@@ -342,7 +342,7 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
 
             List<String> contributorsNames = new ArrayList<String>();
             for (Receipt receipt : transaction.getEntryFor(transaction.getFromAccount()).getReceipts()) {
-                if (!net.sourceforge.fenixedu.util.StringUtils.isEmpty(receipt.getContributorName())) {
+                if (!org.apache.commons.lang.StringUtils.isEmpty(receipt.getContributorName())) {
                     contributorsNames.add(receipt.getContributorName());
                     continue;
                 }

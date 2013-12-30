@@ -46,7 +46,7 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import net.sourceforge.fenixedu.util.MarkType;
-import net.sourceforge.fenixedu.util.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -657,9 +657,9 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
         final String degreeType = getDegreeType().getLocalizedName(locale);
         if (!StringUtils.isEmpty(degreeType)) {
-            res.append(degreeType).append(StringUtils.SINGLE_SPACE);
+            res.append(degreeType).append(" ");
             res.append(ResourceBundle.getBundle("resources.ApplicationResources", locale).getString("label.in"));
-            res.append(StringUtils.SINGLE_SPACE);
+            res.append(" ");
         }
 
         final MultiLanguageString mls = getNameFor(executionYear);

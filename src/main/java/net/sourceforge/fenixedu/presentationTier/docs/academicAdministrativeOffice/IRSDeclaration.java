@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IRSDeclarationRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.util.FenixStringTools;
 import net.sourceforge.fenixedu.util.Money;
-import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
@@ -62,21 +62,21 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
 
     final private void setPersonFields(final Registration registration, final Person person) {
         final String name = person.getName().toUpperCase();
-        addParameter("name", StringUtils.multipleLineRightPad(name, LINE_LENGTH, END_CHAR));
+        addParameter("name", FenixStringTools.multipleLineRightPad(name, LINE_LENGTH, END_CHAR));
 
         final String registrationNumber = registration.getNumber().toString();
         String fourthParagraph = getResourceBundle().getString("label.academicDocument.irs.declaration.fourthParagraph");
         addParameter("fourthParagraph", fourthParagraph);
         int fourthParagraphLength = fourthParagraph.length();
         addParameter("registrationNumber",
-                StringUtils.multipleLineRightPad(registrationNumber, LINE_LENGTH - fourthParagraphLength, END_CHAR));
+                FenixStringTools.multipleLineRightPad(registrationNumber, LINE_LENGTH - fourthParagraphLength, END_CHAR));
 
         final String documentIdNumber = person.getDocumentIdNumber().toString();
         String fifthParagraph = getResourceBundle().getString("label.academicDocument.irs.declaration.fifthParagraph");
         addParameter("fifthParagraph", fifthParagraph);
         int fithParagraphLength = fifthParagraph.length();
         addParameter("documentIdNumber",
-                StringUtils.multipleLineRightPad(documentIdNumber, LINE_LENGTH - fithParagraphLength, END_CHAR));
+                FenixStringTools.multipleLineRightPad(documentIdNumber, LINE_LENGTH - fithParagraphLength, END_CHAR));
     }
 
     final private void setAmounts(final Person person, final Integer civilYear) {

@@ -14,8 +14,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.util.FenixStringTools;
 import net.sourceforge.fenixedu.util.Money;
-import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.joda.time.DateTime;
 
@@ -204,7 +204,7 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 
     final private void reportEnrolment(final StringBuilder result, final Enrolment enrolment) {
         result.append(
-                StringUtils.multipleLineRightPadWithSuffix(getPresentationNameFor(enrolment).toUpperCase(), LINE_LENGTH,
+                FenixStringTools.multipleLineRightPadWithSuffix(getPresentationNameFor(enrolment).toUpperCase(), LINE_LENGTH,
                         END_CHAR, getCreditsInfo(enrolment))).append(LINE_BREAK);
     }
 

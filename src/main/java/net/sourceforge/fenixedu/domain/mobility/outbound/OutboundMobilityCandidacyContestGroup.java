@@ -19,10 +19,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.util.BundleUtil;
-import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixframework.Atomic;
@@ -74,12 +72,14 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
     }
 
     public String getDescription() {
-        return StringUtils.join(getSortedExecutionDegrees(), ", ", new Transformer() {
-            @Override
-            public String transform(final Object executionDegree) {
-                return ((ExecutionDegree) executionDegree).getDegree().getSigla();
+        final StringBuilder builder = new StringBuilder();
+        for (final ExecutionDegree executionDegree : getSortedExecutionDegrees()) {
+            if (builder.length() > 0) {
+                builder.append(", ");
             }
-        });
+            builder.append(executionDegree.getDegree().getSigla());
+        }
+        return builder.toString();
     }
 
     public SortedSet<ExecutionDegree> getSortedExecutionDegrees() {

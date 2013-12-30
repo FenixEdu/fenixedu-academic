@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.StorkAttributeTy
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.StorkAttributesList;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.Gender;
-import net.sourceforge.fenixedu.util.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import org.joda.time.YearMonthDay;
 

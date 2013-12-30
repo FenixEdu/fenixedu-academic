@@ -5,16 +5,18 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.util.FenixStringTools;
+
 import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.util.StringUtils;
+import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class PersonAutoCompleteProvider implements AutoCompleteProvider<Person> {
 
     @Override
     public Collection<Person> getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
-        final String searchValue = StringUtils.normalize(value);
+        final String searchValue = StringNormalizer.normalize(value);
 
         final List<Person> result = new ArrayList<Person>();
         result.addAll(Person.findInternalPerson(value));
@@ -23,7 +25,7 @@ public class PersonAutoCompleteProvider implements AutoCompleteProvider<Person> 
     }
 
     private boolean match(final String stringToMatch, final String content) {
-        final String normalizedContent = StringUtils.normalize(content);
+        final String normalizedContent = StringNormalizer.normalize(content);
         return normalizedContent.indexOf(stringToMatch) >= 0;
     }
 

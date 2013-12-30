@@ -9,10 +9,12 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
-import net.sourceforge.fenixedu.util.StringUtils;
+import net.sourceforge.fenixedu.util.FenixStringTools;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.fenixedu.bennu.core.domain.Bennu;
+
+import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class Researcher extends Researcher_Base {
 
@@ -56,18 +58,18 @@ public class Researcher extends Researcher_Base {
     }
 
     public boolean hasKeyword(String keyword) {
-        String trimmedKeyword = StringUtils.normalize(keyword.trim());
+        String trimmedKeyword = StringNormalizer.normalize(keyword.trim());
 
         for (String reseacherKeyword : getKeywordsPt().split(",")) {
             // Instead of equalsIgoneCase we'll use indexOf
-            if (StringUtils.normalize(reseacherKeyword.trim()).indexOf(trimmedKeyword) >= 0) {
+            if (StringNormalizer.normalize(reseacherKeyword.trim()).indexOf(trimmedKeyword) >= 0) {
                 return true;
             }
         }
 
         for (String reseacherKeyword : getKeywordsEn().split(",")) {
             // Instead of equalsIgoneCase we'll use indexOf
-            if (StringUtils.normalize(reseacherKeyword.trim()).indexOf(trimmedKeyword) >= 0) {
+            if (StringNormalizer.normalize(reseacherKeyword.trim()).indexOf(trimmedKeyword) >= 0) {
                 return true;
             }
         }

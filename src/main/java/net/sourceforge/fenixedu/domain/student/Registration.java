@@ -111,7 +111,7 @@ import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.RegistrationPredicates;
 import net.sourceforge.fenixedu.util.PeriodState;
-import net.sourceforge.fenixedu.util.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -2030,7 +2030,7 @@ public class Registration extends Registration_Base {
         final DegreeType degreeType = degree.getDegreeType();
         if (getDegreeType() != DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA && cycleType != null) {
             res.append(cycleType.getDescription(locale)).append(",");
-            res.append(StringUtils.SINGLE_SPACE).append(bundle.getString("label.of.the.male")).append(StringUtils.SINGLE_SPACE);
+            res.append(" ").append(bundle.getString("label.of.the.male")).append(" ");
         }
 
         if (!isEmptyDegree() && !degreeType.isEmpty()) {
@@ -2040,7 +2040,7 @@ public class Registration extends Registration_Base {
             if (getDegreeType() == DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA && cycleType != null) {
                 res.append(" (").append(cycleType.getDescription(locale)).append(")");
             }
-            res.append(StringUtils.SINGLE_SPACE).append(bundle.getString("label.in")).append(StringUtils.SINGLE_SPACE);
+            res.append(" ").append(bundle.getString("label.in")).append(" ");
         }
 
         res.append(degree.getFilteredName(executionYear, locale).toUpperCase());

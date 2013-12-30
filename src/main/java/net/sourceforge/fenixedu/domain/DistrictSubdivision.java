@@ -7,7 +7,7 @@ import java.util.TreeSet;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 //TODO: Refactor remaining object to use district subdivision instead of strings

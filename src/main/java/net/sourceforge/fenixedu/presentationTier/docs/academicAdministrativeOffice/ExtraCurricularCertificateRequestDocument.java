@@ -6,7 +6,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExtraCurricularCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
-import net.sourceforge.fenixedu.util.StringUtils;
+import net.sourceforge.fenixedu.util.FenixStringTools;
 
 public class ExtraCurricularCertificateRequestDocument extends AdministrativeOfficeDocument {
 
@@ -41,7 +41,7 @@ public class ExtraCurricularCertificateRequestDocument extends AdministrativeOff
 
         for (final Enrolment enrolment : enrolments) {
             result.append(
-                    StringUtils.multipleLineRightPadWithSuffix(getPresentationNameFor(enrolment).toUpperCase(), LINE_LENGTH,
+                    FenixStringTools.multipleLineRightPadWithSuffix(getPresentationNameFor(enrolment).toUpperCase(), LINE_LENGTH,
                             END_CHAR, getCreditsAndGradeInfo(enrolment, enrolment.getExecutionYear()))).append(LINE_BREAK);
         }
 

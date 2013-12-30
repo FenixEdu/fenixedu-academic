@@ -36,7 +36,7 @@ import net.sourceforge.fenixedu.domain.phd.ThesisSubjectOrder;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
-import net.sourceforge.fenixedu.util.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.Partial;

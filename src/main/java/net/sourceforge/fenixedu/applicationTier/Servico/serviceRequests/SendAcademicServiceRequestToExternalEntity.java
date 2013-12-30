@@ -35,7 +35,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServi
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.ApprovementInfoForEquivalenceProcess;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
-import net.sourceforge.fenixedu.util.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.CharEncoding;
@@ -402,8 +402,8 @@ public class SendAcademicServiceRequestToExternalEntity {
                     spreadsheet.addCell(((CurricularCourse) courseModule).getEctsCredits(), cellStyleToUse);
                     // let's fill the next two cells so that they get shaded as
                     // well
-                    spreadsheet.addCell(StringUtils.SINGLE_SPACE, unlockedCellStyleToUse);
-                    spreadsheet.addCell(StringUtils.SINGLE_SPACE, unlockedCellStyleToUse);
+                    spreadsheet.addCell(" ", unlockedCellStyleToUse);
+                    spreadsheet.addCell(" ", unlockedCellStyleToUse);
                 }
             }
             List<Context> sortedGroupContexts =

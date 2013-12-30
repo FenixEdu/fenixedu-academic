@@ -12,9 +12,10 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.certificates.PhdFinalizationCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
+import net.sourceforge.fenixedu.util.FenixStringTools;
 import net.sourceforge.fenixedu.util.Money;
-import net.sourceforge.fenixedu.util.StringUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -71,9 +72,9 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
             addParameter("documentIdNumber", builder1.toString());
             addParameter("birthLocale", builder2.toString());
         } else {
-            addParameter("name", StringUtils.multipleLineRightPad(person.getName().toUpperCase(), LINE_LENGTH, END_CHAR));
-            addParameter("documentIdNumber", StringUtils.multipleLineRightPad(builder1.toString(), LINE_LENGTH, END_CHAR));
-            addParameter("birthLocale", StringUtils.multipleLineRightPad(builder2.toString(), LINE_LENGTH, END_CHAR));
+            addParameter("name", FenixStringTools.multipleLineRightPad(person.getName().toUpperCase(), LINE_LENGTH, END_CHAR));
+            addParameter("documentIdNumber", FenixStringTools.multipleLineRightPad(builder1.toString(), LINE_LENGTH, END_CHAR));
+            addParameter("birthLocale", FenixStringTools.multipleLineRightPad(builder2.toString(), LINE_LENGTH, END_CHAR));
         }
 
         setNationality(person);
@@ -93,7 +94,7 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
         if (getDocumentRequest().getDocumentRequestType().equals(DocumentRequestType.APPROVEMENT_MOBILITY_CERTIFICATE)) {
             addParameter("nationality", builder.toString());
         } else {
-            addParameter("nationality", StringUtils.multipleLineRightPad(builder.toString(), LINE_LENGTH, END_CHAR));
+            addParameter("nationality", FenixStringTools.multipleLineRightPad(builder.toString(), LINE_LENGTH, END_CHAR));
         }
     }
 
@@ -221,13 +222,13 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
         builder.append(genderPrefix).append(SINGLE_SPACE);
         builder.append(person.getNameOfFather().toUpperCase());
 
-        addParameter("fatherName", StringUtils.multipleLineRightPad(builder.toString(), LINE_LENGTH, END_CHAR));
+        addParameter("fatherName", FenixStringTools.multipleLineRightPad(builder.toString(), LINE_LENGTH, END_CHAR));
 
         builder = new StringBuilder();
         builder.append(getResourceBundle().getString("label.phd.finalization.certificate.mother.prefix.for.female")).append(
                 SINGLE_SPACE);
         builder.append(person.getNameOfMother().toUpperCase());
-        addParameter("motherName", StringUtils.multipleLineRightPad(builder.toString(), LINE_LENGTH, END_CHAR));
+        addParameter("motherName", FenixStringTools.multipleLineRightPad(builder.toString(), LINE_LENGTH, END_CHAR));
 
     }
 

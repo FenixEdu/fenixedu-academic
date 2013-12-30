@@ -8,7 +8,7 @@
 <%@ page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
 <%@ page import="java.util.Locale"%>
 <%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean" %>
-<%@ page import="net.sourceforge.fenixedu.util.StringUtils" %>
+<%@ page import="org.apache.commons.lang.StringUtils" %>
 
 <%!static String f(String value, Object ... args) {
     	return String.format(value, args);

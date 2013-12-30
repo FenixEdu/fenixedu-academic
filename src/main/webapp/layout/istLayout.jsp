@@ -1,7 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
 <%@page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
-<%@page import="net.sourceforge.fenixedu.util.StringUtils"%>
 <%@page import="org.fenixedu.bennu.core.security.Authenticate"%>
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>

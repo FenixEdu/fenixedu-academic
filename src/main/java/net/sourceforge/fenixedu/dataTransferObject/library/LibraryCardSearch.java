@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.library.LibraryCard;
 import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.util.FenixStringTools;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -60,7 +61,7 @@ public class LibraryCardSearch implements Serializable {
 
         private boolean satisfiesUserName(Person person) {
             return StringUtils.isEmpty(getUserName())
-                    || net.sourceforge.fenixedu.util.StringUtils.verifyContainsWithEquality(person.getName(), getUserName());
+                    || FenixStringTools.verifyContainsWithEquality(person.getName(), getUserName());
         }
 
         private boolean satisfiesCategory(final Person person) {

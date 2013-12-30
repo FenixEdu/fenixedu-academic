@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.messaging.AnnouncementCategory;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementCategoryType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
-import net.sourceforge.fenixedu.util.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import net.sourceforge.fenixedu.webServices.exceptions.NotAuthorizedException;
 
 import org.codehaus.xfire.MessageContext;

@@ -19,8 +19,8 @@ import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
+import net.sourceforge.fenixedu.util.FenixStringTools;
 import net.sourceforge.fenixedu.util.Money;
-import net.sourceforge.fenixedu.util.StringUtils;
 
 public class ApprovementCertificate extends AdministrativeOfficeDocument {
 
@@ -156,8 +156,8 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
     final private void reportEntry(final StringBuilder result, final ICurriculumEntry entry,
             final Map<Unit, String> academicUnitIdentifiers, final ExecutionYear executionYear) {
         result.append(
-                StringUtils.multipleLineRightPadWithSuffix(getCurriculumEntryName(academicUnitIdentifiers, entry), LINE_LENGTH,
-                        END_CHAR, getCreditsAndGradeInfo(entry, executionYear))).append(LINE_BREAK);
+                FenixStringTools.multipleLineRightPadWithSuffix(getCurriculumEntryName(academicUnitIdentifiers, entry),
+                        LINE_LENGTH, END_CHAR, getCreditsAndGradeInfo(entry, executionYear))).append(LINE_BREAK);
     }
 
     @Override

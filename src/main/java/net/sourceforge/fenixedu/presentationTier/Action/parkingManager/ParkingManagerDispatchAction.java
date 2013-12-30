@@ -474,7 +474,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             final String carPlateNumber = request.getParameter("plateNumber");
             final String parkingCardNumberString = request.getParameter("parkingCardNumber");
             Long parkingCardNumber = null;
-            if (!net.sourceforge.fenixedu.util.StringUtils.isEmpty(parkingCardNumberString)) {
+            if (!org.apache.commons.lang.StringUtils.isEmpty(parkingCardNumberString)) {
                 parkingCardNumber = new Long(parkingCardNumberString);
             }
             Party party = FenixFramework.getDomainObject(externalId);

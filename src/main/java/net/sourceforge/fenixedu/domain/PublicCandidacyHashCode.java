@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
-import static net.sourceforge.fenixedu.util.StringUtils.isEmpty;
+import static org.apache.commons.lang.StringUtils.isEmpty;
 
 import java.util.ArrayList;
 import java.util.Collections;
