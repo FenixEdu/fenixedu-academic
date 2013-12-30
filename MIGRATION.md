@@ -8,7 +8,15 @@ Version 2.0 introduces major architectural changes. FenixEdu is now built on top
 
 Migrating to version 2.0 is a multi-step process that should take about 30 minutes in which the application will be unavailable.
 
-Note that in order to properly migrate the application, there must be NO `FileLocalContent` instances, they all MUST be stored in DSpace.
+#### Pre-Migration
+
+Before migrating to Fenix 2.x, you must first ensure that:
+
+1. There are no instances of `FileLocalContent`.
+2. Username generation is now handled by the [bennu-user-management](https://github.com/FenixEdu/bennu-user-management) module. Ensure that your installation registers a custom `UsernameGenerator`.
+3. Ensure that your installation contains an implementation of `net.sourceforge.fenixedu.util.ConnectionManager`, otherwise SQL-based lookups will not work.
+
+#### Migration
 
 1. Shut down the application before upgrading
 
