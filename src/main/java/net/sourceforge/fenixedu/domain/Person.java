@@ -348,7 +348,7 @@ public class Person extends Person_Base {
         setMaritalStatus(MaritalStatus.UNKNOWN);
         createUser();
     }
-    
+
     public Person(User user) {
         super();
         setMaritalStatus(MaritalStatus.UNKNOWN);
@@ -1552,12 +1552,12 @@ public class Person extends Person_Base {
         private void sendManagerRoleMembershipChangeNotification(final Person person, final String subjectKey,
                 final String bodyKey) {
             final Sender sender = Bennu.getInstance().getSystemSender();
-            
-            if (sender != null){
+
+            if (sender != null) {
                 final Recipient recipient = new Recipient(new RoleGroup(RoleType.MANAGER));
-                new Message(sender, recipient, BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", subjectKey), 
-                        BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", bodyKey,
-                               person.getPresentationName()));
+                new Message(sender, recipient, BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
+                        subjectKey), BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", bodyKey,
+                        person.getPresentationName()));
             }
         }
 
@@ -4308,7 +4308,7 @@ public class Person extends Person_Base {
             roles = new RoleType[0];
         }
         final StringBuilder builder = new StringBuilder();
-        for (final User user : Bennu.getInstance().getUsersSet()) {
+        for (final User user : Bennu.getInstance().getUserSet()) {
             if (!StringUtils.isEmpty(user.getUsername())) {
                 final Person person = user.getPerson();
                 if (roles.length == 0 || person.hasAnyRole(roles)) {

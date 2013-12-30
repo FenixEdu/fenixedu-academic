@@ -4,9 +4,6 @@ import java.util.Collections;
 import java.util.Stack;
 
 import net.sourceforge.fenixedu.domain.contents.Content;
-
-import org.apache.commons.collections.Predicate;
-
 import pt.ist.fenixWebFramework.rendererExtensions.TreeRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
@@ -14,6 +11,8 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlLink;
 import pt.ist.fenixWebFramework.renderers.components.HtmlList;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.ist.fenixframework.DomainObject;
+
+import com.google.common.base.Predicate;
 
 public class ContentHierarchyTreeRenderer extends TreeRenderer {
 
@@ -60,13 +59,11 @@ public class ContentHierarchyTreeRenderer extends TreeRenderer {
             if (rootDragDisabled) {
                 HtmlList list =
                         (component instanceof HtmlList) ? (HtmlList) component : (HtmlList) ((HtmlBlockContainer) component)
-                                .getChild(new Predicate() {
-
+                                .getChild(new Predicate<HtmlComponent>() {
                                     @Override
-                                    public boolean evaluate(Object htmlComponent) {
-                                        return htmlComponent instanceof HtmlList;
+                                    public boolean apply(HtmlComponent input) {
+                                        return input instanceof HtmlLink;
                                     }
-
                                 });
 
                 list.getChildren().iterator().next().setAttribute("noDrag", "true");
@@ -80,12 +77,11 @@ public class ContentHierarchyTreeRenderer extends TreeRenderer {
     protected HtmlComponent generateMainComponent(Object object) {
         HtmlComponent component = super.generateMainComponent(object);
         if (!stack.isEmpty() && getParentParameterName() != null) {
-            HtmlLink link = (HtmlLink) component.getChild(new Predicate() {
+            HtmlLink link = (HtmlLink) component.getChild(new Predicate<HtmlComponent>() {
                 @Override
-                public boolean evaluate(Object arg0) {
-                    return arg0 instanceof HtmlLink;
+                public boolean apply(HtmlComponent input) {
+                    return input instanceof HtmlLink;
                 }
-
             });
             if (link != null) {
                 link.addParameter(getParentParameterName(), (stack.peek()).getExternalId());

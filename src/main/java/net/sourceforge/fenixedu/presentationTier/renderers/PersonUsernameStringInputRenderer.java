@@ -2,12 +2,11 @@ package net.sourceforge.fenixedu.presentationTier.renderers;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.PersonUsernameConverter;
-
-import org.apache.commons.collections.Predicate;
-
 import pt.ist.fenixWebFramework.renderers.StringInputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlFormComponent;
+
+import com.google.common.base.Predicate;
 
 public class PersonUsernameStringInputRenderer extends StringInputRenderer {
 
@@ -18,10 +17,10 @@ public class PersonUsernameStringInputRenderer extends StringInputRenderer {
         String username = (person != null) ? person.getUsername() : null;
 
         final HtmlComponent container = super.createTextField(username, type);
-        final HtmlFormComponent formComponent = (HtmlFormComponent) container.getChild(new Predicate() {
+        final HtmlFormComponent formComponent = (HtmlFormComponent) container.getChild(new Predicate<HtmlComponent>() {
             @Override
-            public boolean evaluate(Object arg0) {
-                return arg0 instanceof HtmlFormComponent;
+            public boolean apply(HtmlComponent input) {
+                return input instanceof HtmlFormComponent;
             }
         });
         formComponent.setConverter(new PersonUsernameConverter());
