@@ -45,7 +45,11 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
     @Override
     public AcademicChronology getAcademicChronology() {
         if (academicChronology == null) {
-            academicChronology = new AcademicChronology(this);
+            synchronized (AcademicCalendarRootEntry.class) {
+                if (academicChronology == null) {
+                    academicChronology = new AcademicChronology(this);
+                }
+            }
         }
         return academicChronology;
     }

@@ -46,10 +46,7 @@ public class AcademicChronology extends AssembledChronology {
     private transient DateTimeField acAcademicTrimester;
 
     // Static Variables
-    private static final ISOChronology ISO_INSTANCE;
-    static {
-        ISO_INSTANCE = ISOChronology.getInstance();
-    }
+    private static final ISOChronology ISO_INSTANCE = ISOChronology.getInstance();
 
     // Override Methods
 
@@ -60,21 +57,23 @@ public class AcademicChronology extends AssembledChronology {
 
     @Override
     protected void assemble(Fields fields) {
-        acAcademicYearsField = new AcademicYearsDurationField(this);
-        acAcademicYear = new AcademicYearDateTimeField(this);
+        if (acAcademicYearsField != null) {
+            acAcademicYearsField = new AcademicYearsDurationField(this);
+            acAcademicYear = new AcademicYearDateTimeField(this);
 
-        acAcademicTrimester = new AcademicTrimesterDateTimeField(this);
-        acAcademicTrimestersField = new AcademicTrimesterDurationField(this);
+            acAcademicTrimester = new AcademicTrimesterDateTimeField(this);
+            acAcademicTrimestersField = new AcademicTrimesterDurationField(this);
 
-        acAcademicSemester = new AcademicSemesterDateTimeField(this);
-        acAcademicSemestersField = new AcademicSemestersDurationField(this);
-        acAcademicSemesterOfAcademicYear = new AcademicSemesterOfAcademicYearDateTimeField(this);
-        acDayOfAcademicSemester = new DayOfAcademicSemesterDateTimeField(this);
+            acAcademicSemester = new AcademicSemesterDateTimeField(this);
+            acAcademicSemestersField = new AcademicSemestersDurationField(this);
+            acAcademicSemesterOfAcademicYear = new AcademicSemesterOfAcademicYearDateTimeField(this);
+            acDayOfAcademicSemester = new DayOfAcademicSemesterDateTimeField(this);
+        }
     }
 
     @Override
     public Chronology withUTC() {
-        return ISO_INSTANCE.getInstanceUTC();
+        return ISOChronology.getInstanceUTC();
     }
 
     @Override

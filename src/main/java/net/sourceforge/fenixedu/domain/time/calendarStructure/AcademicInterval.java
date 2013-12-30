@@ -48,37 +48,23 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
 
     };
 
-    private final String academicCalendarExternalId;
-    private final String entryExternalId;
-
-    private transient AcademicCalendarEntry academicCalendarEntry;
-    private transient AcademicCalendarRootEntry academicCalendarRootEntry;
-    private transient AcademicChronology academicChronology;
+    private final AcademicCalendarEntry academicCalendarEntry;
+    private final AcademicCalendarRootEntry academicCalendarRootEntry;
 
     private AcademicInterval(String entryExternalId, String academicCalendarExternalId) {
-        if (entryExternalId == null) {
-            throw new DomainException("error.AcademicInterval.empty.entry.externalId");
-        }
-        this.entryExternalId = entryExternalId;
-        if (academicCalendarExternalId == null) {
-            throw new DomainException("error.AcademicInterval.empty.academic.chronology.externalId");
-        }
-        this.academicCalendarExternalId = academicCalendarExternalId;
+        this((AcademicCalendarEntry) FenixFramework.getDomainObject(entryExternalId), (AcademicCalendarRootEntry) FenixFramework
+                .getDomainObject(academicCalendarExternalId));
     }
 
-    public AcademicInterval(AcademicCalendarEntry entry, AcademicCalendarRootEntry rootEntry) {
-        String entryExternalId = entry.getExternalId();
-        if (entryExternalId == null) {
+    public AcademicInterval(final AcademicCalendarEntry entry, final AcademicCalendarRootEntry rootEntry) {
+        if (entry == null) {
             throw new DomainException("error.AcademicInterval.empty.entry.externalId");
         }
-        this.entryExternalId = entryExternalId;
-        String academicCalendarExternalId = rootEntry.getExternalId();
-        if (academicCalendarExternalId == null) {
+        if (rootEntry == null) {
             throw new DomainException("error.AcademicInterval.empty.academic.chronology.externalId");
         }
-        this.academicCalendarExternalId = academicCalendarExternalId;
-        academicCalendarEntry = entry;
-        academicCalendarRootEntry = rootEntry;
+        this.academicCalendarEntry = entry;
+        this.academicCalendarRootEntry = rootEntry;
     }
 
     public AcademicChronology getAcademicChronology() {
@@ -87,10 +73,7 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
 
     @Override
     public Chronology getChronology() {
-        if (academicChronology == null) {
-            academicChronology = getAcademicCalendar().getAcademicChronology();
-        }
-        return academicChronology;
+        return getAcademicCalendar().getAcademicChronology();
     }
 
     @Override
@@ -128,23 +111,10 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
     }
 
     public AcademicCalendarRootEntry getAcademicCalendar() {
-        if (academicCalendarRootEntry == null) {
-            academicCalendarRootEntry = FenixFramework.getDomainObject(getAcademicCalendarExternalId());
-        }
         return academicCalendarRootEntry;
     }
 
     public AcademicCalendarEntry getAcademicCalendarEntry() {
-        if (academicCalendarEntry == null) {
-            academicCalendarEntry = FenixFramework.getDomainObject(getEntryExternalId());
-        }
-        return academicCalendarEntry;
-    }
-
-    private AcademicCalendarEntry getAcademicCalendarEntryIntervalWithoutClassNameCheck() {
-        if (academicCalendarEntry == null) {
-            academicCalendarEntry = FenixFramework.getDomainObject(getEntryExternalId());
-        }
         return academicCalendarEntry;
     }
 
@@ -169,11 +139,11 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
     }
 
     public String getEntryExternalId() {
-        return entryExternalId;
+        return getAcademicCalendarEntry().getExternalId();
     }
 
     public String getAcademicCalendarExternalId() {
-        return academicCalendarExternalId;
+        return getAcademicCalendar().getExternalId();
     }
 
     public String getRepresentationInStringFormat() {
