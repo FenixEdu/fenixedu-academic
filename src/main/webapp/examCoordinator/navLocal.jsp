@@ -5,11 +5,11 @@
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="date"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-	<logic:equal name="USER_SESSION_ATTRIBUTE" property="user.person.isExamCoordinatorInCurrentYear" value="true">
+	<logic:equal name="LOGGED_USER_ATTRIBUTE" property="person.isExamCoordinatorInCurrentYear" value="true">
 	<ul>
 		<li class="navheader"><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinator"/></li>
 		
-		<logic:equal name="USER_SESSION_ATTRIBUTE" property="user.person.currentExamCoordinator.allowedToCreateGroups" value="true">
+		<logic:equal name="LOGGED_USER_ATTRIBUTE" property="person.currentExamCoordinator.allowedToCreateGroups" value="true">
 		<li><html:link  page="/vigilancy/vigilantGroupManagement.do?method=prepareVigilantGroupManagement&show=groups"><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.VigilantGroupManagement"/></html:link></li>
 		</logic:equal>
 	

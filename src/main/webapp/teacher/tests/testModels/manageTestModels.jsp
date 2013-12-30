@@ -28,7 +28,7 @@
 			<fr:layout name="tabular">
 				<fr:property name="columnClasses" value="width10em,," />
 			</fr:layout>
-			<fr:hidden slot="creator" name="USER_SESSION_ATTRIBUTE" property="user.person.teacher" />
+			<fr:hidden slot="creator" name="LOGGED_USER_ATTRIBUTE" property="person.teacher" />
 			<fr:destination name="invalid" path="/tests/testModels.do?method=createTestModel" />
 		</fr:create>
 		<html:submit><bean:message key="label.button.create" bundle="TESTS_RESOURCES" /></html:submit>

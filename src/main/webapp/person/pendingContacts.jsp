@@ -6,7 +6,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
 <html:xhtml/>
-<bean:define id="person" name="USER_SESSION_ATTRIBUTE" property="user.person"/>
+<bean:define id="person" name="LOGGED_USER_ATTRIBUTE" property="person"/>
 <fr:form  action="/partyContacts.do">
 <bean:define id="confirm" type="java.lang.String">
 	<bean:message  bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.validation.message.confirm.Phone" />

@@ -16,7 +16,7 @@
 <fr:form action="/changePersonalData.do?method=change">
 
 	<p class="infoop"><span><h2 class="inline"><bean:message key="label.person.title.personal.info" /></h2></span></p>
-	<fr:edit id="personData" name="USER_SESSION_ATTRIBUTE" property="user.person" schema="candidate.personalData-edit" >
+	<fr:edit id="personData" name="LOGGED_USER_ATTRIBUTE" property="person" schema="candidate.personalData-edit" >
 	    <fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1"/>
 			<fr:property name="columnClasses" value="nowrap aleft,,,,,"/>
@@ -25,7 +25,7 @@
 	</fr:edit>
 
 	<p class="infoop"><span><h2 class="inline"><bean:message key="label.person.title.filiation" /></h2></span></p>
-	<fr:edit id="personFiliation" name="USER_SESSION_ATTRIBUTE" property="user.person" schema="candidate.filiation-edit" >
+	<fr:edit id="personFiliation" name="LOGGED_USER_ATTRIBUTE" property="person" schema="candidate.filiation-edit" >
 	    <fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1"/>
 			<fr:property name="columnClasses" value="nowrap aleft,,,,,"/>
@@ -34,7 +34,7 @@
 	</fr:edit>
 
 	<p class="infoop"><span><h2 class="inline"><bean:message key="label.person.title.addressInfo" /></h2></span></p>
-	<fr:edit id="personAddress" name="USER_SESSION_ATTRIBUTE" property="user.person" schema="candidate.address-edit" >
+	<fr:edit id="personAddress" name="LOGGED_USER_ATTRIBUTE" property="person" schema="candidate.address-edit" >
 	    <fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1"/>
 			<fr:property name="columnClasses" value="nowrap aleft,,,,,"/>
@@ -43,7 +43,7 @@
 	</fr:edit>
 	
 	<p class="infoop"><span><h2 class="inline"><bean:message key="label.person.title.contactInfo" /></h2></span></p>
-	<fr:edit id="personContacts" name="USER_SESSION_ATTRIBUTE" property="user.person" schema="candidate.contacts-edit" >
+	<fr:edit id="personContacts" name="LOGGED_USER_ATTRIBUTE" property="person" schema="candidate.contacts-edit" >
 	    <fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1"/>
 			<fr:property name="columnClasses" value="nowrap aleft,,,,,"/>

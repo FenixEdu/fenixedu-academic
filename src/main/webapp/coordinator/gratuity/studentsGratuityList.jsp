@@ -7,7 +7,6 @@
 <%@ page import="java.lang.String" %>
 
 
-<bean:define id="userView" name="USER_SESSION_ATTRIBUTE"/>
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request"/>
 <bean:define id="degree" name="degree" scope="request"/>
 <bean:define id="order" name="order" scope="request"/>

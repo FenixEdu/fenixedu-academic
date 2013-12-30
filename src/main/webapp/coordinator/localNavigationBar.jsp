@@ -33,8 +33,8 @@
 		</li>
 		
 		<%-- BIG HACK :) - temporary --%>
-		<logic:equal name="USER_SESSION_ATTRIBUTE" 
-				property="user.username" value="ist12760">
+		<logic:equal name="LOGGED_USER_ATTRIBUTE" 
+				property="username" value="ist12760">
 
 			<li class="navheader">
 				<bean:message key="label.phd.ist.epfl.collaboration.type" bundle="PHD_RESOURCES" />

@@ -20,7 +20,7 @@
 			</span>
 		<p>
 	</logic:messagesPresent>	
-	<bean:define id="person" name="USER_SESSION_ATTRIBUTE" property="user.person" type="net.sourceforge.fenixedu.domain.Person"/>
+	<bean:define id="person" name="LOGGED_USER_ATTRIBUTE" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
 	<html:form action="roomsReserveManagement.do?method=seeSpecificRequest" >
 		<table>
 			<tr>

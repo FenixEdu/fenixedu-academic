@@ -86,7 +86,7 @@
 <logic:equal name="spaceContextForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Room">
     <p class="mtop15 mbottom05"><strong><bean:message key="label.space.details" bundle="SPACE_RESOURCES"/></strong></p>
 	
-	<bean:define id="person" name="USER_SESSION_ATTRIBUTE" property="user.person" type="net.sourceforge.fenixedu.domain.Person"/>
+	<bean:define id="person" name="LOGGED_USER_ATTRIBUTE" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
 	<%
 		if(net.sourceforge.fenixedu.domain.space.Space.personIsSpacesAdministrator(person)){
 	%>

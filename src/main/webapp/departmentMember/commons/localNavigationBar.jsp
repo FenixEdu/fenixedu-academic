@@ -46,7 +46,7 @@
             	</html:link>
         	</li>
 	--%>
-		<logic:notEmpty name="USER_SESSION_ATTRIBUTE" property="user.person.vigilantWrappers">
+		<logic:notEmpty name="LOGGED_USER_ATTRIBUTE" property="person.vigilantWrappers">
 			<li>
 				<html:link page="/vigilancy/vigilantManagement.do?method=prepareMap">
 					<bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.vigilant"/>
@@ -96,7 +96,7 @@
 	<% } %>
 	<!-- Temporary solution (until we make expectations available for all departments) DEI Code = 28 -->
 	<ul style="margin-top: 1em">
-		<bean:define id="userView" name="USER_SESSION_ATTRIBUTE" property="user" />
+		<bean:define id="userView" name="LOGGED_USER_ATTRIBUTE" />
 		<% String deiCode = "28"; %>
 		<logic:notEmpty name="userView" property="person.teacher">
 			<logic:notEmpty name="userView" property="person.teacher.currentWorkingDepartment">	

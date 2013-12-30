@@ -14,7 +14,7 @@
 hideButtons();
 </script>
 
-<logic:present name="USER_SESSION_ATTRIBUTE" property="user.person.student">
+<logic:present name="LOGGED_USER_ATTRIBUTE" property="person.student">
 
 <h2><bean:message  key="label.fill.information" bundle="STUDENT_RESOURCES"/></h2>
 

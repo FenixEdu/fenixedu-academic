@@ -124,7 +124,7 @@
 <bean:define id="edId" name="coordsBean" property="executionDegree.externalId"/>
 <bean:define id="path" name="coordsBean" property="backPath"/>
 <bean:define id="escapedPath" name="coordsBean" property="escapedBackPath"/>
-<bean:define id="personId" name="USER_SESSION_ATTRIBUTE" property="user.person.externalId" />
+<bean:define id="personId" name="LOGGED_USER_ATTRIBUTE" property="person.externalId" />
 
 <em><bean:message key="scientificCouncil" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>
 <h2><bean:message key="label.edit.coordinationTeam" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h2>

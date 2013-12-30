@@ -8,18 +8,6 @@
 
 <html:xhtml/>
 
-<%--
-<bean:define id="userView" name="USER_SESSION_ATTRIBUTE" property="user" />
-<logic:notEmpty name="userView" property="person.user.lastLoginHost">
-	<logic:notEmpty name="userView" property="person.user.lastLoginDateTime">
-		<bean:define id="lastLoginDateTime" type="java.util.Date" name="userView" property="person.user.lastLoginDateTime"/>
-		<bean:define id="timestamp" ><%= lastLoginDateTime.getTime() %></bean:define>
-		<bean:define id="lastLoginHost" name="userView" property="person.user.lastLoginHost"/>
-	    <p class="mtop0 mbottom2" style="float: right;"><span style="background-color: #eee; padding: 0.25em;"><bean:message key="last.login.dateTime"/>&nbsp;<b><date:format pattern="dd-MM-yyyy HH:mm"><bean:write name="timestamp"/></date:format></b> (<bean:write name="lastLoginHost"/>)</span></p>	
-	</logic:notEmpty>	    
-</logic:notEmpty>
---%>
-
 <em><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.portal"/></em>
 <h2><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.news.title"/></h2>
 

@@ -43,10 +43,6 @@ public class LoginInvalidPasswordExceptionHandler extends FenixExceptionHandler 
         // Create a new session for this user
         sessao = request.getSession(true);
 
-        // Store the UserView into the session and return
-        // UserView.setUser(userView);
-        // sessao.setAttribute(SetUserViewFilter.USER_SESSION_ATTRIBUTE, userView);
-
         ActionForward forward = mapping.findForward("changePass");
         request.setAttribute(Globals.EXCEPTION_KEY, ex);
         super.storeException(request, errorMessage, error, forward, ae.getScope());

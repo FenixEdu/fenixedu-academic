@@ -17,7 +17,7 @@
 		<th></th>
 	</tr>
 	
-<logic:iterate id="candidacy" name="USER_SESSION_ATTRIBUTE" property="user.person.candidacies">
+<logic:iterate id="candidacy" name="LOGGED_USER_ATTRIBUTE" property="person.candidacies">
 	<logic:notEmpty name="candidacy" property="candidacySituations">
 	<bean:define id="externalId" name="candidacy" property="externalId" />
 	<tr>
