@@ -7,13 +7,11 @@ import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
-public class ThesisParticipationTypeProvider implements DataProvider {
+public class ThesisJuryTypeProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
         final List<ThesisParticipationType> thesisParticipationTypes = new ArrayList<ThesisParticipationType>();
-        thesisParticipationTypes.add(ThesisParticipationType.ORIENTATOR);
-        thesisParticipationTypes.add(ThesisParticipationType.COORIENTATOR);
         thesisParticipationTypes.add(ThesisParticipationType.PRESIDENT);
         thesisParticipationTypes.add(ThesisParticipationType.VOWEL);
 

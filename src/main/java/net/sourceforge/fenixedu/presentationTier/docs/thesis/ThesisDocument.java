@@ -101,7 +101,7 @@ public abstract class ThesisDocument extends FenixReport {
         vowels.addAll(thesis.getVowels());
 
         Iterator<ThesisEvaluationParticipant> iterator = vowels.iterator();
-        for (int i = 1; i < 4; i++) {
+        for (int i = 1; i <= 4; i++) {
             final String vowelPrefix = "vowel" + i;
 
             if (iterator.hasNext()) {

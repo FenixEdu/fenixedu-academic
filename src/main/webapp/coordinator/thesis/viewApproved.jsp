@@ -169,11 +169,8 @@
     <fr:destination name="cancel" path="<%= String.format("/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s", dcpId, executionYearId) %>"/>
 </fr:edit>
 
-<%-- Jury --%>
-<h3 class="mtop2 separator2"><bean:message key="title.coordinator.thesis.edit.section.jury"/></h3>
-
 <%-- Orientation --%>
-<h4 class="mtop25 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.orientation"/></h4>
+<h3 class="mtop2 separator2"><bean:message key="title.coordinator.thesis.edit.section.orientation"/></h3>
 
 <logic:empty name="thesis" property="orientator">
     <logic:empty name="thesis" property="coorientator">
@@ -184,6 +181,7 @@
 </logic:empty>
 
 <logic:notEmpty name="thesis" property="orientator">
+	<h4 class="mtop2 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.orientation.orientator"/></h4>
     <fr:view name="thesis" property="orientator" layout="tabular" schema="thesis.jury.proposal.person">
         <fr:layout name="tabular">
            	<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom0"/>
@@ -206,6 +204,7 @@
 </logic:notEmpty>
   
 <logic:notEmpty name="thesis" property="coorientator">
+	<h4 class="mtop2 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.orientation.coorientator"/></h4>
     <fr:view name="thesis" property="coorientator" layout="tabular" schema="thesis.jury.proposal.person">
         <fr:layout name="tabular">
         	    	<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom0"/>
@@ -226,6 +225,9 @@
         </table>
     </logic:equal>
 </logic:notEmpty>
+
+<%-- Jury --%>
+<h3 class="mtop2 separator2"><bean:message key="title.coordinator.thesis.edit.section.jury"/></h3>
 
 <%-- Jury/President --%>
 <h4 class="mtop2 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.jury.president"/></h4>

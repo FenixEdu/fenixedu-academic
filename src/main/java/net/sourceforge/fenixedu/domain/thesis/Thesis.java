@@ -1227,75 +1227,58 @@ public class Thesis extends Thesis_Base {
 
         conditions.addAll(getGeneralConditions());
         conditions.addAll(getOrientationConditions());
-        conditions.addAll(getPresidentConditions());
-        conditions.addAll(getVowelsConditions());
+        conditions.addAll(getJuryConditions());
 
         return conditions;
     }
 
     public Collection<ThesisCondition> getGeneralConditions() {
-        List<ThesisCondition> result = new ArrayList<ThesisCondition>();
-
-        Person orientator = getParticipationPerson(getOrientator());
-        Person coorientator = getParticipationPerson(getCoorientator());
-        Person president = getParticipationPerson(getPresident());
-
-        Set<Person> vowelsPersons = new HashSet<Person>();
-        for (ThesisEvaluationParticipant vowel : getVowels()) {
-            vowelsPersons.add(vowel.getPerson());
-        }
-
-        for (Person person : Arrays.asList(orientator, coorientator, president)) {
-            if (person != null && vowelsPersons.contains(person)) {
-                result.add(new ThesisCondition("thesis.condition.people.repeated.vowels.inOtherPosition"));
-                break;
-            }
-        }
-
-        // check situation where orientator is filled, president is filled, we
-        // have 1 vowel but still need one more person because orientator is
-        // the same as the president
-        int count = getJuryPersonCount();
-        if (count == 2 && orientator != null && orientator == president) {
-            result.add(new ThesisCondition("thesis.condition.people.few"));
-        }
-
-        if (isCreditsDistributionNeeded() && getOrientatorCreditsDistribution() == null) {
-            result.add(new ThesisCondition("thesis.condition.orientation.credits.notDefined"));
-        }
-
-        return result;
-    }
-
-    public List<ThesisCondition> getOrientationConditions() {
         List<ThesisCondition> conditions = new ArrayList<ThesisCondition>();
 
-        boolean hasInternal = false;
-
-        Person orientator = getParticipationPerson(getOrientator());
-        Person coorientator = getParticipationPerson(getCoorientator());
-
-        if (orientator == null) {
-            conditions.add(new ThesisCondition("thesis.condition.orientator.required"));
-        } else {
-            if (!orientator.hasExternalContract()) {
-                hasInternal = true;
-            }
-
-            // check for duplicated persons
-            if (orientator == coorientator) {
-                conditions.add(new ThesisCondition("thesis.condition.people.repeated.coordination"));
-            }
+        // check too few persons
+        int count = getJuryPersonCount();
+        if (count < 3) {
+            conditions.add(new ThesisCondition("thesis.condition.people.number.few"));
         }
 
-        if (coorientator != null && !coorientator.hasExternalContract()) {
-            hasInternal = true;
+        // check too many persons
+        if (count > 5) {
+            conditions.add(new ThesisCondition("thesis.condition.people.number.exceeded"));
         }
 
         return conditions;
     }
 
-    public List<ThesisCondition> getPresidentConditions() {
+    public List<ThesisCondition> getOrientationConditions() {
+        List<ThesisCondition> conditions = new ArrayList<ThesisCondition>();
+
+        Person orientator = getParticipationPerson(getOrientator());
+        Person coorientator = getParticipationPerson(getCoorientator());
+
+        Integer orientatorCreditsDistribution = getOrientatorCreditsDistribution();
+
+        if (orientator == null) {
+            conditions.add(new ThesisCondition("thesis.condition.orientator.required"));
+        } else {
+
+            if (orientatorCreditsDistribution != null) {
+                if ((orientatorCreditsDistribution < 20) || (coorientator != null && getCoorientatorCreditsDistribution() < 20)) {
+                    conditions.add(new ThesisCondition("thesis.condition.orientation.credits.low"));
+                }
+            } else if (isCreditsDistributionNeeded()) {
+                conditions.add(new ThesisCondition("thesis.condition.orientation.credits.notDefined"));
+            }
+
+            // check for duplicated persons
+            if (orientator == coorientator) {
+                conditions.add(new ThesisCondition("thesis.condition.people.repeated.orientation"));
+            }
+        }
+
+        return conditions;
+    }
+
+    public List<ThesisCondition> getJuryConditions() {
         List<ThesisCondition> conditions = new ArrayList<ThesisCondition>();
 
         Person president = getParticipationPerson(getPresident());
@@ -1328,14 +1311,8 @@ public class Thesis extends Thesis_Base {
             }
         }
 
-        return conditions;
-    }
-
-    public List<ThesisCondition> getVowelsConditions() {
-        List<ThesisCondition> conditions = new ArrayList<ThesisCondition>();
-
-        if (getVowels().isEmpty()) {
-            conditions.add(new ThesisCondition("thesis.condition.people.vowels.one.required"));
+        if (getVowels().size() < 2) {
+            conditions.add(new ThesisCondition("thesis.condition.people.vowels.two.required"));
         } else {
             // check duplicated person
             Set<Person> vowelsPersons = new HashSet<Person>();
@@ -1347,11 +1324,10 @@ public class Thesis extends Thesis_Base {
                 conditions.add(new ThesisCondition("thesis.condition.people.repeated.vowels"));
             }
 
-            // check too many persons
-            int count = getJuryPersonCount();
-            if (count > 5) {
-                conditions.add(new ThesisCondition("thesis.condition.people.number.exceeded"));
+            if (president != null && vowelsPersons.contains(president)) {
+                conditions.add(new ThesisCondition("thesis.condition.people.repeated.vowels.president"));
             }
+
         }
 
         return conditions;
@@ -1359,16 +1335,6 @@ public class Thesis extends Thesis_Base {
 
     private int getJuryPersonCount() {
         Set<Person> persons = new HashSet<Person>();
-
-        ThesisEvaluationParticipant orientator = getOrientator();
-        if (orientator != null) {
-            persons.add(orientator.getPerson());
-        }
-
-        ThesisEvaluationParticipant coorientator = getCoorientator();
-        if (coorientator != null) {
-            persons.add(coorientator.getPerson());
-        }
 
         ThesisEvaluationParticipant president = getPresident();
         if (president != null) {

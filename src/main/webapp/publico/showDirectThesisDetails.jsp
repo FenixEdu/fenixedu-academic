@@ -28,9 +28,10 @@
     </fr:layout>
 </fr:view>
 
-<h3 class="mtop15 mbottom05"><bean:message key="title.thesis.details.coordination"/></h3>
+<h3 class="mtop15 mbottom05"><bean:message key="title.thesis.details.orientation"/></h3>
 
 <logic:notEmpty name="thesis" property="orientator">
+	<h4 class="mtop2 mbottom05"><bean:message key="title.public.thesis.section.orientation.orientator"/></h4>
     <fr:view name="thesis" property="orientator" schema="thesis.jury.proposal.person">
         <fr:layout name="tabular">
             <fr:property name="classes" value="tstyle2 thwhite thnowrap thlight thleft thtop ulnomargin width100pc"/>
@@ -40,6 +41,7 @@
 </logic:notEmpty>
 
 <logic:notEmpty name="thesis" property="coorientator">
+	<h4 class="mtop2 mbottom05"><bean:message key="title.public.thesis.section.orientation.coorientator"/></h4>
     <fr:view name="thesis" property="coorientator" schema="thesis.jury.proposal.person">
         <fr:layout name="tabular">
             <fr:property name="classes" value="tstyle2 thwhite thnowrap thlight thleft thtop ulnomargin width100pc"/>
