@@ -10,7 +10,7 @@ public abstract class AbstractPathProcessor {
     public static Map<String, AbstractPathProcessor> strategies = new HashMap<String, AbstractPathProcessor>();
     private final static String DEFAULT = "defaultType";
 
-    static {
+    protected synchronized static void initialize() {
         strategies.put("net.sourceforge.fenixedu.domain.homepage.Homepage", new HomePagePathProcessor());
         strategies.put("net.sourceforge.fenixedu.domain.ResearchUnitSite", new ResearchUnitPathProcessor());
         strategies.put("net.sourceforge.fenixedu.domain.ScientificCouncilSite", new ScientificCouncilPathProcessor());
@@ -41,6 +41,12 @@ public abstract class AbstractPathProcessor {
     public abstract Content processPath(String path);
 
     public static AbstractPathProcessor findStrategyFor(String type) {
+        synchronized (DEFAULT) {
+            if (strategies.isEmpty()) {
+                initialize();
+            }
+        }
+
         AbstractPathProcessor processor = strategies.get(type);
         return processor != null ? processor : strategies.get(DEFAULT);
     }

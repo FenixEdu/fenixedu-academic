@@ -116,7 +116,8 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         SupportRequestBean requestBean = new SupportRequestBean();
-        requestBean.setResponseEmail(getLoggedPerson(request).getInstitutionalOrDefaultEmailAddressValue());
+        final Person loggedPerson = getLoggedPerson(request);
+        requestBean.setResponseEmail(loggedPerson != null ? loggedPerson.getInstitutionalOrDefaultEmailAddressValue() : "");
         final String parameter = request.getParameter("contextId");
         if (parameter != null && !parameter.isEmpty()) {
             requestBean.setRequestContext(FenixFramework.<Content> getDomainObject(parameter));
