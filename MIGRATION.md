@@ -20,13 +20,15 @@ Before migrating to Fenix 2.x, you must first ensure that:
 
 1. Shut down the application before upgrading
 
-2. In this step, some information must be exported to a Json file, so it can be later imported into the new data structures of the application. Run the following script (from the scripts project at https://fenix-ashes.ist.utl.pt/open/trunk/scripts/ ):
+2. If your institutions used the 2nd cycle thesis features, then run the script pt.utl.ist.scripts.runOnce.thesis.CorrectThesisJuryWithOrientation (from the scripts project at https://fenix-ashes.ist.utl.pt/open/trunk/scripts/ ). Be sure to change the username in the script for whatever makes sense at your institution.
+
+3. In this step, some information must be exported to a Json file, so it can be later imported into the new data structures of the application. Run the following script (from the scripts project at https://fenix-ashes.ist.utl.pt/open/trunk/scripts/ ):
 
     `pt.utl.ist.scripts.runOnce.ExportUserPrivateKeys`
 
     This script will generate a file `keys.json`. Keep it around for later.
 
-3. Next, we will rename several of the existing infrastructural classes to their Bennu counterparts. Run the following SQL:
+4. Next, we will rename several of the existing infrastructural classes to their Bennu counterparts. Run the following SQL:
 
     ```sql
     -- RootDomainObject has been removed, Bennu is now used
@@ -72,9 +74,9 @@ Before migrating to Fenix 2.x, you must first ensure that:
     DELETE FROM ROLE WHERE ROLE_TYPE IN ('PROJECTS_MANAGER', 'INSTITUCIONAL_PROJECTS_MANAGER', 'IT_PROJECTS_MANAGER', 'ISTID_PROJECTS_MANAGER', 'ISTID_INSTITUCIONAL_PROJECTS_MANAGER', 'ADIST_PROJECTS_MANAGER', 'ADIST_INSTITUCIONAL_PROJECTS_MANAGER');
     ```
 
-4. Start your application, only one instance if possible, and shut it down once the start up finishes. The goal of this procedure is to allow the automatic bootstrap mechanisms to initialize the new data structures that will be populated in later steps. Note that it is crutial that the application be shut down ASAP to prevent inconsistent data.
+5. Start your application, only one instance if possible, and shut it down once the start up finishes. The goal of this procedure is to allow the automatic bootstrap mechanisms to initialize the new data structures that will be populated in later steps. Note that it is crutial that the application be shut down ASAP to prevent inconsistent data.
 
-5. With the application down, it is time to migrate the existing `File` instances to the new `GenericFile` hierarchy. Run the following SQL: (This step WILL take some time)
+6. With the application down, it is time to migrate the existing `File` instances to the new `GenericFile` hierarchy. Run the following SQL: (This step WILL take some time)
 
     ```sql
     -- Rename FILE, as File now extends GenericFile
@@ -86,11 +88,11 @@ Before migrating to Fenix 2.x, you must first ensure that:
     UPDATE GENERIC_FILE SET OID_STORAGE = (SELECT OID_D_SPACE_FILE_STORAGE FROM BENNU), CONTENT_KEY = EXTERNAL_STORAGE_IDENTIFICATION;
     ```
 
-6. You can now safely start you application. It is now time to import some data and perform initial configurations.
+7. You can now safely start you application. It is now time to import some data and perform initial configurations.
 
-7. Log in with a manager user. (The following steps assume that your installation has the core bennu UI modules).
+8. Log in with a manager user. (The following steps assume that your installation has the core bennu UI modules).
 
-8. Go to `https://<url>/bennu-scheduler-ui/index.html#custom`, and run the following script to import User's private keys. You should change the path to the `keys.json` file being read, so that the path points to the file created in step 2), and is acessible by the Application Server.
+9. Go to `https://<url>/bennu-scheduler-ui/index.html#custom`, and run the following script to import User's private keys. You should change the path to the `keys.json` file being read, so that the path points to the file created in step 2), and is acessible by the Application Server.
 
     ```java
     package pt.ist.fenix;
@@ -139,7 +141,7 @@ Before migrating to Fenix 2.x, you must first ensure that:
     }
     ```
 
-9. Still in the Custom Task view, run the following script, to fill out the user's expiration dates
+10. Still in the Custom Task view, run the following script, to fill out the user's expiration dates
 
     ```java
     package pt.ist.fenix;
@@ -167,13 +169,13 @@ Before migrating to Fenix 2.x, you must first ensure that:
     }
     ```
 
-10. Go to `https://<url>/bennu-io-ui/index.html` and configure the file storage that will be used for new files, and then, associate the file types with the desired storage.
+11. Go to `https://<url>/bennu-io-ui/index.html` and configure the file storage that will be used for new files, and then, associate the file types with the desired storage.
 
     Note that the provided `DSpaceFileStorage` is provided only as a legacy compatibility layer, and as such, it only allows reading from DSpace, and should NOT be used for new files.
 
-11. Go to `https://<url>/bennu-scheduler-ui/index.html` and configure the Schedules for the scripts that were previously run in Cron.
+12. Go to `https://<url>/bennu-scheduler-ui/index.html` and configure the Schedules for the scripts that were previously run in Cron.
 
-12. Your application should now be fully functional :)
+13. Your application should now be fully functional :)
 
 ## 1.1.0
  * Run etc/database_operations/run
