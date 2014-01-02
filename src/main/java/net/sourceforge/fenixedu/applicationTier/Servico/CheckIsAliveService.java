@@ -24,13 +24,13 @@ public class CheckIsAliveService {
     }
 
     private static void checkFenixDatabaseOps() {
-
-        final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-
-        if (executionYear == null || executionYear.getExternalId() == null) {
-            logger.error("Got a null result checking fenix database.");
-            throw new RuntimeException("Problems accesing fenix database! Got a null result.");
-        }
+//
+//        final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+//
+//        if (executionYear == null || executionYear.getExternalId() == null) {
+//            logger.error("Got a null result checking fenix database.");
+//            throw new RuntimeException("Problems accesing fenix database! Got a null result.");
+//        }
     }
 
 }

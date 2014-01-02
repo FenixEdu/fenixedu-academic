@@ -10175,7 +10175,7 @@ relation AdministrativeOfficeEvent {
 relation AdministrativeOfficeUnit {
     administrativeOffice.AdministrativeOffice playsRole administrativeOffice;
     organizationalStructure.Unit playsRole unit {
-    	multiplicity 1..1;
+    	multiplicity 0..1;
     }
 }
 

@@ -75,6 +75,7 @@ import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.Admi
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreements.DegreeCurricularPlanServiceAgreement;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
@@ -324,11 +325,11 @@ public class CreateTestData {
             final SchoolUnit institutionUnit = createSchoolUnit(universityUnit, process.schoolName, process.schoolAcronym);
             getRootDomainObject().setInstitutionUnit(institutionUnit);
             final AggregateUnit serviceUnits = createAggregateUnit(institutionUnit, "Services");
-            createServiceUnits(serviceUnits);
+            //createServiceUnits(serviceUnits);
             final AggregateUnit departmentUnits = createAggregateUnit(institutionUnit, "Departments");
-            createDepartmentUnits(departmentUnits);
+            //createDepartmentUnits(departmentUnits);
             final AggregateUnit degreeUnits = createAggregateUnit(institutionUnit, "Degrees");
-            createDegreeUnits(degreeUnits);
+            //createDegreeUnits(degreeUnits);
         }
 
         private CountryUnit getCountryUnit(final String countryUnitName) {

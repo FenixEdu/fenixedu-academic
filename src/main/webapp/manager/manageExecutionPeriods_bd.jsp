@@ -11,8 +11,6 @@
 <br />
 <br />
 
-
-<logic:present name="<%= PresentationConstants.LIST_EXECUTION_PERIODS %>" scope="request">
 	<%--
 	<html:form action="/createExecutionPeriodForm">
 		Criar Periodo Execução: 
@@ -52,6 +50,8 @@
 		</table>
 	</html:form>
  --%>
+
+<logic:present name="<%= PresentationConstants.LIST_EXECUTION_PERIODS %>" scope="request">
  
 	<bean:message bundle="MANAGER_RESOURCES" key="list.title.execution.periods" />
 	<br />

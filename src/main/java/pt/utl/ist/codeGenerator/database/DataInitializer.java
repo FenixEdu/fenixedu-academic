@@ -185,9 +185,10 @@ public class DataInitializer {
     }
 
     private static void createEmptyDegreeAndEmptyDegreeCurricularPlan() {
-        EmptyDegree.init();
-        EmptyDegree.getInstance().setAdministrativeOffice(CreateTestData.administrativeOffice);
-        EmptyDegreeCurricularPlan.init();
+//        EmptyDegree.init();
+//        EmptyDegree.getInstance().setAdministrativeOffice(CreateTestData.administrativeOffice);
+//        EmptyDegreeCurricularPlan.init();
+        
     }
 
     private static void createRoles() {

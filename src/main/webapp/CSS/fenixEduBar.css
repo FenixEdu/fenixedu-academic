@@ -41,9 +41,7 @@
 	color: #DDD;
 	text-decoration: none;
 }
-#fenixEduBar a:hover {
-	color: #00CCFF;
-}
+
 #fenixEduBar #institutionLogo {
 	float: left;
 	font-weight: normal;
@@ -78,7 +76,7 @@
 	text-transform: uppercase;
 	line-height: 12px;
 	font-size: 12px;
-	font-weight: bold;
+	
 
 	margin: 0px 0px;
 	

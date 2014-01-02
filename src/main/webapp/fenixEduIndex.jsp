@@ -1,4 +1,5 @@
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <html:html xhtml="true">
 <body>
@@ -10,6 +11,10 @@
 		<div id="logo">
 			<a href="#"><img src="images/newImage2012/logo-fenixedu.svg" /></a>
 		</div>
+		<center>
+		<a href="<%= request.getContextPath() + "/exceptionHandlingAction.do?method=prepareSupportHelp" %>" target="_blank">
+			<bean:message key="message.footer.help.support.form" bundle="GLOBAL_RESOURCES"/></a>
+		</center>
 	</div>
 	
 	<style type="text/css">

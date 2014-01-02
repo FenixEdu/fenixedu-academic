@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PlanetUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.SchoolUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificCouncilUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.SectionUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitClassification;
@@ -76,12 +77,7 @@ public class CreateUnit {
                         parentUnit, webAddress, classification, canBeResponsibleOfSpaces, campus);
 
             case ADMINISTRATIVE_OFFICE_UNIT:
-                AdministrativeOffice office = null;
-                if (administrativeOfficeID == null) {
-                    office = new AdministrativeOffice();
-                } else {
-                    office = FenixFramework.getDomainObject(administrativeOfficeID);
-                }
+                AdministrativeOffice office = FenixFramework.getDomainObject(administrativeOfficeID);
                 Unit unit =
                         Unit.createNewUnit(unitName, unitNameCard, costCenterCode, acronym, begin, end, parentUnit,
                                 accountabilityType, webAddress, classification, office, canBeResponsibleOfSpaces, campus);
@@ -110,6 +106,10 @@ public class CreateUnit {
 
             case MANAGEMENT_COUNCIL:
                 return ManagementCouncilUnit.createManagementCouncilUnit(unitName, unitNameCard, costCenterCode, acronym, begin,
+                        end, parentUnit, accountabilityType, webAddress, classification, canBeResponsibleOfSpaces, campus);
+                
+            case SCIENTIFIC_COUNCIL:
+                return ScientificCouncilUnit.createScientificCouncilUnit(unitName, unitNameCard, costCenterCode, acronym, begin,
                         end, parentUnit, accountabilityType, webAddress, classification, canBeResponsibleOfSpaces, campus);
             }
 

@@ -386,7 +386,12 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     static public ExecutionYear readCurrentExecutionYear() {
-        return ExecutionSemester.readActualExecutionSemester().getExecutionYear();
+        ExecutionSemester semester = ExecutionSemester.readActualExecutionSemester();
+        if (semester != null) {
+            return semester.getExecutionYear();
+        } else {
+            return null;
+        }
     }
 
     static transient private ExecutionYear startExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments = null;
@@ -405,8 +410,8 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 
     public static ExecutionYear readStartExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments() {
         startExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments =
-                readFromProperties(startExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments,
-                        FenixConfigurationManager.getConfiguration().getStartExecutionYearForAllOptionalCurricularCoursesWithLessTenEnrolments());
+                readFromProperties(startExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments, FenixConfigurationManager
+                        .getConfiguration().getStartExecutionYearForAllOptionalCurricularCoursesWithLessTenEnrolments());
         return startExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments;
     }
 

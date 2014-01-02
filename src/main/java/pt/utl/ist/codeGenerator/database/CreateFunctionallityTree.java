@@ -1839,6 +1839,13 @@ public class CreateFunctionallityTree {
                  x1238.addChild(x1239);
                  x1239.setNormalizedName(MultiLanguageString.importFromString("pt18:adicionar-entidade"));
                  x1239.setExecutionPath("/externalScholarshipProvider.do?method=add");
+             Module x12380 = new Module(MultiLanguageString.importFromString("pt19:Objectos Associados"),"/");
+             x914.addChild(x12380);
+             x12380.setNormalizedName(MultiLanguageString.importFromString("pt19:objectos-associados"));
+                Functionality x12370 = new Functionality(MultiLanguageString.importFromString("pt25:Gerir Objectos Associados"));
+                x12380.addChild(x12370);
+                x12370.setNormalizedName(MultiLanguageString.importFromString("pt25:gerir-objectos-associados"));
+                x12370.setExecutionPath("/manageAssociatedObjects.do?method=list");
            ExpressionGroupAvailability x1630 = new ExpressionGroupAvailability(x914, "role(MANAGER)");
            x1630.setTargetGroup(Group.fromString("role(MANAGER)"));
            x914.setAvailabilityPolicy(x1630);
@@ -3657,6 +3664,7 @@ public class CreateFunctionallityTree {
                  x101.setName(MultiLanguageString.importFromString("pt27:Gestão de Unidades e Cargos"));
                  x101.setNormalizedName(MultiLanguageString.importFromString("pt27:gestao-de-unidades-e-cargos"));
                  x101.setMaximizable(true);
+                    FunctionalityCall x112 = makeFunctionalityCall(x101, x920, "pt27:Gestão de Unidades e Cargos", null, null, null, "pt27:gestao-de-unidades-e-cargos");
                     FunctionalityCall x100 = makeFunctionalityCall(x101, x924, "pt23:Ver Detalhes de Unidade", null, null, null, "pt23:ver-detalhes-de-unidade");
                     FunctionalityCall x103 = makeFunctionalityCall(x101, x926, "pt14:Editar Unidade", null, null, null, "pt14:editar-unidade");
                     FunctionalityCall x104 = makeFunctionalityCall(x101, x927, "pt20:Escolher Unidade Pai", null, null, null, "pt20:escolher-unidade-pai");
@@ -3667,7 +3675,6 @@ public class CreateFunctionallityTree {
                     FunctionalityCall x109 = makeFunctionalityCall(x101, x932, "pt20:Escolher Unidade Pai", null, null, null, "pt20:escolher-unidade-pai");
                     FunctionalityCall x110 = makeFunctionalityCall(x101, x933, "pt18:Criar Nova Unidade", null, null, null, "pt18:criar-nova-unidade");
                     FunctionalityCall x111 = makeFunctionalityCall(x101, x934, "pt21:Criar Nova SubUnidade", null, null, null, "pt21:criar-nova-subunidade");
-                    FunctionalityCall x112 = makeFunctionalityCall(x101, x920, "pt27:Gestão de Unidades e Cargos", null, null, null, "pt27:gestao-de-unidades-e-cargos");
                  FunctionalityCall x114 = makeFunctionalityCall(x102, x922, "pt26:Merge de Unidades Externas", null, null, null, "pt26:merge-de-unidades-externas");
                  FunctionalityCall x115 = makeFunctionalityCall(x102, x923, "en20:Unit Site Managementpt26:Gestão de Sites de Unidade", null, null, null, "en20:unit-site-managementpt26:gestao-de-sites-de-unidade");
               Section x122 = new Section(x96, MultiLanguageString.importFromString("pt29:Gestão da Estrutura de Ensino"));
@@ -4046,6 +4053,10 @@ public class CreateFunctionallityTree {
               x415.setNormalizedName(MultiLanguageString.importFromString("pt15:bolsas-externas"));
                  FunctionalityCall x414 = makeFunctionalityCall(x415, x1237, "pt16:Listar Entidades", null, null, null, "pt16:listar-entidades");
                  FunctionalityCall x416 = makeFunctionalityCall(x415, x1239, "pt18:Adicionar Entidade", null, null, null, "pt18:adicionar-entidade");
+              Section x4150 = new Section(x96, MultiLanguageString.importFromString("pt15:Bolsas Externas"));
+              x4150.setName(MultiLanguageString.importFromString("pt19:Objectos Associados"));
+              x4150.setNormalizedName(MultiLanguageString.importFromString("pt19:objectos-associados"));
+                 FunctionalityCall x4140 = makeFunctionalityCall(x4150, x12370, "pt25:Gerir Objectos Associados", null, null, null, "pt25:gerir-objectos-associados");
            ExpressionGroupAvailability x1694 = new ExpressionGroupAvailability(x96, "role(MANAGER)");
            x1694.setTargetGroup(Group.fromString("role(MANAGER)"));
            x96.setAvailabilityPolicy(x1694);
