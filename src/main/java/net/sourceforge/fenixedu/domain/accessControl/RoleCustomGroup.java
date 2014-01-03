@@ -12,8 +12,6 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.groups.Group;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixframework.Atomic;
-
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.base.Supplier;
@@ -100,7 +98,6 @@ public class RoleCustomGroup extends RoleCustomGroup_Base {
         }));
     }
 
-    @Atomic
     public static RoleCustomGroup getInstance(final Role role) {
         return select(RoleCustomGroup.class, new Predicate<RoleCustomGroup>() {
             @Override
