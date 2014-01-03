@@ -9,8 +9,7 @@ import java.util.MissingResourceException;
 
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.CurricularYear;
-import net.sourceforge.fenixedu.domain.EmptyDegree;
-import net.sourceforge.fenixedu.domain.EmptyDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Instalation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ResourceAllocationRole;
 import net.sourceforge.fenixedu.domain.Role;
@@ -40,28 +39,61 @@ import pt.utl.ist.codeGenerator.database.CreateTestData.CreateOrganizationalStru
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
-public class DataInitializer {
+public class Installer {
 
     final static Locale PT = new Locale("pt");
     final static Locale EN = new Locale("en");
 
     public static class InstallationProcess {
+        public InstallationProcess(String countryCode, String adminName, String adminUsername, String adminPass,
+                String universityName, String universityAcronym, String schoolName, String schoolAcronym, String email,
+                String instituitionURL, String instituitionEmailDomain, String instalationName, String instalationDomain) {
+            super();
+            this.countryCode = countryCode;
+            
+            Country country = Planet.getEarth().getByAlfa3(countryCode);
+            if (country == null) {
+                throw new RuntimeException("Country with code " + countryCode + " does not exist." );
+            }
+
+            this.adminName = adminName;
+            this.adminUsername = adminUsername;
+            this.adminPass = adminPass;
+            this.universityName = universityName;
+            this.universityAcronym = universityAcronym;
+            this.schoolName = schoolName;
+            this.schoolAcronym = schoolAcronym;
+            this.email = email;
+            this.instituitionURL = instituitionURL;
+            this.instituitionEmailDomain = instituitionEmailDomain;
+            this.instalationName = instalationName;
+            this.instalationDomain = instalationDomain;
+        }
+
+        public InstallationProcess() {
+            // TODO Auto-generated constructor stub
+        }
+
         public String countryCode;
-        public Country country;
+        protected Country country;
 
         public String adminName;
         public String adminUsername;
         public String adminPass;
-        public Person person;
-        
+        protected Person person;
+
         public String universityName;
         public String universityAcronym;
-        
+
         public String schoolName;
         public String schoolAcronym;
         public String email;
-        
-       
+
+        public String instituitionURL;
+        protected String instituitionDomain;
+        public String instituitionEmailDomain;
+        public String instalationName;
+        public String instalationDomain;
     }
 
     private static String readValue(String prompt, String def) {
@@ -89,18 +121,17 @@ public class DataInitializer {
 
     private static String readPassword(String prompt) {
         Console console = System.console();
-        
-        System.out.print(prompt +  ": ");
+
+        System.out.print(prompt + ": ");
         char[] passwordChars = console.readPassword();
 
         return new String(passwordChars);
     }
 
-    public static final Logger logger = LoggerFactory.getLogger(DataInitializer.class);
+    public static final Logger logger = LoggerFactory.getLogger(Installer.class);
 
     public static void main(String[] args) {
         initialize();
-        System.out.println("Initialization complete.");
         System.exit(0);
     }
 
@@ -120,14 +151,17 @@ public class DataInitializer {
         System.out.println("              .       .       .                                               ");
         System.out.println("                                                                              ");
         System.out.println("##############################################################################");
-        System.out.println("");
 
         InstallationProcess process = new InstallationProcess();
-        
+
+        System.out.println("");
+        System.out.println("This process will guide you in installing FenixEdu in your School.");
+        System.out.println("First in what country are you at?");
+
         Language.setDefaultLocale(Locale.getDefault());
         while (true) {
             String countryCode = readValue("Country (Three Letter ISO 3166-1)", "USA").toUpperCase();
-            
+
             pt.ist.standards.geographic.Country country = Planet.getEarth().getByAlfa3(countryCode);
             if (country != null) {
                 System.out.println("Using " + country.getLocalizedName(EN));
@@ -137,29 +171,52 @@ public class DataInitializer {
                 System.out.println("There isn't a country with '" + countryCode + "' code.");
             }
         }
-        
-        
+
+        System.out.println("");
+        System.out.println("Let's setup your school. You need to set up your university and school name.");
+
         process.universityName = readValue("University Name", "Example University");
         process.universityAcronym = readValue("University Acronym", "EU");
         process.schoolName = readValue("School Name", "Example Engineering School");
         process.schoolAcronym = readValue("School Acronym", "EES");
 
+        System.out.println("");
+        System.out.println("Next we need to setup the domain information about your applicatinos.");
+        process.instituitionDomain = readValue("School Domain", "ees.example.edu");
+        process.instituitionURL = readValue("School URL", "http://" + process.instituitionDomain);
+        process.instituitionEmailDomain = readValue("School Email Domain", process.instituitionDomain);
+        process.instalationName = readValue("Installation Name", process.schoolAcronym + " FenixEdu");
+        process.instalationDomain = readValue("Installation Domain", "fenixedu." + process.instituitionDomain);
+
+        System.out.println("");
+        System.out.println("Now we need to create an administrator account.");
         process.adminUsername = readValue("Username", System.getProperty("user.name"));
         process.adminName = readValue("Name", "FenixEdu Administrator");
-        process.email = readValue("Email", process.adminUsername + "@example.edu");
+        process.email = readValue("Email", process.adminUsername + "@" + process.instituitionEmailDomain);
+
         String password = null;
-        while(true){
+        while (true) {
             password = readPassword("Password");
+            if (password.equals("")) {
+                System.out.println("Error: Empty password not allowed.\n");
+                continue;
+            }
             String password2 = readPassword("Password (again)");
-            if (!password.equals(password2)){
+            if (!password.equals(password2)) {
                 System.out.println("Error: Passwords do not match.\n");
-            }else{
+            } else {
                 break;
             }
         }
-        
-        process.adminPass = password;
 
+        process.adminPass = password;
+        System.out.println("");
+        System.out.println("Starting install process...");
+        installFenixEdu(process);
+        System.out.println("Installation Complete.");
+    }
+
+    public static void installFenixEdu(InstallationProcess process) {
         createRoles();
         createManagerUser(process);
         createPartyTypeEnums();
@@ -182,13 +239,18 @@ public class DataInitializer {
 
         createEmptyDegreeAndEmptyDegreeCurricularPlan();
         CreateFunctionallityTree.doIt();
+        Instalation inst = new Instalation();
+        inst.setInstalationDomain(process.instalationDomain);
+        inst.setInstalationName(process.instalationName);
+        inst.setInstituitionEmailDomain(process.instituitionEmailDomain);
+        inst.setInstituitionURL(process.instituitionURL);
     }
 
     private static void createEmptyDegreeAndEmptyDegreeCurricularPlan() {
 //        EmptyDegree.init();
 //        EmptyDegree.getInstance().setAdministrativeOffice(CreateTestData.administrativeOffice);
 //        EmptyDegreeCurricularPlan.init();
-        
+
     }
 
     private static void createRoles() {
@@ -257,66 +319,68 @@ public class DataInitializer {
 
     private static void createCountries(InstallationProcess process) {
         Country defaultCountry = null;
-        for (pt.ist.standards.geographic.Country metaData : Planet.getEarth().getPlaces()) {            
-            String localizedNamePT=null;
+        for (pt.ist.standards.geographic.Country metaData : Planet.getEarth().getPlaces()) {
+            String localizedNamePT = null;
             try {
                 localizedNamePT = metaData.getLocalizedName(PT);
-            } catch (MissingResourceException e) {}
-            
-            String localizedNameEN = null; 
+            } catch (MissingResourceException e) {
+            }
+
+            String localizedNameEN = null;
             try {
                 localizedNameEN = metaData.getLocalizedName(EN);
-            } catch (MissingResourceException e) {}
-            
-            
-            if (localizedNameEN == null && localizedNamePT == null){
+            } catch (MissingResourceException e) {
+            }
+
+            if (localizedNameEN == null && localizedNamePT == null) {
                 continue;
             }
-            
-            if (localizedNamePT == null){
+
+            if (localizedNamePT == null) {
                 localizedNamePT = localizedNameEN;
             }
-            
-            if (localizedNameEN == null){
+
+            if (localizedNameEN == null) {
                 localizedNameEN = localizedNamePT;
             }
             String nationalityPT = null;
             try {
                 nationalityPT = metaData.getNationality(PT);
-            } catch (MissingResourceException e) {}
-            
+            } catch (MissingResourceException e) {
+            }
+
             String nationalityEN = null;
             try {
                 nationalityEN = metaData.getNationality(EN);
-            } catch (MissingResourceException e) {}
-            
-            if (nationalityPT == null){
-                if (nationalityEN == null){
+            } catch (MissingResourceException e) {
+            }
+
+            if (nationalityPT == null) {
+                if (nationalityEN == null) {
                     nationalityPT = localizedNamePT;
-                }else{
-                    nationalityPT = nationalityEN;                    
+                } else {
+                    nationalityPT = nationalityEN;
                 }
             }
-            
-            if (nationalityEN == null){
-                if (nationalityPT == null){
+
+            if (nationalityEN == null) {
+                if (nationalityPT == null) {
                     nationalityEN = localizedNameEN;
-                }else{
-                    nationalityEN = nationalityPT;                    
+                } else {
+                    nationalityEN = nationalityPT;
                 }
             }
-            
+
             final MultiLanguageString countryName = new MultiLanguageString(Language.pt, localizedNamePT);
             countryName.append(new MultiLanguageString(Language.en, localizedNameEN));
 
             final String code = metaData.alpha2;
             final String threeLetterCode = metaData.alpha3;
-            
+
             final Country country =
-                    new Country(countryName,
-                            new MultiLanguageString(Language.pt, nationalityPT).append(new MultiLanguageString(
-                                    Language.en, nationalityEN)), code, threeLetterCode);
-            if (threeLetterCode.equals(process.countryCode)){
+                    new Country(countryName, new MultiLanguageString(Language.pt, nationalityPT).append(new MultiLanguageString(
+                            Language.en, nationalityEN)), code, threeLetterCode);
+            if (threeLetterCode.equals(process.countryCode)) {
                 defaultCountry = country;
             }
         }
@@ -337,13 +401,13 @@ public class DataInitializer {
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.PERSON));
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL));
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.MANAGER));
-        
+
         person.setRootDomainObject(bennu);
         person.setCountry(process.country);
         person.setCountryOfBirth(process.country);
         user.setPassword(process.adminPass);
         process.person = person;
-        
+
         EmailAddress.createEmailAddress(person, process.email, PartyContactType.PERSONAL, true, true, true, true, true, true);
         for (PartyContact partyContact : person.getPartyContactsSet()) {
             partyContact.setValid();

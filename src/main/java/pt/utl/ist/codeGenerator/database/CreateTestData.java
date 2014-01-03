@@ -144,7 +144,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
-import pt.utl.ist.codeGenerator.database.DataInitializer.InstallationProcess;
+import pt.utl.ist.codeGenerator.database.Installer.InstallationProcess;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
