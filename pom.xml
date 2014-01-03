@@ -332,6 +332,11 @@
 			<artifactId>jersey-multipart</artifactId>
 			<version>1.14</version>
 		</dependency>
+        <dependency>
+            <groupId>pt.ist</groupId>
+            <artifactId>html-entities</artifactId>
+            <version>1.0</version>
+        </dependency>
 		<dependency>
 			<groupId>pt.ist</groupId>
 			<artifactId>standards</artifactId>
