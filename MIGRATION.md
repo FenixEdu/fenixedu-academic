@@ -170,13 +170,38 @@ Before migrating to Fenix 2.x, you must first ensure that:
     }
     ```
 
-11. Go to `https://<url>/bennu-io-ui/index.html` and configure the file storage that will be used for new files, and then, associate the file types with the desired storage.
+11. Also, run the following script to initilize the Instalation object
+
+	```java
+	package pt.ist.fenix;
+
+	import org.fenixedu.bennu.core.domain.Bennu;
+	import org.fenixedu.bennu.scheduler.custom.CustomTask;
+
+	public class InstalationInitialization extends CustomTask {
+		private static String DEFAULT_INSTALATION_DOMAIN = "ist.utl.pt";
+		private static String DEFAULT_INSTALATION_NAME = ".IST";
+		private static String DEFAULT_INSTALATION_URL = "http://www.ist.utl.pt/";
+
+		@Override
+		public void runTask() throws Exception {
+			Instalation instalation = Bennu.getInstance().getInstalation();
+			instalation.setInstalationDomain(DEFAULT_INSTALATION_DOMAIN);
+			instalation.setInstalationName(DEFAULT_INSTALATION_NAME);
+			instalation.setInstituitionEmailDomain(DEFAULT_INSTALATION_DOMAIN);
+			instalation.setInstituitionURL(DEFAULT_INSTALATION_URL);
+			taskLog("The Instalation has been initialized with specific IST values");
+		}
+	}
+	```
+
+12. Go to `https://<url>/bennu-io-ui/index.html` and configure the file storage that will be used for new files, and then, associate the file types with the desired storage.
 
     Note that the provided `DSpaceFileStorage` is provided only as a legacy compatibility layer, and as such, it only allows reading from DSpace, and should NOT be used for new files.
 
-12. Go to `https://<url>/bennu-scheduler-ui/index.html` and configure the Schedules for the scripts that were previously run in Cron.
+13. Go to `https://<url>/bennu-scheduler-ui/index.html` and configure the Schedules for the scripts that were previously run in Cron.
 
-13. Your application should now be fully functional :)
+14. Your application should now be fully functional :)
 
 ## 1.1.0
  * Run etc/database_operations/run
@@ -184,3 +209,5 @@ Before migrating to Fenix 2.x, you must first ensure that:
 ## 1.2.0
  * Run etc/database_operations/run
  * Run script : ChangeEveryoneGroupFilesToPrivateScript
+
+
