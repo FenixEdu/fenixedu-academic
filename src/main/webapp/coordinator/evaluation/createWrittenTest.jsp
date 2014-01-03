@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
 <ft:tilesView definition="df.coordinator.evaluation-management" attributeName="body-inline">
-	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
+	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 	
 	<h:outputFormat value="<h2>#{bundle['title.evaluation.create.writtenEvaluation']}</h2>" escape="false">

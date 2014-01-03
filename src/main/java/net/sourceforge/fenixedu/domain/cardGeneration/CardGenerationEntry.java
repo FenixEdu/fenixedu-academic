@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -26,8 +25,9 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
-import net.sourceforge.fenixedu.util.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -54,11 +54,11 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 
     public CardGenerationEntry() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public static CardGenerationEntry readByEntityCodeAndCategoryCodeAndMemberNumber(final String subline) {
-        for (final CardGenerationEntry cardGenerationEntry : RootDomainObject.getInstance().getCardGenerationEntries()) {
+        for (final CardGenerationEntry cardGenerationEntry : Bennu.getInstance().getCardGenerationEntriesSet()) {
             if (cardGenerationEntry.getEntityCodeAndCategoryCodeAndMemberNumber().equals(subline)) {
                 return cardGenerationEntry;
             }
@@ -544,7 +544,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
     }
 
     public static CardGenerationEntry readCardByCGDIdentifier(String identifier) {
-        for (CardGenerationEntry cardEntry : RootDomainObject.getInstance().getCardGenerationEntriesSet()) {
+        for (CardGenerationEntry cardEntry : Bennu.getInstance().getCardGenerationEntriesSet()) {
             if (cardEntry.getCgdIdentifier().equals(identifier)) {
                 return cardEntry;
             }
@@ -831,7 +831,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

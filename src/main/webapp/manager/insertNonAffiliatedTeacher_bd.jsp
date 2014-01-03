@@ -15,7 +15,7 @@
 			</td>	
 	</tr>
 	<tr>
-      		<h2><bean:message bundle="MANAGER_RESOURCES" key="message.insert.professorShip.nonAffiliatedTeacher" /></h2>
+      		<h2><bean:message bundle="MANAGER_RESOURCES" key="message.insert.professorShip.nonAffiliatedTeacher" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" /></h2>
 	</tr>
 </table>
 
@@ -70,7 +70,7 @@
 	</logic:notEmpty>
 	
 	<br/>
-	<h3><bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.new.nonAffiliated.teacher"/></h3>
+	<h3><bean:message bundle="MANAGER_RESOURCES" key="label.manager.insert.new.nonAffiliated.teacher" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/></h3>
 
 	<table cellpadding="5">
 		<tr>

@@ -10,8 +10,8 @@ import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementCategory;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementCategoryType;
 import net.sourceforge.fenixedu.domain.space.Campus;
-import net.sourceforge.fenixedu.util.HostAccessControl;
-import net.sourceforge.fenixedu.util.StringUtils;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
+import org.apache.commons.lang.StringUtils;
 import net.sourceforge.fenixedu.webServices.exceptions.NotAuthorizedException;
 
 import org.codehaus.xfire.MessageContext;
@@ -135,7 +135,8 @@ public class AnnouncementManagement implements IAnnouncementManagement {
 
     private void checkPermissions(MessageContext context) throws NotAuthorizedException {
         // check hosts accessing this service
-        if (!HostAccessControl.isAllowed(this, (ServletRequest) context.getProperty("XFireServletController.httpServletRequest"))) {
+        if (!FenixConfigurationManager.getHostAccessControl().isAllowed(this,
+                (ServletRequest) context.getProperty("XFireServletController.httpServletRequest"))) {
             throw new NotAuthorizedException();
         }
     }

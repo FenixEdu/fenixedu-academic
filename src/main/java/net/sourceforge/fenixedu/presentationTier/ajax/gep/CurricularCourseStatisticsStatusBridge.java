@@ -8,8 +8,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import pt.ist.fenixWebFramework.security.UserView;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -17,14 +17,14 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 public class CurricularCourseStatisticsStatusBridge {
 
-    public static Map<IUserView, Collection<String>> processedDegreeCurricularPlans =
-            new HashMap<IUserView, Collection<String>>();
+    public static Map<User, Collection<String>> processedDegreeCurricularPlans =
+            new HashMap<User, Collection<String>>();
 
-    public static Map<IUserView, Collection<String>> processingDegreeCurricularPlans =
-            new HashMap<IUserView, Collection<String>>();
+    public static Map<User, Collection<String>> processingDegreeCurricularPlans =
+            new HashMap<User, Collection<String>>();
 
-    public static Map<IUserView, Collection<String>> toProcessDegreeCurricularPlans =
-            new HashMap<IUserView, Collection<String>>();
+    public static Map<User, Collection<String>> toProcessDegreeCurricularPlans =
+            new HashMap<User, Collection<String>>();
 
     public static Collection<String> readProcessedDegreeCurricularPlans() {
         Collection<String> degreeCurricularPlans = processedDegreeCurricularPlans.get(getUserVIew());
@@ -41,8 +41,8 @@ public class CurricularCourseStatisticsStatusBridge {
         return (degreeCurricularPlans != null) ? degreeCurricularPlans : new ArrayList<String>();
     }
 
-    private static IUserView getUserVIew() {
-        return UserView.getUser();
+    private static User getUserVIew() {
+        return Authenticate.getUser();
     }
 
 }

@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.contents.Attachment;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode;
@@ -40,7 +42,7 @@ public class Item extends Item_Base {
     protected Item() {
         super();
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public Item(Section section, MultiLanguageString name) {

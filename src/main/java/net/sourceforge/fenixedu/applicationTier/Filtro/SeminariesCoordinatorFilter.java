@@ -2,7 +2,9 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy;
@@ -15,7 +17,7 @@ public class SeminariesCoordinatorFilter {
     public static final SeminariesCoordinatorFilter instance = new SeminariesCoordinatorFilter();
 
     public void execute(String executionDegreeCode, String studentCurricularPlanID) throws NotAuthorizedException {
-        IUserView id = AccessControl.getUserView();
+        User id = Authenticate.getUser();
         String SCPIDINternal = studentCurricularPlanID;
 
         boolean seminaryCandidate = false;
@@ -23,8 +25,9 @@ public class SeminariesCoordinatorFilter {
             seminaryCandidate = this.doesThisSCPBelongToASeminaryCandidate(SCPIDINternal);
         }
 
-        if (((id != null && id.getRoleTypes() != null && !(id.hasRoleType(RoleType.SEMINARIES_COORDINATOR) && seminaryCandidate)))
-                || (id == null) || (id.getRoleTypes() == null)) {
+        if (((id != null && id.getPerson().getPersonRolesSet() != null && !(id.getPerson().hasRole(
+                RoleType.SEMINARIES_COORDINATOR) && seminaryCandidate)))
+                || (id == null) || (id.getPerson().getPersonRolesSet() == null)) {
             throw new NotAuthorizedException();
         }
     }

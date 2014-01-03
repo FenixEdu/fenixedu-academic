@@ -13,14 +13,14 @@
 					<tr>
 						<td width="50" height="100"><img
 							src="<%= request.getContextPath() %>/images/LogoIST.gif"
-							alt="<bean:message key="istlogo" bundle="IMAGE_RESOURCES" />"
+							alt="<bean:message key="istlogo" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="IMAGE_RESOURCES" />"
 							width="50" height="104" border="0" /></td>
 						<td>&nbsp;</td>
 						<td>
 						<table border="0" width="100%" height="100%">
 							<tr valign="top" align="left">
 								<td>&nbsp;<b>INSTITUTO SUPERIOR T�CNICO</b><br />
-								&nbsp;<b>Centro de Inform�tica do Instituto Superior T�cnico</b><br />
+								&nbsp;<b>Centro de Informática do <%= net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent() %></b><br />
 								<hr size="1">
 								</td>
 							</tr>

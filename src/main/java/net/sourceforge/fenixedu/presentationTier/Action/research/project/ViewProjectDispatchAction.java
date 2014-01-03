@@ -29,7 +29,7 @@ public class ViewProjectDispatchAction extends FenixDispatchAction {
 
         final String oid = request.getParameter("projectId");
 
-        for (Project project : rootDomainObject.getProjects()) {
+        for (Project project : rootDomainObject.getProjectsSet()) {
             if (project.getExternalId().equals(oid)) {
                 request.setAttribute("selectedProject", project);
                 List<ProjectParticipation> participations = new ArrayList<ProjectParticipation>();
@@ -42,7 +42,7 @@ public class ViewProjectDispatchAction extends FenixDispatchAction {
             }
         }
 
-        for (Project project : rootDomainObject.getProjects()) {
+        for (Project project : rootDomainObject.getProjectsSet()) {
             if (project.getExternalId().equals(oid)) {
                 request.setAttribute("selectedProject", project);
                 List<ProjectParticipation> unitParticipations = new ArrayList<ProjectParticipation>();

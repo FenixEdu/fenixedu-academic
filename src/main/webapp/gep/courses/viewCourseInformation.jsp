@@ -159,7 +159,7 @@
 	<bean:message key="message.courseInformation.LecturingTeachers" /></p>
 	<bean:message key="message.courseInformation.numberOfStudents"/>:
 	<bean:write name="infoSiteCourseInformation" property="infoExecutionCourse.numberOfAttendingStudents"/>
-	<p><bean:message key="message.courseInformation.specialTeacherWarning"/></p>
+	<p><bean:message key="message.courseInformation.specialTeacherWarning" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/></p>
 	<table width="98%" border="0" cellspacing="1" style="margin-top:10px">
 		<tr>
 			<th class="listClasses-header"> <bean:message key="message.courseInformation.nameOfTeacher"/></th>

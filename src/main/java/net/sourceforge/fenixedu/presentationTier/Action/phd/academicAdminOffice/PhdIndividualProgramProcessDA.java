@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.JobBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.QualificationBean;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -113,6 +112,8 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -235,7 +236,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
         predicate.add(new Predicate<PhdIndividualProgramProcess>() {
             @Override
             public boolean eval(PhdIndividualProgramProcess process) {
-                return process.isAllowedToManageProcess(AccessControl.getUserView());
+                return process.isAllowedToManageProcess(Authenticate.getUser());
             }
         });
 
@@ -1330,7 +1331,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     }
 
     private PhdMigrationIndividualProcessData getMigrationProcessData(Integer migrationId) {
-        for (final PhdMigrationProcess migrationProcess : RootDomainObject.getInstance().getPhdMigrationProcesses()) {
+        for (final PhdMigrationProcess migrationProcess : Bennu.getInstance().getPhdMigrationProcessesSet()) {
             for (final PhdMigrationIndividualProcessData processData : migrationProcess.getPhdMigrationIndividualProcessData()) {
                 if (processData.getNumber().equals(migrationId)) {
                     return processData;
@@ -1342,7 +1343,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     }
 
     private PhdMigrationGuiding getMigrationGuidingData(String teacherCode) {
-        for (final PhdMigrationProcess migrationProcess : RootDomainObject.getInstance().getPhdMigrationProcesses()) {
+        for (final PhdMigrationProcess migrationProcess : Bennu.getInstance().getPhdMigrationProcessesSet()) {
             for (final PhdMigrationGuiding guidingData : migrationProcess.getPhdMigrationGuiding()) {
                 if (guidingData.getTeacherNumber().equals(teacherCode)) {
                     return guidingData;
@@ -1452,7 +1453,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
         processData.getPhdMigrationIndividualPersonalData().setPersonalBean(personalDataBean);
 
         try {
-            processData.proceedWithMigration(AccessControl.getUserView());
+            processData.proceedWithMigration(Authenticate.getUser());
             addSuccessMessage(request, "message.migration.manual.candidacy.success");
         } catch (PhdMigrationException e) {
             addErrorMessage(request, e.getKey());

@@ -6,7 +6,7 @@
 
 <ft:tilesView definition="df.page.structure" attributeName="body-inline">
 
-<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
+<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 <f:loadBundle basename="resources/MessagingResources" var="messagingResources"/>
 	
 <h:form>

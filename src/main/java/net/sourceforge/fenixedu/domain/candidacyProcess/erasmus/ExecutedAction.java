@@ -2,10 +2,10 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
 
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 public class ExecutedAction extends ExecutedAction_Base {
@@ -20,7 +20,7 @@ public class ExecutedAction extends ExecutedAction_Base {
 
     protected ExecutedAction() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
 
         setWhoMade(AccessControl.getPerson());
         setWhenOccured(new DateTime());
@@ -40,7 +40,7 @@ public class ExecutedAction extends ExecutedAction_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

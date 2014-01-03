@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class CandidacyProcessDocumentUploadBean implements Serializable {
@@ -89,7 +90,7 @@ public class CandidacyProcessDocumentUploadBean implements Serializable {
 
     protected static final int MAX_FILE_SIZE = 3698688;
 
-    public IndividualCandidacyDocumentFile createIndividualCandidacyDocumentFile(Class<? extends CandidacyProcess> processType,
+    public IndividualCandidacyDocumentFile createIndividualCandidacyDocumentFile(Class<? extends Process> processType,
             String documentIdNumber) throws IOException {
         String fileName = this.getFileName();
         long fileLength = this.getFileSize();

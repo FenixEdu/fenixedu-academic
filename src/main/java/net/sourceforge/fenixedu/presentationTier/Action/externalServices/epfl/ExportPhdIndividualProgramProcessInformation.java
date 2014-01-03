@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.externalServices.epfl;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.Locale;
 import java.util.Set;
 
@@ -8,17 +9,13 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.ExternalUser;
 import net.sourceforge.fenixedu.domain.Photograph;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessNumber;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.person.RetrievePersonalPhotoAction;
 
@@ -26,8 +23,11 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.commons.i18n.I18N;
 
-import pt.ist.fenixWebFramework.servlets.filters.I18NFilter;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -37,7 +37,8 @@ public class ExportPhdIndividualProgramProcessInformation extends FenixAction {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        I18NFilter.setLocale(request, request.getSession(), Locale.ENGLISH);
+        setLocale(request, Locale.ENGLISH);
+        I18N.setLocale(request.getSession(), Locale.ENGLISH);
 
         final ActionForward actionForward = checkPermissions(request, response);
         if (actionForward == null) {
@@ -102,7 +103,7 @@ public class ExportPhdIndividualProgramProcessInformation extends FenixAction {
 
     private void exportInformationXml(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
         response.addHeader("Content-Disposition", "attachment; filename=epfl.xml");
-        response.setContentType(PropertiesManager.DEFAULT_CHARSET);
+        response.setContentType(Charset.defaultCharset().name());
         final byte[] content = ExportEPFLPhdProgramCandidacies.run();
         writeResponse(response, content, "application/xml");
     }
@@ -117,7 +118,7 @@ public class ExportPhdIndividualProgramProcessInformation extends FenixAction {
 
     private ActionForward checkPermissions(final HttpServletRequest request, final HttpServletResponse response)
             throws IOException {
-        final IUserView userView = AccessControl.getUserView();
+        final User userView = Authenticate.getUser();
         if (userView == null) {
             final String externalUser = (String) request.getSession().getAttribute(getClass().getName());
             if (externalUser != null && !externalUser.isEmpty()) {
@@ -132,7 +133,7 @@ public class ExportPhdIndividualProgramProcessInformation extends FenixAction {
                 request.getSession().setAttribute(getClass().getName(), username);
                 return null;
             }
-        } else if (userView.hasRoleType(RoleType.MANAGER)) {
+        } else if (userView.getPerson().hasRole(RoleType.MANAGER)) {
             return null;
         }
         return displayUnAuhtorizedPage(request, response);
@@ -149,7 +150,7 @@ public class ExportPhdIndividualProgramProcessInformation extends FenixAction {
     }
 
     private boolean isValidExternalUserPassword(final String username, final String password) {
-        for (final ExternalUser externalUser : RootDomainObject.getInstance().getExternalUserSet()) {
+        for (final ExternalUser externalUser : Bennu.getInstance().getExternalUserSet()) {
             if (externalUser.verify(username, password)) {
                 return true;
             }

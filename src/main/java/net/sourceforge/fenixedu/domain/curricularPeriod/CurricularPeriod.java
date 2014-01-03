@@ -8,10 +8,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -33,7 +34,7 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
 
     public CurricularPeriod(AcademicPeriod academicPeriod) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setAcademicPeriod(academicPeriod);
     }
 
@@ -348,7 +349,7 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.internship;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.Interval;
 
 import pt.ist.fenixframework.Atomic;
@@ -10,7 +9,7 @@ public class InternshipCandidacySession extends InternshipCandidacySession_Base 
     public InternshipCandidacySession(Interval interval) {
         super();
         setCandidacyInterval(interval);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     /**
@@ -32,7 +31,7 @@ public class InternshipCandidacySession extends InternshipCandidacySession_Base 
 
     public static InternshipCandidacySession getMostRecentCandidacySession() {
         InternshipCandidacySession current = null;
-        for (InternshipCandidacySession session : RootDomainObject.getInstance().getInternshipCandidacySessionSet()) {
+        for (InternshipCandidacySession session : Bennu.getInstance().getInternshipCandidacySessionSet()) {
             if (current == null || session.getCandidacyInterval().isAfter(current.getCandidacyInterval())) {
                 current = session;
             }
@@ -70,7 +69,7 @@ public class InternshipCandidacySession extends InternshipCandidacySession_Base 
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

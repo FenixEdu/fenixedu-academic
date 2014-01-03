@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.tests.NewModelGroup;
 import net.sourceforge.fenixedu.domain.tests.NewTestModel;
@@ -17,7 +19,7 @@ public class BagsForTeacher implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        IUserView userView = AccessControl.getUserView();
+        User userView = Authenticate.getUser();
         Teacher teacher = userView.getPerson().getTeacher();
         Collection<NewTestModel> testModels = teacher.getTestModels();
         List<NewModelGroup> modelGroups = new ArrayList<NewModelGroup>();

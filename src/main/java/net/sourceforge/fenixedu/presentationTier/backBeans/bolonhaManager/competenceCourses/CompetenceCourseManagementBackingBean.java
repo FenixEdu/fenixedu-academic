@@ -15,7 +15,6 @@ import javax.faces.component.UISelectItems;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateCompetenceCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.DeleteCompetenceCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditCompetenceCourse;
@@ -28,7 +27,6 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CompetenceCourseType;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.DepartmentSite;
-import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -52,10 +50,12 @@ import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.BundleUtil;
-import net.sourceforge.fenixedu.util.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -125,7 +125,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public Department getPersonDepartment() {
-        final IUserView userView = getUserView();
+        final User userView = getUserView();
         final Person person = userView == null ? null : userView.getPerson();
         final Employee employee = person == null ? null : person.getEmployee();
         return employee == null ? null : employee.getCurrentDepartmentWorkingPlace();
@@ -926,8 +926,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     private List<SelectItem> readDepartmentUnitLabels() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        for (final Object departmentObject : DomainObjectUtil.readAllDomainObjects(Department.class)) {
-            DepartmentUnit departmentUnit = ((Department) departmentObject).getDepartmentUnit();
+        for (final Department departmentObject : Bennu.getInstance().getDepartmentsSet()) {
+            DepartmentUnit departmentUnit = departmentObject.getDepartmentUnit();
             if (departmentUnit.isActive(getExecutionSemester().getBeginDateYearMonthDay())) {
                 result.add(new SelectItem(departmentUnit.getExternalId(), departmentUnit.getName()));
             }

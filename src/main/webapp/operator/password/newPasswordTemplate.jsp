@@ -1,8 +1,8 @@
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
-<html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
+<%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
 
 <html>
     <head>
@@ -19,7 +19,7 @@
           <table border="0" width="100%" height="100" align="center" cellpadding="0" cellspacing="0">
             <tr> 
               <td width="50" height="100">
-               <img src="<%= request.getContextPath() %>/masterDegreeAdministrativeOffice/guide/images/istlogo.gif" alt="<bean:message key="istlogo" bundle="IMAGE_RESOURCES" />" width="50" height="104" border="0"/> 
+               <img src="<%= request.getContextPath() %>/masterDegreeAdministrativeOffice/guide/images/istlogo.gif" alt="<bean:message key="istlogo" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="IMAGE_RESOURCES" />" width="50" height="104" border="0"/> 
               </td>
               <td>
                 &nbsp;
@@ -79,7 +79,7 @@
           
           <tr>
             <td> <bean:message key="label.candidate.accessAddress"/> </td>
-            <td> <%= net.sourceforge.fenixedu._development.PropertiesManager.getProperty("login.page") %> </td>
+            <td> <%= FenixConfigurationManager.getConfiguration().getLoginPage() %> </td>
           </tr>
 
           <tr>

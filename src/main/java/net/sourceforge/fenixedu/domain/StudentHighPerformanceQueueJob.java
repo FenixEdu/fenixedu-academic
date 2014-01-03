@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
@@ -24,7 +25,7 @@ public class StudentHighPerformanceQueueJob extends StudentHighPerformanceQueueJ
         final ExecutionSemester semester = (ExecutionSemester) ExecutionSemester.getExecutionInterval(getExecutionInterval());
 
         Collection<Registration> highPerformants =
-                CollectionUtils.select(RootDomainObject.getInstance().getRegistrationsSet(), new Predicate() {
+                CollectionUtils.select(Bennu.getInstance().getRegistrationsSet(), new Predicate() {
                     @Override
                     public boolean evaluate(Object element) {
                         Registration registration = (Registration) element;
@@ -77,6 +78,7 @@ public class StudentHighPerformanceQueueJob extends StudentHighPerformanceQueueJ
     public String getFilename() {
         return "Students_" + new DateTime().toString("yyyy-MM-dd") + ".xls";
     }
+
     @Deprecated
     public boolean hasExecutionInterval() {
         return getExecutionInterval() != null;

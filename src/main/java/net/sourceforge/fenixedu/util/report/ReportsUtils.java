@@ -35,10 +35,9 @@ import net.sf.jasperreports.engine.export.JRPrintServiceExporter;
 import net.sf.jasperreports.engine.export.JRPrintServiceExporterParameter;
 import net.sf.jasperreports.engine.export.PdfFont;
 import net.sf.jasperreports.engine.util.JRLoader;
-import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.JasperPrintProcessor;
-import net.sourceforge.fenixedu.util.PrinterManager;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -184,35 +183,27 @@ public class ReportsUtils extends PropertiesManager {
             final Collection dataSource, final String printerName) {
         try {
             final JasperPrint jasperPrint = createJasperPrint(key, parameters, bundle, dataSource);
-            final PrintService printService = PrinterManager.getPrintServiceByName(printerName);
+            final PrintService printService = FenixConfigurationManager.getPrinterManager().getPrintServiceByName(printerName);
             if (jasperPrint != null && printService != null) {
                 export(new JRPrintServiceExporter(), Collections.singletonList(jasperPrint), (ByteArrayOutputStream) null,
                         printService, createPrintRequestAttributeSet(210, 297));
 
-                if (LogLevel.INFO) {
-                    logger.info("Printer Job Sent");
-                }
+                logger.info("Printer Job Sent");
 
                 return true;
             } else {
                 if (jasperPrint == null) {
-                    if (LogLevel.ERROR) {
-                        logger.info("Couldn't find report " + key);
-                    }
+                    logger.info("Couldn't find report " + key);
                 }
 
                 if (printService == null) {
-                    if (LogLevel.ERROR) {
-                        logger.info("Couldn't find print service " + printerName);
-                    }
+                    logger.info("Couldn't find print service " + printerName);
                 }
 
                 return false;
             }
         } catch (JRException e) {
-            if (LogLevel.ERROR) {
-                logger.info("Unable to print");
-            }
+            logger.info("Unable to print");
             e.printStackTrace();
             return false;
         }

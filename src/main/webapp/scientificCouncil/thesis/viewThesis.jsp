@@ -355,11 +355,8 @@
     </fr:layout>
 </fr:view>
 
-<%-- Jury --%>
-<h3 class="separator2 mtop2"><bean:message key="title.scientificCouncil.thesis.review.section.jury"/></h3>
-
 <%-- Orientation --%>
-<h4 class="mtop25 mbottom05"><bean:message key="title.scientificCouncil.thesis.review.section.orientation"/></h4>
+<h3 class="separator2 mtop2"><bean:message key="title.scientificCouncil.thesis.review.section.orientation"/></h3>
 
 <logic:empty name="thesis" property="orientator">
     <logic:empty name="thesis" property="coorientator">
@@ -380,13 +377,14 @@
     <logic:empty name="thesis" property="coorientator">
         <p>
 	        <html:link page="<%= String.format("/scientificCouncilManageThesis.do?method=changePerson&amp;target=coorientator&amp;degreeId=%s&amp;executionYearId=%s&amp;thesisID=%s", degreeId, executionYearId, thesisId) %>">
-                <bean:message key="link.coordinator.thesis.edit.addOrientation" bundle="APPLICATION_RESOURCES"/>
+                <bean:message key="link.coordinator.thesis.edit.addCoorientation" bundle="APPLICATION_RESOURCES"/>
     	    </html:link>
         </p>
     </logic:empty>
 </logic:notEmpty>
 
 <logic:notEmpty name="thesis" property="orientator">
+	<h4 class="mtop2 mbottom05"><bean:message key="title.scientificCouncil.thesis.review.section.orientation.orientator"/></h4>
     <fr:view name="thesis" property="orientator" layout="tabular" schema="thesis.jury.proposal.person.loginInfo">
         <fr:layout name="tabular">
             <fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom0"/>
@@ -457,6 +455,7 @@
 </logic:notEmpty>
   
 <logic:notEmpty name="thesis" property="coorientator">
+	<h4 class="mtop2 mbottom05"><bean:message key="title.scientificCouncil.thesis.review.section.orientation.coorientator"/></h4>
     <fr:view name="thesis" property="coorientator" layout="tabular" schema="thesis.jury.proposal.person.loginInfo">
         <fr:layout name="tabular">
             <fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom0"/>
@@ -523,6 +522,10 @@
         </html:link>
     </p>
 </logic:notEmpty>
+
+
+<%-- Jury --%>
+<h3 class="separator2 mtop2"><bean:message key="title.scientificCouncil.thesis.review.section.jury"/></h3>
 
 <%-- Jury/President --%>
 <h4 class="mtop2 mbottom05"><bean:message key="title.scientificCouncil.thesis.review.section.jury.president"/></h4>

@@ -4,9 +4,8 @@ import java.util.UUID;
 
 import javax.servlet.ServletRequest;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.AlumniIdentityCheckRequest;
-import net.sourceforge.fenixedu.util.HostAccessControl;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.webServices.exceptions.NotAuthorizedException;
 
 import org.codehaus.xfire.MessageContext;
@@ -19,8 +18,8 @@ public class AlumniManagement implements IAlumniManagement {
     private static final String storedUsername;
 
     static {
-        storedUsername = PropertiesManager.getProperty("webServices.PersonManagement.getPersonInformation.username");
-        storedPassword = PropertiesManager.getProperty("webServices.PersonManagement.getPersonInformation.password");
+        storedUsername = FenixConfigurationManager.getConfiguration().getWebServicesPersonManagementgetPersonInformationUsername();
+        storedPassword = FenixConfigurationManager.getConfiguration().getWebServicesPersonManagementgetPersonInformationPassword();
     }
 
     @Override
@@ -42,7 +41,8 @@ public class AlumniManagement implements IAlumniManagement {
         }
 
         // check hosts accessing this service
-        if (!HostAccessControl.isAllowed(this, (ServletRequest) context.getProperty("XFireServletController.httpServletRequest"))) {
+        if (!FenixConfigurationManager.getHostAccessControl().isAllowed(this,
+                (ServletRequest) context.getProperty("XFireServletController.httpServletRequest"))) {
             throw new NotAuthorizedException();
         }
     }

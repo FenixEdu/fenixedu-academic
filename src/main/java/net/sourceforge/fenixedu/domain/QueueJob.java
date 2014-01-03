@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -20,8 +21,8 @@ public abstract class QueueJob extends QueueJob_Base {
         super();
         this.setRequestDate(new DateTime());
         setFailedCounter(new Integer(0));
-        setRootDomainObject(RootDomainObject.getInstance());
-        setRootDomainObjectQueueUndone(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
+        setRootDomainObjectQueueUndone(Bennu.getInstance());
         setDone(Boolean.FALSE);
         setPerson(AccessControl.getPerson());
     }
@@ -37,37 +38,35 @@ public abstract class QueueJob extends QueueJob_Base {
     }
 
     public boolean getIsNotDoneAndCancelled() {
-        return !getDone() && !hasRootDomainObjectQueueUndone();
+        return !getDone() && !hasBennuQueueUndone();
     }
 
     public boolean getIsNotDoneAndNotCancelled() {
-        return !getDone() && hasRootDomainObjectQueueUndone();
+        return !getDone() && hasBennuQueueUndone();
     }
 
     public static List<QueueJob> getAllJobsForClassOrSubClass(final Class aClass, int max) {
-        List<QueueJob> tempList =
-                (List<QueueJob>) CollectionUtils.select(RootDomainObject.getInstance().getQueueJob(), new Predicate() {
+        List<QueueJob> tempList = (List<QueueJob>) CollectionUtils.select(Bennu.getInstance().getQueueJobSet(), new Predicate() {
 
-                    @Override
-                    public boolean evaluate(Object arg0) {
-                        return aClass.isInstance(arg0);
-                    }
+            @Override
+            public boolean evaluate(Object arg0) {
+                return aClass.isInstance(arg0);
+            }
 
-                });
+        });
 
         return tempList.size() > max ? tempList.subList(0, max) : tempList;
     }
 
     public static List<QueueJob> getUndoneJobsForClass(final Class clazz) {
-        return new ArrayList<QueueJob>(CollectionUtils.select(RootDomainObject.getInstance().getQueueJobUndone(),
-                new Predicate() {
+        return new ArrayList<QueueJob>(CollectionUtils.select(Bennu.getInstance().getQueueJobUndoneSet(), new Predicate() {
 
-                    @Override
-                    public boolean evaluate(Object arg0) {
-                        return clazz.isInstance(arg0);
-                    }
+            @Override
+            public boolean evaluate(Object arg0) {
+                return clazz.isInstance(arg0);
+            }
 
-                }));
+        }));
     }
 
     public Priority getPriority() {
@@ -81,11 +80,11 @@ public abstract class QueueJob extends QueueJob_Base {
 
     @Atomic
     public void resend() {
-        setRootDomainObjectQueueUndone(RootDomainObject.getInstance());
+        setRootDomainObjectQueueUndone(Bennu.getInstance());
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 
@@ -120,7 +119,7 @@ public abstract class QueueJob extends QueueJob_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObjectQueueUndone() {
+    public boolean hasBennuQueueUndone() {
         return getRootDomainObjectQueueUndone() != null;
     }
 

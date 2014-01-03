@@ -3,8 +3,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.research;
 import java.util.Collection;
 import java.util.Map;
 
+import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
+
 import net.sourceforge.fenixedu.domain.person.PersonName;
-import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
 
 public class SearchPersonsForParticipations implements AutoCompleteProvider<PersonName> {
 

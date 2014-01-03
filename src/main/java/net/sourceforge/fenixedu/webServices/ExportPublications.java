@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
@@ -29,6 +28,7 @@ import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis.ThesisType;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -53,7 +53,7 @@ public class ExportPublications {
             Set<ScientificJournal> journals = new HashSet<ScientificJournal>();
             Set<EventEdition> eventEditions = new HashSet<EventEdition>();
 
-            for (ResearchResult result : RootDomainObject.getInstance().getResultsSet()) {
+            for (ResearchResult result : Bennu.getInstance().getResultsSet()) {
                 if (result instanceof ResearchResultPublication) {
                     ResearchResultPublication publication = (ResearchResultPublication) result;
                     String type = publication.getClass().getSimpleName().toLowerCase();

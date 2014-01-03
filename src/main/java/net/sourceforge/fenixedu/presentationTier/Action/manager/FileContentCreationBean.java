@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import net.sourceforge.fenixedu.domain.FileContent.EducationalResourceType;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -103,29 +104,6 @@ public class FileContentCreationBean implements Serializable {
 
     public void setEducationalLearningResourceType(EducationalResourceType educationalLearningResourceType) {
         this.educationalLearningResourceType = educationalLearningResourceType;
-    }
-
-    public enum EducationalResourceType {
-        EXERCISE("exercise"), SIMULATION("simulation"),
-        QUESTIONNARIE("questionnaire"),
-        // DIAGRAM ("diagram"),
-        FIGURE("figure"),
-        // GRAPH ("graph"),
-        // INDEX ("index"),
-        SLIDE("slide"), TABLE("table"), EXAM("exam"), TEST("test"), INFORMATIONS("informations"), MARKSHEET("marksheet"),
-        PROJECT_SUBMISSION("projectSubmission"), LABORATORY_GUIDE("laboratoryGuide"), DIDACTIL_TEXT("didactilText"), STUDY_BOOK(
-                "studyBook"), SITE_CONTENT("siteContent"), PROGRAM("program");
-
-        private String type;
-
-        private EducationalResourceType(String type) {
-            this.type = type;
-        }
-
-        public String getType() {
-            return type;
-        }
-
     }
 
 }

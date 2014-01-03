@@ -6,7 +6,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="e" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<logic:present role="DIRECTIVE_COUNCIL">
+<logic:present role="role(DIRECTIVE_COUNCIL)">
 
 	<em><bean:message key="DIRECTIVE_COUNCIL"/></em>
 	<h2><bean:message key="link.summaries.control"/></h2>

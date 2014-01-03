@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.phd.email;
 import java.util.StringTokenizer;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.util.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import org.joda.time.DateTime;
 

@@ -3,7 +3,8 @@ package net.sourceforge.fenixedu.domain.accessControl;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.User;
+
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
@@ -66,8 +67,8 @@ public class RoleGroup extends LeafGroup {
      * This method checks if the <tt>UserView</tt> contains the same role as this group.
      */
     @Override
-    public boolean allows(IUserView userView) {
-        return userView != null && userView.hasRoleType(roleType);
+    public boolean allows(User userView) {
+        return userView != null && userView.getPerson().hasRole(roleType);
     }
 
     @Override

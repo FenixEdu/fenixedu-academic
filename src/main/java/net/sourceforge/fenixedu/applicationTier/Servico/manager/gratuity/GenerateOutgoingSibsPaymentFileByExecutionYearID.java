@@ -13,7 +13,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.FileNotCreatedServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.InsufficientSibsPaymentPhaseCodesServiceException;
@@ -119,13 +118,6 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID {
 
                     if (gratuitySituation != null) {
                         totalLines += addGratuityLines(outgoingSibsPaymentFile, gratuitySituation, shortYear, paymentEndDate);
-                    } else {
-                        if (LogLevel.INFO) {
-                            System.out.println("Registration " + registration.getNumber()
-                                    + " does not have a gratuity situation for year "
-                                    + executionDegree.getExecutionYear().getYear() + " Degree "
-                                    + executionDegree.getDegreeCurricularPlan().getName());
-                        }
                     }
                 }
 

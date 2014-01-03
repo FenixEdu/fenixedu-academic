@@ -4,12 +4,12 @@ import java.io.Serializable;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.LocalDate;
 
 public class EventReportQueueJobBean implements Serializable {
@@ -122,7 +122,7 @@ public class EventReportQueueJobBean implements Serializable {
     }
 
     public Set<AdministrativeOffice> getAvailableOfficesForManager() {
-        return RootDomainObject.getInstance().getAdministrativeOfficesSet();
+        return Bennu.getInstance().getAdministrativeOfficesSet();
     }
 
     public static EventReportQueueJobBean createBeanForManager() {

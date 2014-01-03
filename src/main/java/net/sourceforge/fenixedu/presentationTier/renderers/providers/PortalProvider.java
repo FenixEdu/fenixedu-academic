@@ -4,16 +4,16 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.contents.Content;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
-import pt.ist.fenixWebFramework.security.UserView;
 
 public class PortalProvider implements DataProvider {
 
@@ -24,10 +24,10 @@ public class PortalProvider implements DataProvider {
     public Object provide(Object source, Object currentValue) {
         final Set<Content> portalSet = new TreeSet<Content>(new BeanComparator("name"));
 
-        for (Section portal : RootDomainObject.getInstance().getRootPortal().getChildren(Section.class)) {
+        for (Section portal : Bennu.getInstance().getRootPortal().getChildren(Section.class)) {
             if (portal.hasAvailabilityPolicy()) {
                 if (portal.getAvailabilityPolicy().getTargetGroup()
-                        .isMember(Person.readPersonByUsername(UserView.getUser().getUsername()))) {
+                        .isMember(Person.readPersonByUsername(Authenticate.getUser().getUsername()))) {
                     portalSet.add(portal);
                 }
             } else {

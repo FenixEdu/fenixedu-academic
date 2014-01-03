@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.NullComparator;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class BibliographicReference extends BibliographicReference_Base {
 
@@ -31,7 +32,7 @@ public class BibliographicReference extends BibliographicReference_Base {
 
     public BibliographicReference() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void edit(final String title, final String authors, final String reference, final String year, final Boolean optional) {
@@ -88,6 +89,7 @@ public class BibliographicReference extends BibliographicReference_Base {
     public boolean isOptional() {
         return getOptional() == null || getOptional();
     }
+
     @Deprecated
     public boolean hasExecutionCourse() {
         return getExecutionCourse() != null;
@@ -99,7 +101,7 @@ public class BibliographicReference extends BibliographicReference_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

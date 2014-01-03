@@ -9,7 +9,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.gesdis.EditCourseInformation;
 import net.sourceforge.fenixedu.applicationTier.Servico.gesdis.ReadCourseHistoric;
@@ -29,8 +28,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-
-import pt.ist.fenixWebFramework.security.UserView;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 /**
  * @author Leonor Almeida
@@ -122,7 +121,7 @@ public class TeachingReportAction extends FenixDispatchAction {
     }
 
     private List readCoursesHistoric(ActionMapping mapping, ActionForm form, HttpServletRequest request) throws Exception {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         String executionCourseId = request.getParameter("executionCourseId");
 
         return ReadCourseHistoric.runReadCourseHistoric(executionCourseId);
@@ -130,7 +129,7 @@ public class TeachingReportAction extends FenixDispatchAction {
 
     private SiteView readSiteView(ActionMapping mapping, ActionForm form, HttpServletRequest request)
             throws FenixServiceException {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         String executionCourseId = request.getParameter("executionCourseId");
 
         return ReadCourseInformation.runReadCourseInformation(executionCourseId);

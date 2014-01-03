@@ -5,9 +5,9 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.sibsPaymentFileProcessReport.SibsPaymentFileProcessReportDTO;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
@@ -35,7 +35,7 @@ public class SibsPaymentFileProcessReport extends SibsPaymentFileProcessReport_B
         checkParameters(sibsPaymentFileProcessReportDTO);
         checkRulesToCreate(sibsPaymentFileProcessReportDTO);
 
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
         super.setWhenProcessed(new DateTime());
         super.setFilename(sibsPaymentFileProcessReportDTO.getFilename());
         super.setWhenProcessedBySibs(sibsPaymentFileProcessReportDTO.getWhenProcessedBySibs());
@@ -100,7 +100,7 @@ public class SibsPaymentFileProcessReport extends SibsPaymentFileProcessReport_B
     }
 
     static public SibsPaymentFileProcessReport readBy(final YearMonthDay date, final Integer fileVersion) {
-        for (final SibsPaymentFileProcessReport sibsPaymentFileProcessReport : RootDomainObject.getInstance()
+        for (final SibsPaymentFileProcessReport sibsPaymentFileProcessReport : Bennu.getInstance()
                 .getSibsPaymentFileProcessReportsSet()) {
             if (sibsPaymentFileProcessReport.getWhenProcessedBySibs().isEqual(date)
                     && sibsPaymentFileProcessReport.getFileVersion().equals(fileVersion)) {
@@ -121,7 +121,7 @@ public class SibsPaymentFileProcessReport extends SibsPaymentFileProcessReport_B
 
     static public List<SibsPaymentFileProcessReport> readAllBetween(final LocalDate startDate, final LocalDate endDate) {
         final List<SibsPaymentFileProcessReport> result = new ArrayList<SibsPaymentFileProcessReport>();
-        for (final SibsPaymentFileProcessReport report : RootDomainObject.getInstance().getSibsPaymentFileProcessReportsSet()) {
+        for (final SibsPaymentFileProcessReport report : Bennu.getInstance().getSibsPaymentFileProcessReportsSet()) {
             if (report.getWhenProcessedBySibs().compareTo(startDate) >= 0
                     && report.getWhenProcessedBySibs().compareTo(endDate) <= 0) {
                 result.add(report);
@@ -141,7 +141,7 @@ public class SibsPaymentFileProcessReport extends SibsPaymentFileProcessReport_B
         super.deleteDomainObject();
     }
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

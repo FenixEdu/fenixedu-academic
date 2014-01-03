@@ -5,7 +5,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<bean:define id="publications" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.researchResultPublications"/>
+<bean:define id="publications" name="USER_SESSION_ATTRIBUTE" property="user.person.researchResultPublications"/>
 <bean:define id="personId" name="person" property="externalId"/>
 
 <em><bean:message bundle="RESEARCHER_RESOURCES" key="label.researchPortal"/></em>
@@ -108,7 +108,7 @@
 <logic:present name="preferredSetting">
     <h3><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.preferredPublications.title"/></h3>
 	<div class="infoop2">
-		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.preferredPublications.help"/>
+		<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.preferredPublications.help" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/>
 	</div>
 	
 	<p>

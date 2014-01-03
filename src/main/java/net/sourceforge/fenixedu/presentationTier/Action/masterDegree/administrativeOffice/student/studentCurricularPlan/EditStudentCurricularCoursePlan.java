@@ -8,7 +8,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadBranchesByDegreeCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.enrolment.SetEnrolmentState;
@@ -26,6 +25,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixframework.FenixFramework;
 
@@ -38,7 +38,7 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
             throws Exception {
         DynaActionForm editStudentCurricularPlanForm = (DynaActionForm) form;
         String studentCurricularPlanId = getFromRequest("studentCurricularPlanId", request);
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         InfoStudentCurricularPlan infoStudentCurricularPlan = null;
         infoStudentCurricularPlan = (InfoStudentCurricularPlan) ReadPosGradStudentCurricularPlanById.run(studentCurricularPlanId);
@@ -89,7 +89,7 @@ public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
 
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
 
         final String scpOID = getStringFromRequest(request, "studentCurricularPlanId");
         request.setAttribute("studentCurricularPlanId", scpOID);

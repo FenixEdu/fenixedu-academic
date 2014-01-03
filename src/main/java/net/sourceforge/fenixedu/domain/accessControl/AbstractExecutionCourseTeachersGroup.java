@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.accessControl;
 import java.util.Collection;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.commons.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;

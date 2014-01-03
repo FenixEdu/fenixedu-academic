@@ -28,8 +28,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import net.fortuna.ical4j.model.Calendar;
-import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Factory.RoomSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.EnrolStudentInWrittenEvaluation;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.UnEnrollStudentInWrittenEvaluation;
@@ -65,7 +63,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Event;
@@ -91,6 +88,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.externalServices.OAuthUt
 import net.sourceforge.fenixedu.presentationTier.backBeans.student.enrolment.DisplayEvaluationsForStudentToEnrol;
 import net.sourceforge.fenixedu.util.ContentType;
 import net.sourceforge.fenixedu.util.EvaluationType;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.webServices.jersey.beans.FenixCalendar;
 import net.sourceforge.fenixedu.webServices.jersey.beans.FenixCalendar.FenixCalendarEvent;
 import net.sourceforge.fenixedu.webServices.jersey.beans.FenixCurriculum;
@@ -121,12 +119,13 @@ import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixSpace.Room
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.json.simple.JSONObject;
 
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixframework.DomainObject;
 import pt.utl.ist.fenix.tools.resources.DefaultResourceBundleProvider;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -178,7 +177,7 @@ public class FenixAPIv1 {
     }
 
     private Person getPerson() {
-        IUserView user = UserView.getUser();
+        User user = Authenticate.getUser();
         if (user != null) {
             return user.getPerson();
         }
@@ -930,10 +929,10 @@ public class FenixAPIv1 {
 
     private String getServerLink() {
         String serverLink;
-        final String appName = PropertiesManager.getProperty("http.host");
-        final String appContext = PropertiesManager.getProperty("app.context");
-        final String httpPort = PropertiesManager.getProperty("http.port");
-        final String httpProtocol = PropertiesManager.getProperty("http.protocol");
+        final String appName = FenixConfigurationManager.getConfiguration().getHTTPHost();
+        final String appContext = FenixConfigurationManager.getConfiguration().appContext();
+        final String httpPort = FenixConfigurationManager.getConfiguration().getHTTPPort();
+        final String httpProtocol = FenixConfigurationManager.getConfiguration().getHTTPProtocol();
 
         if (StringUtils.isEmpty(httpPort)) {
             serverLink = String.format("%s://%s/", httpProtocol, appName);

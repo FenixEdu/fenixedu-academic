@@ -7,7 +7,7 @@
 
 <h2><bean:message key="logins.management.title" bundle="MANAGER_RESOURCES"/></h2>
 
-<logic:present role="MANAGER,OPERATOR">
+<logic:present role="(role(MANAGER) | role(OPERATOR))">
 	
 	<logic:messagesPresent message="true">
 		<p>
@@ -34,13 +34,7 @@
 			<fr:view name="resultPersons" schema="ShowExistentPersonsDetailsBeforeCreateInvitedPersons" >
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle4"/>
-					<fr:property name="rowClasses" value="listClasses"/>					
-																
-		   			<fr:property name="link(aliasManagement)" value="/loginsManagement.do?method=prepareManageAlias"/>
-		            <fr:property name="param(aliasManagement)" value="externalId/personID"/>
-			        <fr:property name="key(aliasManagement)" value="link.manage.login.alias"/>
-		            <fr:property name="bundle(aliasManagement)" value="MANAGER_RESOURCES"/>
-		            <fr:property name="order(aliasManagement)" value="0"/>		     
+					<fr:property name="rowClasses" value="listClasses"/>
 		            
 		            <fr:property name="link(loginTimeIntervalsManagement)" value="/loginsManagement.do?method=prepareManageLoginTimeIntervals"/>
 		            <fr:property name="param(loginTimeIntervalsManagement)" value="externalId/personID"/>

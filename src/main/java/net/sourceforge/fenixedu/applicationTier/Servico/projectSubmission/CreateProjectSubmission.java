@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.DeleteFileRequest;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.FileContent.EducationalResourceType;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.ProjectSubmission;
@@ -28,7 +29,6 @@ import net.sourceforge.fenixedu.domain.accessControl.ProjectDepartmentAccessGrou
 import net.sourceforge.fenixedu.domain.accessControl.StudentGroupStudentsGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
-import net.sourceforge.fenixedu.presentationTier.Action.manager.FileContentCreationBean.EducationalResourceType;
 
 import org.apache.commons.io.IOUtils;
 

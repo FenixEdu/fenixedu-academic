@@ -48,6 +48,7 @@ import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -83,7 +84,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public static List<CurricularCourse> readCurricularCourses() {
         List<CurricularCourse> result = new ArrayList<CurricularCourse>();
-        for (DegreeModule degreeModule : RootDomainObject.getInstance().getDegreeModules()) {
+        for (DegreeModule degreeModule : Bennu.getInstance().getDegreeModulesSet()) {
             if (degreeModule instanceof CurricularCourse) {
                 result.add((CurricularCourse) degreeModule);
             }

@@ -5,7 +5,6 @@ import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import java.util.Collections;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.parking.ParkingGroup;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
@@ -17,6 +16,7 @@ import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -60,7 +60,7 @@ public class UpdateParkingParty {
 
         if (note != null && note.trim().length() != 0 && email != null) {
             ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", Language.getLocale());
-            Sender sender = RootDomainObject.getInstance().getSystemSender();
+            Sender sender = Bennu.getInstance().getSystemSender();
             ConcreteReplyTo replyTo = new ConcreteReplyTo(bundle.getString("label.fromAddress"));
             new Message(sender, replyTo.asCollection(), Collections.EMPTY_LIST, bundle.getString("label.subject"), note, email);
         }

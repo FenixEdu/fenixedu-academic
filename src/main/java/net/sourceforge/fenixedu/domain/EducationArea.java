@@ -1,10 +1,12 @@
 package net.sourceforge.fenixedu.domain;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 public class EducationArea extends EducationArea_Base {
 
     public EducationArea(String code, String description) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setCode(code);
         setDescription(description);
     }
@@ -40,7 +42,7 @@ public class EducationArea extends EducationArea_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -8,11 +8,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.QueueJobResult;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
 import net.sourceforge.fenixedu.domain.parking.Vehicle;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
@@ -45,7 +45,7 @@ public class ParkingDataReportFile extends ParkingDataReportFile_Base {
     public QueueJobResult execute() throws Exception {
         QueueJobResult queueJobResult = null;
 
-        final String inputFilename = PropertiesManager.getProperty("export.parking.data.report.input.file");
+        final String inputFilename = FenixConfigurationManager.getConfiguration().getExportParkingDataReportInputFile();
         if (inputFilename != null) {
             File parkingDataFile = FileUtils.copyToTemporaryFile(new FileInputStream(inputFilename));
             renderReport(parkingDataFile);

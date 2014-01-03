@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProce
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -268,7 +269,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
         final Spreadsheet spreadsheet = new Spreadsheet(degree.getSigla(), getHeader());
 
         for (final SecondCycleIndividualCandidacyProcess process : name) {
-            if (!process.canExecuteActivity(AccessControl.getUserView())) {
+            if (!process.canExecuteActivity(Authenticate.getUser())) {
                 continue;
             }
             final Row row = spreadsheet.addRow();

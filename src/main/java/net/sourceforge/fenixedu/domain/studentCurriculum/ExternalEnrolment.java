@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.EctsTableIndex;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
@@ -24,6 +23,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -53,7 +53,7 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 
     protected ExternalEnrolment() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setCreationDateDateTime(new DateTime());
         if (AccessControl.getPerson() != null) {
             setCreatedBy(AccessControl.getPerson().getUsername());
@@ -332,7 +332,7 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.resource.Resource;
@@ -26,6 +25,7 @@ import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
@@ -117,7 +117,7 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
     public static List<AllocatableSpace> readAllAllocatableSpacesByName(String name) {
         List<AllocatableSpace> result = new ArrayList<AllocatableSpace>();
         String[] identificationWords = getIdentificationWords(name);
-        for (Resource resource : RootDomainObject.getInstance().getResources()) {
+        for (Resource resource : Bennu.getInstance().getResourcesSet()) {
             if (resource.isAllocatableSpace() && ((Space) resource).verifyNameEquality(identificationWords)) {
                 result.add((AllocatableSpace) resource);
             }
@@ -191,7 +191,7 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
     }
 
     public static AllocatableSpace findAllocatableSpaceForEducationByName(String name) {
-        for (Resource space : RootDomainObject.getInstance().getResources()) {
+        for (Resource space : Bennu.getInstance().getResourcesSet()) {
             if (space.isAllocatableSpace() && ((AllocatableSpace) space).isForEducation()
                     && ((AllocatableSpace) space).getIdentification().equalsIgnoreCase(name)) {
                 return (AllocatableSpace) space;
@@ -210,7 +210,7 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
 
     public static List<Room> getAllRoomsForAlameda() {
         List<Room> result = new ArrayList<Room>();
-        for (Resource space : RootDomainObject.getInstance().getResources()) {
+        for (Resource space : Bennu.getInstance().getResourcesSet()) {
             if (space.isAllocatableSpace() && space.isRoom()) {
                 AllocatableSpace allocSpace = ((AllocatableSpace) space);
                 if (allocSpace.isActive() && allocSpace.getSpaceBuilding().getSpaceCampus().isCampusAlameda()) {
@@ -235,7 +235,7 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
 
     public static List<AllocatableSpace> getAllActiveAllocatableSpacesForEducationAndPunctualOccupations(Person person) {
         List<AllocatableSpace> result = new ArrayList<AllocatableSpace>();
-        for (Resource space : RootDomainObject.getInstance().getResources()) {
+        for (Resource space : Bennu.getInstance().getResourcesSet()) {
             if (space.isAllocatableSpace()
                     && ((AllocatableSpace) space).isActive()
                     && (((AllocatableSpace) space).isForEducation(person) || ((AllocatableSpace) space)
@@ -258,17 +258,18 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
 
     }
 
-    public static final AllocatableSpaceTransformer<AllocatableSpace> NO_TRANSFORMER = new AllocatableSpaceTransformer<AllocatableSpace>() {
-        @Override
-        public AllocatableSpace transform(final AllocatableSpace space) {
-            return space;
-        }
-    };
+    public static final AllocatableSpaceTransformer<AllocatableSpace> NO_TRANSFORMER =
+            new AllocatableSpaceTransformer<AllocatableSpace>() {
+                @Override
+                public AllocatableSpace transform(final AllocatableSpace space) {
+                    return space;
+                }
+            };
 
     public static <T> List<T> findAllocatableSpacesByPredicates(final AllocatableSpaceTransformer<T> transformer,
             final AllocatableSpacePredicate... predicates) {
         final List<T> result = new ArrayList<T>();
-        for (final Resource resource : RootDomainObject.getInstance().getResources()) {
+        for (final Resource resource : Bennu.getInstance().getResourcesSet()) {
             if (resource.isAllocatableSpace()) {
                 final AllocatableSpace allocatableSpace = (AllocatableSpace) resource;
                 if (allocatableSpace.matchesAllPredicates(predicates)) {

@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumen
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.StandaloneEnrolmentCertificateRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.util.StringUtils;
+import net.sourceforge.fenixedu.util.FenixStringTools;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -94,7 +94,7 @@ public class StandaloneEnrolmentCertificateRequestDocument extends Administrativ
 
         for (final Enrolment enrolment : enrolments) {
             result.append(
-                    StringUtils.multipleLineRightPadWithSuffix(getPresentationNameFor(enrolment).toUpperCase(), LINE_LENGTH,
+                    FenixStringTools.multipleLineRightPadWithSuffix(getPresentationNameFor(enrolment).toUpperCase(), LINE_LENGTH,
                             END_CHAR, getCreditsAndGradeInfo(enrolment, enrolment.getExecutionYear()))).append(LINE_BREAK);
         }
 

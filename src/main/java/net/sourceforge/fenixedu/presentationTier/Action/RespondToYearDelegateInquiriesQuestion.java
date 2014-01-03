@@ -10,6 +10,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+@Mapping(path = "/respondToYearDelegateInquiriesQuestion")
 public class RespondToYearDelegateInquiriesQuestion extends FenixDispatchAction {
 
     public final ActionForward showQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -18,7 +21,7 @@ public class RespondToYearDelegateInquiriesQuestion extends FenixDispatchAction 
         final DelegateInquiryTemplate inquiryTemplate = DelegateInquiryTemplate.getCurrentTemplate();
         request.setAttribute("executionPeriod", inquiryTemplate == null ? null : inquiryTemplate.getExecutionPeriod());
 
-        return mapping.findForward("respondToYearDelegateInquiriesQuestion");
+        return new ActionForward("/respondToYearDelegateInquiriesQuestion.jsp");
     }
 
     private ActionForward forward(final String path) {

@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.InstitutionSite;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.UnitFile;
 import net.sourceforge.fenixedu.domain.UnitFileTag;
@@ -63,6 +62,7 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
@@ -762,7 +762,7 @@ public class Unit extends Unit_Base {
 
     public static List<Unit> readAllUnits() {
         final List<Unit> allUnits = new ArrayList<Unit>();
-        for (final Party party : RootDomainObject.getInstance().getPartys()) {
+        for (final Party party : Bennu.getInstance().getPartysSet()) {
             if (party.isUnit()) {
                 allUnits.add((Unit) party);
             }
@@ -891,7 +891,7 @@ public class Unit extends Unit_Base {
         if (unitName == null || unitName.length() == 0) {
             return null;
         }
-        for (final Party party : RootDomainObject.getInstance().getExternalInstitutionUnit().getSubUnits()) {
+        for (final Party party : Bennu.getInstance().getExternalInstitutionUnit().getSubUnits()) {
             if (!party.isPerson() && unitName.equalsIgnoreCase(party.getName())) {
                 final Unit unit = (Unit) party;
                 return unit;
@@ -1042,7 +1042,7 @@ public class Unit extends Unit_Base {
     public String getShortPresentationName() {
         final StringBuilder stringBuilder = new StringBuilder();
         for (final Unit unit : getParentUnits()) {
-            if (!unit.isAggregateUnit() && unit != RootDomainObject.getInstance().getInstitutionUnit()) {
+            if (!unit.isAggregateUnit() && unit != Bennu.getInstance().getInstitutionUnit()) {
                 stringBuilder.append(unit.getName());
                 stringBuilder.append(" - ");
             }
@@ -1190,7 +1190,7 @@ public class Unit extends Unit_Base {
     }
 
     public boolean isEarth() {
-        return this.equals(RootDomainObject.getInstance().getEarthUnit());
+        return this.equals(Bennu.getInstance().getEarthUnit());
     }
 
     @Override
@@ -1282,7 +1282,7 @@ public class Unit extends Unit_Base {
 
     @Override
     protected UnitSite createSite() {
-        if (this == RootDomainObject.getInstance().getInstitutionUnit()) {
+        if (this == Bennu.getInstance().getInstitutionUnit()) {
             // TODO: to be removed if institution unit becomes a specific
             // class
             return InstitutionSite.initialize();
@@ -1292,8 +1292,14 @@ public class Unit extends Unit_Base {
     }
 
     static public MultiLanguageString getInstitutionName() {
-        final Unit institutionUnit = RootDomainObject.getInstance().getInstitutionUnit();
-        MultiLanguageString result = institutionUnit == null ? new MultiLanguageString() : institutionUnit.getNameI18n();
+        final Bennu root = Bennu.getInstance();
+        MultiLanguageString result = new MultiLanguageString();
+        if (root != null) {
+            final Unit institutionUnit = root.getInstitutionUnit();
+            if (root != null) {
+                result = institutionUnit.getNameI18n();
+            }
+        }
         if (result.isEmpty()) {
             result =
                     result.with(Language.getDefaultLanguage(),
@@ -1304,8 +1310,14 @@ public class Unit extends Unit_Base {
     }
 
     static public String getInstitutionAcronym() {
-        final Unit institutionUnit = RootDomainObject.getInstance().getInstitutionUnit();
-        String result = institutionUnit == null ? StringUtils.EMPTY : institutionUnit.getAcronym();
+        final Bennu root = Bennu.getInstance();
+        String result = StringUtils.EMPTY;
+        if (root != null) {
+            final Unit institutionUnit = root.getInstitutionUnit();
+            if (root != null) {
+                result = institutionUnit.getAcronym();
+            }
+        }
         if (result.isEmpty()) {
             result = BundleUtil.getStringFromResourceBundle("resources/GlobalResources", "institution.name.abbreviation");
         }
@@ -2064,7 +2076,7 @@ public class Unit extends Unit_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObjectForExternalInstitutionUnit() {
+    public boolean hasBennuForExternalInstitutionUnit() {
         return getRootDomainObjectForExternalInstitutionUnit() != null;
     }
 
@@ -2110,12 +2122,12 @@ public class Unit extends Unit_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObjectForEarthUnit() {
+    public boolean hasBennuForEarthUnit() {
         return getRootDomainObjectForEarthUnit() != null;
     }
 
     @Deprecated
-    public boolean hasRootDomainObjectForInstitutionUnit() {
+    public boolean hasBennuForInstitutionUnit() {
         return getRootDomainObjectForInstitutionUnit() != null;
     }
 

@@ -153,39 +153,8 @@
     </fr:form>
 </logic:present>
 
-
-<%-- Jury --%>
-<h3 class="separator2 mtop2 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.jury" bundle="APPLICATION_RESOURCES"/></h3>
-
-<div style="padding: 1em;">
-	<p class="mtop0">
-		<bean:message key="label.thesis.external.orientators" bundle="APPLICATION_RESOURCES"/>
-	</p>
-</div>
-
-<%-- problems in the jury --%>
-<logic:notEmpty name="conditions">
-	<div class="warning0" style="padding: 1em;">
-    <strong><bean:message key="label.attention" bundle="APPLICATION_RESOURCES"/>:</strong><br/>
-	<ul class="mbottom05">
-	    <logic:iterate id="condition" name="conditions">
-	       	<li>
-	            <bean:define id="key" name="condition" property="key" type="java.lang.String"/>
-	            <bean:message key="<%= key %>" bundle="APPLICATION_RESOURCES"/>
-			</li>
-	    </logic:iterate>
-    </ul>
-    </div>
-</logic:notEmpty>
-<p>
-	<bean:message key="label.coordinator.thesis.jury" bundle="COORDINATOR_RESOURCES"/>
-	<html:link target="_blank" href="http://da.ist.utl.pt/dissertacao-de-mestrado/">
-		<bean:message key="link.coordinator.thesis.consultHere" bundle="APPLICATION_RESOURCES"/>
-	</html:link>.
-</p>
-
 <%-- Orientation --%>
-<h4 class="mtop25 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.orientation" bundle="APPLICATION_RESOURCES"/></h4>
+<h3 class="separator2 mtop2 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.orientation" bundle="APPLICATION_RESOURCES"/></h3>
 
 <logic:empty name="thesis" property="orientator">
     <p>
@@ -198,7 +167,7 @@
     <logic:empty name="thesis" property="coorientator">
         <p>
 	        <html:link page="<%= String.format("/manageThesis.do?method=changePerson&amp;target=coorientator&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
-                <bean:message key="link.coordinator.thesis.edit.addOrientation" bundle="APPLICATION_RESOURCES"/>
+                <bean:message key="link.coordinator.thesis.edit.addCoorientation" bundle="APPLICATION_RESOURCES"/>
     	    </html:link>
         </p>
     </logic:empty>
@@ -213,6 +182,7 @@
 </logic:empty>
 
 <logic:notEmpty name="thesis" property="orientator">
+	<h4 class="mtop2 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.orientation.orientator" bundle="APPLICATION_RESOURCES"/></h4>
     <fr:view name="thesis" property="orientator" layout="tabular" schema="thesis.jury.proposal.person">
         <fr:layout name="tabular">
            	<fr:property name="classes" value="tstyle2 thlight thright mbottom0"/>
@@ -284,6 +254,7 @@
 </logic:notEmpty>
   
 <logic:notEmpty name="thesis" property="coorientator">
+	<h4 class="mtop2 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.orientation.coorientator" bundle="APPLICATION_RESOURCES"/></h4>
     <fr:view name="thesis" property="coorientator" layout="tabular" schema="thesis.jury.proposal.person">
         <fr:layout name="tabular">
         	    	<fr:property name="classes" value="tstyle2 thlight thright mbottom0"/>
@@ -352,6 +323,36 @@
         </html:link>
     </p>
 </logic:notEmpty>
+
+<%-- Jury --%>
+<h3 class="separator2 mtop2 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.jury" bundle="APPLICATION_RESOURCES"/></h3>
+
+<div style="padding: 1em;">
+	<p class="mtop0">
+		<bean:message key="label.thesis.external.orientators" bundle="APPLICATION_RESOURCES"/>
+	</p>
+</div>
+
+<%-- problems in the jury --%>
+<logic:notEmpty name="conditions">
+	<div class="warning0" style="padding: 1em;">
+    <strong><bean:message key="label.attention" bundle="APPLICATION_RESOURCES"/>:</strong><br/>
+	<ul class="mbottom05">
+	    <logic:iterate id="condition" name="conditions">
+	       	<li>
+	            <bean:define id="key" name="condition" property="key" type="java.lang.String"/>
+	            <bean:message key="<%= key %>" bundle="APPLICATION_RESOURCES"/>
+			</li>
+	    </logic:iterate>
+    </ul>
+    </div>
+</logic:notEmpty>
+<p>
+	<bean:message key="label.coordinator.thesis.jury" bundle="APPLICATION_RESOURCES"/>
+	<html:link target="_blank" href="http://da.ist.utl.pt/dissertacao-de-mestrado/">
+		<bean:message key="link.coordinator.thesis.consultHere" bundle="APPLICATION_RESOURCES"/>
+	</html:link>.
+</p>
 
 <%-- Jury/President --%>
 <h4 class="mtop25 mbottom05"><bean:message key="title.coordinator.thesis.edit.section.jury.president" bundle="APPLICATION_RESOURCES"/></h4>

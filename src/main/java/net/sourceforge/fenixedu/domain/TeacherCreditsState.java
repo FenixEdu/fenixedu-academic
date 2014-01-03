@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import net.sourceforge.fenixedu.domain.credits.CreditsState;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 public class TeacherCreditsState extends TeacherCreditsState_Base {
@@ -12,7 +13,7 @@ public class TeacherCreditsState extends TeacherCreditsState_Base {
         setExecutionSemester(executionSemester);
         setBasicOperations();
         setCloseState();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public boolean isOpenState() {
@@ -39,7 +40,7 @@ public class TeacherCreditsState extends TeacherCreditsState_Base {
     }
 
     public static TeacherCreditsState getTeacherCreditsState(ExecutionSemester executionSemester) {
-        for (TeacherCreditsState teacherCreditsState : RootDomainObject.getInstance().getTeacherCreditsStateSet()) {
+        for (TeacherCreditsState teacherCreditsState : Bennu.getInstance().getTeacherCreditsStateSet()) {
             if (teacherCreditsState.getExecutionSemester().equals(executionSemester)) {
                 return teacherCreditsState;
             }
@@ -58,7 +59,7 @@ public class TeacherCreditsState extends TeacherCreditsState_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

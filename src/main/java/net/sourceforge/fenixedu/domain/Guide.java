@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -31,7 +32,7 @@ public class Guide extends Guide_Base {
 
     public Guide() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void delete() {
@@ -106,12 +107,12 @@ public class Guide extends Guide_Base {
     }
 
     public static Integer generateGuideNumber() {
-        return Collections.max(RootDomainObject.getInstance().getGuides(), Guide.yearAndNumberComparator).getNumber() + 1;
+        return Collections.max(Bennu.getInstance().getGuidesSet(), Guide.yearAndNumberComparator).getNumber() + 1;
 
     }
 
     public static Guide readByNumberAndYearAndVersion(Integer number, Integer year, Integer version) {
-        for (Guide guide : RootDomainObject.getInstance().getGuides()) {
+        for (Guide guide : Bennu.getInstance().getGuidesSet()) {
             if (guide.getNumber().equals(number) && guide.getYear().equals(year) && guide.getVersion().equals(version)) {
                 return guide;
             }
@@ -121,7 +122,7 @@ public class Guide extends Guide_Base {
 
     static public Guide readLastVersionByNumberAndYear(Integer number, Integer year) {
         Set<Guide> result = new HashSet<Guide>();
-        for (Guide guide : RootDomainObject.getInstance().getGuides()) {
+        for (Guide guide : Bennu.getInstance().getGuidesSet()) {
             if (guide.getYear().equals(year) && guide.getNumber().equals(number)) {
                 result.add(guide);
             }
@@ -136,7 +137,7 @@ public class Guide extends Guide_Base {
 
     public static List<Guide> readByNumberAndYear(Integer number, Integer year) {
         List<Guide> guides = new ArrayList<Guide>();
-        for (Guide guide : RootDomainObject.getInstance().getGuides()) {
+        for (Guide guide : Bennu.getInstance().getGuidesSet()) {
             if (guide.getYear().equals(year) && guide.getNumber().equals(number)) {
                 guides.add(guide);
             }
@@ -147,7 +148,7 @@ public class Guide extends Guide_Base {
 
     public static List<Guide> readByYear(Integer year) {
         List<Guide> guides = new ArrayList<Guide>();
-        for (Guide guide : RootDomainObject.getInstance().getGuides()) {
+        for (Guide guide : Bennu.getInstance().getGuidesSet()) {
             if (guide.getYear().equals(year)) {
                 guides.add(guide);
             }
@@ -158,7 +159,7 @@ public class Guide extends Guide_Base {
     public static List<Guide> readByYearAndState(Integer guideYear, GuideState situationOfGuide) {
 
         List<Guide> result = new ArrayList<Guide>();
-        for (Guide guide : RootDomainObject.getInstance().getGuides()) {
+        for (Guide guide : Bennu.getInstance().getGuidesSet()) {
             GuideSituation activeSituation = guide.getActiveSituation();
             if (activeSituation != null && activeSituation.getSituation().equals(situationOfGuide)) {
                 if (guideYear == null || (guideYear != null && guide.getYear().equals(guideYear))) {
@@ -250,7 +251,7 @@ public class Guide extends Guide_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

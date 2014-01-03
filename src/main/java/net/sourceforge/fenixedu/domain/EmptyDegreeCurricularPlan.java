@@ -9,6 +9,8 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseView;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
@@ -34,7 +36,7 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
     private EmptyDegreeCurricularPlan() {
         super();
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     @Override
@@ -46,7 +48,7 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
         if (instance == null) {
             synchronized (EmptyDegreeCurricularPlan.class) {
                 if (instance == null) {
-                    for (final DegreeCurricularPlan iter : RootDomainObject.getInstance().getDegreeCurricularPlansSet()) {
+                    for (final DegreeCurricularPlan iter : Bennu.getInstance().getDegreeCurricularPlansSet()) {
                         if (iter.isEmpty()) {
                             instance = (EmptyDegreeCurricularPlan) iter;
                         }

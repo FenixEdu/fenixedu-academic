@@ -12,6 +12,7 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlLink;
 import pt.ist.fenixWebFramework.renderers.components.HtmlLinkWithPreprendedComment;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 
 public class ContextBreadCrumRenderer extends OutputRenderer {
 
@@ -65,8 +66,7 @@ public class ContextBreadCrumRenderer extends OutputRenderer {
                 }
 
                 if (targetContent.isAvailable()) {
-                    final String prefix =
-                            targetContent.isPublic() ? pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX : pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX;
+                    final String prefix = GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX;
                     HtmlLink link = new HtmlLinkWithPreprendedComment(prefix);
 
                     HtmlInlineContainer container = new HtmlInlineContainer();

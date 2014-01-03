@@ -2,8 +2,9 @@ package net.sourceforge.fenixedu.domain.accounting;
 
 import java.io.Serializable;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixframework.Atomic;
 
@@ -57,7 +58,7 @@ public class PaymentCodeMapping extends PaymentCodeMapping_Base {
 
     protected PaymentCodeMapping() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public PaymentCodeMapping(final ExecutionInterval executionInterval, final PaymentCode oldCode, final PaymentCode newCode) {
@@ -115,7 +116,7 @@ public class PaymentCodeMapping extends PaymentCodeMapping_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

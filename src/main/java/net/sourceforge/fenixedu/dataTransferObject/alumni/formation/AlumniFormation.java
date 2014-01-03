@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Formation;
 import net.sourceforge.fenixedu.domain.FormationType;
 import net.sourceforge.fenixedu.domain.QualificationType;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CountryUnit;
@@ -20,6 +19,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class AlumniFormation implements Serializable, IFormation {
 
@@ -56,7 +56,7 @@ public class AlumniFormation implements Serializable, IFormation {
 
     private void initEducationAreas() {
         allAreas = new ArrayList<AlumniEducationArea>();
-        for (EducationArea area : RootDomainObject.getInstance().getEducationAreas()) {
+        for (EducationArea area : Bennu.getInstance().getEducationAreasSet()) {
             allAreas.add(new AlumniEducationArea(area));
         }
     }

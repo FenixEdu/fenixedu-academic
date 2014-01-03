@@ -5,7 +5,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerAulasDeTurno;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadShiftByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.RemoverAula;
@@ -20,8 +19,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-
-import pt.ist.fenixWebFramework.security.UserView;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 /**
  * @author Luis Cruz & SaraRibeiro
@@ -36,7 +35,7 @@ public class RemoverAulaDeTurnoFormAction extends FenixShiftAndExecutionCourseAn
 
         DynaActionForm editarAulasDeTurnoForm = (DynaActionForm) request.getAttribute("editarAulasDeTurnoForm");
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         String shiftOID = request.getParameter(PresentationConstants.SHIFT_OID);
 

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.phd.individualProcess.activities;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.User;
+
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
@@ -12,7 +13,7 @@ import net.sourceforge.fenixedu.domain.phd.alert.AlertService.AlertMessage;
 public class AcceptEnrolments extends PhdIndividualProgramProcessActivity {
 
     @Override
-    public void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+    public void activityPreConditions(PhdIndividualProgramProcess process, User userView) {
 
         if (!process.isCoordinatorForPhdProgram(userView.getPerson())) {
             throw new PreConditionNotValidException();
@@ -20,7 +21,7 @@ public class AcceptEnrolments extends PhdIndividualProgramProcessActivity {
     }
 
     @Override
-    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
+    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, User userView, Object object) {
 
         final ManageEnrolmentsBean bean = (ManageEnrolmentsBean) object;
 

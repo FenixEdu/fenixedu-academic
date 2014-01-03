@@ -2,15 +2,14 @@ package net.sourceforge.fenixedu.domain.log.requests;
 
 import java.util.ArrayList;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 public class RequestLogDay extends RequestLogDay_Base {
 
     public RequestLogDay() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void delele() {
@@ -34,7 +33,7 @@ public class RequestLogDay extends RequestLogDay_Base {
         int month = now.getMonthOfYear();
         int day = now.getDayOfMonth();
 
-        RequestLogDay mostRecent = RootDomainObject.getInstance().getMostRecentRequestLogDay();
+        RequestLogDay mostRecent = Bennu.getInstance().getMostRecentRequestLogDay();
         if (mostRecent.getDayOfMonth().equals(day)) {
             return mostRecent;
         } else {
@@ -43,7 +42,7 @@ public class RequestLogDay extends RequestLogDay_Base {
                 requestLogDay.setDayOfMonth(day);
                 requestLogDay.setPrevious(mostRecent);
                 mostRecent.getMonth().addDays(requestLogDay);
-                RootDomainObject.getInstance().setMostRecentRequestLogDay(requestLogDay);
+                Bennu.getInstance().setMostRecentRequestLogDay(requestLogDay);
                 return requestLogDay;
             } else {
                 if (mostRecent.getMonth().getYear().getYear().equals(year)) {
@@ -55,7 +54,7 @@ public class RequestLogDay extends RequestLogDay_Base {
                     requestLogDay.setDayOfMonth(day);
                     requestLogDay.setPrevious(mostRecent);
                     mostRecent.getMonth().addDays(requestLogDay);
-                    RootDomainObject.getInstance().setMostRecentRequestLogDay(requestLogDay);
+                    Bennu.getInstance().setMostRecentRequestLogDay(requestLogDay);
                     return requestLogDay;
                 } else {
                     RequestLogYear requestLogYear = new RequestLogYear();
@@ -69,7 +68,7 @@ public class RequestLogDay extends RequestLogDay_Base {
                     requestLogDay.setDayOfMonth(day);
                     requestLogDay.setPrevious(mostRecent);
                     mostRecent.getMonth().addDays(requestLogDay);
-                    RootDomainObject.getInstance().setMostRecentRequestLogDay(requestLogDay);
+                    Bennu.getInstance().setMostRecentRequestLogDay(requestLogDay);
                     return requestLogDay;
                 }
             }
@@ -87,7 +86,7 @@ public class RequestLogDay extends RequestLogDay_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObjectRequestLogDay() {
+    public boolean hasBennuRequestLogDay() {
         return getRootDomainObjectRequestLogDay() != null;
     }
 
@@ -102,7 +101,7 @@ public class RequestLogDay extends RequestLogDay_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

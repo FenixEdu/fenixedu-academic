@@ -6,8 +6,8 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -23,14 +23,11 @@ import pt.ist.fenixframework.FenixFramework;
 @Mapping(module = "external", path = "/connect", scope = "request", parameter = "method")
 public class ISTConnectDA extends ExternalInterfaceDispatchAction {
 
-    private static final String USERNAME_KEY = "externalServices.ISTConnect.username";
-    private static final String PASSWORD_KEY = "externalServices.ISTConnect.password";
-
     private boolean doLogin(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
         final String username = (String) getFromRequest(request, "username");
         final String password = (String) getFromRequest(request, "password");
-        final String usernameProp = PropertiesManager.getProperty(USERNAME_KEY);
-        final String passwordProp = PropertiesManager.getProperty(PASSWORD_KEY);
+        final String usernameProp = FenixConfigurationManager.getConfiguration().getExternalServicesISTConnectUsername();
+        final String passwordProp = FenixConfigurationManager.getConfiguration().getExternalServicesISTConnectPassword();
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password) || StringUtils.isEmpty(usernameProp)
                 || StringUtils.isEmpty(passwordProp)) {
             return false;
@@ -42,7 +39,7 @@ public class ISTConnectDA extends ExternalInterfaceDispatchAction {
             HttpServletResponse response) throws Exception {
         if (doLogin(mapping, actionForm, request, response)) {
             final String istID = (String) getFromRequest(request, "istID");
-            final Person person = Person.readPersonByIstUsername(istID);
+            final Person person = Person.readPersonByUsername(istID);
             final JSONObject jsonObject = DomainObjectJSONSerializer.getDomainObject(person);
             writeJSONObject(response, jsonObject);
         } else {
@@ -55,7 +52,7 @@ public class ISTConnectDA extends ExternalInterfaceDispatchAction {
             HttpServletResponse response) throws Exception {
         if (doLogin(mapping, actionForm, request, response)) {
             final String istID = (String) getFromRequest(request, "istID");
-            final Person person = Person.readPersonByIstUsername(istID);
+            final Person person = Person.readPersonByUsername(istID);
 
             final JSONObject jsonObject = new JSONObject();
 

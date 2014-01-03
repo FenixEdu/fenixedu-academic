@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadRoomsWithNoExamsInDayAndBeginning;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
@@ -14,8 +13,8 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-
-import pt.ist.fenixWebFramework.security.UserView;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 /**
  * @author Luis Cruz e Sara Ribeiro
@@ -26,7 +25,7 @@ public class ViewEmptyRoomsInDayAndShiftAction extends Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         Calendar dateAndTime = (Calendar) request.getAttribute(PresentationConstants.EXAM_DATEANDTIME);
 

@@ -96,12 +96,12 @@
 </style>
 
 
-<div class="col_right_photo"><img src="http://www.ist.utl.pt/img/perfil/candidato_photo.jpg" alt="[Foto] Inscrições na secretaria" width="150" height="100" /></div>
+<div class="col_right_photo"><img src="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>img/perfil/candidato_photo.jpg" alt="[Foto] Inscrições na secretaria" width="150" height="100" /></div>
 <h1>Candidato</h1> 
-<p class="greytxt">Bem-vindo &agrave; p&aacute;gina informativa destinada aos  Candidatos a ingressar no IST. O objectivo &eacute; fornecer aqui os links que pensamos serem mais &uacute;teis para o seu processo de candidatura.</p>
-<h2>Com o IST, entra no melhor ensino superior europeu</h2>
+<p class="greytxt">Bem-vindo &agrave; p&aacute;gina informativa destinada aos  Candidatos a ingressar no <%= net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym() %>. O objectivo &eacute; fornecer aqui os links que pensamos serem mais &uacute;teis para o seu processo de candidatura.</p>
+<h2>Com o <%= net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym() %>, entra no melhor ensino superior europeu</h2>
 
-<p>O Instituto Superior Técnico (IST), escola de referência em Engenharia, Ciência e Tecnologia, implementou, a partir do ano lectivo de 2006/2007, uma reforma de todas as suas formações de acordo com o Processo de Bolonha.</p>
+<p>O <%= net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent() %> (<%= net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym() %>), escola de referência em Engenharia, Ciência e Tecnologia, implementou, a partir do ano lectivo de 2006/2007, uma reforma de todas as suas formações de acordo com o Processo de Bolonha.</p>
 <p>Esta reforma visa:</p>
 <ul>
 	<li>aumentar a mobilidade dos estudantes a nível nacional e internacional;</li>
@@ -120,22 +120,22 @@
 	<ul class="cycles">
 		<li class="btt_one"><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/licenciaturas" %>">Licenciaturas (1&ordm; Ciclo)</a></li>
 		<li class="btt_two"><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/mestrados" %>">Mestrados (2&ordm; Ciclo)</a></li>
-		<li class="btt_three"><a href="http://www.ist.utl.pt/html/perfil/candidato/pd/">Forma&ccedil;&atilde;o Avan&ccedil;ada</a></li>
-		<li class="btt_four"><a href="http://www.ist.utl.pt/html/perfil/candidato/fa/">Programas Doutorais (3&ordm; Ciclo)</a></li>
+		<li class="btt_three"><a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>html/perfil/candidato/pd/">Forma&ccedil;&atilde;o Avan&ccedil;ada</a></li>
+		<li class="btt_four"><a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>html/perfil/candidato/fa/">Programas Doutorais (3&ordm; Ciclo)</a></li>
 	</ul>
 
 	<div style="clear: both;"></div>
 </div>
 
-<p>Na sequ&ecirc;ncia destas forma&ccedil;&otilde;es de 1&ordm; e 2&ordm; ciclo, o IST, como grande escola europeia na &aacute;rea da Engenharia, Ci&ecirc;ncia e Tecnologia, oferece um amplo leque de forma&ccedil;&otilde;es p&oacute;s-graduadas de &iacute;ndole profissionalizante ou mais vocacionadas para a Investiga&ccedil;&atilde;o, o Desenvolvimento e a Inova&ccedil;&atilde;o. Neste &acirc;mbito o IST est&aacute; fortemente envolvido em programas de coopera&ccedil;&atilde;o com as melhores escolas europeias no &acirc;mbito da rede CLUSTER e tamb&eacute;m com universidades americanas de refer&ecirc;ncia como sejam o MIT, a CMU ou a UTAustin.</p>
+<p>Na sequ&ecirc;ncia destas forma&ccedil;&otilde;es de 1&ordm; e 2&ordm; ciclo, o <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>, como grande escola europeia na &aacute;rea da Engenharia, Ci&ecirc;ncia e Tecnologia, oferece um amplo leque de forma&ccedil;&otilde;es p&oacute;s-graduadas de &iacute;ndole profissionalizante ou mais vocacionadas para a Investiga&ccedil;&atilde;o, o Desenvolvimento e a Inova&ccedil;&atilde;o. Neste &acirc;mbito o <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> est&aacute; fortemente envolvido em programas de coopera&ccedil;&atilde;o com as melhores escolas europeias no &acirc;mbito da rede CLUSTER e tamb&eacute;m com universidades americanas de refer&ecirc;ncia como sejam o MIT, a CMU ou a UTAustin.</p>
 
 <h2>Contacto</h2>
 <h3><a href="http://nape.ist.utl.pt/nape/index.php">Núcleo de Apoio ao Estudante (NAPE)</a></h3>
-<p><strong>IST - Alameda </strong><br />
+<p><strong><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> - Alameda </strong><br />
 	Tlf: 218 417 251 / 218 419 155 <br />
 	Fax: 218 419 344
 </p>
-<p><strong>IST - Taguspark</strong><br />
+<p><strong><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> - Taguspark</strong><br />
    Tlf: 214 233 545</p>
 
 <p><a href="mailto:nape@ist.utl.pt">nape@ist.utl.pt</a></p> 

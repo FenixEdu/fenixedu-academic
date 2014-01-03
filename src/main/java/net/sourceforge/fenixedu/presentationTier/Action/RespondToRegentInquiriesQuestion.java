@@ -11,6 +11,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+@Mapping(path = "/respondToRegentInquiriesQuestion")
 public class RespondToRegentInquiriesQuestion extends FenixDispatchAction {
 
     public final ActionForward showQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -18,7 +21,7 @@ public class RespondToRegentInquiriesQuestion extends FenixDispatchAction {
         final RegentInquiryTemplate currentTemplate = RegentInquiryTemplate.getCurrentTemplate();
         request.setAttribute("inquiryTemplate", currentTemplate);
         request.setAttribute("executionCourses", AccessControl.getPerson().getExecutionCoursesWithRegentInquiriesToAnswer());
-        return mapping.findForward("respondToInquiriesQuestion");
+        return new ActionForward("/respondToRegentInquiriesQuestion.jsp");
     }
 
     private ActionForward forward(final String path) {

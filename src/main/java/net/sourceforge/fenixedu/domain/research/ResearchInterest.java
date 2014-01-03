@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
@@ -25,7 +26,7 @@ public class ResearchInterest extends ResearchInterest_Base {
 
     public ResearchInterest() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void delete() {
@@ -146,7 +147,7 @@ public class ResearchInterest extends ResearchInterest_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

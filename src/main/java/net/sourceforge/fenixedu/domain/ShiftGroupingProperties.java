@@ -1,10 +1,12 @@
 package net.sourceforge.fenixedu.domain;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 public class ShiftGroupingProperties extends ShiftGroupingProperties_Base {
 
     public ShiftGroupingProperties(Shift shift, Grouping grouping, Integer capacity) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setCapacity(capacity);
         setShift(shift);
         setGrouping(grouping);
@@ -18,7 +20,7 @@ public class ShiftGroupingProperties extends ShiftGroupingProperties_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

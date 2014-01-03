@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.domain.phd;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
@@ -25,7 +25,7 @@ abstract public class PhdStudyPlanEntry extends PhdStudyPlanEntry_Base {
 
     protected PhdStudyPlanEntry() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setWhenCreated(new DateTime());
         if (AccessControl.getPerson() != null) {
             setCreatedBy(AccessControl.getPerson().getUsername());
@@ -92,7 +92,7 @@ abstract public class PhdStudyPlanEntry extends PhdStudyPlanEntry_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

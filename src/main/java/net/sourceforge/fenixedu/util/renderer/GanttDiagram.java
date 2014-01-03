@@ -9,7 +9,6 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import org.apache.jcs.access.exception.InvalidArgumentException;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Interval;
@@ -50,61 +49,54 @@ public class GanttDiagram {
 
     private List<DateTime> months, days;
 
-    public static GanttDiagram getNewTotalGanttDiagram(List<? extends GanttDiagramEvent> events_) throws InvalidArgumentException {
+    public static GanttDiagram getNewTotalGanttDiagram(List<? extends GanttDiagramEvent> events_) {
         return new GanttDiagram(events_, ViewType.TOTAL);
     }
 
     public static GanttDiagram getNewTotalGanttDiagram(List<? extends GanttDiagramEvent> events_, YearMonthDay begin,
-            YearMonthDay end) throws InvalidArgumentException {
+            YearMonthDay end) {
         return new GanttDiagram(events_, ViewType.TOTAL, begin, end);
     }
 
-    public static GanttDiagram getNewWeeklyGanttDiagram(List<? extends GanttDiagramEvent> events_, YearMonthDay begin)
-            throws InvalidArgumentException {
+    public static GanttDiagram getNewWeeklyGanttDiagram(List<? extends GanttDiagramEvent> events_, YearMonthDay begin) {
         return new GanttDiagram(events_, ViewType.WEEKLY, begin);
     }
 
-    public static GanttDiagram getNewDailyGanttDiagram(List<? extends GanttDiagramEvent> events_, YearMonthDay begin)
-            throws InvalidArgumentException {
+    public static GanttDiagram getNewDailyGanttDiagram(List<? extends GanttDiagramEvent> events_, YearMonthDay begin) {
         return new GanttDiagram(events_, ViewType.DAILY, begin);
     }
 
-    public static GanttDiagram getNewMonthlyGanttDiagram(List<? extends GanttDiagramEvent> events_, YearMonthDay begin)
-            throws InvalidArgumentException {
+    public static GanttDiagram getNewMonthlyGanttDiagram(List<? extends GanttDiagramEvent> events_, YearMonthDay begin) {
         return new GanttDiagram(events_, ViewType.MONTHLY, begin);
     }
 
-    public static GanttDiagram getNewMonthlyTotalGanttDiagram(List<? extends GanttDiagramEvent> events_, YearMonthDay begin)
-            throws InvalidArgumentException {
+    public static GanttDiagram getNewMonthlyTotalGanttDiagram(List<? extends GanttDiagramEvent> events_, YearMonthDay begin) {
         return new GanttDiagram(events_, ViewType.MONTHLY_TOTAL, begin);
     }
 
-    public static GanttDiagram getNewYearDailyGanttDiagram(List<? extends GanttDiagramEvent> events_, YearMonthDay begin)
-            throws InvalidArgumentException {
+    public static GanttDiagram getNewYearDailyGanttDiagram(List<? extends GanttDiagramEvent> events_, YearMonthDay begin) {
         return new GanttDiagram(events_, ViewType.YEAR_DAILY, begin);
     }
 
-    private GanttDiagram(List<? extends GanttDiagramEvent> events_, ViewType type) throws InvalidArgumentException {
+    private GanttDiagram(List<? extends GanttDiagramEvent> events_, ViewType type) {
         setViewType(type);
         setEvents(events_);
         init(type, null, null);
     }
 
-    private GanttDiagram(List<? extends GanttDiagramEvent> events_, ViewType type, YearMonthDay begin)
-            throws InvalidArgumentException {
+    private GanttDiagram(List<? extends GanttDiagramEvent> events_, ViewType type, YearMonthDay begin) {
         setViewType(type);
         setEvents(events_);
         init(type, begin, null);
     }
 
-    private GanttDiagram(List<? extends GanttDiagramEvent> events_, ViewType type, YearMonthDay begin, YearMonthDay end)
-            throws InvalidArgumentException {
+    private GanttDiagram(List<? extends GanttDiagramEvent> events_, ViewType type, YearMonthDay begin, YearMonthDay end) {
         setViewType(type);
         setEvents(events_);
         init(type, begin, end);
     }
 
-    private void init(ViewType type, YearMonthDay begin, YearMonthDay end) throws InvalidArgumentException {
+    private void init(ViewType type, YearMonthDay begin, YearMonthDay end) {
         switch (type) {
 
         case TOTAL:
@@ -142,9 +134,9 @@ public class GanttDiagram {
         }
     }
 
-    private void calculateFirstAndLastInstantInMonthlyMode(YearMonthDay begin) throws InvalidArgumentException {
+    private void calculateFirstAndLastInstantInMonthlyMode(YearMonthDay begin) {
         if (begin == null) {
-            throw new InvalidArgumentException();
+            throw new IllegalArgumentException();
         }
         DateTime beginDateTime = begin.toDateTimeAtMidnight();
         beginDateTime = (beginDateTime.getDayOfMonth() != 1) ? beginDateTime.withDayOfMonth(1) : beginDateTime;
@@ -152,17 +144,17 @@ public class GanttDiagram {
         setLastInstant(beginDateTime.plusMonths(1).minusDays(1));
     }
 
-    private void calculateFirstAndLastInstantInDailyMode(YearMonthDay begin) throws InvalidArgumentException {
+    private void calculateFirstAndLastInstantInDailyMode(YearMonthDay begin) {
         if (begin == null) {
-            throw new InvalidArgumentException();
+            throw new IllegalArgumentException();
         }
         setFirstInstant(begin.toDateTimeAtMidnight());
         setLastInstant(begin.toDateTimeAtMidnight());
     }
 
-    private void calculateFirstAndLastInstantInWeeklyMode(YearMonthDay begin) throws InvalidArgumentException {
+    private void calculateFirstAndLastInstantInWeeklyMode(YearMonthDay begin) {
         if (begin == null) {
-            throw new InvalidArgumentException();
+            throw new IllegalArgumentException();
         }
         DateTime beginDateTime = begin.toDateTimeAtMidnight();
         beginDateTime = (beginDateTime.getDayOfWeek() != 1) ? beginDateTime.withDayOfWeek(1) : beginDateTime;
@@ -170,10 +162,10 @@ public class GanttDiagram {
         setLastInstant(beginDateTime.plusDays(6));
     }
 
-    private void calculateFirstAndLastInstantInTotalMode(YearMonthDay begin, YearMonthDay end) throws InvalidArgumentException {
+    private void calculateFirstAndLastInstantInTotalMode(YearMonthDay begin, YearMonthDay end) {
 
         if ((begin != null && end == null) || (end != null && begin == null)) {
-            throw new InvalidArgumentException();
+            throw new IllegalArgumentException();
         }
 
         if (begin == null) {
@@ -201,7 +193,7 @@ public class GanttDiagram {
 
         if ((getFirstInstant() != null && getLastInstant() != null)
                 && (getFirstInstant().isAfter(getLastInstant()) || getLastInstant().isBefore(getFirstInstant()))) {
-            throw new InvalidArgumentException();
+            throw new IllegalArgumentException();
         }
     }
 

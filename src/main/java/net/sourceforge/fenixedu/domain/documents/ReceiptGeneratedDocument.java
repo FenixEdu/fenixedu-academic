@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.documents;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
+
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
@@ -33,10 +34,11 @@ public class ReceiptGeneratedDocument extends ReceiptGeneratedDocument_Base {
 
     @Atomic
     public static void store(Receipt source, String filename, byte[] content) {
-        if (PropertiesManager.getBooleanProperty(CONFIG_DSPACE_DOCUMENT_STORE)) {
+        if (!CoreConfiguration.getConfiguration().developmentMode()) {
             new ReceiptGeneratedDocument(source, source.getPerson(), AccessControl.getPerson(), filename, content);
         }
     }
+
     @Deprecated
     public boolean hasSource() {
         return getSource() != null;

@@ -9,6 +9,7 @@ import java.util.UUID;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -37,7 +38,7 @@ public class AlumniIdentityCheckRequest extends AlumniIdentityCheckRequest_Base 
         setRequestType(requestType);
         setRequestToken(UUID.randomUUID());
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     private void checkParameters(String contactEmail, String documentIdNumber, String fullName,
@@ -60,7 +61,7 @@ public class AlumniIdentityCheckRequest extends AlumniIdentityCheckRequest_Base 
     }
 
     public static boolean hasPendingRequestsForDocumentNumber(String documentIdNumber) {
-        for (AlumniIdentityCheckRequest request : RootDomainObject.getInstance().getAlumniIdentityRequest()) {
+        for (AlumniIdentityCheckRequest request : Bennu.getInstance().getAlumniIdentityRequestSet()) {
             if (request.getDocumentIdNumber().equals(documentIdNumber)) {
                 return true;
             }
@@ -70,7 +71,7 @@ public class AlumniIdentityCheckRequest extends AlumniIdentityCheckRequest_Base 
 
     public static Collection<AlumniIdentityCheckRequest> readPendingRequests() {
         Collection<AlumniIdentityCheckRequest> pendingRequests = new ArrayList<AlumniIdentityCheckRequest>();
-        Set<AlumniIdentityCheckRequest> requests = DomainObjectUtil.readAllDomainObjects(AlumniIdentityCheckRequest.class);
+        Set<AlumniIdentityCheckRequest> requests = Bennu.getInstance().getAlumniIdentityRequestSet();
 
         AlumniIdentityCheckRequest request;
         Iterator iter = requests.iterator();
@@ -85,10 +86,9 @@ public class AlumniIdentityCheckRequest extends AlumniIdentityCheckRequest_Base 
 
     public static Object readClosedRequests() {
         Collection<AlumniIdentityCheckRequest> pendingRequests = new ArrayList<AlumniIdentityCheckRequest>();
-        Set<AlumniIdentityCheckRequest> requests = DomainObjectUtil.readAllDomainObjects(AlumniIdentityCheckRequest.class);
 
         AlumniIdentityCheckRequest request;
-        Iterator iter = requests.iterator();
+        Iterator<AlumniIdentityCheckRequest> iter = Bennu.getInstance().getAlumniIdentityRequestSet().iterator();
         while (iter.hasNext()) {
             request = (AlumniIdentityCheckRequest) iter.next();
             if (request.getApproved() != null) {
@@ -174,7 +174,7 @@ public class AlumniIdentityCheckRequest extends AlumniIdentityCheckRequest_Base 
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -13,7 +13,7 @@
 	<h2><bean:message key="label.createTeacherExpectationVisualizationPeriodManagement.title"/></h2>
 </logic:empty>
 
-<logic:present role="DEPARTMENT_ADMINISTRATIVE_OFFICE">
+<logic:present role="role(DEPARTMENT_ADMINISTRATIVE_OFFICE)">
 	
 	<logic:messagesPresent message="true">
 		<p>

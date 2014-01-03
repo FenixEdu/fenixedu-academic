@@ -103,7 +103,8 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
     public ActionForward insertEvaluationMark(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         TeacherEvaluationProcess process = getDomainObject(request, "process");
-        if (process.getEvaluator() != AccessControl.getPerson() && AccessControl.getPerson().isTeacherEvaluationCoordinatorCouncilMember()) {
+        if (process.getEvaluator() != AccessControl.getPerson()
+                && AccessControl.getPerson().isTeacherEvaluationCoordinatorCouncilMember()) {
             request.setAttribute("action", "viewEvaluationByCCAD&processId=" + process.getExternalId());
         } else {
             request.setAttribute("action", "viewEvaluation&evalueeOID=" + process.getEvaluee().getExternalId());
@@ -167,9 +168,9 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
     }
 
     public class EvalueesMap implements Serializable {
-        private Person evaluee;
+        private final Person evaluee;
 
-        private SortedMap<FacultyEvaluationProcess, TeacherEvaluationProcess> processes =
+        private final SortedMap<FacultyEvaluationProcess, TeacherEvaluationProcess> processes =
                 new TreeMap<FacultyEvaluationProcess, TeacherEvaluationProcess>();
 
         public EvalueesMap(Person evaluee) {
@@ -414,7 +415,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
         final String fileNameSeparator = "_";
         final String withoutDepartment = "Sem departamento";
         try {
-            for (FacultyEvaluationProcess facultyEvaluationProcess : rootDomainObject.getFacultyEvaluationProcess()) {
+            for (FacultyEvaluationProcess facultyEvaluationProcess : rootDomainObject.getFacultyEvaluationProcessSet()) {
                 String evaluationName =
                         (facultyEvaluationProcess.getSuffix() == null ? facultyEvaluationProcess.getTitle().getContent() : facultyEvaluationProcess
                                 .getSuffix());
@@ -463,7 +464,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
         final String fileNameSeparator = "_";
         final String withoutDepartment = "Sem departamento";
         try {
-            for (FacultyEvaluationProcess facultyEvaluationProcess : rootDomainObject.getFacultyEvaluationProcess()) {
+            for (FacultyEvaluationProcess facultyEvaluationProcess : rootDomainObject.getFacultyEvaluationProcessSet()) {
                 String evaluationName =
                         (facultyEvaluationProcess.getSuffix() == null ? facultyEvaluationProcess.getTitle().getContent() : facultyEvaluationProcess
                                 .getSuffix());

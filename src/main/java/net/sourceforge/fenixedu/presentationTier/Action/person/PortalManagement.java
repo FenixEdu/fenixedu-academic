@@ -4,10 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.person.AddContentToPool;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.CreatePortal;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.DeleteTemplatedContent;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.EditPortal;
-import net.sourceforge.fenixedu.domain.MetaDomainObject;
 import net.sourceforge.fenixedu.domain.contents.Element;
 import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.domain.contents.Portal;
@@ -17,6 +15,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -39,18 +38,9 @@ public class PortalManagement extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
-        request.setAttribute("metaDomainObjects", rootDomainObject.getMetaDomainObjects());
+        request.setAttribute("metaDomainObjects", Bennu.getInstance().getMetaDomainObjectPortalSet());
 
         return mapping.findForward("selectMetaDomainObject");
-    }
-
-    public ActionForward prepareCreatePortal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
-        MetaDomainObject metaDomainObject = getMetaDomainObject(request);
-        PortalBean bean = new PortalBean(metaDomainObject);
-
-        request.setAttribute("bean", bean);
-        return mapping.findForward("createPortal");
     }
 
     public ActionForward prepareEditPortal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -68,20 +58,6 @@ public class PortalManagement extends FenixDispatchAction {
 
         try {
             EditPortal.run(bean.getPortal(), bean.getName(), bean.getPrefix());
-        } catch (Exception exception) {
-            addActionMessage(request, exception.getMessage());
-        }
-
-        return prepare(mapping, form, request, response);
-    }
-
-    public ActionForward createPortal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
-        PortalBean bean = (PortalBean) RenderUtils.getViewState("createPortal").getMetaObject().getObject();
-
-        try {
-            CreatePortal.run((MetaDomainObject) (bean.getContainer() == null ? bean.getMetaDomainObject() : bean.getContainer()),
-                    bean.getName(), bean.getPrefix());
         } catch (Exception exception) {
             addActionMessage(request, exception.getMessage());
         }
@@ -135,8 +111,4 @@ public class PortalManagement extends FenixDispatchAction {
         return (Portal) FenixFramework.getDomainObject(portalID);
     }
 
-    private MetaDomainObject getMetaDomainObject(HttpServletRequest request) {
-        String metaObjectID = request.getParameter("oid");
-        return FenixFramework.getDomainObject(metaObjectID);
-    }
 }

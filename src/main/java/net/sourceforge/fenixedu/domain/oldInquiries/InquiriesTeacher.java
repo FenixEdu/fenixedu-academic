@@ -6,6 +6,8 @@ package net.sourceforge.fenixedu.domain.oldInquiries;
 
 import java.util.Map;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.AffiliatedTeacherDTO;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InfoInquiriesTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InquiriesQuestion;
@@ -14,7 +16,6 @@ import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.TeacherInquiryDT
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -26,7 +27,7 @@ public class InquiriesTeacher extends InquiriesTeacher_Base {
 
     public InquiriesTeacher() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     protected InquiriesTeacher(InquiriesCourse inquiriesCourse, Professorship professorship, ShiftType shiftType,
@@ -120,7 +121,7 @@ public class InquiriesTeacher extends InquiriesTeacher_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

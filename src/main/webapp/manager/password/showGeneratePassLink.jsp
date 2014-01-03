@@ -7,7 +7,7 @@
 
 
 <div class="infoop2 mvert15">
-<bean:message key="message.generate.password" bundle="APPLICATION_RESOURCES"/>
+<bean:message key="message.generate.password" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="APPLICATION_RESOURCES"/>
 </div>
 
 <p><html:link href='https://ciist.ist.utl.pt/ciistadmin/admin' target="_blank"><bean:message key="link.generate.password" bundle="APPLICATION_RESOURCES"/></html:link></p>	

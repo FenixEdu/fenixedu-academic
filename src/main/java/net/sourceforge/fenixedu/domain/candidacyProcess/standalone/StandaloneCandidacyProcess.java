@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
@@ -21,6 +20,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.StandaloneCandidacyPeriod;
 
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 
 import com.google.common.collect.Sets;
@@ -56,7 +56,7 @@ public class StandaloneCandidacyProcess extends StandaloneCandidacyProcess_Base 
     }
 
     @Override
-    public boolean canExecuteActivity(final IUserView userView) {
+    public boolean canExecuteActivity(final User userView) {
         return isAllowedToManageProcess(userView);
     }
 
@@ -98,7 +98,7 @@ public class StandaloneCandidacyProcess extends StandaloneCandidacyProcess_Base 
             DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE,
             DegreeType.BOLONHA_SPECIALIZATION_DEGREE);
 
-    static private boolean isAllowedToManageProcess(IUserView userView) {
+    static private boolean isAllowedToManageProcess(User userView) {
         for (AcademicProgram program : AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
                 AcademicOperationType.MANAGE_CANDIDACY_PROCESSES)) {
             if (ALLOWED_DEGREE_TYPES.contains(program.getDegreeType())) {
@@ -112,14 +112,14 @@ public class StandaloneCandidacyProcess extends StandaloneCandidacyProcess_Base 
     static public class CreateCandidacyPeriod extends Activity<StandaloneCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(StandaloneCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(StandaloneCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(userView)) {
                 throw new PreConditionNotValidException();
             }
         }
 
         @Override
-        protected StandaloneCandidacyProcess executeActivity(StandaloneCandidacyProcess process, IUserView userView, Object object) {
+        protected StandaloneCandidacyProcess executeActivity(StandaloneCandidacyProcess process, User userView, Object object) {
             final CandidacyProcessBean bean = (CandidacyProcessBean) object;
             return new StandaloneCandidacyProcess((ExecutionSemester) bean.getExecutionInterval(), bean.getStart(), bean.getEnd());
         }
@@ -128,14 +128,14 @@ public class StandaloneCandidacyProcess extends StandaloneCandidacyProcess_Base 
     static private class EditCandidacyPeriod extends Activity<StandaloneCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(StandaloneCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(StandaloneCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(userView)) {
                 throw new PreConditionNotValidException();
             }
         }
 
         @Override
-        protected StandaloneCandidacyProcess executeActivity(StandaloneCandidacyProcess process, IUserView userView, Object object) {
+        protected StandaloneCandidacyProcess executeActivity(StandaloneCandidacyProcess process, User userView, Object object) {
             final CandidacyProcessBean bean = (CandidacyProcessBean) object;
             process.edit(bean.getStart(), bean.getEnd());
             return process;
@@ -145,7 +145,7 @@ public class StandaloneCandidacyProcess extends StandaloneCandidacyProcess_Base 
     static private class SendToCoordinator extends Activity<StandaloneCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(StandaloneCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(StandaloneCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -160,7 +160,7 @@ public class StandaloneCandidacyProcess extends StandaloneCandidacyProcess_Base 
         }
 
         @Override
-        protected StandaloneCandidacyProcess executeActivity(StandaloneCandidacyProcess process, IUserView userView, Object object) {
+        protected StandaloneCandidacyProcess executeActivity(StandaloneCandidacyProcess process, User userView, Object object) {
             process.setState(CandidacyProcessState.SENT_TO_COORDINATOR);
             return process;
         }
@@ -169,7 +169,7 @@ public class StandaloneCandidacyProcess extends StandaloneCandidacyProcess_Base 
     static private class PrintCandidacies extends Activity<StandaloneCandidacyProcess> {
 
         @Override
-        public void checkPreConditions(StandaloneCandidacyProcess process, IUserView userView) {
+        public void checkPreConditions(StandaloneCandidacyProcess process, User userView) {
             if (!isAllowedToManageProcess(userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -179,7 +179,7 @@ public class StandaloneCandidacyProcess extends StandaloneCandidacyProcess_Base 
         }
 
         @Override
-        protected StandaloneCandidacyProcess executeActivity(StandaloneCandidacyProcess process, IUserView userView, Object object) {
+        protected StandaloneCandidacyProcess executeActivity(StandaloneCandidacyProcess process, User userView, Object object) {
             return process; // for now, nothing to be done
         }
     }

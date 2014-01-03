@@ -7,11 +7,9 @@ import java.io.InputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Photograph;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.ContentType;
 
@@ -19,8 +17,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionServlet;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -36,13 +35,13 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
     public ActionForward retrieveByUUID(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
         final String uuid = request.getParameter("uuid");
-        final User user = User.readUserByUserUId(uuid);
+        final User user = User.findByUsername(uuid);
         return user == null ? null : retrievePhotograph(request, response, user.getPerson());
     }
 
     public ActionForward retrieveOwnPhoto(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        final IUserView userView = UserView.getUser();
+        final User userView = Authenticate.getUser();
         final Photograph personalPhoto = userView.getPerson().getPersonalPhotoEvenIfPending();
         if (personalPhoto != null) {
             writePhoto(response, personalPhoto);

@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationStateBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -27,6 +26,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.RegistrationStatePredicates;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -86,7 +86,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 
     public RegistrationState() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     private static RegistrationState createState(Registration registration, Person person, DateTime dateTime,
@@ -368,7 +368,7 @@ public abstract class RegistrationState extends RegistrationState_Base implement
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

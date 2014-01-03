@@ -7,6 +7,8 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.gesdis;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.coordinator.CoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Coordinator;
@@ -33,7 +35,7 @@ public class ReadCourseInformationCoordinatorAuthorizationFilter extends Coordin
     }
 
     public void execute(String execution) throws NotAuthorizedException {
-        Person person = AccessControl.getUserView().getPerson();
+        Person person = Authenticate.getUser().getPerson();
 
         if (!person.hasRole(RoleType.COORDINATOR)) {
             deny();

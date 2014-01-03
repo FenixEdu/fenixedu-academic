@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.domain.inquiries;
 import java.util.Collection;
 import java.util.List;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseInquiriesRegistryDTO;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -13,7 +15,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.GradeScale;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
@@ -21,7 +22,7 @@ public class StudentInquiryRegistry extends StudentInquiryRegistry_Base {
 
     public StudentInquiryRegistry() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public StudentInquiryRegistry(ExecutionCourse executionCourse, ExecutionSemester executionPeriod,
@@ -170,7 +171,7 @@ public class StudentInquiryRegistry extends StudentInquiryRegistry_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

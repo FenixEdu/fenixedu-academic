@@ -4,10 +4,13 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import java.io.PrintWriter;
 import java.security.MessageDigest;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.net.ssl.SSLContext;
@@ -16,9 +19,6 @@ import javax.net.ssl.X509TrustManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.logging.SystemInfo;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -49,6 +49,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.RootCurriculumGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -67,7 +68,7 @@ import org.restlet.util.Series;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixframework.core.SharedIdentityMap;
 
 /**
  * @author Luis Cruz
@@ -79,16 +80,9 @@ public class MonitorSystemDA extends FenixDispatchAction {
     public ActionForward monitor(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        IUserView userView = UserView.getUser();
+        request.setAttribute("properties", System.getProperties());
 
-        SystemInfo systemInfoApplicationServer = new SystemInfo();
-        request.setAttribute("systemInfoApplicationServer", systemInfoApplicationServer);
-
-        SystemInfo systemInfoWebContainer = new SystemInfo();
-        request.setAttribute("systemInfoWebContainer", systemInfoWebContainer);
-
-        String useBarraAsAuth = PropertiesManager.getProperty("barra.as.authentication.broker");
-        request.setAttribute("useBarraAsAuth", useBarraAsAuth);
+        request.setAttribute("useBarraAsAuth", FenixConfigurationManager.isBarraAsAuthenticationBroker());
 
         request.setAttribute("startMillis", ""
                 + ExecutionSemester.readActualExecutionSemester().getAcademicInterval().getStartMillis());
@@ -96,8 +90,36 @@ public class MonitorSystemDA extends FenixDispatchAction {
                 + ExecutionSemester.readActualExecutionSemester().getAcademicInterval().getEndMillis());
         request.setAttribute("chronology", ""
                 + ExecutionSemester.readActualExecutionSemester().getAcademicInterval().getChronology().toString());
+        request.setAttribute("cacheSize", SharedIdentityMap.getCache().size());
 
         return mapping.findForward("Show");
+    }
+
+    public ActionForward dumpThreadTrace(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        Map<Thread, StackTraceElement[]> traces = Thread.getAllStackTraces();
+
+        StringBuilder builder = new StringBuilder();
+
+        for (Entry<Thread, StackTraceElement[]> trace : traces.entrySet()) {
+            builder.append(trace.getKey());
+            builder.append(":\n");
+            for (StackTraceElement element : trace.getValue()) {
+                builder.append("\t");
+                builder.append(element);
+                builder.append("\n");
+            }
+            builder.append("\n");
+        }
+
+        try (PrintWriter writer = response.getWriter()) {
+            response.setContentType("text/plain");
+            response.setStatus(HttpServletResponse.SC_OK);
+            writer.write(builder.toString());
+            writer.flush();
+        }
+
+        return null;
     }
 
     public ActionForward testRestlet(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -105,12 +127,12 @@ public class MonitorSystemDA extends FenixDispatchAction {
 
         MessageDigest messageDigest = MessageDigest.getInstance("MD5");
         byte[] hashedSecret =
-                messageDigest.digest(PropertiesManager.getProperty("external.application.workflow.equivalences.uri.secret")
-                        .getBytes());
+                messageDigest.digest(FenixConfigurationManager.getConfiguration()
+                        .getExternalApplicationWorkflowEquivalencesUriSecret().getBytes());
 
         final Reference reference =
-                new Reference(PropertiesManager.getProperty("external.application.workflow.equivalences.uri") + "aaaa")
-                        .addQueryParameter("creator", "xxxx").addQueryParameter("requestor", "yyyyy")
+                new Reference(FenixConfigurationManager.getConfiguration().getExternalApplicationWorkflowEquivalencesUri()
+                        + "aaaa").addQueryParameter("creator", "xxxx").addQueryParameter("requestor", "yyyyy")
                         .addQueryParameter("base64Secret", new String(Base64.encode(hashedSecret)));
 
         TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
@@ -168,8 +190,8 @@ public class MonitorSystemDA extends FenixDispatchAction {
     public ActionForward switchBarraAsAuthenticationBroker(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        final String useBarraAsAuth = request.getParameter("useBarraAsAuth");
-        PropertiesManager.setProperty("barra.as.authentication.broker", useBarraAsAuth);
+        final boolean useBarraAsAuth = Boolean.parseBoolean(request.getParameter("useBarraAsAuth"));
+        FenixConfigurationManager.setBarraAsAuthenticationBroker(useBarraAsAuth);
 
         return monitor(mapping, form, request, response);
     }
@@ -278,7 +300,7 @@ public class MonitorSystemDA extends FenixDispatchAction {
         degreeModule.getName();
         if (degreeModule.isCourseGroup()) {
             final CourseGroup courseGroup = (CourseGroup) degreeModule;
-            for (final net.sourceforge.fenixedu.domain.degreeStructure.Context context: courseGroup.getChildContextsSet()) {
+            for (final net.sourceforge.fenixedu.domain.degreeStructure.Context context : courseGroup.getChildContextsSet()) {
                 final DegreeModule child = context.getChildDegreeModule();
                 load(child);
             }

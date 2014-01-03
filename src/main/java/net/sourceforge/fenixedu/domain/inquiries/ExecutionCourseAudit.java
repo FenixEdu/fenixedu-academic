@@ -1,8 +1,9 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import pt.ist.fenixframework.Atomic;
@@ -11,7 +12,7 @@ public class ExecutionCourseAudit extends ExecutionCourseAudit_Base {
 
     public ExecutionCourseAudit(ExecutionCourse executionCourse) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setExecutionCourse(executionCourse);
     }
 
@@ -102,7 +103,7 @@ public class ExecutionCourseAudit extends ExecutionCourseAudit_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

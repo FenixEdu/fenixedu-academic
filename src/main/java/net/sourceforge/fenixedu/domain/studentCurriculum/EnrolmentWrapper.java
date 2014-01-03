@@ -1,15 +1,16 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 abstract public class EnrolmentWrapper extends EnrolmentWrapper_Base {
 
     protected EnrolmentWrapper() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     protected void init(final Credits credits) {
@@ -46,7 +47,7 @@ abstract public class EnrolmentWrapper extends EnrolmentWrapper_Base {
         }
     }
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

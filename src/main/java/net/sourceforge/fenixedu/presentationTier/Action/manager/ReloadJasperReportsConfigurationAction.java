@@ -3,8 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.LogLevel;
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
 import org.apache.struts.action.Action;
@@ -28,11 +26,9 @@ public class ReloadJasperReportsConfigurationAction extends Action {
         ReportsUtils.getReportsMap().clear();
 
         ReportsUtils.getProperties().clear();
-        PropertiesManager.loadProperties(ReportsUtils.getProperties(), ReportsUtils.getReportsPropertiesFile());
+        ReportsUtils.loadProperties(ReportsUtils.getProperties(), ReportsUtils.getReportsPropertiesFile());
 
-        if (LogLevel.INFO) {
-            logger.info("reloaded jasper reports configuration");
-        }
+        logger.info("reloaded jasper reports configuration");
         return null;
     }
 

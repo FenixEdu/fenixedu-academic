@@ -4,7 +4,9 @@
 
 package net.sourceforge.fenixedu.applicationTier.Filtro.person;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
 import net.sourceforge.fenixedu.domain.Qualification;
@@ -24,11 +26,11 @@ public class QualificationManagerAuthorizationFilter {
     }
 
     public void execute(InfoQualification infoQualification) throws NotAuthorizedException {
-        IUserView id = AccessControl.getUserView();
+        User id = Authenticate.getUser();
 
         try {
             // Verify if needed fields are null
-            if ((id == null) || (id.getRoleTypes() == null)) {
+            if ((id == null) || (id.getPerson().getPersonRolesSet() == null)) {
                 throw new NotAuthorizedException();
             }
 
@@ -39,7 +41,7 @@ public class QualificationManagerAuthorizationFilter {
             boolean valid = false;
             // Verify if:
             // 2: The user ir a Teacher and the qualification is his own
-            if (id.hasRoleType(getRoleTypeTeacher()) && isOwnQualification(id, infoQualification)) {
+            if (id.getPerson().hasRole(getRoleTypeTeacher()) && isOwnQualification(id, infoQualification)) {
                 valid = true;
             }
 
@@ -52,7 +54,7 @@ public class QualificationManagerAuthorizationFilter {
         }
     }
 
-    private boolean isOwnQualification(IUserView userView, InfoQualification infoQualification) {
+    private boolean isOwnQualification(User userView, InfoQualification infoQualification) {
         boolean isNew = infoQualification.getExternalId() == null;
         if (isNew) {
             return true;

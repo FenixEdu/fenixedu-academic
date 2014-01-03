@@ -8,7 +8,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
@@ -28,17 +27,19 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProce
 import net.sourceforge.fenixedu.domain.candidacyProcess.PrecedentDegreeInformationBeanFactory;
 import net.sourceforge.fenixedu.domain.candidacyProcess.exceptions.HashCodeForEmailAndProcessAlreadyBounded;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
+import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.casehandling.CaseHandlingDispatchAction;
-import net.sourceforge.fenixedu.util.StringUtils;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
+import org.apache.commons.lang.StringUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.components.state.LifeCycleConstants;
@@ -70,9 +71,9 @@ import pt.ist.fenixframework.FenixFramework;
 
 public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchAction {
 
-    private static final String SIBS_ENTITY_CODE = PropertiesManager.getProperty("sibs.entityCode");
+    private static final String SIBS_ENTITY_CODE = FenixConfigurationManager.getConfiguration().getSibsEntityCode();
 
-    abstract protected Class getParentProcessType();
+    abstract protected Class<? extends Process> getParentProcessType();
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -122,7 +123,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
         request.setAttribute("process", process);
         request.setAttribute("processName", getParentProcessType().getSimpleName());
         request.setAttribute("canCreateProcess", canCreateProcess(getParentProcessType().getName()));
-        request.setAttribute("processActivities", process.getAllowedActivities(AccessControl.getUserView()));
+        request.setAttribute("processActivities", process.getAllowedActivities(Authenticate.getUser()));
         request.setAttribute("canCreateChildProcess", canCreateProcess(getProcessType().getName()));
         request.setAttribute("childProcessName", getProcessType().getSimpleName());
         request.setAttribute("childProcesses", process.getChildProcesses());
@@ -132,7 +133,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
     }
 
     protected List<Activity> getAllowedActivities(final IndividualCandidacyProcess process) {
-        List<Activity> activities = process.getAllowedActivities(AccessControl.getUserView());
+        List<Activity> activities = process.getAllowedActivities(Authenticate.getUser());
         ArrayList<Activity> resultActivities = new ArrayList<Activity>();
 
         for (Activity activity : activities) {

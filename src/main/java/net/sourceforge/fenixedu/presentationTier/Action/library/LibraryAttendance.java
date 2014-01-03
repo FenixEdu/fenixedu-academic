@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.Sear
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.TeacherAuthorization;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Invitation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -29,6 +28,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.renderers.DataProvider;
@@ -273,7 +273,6 @@ public class LibraryAttendance implements Serializable {
                 .getPersonProfessionalData().getGiafProfessionalDatas();
     }
 
-
     public Registration getStudentRegistration() {
         return studentRegistration;
     }
@@ -327,7 +326,7 @@ public class LibraryAttendance implements Serializable {
         this.matches = null;
         if (!StringUtils.isEmpty(getPersonId())) {
             if (getPersonId().startsWith("ist")) {
-                setPerson(Person.readPersonByIstUsername(getPersonId()));
+                setPerson(Person.readPersonByUsername(getPersonId()));
             } else {
                 setPerson(Person.readPersonByLibraryCardNumber(getPersonId()));
             }
@@ -359,7 +358,7 @@ public class LibraryAttendance implements Serializable {
 
     @Atomic
     public void generateCardNumber() {
-        getPerson().setLibraryCardNumber(RootDomainObject.getInstance().getLibraryCardSystem().generateNewMilleniumCode());
+        getPerson().setLibraryCardNumber(Bennu.getInstance().getLibraryCardSystem().generateNewMilleniumCode());
         setPersonLibraryCardNumber(getPerson().getLibraryCardNumber());
     }
 

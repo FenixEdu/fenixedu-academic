@@ -10,7 +10,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.UnitBoardPermittedGroupType;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
@@ -21,6 +20,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.messaging.AnnouncementMa
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -212,7 +212,7 @@ public class WebSiteAnnouncementManagement extends AnnouncementManagement {
     private void changeOrder(AnnouncementBoard board, HttpServletRequest request, int direction) throws FenixServiceException {
         String oid = request.getParameter("oid");
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         Announcement announcement = FenixFramework.getDomainObject(oid);
         List<Announcement> orderedAnnouncements = getOrderedStickies(board, request);

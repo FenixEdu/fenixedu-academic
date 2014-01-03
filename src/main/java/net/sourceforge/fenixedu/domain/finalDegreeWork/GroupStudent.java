@@ -4,10 +4,10 @@ import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class GroupStudent extends GroupStudent_Base {
 
@@ -37,7 +37,7 @@ public class GroupStudent extends GroupStudent_Base {
 
     public GroupStudent() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void delete() {
@@ -82,7 +82,7 @@ public class GroupStudent extends GroupStudent_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

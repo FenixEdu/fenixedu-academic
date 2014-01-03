@@ -12,20 +12,21 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.library.LibraryCard;
 import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.util.FenixStringTools;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class LibraryCardSearch implements Serializable {
 
     private class PersonSearchSet extends HashSet<Person> {
 
-        private List<LibraryCardDTO> libraryCardDTOs = new ArrayList<LibraryCardDTO>();
+        private final List<LibraryCardDTO> libraryCardDTOs = new ArrayList<LibraryCardDTO>();
 
         @Override
         public boolean add(final Person person) {
@@ -60,7 +61,7 @@ public class LibraryCardSearch implements Serializable {
 
         private boolean satisfiesUserName(Person person) {
             return StringUtils.isEmpty(getUserName())
-                    || net.sourceforge.fenixedu.util.StringUtils.verifyContainsWithEquality(person.getName(), getUserName());
+                    || FenixStringTools.verifyContainsWithEquality(person.getName(), getUserName());
         }
 
         private boolean satisfiesCategory(final Person person) {
@@ -118,7 +119,7 @@ public class LibraryCardSearch implements Serializable {
     }
 
     private void getAssociatedPersons(final PersonSearchSet resultSet, PartyClassification partyClassification) {
-        for (final LibraryCard libraryCard : RootDomainObject.getInstance().getLibraryCardsSet()) {
+        for (final LibraryCard libraryCard : Bennu.getInstance().getLibraryCardsSet()) {
             if (libraryCard.getPartyClassification() == partyClassification) {
                 resultSet.add(libraryCard.getPerson());
             }
@@ -179,7 +180,7 @@ public class LibraryCardSearch implements Serializable {
     }
 
     private void getPersonsByCardClassification(PersonSearchSet resultSet, PartyClassification partyClassification) {
-        for (LibraryCard libraryCard : RootDomainObject.getInstance().getLibraryCards()) {
+        for (LibraryCard libraryCard : Bennu.getInstance().getLibraryCardsSet()) {
             if (libraryCard.getPartyClassification() == partyClassification) {
                 resultSet.add(libraryCard.getPerson());
             }

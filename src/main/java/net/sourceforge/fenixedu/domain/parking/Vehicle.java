@@ -2,20 +2,21 @@ package net.sourceforge.fenixedu.domain.parking;
 
 import java.util.ResourceBundle;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.dataTransferObject.parking.VehicleBean;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class Vehicle extends Vehicle_Base {
 
     public Vehicle() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public Vehicle(VehicleBean vehicleBean) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setParkingParty(vehicleBean.getParkingParty());
         setVehicleMake(vehicleBean.getVehicleMake());
         setPlateNumber(vehicleBean.getVehiclePlateNumber());
@@ -23,7 +24,7 @@ public class Vehicle extends Vehicle_Base {
 
     public Vehicle(Vehicle parkingRequestVehicle) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setVehicleMake(parkingRequestVehicle.getVehicleMake());
         setPlateNumber(parkingRequestVehicle.getPlateNumber());
         setParkingParty(parkingRequestVehicle.getParkingRequest().getParkingParty());
@@ -210,7 +211,7 @@ public class Vehicle extends Vehicle_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

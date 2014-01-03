@@ -8,7 +8,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.Seminaries;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.GetEquivalency;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoEquivalency;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
@@ -17,6 +16,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.User;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -29,7 +29,7 @@ public class ShowCandidacyForm extends FenixAction {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         String equivalencyIDString = request.getParameter("objectCode");
         if (equivalencyIDString == null) {
             throw new FenixActionException(mapping.findForward("invalidQueryString"));

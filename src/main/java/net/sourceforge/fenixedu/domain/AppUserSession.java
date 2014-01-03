@@ -29,7 +29,7 @@ public class AppUserSession extends AppUserSession_Base {
 
     public boolean isCodeValid() {
         return !StringUtils.isBlank(getCode())
-                && getCreationDate().plusSeconds(OAuthProperties.getCodeExpirationSeconds()).isAfterNow();
+                && getCreationDate().plusSeconds(OAuthProperties.getConfiguration().getCodeExpirationSeconds()).isAfterNow();
     }
 
     public boolean matchesAccessToken(String accessToken) {
@@ -40,7 +40,7 @@ public class AppUserSession extends AppUserSession_Base {
     }
 
     public boolean isAccessTokenValid() {
-        return getCreationDate() != null && getCreationDate().plusSeconds(OAuthProperties.getAccessTokenExpirationSeconds()).isAfterNow();
+        return getCreationDate() != null && getCreationDate().plusSeconds(OAuthProperties.getConfiguration().getAccessTokenExpirationSeconds()).isAfterNow();
     }
 
     public boolean isRefreshTokenValid() {

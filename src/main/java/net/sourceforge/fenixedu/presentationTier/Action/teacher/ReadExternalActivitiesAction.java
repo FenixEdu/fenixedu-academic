@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadExternalActivities;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
@@ -15,6 +14,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -41,9 +41,9 @@ public class ReadExternalActivitiesAction extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
-        SiteView siteView = ReadExternalActivities.run(userView.getUtilizador());
+        SiteView siteView = ReadExternalActivities.run(userView.getUsername());
 
         request.setAttribute("siteView", siteView);
 

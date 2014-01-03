@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
@@ -133,7 +134,7 @@ public class RegistrationOperation extends CandidacyOperation {
     }
 
     private String getCurrentUsername() {
-        if (AccessControl.getUserView() != null) {
+        if (Authenticate.getUser() != null) {
             return AccessControl.getPerson().getUsername();
         }
         return getStudentCandidacy().getPerson().getUsername();

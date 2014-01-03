@@ -13,7 +13,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ApagarTurma;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.CriarTurma;
@@ -33,8 +32,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -52,7 +52,7 @@ public class ClassManagerDispatchAction extends FenixClassAndExecutionDegreeAndC
         request.removeAttribute(PresentationConstants.LESSON_LIST_ATT);
         String className = getClassName(form);
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         if (className != null && !className.equals("")) {
 
@@ -91,7 +91,7 @@ public class ClassManagerDispatchAction extends FenixClassAndExecutionDegreeAndC
 
         String className = getClassName(form);
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         boolean change = request.getParameter("change") != null;
 
         if (change) {
@@ -135,7 +135,7 @@ public class ClassManagerDispatchAction extends FenixClassAndExecutionDegreeAndC
             HttpServletResponse response) throws Exception {
 
         // String className = getClassName(form);
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         // InfoClass classView = getInfoTurma(userView, className, request);
         InfoClass infoClass = (InfoClass) request.getAttribute(PresentationConstants.CLASS_VIEW);
         setLessonListToSession(request, userView, infoClass.getNome());
@@ -162,7 +162,7 @@ public class ClassManagerDispatchAction extends FenixClassAndExecutionDegreeAndC
 
     }
 
-    private InfoClass getInfoTurma(IUserView userView, String className, HttpServletRequest request) throws Exception {
+    private InfoClass getInfoTurma(User userView, String className, HttpServletRequest request) throws Exception {
         /* :FIXME: put this 2 variables into parameters */
         InfoExecutionPeriod infoExecutionPeriod =
                 (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
@@ -173,7 +173,7 @@ public class ClassManagerDispatchAction extends FenixClassAndExecutionDegreeAndC
         return classView;
     }
 
-    private void setLessonListToSession(HttpServletRequest request, IUserView userView, String className) throws Exception {
+    private void setLessonListToSession(HttpServletRequest request, User userView, String className) throws Exception {
 
         InfoExecutionPeriod infoExecutionPeriod =
                 (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);

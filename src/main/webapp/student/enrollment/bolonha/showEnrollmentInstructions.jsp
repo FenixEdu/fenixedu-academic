@@ -4,14 +4,14 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<logic:present role="STUDENT">
+<logic:present role="role(STUDENT)">
 
 <em><bean:message key="title.student.portalTitle" /></em>
 <h2><bean:message key="label.enrollment.courses.instructions"/></h2>
 
 <!--<p class="mtop2 mbottom05">Antes de prosseguir com a inscrição em disciplinas, para facilitar o processo tome conhecimento de:</p>-->
 <!--<ul class="mtop05">-->
-<!--	<li>regulamento oficial de inscrições: <a href="http://www.ist.utl.pt/files/alunos/reg_1e2ciclo_20092010.pdf">Regulamentos dos Cursos de 1º e 2º Ciclo</a> "Regulamento de Matrículas e Inscrições" (pág. 10)</li>-->
+<!--	<li>regulamento oficial de inscrições: <a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>files/alunos/reg_1e2ciclo_20092010.pdf">Regulamentos dos Cursos de 1º e 2º Ciclo</a> "Regulamento de Matrículas e Inscrições" (pág. 10)</li>-->
 <!--	<li>regras de inscrição do seu curso</li>-->
 <!--	<li>disciplinas a que se pretende inscrever</li>-->
 <!--</ul>-->

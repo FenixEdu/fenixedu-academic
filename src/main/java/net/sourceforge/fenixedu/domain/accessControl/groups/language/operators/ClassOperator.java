@@ -18,7 +18,9 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
  * <code>$C('java.lang.Object') = class&nbsp;java.lang.Object<code>
  * 
  * @author cfgi
+ * @deprecated Use Bennu Groups instead
  */
+@Deprecated
 public class ClassOperator extends OperatorArgument {
 
     private static final long serialVersionUID = 1L;

@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.predicates.ResourcePredicates;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.YearMonthDay;
 
 public class Vehicle extends Vehicle_Base {
@@ -109,7 +109,7 @@ public class Vehicle extends Vehicle_Base {
     }
 
     private void checksIfVehicleAlreadyExists(String numberPlate) {
-        Collection<Resource> resources = RootDomainObject.getInstance().getResources();
+        Collection<Resource> resources = Bennu.getInstance().getResourcesSet();
         for (Resource resource : resources) {
             if (resource.isVehicle() && !resource.equals(this)
                     && ((Vehicle) resource).getNumberPlate().equalsIgnoreCase(numberPlate)) {
@@ -119,7 +119,7 @@ public class Vehicle extends Vehicle_Base {
     }
 
     public static Vehicle getVehicleByNumberPlate(String numberPlate) {
-        Collection<Resource> resources = RootDomainObject.getInstance().getResources();
+        Collection<Resource> resources = Bennu.getInstance().getResourcesSet();
         for (Resource resource : resources) {
             if (resource.isVehicle() && ((Vehicle) resource).getNumberPlate().equalsIgnoreCase(numberPlate)) {
                 return (Vehicle) resource;
@@ -131,7 +131,7 @@ public class Vehicle extends Vehicle_Base {
     public static List<Vehicle> getAllActiveVehicles() {
         List<Vehicle> result = new ArrayList<Vehicle>();
         YearMonthDay currentDate = new YearMonthDay();
-        Collection<Resource> resources = RootDomainObject.getInstance().getResources();
+        Collection<Resource> resources = Bennu.getInstance().getResourcesSet();
         for (Resource resource : resources) {
             if (resource.isVehicle() && ((Vehicle) resource).isActive(currentDate)) {
                 result.add((Vehicle) resource);
@@ -142,7 +142,7 @@ public class Vehicle extends Vehicle_Base {
 
     public static List<Vehicle> getAllVehicles() {
         List<Vehicle> result = new ArrayList<Vehicle>();
-        Collection<Resource> resources = RootDomainObject.getInstance().getResources();
+        Collection<Resource> resources = Bennu.getInstance().getResourcesSet();
         for (Resource resource : resources) {
             if (resource.isVehicle()) {
                 result.add((Vehicle) resource);

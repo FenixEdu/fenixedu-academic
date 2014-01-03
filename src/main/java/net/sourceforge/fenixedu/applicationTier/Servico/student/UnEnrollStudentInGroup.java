@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
@@ -18,7 +17,6 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -26,8 +24,10 @@ import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.struts.util.MessageResources;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -40,7 +40,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class UnEnrollStudentInGroup {
 
     public static String mailServer() {
-        final String server = PropertiesManager.getProperty("mail.smtp.host");
+        final String server = FenixConfigurationManager.getConfiguration().getMailSmtpHost();
         return (server != null) ? server : "mail.adm";
     }
 
@@ -103,7 +103,7 @@ public class UnEnrollStudentInGroup {
                 messages.getMessage("message.body.grouping.change.unenrolment", registration.getNumber().toString(), studentGroup
                         .getGroupNumber().toString(), attend.getExecutionCourse().getNome());
 
-        SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
+        SystemSender systemSender = Bennu.getInstance().getSystemSender();
         new Message(systemSender, systemSender.getConcreteReplyTos(), recipients,
                 messages.getMessage("message.subject.grouping.change"), message, "");
 

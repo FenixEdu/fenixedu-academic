@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.User;
+
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -16,15 +17,15 @@ import net.sourceforge.fenixedu.util.phd.PhdProperties;
 abstract public class PhdMeetingSchedulingActivity extends Activity<PhdMeetingSchedulingProcess> {
 
     @Override
-    final public void checkPreConditions(final PhdMeetingSchedulingProcess process, final IUserView userView) {
+    final public void checkPreConditions(final PhdMeetingSchedulingProcess process, final User userView) {
         processPreConditions(process, userView);
         activityPreConditions(process, userView);
     }
 
-    protected void processPreConditions(final PhdMeetingSchedulingProcess process, final IUserView userView) {
+    protected void processPreConditions(final PhdMeetingSchedulingProcess process, final User userView) {
     }
 
-    abstract protected void activityPreConditions(final PhdMeetingSchedulingProcess process, final IUserView userView);
+    abstract protected void activityPreConditions(final PhdMeetingSchedulingProcess process, final User userView);
 
     public static String getAccessInformation(PhdIndividualProgramProcess process, PhdParticipant participant,
             String coordinatorMessage, String teacherMessage) {
@@ -48,7 +49,7 @@ abstract public class PhdMeetingSchedulingActivity extends Activity<PhdMeetingSc
     }
 
     @Override
-    protected void log(PhdMeetingSchedulingProcess process, IUserView userView, Object object) {
+    protected void log(PhdMeetingSchedulingProcess process, User userView, Object object) {
         PhdThesisProcess thesisProcess = process.getThesisProcess();
 
         PhdLog.logActivity(this, thesisProcess, userView, object);

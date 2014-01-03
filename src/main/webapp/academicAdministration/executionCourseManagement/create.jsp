@@ -1,4 +1,4 @@
-<%@page import="net.sourceforge.fenixedu.util.StringUtils"%>
+<%@page import="org.apache.commons.lang.StringUtils"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>

@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 public class DeleteFileLog extends DeleteFileLog_Base {
@@ -9,11 +10,11 @@ public class DeleteFileLog extends DeleteFileLog_Base {
         this.setRequestorIstUsername(requestor);
         this.setExternalStorageIdentification(storageID);
         this.setRequestTime(new DateTime());
-        this.setRootDomainObject(RootDomainObject.getInstance());
+        this.setRootDomainObject(Bennu.getInstance());
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

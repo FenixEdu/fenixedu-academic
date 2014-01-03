@@ -4,13 +4,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.DeleteFunctionalityParameter;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupExpressionException;
@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.domain.functionalities.FunctionalityParameter;
 import net.sourceforge.fenixedu.domain.functionalities.GroupAvailability;
 import net.sourceforge.fenixedu.domain.functionalities.IFunctionality;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
-import net.sourceforge.fenixedu.util.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -204,7 +204,7 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
         final String identifier = StringUtils.isEmpty(contentId) ? StringUtils.EMPTY : "_" + contentId;
         final String filename = "module-structure_" + timestamp + identifier + ".xml";
         response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
-        response.setContentType("text/xml; charset=" + PropertiesManager.DEFAULT_CHARSET);
+        response.setContentType("text/xml; charset=" + Charset.defaultCharset().name());
 
         Document document = new Document(toplevel);
 
@@ -213,7 +213,7 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
             document.setDocType(docType);
         }
 
-        XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat().setEncoding(PropertiesManager.DEFAULT_CHARSET));
+        XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat().setEncoding(Charset.defaultCharset().name()));
         outputter.output(document, response.getWriter());
 
         return null;

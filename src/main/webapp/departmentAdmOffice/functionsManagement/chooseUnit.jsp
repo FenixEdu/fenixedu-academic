@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 
 <ft:tilesView definition="departmentAdmOffice.masterPage" attributeName="body-inline">
-	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
+	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 
 	<script language="JavaScript">
 	function check(e,v)

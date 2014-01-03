@@ -42,7 +42,7 @@
 	<input alt="input.page" type="hidden" name="page" value="0"/>
 	<table class="tstyle5 thlight thright thmiddle mvert05">
 		<tr>
-			<th><bean:message key="label.teacher.id"/>:</th>
+			<th><bean:message key="label.teacher.id" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/>:</th>
 			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherId" property="teacherId"	size="6" /></td>
 		</tr>
 	</table>

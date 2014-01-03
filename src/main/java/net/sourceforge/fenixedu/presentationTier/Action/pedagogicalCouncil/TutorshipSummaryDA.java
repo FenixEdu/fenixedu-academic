@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TutorshipSummary;
 import net.sourceforge.fenixedu.domain.TutorshipSummaryRelation;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.tutorship.ViewStudentsByTutorDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -96,7 +97,7 @@ public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
                 addCell("Relação Professor - Aluno", convertBoolean(summary.getProblemsR7()));
                 addCell("Desempenho Académico (ex.: taxas de aprovação)", convertBoolean(summary.getProblemsR8()));
                 addCell("Avaliação (ex.: metodologia, datas de exames; etc.)", convertBoolean(summary.getProblemsR9()));
-                addCell("Adaptação ao IST", convertBoolean(summary.getProblemsR10()));
+                addCell("Adaptação ao " + Unit.getInstitutionAcronym(), convertBoolean(summary.getProblemsR10()));
                 addCell("Outro", summary.getProblemsOther());
 
                 addCell("Ganhos:", "");
@@ -108,7 +109,7 @@ public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
                 addCell("Melhor desempenho académico", convertBoolean(summary.getGainsR6()));
                 addCell("Maior proximidade Professor-Aluno", convertBoolean(summary.getGainsR7()));
                 addCell("Transição do Ensino Secundário para o Ensino Superior mais fácil", convertBoolean(summary.getGainsR8()));
-                addCell("Melhor adaptação ao IST", convertBoolean(summary.getGainsR9()));
+                addCell("Melhor adaptação ao " + Unit.getInstitutionAcronym(), convertBoolean(summary.getGainsR9()));
                 addCell("Apoio na tomada de decisões/Resolução de problemas", convertBoolean(summary.getGainsR10()));
                 addCell("Outro", summary.getGainsOther());
 

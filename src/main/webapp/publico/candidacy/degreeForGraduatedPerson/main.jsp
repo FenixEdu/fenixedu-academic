@@ -14,13 +14,13 @@
 <!--LANGUAGE SWITCHER -->
 <div id="version">
 	<img class="activeflag" src="Candidato%20%20Licenciatura%20_%20IST_files/icon_pt.gif" alt="Português">
-	<a href="http://www.ist.utl.pt/en/htm/profile/pstudent/lic/"><img src="Candidato%20%20Licenciatura%20_%20IST_files/icon_en.gif" alt="English" border="0"></a>
+	<a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>en/htm/profile/pstudent/lic/"><img src="Candidato%20%20Licenciatura%20_%20IST_files/icon_en.gif" alt="English" border="0"></a>
 </div>
 <!--END LANGUAGE SWITCHER -->
 
 
 <div class="breadcumbs">
-	<a href="#">IST</a> &gt;
+	<a href="#"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
 	<a href="#">Candidato</a> &gt;
 	<a href="#">Candidaturas</a> &gt;
 	<a href='<%= fullPath + "?method=candidacyIntro" %>'>Licenciaturas</a> &gt;

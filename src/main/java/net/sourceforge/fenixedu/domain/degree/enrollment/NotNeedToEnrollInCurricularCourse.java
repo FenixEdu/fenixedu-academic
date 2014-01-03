@@ -4,11 +4,12 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
@@ -20,7 +21,7 @@ public class NotNeedToEnrollInCurricularCourse extends NotNeedToEnrollInCurricul
 
     public NotNeedToEnrollInCurricularCourse() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public NotNeedToEnrollInCurricularCourse(CurricularCourse curricularCourse, StudentCurricularPlan studentCurricularPlan) {
@@ -101,7 +102,7 @@ public class NotNeedToEnrollInCurricularCourse extends NotNeedToEnrollInCurricul
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
@@ -101,7 +103,7 @@ public class AcademicPredicates {
 
         @Override
         public boolean evaluate(Object c) {
-            return AccessControl.getUserView().hasRoleType(RoleType.MANAGER);
+            return Authenticate.getUser().getPerson().hasRole(RoleType.MANAGER);
             // return
             // new AcademicAuthorizationGroup(AcademicOperationType.MANAGE_PAYMENTS).isMember(
             // AccessControl.getPerson());
@@ -113,7 +115,7 @@ public class AcademicPredicates {
 
         @Override
         public boolean evaluate(Object c) {
-            return AccessControl.getUserView().hasRoleType(RoleType.MANAGER);
+            return Authenticate.getUser().getPerson().hasRole(RoleType.MANAGER);
             // return new
             // AcademicAuthorizationGroup(AcademicOperationType.DEPOSIT_AMOUNT_ON_PAYMENT_EVENT).isMember(AccessControl
             // .getPerson()) || MANAGE_PAYMENTS.evaluate(c);
@@ -124,7 +126,7 @@ public class AcademicPredicates {
 
         @Override
         public boolean evaluate(Object c) {
-            return AccessControl.getUserView().hasRoleType(RoleType.MANAGER);
+            return Authenticate.getUser().getPerson().hasRole(RoleType.MANAGER);
             // return new
             // AcademicAuthorizationGroup(AcademicOperationType.CREATE_PAYMENT_EVENT).isMember(AccessControl.getPerson())
             // || MANAGE_PAYMENTS.evaluate(c);

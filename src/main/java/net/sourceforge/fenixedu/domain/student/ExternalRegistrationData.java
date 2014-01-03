@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.domain.student;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.ExternalRegistrationDataBean;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * 
@@ -16,7 +16,7 @@ public class ExternalRegistrationData extends ExternalRegistrationData_Base {
 
     public ExternalRegistrationData(Registration registration) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setRegistration(registration);
     }
 
@@ -46,7 +46,7 @@ public class ExternalRegistrationData extends ExternalRegistrationData_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

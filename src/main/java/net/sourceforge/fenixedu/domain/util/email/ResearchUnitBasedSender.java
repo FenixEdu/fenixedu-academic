@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.util.email;
 
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.ResearchUnitElementGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
@@ -16,11 +15,6 @@ public class ResearchUnitBasedSender extends ResearchUnitBasedSender_Base {
     public ResearchUnitBasedSender(Unit unit, String fromAddress, Group members) {
         super();
         init(unit, fromAddress, members);
-    }
-
-    @Override
-    public String getFromName(Person person) {
-        return String.format("%s - %s", getUnit().getAcronym(), person.getName());
     }
 
     @Atomic

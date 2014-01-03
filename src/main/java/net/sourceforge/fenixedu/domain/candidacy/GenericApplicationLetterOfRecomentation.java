@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.domain.candidacy;
 import java.util.Collection;
 import java.util.Collections;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.accessControl.NoOneGroup;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.util.BundleUtil;
@@ -49,7 +51,7 @@ public class GenericApplicationLetterOfRecomentation extends GenericApplicationL
                         "label.application.recomentation.upload.notification.email.body", getRecomentation().getName(),
                         getRecomentation().getInstitution());
 
-        new Message(getRootDomainObject().getSystemSender(), getRecomentation().getGenericApplication().getEmail(), subject, body);
+        new Message(Bennu.getInstance().getSystemSender(), getRecomentation().getGenericApplication().getEmail(), subject, body);
     }
 
     @Deprecated

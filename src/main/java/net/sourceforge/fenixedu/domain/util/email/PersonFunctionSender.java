@@ -8,8 +8,10 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.DelegatesGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import pt.ist.fenixframework.Atomic;
@@ -18,20 +20,39 @@ public class PersonFunctionSender extends PersonFunctionSender_Base {
 
     public PersonFunctionSender(PersonFunction personFunction) {
         super();
-        String fromName;
-        if (!personFunction.getFunction().isOfFunctionType(FunctionType.DELEGATE_OF_YEAR)) {
-            fromName = String.format("%s", personFunction.getFunction().getTypeName());
-        } else {
-            Integer delegateYear = personFunction.getCurricularYear().getYear();
-            fromName = String.format("Delegado do %sº ano", delegateYear);
-        }
+
         Person person = personFunction.getPerson();
-        setFromName(fromName);
         setPersonFunction(personFunction);
         setFromAddress(Sender.getNoreplyMail());
         addReplyTos(new CurrentUserReplyTo());
         setMembers(new PersonGroup(person));
         getRecipients().addAll(Recipient.newInstance(getPossibleReceivers(person)));
+        setFromName(createFromName());
+    }
+
+    public String createFromName() {
+
+        if (getPersonFunction() == null || getPersonFunction().getFunction() == null) {
+            return getFromName();
+        }
+
+        String institutionAcronym = Unit.getInstitutionAcronym();
+        Function function = getPersonFunction().getFunction();
+
+        if (function.isOfAnyFunctionType(FunctionType.getAllDegreeDelegateFunctionTypes())) {
+            String courseAcronym = function.getUnit().getDegree().getSigla();
+            String functionTypeName;
+            if (function.isOfFunctionType(FunctionType.DELEGATE_OF_YEAR)) {
+                String year = getPersonFunction().getCurricularYear().getYear().toString();
+                functionTypeName = String.format("Delegado do %sº ano", year);
+            } else {
+                functionTypeName = function.getTypeName().toString();
+            }
+            return String.format("%s (%s: %s)", institutionAcronym, courseAcronym, functionTypeName);
+        } else {
+            String functionTypeName = function.getTypeName().toString();
+            return String.format("%s (%s)", institutionAcronym, functionTypeName);
+        }
     }
 
     public static List<Group> getPossibleReceivers(Person person) {
@@ -76,6 +97,7 @@ public class PersonFunctionSender extends PersonFunctionSender_Base {
         PersonFunctionSender sender = personFunction.getSender();
         return sender == null ? new PersonFunctionSender(personFunction) : sender;
     }
+
     @Deprecated
     public boolean hasPersonFunction() {
         return getPersonFunction() != null;

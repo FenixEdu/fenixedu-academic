@@ -44,10 +44,6 @@ public class DegreeSpecializationArea extends DegreeSpecializationArea_Base {
         return false;
     }
 
-    protected RootDomainObject getRootDomainObject() {
-        return getOfficialPublication().getRootDomainObject();
-    }
-
     public void delete() {
         setOfficialPublication(null);
         deleteDomainObject();

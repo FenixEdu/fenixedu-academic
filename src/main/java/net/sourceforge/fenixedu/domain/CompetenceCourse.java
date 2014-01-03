@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.commons.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.predicates.CompetenceCoursePredicates;
 import net.sourceforge.fenixedu.util.UniqueAcronymCreator;
 
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
@@ -54,7 +55,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     protected CompetenceCourse() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public CompetenceCourse(String code, String name, Collection<Department> departments) {
@@ -1202,7 +1203,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     // -------------------------------------------------------------
     static public List<CompetenceCourse> readOldCompetenceCourses() {
         final List<CompetenceCourse> result = new ArrayList<CompetenceCourse>();
-        for (final CompetenceCourse competenceCourse : RootDomainObject.getInstance().getCompetenceCoursesSet()) {
+        for (final CompetenceCourse competenceCourse : Bennu.getInstance().getCompetenceCoursesSet()) {
             if (!competenceCourse.isBolonha()) {
                 result.add(competenceCourse);
             }
@@ -1212,7 +1213,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     static public Collection<CompetenceCourse> readBolonhaCompetenceCourses() {
         final Set<CompetenceCourse> result = new TreeSet<CompetenceCourse>(COMPETENCE_COURSE_COMPARATOR_BY_NAME);
-        for (final CompetenceCourse competenceCourse : RootDomainObject.getInstance().getCompetenceCoursesSet()) {
+        for (final CompetenceCourse competenceCourse : Bennu.getInstance().getCompetenceCoursesSet()) {
             if (competenceCourse.isBolonha()) {
                 result.add(competenceCourse);
             }
@@ -1222,7 +1223,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     static public Collection<CompetenceCourse> searchBolonhaCompetenceCourses(String searchName, String searchCode) {
         final Set<CompetenceCourse> result = new TreeSet<CompetenceCourse>(COMPETENCE_COURSE_COMPARATOR_BY_NAME);
-        for (final CompetenceCourse competenceCourse : RootDomainObject.getInstance().getCompetenceCoursesSet()) {
+        for (final CompetenceCourse competenceCourse : Bennu.getInstance().getCompetenceCoursesSet()) {
             if (!competenceCourse.isBolonha()) {
                 continue;
             }
@@ -1239,7 +1240,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     static public Collection<CompetenceCourse> readApprovedBolonhaCompetenceCourses() {
         final Set<CompetenceCourse> result = new TreeSet<CompetenceCourse>(COMPETENCE_COURSE_COMPARATOR_BY_NAME);
-        for (final CompetenceCourse competenceCourse : RootDomainObject.getInstance().getCompetenceCoursesSet()) {
+        for (final CompetenceCourse competenceCourse : Bennu.getInstance().getCompetenceCoursesSet()) {
             if (competenceCourse.isBolonha() && competenceCourse.isApproved()) {
                 result.add(competenceCourse);
             }
@@ -1249,7 +1250,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     static public Collection<CompetenceCourse> readApprovedBolonhaDissertations() {
         final List<CompetenceCourse> result = new ArrayList<CompetenceCourse>();
-        for (final CompetenceCourse competenceCourse : RootDomainObject.getInstance().getCompetenceCoursesSet()) {
+        for (final CompetenceCourse competenceCourse : Bennu.getInstance().getCompetenceCoursesSet()) {
             if (competenceCourse.isBolonha() && competenceCourse.isApproved() && competenceCourse.isDissertation()) {
                 result.add(competenceCourse);
             }
@@ -1360,7 +1361,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

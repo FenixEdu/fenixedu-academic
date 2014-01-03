@@ -3,21 +3,20 @@ package net.sourceforge.fenixedu.domain.cardGeneration;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
-
-import edu.emory.mathcs.backport.java.util.Collections;
 
 public class SantanderBatch extends SantanderBatch_Base {
 
@@ -35,7 +34,7 @@ public class SantanderBatch extends SantanderBatch_Base {
 
     private SantanderBatch() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public SantanderBatch(Person requester, ExecutionYear executionYear) {
@@ -89,7 +88,7 @@ public class SantanderBatch extends SantanderBatch_Base {
             visibleLine += SantanderSequenceNumberGenerator.decodeSantanderPIN(entryLine.getPerson().getSantanderPIN());
 
             // Update line with the institutions own PIN
-            visibleLine += PropertiesManager.getProperty("app.institution.PIN");
+            visibleLine += FenixConfigurationManager.getConfiguration().appInstitutionPIN();
 
             visibleLine += line.substring(315);
 
@@ -193,7 +192,7 @@ public class SantanderBatch extends SantanderBatch_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

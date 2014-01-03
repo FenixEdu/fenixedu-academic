@@ -6,12 +6,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.Alumni;
 import net.sourceforge.fenixedu.domain.AlumniIdentityCheckRequest;
 import net.sourceforge.fenixedu.domain.AlumniRequestType;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
@@ -33,7 +35,7 @@ public class AlumniNotificationService {
 
     private static void sendEmail(final Collection<Recipient> recipients, final String subject, final String body,
             final String bccs) {
-        SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
+        SystemSender systemSender = Bennu.getInstance().getSystemSender();
         new Message(systemSender, systemSender.getConcreteReplyTos(), recipients, subject, body, bccs);
     }
 
@@ -43,7 +45,9 @@ public class AlumniNotificationService {
 
     protected static void sendPublicAccessMail(final Alumni alumni, final String alumniEmail) {
 
-        final String subject = getAlumniBundle().getString("alumni.public.registration.mail.subject");
+        final String subject =
+                MessageFormat.format(getAlumniBundle().getString("alumni.public.registration.mail.subject"),
+                        Unit.getInstitutionAcronym());
         final Person person = alumni.getStudent().getPerson();
         final String body =
                 MessageFormat.format(getAlumniBundle().getString("alumni.public.registration.url"), person.getFirstAndLastName(),
@@ -60,7 +64,9 @@ public class AlumniNotificationService {
 
     protected static void sendIdentityCheckEmail(AlumniIdentityCheckRequest request, Boolean approval) {
 
-        final String subject = getManagerBundle().getString("alumni.identity.request.mail.subject");
+        final String subject =
+                MessageFormat.format(getManagerBundle().getString("alumni.identity.request.mail.subject"),
+                        Unit.getInstitutionAcronym());
 
         String body;
         if (approval) {
@@ -81,7 +87,7 @@ public class AlumniNotificationService {
             case STUDENT_NUMBER_RECOVERY:
                 body +=
                         MessageFormat.format(getManagerBundle().getString("alumni.identity.request.student.number.info"), request
-                                .getAlumni().getStudent().getNumber().toString());
+                                .getAlumni().getStudent().getNumber().toString(), Unit.getInstitutionAcronym());
                 break;
 
             default:
@@ -107,7 +113,9 @@ public class AlumniNotificationService {
 
     protected static void sendRegistrationSuccessMail(final Alumni alumni) {
 
-        final String subject = getAlumniBundle().getString("alumni.public.success.mail.subject");
+        final String subject =
+                MessageFormat.format(getAlumniBundle().getString("alumni.public.success.mail.subject"),
+                        Unit.getInstitutionAcronym());
         final String body =
                 MessageFormat.format(getAlumniBundle().getString("alumni.public.username.login.url"), alumni.getStudent()
                         .getPerson().getFirstAndLastName(), alumni.getLoginUsername());

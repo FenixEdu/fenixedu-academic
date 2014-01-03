@@ -4,7 +4,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <html:xhtml />
 
-<logic:present role="DEPARTMENT_ADMINISTRATIVE_OFFICE">
+<logic:present role="role(DEPARTMENT_ADMINISTRATIVE_OFFICE)">
 
 	<h2><bean:message key="link.students.search" /></h2>
 

@@ -180,7 +180,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
         String executionPeriodId = (String) request.getAttribute("executionPeriodId");
 
         ExecutionCourse executionCourse = null;
-        if (!net.sourceforge.fenixedu.util.StringUtils.isEmpty(executionCourseId)) {
+        if (!org.apache.commons.lang.StringUtils.isEmpty(executionCourseId)) {
             executionCourse = FenixFramework.getDomainObject(executionCourseId);
         }
         ExecutionSemester executionPeriod = FenixFramework.getDomainObject(executionPeriodId);

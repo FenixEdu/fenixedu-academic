@@ -2,8 +2,7 @@ package net.sourceforge.fenixedu.domain.system;
 
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 
@@ -21,7 +20,7 @@ public class CronScriptInvocation extends CronScriptInvocation_Base {
     public CronScriptInvocation(final CronScriptState cronScriptState, final String serverID, final DateTime startTime,
             final DateTime endTime, final Boolean successful, final String log) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setCronScriptState(cronScriptState);
         setServerID(serverID);
         setStartTime(startTime);
@@ -46,7 +45,7 @@ public class CronScriptInvocation extends CronScriptInvocation_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

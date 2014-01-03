@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
@@ -18,6 +17,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ApprovedLearning
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean;
+import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.IndividualCandidacyProcessDA;
@@ -53,7 +53,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
 
     @Override
-    protected Class<? extends CandidacyProcess> getParentProcessType() {
+    protected Class<? extends Process> getParentProcessType() {
         return MobilityApplicationProcess.class;
     }
 
@@ -234,7 +234,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
     }
 
     public ActionForward executeEditCandidacyPersonalInformation(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
 
         try {
             executeActivity(getProcess(request), "EditCandidacyPersonalInformation", getIndividualCandidacyProcessBean());
@@ -254,7 +254,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
     }
 
     public ActionForward executeEditCandidacyInformation(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
         try {
             executeActivity(getProcess(request), "EditCandidacyInformation", getIndividualCandidacyProcessBean());
         } catch (final DomainException e) {
@@ -283,7 +283,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
     }
 
     public ActionForward executeEditDegreeAndCoursesInformation(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
         try {
             executeActivity(getProcess(request), "EditDegreeAndCoursesInformation", getIndividualCandidacyProcessBean());
         } catch (final DomainException e) {
@@ -362,7 +362,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
     }
 
     public ActionForward executeUploadApprovedLearningAgreement(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
 
         ApprovedLearningAgreementDocumentUploadBean learningAgreementUploadBean =
                 (ApprovedLearningAgreementDocumentUploadBean) getObjectFromViewState("individualCandidacyProcessBean.document.file");
@@ -402,7 +402,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
     }
 
     public ActionForward executeCreateRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         MobilityIndividualApplicationProcess erasmusIndividualCandidacyProcess = getProcess(request);
         executeActivity(erasmusIndividualCandidacyProcess, "CreateRegistration");
 
@@ -415,7 +415,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
     }
 
     public ActionForward executeEnrolOnFirstSemester(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         MobilityIndividualApplicationProcess erasmusIndividualCandidacyProcess = getProcess(request);
         executeActivity(erasmusIndividualCandidacyProcess, "EnrolOnModules");
 

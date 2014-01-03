@@ -6,7 +6,9 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.coordinator;
 
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Coordinator;
@@ -36,23 +38,23 @@ public class ExecutionDegreeCoordinatorOrScientificCouncilmemberAuthorizationFil
             new ExecutionDegreeCoordinatorOrScientificCouncilmemberAuthorizationFilter();
 
     public void execute(ExecutionDegree executionDegree) throws NotAuthorizedException {
-        final IUserView userView = AccessControl.getUserView();
+        final User userView = Authenticate.getUser();
         if (executionDegree == null) {
             throw new NotAuthorizedException();
         }
 
-        if (userView == null || userView.getRoleTypes() == null || !verifyCondition(userView, executionDegree)) {
+        if (userView == null || userView.getPerson().getPersonRolesSet() == null || !verifyCondition(userView, executionDegree)) {
             throw new NotAuthorizedException();
         }
 
-        if (((userView != null && userView.getRoleTypes() != null && !verifyCondition(userView, executionDegree)))
-                || (userView == null) || (userView.getRoleTypes() == null)) {
+        if (((userView != null && userView.getPerson().getPersonRolesSet() != null && !verifyCondition(userView, executionDegree)))
+                || (userView == null) || (userView.getPerson().getPersonRolesSet() == null)) {
             throw new NotAuthorizedException();
         }
 
     }
 
-    public static boolean verifyCondition(IUserView id, ExecutionDegree executionDegree) {
+    public static boolean verifyCondition(User id, ExecutionDegree executionDegree) {
         if (id != null) {
             final Person person = id.getPerson();
             if (person != null) {

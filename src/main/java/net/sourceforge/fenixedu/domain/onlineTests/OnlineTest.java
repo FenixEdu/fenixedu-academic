@@ -3,9 +3,10 @@ package net.sourceforge.fenixedu.domain.onlineTests;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.GradeScale;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
@@ -14,7 +15,7 @@ public class OnlineTest extends OnlineTest_Base {
     public static List<OnlineTest> readOnlineTests() {
         List<OnlineTest> result = new ArrayList<OnlineTest>();
 
-        for (Evaluation evaluation : RootDomainObject.getInstance().getEvaluations()) {
+        for (Evaluation evaluation : Bennu.getInstance().getEvaluationsSet()) {
             if (evaluation instanceof OnlineTest) {
                 result.add((OnlineTest) evaluation);
             }
@@ -45,6 +46,7 @@ public class OnlineTest extends OnlineTest_Base {
         return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.online.test") + " "
                 + getDistributedTest().getEvaluationTitle();
     }
+
     @Deprecated
     public boolean hasDistributedTest() {
         return getDistributedTest() != null;

@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.DegreeOfficialPublication;
 import net.sourceforge.fenixedu.domain.DegreeSpecializationArea;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.EctsGraduationGradeConversionTable;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -38,6 +37,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -169,9 +169,9 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
                 "universityStatus",
                 portugueseEnumerationBundle.getString(AcademicalInstitutionType.class.getSimpleName() + "."
                         + institutionsUniversityUnit.getInstitutionType().getName()));
-        addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
+        addParameter("institutionName", Bennu.getInstance().getInstitutionUnit().getName());
         addParameter("institutionStatus",
-                portugueseEnumerationBundle.getString(RootDomainObject.getInstance().getInstitutionUnit().getType().getName())
+                portugueseEnumerationBundle.getString(Bennu.getInstance().getInstitutionUnit().getType().getName())
                         + SINGLE_SPACE + this.portugueseAcademicBundle.getString("diploma.supplement.of") + SINGLE_SPACE
                         + institutionsUniversityUnit.getName());
         if (getDocumentRequest().getRequestedCycle().equals(CycleType.FIRST_CYCLE)) {
@@ -476,7 +476,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 
         private String obtainAcademicUnitIdentifier(final Map<Unit, String> academicUnitIdentifiers) {
             final Unit unit =
-                    entry instanceof ExternalEnrolment ? ((ExternalEnrolment) entry).getAcademicUnit() : RootDomainObject
+                    entry instanceof ExternalEnrolment ? ((ExternalEnrolment) entry).getAcademicUnit() : Bennu
                             .getInstance().getInstitutionUnit();
             return getAcademicUnitIdentifier(academicUnitIdentifiers, unit);
         }

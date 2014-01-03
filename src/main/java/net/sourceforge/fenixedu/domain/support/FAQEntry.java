@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.domain.support;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class FAQEntry extends FAQEntry_Base {
 
     public FAQEntry() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void delete() {
@@ -20,7 +20,7 @@ public class FAQEntry extends FAQEntry_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

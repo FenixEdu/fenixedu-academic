@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
-import net.sourceforge.fenixedu.util.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import pt.utl.ist.fenix.tools.util.StringAppender;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -183,7 +183,7 @@ public enum DegreeType {
         protected String filteredName(Locale locale) {
             final StringBuilder result = new StringBuilder(localizedName(locale));
 
-            final String remove = StringAppender.append(StringUtils.SINGLE_SPACE, "Bolonha");
+            final String remove = StringAppender.append(" ", "Bolonha");
             if (result.toString().contains(remove)) {
                 result.replace(result.indexOf(remove), result.indexOf(remove) + remove.length(), StringUtils.EMPTY);
             }
@@ -252,7 +252,7 @@ public enum DegreeType {
         protected String filteredName(Locale locale) {
             final StringBuilder result = new StringBuilder(localizedName(locale));
 
-            final String remove = StringAppender.append(StringUtils.SINGLE_SPACE, "Bolonha");
+            final String remove = StringAppender.append(" ", "Bolonha");
             if (result.toString().contains(remove)) {
                 result.replace(result.indexOf(remove), result.indexOf(remove) + remove.length(), StringUtils.EMPTY);
             }
@@ -316,7 +316,7 @@ public enum DegreeType {
         protected String filteredName(Locale locale) {
             final StringBuilder result = new StringBuilder(localizedName(locale));
 
-            final String remove = StringAppender.append(StringUtils.SINGLE_SPACE, "Bolonha");
+            final String remove = StringAppender.append(" ", "Bolonha");
             if (result.toString().contains(remove)) {
                 result.replace(result.indexOf(remove), result.indexOf(remove) + remove.length(), StringUtils.EMPTY);
             }
@@ -405,7 +405,7 @@ public enum DegreeType {
         protected String filteredName(Locale locale) {
             final StringBuilder result = new StringBuilder(localizedName(locale));
 
-            final String remove = StringAppender.append(StringUtils.SINGLE_SPACE, "Bolonha");
+            final String remove = StringAppender.append(" ", "Bolonha");
             if (result.toString().contains(remove)) {
                 result.replace(result.indexOf(remove), result.indexOf(remove) + remove.length(), StringUtils.EMPTY);
             }
@@ -464,7 +464,7 @@ public enum DegreeType {
         protected String filteredName(Locale locale) {
             final StringBuilder result = new StringBuilder(localizedName(locale));
 
-            final String remove = StringAppender.append(StringUtils.SINGLE_SPACE, "Bolonha");
+            final String remove = StringAppender.append(" ", "Bolonha");
             if (result.toString().contains(remove)) {
                 result.replace(result.indexOf(remove), result.indexOf(remove) + remove.length(), StringUtils.EMPTY);
             }
@@ -523,7 +523,7 @@ public enum DegreeType {
         protected String filteredName(Locale locale) {
             final StringBuilder result = new StringBuilder(localizedName(locale));
 
-            final String remove = StringAppender.append(StringUtils.SINGLE_SPACE, "Bolonha");
+            final String remove = StringAppender.append(" ", "Bolonha");
             if (result.toString().contains(remove)) {
                 result.replace(result.indexOf(remove), result.indexOf(remove) + remove.length(), StringUtils.EMPTY);
             }
@@ -839,11 +839,11 @@ public enum DegreeType {
         case BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA:
             return result.toString();
         case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
-            result.append(bundle.getString("degree.DegreeType.prefix.one")).append(StringUtils.SINGLE_SPACE);
+            result.append(bundle.getString("degree.DegreeType.prefix.one")).append(" ");
             return result.toString();
         default:
             final String string = bundle.getString("degree.DegreeType.prefix.two");
-            result.append(string).append(string.isEmpty() ? StringUtils.EMPTY : StringUtils.SINGLE_SPACE);
+            result.append(string).append(string.isEmpty() ? StringUtils.EMPTY : " ");
             return result.toString();
         }
     }

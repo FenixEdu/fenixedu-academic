@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ResourceAllocationRole;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.User;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CountryUnit;
@@ -33,7 +33,7 @@ public class DataInitializer {
 	Config config = PropertiesManager.getFenixFrameworkConfig("build/WEB-INF/classes/domain_model.dml");
 	FenixFramework.initialize(config);
 
-	RootDomainObject.init();
+	Bennu.init();
 
 	try {
 	    Transaction.withTransaction(false, new jvstm.TransactionalCommand() {
@@ -235,7 +235,7 @@ public class DataInitializer {
     }
 
     private static void createOrganizationalStructure() {
-	final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+	final Bennu rootDomainObject = Bennu.getInstance();
 	final PlanetUnit planetUnit = PlanetUnit.createNewPlanetUnit(new MultiLanguageString(Language.getDefaultLanguage(),
 		"Earth"), null, "E", new YearMonthDay(), null, null, null, null, false, null);
 	rootDomainObject.setEarthUnit(planetUnit);
@@ -243,7 +243,7 @@ public class DataInitializer {
 	createCountryUnits(rootDomainObject, planetUnit);
     }
 
-    private static void createCountryUnits(final RootDomainObject rootDomainObject, final PlanetUnit planetUnit) {
+    private static void createCountryUnits(final Bennu rootDomainObject, final PlanetUnit planetUnit) {
 	for (final Country country : rootDomainObject.getCountrysSet()) {
 	    CountryUnit.createNewCountryUnit(new MultiLanguageString(Language.getDefaultLanguage(), country.getName()), null,
 		    country.getCode(), new YearMonthDay(), null, planetUnit, null, null, false, null);

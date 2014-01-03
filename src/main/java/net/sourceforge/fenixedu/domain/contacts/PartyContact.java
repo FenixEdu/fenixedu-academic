@@ -10,16 +10,19 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonInformationLog;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
+
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Sets;
 
 public abstract class PartyContact extends PartyContact_Base {
 
@@ -33,7 +36,7 @@ public abstract class PartyContact extends PartyContact_Base {
 
     protected PartyContact() {
         super();
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
         setVisibleToPublic(Boolean.FALSE);
         setVisibleToStudents(Boolean.FALSE);
         setVisibleToTeachers(Boolean.FALSE);
@@ -238,7 +241,7 @@ public abstract class PartyContact extends PartyContact_Base {
             setPrevPartyContact(null);
             if (hasPartyContactValidation()) {
                 final PartyContactValidation validation = getPartyContactValidation();
-                if (validation.hasRootDomainObject()) {
+                if (validation.hasBennu()) {
                     validation.setRootDomainObject(null);
                 }
             }
@@ -272,7 +275,7 @@ public abstract class PartyContact extends PartyContact_Base {
         Set<PartyContact> contacts = new HashSet<PartyContact>();
 
         for (Class<? extends PartyContact> clazz : contactClasses) {
-            contacts.addAll(DomainObjectUtil.readAllDomainObjects(clazz));
+            contacts.addAll(getAllInstancesOf(clazz));
         }
 
         return contacts;
@@ -523,7 +526,7 @@ public abstract class PartyContact extends PartyContact_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 
@@ -592,4 +595,7 @@ public abstract class PartyContact extends PartyContact_Base {
         return getPrevPartyContact() != null;
     }
 
+    private static Set<PartyContact> getAllInstancesOf(Class<? extends PartyContact> type) {
+        return Sets.newHashSet(Iterables.filter(Bennu.getInstance().getPartyContactsSet(), type));
+    }
 }

@@ -5,7 +5,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<logic:present role="SCIENTIFIC_COUNCIL">
+<logic:present role="role(SCIENTIFIC_COUNCIL)">
 
 <h3><bean:message key="label.teacherCreditsSheet.otherTypeCreditLines" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
 <jsp:include page="../teacherCreditsStyles.jsp"/>

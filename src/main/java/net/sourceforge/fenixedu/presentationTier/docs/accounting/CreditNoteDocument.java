@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.CreditNote;
 import net.sourceforge.fenixedu.domain.accounting.CreditNoteEntry;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.resources.IMessageResourceProvider;
@@ -71,7 +71,7 @@ public class CreditNoteDocument extends FenixReport {
         addParameter("documentIdNumber", this.creditNote.getReceipt().getPerson().getDocumentIdNumber());
         addParameter("name", this.creditNote.getReceipt().getPerson().getName());
 
-        addParameter("ownerUnitPhone", RootDomainObject.getInstance().getInstitutionUnit().getDefaultPhoneNumber());
+        addParameter("ownerUnitPhone", Bennu.getInstance().getInstitutionUnit().getDefaultPhoneNumber());
 
         addParameter("creditNoteNumber", this.creditNote.getNumber() + "/" + this.creditNote.getYear().toString());
         addParameter("receiptNumber", this.creditNote.getReceipt().getNumberWithSeries() + "/"

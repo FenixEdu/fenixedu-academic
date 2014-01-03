@@ -4,13 +4,14 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -31,9 +32,9 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter {
     }
 
     public void execute(String username, String writtenEvaluationOID) throws NotAuthorizedException {
-        IUserView id = AccessControl.getUserView();
+        User id = Authenticate.getUser();
         try {
-            if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
+            if ((id == null) || (id.getPerson().getPersonRolesSet() == null) || !id.getPerson().hasRole(getRoleType())
                     || !attendsEvaluationExecutionCourse(id, username, writtenEvaluationOID)) {
                 throw new NotAuthorizedException();
             }
@@ -42,7 +43,7 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter {
         }
     }
 
-    private boolean attendsEvaluationExecutionCourse(IUserView id, String studentUsername, String writtenEvaluationOID) {
+    private boolean attendsEvaluationExecutionCourse(User id, String studentUsername, String writtenEvaluationOID) {
         if (writtenEvaluationOID == null) {
             return false;
         }
@@ -51,7 +52,7 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter {
 
             for (final ExecutionCourse executionCourse : evaluation.getAssociatedExecutionCourses()) {
                 for (final Attends attend : executionCourse.getAttends()) {
-                    if (attend.getRegistration().getPerson().hasUsername(studentUsername)) {
+                    if (attend.getRegistration().getPerson().getUsername().equals(studentUsername)) {
                         return true;
                     }
                 }

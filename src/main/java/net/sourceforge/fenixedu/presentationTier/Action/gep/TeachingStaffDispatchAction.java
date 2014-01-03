@@ -12,7 +12,6 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadActiveCurricularCourseScopesByDegreeCurricularPlanIDAndExecutionYearID;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYearByID;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
@@ -35,8 +34,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -62,7 +62,7 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         request.setAttribute("executionYears", ReadNotClosedExecutionYears.run());
 
@@ -72,7 +72,7 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
     public ActionForward selectExecutionYear(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
         String executionYearID = executionYear.getExternalId();

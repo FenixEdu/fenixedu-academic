@@ -21,13 +21,15 @@
 
 <jsp:include page="viewThesisHeader.jsp"/>
 
+<h3 class="separator2 mtop2"><bean:message key="title.scientificCouncil.thesis.review.section.jury.add"/></h3>
+
 <div style="margin-left: 35px; width: 90%;">
-	<fr:edit name="juryMemberBean"
-    	     action="<%= "/manageSecondCycleThesis.do?method=addJuryMember&amp;thesisOid=" + thesis.getExternalId() %>"
+	<fr:edit name="evaluationMemberBean"
+    	     action="<%= "/manageSecondCycleThesis.do?method=addEvaluationMember&amp;thesisOid=" + thesis.getExternalId() %>"
         	 schema="thesis.jury.proposal.information.edit">
 		<fr:schema type="net.sourceforge.fenixedu.domain.thesis.Thesis" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 			<fr:slot name="thesisParticipationType" key="label.jury.member.type" layout="menu-select">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ThesisParticipationTypeProvider"/>
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ThesisJuryTypeProvider"/>
 			</fr:slot>
 			<fr:slot name="person" layout="autoComplete" key="label.jury.member.person" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
 				<fr:property name="size" value="70" />

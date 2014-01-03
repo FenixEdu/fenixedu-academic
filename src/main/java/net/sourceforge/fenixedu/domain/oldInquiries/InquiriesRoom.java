@@ -4,8 +4,9 @@
  */
 package net.sourceforge.fenixedu.domain.oldInquiries;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InfoInquiriesRoom;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 
@@ -17,7 +18,7 @@ public class InquiriesRoom extends InquiriesRoom_Base {
 
     public InquiriesRoom() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     protected InquiriesRoom(InquiriesCourse inquiriesCourse, AllocatableSpace room, InfoInquiriesRoom infoInquiriesRoom) {
@@ -49,7 +50,7 @@ public class InquiriesRoom extends InquiriesRoom_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

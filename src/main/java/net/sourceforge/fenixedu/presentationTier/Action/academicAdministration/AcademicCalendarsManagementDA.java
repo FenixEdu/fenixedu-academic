@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.util.renderer.GanttDiagram;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
 
-import org.apache.jcs.access.exception.InvalidArgumentException;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -61,7 +60,7 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
     public ActionForward prepareChooseCalendar(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        Collection<AcademicCalendarRootEntry> academicCalendars = rootDomainObject.getAcademicCalendars();
+        Collection<AcademicCalendarRootEntry> academicCalendars = rootDomainObject.getAcademicCalendarsSet();
         request.setAttribute("academicCalendars", academicCalendars);
 
         return mapping.findForward("prepareChooseCalendar");
@@ -244,8 +243,7 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
 
     // Private Methods
 
-    private ActionForward generateGanttDiagram(ActionMapping mapping, HttpServletRequest request, CalendarEntryBean bean)
-            throws InvalidArgumentException {
+    private ActionForward generateGanttDiagram(ActionMapping mapping, HttpServletRequest request, CalendarEntryBean bean) {
 
         YearMonthDay beginDate = bean.getBeginDateToDisplayInYearMonthDayFormat();
         YearMonthDay endDate = bean.getEndDateToDisplayInYearMonthDayFormat();

@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.util.DateI18NUtil;
 import net.sourceforge.fenixedu.util.JasperPrintProcessor;
-import net.sourceforge.fenixedu.util.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import org.joda.time.LocalDate;
 
@@ -37,7 +37,7 @@ abstract public class FenixReport implements Serializable {
 
     static final protected String EMPTY_STR = StringUtils.EMPTY;
 
-    static final protected String SINGLE_SPACE = StringUtils.SINGLE_SPACE;
+    static final protected String SINGLE_SPACE = " ";
 
     static final protected String DD_MMMM_YYYY = "dd MMMM yyyy";
 

@@ -1,34 +1,33 @@
 package net.sourceforge.fenixedu.util.phd;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import org.fenixedu.bennu.core.annotation.ConfigurationManager;
+import org.fenixedu.bennu.core.annotation.ConfigurationProperty;
+import org.fenixedu.bennu.core.util.ConfigurationInvocationHandler;
+
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 
 public class EPFLPhdCandidacyProcessProperties {
+    @ConfigurationManager(description = "EPFL Properties")
+    public interface ConfigurationProperties {
+        @ConfigurationProperty(key = "phd.epfl.public.candidacy.access.link")
+        public String getPublicCandidacyAccessLink();
 
-    static private final long serialVersionUID = 1L;
+        @ConfigurationProperty(key = "phd.epfl.public.candidacy.submission.link")
+        public String getPublicCandidacySubmissionLink();
 
-    static private String getProperty(final String key) {
-        return PropertiesManager.getProperty(key);
+        @ConfigurationProperty(key = "phd.epfl.public.candidacy.referee.form.link")
+        public String getPublicCandidacyRefereeFormLink();
+
+        @ConfigurationProperty(key = "phd.public.external.access.link")
+        public String getPhdExternalAccessLink();
     }
 
-    static public String getPublicCandidacyAccessLink() {
-        return getProperty("phd.epfl.public.candidacy.access.link");
+    public static ConfigurationProperties getConfiguration() {
+        return ConfigurationInvocationHandler.getConfiguration(ConfigurationProperties.class);
     }
 
-    static public String getPublicCandidacySubmissionLink() {
-        return getProperty("phd.epfl.public.candidacy.submission.link");
-    }
-
-    static public String getPublicCandidacyRefereeFormLink() {
-        return getProperty("phd.epfl.public.candidacy.referee.form.link");
-    }
-
-    static public String getPhdExternalAccessLink() {
-        return getProperty("phd.public.external.access.link");
-    }
-
-    static public String getPublicCandidacyAccessLink(PhdProgramPublicCandidacyHashCode candidacyProcessHashCode) {
-        String url = String.format("%s?hash=%s", getPublicCandidacyAccessLink(), candidacyProcessHashCode.getValue());
-        return url;
+    public static String getPublicCandidacyAccessLink(PhdProgramPublicCandidacyHashCode candidacyProcessHashCode) {
+        return String.format("%s?hash=%s", EPFLPhdCandidacyProcessProperties.getConfiguration().getPublicCandidacyAccessLink(),
+                candidacyProcessHashCode.getValue());
     }
 }

@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.thesis;
 import java.io.File;
 import java.io.IOException;
 
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.student.thesis.ScientificCouncilOrStudentThesisAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -18,7 +20,7 @@ public class CreateThesisAbstractFile extends CreateThesisFile {
     protected void removePreviousFile(Thesis thesis) {
         ThesisFile extendedAbstract = thesis.getExtendedAbstract();
         if (extendedAbstract != null) {
-            if (AccessControl.getUserView().hasRoleType(RoleType.SCIENTIFIC_COUNCIL)) {
+            if (Authenticate.getUser().getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
                 extendedAbstract.deleteWithoutStateCheck();
             } else {
                 extendedAbstract.delete();

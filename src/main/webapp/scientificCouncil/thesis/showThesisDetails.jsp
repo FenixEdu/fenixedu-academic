@@ -328,6 +328,8 @@
 	</div>
 </logic:present>
 
+<jsp:include page="viewThesisOrientation.jsp"/>
+
 <jsp:include page="viewThesisJury.jsp"/>
 
 <h3 class="separator2 mtop2">

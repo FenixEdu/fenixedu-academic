@@ -45,7 +45,7 @@ public class ConfirmAttributionOfFinalDegreeWork {
                 Collection<GroupStudent> groupStudents = group.getGroupStudents();
                 if (groupStudents != null && !groupStudents.isEmpty()) {
                     for (GroupStudent groupStudent : groupStudents) {
-                        if (groupStudent != null && groupStudent.getRegistration().getPerson().hasUsername(username)) {
+                        if (groupStudent != null && groupStudent.getRegistration().getPerson().getUsername().equals(username)) {
                             groupStudent.setFinalDegreeWorkProposalConfirmation(groupProposal.getFinalDegreeWorkProposal());
                         }
                     }

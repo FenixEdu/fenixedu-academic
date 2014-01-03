@@ -28,7 +28,7 @@
 	
 		<div id="container">
 			<div id="dotist_id">
-				<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />"
+				<img alt="<%=net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstalationName() %>"
 						src="<bean:message key="dot.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>" />
 			</div>
 
@@ -45,7 +45,7 @@
 					</div>
 				</logic:equal>
 				
-				<bean:message key="message.gratuity.payments.reminder.text" bundle="APPLICATION_RESOURCES" />
+				<bean:message key="message.gratuity.payments.reminder.text" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" arg1="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="APPLICATION_RESOURCES" />
 			</div>
 			<br />
 			

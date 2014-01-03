@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOff
 import java.text.MessageFormat;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
@@ -13,6 +12,7 @@ import net.sourceforge.fenixedu.util.StringFormatter;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.LocalDate;
 
 public class PhdDiploma extends AdministrativeOfficeDocument {
@@ -49,7 +49,7 @@ public class PhdDiploma extends AdministrativeOfficeDocument {
         addParameter("documentNumber", getResourceBundle().getString("label.diploma.documentNumber"));
         addParameter("registryCode", diplomaRequest.hasRegistryCode() ? diplomaRequest.getRegistryCode().getCode() : null);
         addParameter("conclusionDate", diplomaRequest.getConclusionDate().toString(getDatePattern(), getLocale()));
-        addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
+        addParameter("institutionName", Bennu.getInstance().getInstitutionUnit().getName());
         addParameter("day", MessageFormat.format(getResourceBundle().getString("label.diploma.university.actualDate"),
                 universityName, getFormatedCurrentDate()));
 

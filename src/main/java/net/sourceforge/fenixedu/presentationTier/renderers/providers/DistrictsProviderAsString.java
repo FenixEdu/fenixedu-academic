@@ -6,8 +6,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.District;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
@@ -23,7 +24,7 @@ public class DistrictsProviderAsString implements DataProvider {
         final List<String> result = new ArrayList<String>();
 
         Collator ptsCollator = Collator.getInstance(new Locale("pt"));
-        for (final District each : RootDomainObject.getInstance().getDistricts()) {
+        for (final District each : Bennu.getInstance().getDistrictsSet()) {
             result.add(each.getName());
         }
 

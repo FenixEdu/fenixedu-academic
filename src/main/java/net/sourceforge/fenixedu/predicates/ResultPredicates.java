@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.predicates;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.research.AuthorGroup;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
@@ -18,10 +20,10 @@ public class ResultPredicates {
     public static final AccessControlPredicate<ResearchResult> createPredicate = new AccessControlPredicate<ResearchResult>() {
         @Override
         public boolean evaluate(ResearchResult result) {
-            final IUserView userView = AccessControl.getUserView();
+            final User userView = Authenticate.getUser();
             if (userView != null
-                    && (userView.hasRoleType(RoleType.SCIENTIFIC_COUNCIL) || ((userView.hasRoleType(RoleType.RESEARCHER) || new AuthorGroup()
-                            .allows(userView)) && !result.hasAnyResultParticipations()))) {
+                    && (userView.getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL) || ((userView.getPerson().hasRole(
+                            RoleType.RESEARCHER) || new AuthorGroup().allows(userView)) && !result.hasAnyResultParticipations()))) {
                 return true;
             }
             return false;
@@ -31,10 +33,10 @@ public class ResultPredicates {
     public static final AccessControlPredicate<Object> author = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(Object result) {
-            final IUserView userView = AccessControl.getUserView();
+            final User userView = Authenticate.getUser();
             if (userView != null
-                    && (userView.hasRoleType(RoleType.SCIENTIFIC_COUNCIL) || userView.hasRoleType(RoleType.RESEARCHER) || new AuthorGroup()
-                            .allows(userView))) {
+                    && (userView.getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)
+                            || userView.getPerson().hasRole(RoleType.RESEARCHER) || new AuthorGroup().allows(userView))) {
                 return true;
             }
             return false;
@@ -44,8 +46,9 @@ public class ResultPredicates {
     public static final AccessControlPredicate<ResearchResult> writePredicate = new AccessControlPredicate<ResearchResult>() {
         @Override
         public boolean evaluate(ResearchResult result) {
-            final IUserView userView = AccessControl.getUserView();
-            return result.isEditableByCurrentUser() || (userView != null && userView.hasRoleType(RoleType.SCIENTIFIC_COUNCIL));
+            final User userView = Authenticate.getUser();
+            return result.isEditableByCurrentUser()
+                    || (userView != null && userView.getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL));
         }
     };
 

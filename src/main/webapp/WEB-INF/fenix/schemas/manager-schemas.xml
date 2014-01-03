@@ -351,46 +351,16 @@
 	<slot name="responsiblePerson" layout="username-as-person" key="label.responsibility.person.username" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>				
 </schema>
 
-<schema name="ViewInstitutionalLoginAlias" type="net.sourceforge.fenixedu.domain.LoginAlias" bundle="MANAGER_RESOURCES">
-	<slot name="alias"/>
-	<slot name="type"/>
+<schema name="EditUserLoginPeriod" type="org.fenixedu.bennu.user.management.UserLoginPeriod" bundle="MANAGER_RESOURCES">
+		<slot name="beginDate" required="true" />
+        <slot name="endDate" required="true" />
+        <setter signature="edit(beginDate, endDate)" />
 </schema>
 
-<schema name="ViewRoleTypeLoginAlias" type="net.sourceforge.fenixedu.domain.LoginAlias" bundle="MANAGER_RESOURCES" extends="ViewInstitutionalLoginAlias">
-	<slot name="roleType"/>			
-</schema>
-
-<schema name="CreateNewRoleTypeAlias" type="net.sourceforge.fenixedu.dataTransferObject.manager.loginsManagement.LoginAliasBean" bundle="MANAGER_RESOURCES">
-	<slot name="alias" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="roleType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.manager.PersonRolesProvider" />
-	</slot>			
-</schema>
-
-<schema name="CreateNewCustomAlias" type="net.sourceforge.fenixedu.dataTransferObject.manager.loginsManagement.LoginAliasBean" bundle="MANAGER_RESOURCES">
-	<slot name="alias" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-</schema>
-
-<schema name="EditCustomAlias" type="net.sourceforge.fenixedu.dataTransferObject.manager.loginsManagement.LoginAliasBean" bundle="MANAGER_RESOURCES">
-	<slot name="alias" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<setter signature="editCustomAlias(alias)"/>
-</schema>
-
-<schema name="ViewLoginPeriod" type="net.sourceforge.fenixedu.domain.LoginPeriod" bundle="MANAGER_RESOURCES">
-	<slot name="beginDate" />
-	<slot name="endDate" />	
-</schema>
-
-<schema name="EditLoginPeriod" type="net.sourceforge.fenixedu.domain.LoginPeriod" bundle="MANAGER_RESOURCES">
-	<slot name="beginDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="endDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<setter signature="edit(beginDate, endDate)" />
-</schema>
-
-<schema name="CreateLoginPeriod" type="net.sourceforge.fenixedu.domain.LoginPeriod" bundle="MANAGER_RESOURCES" constructor="beginDate, endDate, login">
-	<slot name="beginDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="endDate" />
-	<slot name="login" hidden="true"/>
+<schema name="CreateUserLoginPeriod" type="org.fenixedu.bennu.user.management.UserLoginPeriod" bundle="MANAGER_RESOURCES" constructor="user, beginDate, endDate">
+        <slot name="user" hidden="true"/>
+        <slot name="beginDate" required="true" />
+        <slot name="endDate" required="true" />
 </schema>
 
 <schema name="AcademicCalendarInfo" type="net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry" bundle="MANAGER_RESOURCES">
@@ -767,12 +737,8 @@
 	</slot>
 </schema>
 
-<schema name="EditUserDomainObject" type="net.sourceforge.fenixedu.domain.User" bundle="MANAGER_RESOURCES">
-	<slot name="userUId" />
-</schema>
-
-<schema name="EditLoginAliasDomainObject" type="net.sourceforge.fenixedu.domain.LoginAlias" bundle="MANAGER_RESOURCES">
-	<slot name="alias" />
+<schema name="EditUserDomainObject" type="org.fenixedu.bennu.core.domain.User" bundle="MANAGER_RESOURCES">
+	<slot name="username" />
 </schema>
 
 <schema name="EditTeacherDomainObject" type="net.sourceforge.fenixedu.domain.Teacher" bundle="MANAGER_RESOURCES">

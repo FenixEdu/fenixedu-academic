@@ -34,12 +34,12 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 
     @Override
     public String getJobName() {
-        return "Informação sobre docentes do IST";
+        return "Informação sobre docentes do " + Unit.getInstitutionAcronym();
     }
 
     @Override
     protected String getPrefix() {
-        return "Informação sobre docentes do IST";
+        return "Informação sobre docentes do " + Unit.getInstitutionAcronym();
     }
 
     @Override
@@ -48,7 +48,8 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
     }
 
     private void generateNameAndHeaders(Spreadsheet spreadsheet, ExecutionYear executionYear) {
-        spreadsheet.setName("Docentes do IST " + executionYear.getQualifiedName().replace("/", ""));
+        spreadsheet.setName("Docentes do " + Unit.getInstitutionAcronym() + " "
+                + executionYear.getQualifiedName().replace("/", ""));
         spreadsheet.setHeader("Identificação");
         spreadsheet.setHeader("OID_PERSON");
         spreadsheet.setHeader("Tipo Docente");
@@ -73,7 +74,7 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 
     private void listTeachers(Spreadsheet spreadsheet, final ExecutionYear executionYear) throws IOException {
         generateNameAndHeaders(spreadsheet, executionYear);
-        for (final Teacher teacher : getRootDomainObject().getTeachers()) {
+        for (final Teacher teacher : getRootDomainObject().getTeachersSet()) {
             PersonProfessionalData personProfessionalData = teacher.getPerson().getPersonProfessionalData();
             if (personProfessionalData != null) {
                 GiafProfessionalData giafProfessionalData = personProfessionalData.getGiafProfessionalData();
@@ -131,7 +132,8 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
             }
         }
 
-        spreadsheet.exportToXLSSheet(new File("Docentes do IST " + executionYear.getQualifiedName().replace("/", "") + ".xls"));
+        spreadsheet.exportToXLSSheet(new File("Docentes do " + Unit.getInstitutionAcronym() + " "
+                + executionYear.getQualifiedName().replace("/", "") + ".xls"));
     }
 
     private ExecutionSemester getLastSemester(PersonContractSituation personContractSituation, ExecutionYear executionYear) {

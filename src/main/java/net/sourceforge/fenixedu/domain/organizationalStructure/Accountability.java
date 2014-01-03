@@ -2,16 +2,16 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.YearMonthDay;
 
 public class Accountability extends Accountability_Base {
 
     protected Accountability() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public Accountability(Party parentParty, Party childParty, AccountabilityType accountabilityType) {
@@ -109,7 +109,7 @@ public class Accountability extends Accountability_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

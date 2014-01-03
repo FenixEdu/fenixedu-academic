@@ -12,7 +12,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
@@ -32,6 +31,7 @@ import net.sourceforge.fenixedu.util.sibs.SibsOutgoingPaymentFile;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
@@ -160,7 +160,7 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
     }
 
     protected void exportIndividualCandidacyPaymentCodes(SibsOutgoingPaymentFile sibsFile, StringBuilder errorsBuilder) {
-        Set<? extends PaymentCode> individualCandidacyPaymentCodeList = RootDomainObject.getInstance().getPaymentCodesSet();
+        Set<? extends PaymentCode> individualCandidacyPaymentCodeList = Bennu.getInstance().getPaymentCodesSet();
 
         LocalDate date = new LocalDate();
 

@@ -7,10 +7,10 @@ import net.sourceforge.fenixedu.dataTransferObject.candidacy.OriginInformationBe
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GrantOwnerType;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 public class PersonalIngressionData extends PersonalIngressionData_Base {
@@ -24,7 +24,7 @@ public class PersonalIngressionData extends PersonalIngressionData_Base {
 
     public PersonalIngressionData() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setLastModifiedDate(new DateTime());
     }
 
@@ -191,7 +191,7 @@ public class PersonalIngressionData extends PersonalIngressionData_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

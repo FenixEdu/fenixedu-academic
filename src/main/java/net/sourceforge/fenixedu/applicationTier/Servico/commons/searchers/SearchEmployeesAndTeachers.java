@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
 
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 

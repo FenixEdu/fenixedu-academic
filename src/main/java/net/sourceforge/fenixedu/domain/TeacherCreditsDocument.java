@@ -79,7 +79,7 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
         htmlText.append("<h1 style=\"text-align: center;\">").append(executionSemester.getName()).append(" ")
                 .append(executionSemester.getExecutionYear().getYear()).append("</h1>");
         htmlText.append("<table class=\"tb01\"><tr><td><strong>Nome:</strong>").append(teacher.getPerson().getName());
-        htmlText.append("</td><td><strong>IST Id:</strong>").append(teacher.getPerson().getIstUsername());
+        htmlText.append("</td><td><strong>Username:</strong>").append(teacher.getPerson().getIstUsername());
         htmlText.append("</td></tr><tr><td><strong>Categoria:</strong>");
 
         ProfessionalCategory categoryByPeriod = teacher.getCategoryByPeriod(executionSemester);
@@ -115,7 +115,7 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
         htmlText.append("<li><b>").append(creditLineDTO.getThesesCredits())
                 .append("</b> (Diss) - Créditos provenientes de Dissertações</li>");
         htmlText.append("<li><b>").append(creditLineDTO.getInstitutionWorkingHours())
-                .append("</b> (P) - Horas semanais de permanência no IST</li>");
+                .append("</b> (P) - Horas semanais de permanência no " + Unit.getInstitutionAcronym() + "</li>");
         htmlText.append("<li><b>").append(creditLineDTO.getOtherCredits())
                 .append("</b> (O) - Créditos enquadrados na categoria outros</li>");
         htmlText.append("<li><b>").append(creditLineDTO.getManagementCredits())
@@ -246,7 +246,7 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
                     .append("</p>");
         }
 
-        htmlText.append("<h3>5) Permanência no IST</h3>");
+        htmlText.append("<h3>5) Permanência no " + Unit.getInstitutionAcronym() + "</h3>");
         ComparatorChain comparatorChain = new ComparatorChain();
         BeanComparator weekDayComparator = new BeanComparator("weekDay");
         BeanComparator startTimeComparator = new BeanComparator("startTime");
@@ -368,6 +368,7 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
 
         return htmlText.toString();
     }
+
     @Deprecated
     public boolean hasTeacherCredits() {
         return getTeacherCredits() != null;

@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.commons.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 

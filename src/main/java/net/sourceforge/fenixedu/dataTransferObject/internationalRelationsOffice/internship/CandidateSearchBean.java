@@ -3,10 +3,10 @@ package net.sourceforge.fenixedu.dataTransferObject.internationalRelationsOffice
 import java.io.Serializable;
 import java.util.Collections;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.internship.InternshipCandidacySession;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionUnit;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
@@ -25,7 +25,7 @@ public class CandidateSearchBean implements Serializable {
 
         @Override
         public Object provide(Object source, Object currentValue) {
-            return RootDomainObject.getInstance().getInternshipCandidacySessionSet();
+            return Bennu.getInstance().getInternshipCandidacySessionSet();
         }
     }
 

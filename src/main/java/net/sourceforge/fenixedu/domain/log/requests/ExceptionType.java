@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.log.requests;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * 
@@ -11,7 +11,7 @@ public class ExceptionType extends ExceptionType_Base {
 
     public ExceptionType() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     private ExceptionType(String type) {
@@ -20,7 +20,7 @@ public class ExceptionType extends ExceptionType_Base {
     }
 
     public static ExceptionType createOrRetrieveExceptionType(String type) {
-        for (ExceptionType exceptionType : RootDomainObject.getInstance().getExceptionTypes()) {
+        for (ExceptionType exceptionType : Bennu.getInstance().getExceptionTypesSet()) {
             if (exceptionType.getType().equals(type)) {
                 return exceptionType;
             }
@@ -39,7 +39,7 @@ public class ExceptionType extends ExceptionType_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

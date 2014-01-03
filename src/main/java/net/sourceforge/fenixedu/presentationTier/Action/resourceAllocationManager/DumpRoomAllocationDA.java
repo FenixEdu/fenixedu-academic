@@ -38,7 +38,6 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.WeekDay;
 
-import org.apache.jcs.access.exception.InvalidArgumentException;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -71,7 +70,7 @@ public class DumpRoomAllocationDA extends FenixDispatchAction {
     }
 
     public ActionForward firstPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException {
+            HttpServletResponse response) {
         DumpContextBean dumpContextBean = getRenderedObject();
         if (dumpContextBean == null) {
             dumpContextBean = new DumpContextBean();

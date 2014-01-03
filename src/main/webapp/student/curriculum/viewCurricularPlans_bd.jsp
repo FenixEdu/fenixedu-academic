@@ -1,8 +1,9 @@
 <%@ page language="java" %>
 <%@ page import="java.util.List" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
-<%@ page import="net.sourceforge.fenixedu.applicationTier.IUserView" %>
+<%@ page import="org.fenixedu.bennu.core.domain.User" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan" %>
+<%@ page import="org.fenixedu.bennu.core.security.Authenticate" %>
 
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
@@ -29,7 +30,7 @@
 				</td>
 				<td class="infoop">
 					<strong>Nota: É normal a existência de dois planos curriculares para o mesmo curso.</strong><br/>
-					O plano curricular com a data mais antiga (ano da sua entrada no IST), contem o seu currículo tal e qual como o pode visionar no ponto habitual acedido através da página do IST.<br/>
+					O plano curricular com a data mais antiga (ano da sua entrada no <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>), contem o seu currículo tal e qual como o pode visionar no ponto habitual acedido através da página do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>.<br/>
 					O plano curricular com a data mais recente (este ano lectivo), contem o seu currículo como se o tivesse iniciado este ano, ou seja, apenas com as disciplinas em que se encontra inscrito a partir deste ano lectivo.<br/>
 					A razão desta separação é dar a hipótese de verificar a correcção do seu currículo passado para, mais tarde (e depois de ter a certeza de que está tudo em ordem), juntar toda a informação num só plano curricular.
 				</td>
@@ -39,8 +40,8 @@
 		<br/>
 		<br/>
 		<%
-			IUserView userView = (IUserView) session.getAttribute(pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE);
-			if(userView.getUtilizador().startsWith("D"))
+			User userView = Authenticate.getUser();
+			if(userView.getUsername().startsWith("D"))
 			{
 				InfoStudentCurricularPlan infoScp = (InfoStudentCurricularPlan) ((List) studentCPList).get(0);
 				String personCode = infoScp.getInfoStudent().getInfoPerson().getExternalId();

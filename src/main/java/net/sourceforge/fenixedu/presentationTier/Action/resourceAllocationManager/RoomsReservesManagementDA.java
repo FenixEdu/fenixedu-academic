@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.jcs.access.exception.InvalidArgumentException;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -52,7 +51,7 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
 public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
 
     public ActionForward seeSpecificRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, InvalidArgumentException {
+            HttpServletResponse response) throws FenixServiceException {
         ActionForward forward = seeRoomsReserveRequests(mapping, form, request, response);
         DynaActionForm dynaForm = (DynaActionForm) form;
         final Integer requestID = (Integer) dynaForm.get("requestID");
@@ -62,14 +61,14 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
     }
 
     public ActionForward seeRoomsReserveRequests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, InvalidArgumentException {
+            HttpServletResponse response) throws FenixServiceException {
 
         request.setAttribute("campusBean", new CampusBean());
         return mapping.findForward("seeRoomsReserveRequests");
     }
 
     public ActionForward seeFilteredRoomsReserveRequests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, InvalidArgumentException {
+            HttpServletResponse response) throws FenixServiceException {
 
         Person person = getLoggedPerson(request);
         IViewState viewState = RenderUtils.getViewState("filterRoomRequestByCampus");
@@ -104,7 +103,7 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
     }
 
     public ActionForward seeSpecifiedRoomsReserveRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, InvalidArgumentException {
+            HttpServletResponse response) throws FenixServiceException {
 
         Person loggedPerson = getLoggedPerson(request);
         PunctualRoomsOccupationRequest roomsReserveRequest = getRoomsReserveRequest(request);
@@ -127,7 +126,7 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
 
     @Override
     public ActionForward deleteRoomsPunctualScheduling(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException, FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         GenericEvent genericEventFromParameter = getGenericEventFromParameter(request);
         PunctualRoomsOccupationRequest roomsReserveRequest = getRoomsReserveRequest(request);
 
@@ -143,13 +142,13 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
 
     @Override
     public ActionForward prepareView(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException {
+            HttpServletResponse response) {
         ActionForward forward = super.prepareView(mapping, form, request, response);
         RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) request.getAttribute("roomsPunctualSchedulingBean");
         PunctualRoomsOccupationRequest roomsReserveRequest = getRoomsReserveRequest(request);
 
         if (roomsReserveRequest == null) {
-            throw new InvalidArgumentException();
+            throw new IllegalArgumentException();
         }
 
         bean.setRoomsReserveRequest(roomsReserveRequest);
@@ -158,7 +157,7 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
 
     @Override
     public ActionForward editRoomsPunctualScheduling(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, InvalidArgumentException {
+            HttpServletResponse response) throws FenixServiceException {
         IViewState viewState = RenderUtils.getViewState("roomsPunctualSchedulingWithDescriptions");
         RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) viewState.getMetaObject().getObject();
 
@@ -173,7 +172,7 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
 
         PunctualRoomsOccupationRequest roomsReserveRequest = bean.getRoomsReserveRequest();
         if (roomsReserveRequest == null) {
-            throw new InvalidArgumentException();
+            throw new IllegalArgumentException();
         }
 
         request.setAttribute("roomsReserveBean", new RoomsReserveBean(getLoggedPerson(request), roomsReserveRequest));
@@ -182,13 +181,13 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
 
     @Override
     public ActionForward prepareCreate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, InvalidArgumentException {
+            HttpServletResponse response) throws FenixServiceException {
         ActionForward forward = super.prepareCreate(mapping, form, request, response);
         RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) request.getAttribute("roomsPunctualSchedulingBean");
         PunctualRoomsOccupationRequest roomsReserveRequest = getRoomsReserveRequest(request);
 
         if (roomsReserveRequest == null) {
-            throw new InvalidArgumentException();
+            throw new IllegalArgumentException();
         }
 
         bean.setRoomsReserveRequest(roomsReserveRequest);
@@ -197,7 +196,7 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
 
     @Override
     public ActionForward createRoomsPunctualScheduling(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, InvalidArgumentException {
+            HttpServletResponse response) throws FenixServiceException {
         IViewState viewState = RenderUtils.getViewState("roomsPunctualSchedulingWithDescriptions");
         RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) viewState.getMetaObject().getObject();
 
@@ -211,7 +210,7 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
 
         PunctualRoomsOccupationRequest roomsReserveRequest = bean.getRoomsReserveRequest();
         if (roomsReserveRequest == null) {
-            throw new InvalidArgumentException();
+            throw new IllegalArgumentException();
         }
 
         request.setAttribute("roomsReserveBean", new RoomsReserveBean(getLoggedPerson(request), roomsReserveRequest));
@@ -219,7 +218,7 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
     }
 
     public ActionForward openRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, InvalidArgumentException {
+            HttpServletResponse response) throws FenixServiceException {
 
         PunctualRoomsOccupationRequest roomsReserveRequest = getRoomsReserveRequest(request);
         try {
@@ -231,7 +230,7 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
     }
 
     public ActionForward openRequestAndReturnToSeeRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, InvalidArgumentException {
+            HttpServletResponse response) throws FenixServiceException {
 
         PunctualRoomsOccupationRequest roomsReserveRequest = getRoomsReserveRequest(request);
         try {
@@ -244,7 +243,7 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
     }
 
     public ActionForward closeRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, InvalidArgumentException {
+            HttpServletResponse response) throws FenixServiceException {
 
         PunctualRoomsOccupationRequest roomsReserveRequest = getRoomsReserveRequest(request);
         try {
@@ -256,7 +255,7 @@ public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
     }
 
     public ActionForward closeRequestAndReturnToSeeRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, InvalidArgumentException {
+            HttpServletResponse response) throws FenixServiceException {
 
         PunctualRoomsOccupationRequest roomsReserveRequest = getRoomsReserveRequest(request);
         try {

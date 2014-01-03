@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.commons.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExamsMap;
@@ -11,6 +10,8 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 /**
  * @author Luis Cruz
@@ -19,7 +20,7 @@ import org.apache.commons.collections.Predicate;
 public class PublishedExamsMapAuthorizationFilter {
 
     public static void execute(Object returnedObject) {
-        IUserView userView = AccessControl.getUserView();
+        User userView = Authenticate.getUser();
 
         if (returnedObject instanceof ExecutionCourseSiteView) {
 
@@ -31,8 +32,9 @@ public class PublishedExamsMapAuthorizationFilter {
 
             }
 
-        } else if (((userView != null && userView.getRoleTypes() != null && !userView.hasRoleType(getRoleType())))
-                || (userView == null) || (userView.getRoleTypes() == null)) {
+        } else if (((userView != null && userView.getPerson().getPersonRolesSet() != null && !userView.getPerson().hasRole(
+                getRoleType())))
+                || (userView == null) || (userView.getPerson().getPersonRolesSet() == null)) {
 
             if (returnedObject instanceof InfoExamsMap) {
 

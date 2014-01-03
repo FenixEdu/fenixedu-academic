@@ -22,6 +22,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
@@ -89,7 +90,7 @@ public class ErasmusCandidacyProcessDA extends
         public Object provide(Object source, Object currentValue) {
             ChooseDegreeBean bean = (ChooseDegreeBean) source;
 
-            Teacher teacher = AccessControl.getUserView().getPerson().getTeacher();
+            Teacher teacher = Authenticate.getUser().getPerson().getTeacher();
             return ((MobilityApplicationProcess) bean.getCandidacyProcess()).getDegreesAssociatedToTeacherAsCoordinator(teacher);
         }
 

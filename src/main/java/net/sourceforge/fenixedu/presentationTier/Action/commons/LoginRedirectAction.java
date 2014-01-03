@@ -14,9 +14,11 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
+@Mapping(path = "/redirect")
 public class LoginRedirectAction extends Action {
 
     public static String addToUrl(String url, String param, String value) {
@@ -84,7 +86,7 @@ public class LoginRedirectAction extends Action {
                     response.sendRedirect(addParametersFromAttributes(url, request));
                     return null;
                 }
-                return mapping.findForward("show-redirect-page");
+                return new ActionForward("/redirect.jsp");
             }
         } catch (Exception e) {
             System.out.println("Login: Catched " + e.getClass().getName() + " OID with pendingRequest  "

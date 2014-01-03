@@ -6,7 +6,7 @@
 
 <%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess"%><html:xhtml/>
 
-<logic:present role="MANAGER">
+<logic:present role="role(MANAGER)">
 
 <%-- ### Title #### --%>
 <em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>

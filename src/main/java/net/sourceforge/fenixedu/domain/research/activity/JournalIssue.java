@@ -5,8 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.research.result.publication.Article;
@@ -33,7 +34,7 @@ public class JournalIssue extends JournalIssue_Base implements ParticipationsInt
 
     public JournalIssue(ScientificJournal journal) {
         super();
-        this.setRootDomainObject(RootDomainObject.getInstance());
+        this.setRootDomainObject(Bennu.getInstance());
         this.setScientificJournal(journal);
     }
 
@@ -184,7 +185,7 @@ public class JournalIssue extends JournalIssue_Base implements ParticipationsInt
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

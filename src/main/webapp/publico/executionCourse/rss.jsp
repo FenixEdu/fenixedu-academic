@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <html:xhtml/>
@@ -6,7 +7,7 @@
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt" %>
 
 <h2><bean:message key="label.rss"/></h2>
-<p><bean:message key="message.rss.1"/></p>
+<p><bean:message key="message.rss.1" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/></p>
 
 <h2><bean:message key="message.rss.2"/></h2>
 <p><bean:message key="message.rss.3"/></p>
@@ -20,7 +21,7 @@
 	
 <p><bean:message key="message.rss.copy.feeds"/></p>	
 
-<% final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context"); %>
+<% final String appContext = FenixConfigurationManager.getConfiguration().appContext(); %>
 <% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
 
 <bean:define id="linkRSS" type="java.lang.String"><%=request.getScheme()%>://<%=request.getServerName()%>:<%=request.getServerPort()%><%=context%></bean:define>

@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.EvaluationType;
@@ -12,7 +14,7 @@ public abstract class Evaluation extends Evaluation_Base {
     public Evaluation() {
         super();
         setGradeScale(GradeScale.TYPE20);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public List<ExecutionCourse> getAttendingExecutionCoursesFor(final Registration registration) {
@@ -81,6 +83,7 @@ public abstract class Evaluation extends Evaluation_Base {
                     ec.getDegreePresentationString());
         }
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Mark> getMarks() {
         return getMarksSet();
@@ -102,7 +105,7 @@ public abstract class Evaluation extends Evaluation_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

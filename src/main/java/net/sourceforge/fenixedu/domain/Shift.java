@@ -32,6 +32,7 @@ import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.Duration;
 
 import pt.ist.fenixframework.Atomic;
@@ -73,7 +74,7 @@ public class Shift extends Shift_Base {
     public Shift(final ExecutionCourse executionCourse, Collection<ShiftType> types, final Integer lotacao) {
 //        check(this, ResourceAllocationRolePredicates.checkPermissionsToManageShifts);
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         shiftTypeManagement(types, executionCourse);
         setLotacao(lotacao);
         executionCourse.setShiftNames();
@@ -744,7 +745,7 @@ public class Shift extends Shift_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

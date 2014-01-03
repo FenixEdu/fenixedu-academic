@@ -7,11 +7,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.util.Email;
 import net.sourceforge.fenixedu.domain.util.EmailAddressList;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -36,7 +36,7 @@ public class Message extends Message_Base {
 
     public Message() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public Message(final Sender sender, String to, String subject, String body) {
@@ -88,7 +88,7 @@ public class Message extends Message_Base {
     public Message(final Sender sender, final Collection<? extends ReplyTo> replyTos, final Collection<Recipient> recipients,
             final String subject, final String body, final String bccs) {
         super();
-        final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+        final Bennu rootDomainObject = Bennu.getInstance();
         setRootDomainObject(rootDomainObject);
         setRootDomainObjectFromPendingRelation(rootDomainObject);
         setSender(sender);
@@ -113,7 +113,7 @@ public class Message extends Message_Base {
     public Message(final Sender sender, final Collection<? extends ReplyTo> replyTos, final Collection<Recipient> recipients,
             final String subject, final String body, final String bccs, final String htmlBody) {
         super();
-        final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+        final Bennu rootDomainObject = Bennu.getInstance();
         setRootDomainObject(rootDomainObject);
         setRootDomainObjectFromPendingRelation(rootDomainObject);
         setSender(sender);
@@ -457,7 +457,7 @@ public class Message extends Message_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 
@@ -467,7 +467,7 @@ public class Message extends Message_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObjectFromPendingRelation() {
+    public boolean hasBennuFromPendingRelation() {
         return getRootDomainObjectFromPendingRelation() != null;
     }
 

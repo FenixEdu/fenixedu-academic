@@ -1,11 +1,13 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
@@ -19,7 +21,7 @@ import pt.ist.fenixframework.Atomic;
 public class CompetenceCourseInformationChangeRequest extends CompetenceCourseInformationChangeRequest_Base {
 
     public CompetenceCourseInformationChangeRequest() {
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public CompetenceCourseInformationChangeRequest(CompetenceCourseInformation information, String justification,
@@ -248,7 +250,7 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

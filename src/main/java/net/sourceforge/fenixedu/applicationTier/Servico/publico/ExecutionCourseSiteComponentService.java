@@ -5,6 +5,8 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import net.sourceforge.fenixedu.applicationTier.Factory.ExecutionCourseSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Filtro.PublishedExamsMapAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -47,7 +49,7 @@ public class ExecutionCourseSiteComponentService {
         final ExecutionCourseSiteView executionCourseSiteView = new ExecutionCourseSiteView(commonComponent, bodyComponent);
         executionCourseSiteView.setExecutionCourse(site.getExecutionCourse());
 
-        if (!AccessControl.getUserView().hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
+        if (!Authenticate.getUser().getPerson().hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
             PublishedExamsMapAuthorizationFilter.execute(executionCourseSiteView);
         }
 

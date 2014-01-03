@@ -4,10 +4,14 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.commons.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 
+/**
+ * @deprecated Use Bennu Groups instead
+ */
+@Deprecated
 public final class GroupDifference extends NodeGroup {
 
     private static final long serialVersionUID = 1L;

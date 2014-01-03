@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorshipSummaryRelationBean;
 import pt.ist.fenixframework.Atomic;
 
@@ -7,7 +9,7 @@ public class TutorshipSummaryRelation extends TutorshipSummaryRelation_Base {
 
     public TutorshipSummaryRelation(final Tutorship tutorship, final TutorshipSummary tutorshipSummary) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setTutorship(tutorship);
         setTutorshipSummary(tutorshipSummary);
     }
@@ -50,7 +52,7 @@ public class TutorshipSummaryRelation extends TutorshipSummaryRelation_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

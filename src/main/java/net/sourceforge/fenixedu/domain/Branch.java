@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author dcs-rjao
@@ -18,7 +19,7 @@ public class Branch extends Branch_Base {
 
     public Branch() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public Branch(String name, String nameEn, String code, DegreeCurricularPlan degreeCurricularPlan) {
@@ -139,7 +140,7 @@ public class Branch extends Branch_Base {
 
     // Static methods
     public static Branch readByBranchType(final BranchType branchType) {
-        for (final Branch branch : RootDomainObject.getInstance().getBranchsSet()) {
+        for (final Branch branch : Bennu.getInstance().getBranchsSet()) {
             if (branch.getBranchType() == branchType) {
                 return branch;
             }
@@ -200,7 +201,7 @@ public class Branch extends Branch_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
@@ -35,6 +34,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.Partial;
 import org.joda.time.format.DateTimeFormat;
@@ -278,7 +278,7 @@ public class ViewTutorshipDA extends FenixDispatchAction {
      */
     private List<ExecutionSemester> provideSemesters(Tutorship tutorship) {
         final List<ExecutionSemester> executionSemestersFinal =
-                new ArrayList<ExecutionSemester>(RootDomainObject.getInstance().getExecutionPeriods());
+                new ArrayList<ExecutionSemester>(Bennu.getInstance().getExecutionPeriodsSet());
         Collections.sort(executionSemestersFinal, new ReverseComparator());
         List<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>();
 

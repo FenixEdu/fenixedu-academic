@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
@@ -19,7 +21,7 @@ public class EnrolmentInOptionalCurricularCourse extends EnrolmentInOptionalCurr
 
     protected EnrolmentInOptionalCurricularCourse() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public EnrolmentInOptionalCurricularCourse(StudentCurricularPlan studentCurricularPlan, CurricularCourse curricularCourse,

@@ -112,7 +112,7 @@ public class PersonNameWithAliasRenderer extends PersonNameRenderer {
         if (person.hasExternalContract()) {
             return addLabel(person, component, getExternalLabel());
         } else {
-            return addLabel(person, component, person.getMostImportantAlias());
+            return addLabel(person, component, person.getUsername());
         }
     }
 

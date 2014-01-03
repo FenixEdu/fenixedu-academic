@@ -1,15 +1,14 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 public class InquiryAnswer extends InquiryAnswer_Base {
 
     public InquiryAnswer() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setResponseDateTime(new DateTime());
     }
 
@@ -72,7 +71,7 @@ public class InquiryAnswer extends InquiryAnswer_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

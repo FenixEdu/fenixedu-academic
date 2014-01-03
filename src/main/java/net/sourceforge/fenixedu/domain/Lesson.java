@@ -32,6 +32,7 @@ import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
@@ -78,7 +79,7 @@ public class Lesson extends Lesson_Base {
             }
         }
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setDiaSemana(diaSemana);
         setInicio(inicio);
         setFim(fim);
@@ -111,7 +112,7 @@ public class Lesson extends Lesson_Base {
             period = OccupationPeriod.createOccupationPeriodForLesson(executionCourse, beginDate, endDate);
         }
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setDiaSemana(diaSemana);
         setInicio(inicio);
         setFim(fim);
@@ -1195,7 +1196,7 @@ public class Lesson extends Lesson_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

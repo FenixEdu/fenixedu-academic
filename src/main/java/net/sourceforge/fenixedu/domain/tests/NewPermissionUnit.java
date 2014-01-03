@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.domain.tests;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class NewPermissionUnit extends NewPermissionUnit_Base {
 
     public NewPermissionUnit() {
         super();
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void delete() {
@@ -19,7 +19,7 @@ public class NewPermissionUnit extends NewPermissionUnit_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

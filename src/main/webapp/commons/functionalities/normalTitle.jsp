@@ -9,7 +9,7 @@
 <logic:present name="bundleT">
 	<logic:present name="titleK">
 		<bean:message name="titleK" bundle="<%= bundleT.toString() %>" /> -
-		<bean:message key="institution.name" bundle="GLOBAL_RESOURCES" />
+		<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%>
 	</logic:present>
 </logic:present>
 <logic:notPresent name="bundleT">

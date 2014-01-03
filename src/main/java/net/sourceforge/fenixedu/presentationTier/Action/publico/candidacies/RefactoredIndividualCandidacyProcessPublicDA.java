@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DomainObjectUtil;
+import net.sourceforge.fenixedu.domain.Instalation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -32,20 +32,24 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProce
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean.PrecedentDegreeType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacyProcess.SendEmailForApplicationSubmission;
 import net.sourceforge.fenixedu.domain.candidacyProcess.exceptions.HashCodeForEmailAndProcessAlreadyBounded;
+import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.IndividualCandidacyProcessDA;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
-import net.sourceforge.fenixedu.util.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.Pair;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Sets;
 import com.octo.captcha.module.struts.CaptchaServicePlugin;
 import com.octo.captcha.service.CaptchaServiceException;
 
@@ -54,16 +58,17 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
-        request.setAttribute("application.name", bundle.getString(getCandidacyNameKey()));
+        request.setAttribute("application.name", getStringFromDefaultBundle(getCandidacyNameKey()));
         request.setAttribute("mappingPath", mapping.getPath());
         request.setAttribute("isApplicationSubmissionPeriodValid", isApplicationSubmissionPeriodValid());
-        request.setAttribute("application.information.link.default",
-                bundle.getString(getCandidacyInformationLinkDefaultLanguage()));
-        request.setAttribute("application.information.link.english", bundle.getString(getCandidacyInformationLinkEnglish()));
-
+        request.setAttribute("application.information.link.default", getCandidacyInformationLinkDefaultLanguage());
+        request.setAttribute("application.information.link.english", getCandidacyInformationLinkEnglish());
         setProcess(request);
         return super.execute(mapping, actionForm, request, response);
+    }
+
+    protected String getStringFromDefaultBundle(String key) {
+        return ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale()).getString(key);
     }
 
     @Override
@@ -119,13 +124,13 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
         return preparePreCreationOfCandidacy(mapping, form, request, response);
     }
 
-    @SuppressWarnings("unchecked")
     protected CandidacyProcess getCurrentOpenParentProcess() {
-        Set<CandidacyProcess> degreeChangeCandidacyProcesses = DomainObjectUtil.readAllDomainObjects(getParentProcessType());
+        Set<Process> degreeChangeCandidacyProcesses =
+                Sets.newHashSet(Iterables.filter(Bennu.getInstance().getProcessesSet(), getParentProcessType()));
 
-        for (CandidacyProcess candidacyProcess : degreeChangeCandidacyProcesses) {
-            if (candidacyProcess.hasOpenCandidacyPeriod()) {
-                return candidacyProcess;
+        for (Process candidacyProcess : degreeChangeCandidacyProcesses) {
+            if (candidacyProcess instanceof CandidacyProcess && ((CandidacyProcess) candidacyProcess).hasOpenCandidacyPeriod()) {
+                return (CandidacyProcess) candidacyProcess;
             }
         }
 
@@ -638,11 +643,12 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
         Locale locale = Language.getLocale();
         String countryCode = readCountryCode(locale);
 
+        String institutionalURL = Instalation.getInstance().getInstituitionURL();
         if ("PT".equals(countryCode)) {
-            return redirect("https://www.ist.utl.pt/pt/candidatos/candidaturas/", request, false);
+            return redirect(institutionalURL + "pt/candidatos/candidaturas/", request, false);
         }
 
-        return redirect("https://www.ist.utl.pt/en/prospective-students/admissions/", request, false);
+        return redirect(institutionalURL + "en/prospective-students/admissions/", request, false);
     }
 
     static private String readCountryCode(final Locale locale) {

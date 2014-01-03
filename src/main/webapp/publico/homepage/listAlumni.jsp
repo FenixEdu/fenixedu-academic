@@ -29,7 +29,7 @@
 				<br/>
 				<br/>
 				<logic:iterate id="homepage" name="entry" property="value">
-					<bean:write name="homepage" property="person.user.userUId"/>
+					<bean:write name="homepage" property="person.user.username"/>
 					<html:link action="/viewHomepage.do?method=show" paramId="homepageID" paramName="homepage" paramProperty="externalId">
 						<bean:write name="homepage" property="name"/>
 					</html:link>

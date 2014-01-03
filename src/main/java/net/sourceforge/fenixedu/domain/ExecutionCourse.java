@@ -68,6 +68,7 @@ import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
@@ -88,7 +89,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 public class ExecutionCourse extends ExecutionCourse_Base {
 
     public static List<ExecutionCourse> readNotEmptyExecutionCourses() {
-        final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>(RootDomainObject.getInstance().getExecutionCourses());
+        final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>(Bennu.getInstance().getExecutionCoursesSet());
         for (ExecutionCourse ec : result) {
             if (ec == null) {
                 result.remove(ec);
@@ -171,7 +172,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public ExecutionCourse(final String nome, final String sigla, final ExecutionSemester executionSemester, EntryPhase entryPhase) {
         super();
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         addAssociatedEvaluations(new FinalEvaluation());
         setAvailableGradeSubmission(Boolean.TRUE);
         setAvailableForInquiries(Boolean.TRUE);
@@ -2158,7 +2159,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public static ExecutionCourse readLastBySigla(final String sigla) {
         SortedSet<ExecutionCourse> result = new TreeSet<ExecutionCourse>(EXECUTION_COURSE_EXECUTION_PERIOD_COMPARATOR);
-        for (ExecutionCourse executionCourse : RootDomainObject.getInstance().getExecutionCourses()) {
+        for (ExecutionCourse executionCourse : Bennu.getInstance().getExecutionCoursesSet()) {
             if (sigla.equalsIgnoreCase(executionCourse.getSigla())) {
                 result.add(executionCourse);
             }
@@ -2972,7 +2973,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

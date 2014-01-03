@@ -1,15 +1,15 @@
 package net.sourceforge.fenixedu.domain.caseHandling;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.User;
 
 public abstract class Activity<P extends Process> {
 
     // TODO: change method return to boolean
-    public abstract void checkPreConditions(P process, IUserView userView);
+    public abstract void checkPreConditions(P process, User userView);
 
-    protected abstract P executeActivity(P process, IUserView userView, Object object);
+    protected abstract P executeActivity(P process, User userView, Object object);
 
-    protected void executePosConditions(P process, IUserView userView, Object object) {
+    protected void executePosConditions(P process, User userView, Object object) {
         new ProcessLog(process, userView, this);
     }
 
@@ -25,7 +25,7 @@ public abstract class Activity<P extends Process> {
         return Boolean.FALSE;
     }
 
-    final public P execute(P process, IUserView userView, Object object) {
+    final public P execute(P process, User userView, Object object) {
         checkPreConditions(process, userView);
         P modifiedProcess = executeActivity(process, userView, object);
         executePosConditions(modifiedProcess, userView, object);
@@ -35,7 +35,7 @@ public abstract class Activity<P extends Process> {
         return modifiedProcess;
     }
 
-    protected void log(P process, IUserView userView, Object object) {
+    protected void log(P process, User userView, Object object) {
 
     }
 

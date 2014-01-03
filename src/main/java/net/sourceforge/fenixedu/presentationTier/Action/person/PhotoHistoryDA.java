@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.person;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +17,6 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import edu.emory.mathcs.backport.java.util.Collections;
 
 /**
  * 

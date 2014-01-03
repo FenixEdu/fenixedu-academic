@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.resource.VehicleAllocation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
-import org.apache.jcs.access.exception.InvalidArgumentException;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -35,8 +34,7 @@ import pt.ist.fenixframework.FenixFramework;
         @Forward(name = "seeVehicleAllocation", path = "see-vehicle-allocation") })
 public class VehicleManagementDA extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws InvalidArgumentException {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
         Set<VehicleAllocation> activeVehicleAllocations = VehicleAllocation.getActiveVehicleAllocations();
         Set<VehicleAllocation> futureVehicleAllocations = VehicleAllocation.getFutureVehicleAllocations();
@@ -48,7 +46,7 @@ public class VehicleManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareCreate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException {
+            HttpServletResponse response) {
 
         VehicleAllocationBean vehicleAllocationBean = new VehicleAllocationBean();
         request.setAttribute("allocationBean", vehicleAllocationBean);
@@ -56,7 +54,7 @@ public class VehicleManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareConfirmCreation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException {
+            HttpServletResponse response) {
 
         VehicleAllocationBean bean = getRenderedObject();
         BigDecimal allocationCost =
@@ -69,7 +67,7 @@ public class VehicleManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward createAllocation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException, FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         VehicleAllocationBean bean = getRenderedObject();
 
@@ -85,7 +83,7 @@ public class VehicleManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareEditAllocation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException {
+            HttpServletResponse response) {
 
         VehicleAllocation allocation = getAllocationFromParameter(request);
         request.setAttribute("vehicleAllocation", allocation);
@@ -93,7 +91,7 @@ public class VehicleManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteAllocation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException, FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         VehicleAllocation allocation = getAllocationFromParameter(request);
 
@@ -107,7 +105,7 @@ public class VehicleManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward seeVehicleAllocationHistory(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException {
+            HttpServletResponse response) {
 
         VehicleAllocationHistoryBean bean = getRenderedObject();
         if (bean == null) {
@@ -130,7 +128,7 @@ public class VehicleManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward seeVehicleAllocation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException {
+            HttpServletResponse response) {
 
         VehicleAllocation allocation = getAllocationFromParameter(request);
         request.setAttribute("vehicleAllocation", allocation);

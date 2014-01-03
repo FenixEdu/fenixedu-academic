@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.person;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePassword;
@@ -20,6 +19,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.core.domain.User;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -31,7 +31,7 @@ public class ChangePersonPasswordAction extends FenixAction {
             throws Exception {
 
         DynaActionForm changePasswordForm = (DynaActionForm) form;
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         String oldPassword = (String) changePasswordForm.get("oldPassword");
         String newPassword = (String) changePasswordForm.get("newPassword");
 

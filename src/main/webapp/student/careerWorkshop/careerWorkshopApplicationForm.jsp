@@ -10,7 +10,7 @@
 <html:xhtml />
 
 <em><bean:message key="title.student.portalTitle" /></em>
-<h2><bean:message key="label.careerWorkshopApplication.title" /></h2>
+<h2><bean:message key="label.careerWorkshopApplication.title" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" /></h2>
 
 <p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 <bean:define id="applicationX" name="application" type="net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopApplication" />
@@ -42,7 +42,7 @@
 <div class="infoop2 CareerWorkshop-Rules">
 	<bean:message key="label.careerWorkshopApplication.applicationRules" bundle="STUDENT_RESOURCES" /><br />
 	<p class="CareerWorkshop-TextCenter">
-		<a href="http://tt.ist.utl.pt/desenvolvimento-de-carreiras-alunos/concurso-de-bolsas-para-os-ist-career-workshops/"><bean:message key="link.careerWorkshopApplication.rules" /></a>
+		<a href="http://tt.ist.utl.pt/desenvolvimento-de-carreiras-alunos/concurso-de-bolsas-para-os-ist-career-workshops/"><bean:message key="link.careerWorkshopApplication.rules" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" /></a>
 	</p>
 </div>
 
@@ -145,7 +145,7 @@
 </table>
 
 <div class="CareerWorkshop-Terms"><bean:message
-	key="label.careerWorkshopApplication.termsOfResponsability" /></div>
+	key="label.careerWorkshopApplication.termsOfResponsability" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" /></div>
 
 <div class="CareerWorkshop-Submit"><html:submit>
 	<bean:message bundle="STUDENT_RESOURCES" key="button.submit" />

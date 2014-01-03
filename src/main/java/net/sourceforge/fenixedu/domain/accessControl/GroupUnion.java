@@ -7,10 +7,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.User;
+
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 
+/**
+ * @deprecated Use Bennu Groups instead
+ */
+@Deprecated
 public final class GroupUnion extends NodeGroup {
 
     private static final long serialVersionUID = 1L;
@@ -87,7 +92,7 @@ public final class GroupUnion extends NodeGroup {
     }
 
     @Override
-    public boolean allows(IUserView userView) {
+    public boolean allows(User userView) {
         for (IGroup group : getChildren()) {
             if (group.allows(userView)) {
                 return true;

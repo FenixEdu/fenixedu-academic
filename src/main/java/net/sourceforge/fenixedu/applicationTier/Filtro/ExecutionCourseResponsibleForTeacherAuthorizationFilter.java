@@ -5,7 +5,9 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
@@ -33,10 +35,10 @@ public class ExecutionCourseResponsibleForTeacherAuthorizationFilter extends Aut
     }
 
     public void execute(String executionCourseOID) throws NotAuthorizedException {
-        IUserView id = AccessControl.getUserView();
+        User id = Authenticate.getUser();
 
         try {
-            if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
+            if ((id == null) || (id.getPerson().getPersonRolesSet() == null) || !id.getPerson().hasRole(getRoleType())
                     || !isResponsibleForExecutionCourse(id, executionCourseOID)) {
                 throw new NotAuthorizedException();
             }
@@ -50,7 +52,7 @@ public class ExecutionCourseResponsibleForTeacherAuthorizationFilter extends Aut
      * @param argumentos
      * @return
      */
-    private boolean isResponsibleForExecutionCourse(IUserView id, String executionCourseOID) {
+    private boolean isResponsibleForExecutionCourse(User id, String executionCourseOID) {
         Professorship responsibleFor = null;
         if (executionCourseOID == null) {
             return false;
@@ -58,7 +60,7 @@ public class ExecutionCourseResponsibleForTeacherAuthorizationFilter extends Aut
         try {
             ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseOID);
 
-            Teacher teacher = Teacher.readTeacherByUsername(id.getUtilizador());
+            Teacher teacher = Teacher.readTeacherByUsername(id.getUsername());
             responsibleFor = teacher.isResponsibleFor(executionCourse);
 
         } catch (Exception e) {

@@ -3,8 +3,8 @@ package net.sourceforge.fenixedu.domain.inquiries;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 public class CurricularCourseInquiryTemplate extends CurricularCourseInquiryTemplate_Base {
@@ -15,7 +15,7 @@ public class CurricularCourseInquiryTemplate extends CurricularCourseInquiryTemp
     }
 
     public static CurricularCourseInquiryTemplate getCurrentTemplate() {
-        final Collection<InquiryTemplate> inquiryTemplates = RootDomainObject.getInstance().getInquiryTemplates();
+        final Collection<InquiryTemplate> inquiryTemplates = Bennu.getInstance().getInquiryTemplatesSet();
         for (final InquiryTemplate inquiryTemplate : inquiryTemplates) {
             if (inquiryTemplate instanceof CurricularCourseInquiryTemplate && inquiryTemplate.isOpen()) {
                 return (CurricularCourseInquiryTemplate) inquiryTemplate;
@@ -25,7 +25,7 @@ public class CurricularCourseInquiryTemplate extends CurricularCourseInquiryTemp
     }
 
     public static CurricularCourseInquiryTemplate getTemplateByExecutionPeriod(ExecutionSemester executionSemester) {
-        final Collection<InquiryTemplate> inquiryTemplates = RootDomainObject.getInstance().getInquiryTemplates();
+        final Collection<InquiryTemplate> inquiryTemplates = Bennu.getInstance().getInquiryTemplatesSet();
         for (final InquiryTemplate inquiryTemplate : inquiryTemplates) {
             if (inquiryTemplate instanceof CurricularCourseInquiryTemplate
                     && executionSemester == inquiryTemplate.getExecutionPeriod()) {
@@ -34,6 +34,7 @@ public class CurricularCourseInquiryTemplate extends CurricularCourseInquiryTemp
         }
         return null;
     }
+
     @Deprecated
     public boolean hasCourseType() {
         return getCourseType() != null;

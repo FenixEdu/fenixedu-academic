@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.domain.messaging;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contents.DateOrderedNode;
 import net.sourceforge.fenixedu.domain.contents.IDateContent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -14,7 +14,7 @@ public class ConversationMessage extends ConversationMessage_Base implements IDa
 
     public ConversationMessage() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setCreationDate(new DateTime());
     }
 

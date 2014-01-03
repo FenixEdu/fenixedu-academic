@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -173,7 +175,7 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
     //
     protected EquivalencePlanEntry() {
         super();
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
     }
 
     public EquivalencePlanEntry(final EquivalencePlan equivalencePlan, final CourseGroup oldCourseGroup,
@@ -455,7 +457,7 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

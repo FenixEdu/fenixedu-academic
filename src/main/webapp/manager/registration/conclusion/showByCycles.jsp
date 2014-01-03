@@ -5,7 +5,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt"%>
 
-<logic:present role="MANAGER">
+<logic:present role="role(MANAGER)">
 	<h3><bean:message key="student.registrationConclusionProcess"
 		bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
 

@@ -21,7 +21,7 @@
 		}
 	</script>
 
-	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
+	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/DepartmentAdmOfficeResources" var="bundle"/>
 	
 	<h:form>

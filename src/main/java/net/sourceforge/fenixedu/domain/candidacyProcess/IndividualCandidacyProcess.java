@@ -8,7 +8,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
-import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode;
@@ -18,13 +17,17 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.RandomStringGenerator;
-import net.sourceforge.fenixedu.util.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.LocalDate;
+
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Sets;
 
 abstract public class IndividualCandidacyProcess extends IndividualCandidacyProcess_Base {
 
@@ -261,12 +264,12 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
      * an email and an access hash
      */
     public static IndividualCandidacyProcess findIndividualCandidacyProcess(
-            Class<? extends IndividualCandidacyProcess> individualCandidacyProcessClass, String email, String accessHash) {
+            final Class<? extends IndividualCandidacyProcess> individualCandidacyProcessClass, String email, String accessHash) {
         if (StringUtils.isEmpty(email) || StringUtils.isEmpty(accessHash)) {
             return null;
         }
 
-        Set<IndividualCandidacyProcess> candidacies = DomainObjectUtil.readAllDomainObjects(individualCandidacyProcessClass);
+        Set<IndividualCandidacyProcess> candidacies = getAllInstancesOf(individualCandidacyProcessClass);
 
         for (IndividualCandidacyProcess individualCandidacyProcess : candidacies) {
             if (email.equals(individualCandidacyProcess.getPersonalDetails().getEmail())
@@ -280,7 +283,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 
     public static <T extends IndividualCandidacyProcess> T findIndividualCandidacyProcessByCode(
             Class<T> individualCandidacyProcessClass, final String processCode) {
-        Set<IndividualCandidacyProcess> candidacies = DomainObjectUtil.readAllDomainObjects(individualCandidacyProcessClass);
+        Set<IndividualCandidacyProcess> candidacies = getAllInstancesOf(individualCandidacyProcessClass);
 
         for (IndividualCandidacyProcess process : candidacies) {
             if (processCode.equals(process.getProcessCode())) {
@@ -449,4 +452,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
         return getProcessChecked() != null;
     }
 
+    private static Set<IndividualCandidacyProcess> getAllInstancesOf(final Class<? extends IndividualCandidacyProcess> type) {
+        return Sets.newHashSet(Iterables.filter(Bennu.getInstance().getProcessesSet(), type));
+    }
 }

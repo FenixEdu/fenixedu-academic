@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.student;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class StudentNumber extends StudentNumber_Base {
@@ -11,7 +12,7 @@ public class StudentNumber extends StudentNumber_Base {
         if (student == null) {
             throw new DomainException("error.StudentNumber.invalid.student", args);
         }
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setStudent(student);
         setNumber(student.getNumber());
     }
@@ -27,7 +28,7 @@ public class StudentNumber extends StudentNumber_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

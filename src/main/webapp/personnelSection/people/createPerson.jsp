@@ -9,7 +9,7 @@
 
 <h2><bean:message key="create.person.title" bundle="MANAGER_RESOURCES"/></h2>
 
-<logic:present role="PERSONNEL_SECTION">
+<logic:present role="role(PERSONNEL_SECTION)">
 
 	<logic:notEmpty name="createdPerson">
 		<b><bean:message key="label.invitedPerson.created.with.success" bundle="MANAGER_RESOURCES"/>:</b>

@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.candidacy;
 
-
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
@@ -38,7 +37,6 @@ public class CreateCandidacy {
 
         person.addPersonRoleByRoleType(RoleType.CANDIDATE);
         person.addPersonRoleByRoleType(RoleType.PERSON);
-        person.setIstUsername();
 
         Candidacy candidacy = CandidacyFactory.newCandidacy(degreeType, person, executionDegree, startDate);
 

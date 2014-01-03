@@ -5,13 +5,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.EnrollStudentInShifts;
 import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.EnrollStudentInShifts.StudentNotFoundServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.shift.ShiftEnrollmentErrorReport;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 
@@ -19,6 +17,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -36,7 +35,7 @@ public class EnrollStudentInShiftsAction extends FenixAction {
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
 
         final String shiftId = request.getParameter("shiftId");
         if (!StringUtils.isEmpty(request.getParameter("executionCourseID"))) {
@@ -78,11 +77,4 @@ public class EnrollStudentInShiftsAction extends FenixAction {
         return FenixFramework.getDomainObject(request.getParameter("registrationOID"));
     }
 
-    private Registration getStudent(final IUserView userView) {
-        Registration registration = userView.getPerson().getStudentByUsername();
-        if (registration == null) {
-            registration = userView.getPerson().getStudentByType(DegreeType.DEGREE);
-        }
-        return registration;
-    }
 }

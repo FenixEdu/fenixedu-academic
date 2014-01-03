@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.UUID;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -69,9 +70,9 @@ public class AlumniManager {
         if (student == null) {
 
             if (Person.findPersonByDocumentID(documentIdNumber).isEmpty()) {
-                throw new DomainException("error.person.document.number");
+                throw new DomainException("error.person.document.number", Unit.getInstitutionAcronym());
             } else {
-                throw new DomainException("error.person.no.student");
+                throw new DomainException("error.person.no.student", Unit.getInstitutionAcronym());
             }
         }
 
@@ -90,7 +91,8 @@ public class AlumniManager {
 
                 throw new DomainException("error.no.concluded.registrations");
             } else {
-                throw new DomainException("error.no.registrations");
+                throw new DomainException("error.no.registrations", Unit.getInstitutionAcronym(), Instalation.getInstance()
+                        .getInstituitionalEmailAddress("alumni"));
             }
         }
     }

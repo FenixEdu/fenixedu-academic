@@ -13,8 +13,6 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.candidacy.ExecuteStateOperation;
 import net.sourceforge.fenixedu.applicationTier.Servico.candidacy.LogFirstTimeCandidacyTimestamp;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -32,12 +30,14 @@ import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.CandidacyOperation;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.PrintAllDocumentsOperation;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.form.ResidenceInformationForm;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.workflow.Form;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -46,6 +46,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -152,7 +153,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
             HttpServletResponse response, CandidacyOperation candidacyOperation) throws FenixServiceException,
             FenixActionException {
 
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
 
         if (candidacyOperation == null) {
             // possible due to first-time candidacy summary generation link in manager portal
@@ -197,7 +198,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
                     "firstInstallmentEndDate",
                     calculateFirstInstallmentEndDate(candidacy.getRegistration(), getCandidacy(request)
                             .getAvailablePaymentCodes()));
-            request.setAttribute("sibsEntityCode", PropertiesManager.getProperty("sibs.entityCode"));
+            request.setAttribute("sibsEntityCode", FenixConfigurationManager.getConfiguration().getSibsEntityCode());
 
             final List<InfoShowOccupation> infoLessons = ReadStudentTimeTable.run(candidacy.getRegistration(), null);
             request.setAttribute("infoLessons", infoLessons);
@@ -218,11 +219,11 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
             request.setAttribute(
                     "aditionalInformation",
                     getResources(request).getMessage("label.candidacy.username.changed.message",
-                            userView.getPerson().getIstUsername()));
+                            userView.getPerson().getIstUsername(), Unit.getInstitutionAcronym()));
         } else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_GRATUITY_PAYMENT_CODES) {
             request.setAttribute("registration", getCandidacy(request).getRegistration());
             request.setAttribute("paymentCodes", getCandidacy(request).getAvailablePaymentCodes());
-            request.setAttribute("sibsEntityCode", PropertiesManager.getProperty("sibs.entityCode"));
+            request.setAttribute("sibsEntityCode", FenixConfigurationManager.getConfiguration().getSibsEntityCode());
             request.setAttribute("administrativeOfficeFeeAndInsurancePaymentCode",
                     administrativeOfficeFeeAndInsurancePaymentCode(getCandidacy(request).getAvailablePaymentCodes()));
             request.setAttribute("installmentPaymentCodes", installmmentPaymentCodes(getCandidacy(request)

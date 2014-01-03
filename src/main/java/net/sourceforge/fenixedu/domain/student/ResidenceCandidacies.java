@@ -4,8 +4,7 @@
  */
 package net.sourceforge.fenixedu.domain.student;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 /**
@@ -16,7 +15,7 @@ public class ResidenceCandidacies extends ResidenceCandidacies_Base {
 
     public ResidenceCandidacies() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setCreationDateDateTime(new DateTime());
     }
 
@@ -41,7 +40,7 @@ public class ResidenceCandidacies extends ResidenceCandidacies_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

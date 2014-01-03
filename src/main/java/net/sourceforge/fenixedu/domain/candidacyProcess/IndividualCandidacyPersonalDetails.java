@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
@@ -14,6 +13,7 @@ import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.YearMonthDay;
 
 public abstract class IndividualCandidacyPersonalDetails extends IndividualCandidacyPersonalDetails_Base {
@@ -41,7 +41,7 @@ public abstract class IndividualCandidacyPersonalDetails extends IndividualCandi
         super();
     }
 
-    protected RootDomainObject getRootDomainObject() {
+    protected Bennu getRootDomainObject() {
         return getCandidacy().getRootDomainObject();
     }
 

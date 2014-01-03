@@ -5,13 +5,16 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolLevelType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.raides.DegreeDesignation;
-import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
-import net.sourceforge.fenixedu.util.StringUtils;
+import net.sourceforge.fenixedu.util.FenixStringTools;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
+
 import pt.ist.fenixframework.FenixFramework;
+import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class SearchRaidesDegreeDesignations implements AutoCompleteProvider<DegreeDesignation> {
 
@@ -25,11 +28,11 @@ public class SearchRaidesDegreeDesignations implements AutoCompleteProvider<Degr
         Unit unit = getFilterUnit(argsMap);
         SchoolLevelType schoolLevel = getFilterSchoolLevel(argsMap);
 
-        value = StringUtils.normalize(value);
+        value = StringNormalizer.normalize(value);
         List<DegreeDesignation> result = new ArrayList<DegreeDesignation>();
         Collection<DegreeDesignation> possibleDesignations = null;
         if (unit == null) {
-            possibleDesignations = RootDomainObject.getInstance().getDegreeDesignationsSet();
+            possibleDesignations = Bennu.getInstance().getDegreeDesignationsSet();
         } else {
             possibleDesignations = unit.getDegreeDesignation();
         }
@@ -39,7 +42,7 @@ public class SearchRaidesDegreeDesignations implements AutoCompleteProvider<Degr
         }
 
         for (DegreeDesignation degreeDesignation : possibleDesignations) {
-            String normalizedDesignation = StringUtils.normalize(degreeDesignation.getDescription());
+            String normalizedDesignation = StringNormalizer.normalize(degreeDesignation.getDescription());
             if (normalizedDesignation.contains(value)) {
                 result.add(degreeDesignation);
             }

@@ -11,7 +11,6 @@ import java.util.StringTokenizer;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.InsertEvaluationMarks;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.TeacherAdministrationSiteComponentService;
@@ -31,8 +30,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.upload.FormFile;
-
-import pt.ist.fenixWebFramework.security.UserView;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 /**
  * @author Tânia Pousão
@@ -119,7 +118,7 @@ public class WriteMarksAction extends FenixDispatchAction {
         }
         reader.close();
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         TeacherAdministrationSiteView siteView = null;
 
@@ -166,7 +165,7 @@ public class WriteMarksAction extends FenixDispatchAction {
 
     private void prepareInputForward(HttpServletRequest request, String objectCode, String evaluationCode)
             throws FenixActionException {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         ISiteComponent commonComponent = new InfoSiteCommon();
 
         try {
@@ -197,7 +196,7 @@ public class WriteMarksAction extends FenixDispatchAction {
         request.setAttribute("objectCode", objectCode);
         request.setAttribute("evaluationCode", evaluationCode);
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         Object[] args = { objectCode, evaluationCode, hashMarks };
         TeacherAdministrationSiteView siteView = null;

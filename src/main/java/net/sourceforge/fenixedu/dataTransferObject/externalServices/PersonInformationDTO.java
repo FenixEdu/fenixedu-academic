@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.Role;
@@ -191,9 +190,6 @@ public class PersonInformationDTO {
         this.photo = person.getPersonalPhoto() != null ? getJpegPhoto(person.getPersonalPhoto()) : null;
 
         this.alias = new ArrayList<String>();
-        for (LoginAlias loginAlias : person.getLoginAliasOrderByImportance()) {
-            this.alias.add(loginAlias.getAlias());
-        }
 
         this.eIdentifier = person.getEidentifier();
 

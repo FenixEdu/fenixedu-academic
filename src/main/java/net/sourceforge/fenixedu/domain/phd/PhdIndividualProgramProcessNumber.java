@@ -5,8 +5,9 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class PhdIndividualProgramProcessNumber extends PhdIndividualProgramProcessNumber_Base implements
@@ -23,7 +24,7 @@ public class PhdIndividualProgramProcessNumber extends PhdIndividualProgramProce
 
     protected PhdIndividualProgramProcessNumber() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     protected PhdIndividualProgramProcessNumber(Integer number, Integer year, Integer phdStudentNumber) {
@@ -111,7 +112,7 @@ public class PhdIndividualProgramProcessNumber extends PhdIndividualProgramProce
     static public Set<PhdIndividualProgramProcessNumber> readByYear(final Integer year) {
         final Set<PhdIndividualProgramProcessNumber> result = new HashSet<PhdIndividualProgramProcessNumber>();
 
-        for (final PhdIndividualProgramProcessNumber each : RootDomainObject.getInstance().getPhdIndividualProcessNumbers()) {
+        for (final PhdIndividualProgramProcessNumber each : Bennu.getInstance().getPhdIndividualProcessNumbersSet()) {
             if (each.getYear().intValue() == year) {
                 result.add(each);
             }
@@ -121,7 +122,7 @@ public class PhdIndividualProgramProcessNumber extends PhdIndividualProgramProce
     }
 
     static public PhdIndividualProgramProcessNumber readByPhdStudentNumber(Integer number) {
-        for (final PhdIndividualProgramProcessNumber each : RootDomainObject.getInstance().getPhdIndividualProcessNumbers()) {
+        for (final PhdIndividualProgramProcessNumber each : Bennu.getInstance().getPhdIndividualProcessNumbersSet()) {
             if (number.equals(each.getPhdStudentNumber())) {
                 return each;
             }
@@ -147,13 +148,14 @@ public class PhdIndividualProgramProcessNumber extends PhdIndividualProgramProce
     public boolean belongsTo(final ExecutionYear year) {
         return year.belongsToCivilYear(getYear());
     }
+
     @Deprecated
     public boolean hasYear() {
         return getYear() != null;
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

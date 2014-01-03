@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Comparator;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 //TODO: Refactor remaining object to use district instead of strings
@@ -17,7 +19,7 @@ public class District extends District_Base {
 
     private District() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public District(final String code, final String name) {
@@ -55,7 +57,7 @@ public class District extends District_Base {
     }
 
     static public District readByCode(final String code) {
-        for (final District district : RootDomainObject.getInstance().getDistricts()) {
+        for (final District district : Bennu.getInstance().getDistrictsSet()) {
             if (district.getCode().equals(code)) {
                 return district;
             }
@@ -65,7 +67,7 @@ public class District extends District_Base {
     }
 
     static public District readByName(final String name) {
-        for (final District district : RootDomainObject.getInstance().getDistricts()) {
+        for (final District district : Bennu.getInstance().getDistrictsSet()) {
             if (district.getName().equals(name)) {
                 return district;
             }
@@ -90,7 +92,7 @@ public class District extends District_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

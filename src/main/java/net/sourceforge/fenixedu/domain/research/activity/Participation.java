@@ -3,14 +3,15 @@ package net.sourceforge.fenixedu.domain.research.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 
 public abstract class Participation extends Participation_Base {
 
     public Participation() {
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public Participation(Party party, ResearchActivityParticipationRole role) {
@@ -158,7 +159,7 @@ public abstract class Participation extends Participation_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

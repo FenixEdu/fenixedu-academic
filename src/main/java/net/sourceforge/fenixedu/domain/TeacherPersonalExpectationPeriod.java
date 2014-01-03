@@ -2,13 +2,14 @@ package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.YearMonthDay;
 
 public class TeacherPersonalExpectationPeriod extends TeacherPersonalExpectationPeriod_Base {
 
     public TeacherPersonalExpectationPeriod() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void init(Department department, ExecutionYear executionYear, YearMonthDay startDate, YearMonthDay endDate) {
@@ -107,7 +108,7 @@ public class TeacherPersonalExpectationPeriod extends TeacherPersonalExpectation
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

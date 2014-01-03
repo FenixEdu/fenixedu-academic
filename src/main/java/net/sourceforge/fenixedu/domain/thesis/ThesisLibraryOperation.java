@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.thesis;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 /**
@@ -39,7 +39,7 @@ public abstract class ThesisLibraryOperation extends ThesisLibraryOperation_Base
 
     public abstract String getPendingComment();
 
-    protected RootDomainObject getRootDomainObject() {
+    protected Bennu getRootDomainObject() {
         return getThesis().getRootDomainObject();
     }
 

@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
@@ -17,7 +18,7 @@ public class TemplateAcademicCalendarProvider implements DataProvider {
     public Object provide(Object source, Object currentValue) {
 
         CalendarEntryBean rootEntry = (CalendarEntryBean) source;
-        Set<AcademicCalendarRootEntry> academicCalendars = RootDomainObject.getInstance().getAcademicCalendarsSet();
+        Set<AcademicCalendarRootEntry> academicCalendars = Bennu.getInstance().getAcademicCalendarsSet();
         List<AcademicCalendarRootEntry> result = new ArrayList<AcademicCalendarRootEntry>();
         result.addAll(academicCalendars);
 

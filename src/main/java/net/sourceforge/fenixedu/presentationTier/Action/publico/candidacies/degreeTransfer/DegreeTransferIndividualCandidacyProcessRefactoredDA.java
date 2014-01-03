@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.degreeTransfer;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Instalation;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
@@ -25,6 +27,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTra
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.RefactoredIndividualCandidacyProcessPublicDA;
@@ -199,7 +202,8 @@ public class DegreeTransferIndividualCandidacyProcessRefactoredDA extends Refact
             }
 
             if (isOrWasEnrolledInInstitution(bean)) {
-                addActionMessage("error", request, "error.degreeTransfer.is.or.was.enrolled.in.institution");
+                addActionMessage("error", request, "error.degreeTransfer.is.or.was.enrolled.in.institution", Unit
+                        .getInstitutionName().getContent());
                 invalidateDocumentFileRelatedViewStates();
                 request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
                 return mapping.findForward("candidacy-continue-creation");
@@ -312,7 +316,8 @@ public class DegreeTransferIndividualCandidacyProcessRefactoredDA extends Refact
             }
 
             if (isOrWasEnrolledInInstitution(bean)) {
-                addActionMessage("error", request, "error.degreeTransfer.is.or.was.enrolled.in.institution");
+                addActionMessage("error", request, "error.degreeTransfer.is.or.was.enrolled.in.institution", Unit
+                        .getInstitutionName().getContent());
                 request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
                 return mapping.findForward("edit-candidacy-habilitations");
             }
@@ -339,12 +344,14 @@ public class DegreeTransferIndividualCandidacyProcessRefactoredDA extends Refact
 
     @Override
     protected String getCandidacyInformationLinkDefaultLanguage() {
-        return "link.candidacy.information.default.degreeTransfer";
+        String message = getStringFromDefaultBundle("link.candidacy.information.default.degreeTransfer");
+        return MessageFormat.format(message, Instalation.getInstance().getInstituitionURL());
     }
 
     @Override
     protected String getCandidacyInformationLinkEnglish() {
-        return "link.candidacy.information.english.degreeTransfer";
+        String message = getStringFromDefaultBundle("link.candidacy.information.english.degreeTransfer");
+        return MessageFormat.format(message, Instalation.getInstance().getInstituitionURL());
     }
 
 }

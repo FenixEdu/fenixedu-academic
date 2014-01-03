@@ -5,7 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.NoCourseGroupEnrolmentBean;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
@@ -27,20 +29,20 @@ public class EnrolmentContext {
 
     private ExecutionSemester executionSemester;
 
-    private Set<IDegreeModuleToEvaluate> degreeModulesToEvaluate;
+    private final Set<IDegreeModuleToEvaluate> degreeModulesToEvaluate;
 
-    private List<CurriculumModule> curriculumModulesToRemove;
+    private final List<CurriculumModule> curriculumModulesToRemove;
 
     private CurricularRuleLevel curricularRuleLevel;
 
     //private Person responsiblePerson;
-    private IUserView userView;
+    private final User userView;
 
     public EnrolmentContext(final StudentCurricularPlan studentCurricularPlan, final ExecutionSemester executionSemester,
             final Set<IDegreeModuleToEvaluate> degreeModulesToEnrol, final List<CurriculumModule> curriculumModulesToRemove,
             final CurricularRuleLevel curricularRuleLevel) {
 
-        this.userView = AccessControl.getUserView();
+        this.userView = Authenticate.getUser();
         this.studentCurricularPlan = studentCurricularPlan;
 
         this.degreeModulesToEvaluate = new HashSet<IDegreeModuleToEvaluate>();
@@ -123,7 +125,7 @@ public class EnrolmentContext {
     }
 
     public boolean isResponsiblePersonStudent() {
-        return userView.hasRoleType(RoleType.STUDENT);
+        return userView.getPerson().hasRole(RoleType.STUDENT);
     }
 
     public boolean isRegistrationFromResponsiblePerson() {

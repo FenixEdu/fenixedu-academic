@@ -3,13 +3,13 @@ package net.sourceforge.fenixedu.domain.teacher;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
@@ -22,7 +22,7 @@ public class Advise extends Advise_Base {
     public Advise(Teacher teacher, Registration registration, AdviseType adviseType, ExecutionSemester startPeriod,
             ExecutionSemester endPeriod) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         if (teacher == null || registration == null || adviseType == null || startPeriod == null || endPeriod == null) {
             throw new DomainException("arguments can't be null");
         }
@@ -183,7 +183,7 @@ public class Advise extends Advise_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

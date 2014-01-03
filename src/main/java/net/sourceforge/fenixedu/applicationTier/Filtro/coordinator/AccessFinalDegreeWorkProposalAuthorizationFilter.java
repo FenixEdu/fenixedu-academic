@@ -4,7 +4,8 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro.coordinator;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.User;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.framework.DomainObjectAuthorizationFilter;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -29,7 +30,7 @@ public class AccessFinalDegreeWorkProposalAuthorizationFilter extends DomainObje
     }
 
     @Override
-    protected boolean verifyCondition(IUserView id, String objectId) {
+    protected boolean verifyCondition(User id, String objectId) {
         if (objectId == null) {
             return false;
         }

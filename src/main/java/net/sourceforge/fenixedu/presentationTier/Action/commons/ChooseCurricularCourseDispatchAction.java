@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurricularCourseByID;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.ReadStudentListByCurricularCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
@@ -27,6 +26,7 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.User;
 
 /**
  * @author Fernanda Quitério 03/07/2003
@@ -52,7 +52,7 @@ public class ChooseCurricularCourseDispatchAction extends FenixDispatchAction {
 
         // Get the Curricular Course List
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         List curricularCourseList = null;
         try {
             curricularCourseList = ReadCurricularCoursesByDegree.run(executionYear, degree);
@@ -84,7 +84,7 @@ public class ChooseCurricularCourseDispatchAction extends FenixDispatchAction {
         request.setAttribute("degree", getFromRequest("degree", request));
         request.setAttribute("jspTitle", getFromRequest("jspTitle", request));
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         List listEnrolmentEvaluation = null;
         try {
@@ -120,7 +120,7 @@ public class ChooseCurricularCourseDispatchAction extends FenixDispatchAction {
         request.setAttribute("courseID", getFromRequest("courseID", request));
 
         String courseID = getFromRequest("courseID", request);
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         List studentList = null;
         try {

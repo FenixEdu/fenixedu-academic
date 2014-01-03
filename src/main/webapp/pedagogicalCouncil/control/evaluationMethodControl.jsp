@@ -6,7 +6,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="e" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<logic:present role="PEDAGOGICAL_COUNCIL">
+<logic:present role="role(PEDAGOGICAL_COUNCIL)">
 
 	<em><bean:message key="pedagogical.council" bundle="PEDAGOGICAL_COUNCIL"/></em>
 	<h2><bean:message key="label.evaluationMethodControl" bundle="APPLICATION_RESOURCES"/></h2>

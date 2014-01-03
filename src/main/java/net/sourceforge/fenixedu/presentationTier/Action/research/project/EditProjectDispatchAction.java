@@ -7,7 +7,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.project.CreateProjectEventAssociation;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.project.CreateProjectParticipant;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.project.DeleteProjectEventAssociation;
@@ -27,6 +26,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -63,7 +63,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
 
         final String oid = request.getParameter("projectId");
 
-        for (Project project : rootDomainObject.getProjects()) {
+        for (Project project : rootDomainObject.getProjectsSet()) {
             if (project.getExternalId().equals(oid)) {
                 request.setAttribute("selectedProject", project);
                 List<ProjectParticipation> participations = new ArrayList<ProjectParticipation>();
@@ -108,7 +108,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
     public ActionForward createParticipantInternalPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
 
         ProjectParticipantSimpleCreationBean simpleBean =
                 (ProjectParticipantSimpleCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
@@ -130,7 +130,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
     public ActionForward createParticipantExternalPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
 
         if (RenderUtils.getViewState().getMetaObject().getObject() instanceof ProjectParticipantSimpleCreationBean) {
             ProjectParticipantSimpleCreationBean simpleBean =
@@ -181,7 +181,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
 
         final String oid = request.getParameter("projectId");
 
-        for (Project project : rootDomainObject.getProjects()) {
+        for (Project project : rootDomainObject.getProjectsSet()) {
             if (project.getExternalId().equals(oid)) {
                 request.setAttribute("selectedProject", project);
                 Collection<ProjectEventAssociation> associations = project.getAssociatedEvents();
@@ -206,7 +206,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
     public ActionForward createEventAssociationSimple(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
 
         if (RenderUtils.getViewState().getMetaObject().getObject() instanceof ProjectEventAssociationSimpleCreationBean) {
             ProjectEventAssociationSimpleCreationBean simpleBean =
@@ -258,7 +258,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
 
         final String oid = request.getParameter("projectId");
 
-        for (Project project : rootDomainObject.getProjects()) {
+        for (Project project : rootDomainObject.getProjectsSet()) {
             if (project.getExternalId().equals(oid)) {
                 request.setAttribute("selectedProject", project);
                 List<ProjectParticipation> unitParticipations = new ArrayList<ProjectParticipation>();
@@ -280,7 +280,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
     public ActionForward createParticipantUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
 
         ProjectParticipantUnitCreationBean bean =
                 (ProjectParticipantUnitCreationBean) RenderUtils.getViewState().getMetaObject().getObject();
@@ -292,7 +292,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
     public ActionForward removeParticipantUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
 
         DeleteProjectParticipant.run(request.getParameter("participantUnitId"));
 
@@ -306,7 +306,7 @@ public class EditProjectDispatchAction extends FenixDispatchAction {
     private void setAttributeSelectedProject(HttpServletRequest request) {
         final String oid = request.getParameter("projectId");
 
-        for (Project project : rootDomainObject.getProjects()) {
+        for (Project project : rootDomainObject.getProjectsSet()) {
             if (project.getExternalId().equals(oid)) {
                 request.setAttribute("selectedProject", project);
             }

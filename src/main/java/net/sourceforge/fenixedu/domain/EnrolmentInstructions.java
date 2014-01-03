@@ -1,12 +1,14 @@
 package net.sourceforge.fenixedu.domain;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.ist.fenixframework.Atomic;
 
 public class EnrolmentInstructions extends EnrolmentInstructions_Base {
 
     public EnrolmentInstructions() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public EnrolmentInstructions(final ExecutionSemester executionSemester) {
@@ -23,7 +25,7 @@ public class EnrolmentInstructions extends EnrolmentInstructions_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

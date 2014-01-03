@@ -1,18 +1,23 @@
 package pt.utl.ist.codeGenerator.database;
 
+import java.io.BufferedReader;
+import java.io.Console;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Locale;
+import java.util.MissingResourceException;
+
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.CurricularYear;
-import net.sourceforge.fenixedu.domain.District;
-import net.sourceforge.fenixedu.domain.DistrictSubdivision;
 import net.sourceforge.fenixedu.domain.EmptyDegree;
 import net.sourceforge.fenixedu.domain.EmptyDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.Login;
-import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ResourceAllocationRole;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
+import net.sourceforge.fenixedu.domain.contacts.PartyContact;
+import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
+import net.sourceforge.fenixedu.domain.contacts.PartyContactValidationState;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CountryUnit;
@@ -21,41 +26,169 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PlanetUnit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.YearMonthDay;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.Atomic.TxMode;
+import pt.ist.standards.geographic.Planet;
+import pt.utl.ist.codeGenerator.database.CreateTestData.CreateOrganizationalStructure;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class DataInitializer {
 
+    final static Locale PT = new Locale("pt");
+    final static Locale EN = new Locale("en");
+
+    public static class InstallationProcess {
+        public String countryCode;
+        public Country country;
+
+        public String adminName;
+        public String adminUsername;
+        public String adminPass;
+        public Person person;
+        
+        public String universityName;
+        public String universityAcronym;
+        
+        public String schoolName;
+        public String schoolAcronym;
+        public String email;
+        
+       
+    }
+
+    private static String readValue(String prompt, String def) {
+        //  prompt the user to enter their name
+        System.out.print(prompt + " [" + def + "]: ");
+
+        //  open up standard input
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        String value = null;
+
+        //  read the username from the command-line; need to use try/catch with the
+        //  readLine() method
+        try {
+            value = br.readLine();
+        } catch (IOException ioe) {
+            System.out.println("IO error trying to read your name!");
+            System.exit(1);
+        }
+        if (value.equals("")) {
+            value = def;
+        }
+        return value;
+    }
+
+    private static String readPassword(String prompt) {
+        Console console = System.console();
+        
+        System.out.print(prompt +  ": ");
+        char[] passwordChars = console.readPassword();
+
+        return new String(passwordChars);
+    }
+
+    public static final Logger logger = LoggerFactory.getLogger(DataInitializer.class);
+
     public static void main(String[] args) {
-
         initialize();
-
         System.out.println("Initialization complete.");
         System.exit(0);
     }
 
-    @Atomic
+    @Atomic(mode = TxMode.WRITE)
     private static void initialize() {
-        RootDomainObject.ensureRootDomainObject();
-        RootDomainObject.initialize();
+        System.out.println("");
+        System.out.println("##############################################################################");
+        System.out.println("                                                                              ");
+        System.out.println("                   XXXXXXX                                                    ");
+        System.out.println("                  + XXXXX +                                                   ");
+        System.out.println("                +++++ X +++++                                                 ");
+        System.out.println("               +++++++ +++++++                                                ");
+        System.out.println("              . +++++ . +++++ .            FenixEdu™                          ");
+        System.out.println("            ..... + ..... + .....          Installation                       ");
+        System.out.println("           ....... ....... .......                                            ");
+        System.out.println("            .....   .....   .....                                             ");
+        System.out.println("              .       .       .                                               ");
+        System.out.println("                                                                              ");
+        System.out.println("##############################################################################");
+        System.out.println("");
+
+        InstallationProcess process = new InstallationProcess();
+        
+        Language.setDefaultLocale(Locale.getDefault());
+        while (true) {
+            String countryCode = readValue("Country (Three Letter ISO 3166-1)", "USA").toUpperCase();
+            
+            pt.ist.standards.geographic.Country country = Planet.getEarth().getByAlfa3(countryCode);
+            if (country != null) {
+                System.out.println("Using " + country.getLocalizedName(EN));
+                process.countryCode = countryCode;
+                break;
+            } else {
+                System.out.println("There isn't a country with '" + countryCode + "' code.");
+            }
+        }
+        
+        
+        process.universityName = readValue("University Name", "Example University");
+        process.universityAcronym = readValue("University Acronym", "EU");
+        process.schoolName = readValue("School Name", "Example Engineering School");
+        process.schoolAcronym = readValue("School Acronym", "EES");
+
+        process.adminUsername = readValue("Username", System.getProperty("user.name"));
+        process.adminName = readValue("Name", "FenixEdu Administrator");
+        process.email = readValue("Email", process.adminUsername + "@example.edu");
+        String password = null;
+        while(true){
+            password = readPassword("Password");
+            String password2 = readPassword("Password (again)");
+            if (!password.equals(password2)){
+                System.out.println("Error: Passwords do not match.\n");
+            }else{
+                break;
+            }
+        }
+        
+        process.adminPass = password;
 
         createRoles();
-        createCurricularYearsAndSemesters();
-        createEmptyDegreeAndEmptyDegreeCurricularPlan();
-        createCountries();
-        createDistrictAndDistrictSubdivision();
-        createManagerUser();
+        createManagerUser(process);
         createPartyTypeEnums();
         createAccountabilityTypeEnums();
+        createCountries(process);
+        createCurricularYearsAndSemesters();
+        createDistrictAndDistrictSubdivision();
         createOrganizationalStructure();
+
+        //new CreateExecutionYears().doIt();
+        //new CreateResources().doIt();
+
+        new CreateOrganizationalStructure().doIt(process);
+
+        //new CreateDegrees().doIt(process);
+        //new CreateCurricularPeriods().doIt();
+        //new CreateCurricularStructure().doIt();
+        //new CreateExecutionCourses().doIt();
+        //new CreateEvaluations().doIt();
+
+        createEmptyDegreeAndEmptyDegreeCurricularPlan();
+        CreateFunctionallityTree.doIt();
     }
 
     private static void createEmptyDegreeAndEmptyDegreeCurricularPlan() {
-        EmptyDegree.init();
-        EmptyDegreeCurricularPlan.init();
+//        EmptyDegree.init();
+//        EmptyDegree.getInstance().setAdministrativeOffice(CreateTestData.administrativeOffice);
+//        EmptyDegreeCurricularPlan.init();
+        
     }
 
     private static void createRoles() {
@@ -111,6 +244,7 @@ public class DataInitializer {
         new Role(RoleType.TREASURY, "/treasury", "/index.do", "portal.treasury");
         new Role(RoleType.TUTORSHIP, "/pedagogicalCouncil", "/index.do", "portal.PedagogicalCouncil");
         new Role(RoleType.WEBSITE_MANAGER, "/webSiteManager", "/index.do", "portal.webSiteManager");
+        new Role(RoleType.DEVELOPER, "/person", "/index.do", "portal.developer");
     }
 
     private static void createCurricularYearsAndSemesters() {
@@ -121,60 +255,101 @@ public class DataInitializer {
         new CurricularYear(Integer.valueOf(5), 2);
     }
 
-    private static void createCountries() {
-        final MultiLanguageString localizedNamePortugal =
-                new MultiLanguageString(Language.pt, Country.PORTUGAL).append(new MultiLanguageString(Language.en,
-                        Country.PORTUGAL));
-        final String code = "PT";
-        final String threeLetterCode = "PRT";
+    private static void createCountries(InstallationProcess process) {
+        Country defaultCountry = null;
+        for (pt.ist.standards.geographic.Country metaData : Planet.getEarth().getPlaces()) {            
+            String localizedNamePT=null;
+            try {
+                localizedNamePT = metaData.getLocalizedName(PT);
+            } catch (MissingResourceException e) {}
+            
+            String localizedNameEN = null; 
+            try {
+                localizedNameEN = metaData.getLocalizedName(EN);
+            } catch (MissingResourceException e) {}
+            
+            
+            if (localizedNameEN == null && localizedNamePT == null){
+                continue;
+            }
+            
+            if (localizedNamePT == null){
+                localizedNamePT = localizedNameEN;
+            }
+            
+            if (localizedNameEN == null){
+                localizedNameEN = localizedNamePT;
+            }
+            String nationalityPT = null;
+            try {
+                nationalityPT = metaData.getNationality(PT);
+            } catch (MissingResourceException e) {}
+            
+            String nationalityEN = null;
+            try {
+                nationalityEN = metaData.getNationality(EN);
+            } catch (MissingResourceException e) {}
+            
+            if (nationalityPT == null){
+                if (nationalityEN == null){
+                    nationalityPT = localizedNamePT;
+                }else{
+                    nationalityPT = nationalityEN;                    
+                }
+            }
+            
+            if (nationalityEN == null){
+                if (nationalityPT == null){
+                    nationalityEN = localizedNameEN;
+                }else{
+                    nationalityEN = nationalityPT;                    
+                }
+            }
+            
+            final MultiLanguageString countryName = new MultiLanguageString(Language.pt, localizedNamePT);
+            countryName.append(new MultiLanguageString(Language.en, localizedNameEN));
 
-        final Country countryDefault =
-                new Country(localizedNamePortugal,
-                        new MultiLanguageString(Language.pt, Country.NATIONALITY_PORTUGUESE).append(new MultiLanguageString(
-                                Language.en, "PORTUGUESE")), code, threeLetterCode);
-        countryDefault.setDefaultCountry(Boolean.TRUE);
+            final String code = metaData.alpha2;
+            final String threeLetterCode = metaData.alpha3;
+            
+            final Country country =
+                    new Country(countryName,
+                            new MultiLanguageString(Language.pt, nationalityPT).append(new MultiLanguageString(
+                                    Language.en, nationalityEN)), code, threeLetterCode);
+            if (threeLetterCode.equals(process.countryCode)){
+                defaultCountry = country;
+            }
+        }
 
-        new Country(localizedNamePortugal,
-                new MultiLanguageString(Language.pt, "PORTUGUESA NATURAL DOS ACORES").append(new MultiLanguageString(Language.en,
-                        "NATURAL PORTUGUESE THE AZORES")), code, threeLetterCode);
-        new Country(localizedNamePortugal,
-                new MultiLanguageString(Language.pt, "PORTUGUESA NATURAL DA MADEIRA").append(new MultiLanguageString(Language.en,
-                        "PORTUGUESE NATURAL MADEIRA")), code, threeLetterCode);
-        new Country(localizedNamePortugal,
-                new MultiLanguageString(Language.pt, "PORTUGUESA NATURAL DO ESTRANGEIRO").append(new MultiLanguageString(
-                        Language.en, "NATURAL PORTUGUESE OF FOREIGN")), code, threeLetterCode);
-        new Country(localizedNamePortugal,
-                new MultiLanguageString(Language.pt, "PORTUGUESA NATURAL DE MACAU E TIMOR LESTE").append(new MultiLanguageString(
-                        Language.en, "NATURAL PORTUGUESE MACAU AND EAST TIMOR")), code, threeLetterCode);
+        defaultCountry.setDefaultCountry(Boolean.TRUE);
+        process.country = defaultCountry;
     }
 
     private static void createDistrictAndDistrictSubdivision() {
-        District district = new District("01", "Aveiro");
-        district = new District("06", "Coimbra");
-        district = new District("07", "Evora");
 
-        district = new District("08", "Faro");
-        new DistrictSubdivision("081", "Se (Faro)", district);
-        new DistrictSubdivision("081", "Sao Pedro", district);
-
-        district = new District("11", "Lisboa");
-        district = new District("31", "Ilha da Madeira (Madeira)");
-        district = new District("32", "Ilha de Porto Santo (Madeira)");
-        district = new District("43", "Ilha Terceira (Acores)");
-        district = new District("99", "Estrangeiro");
     }
 
-    private static void createManagerUser() {
-        final Person person = new Person();
-        person.setName("Fenix System Administrator");
+    private static void createManagerUser(InstallationProcess process) {
+        Bennu bennu = Bennu.getInstance();
+        final User user = new User(process.adminUsername);
+        final Person person = new Person(user);
+        person.setName(process.adminName);
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.PERSON));
+        person.addPersonRoles(Role.getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL));
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.MANAGER));
-        person.setIsPassInKerberos(Boolean.FALSE);
-        final User user = person.getUser();
-        final Login login = user.readUserLoginIdentification();
-        login.setActive(Boolean.TRUE);
-        LoginAlias.createNewCustomLoginAlias(login, "admin");
-        login.openLoginIfNecessary(RoleType.MANAGER);
+        
+        person.setRootDomainObject(bennu);
+        person.setCountry(process.country);
+        person.setCountryOfBirth(process.country);
+        user.setPassword(process.adminPass);
+        process.person = person;
+        
+        EmailAddress.createEmailAddress(person, process.email, PartyContactType.PERSONAL, true, true, true, true, true, true);
+        for (PartyContact partyContact : person.getPartyContactsSet()) {
+            partyContact.setValid();
+            partyContact.getPartyContactValidation().setState(PartyContactValidationState.VALID);
+        }
+        Authenticate.mock(user);
     }
 
     private static void createPartyTypeEnums() {
@@ -191,7 +366,7 @@ public class DataInitializer {
     }
 
     private static void createOrganizationalStructure() {
-        final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+        final Bennu rootDomainObject = Bennu.getInstance();
         final PlanetUnit planetUnit =
                 PlanetUnit.createNewPlanetUnit(new MultiLanguageString(Language.getDefaultLanguage(), "Earth"), null, null, "E",
                         new YearMonthDay(), null, null, null, null, false, null);
@@ -200,7 +375,7 @@ public class DataInitializer {
         createCountryUnits(rootDomainObject, planetUnit);
     }
 
-    private static void createCountryUnits(final RootDomainObject rootDomainObject, final PlanetUnit planetUnit) {
+    private static void createCountryUnits(final Bennu rootDomainObject, final PlanetUnit planetUnit) {
         for (final Country country : Country.readDistinctCountries()) {
             CountryUnit.createNewCountryUnit(new MultiLanguageString(Language.getDefaultLanguage(), country.getName()), null,
                     null, country.getCode(), new YearMonthDay(), null, planetUnit, null, null, false, null);

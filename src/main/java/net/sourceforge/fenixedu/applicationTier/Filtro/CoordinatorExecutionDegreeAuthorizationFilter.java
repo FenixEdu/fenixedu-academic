@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -24,10 +26,10 @@ public class CoordinatorExecutionDegreeAuthorizationFilter extends Filtro {
             new CoordinatorExecutionDegreeAuthorizationFilter();
 
     public void execute(String executionDegreeId) throws NotAuthorizedException {
-        IUserView id = AccessControl.getUserView();
-        if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
-                || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, executionDegreeId)) || (id == null)
-                || (id.getRoleTypes() == null)) {
+        User id = Authenticate.getUser();
+        if ((id != null && id.getPerson().getPersonRolesSet() != null && !containsRoleType(id.getPerson().getPersonRolesSet()))
+                || (id != null && id.getPerson().getPersonRolesSet() != null && !hasPrivilege(id, executionDegreeId))
+                || (id == null) || (id.getPerson().getPersonRolesSet() == null)) {
             throw new NotAuthorizedException();
         }
     }
@@ -40,12 +42,12 @@ public class CoordinatorExecutionDegreeAuthorizationFilter extends Filtro {
         return roles;
     }
 
-    private boolean hasPrivilege(IUserView id, String executionDegreeId) {
-        if (id.hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
+    private boolean hasPrivilege(User id, String executionDegreeId) {
+        if (id.getPerson().hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
             return true;
         }
 
-        if (id.hasRoleType(RoleType.COORDINATOR)) {
+        if (id.getPerson().hasRole(RoleType.COORDINATOR)) {
             String executionDegreeID = executionDegreeId;
 
             if (executionDegreeID == null) {

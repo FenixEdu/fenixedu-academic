@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -29,6 +28,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -68,7 +68,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
         final Statistics statistics = new Statistics();
 
         final List<PublicPhdCandidacyBean> candidacyHashCodes = new ArrayList<PublicPhdCandidacyBean>();
-        for (final PublicCandidacyHashCode hashCode : RootDomainObject.getInstance().getCandidacyHashCodesSet()) {
+        for (final PublicCandidacyHashCode hashCode : Bennu.getInstance().getCandidacyHashCodesSet()) {
             if (hashCode.isFromPhdProgram()) {
                 final PhdProgramPublicCandidacyHashCode phdHashCode = (PhdProgramPublicCandidacyHashCode) hashCode;
 
@@ -139,7 +139,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
     public ActionForward manageFocusAreas(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
-        request.setAttribute("focusAreas", RootDomainObject.getInstance().getPhdProgramFocusAreas());
+        request.setAttribute("focusAreas", Bennu.getInstance().getPhdProgramFocusAreasSet());
 
         return mapping.findForward("manageFocusAreas");
     }
@@ -269,7 +269,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
         private List<PhdCandidacyPeriod> getCandidacyPeriods() {
             List<PhdCandidacyPeriod> candidacyPeriodList = new ArrayList<PhdCandidacyPeriod>();
 
-            CollectionUtils.select(RootDomainObject.getInstance().getCandidacyPeriods(), new Predicate() {
+            CollectionUtils.select(Bennu.getInstance().getCandidacyPeriodsSet(), new Predicate() {
 
                 @Override
                 public boolean evaluate(Object arg0) {

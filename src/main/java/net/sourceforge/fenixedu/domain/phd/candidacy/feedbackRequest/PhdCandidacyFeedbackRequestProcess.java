@@ -7,11 +7,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -33,6 +31,8 @@ import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.util.phd.PhdProperties;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 
 public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequestProcess_Base {
@@ -57,12 +57,12 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
     }
 
     @Override
-    public boolean canExecuteActivity(IUserView userView) {
+    public boolean canExecuteActivity(User userView) {
         return true;
     }
 
     @Override
-    public boolean isAllowedToManageProcess(IUserView userView) {
+    public boolean isAllowedToManageProcess(User userView) {
         return true;
     }
 
@@ -183,37 +183,37 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
     static abstract private class PhdActivity extends Activity<PhdCandidacyFeedbackRequestProcess> {
 
         @Override
-        final public void checkPreConditions(final PhdCandidacyFeedbackRequestProcess process, final IUserView userView) {
+        final public void checkPreConditions(final PhdCandidacyFeedbackRequestProcess process, final User userView) {
             processPreConditions(process, userView);
             activityPreConditions(process, userView);
         }
 
-        protected void processPreConditions(final PhdCandidacyFeedbackRequestProcess process, final IUserView userView) {
+        protected void processPreConditions(final PhdCandidacyFeedbackRequestProcess process, final User userView) {
             if (!process.getCandidacyProcess().isInState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION)) {
                 throw new PreConditionNotValidException(
                         "error.PhdCandidacyFeedbackRequestProcess.candidacy.process.is.not.pending.for.coordinator.opinion");
             }
         }
 
-        abstract protected void activityPreConditions(final PhdCandidacyFeedbackRequestProcess process, final IUserView userView);
+        abstract protected void activityPreConditions(final PhdCandidacyFeedbackRequestProcess process, final User userView);
     }
 
     @StartActivity
     static public class CreateCandidacy extends PhdActivity {
 
         @Override
-        protected void processPreConditions(PhdCandidacyFeedbackRequestProcess process, IUserView userView) {
+        protected void processPreConditions(PhdCandidacyFeedbackRequestProcess process, User userView) {
             // Auto-generated method stub
         }
 
         @Override
-        protected void activityPreConditions(PhdCandidacyFeedbackRequestProcess noProcess, IUserView userView) {
+        protected void activityPreConditions(PhdCandidacyFeedbackRequestProcess noProcess, User userView) {
 
         }
 
         @Override
         protected PhdCandidacyFeedbackRequestProcess executeActivity(PhdCandidacyFeedbackRequestProcess noProcess,
-                IUserView userView, Object object) {
+                User userView, Object object) {
 
             final PhdCandidacyFeedbackRequestProcessBean bean = (PhdCandidacyFeedbackRequestProcessBean) object;
             final PhdCandidacyFeedbackRequestProcess process = new PhdCandidacyFeedbackRequestProcess();
@@ -230,7 +230,7 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
     static public class EditSharedDocumentTypes extends PhdActivity {
 
         @Override
-        protected void activityPreConditions(PhdCandidacyFeedbackRequestProcess process, IUserView userView) {
+        protected void activityPreConditions(PhdCandidacyFeedbackRequestProcess process, User userView) {
             if (!process.getIndividualProgramProcess().isCoordinatorForPhdProgram(userView.getPerson())) {
                 throw new PreConditionNotValidException();
             }
@@ -238,7 +238,7 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
 
         @Override
         protected PhdCandidacyFeedbackRequestProcess executeActivity(PhdCandidacyFeedbackRequestProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
 
             final PhdCandidacyFeedbackRequestProcessBean bean = (PhdCandidacyFeedbackRequestProcessBean) object;
             process.setSharedDocuments(new PhdCandidacySharedDocumentsList(bean.getSharedDocuments()));
@@ -250,7 +250,7 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
     static public class AddPhdCandidacyFeedbackRequestElements extends PhdActivity {
 
         @Override
-        protected void activityPreConditions(PhdCandidacyFeedbackRequestProcess process, IUserView userView) {
+        protected void activityPreConditions(PhdCandidacyFeedbackRequestProcess process, User userView) {
             if (!process.getIndividualProgramProcess().isCoordinatorForPhdProgram(userView.getPerson())) {
                 throw new PreConditionNotValidException();
             }
@@ -258,7 +258,7 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
 
         @Override
         protected PhdCandidacyFeedbackRequestProcess executeActivity(PhdCandidacyFeedbackRequestProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
 
             final PhdCandidacyFeedbackRequestElementBean bean = (PhdCandidacyFeedbackRequestElementBean) object;
 
@@ -322,7 +322,7 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
         }
 
         private void email(String email, String subject, String body) {
-            final SystemSender sender = RootDomainObject.getInstance().getSystemSender();
+            final SystemSender sender = Bennu.getInstance().getSystemSender();
             new Message(sender, sender.getConcreteReplyTos(), null, null, null, subject, body, Collections.singleton(email));
         }
     }
@@ -330,7 +330,7 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
     static public class DeleteCandidacyFeedbackRequestElement extends PhdActivity {
 
         @Override
-        protected void activityPreConditions(PhdCandidacyFeedbackRequestProcess process, IUserView userView) {
+        protected void activityPreConditions(PhdCandidacyFeedbackRequestProcess process, User userView) {
             if (!process.getIndividualProgramProcess().isCoordinatorForPhdProgram(userView.getPerson())) {
                 throw new PreConditionNotValidException();
             }
@@ -338,7 +338,7 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
 
         @Override
         protected PhdCandidacyFeedbackRequestProcess executeActivity(PhdCandidacyFeedbackRequestProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
 
             ((PhdCandidacyFeedbackRequestElement) object).delete();
             return process;
@@ -348,7 +348,7 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
     static public class UploadCandidacyFeedback extends PhdActivity {
 
         @Override
-        protected void activityPreConditions(PhdCandidacyFeedbackRequestProcess process, IUserView userView) {
+        protected void activityPreConditions(PhdCandidacyFeedbackRequestProcess process, User userView) {
             if (!process.hasElement(userView.getPerson())) {
                 throw new PreConditionNotValidException();
             }
@@ -356,7 +356,7 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
 
         @Override
         protected PhdCandidacyFeedbackRequestProcess executeActivity(PhdCandidacyFeedbackRequestProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
 
             final PhdProgramDocumentUploadBean bean = (PhdProgramDocumentUploadBean) object;
 
@@ -376,7 +376,7 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
     static public class DownloadCandidacyFeedbackDocuments extends ExternalAccessPhdActivity<PhdCandidacyFeedbackRequestProcess> {
 
         @Override
-        public void checkPreConditions(PhdCandidacyFeedbackRequestProcess process, IUserView userView) {
+        public void checkPreConditions(PhdCandidacyFeedbackRequestProcess process, User userView) {
             if (!process.getCandidacyProcess().isInState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION)) {
                 throw new PreConditionNotValidException(
                         "error.PhdCandidacyFeedbackRequestProcess.candidacy.process.is.not.pending.for.coordinator.opinion");
@@ -385,7 +385,7 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
 
         @Override
         protected PhdCandidacyFeedbackRequestProcess internalExecuteActivity(PhdCandidacyFeedbackRequestProcess process,
-                IUserView userView, PhdExternalOperationBean bean) {
+                User userView, PhdExternalOperationBean bean) {
             // Auto-generated method stub
             return process;
         }
@@ -394,7 +394,7 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
     static public class ExternalUploadCandidacyFeedback extends ExternalAccessPhdActivity<PhdCandidacyFeedbackRequestProcess> {
 
         @Override
-        public void checkPreConditions(PhdCandidacyFeedbackRequestProcess process, IUserView userView) {
+        public void checkPreConditions(PhdCandidacyFeedbackRequestProcess process, User userView) {
             if (!process.getCandidacyProcess().isInState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION)) {
                 throw new PreConditionNotValidException(
                         "error.PhdCandidacyFeedbackRequestProcess.candidacy.process.is.not.pending.for.coordinator.opinion");
@@ -403,7 +403,7 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
 
         @Override
         protected PhdCandidacyFeedbackRequestProcess internalExecuteActivity(PhdCandidacyFeedbackRequestProcess process,
-                IUserView userView, PhdExternalOperationBean bean) {
+                User userView, PhdExternalOperationBean bean) {
 
             if (bean.getDocumentBean().hasAnyInformation()) {
 

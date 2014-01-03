@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.List;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import com.google.common.base.Function;
@@ -30,7 +32,7 @@ public class OccupationPeriodReference extends OccupationPeriodReference_Base {
 
     private OccupationPeriodReference() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public OccupationPeriodReference(OccupationPeriod period, ExecutionDegree degree, OccupationPeriodType type,
@@ -103,7 +105,7 @@ public class OccupationPeriodReference extends OccupationPeriodReference_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

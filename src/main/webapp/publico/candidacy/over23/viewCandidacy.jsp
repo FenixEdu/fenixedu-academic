@@ -12,10 +12,10 @@
 <bean:define id="fullPath"><%= request.getContextPath() + "/publico" + mappingPath + ".do" %></bean:define>
 
 <div class="breadcumbs">
-	<a href="http://www.ist.utl.pt">IST</a> &gt;
-	<a href="http://www.ist.utl.pt/pt/candidatos/"><bean:message key="title.candidate" bundle="CANDIDATE_RESOURCES"/></a> &gt;
-	<a href="http://www.ist.utl.pt/pt/candidatos/candidaturas/"><bean:message key="title.degrees" bundle="CANDIDATE_RESOURCES"/></a> &gt;
-	<a href="http://www.ist.utl.pt/pt/candidatos/candidaturas/licenciaturas/maiores_23/"><bean:write name="application.name"/> </a> &gt;
+	<a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
+	<a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>pt/candidatos/"><bean:message key="title.candidate" bundle="CANDIDATE_RESOURCES"/></a> &gt;
+	<a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>pt/candidatos/candidaturas/"><bean:message key="title.degrees" bundle="CANDIDATE_RESOURCES"/></a> &gt;
+	<a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>pt/candidatos/candidaturas/licenciaturas/maiores_23/"><bean:write name="application.name"/> </a> &gt;
 	<bean:message key="title.view.candidacy.process" bundle="CANDIDATE_RESOURCES"/>
 </div>
 
@@ -31,7 +31,7 @@
 				<li><fr:view name="missingDocumentFileType"/></li>
 			</logic:iterate>
 		</ul>
-		<p><bean:message key="message.ist.conditions.note" bundle="CANDIDATE_RESOURCES"/></p>
+		<p><bean:message key="message.ist.conditions.note" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></p>
 	</div>
 </div>
 </logic:equal>
@@ -165,7 +165,7 @@
 </p>
 
 
-<h3 style="margin-top: 1em;"><bean:message key="title.over23.bachelor.first.cycle.choice" bundle="CANDIDATE_RESOURCES"/></h3>
+<h3 style="margin-top: 1em;"><bean:message key="title.over23.bachelor.first.cycle.choice" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></h3>
 <ol class="mtop05">
 	<logic:iterate id="degree" name="individualCandidacyProcessBean" property="selectedDegrees" indexId="index">
 		<li>				

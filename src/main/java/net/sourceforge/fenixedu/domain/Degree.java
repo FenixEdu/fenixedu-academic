@@ -46,9 +46,10 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import net.sourceforge.fenixedu.util.MarkType;
-import net.sourceforge.fenixedu.util.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.StringAppender;
@@ -121,7 +122,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     protected Degree() {
         super();
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         new DegreeSite(this);
     }
 
@@ -656,9 +657,9 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
         final String degreeType = getDegreeType().getLocalizedName(locale);
         if (!StringUtils.isEmpty(degreeType)) {
-            res.append(degreeType).append(StringUtils.SINGLE_SPACE);
+            res.append(degreeType).append(" ");
             res.append(ResourceBundle.getBundle("resources.ApplicationResources", locale).getString("label.in"));
-            res.append(StringUtils.SINGLE_SPACE);
+            res.append(" ");
         }
 
         final MultiLanguageString mls = getNameFor(executionYear);
@@ -857,7 +858,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         final SoftReference<Degree> degreeReference = degrees.get(lowerCaseString);
         if (degreeReference != null) {
             final Degree degree = degreeReference.get();
-            if (degree != null && degree.getRootDomainObject() == RootDomainObject.getInstance()
+            if (degree != null && degree.getRootDomainObject() == Bennu.getInstance()
                     && degree.getSigla().equalsIgnoreCase(lowerCaseString)) {
                 return degree;
             } else {
@@ -865,7 +866,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
                 final SoftReference<Degree> otherDegreeReference = degrees.get(lowerCaseString);
                 if (otherDegreeReference != null) {
                     final Degree otherDegree = otherDegreeReference.get();
-                    if (otherDegree != null && otherDegree.getRootDomainObject() == RootDomainObject.getInstance()
+                    if (otherDegree != null && otherDegree.getRootDomainObject() == Bennu.getInstance()
                             && otherDegree.getSigla().equalsIgnoreCase(lowerCaseString)) {
                         return otherDegree;
                     }
@@ -877,7 +878,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public static List<Degree> readNotEmptyDegrees() {
-        final List<Degree> result = new ArrayList<Degree>(RootDomainObject.getInstance().getDegrees());
+        final List<Degree> result = new ArrayList<Degree>(Bennu.getInstance().getDegreesSet());
         result.remove(readEmptyDegree());
         return result;
     }
@@ -1954,7 +1955,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -23,7 +23,7 @@ public class EditEventDA extends EditResearchActivityDA {
 
     @Override
     protected List getObjects() {
-        List<ResearchEvent> events = new ArrayList<ResearchEvent>(rootDomainObject.getEvents());
+        List<ResearchEvent> events = new ArrayList<ResearchEvent>(rootDomainObject.getEventsSet());
         Collections.sort(events, new BeanComparator("name", Collator.getInstance()));
         return events;
     }

@@ -8,7 +8,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ApagarTurma;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.CriarTurma;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteClasses;
@@ -32,8 +31,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -84,7 +84,7 @@ public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContex
 
         DynaValidatorForm classForm = (DynaValidatorForm) form;
         String className = (String) classForm.get("className");
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(PresentationConstants.CURRICULAR_YEAR);
         InfoExecutionDegree infoExecutionDegree =
@@ -115,7 +115,7 @@ public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContex
 
         InfoClass infoClass = (InfoClass) request.getAttribute(PresentationConstants.CLASS_VIEW);
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         ApagarTurma.run(infoClass);
 

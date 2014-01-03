@@ -5,7 +5,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
 <ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
-	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
+	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
@@ -126,7 +126,7 @@
 				<h:outputText value="<p><label>#{bolonhaBundle['degreeType']}:</label>" escape="false"/>
 				<fc:selectOneMenu value="#{CurricularRulesManagement.selectedDegreeType}" onchange="this.form.submit();"
 						valueChangeListener="#{CurricularRulesManagement.onChangeDegreeTypeDropDown}">
-					<f:selectItem itemLabel="IST" itemValue=""/>
+					<f:selectItem itemLabel="#{CurricularRulesManagement.schoolAcronym}" itemValue=""/>
 					<f:selectItem itemLabel="#{enumerationBundle['BOLONHA_DEGREE']}" itemValue="BOLONHA_DEGREE"/>
 					<f:selectItem itemLabel="#{enumerationBundle['BOLONHA_MASTER_DEGREE']}" itemValue="BOLONHA_MASTER_DEGREE"/>
 					<f:selectItem itemLabel="#{enumerationBundle['BOLONHA_INTEGRATED_MASTER_DEGREE']}" itemValue="BOLONHA_INTEGRATED_MASTER_DEGREE"/>

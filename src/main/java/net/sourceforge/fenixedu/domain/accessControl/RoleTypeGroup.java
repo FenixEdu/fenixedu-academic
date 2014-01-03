@@ -8,6 +8,10 @@ import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
+/**
+ * @deprecated Use Bennu Groups instead
+ */
+@Deprecated
 public class RoleTypeGroup extends Group {
 
     private static final long serialVersionUID = 1L;

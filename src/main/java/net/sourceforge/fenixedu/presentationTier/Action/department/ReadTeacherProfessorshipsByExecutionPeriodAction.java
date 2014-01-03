@@ -8,11 +8,11 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ReadDetailedTeacherProfessorshipsByExecutionPeriod;
 
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
@@ -39,12 +39,12 @@ public class ReadTeacherProfessorshipsByExecutionPeriodAction extends AbstractRe
      * (non-Javadoc)
      * 
      * @seepresentationTier.Action.department.AbstractReadProfessorshipsAction#
-     * getDetailedProfessorships(ServidorAplicacao.IUserView, java.lang.Integer,
+     * getDetailedProfessorships(ServidorAplicacao.User, java.lang.Integer,
      * org.apache.struts.action.DynaActionForm,
      * javax.servlet.http.HttpServletRequest)
      */
     @Override
-    List getDetailedProfessorships(IUserView userView, String teacherId, DynaActionForm actionForm, HttpServletRequest request)
+    List getDetailedProfessorships(User userView, String teacherId, DynaActionForm actionForm, HttpServletRequest request)
             throws FenixServiceException {
         String executionPeriodId = (String) actionForm.get("executionPeriodId");
         List detailedInfoProfessorshipList =

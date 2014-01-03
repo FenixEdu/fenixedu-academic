@@ -2,14 +2,15 @@ package net.sourceforge.fenixedu.domain.vigilancy;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
@@ -17,7 +18,7 @@ public class UnavailablePeriod extends UnavailablePeriod_Base {
 
     public UnavailablePeriod() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public UnavailablePeriod(DateTime beginDate, DateTime endDate, String justification) {
@@ -123,7 +124,7 @@ public class UnavailablePeriod extends UnavailablePeriod_Base {
 
     private boolean isExamCoordinatorRequesting(Person person) {
 
-        IUserView userview = AccessControl.getUserView();
+        User userview = Authenticate.getUser();
 
         if (userview != null) {
             Person loggedPerson = userview.getPerson();
@@ -162,7 +163,7 @@ public class UnavailablePeriod extends UnavailablePeriod_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -113,8 +113,6 @@ public class PersonBean implements Serializable {
 
     private Country countryOfResidence;
 
-    private boolean createLoginIdentificationAndUserIfNecessary = false;
-
     private Integer studentNumber;
 
     private String emailConfirmation;
@@ -645,14 +643,6 @@ public class PersonBean implements Serializable {
 
     public boolean hasStudent() {
         return hasPerson() && getPerson().hasStudent();
-    }
-
-    public boolean createLoginIdentificationAndUserIfNecessary() {
-        return createLoginIdentificationAndUserIfNecessary;
-    }
-
-    public void setCreateLoginIdentificationAndUserIfNecessary(boolean value) {
-        this.createLoginIdentificationAndUserIfNecessary = value;
     }
 
     public Integer getStudentNumber() {

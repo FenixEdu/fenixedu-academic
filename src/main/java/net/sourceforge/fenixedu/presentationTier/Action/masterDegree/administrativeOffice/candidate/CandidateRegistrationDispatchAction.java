@@ -10,7 +10,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDegreeByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ActiveStudentCurricularPlanAlreadyExistsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
@@ -43,6 +42,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.core.domain.User;
 
 /**
  * 
@@ -69,7 +69,7 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
             degreeCode = (String) candidateRegistration.get("degreeCode");
         }
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         List result = null;
 
@@ -104,7 +104,7 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
 
         DynaActionForm candidateRegistration = (DynaActionForm) form;
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         String candidateID = request.getParameter("candidateID");
 
         candidateRegistration.set("candidateID", candidateID);
@@ -136,7 +136,7 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
 
         DynaActionForm candidateRegistration = (DynaActionForm) form;
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         String candidateID = (String) candidateRegistration.get("candidateID");
         String branchID = (String) candidateRegistration.get("branchID");
 
@@ -205,7 +205,7 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
 
         DynaActionForm candidateRegistration = (DynaActionForm) form;
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         String candidateID = (String) candidateRegistration.get("candidateID");
 
         InfoCandidateRegistration infoCandidateRegistration = null;

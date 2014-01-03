@@ -9,8 +9,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteObjectByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.TransferDomainObjectProperty;
@@ -22,13 +20,15 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -259,7 +259,7 @@ public class MergePersonsDA extends FenixDispatchAction {
             String leftOid, String rightOid, String currentClass) throws FenixServiceException, IllegalAccessException,
             InvocationTargetException, NoSuchMethodException, ClassNotFoundException {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         DomainObject domainObject1 = FenixFramework.getDomainObject(leftOid);
         DomainObject domainObject2 = FenixFramework.getDomainObject(rightOid);
@@ -434,8 +434,7 @@ public class MergePersonsDA extends FenixDispatchAction {
 
     private Person checkUser() {
         Person person = AccessControl.getPerson();
-        String ciistCostCenterCode = PropertiesManager.getProperty("ciistCostCenterCode");
-        Unit ciistUnit = Unit.readByCostCenterCode(Integer.valueOf(ciistCostCenterCode));
+        Unit ciistUnit = Unit.readByCostCenterCode(FenixConfigurationManager.getConfiguration().getCIISTCostCenterCode());
         Unit currentWorkingPlace = person.getEmployee().getCurrentWorkingPlace();
         if ((currentWorkingPlace != null && ciistUnit != null && !currentWorkingPlace.equals(ciistUnit))
                 || person.getPersonRole(RoleType.MANAGER) == null) {

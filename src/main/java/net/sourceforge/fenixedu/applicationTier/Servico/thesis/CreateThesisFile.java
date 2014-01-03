@@ -1,10 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.thesis;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -19,14 +16,11 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.io.FileUtils;
+import org.fenixedu.bennu.core.security.Authenticate;
 
-import pt.utl.ist.fenix.tools.file.FileDescriptor;
-import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
-import pt.utl.ist.fenix.tools.file.IFileManager;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -36,11 +30,11 @@ public abstract class CreateThesisFile {
     public ThesisFile run(Thesis thesis, File fileToUpload, String fileName, String title, String subTitle, Language language)
             throws FenixServiceException, IOException {
 
-        if (!thesis.isWaitingConfirmation() && !AccessControl.getUserView().hasRoleType(RoleType.SCIENTIFIC_COUNCIL)) {
+        if (!thesis.isWaitingConfirmation() && !Authenticate.getUser().getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
             throw new DomainException("thesis.files.submit.unavailable");
         }
 
-        if (!thesis.isDeclarationAccepted() && !AccessControl.getUserView().hasRoleType(RoleType.SCIENTIFIC_COUNCIL)) {
+        if (!thesis.isDeclarationAccepted() && !Authenticate.getUser().getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
             throw new DomainException("thesis.files.submit.unavailable");
         }
 
@@ -91,22 +85,6 @@ public abstract class CreateThesisFile {
         metaData.add(FileSetMetaData.createTitleMeta(thesis.getTitle().getContent()));
 
         return metaData;
-    }
-
-    protected FileDescriptor saveFile(VirtualPath filePath, String fileName, boolean isPrivate,
-            Collection<FileSetMetaData> metaData, File file) throws FenixServiceException, IOException {
-        IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
-        InputStream is = null;
-        try {
-            is = new FileInputStream(file);
-            return fileManager.saveFile(filePath, fileName, isPrivate, metaData, is);
-        } catch (FileNotFoundException e) {
-            throw new FenixServiceException(e.getMessage());
-        } finally {
-            if (is != null) {
-                is.close();
-            }
-        }
     }
 
     protected abstract void removePreviousFile(Thesis thesis);

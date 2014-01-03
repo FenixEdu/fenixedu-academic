@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Collection;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.predicates.UnitSitePredicates;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
@@ -28,7 +30,7 @@ public class UnitSiteBanner extends UnitSiteBanner_Base {
     protected UnitSiteBanner() {
         super();
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public UnitSiteBanner(UnitSite site) {
@@ -102,7 +104,7 @@ public class UnitSiteBanner extends UnitSiteBanner_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

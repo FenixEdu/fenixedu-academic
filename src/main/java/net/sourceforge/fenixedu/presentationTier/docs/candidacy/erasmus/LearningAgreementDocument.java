@@ -5,7 +5,7 @@ import java.util.Locale;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
-import net.sourceforge.fenixedu.util.StringUtils;
+import net.sourceforge.fenixedu.util.FenixStringTools;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class LearningAgreementDocument extends FenixReport {
@@ -43,7 +43,7 @@ public class LearningAgreementDocument extends FenixReport {
 
         for (CurricularCourse course : process.getCandidacy().getCurricularCourses()) {
             result.append(
-                    StringUtils.multipleLineRightPadWithSuffix(course.getNameI18N().getContent(Language.en), LINE_LENGTH,
+                    FenixStringTools.multipleLineRightPadWithSuffix(course.getNameI18N().getContent(Language.en), LINE_LENGTH,
                             END_CHAR, course.getEctsCredits().toString())).append(LINE_BREAK);
         }
 

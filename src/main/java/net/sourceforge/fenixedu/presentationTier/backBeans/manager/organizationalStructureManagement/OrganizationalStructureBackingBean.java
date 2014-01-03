@@ -135,31 +135,39 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     public List<Function> getAllNonInherentFunctions() throws FenixServiceException {
-        List<Function> allNonInherentFunctions = new ArrayList<Function>();
-        YearMonthDay currentDate = new YearMonthDay();
-        for (Function function : this.getUnit().getFunctions()) {
-            if (!function.isInherentFunction()
-                    && ((this.getListingTypeValueToFunctionsHidden().getValue().toString().equals("0") && function
-                            .isActive(currentDate)) || (this.getListingTypeValueToFunctionsHidden().getValue().toString()
-                            .equals("1") && !function.isActive(currentDate)))) {
-                allNonInherentFunctions.add(function);
+        if (this.getUnit() != null) {
+            List<Function> allNonInherentFunctions = new ArrayList<Function>();
+            YearMonthDay currentDate = new YearMonthDay();
+            for (Function function : this.getUnit().getFunctions()) {
+                if (!function.isInherentFunction()
+                        && ((this.getListingTypeValueToFunctionsHidden().getValue().toString().equals("0") && function
+                                .isActive(currentDate)) || (this.getListingTypeValueToFunctionsHidden().getValue().toString()
+                                .equals("1") && !function.isActive(currentDate)))) {
+                    allNonInherentFunctions.add(function);
+                }
             }
+            return allNonInherentFunctions;
+        } else {
+            return new ArrayList();
         }
-        return allNonInherentFunctions;
     }
 
     public List<Function> getAllInherentFunctions() throws FenixServiceException {
-        List<Function> allInherentFunctions = new ArrayList<Function>();
-        YearMonthDay currentDate = new YearMonthDay();
-        for (Function function : this.getUnit().getFunctions()) {
-            if (function.isInherentFunction()
-                    && ((this.getListingTypeValueToFunctionsHidden().getValue().toString().equals("0") && function
-                            .isActive(currentDate)) || (this.getListingTypeValueToFunctionsHidden().getValue().toString()
-                            .equals("1") && !function.isActive(currentDate)))) {
-                allInherentFunctions.add(function);
+        if (this.getUnit() != null) {
+            List<Function> allInherentFunctions = new ArrayList<Function>();
+            YearMonthDay currentDate = new YearMonthDay();
+            for (Function function : this.getUnit().getFunctions()) {
+                if (function.isInherentFunction()
+                        && ((this.getListingTypeValueToFunctionsHidden().getValue().toString().equals("0") && function
+                                .isActive(currentDate)) || (this.getListingTypeValueToFunctionsHidden().getValue().toString()
+                                .equals("1") && !function.isActive(currentDate)))) {
+                    allInherentFunctions.add(function);
+                }
             }
+            return allInherentFunctions;
+        } else {
+            return new ArrayList();
         }
-        return allInherentFunctions;
     }
 
     public String getAllUnitsToChooseParentUnit() throws FenixServiceException {
@@ -217,11 +225,16 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     private List<Unit> getSubUnits(boolean active, Unit unit, YearMonthDay currentDate) {
-        List<Unit> subUnits = (active) ? unit.getActiveSubUnits(currentDate) : unit.getInactiveSubUnits(currentDate);
-        if (!subUnits.isEmpty()) {
-            Collections.sort(subUnits, Unit.COMPARATOR_BY_NAME_AND_ID);
+        if (unit != null) {
+            List<Unit> subUnits = (active) ? unit.getActiveSubUnits(currentDate) : unit.getInactiveSubUnits(currentDate);
+            if (!subUnits.isEmpty()) {
+                Collections.sort(subUnits, Unit.COMPARATOR_BY_NAME_AND_ID);
+            }
+            return subUnits;
+        } else {
+            // HACK: What is this suposed to do, Patch??
+            return new ArrayList<>();
         }
-        return subUnits;
     }
 
     private List<Unit> getAllSubUnits(boolean active, Unit unit, YearMonthDay currentDate) {
@@ -394,7 +407,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         List<SelectItem> list = new ArrayList<SelectItem>();
         SelectItem selectItem = null;
 
-        Collection<Department> allDepartments = rootDomainObject.getDepartments();
+        Collection<Department> allDepartments = rootDomainObject.getDepartmentsSet();
 
         for (Department department : allDepartments) {
             selectItem = new SelectItem();
@@ -413,9 +426,9 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         List<SelectItem> list = new ArrayList<SelectItem>();
         SelectItem selectItem = null;
 
-        Collection<AdministrativeOffice> allAdministrativeOffices = rootDomainObject.getAdministrativeOffices();
+        Collection<AdministrativeOffice> allAdministrativeOffices = rootDomainObject.getAdministrativeOfficesSet();
         ResourceBundle bundle = getResourceBundle("resources/EnumerationResources");
-
+        
         for (AdministrativeOffice administrativeOffice : allAdministrativeOffices) {
             selectItem = new SelectItem();
             String name =

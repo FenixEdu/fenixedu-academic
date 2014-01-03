@@ -7,15 +7,17 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
+import net.sourceforge.fenixedu.domain.Instalation;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.BundleUtil;
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixframework.Atomic;
 
 public class Sender extends Sender_Base {
@@ -32,7 +34,7 @@ public class Sender extends Sender_Base {
 
     public Sender() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public Sender(final String fromName, final String fromAddress, final Group members) {
@@ -57,14 +59,14 @@ public class Sender extends Sender_Base {
         deleteDomainObject();
     }
 
-    static public String getNoreplyMail() {
-        return BundleUtil.getMessageFromModuleOrApplication("GlobalResources", "noreply.mail");
+    public static String getNoreplyMail() {
+        return Instalation.getInstance().getInstituitionalEmailAddress("noreply");
     }
 
     public static boolean hasAvailableSender() {
-        final IUserView userView = UserView.getUser();
+        final User userView = Authenticate.getUser();
         if (userView != null) {
-            if (userView.hasRoleType(RoleType.MANAGER)) {
+            if (userView.getPerson().hasRole(RoleType.MANAGER)) {
                 return true;
             }
 
@@ -73,7 +75,7 @@ public class Sender extends Sender_Base {
                 return true;
             }
 
-            for (final Sender sender : RootDomainObject.getInstance().getUtilEmailSendersSet()) {
+            for (final Sender sender : Bennu.getInstance().getUtilEmailSendersSet()) {
                 if (sender.allows(userView)) {
                     return true;
                 }
@@ -82,16 +84,16 @@ public class Sender extends Sender_Base {
         return false;
     }
 
-    protected boolean allows(final IUserView userView) {
+    protected boolean allows(final User userView) {
         return getMembers().allows(userView);
     }
 
     public static Set<Sender> getAvailableSenders() {
-        final IUserView userView = UserView.getUser();
+        final User userView = Authenticate.getUser();
 
         final Set<Sender> senders = new TreeSet<Sender>(Sender.COMPARATOR_BY_FROM_NAME);
-        for (final Sender sender : RootDomainObject.getInstance().getUtilEmailSendersSet()) {
-            if (sender.getMembers().allows(userView) || (userView != null && userView.hasRoleType(RoleType.MANAGER))) {
+        for (final Sender sender : Bennu.getInstance().getUtilEmailSendersSet()) {
+            if (sender.getMembers().allows(userView) || (userView != null && userView.getPerson().hasRole(RoleType.MANAGER))) {
                 senders.add(sender);
             }
         }
@@ -166,7 +168,7 @@ public class Sender extends Sender_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

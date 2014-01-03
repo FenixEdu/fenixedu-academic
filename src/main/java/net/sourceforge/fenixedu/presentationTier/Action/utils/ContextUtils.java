@@ -13,7 +13,6 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurricularYearByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionCourseByOID;
@@ -52,9 +51,10 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.StringAppender;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -535,7 +535,7 @@ public class ContextUtils {
     }
 
     public static List createExecutionDegreeList(HttpServletRequest request) throws FenixServiceException {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         InfoExecutionPeriod infoExecutionPeriod =
                 (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);

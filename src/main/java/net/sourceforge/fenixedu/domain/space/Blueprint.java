@@ -9,11 +9,11 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
 import net.sourceforge.fenixedu.predicates.SpacePredicates;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.YearMonthDay;
 
 public class Blueprint extends Blueprint_Base implements Comparable<Blueprint> {
@@ -21,7 +21,7 @@ public class Blueprint extends Blueprint_Base implements Comparable<Blueprint> {
     @FenixDomainObjectActionLogAnnotation(actionName = "Created space blueprint", parameters = { "space", "person" })
     public Blueprint(Space space, Person person) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         checkNewBluePrintDates(space);
         closeCurrentSpaceBlueprint(space);
         setSpace(space);
@@ -196,7 +196,7 @@ public class Blueprint extends Blueprint_Base implements Comparable<Blueprint> {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

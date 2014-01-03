@@ -11,11 +11,11 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.CreditNoteEntryDTO;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.util.Money;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
@@ -34,7 +34,7 @@ public class CreditNote extends CreditNote_Base {
         super();
         final Integer year = new DateTime().getYear();
         super.setNumber(generateCreditNoteNumber(year));
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
         super.setWhenCreated(new DateTime());
         super.setYear(year);
     }
@@ -76,7 +76,7 @@ public class CreditNote extends CreditNote_Base {
 
     private List<CreditNote> getCreditNotesForYear(final Integer year) {
         final List<CreditNote> result = new ArrayList<CreditNote>();
-        for (final CreditNote creditNote : RootDomainObject.getInstance().getCreditNotes()) {
+        for (final CreditNote creditNote : Bennu.getInstance().getCreditNotesSet()) {
             if (creditNote.getYear().equals(year)) {
                 result.add(creditNote);
             }
@@ -282,7 +282,7 @@ public class CreditNote extends CreditNote_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

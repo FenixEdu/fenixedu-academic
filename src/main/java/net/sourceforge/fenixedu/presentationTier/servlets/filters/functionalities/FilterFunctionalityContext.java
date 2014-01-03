@@ -6,7 +6,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.contents.Container;
@@ -243,7 +244,7 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
             if (content instanceof Redirect) {
                 continue;
             }
-            if (content != RootDomainObject.getInstance().getRootPortal()) {
+            if (content != Bennu.getInstance().getRootPortal()) {
                 final String name = content.getNormalizedName().getContent();
                 if (name.length() > 0 && (stringBuilder.length() > 0 || (stringBuilder.length() == 0 && name.charAt(0) != '/'))) {
                     stringBuilder.append('/');

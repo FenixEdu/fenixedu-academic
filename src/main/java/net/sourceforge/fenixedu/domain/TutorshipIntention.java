@@ -37,10 +37,6 @@ public class TutorshipIntention extends TutorshipIntention_Base {
         }
     }
 
-    protected RootDomainObject getRootDomainObject() {
-        return getDegreeCurricularPlan().getRootDomainObject();
-    }
-
     public boolean isDeletable() {
         for (Tutorship tutorship : getTeacher().getTutorshipsSet()) {
             if (tutorship.getStudentCurricularPlan().getDegreeCurricularPlan().equals(getDegreeCurricularPlan())
@@ -77,6 +73,7 @@ public class TutorshipIntention extends TutorshipIntention_Base {
         }
         return null;
     }
+
     @Deprecated
     public boolean hasDegreeCurricularPlan() {
         return getDegreeCurricularPlan() != null;

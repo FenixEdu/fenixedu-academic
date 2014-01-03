@@ -20,7 +20,7 @@
 		}
 	</script>
 	
-	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
+	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 
 	<h:outputFormat value="<h2>#{bundle['label.submit.listMarks']}</h2>" escape="false"/>

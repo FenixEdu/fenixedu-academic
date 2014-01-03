@@ -12,7 +12,7 @@
 <%@page import="pt.ist.fenixframework.DomainObject"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" %>
 
-<logic:present role="COORDINATOR">
+<logic:present role="role(COORDINATOR)">
 
 
 <%-- ### Title #### --%>

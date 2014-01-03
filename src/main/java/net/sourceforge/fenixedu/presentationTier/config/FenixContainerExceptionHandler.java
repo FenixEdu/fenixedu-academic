@@ -8,20 +8,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.LogLevel;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.config.ExceptionConfig;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * 
@@ -35,20 +28,14 @@ public class FenixContainerExceptionHandler extends FenixExceptionHandler {
     public ActionForward execute(Exception ex, ExceptionConfig ae, ActionMapping mapping, ActionForm formInstance,
             HttpServletRequest request, HttpServletResponse response) throws ServletException {
 
-        ex.printStackTrace();
-        if (LogLevel.ERROR) {
-            if (!(ex instanceof FenixServiceException) && !(ex instanceof FenixActionException)) {
-                logger.error(ex.getMessage(), ex);
-            }
-        }
+        logger.error(ex.getMessage(), ex);
 
-        final IUserView userView = UserView.getUser();
-        if (userView != null) {
-            final Person person = userView.getPerson();
-            request.setAttribute("loggedPersonEmail", person.getEmail());
+        if (Authenticate.isLogged()) {
+            request.setAttribute("loggedPersonEmail", Authenticate.getUser().getPerson().getDefaultEmailAddressValue());
         }
 
         super.execute(ex, ae, mapping, formInstance, request, response);
-        throw new ServletException(ex);
+
+        return new ActionForward("error-page", "/showErrorPage.do", false, "/");
     }
 }

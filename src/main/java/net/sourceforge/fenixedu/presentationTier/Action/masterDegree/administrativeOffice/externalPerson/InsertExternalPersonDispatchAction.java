@@ -9,7 +9,6 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.InsertExternalPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.institution.ReadAllInstitutions;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
@@ -31,8 +30,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -81,7 +81,7 @@ public class InsertExternalPersonDispatchAction extends FenixDispatchAction {
     }
 
     private List getInstitutions(HttpServletRequest request) throws FenixActionException {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         List institutions = null;
 
         try {
@@ -112,7 +112,7 @@ public class InsertExternalPersonDispatchAction extends FenixDispatchAction {
 
     public ActionForward insert(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         DynaActionForm insertExternalPersonForm = (DynaActionForm) form;
 

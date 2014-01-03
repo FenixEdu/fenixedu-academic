@@ -8,11 +8,11 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
@@ -39,7 +39,7 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
 
     protected PhdStudyPlan() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setWhenCreated(new DateTime());
         if (AccessControl.getPerson() != null) {
             setCreatedBy(AccessControl.getPerson().getUsername());
@@ -247,7 +247,7 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -36,7 +36,7 @@
 
 <h3 class="mtop2 mbottom05"><bean:message key="title.inquiry.audit.processData" bundle="INQUIRIES_RESOURCES"/></h3>
 
-<logic:present role="PEDAGOGICAL_COUNCIL">
+<logic:present role="role(PEDAGOGICAL_COUNCIL)">
 
 	<logic:equal name="executionCourseAudit" property="approvedByStudent" value="true">
 		<logic:equal name="executionCourseAudit" property="approvedByTeacher" value="true">	

@@ -11,7 +11,7 @@
 <bean:define id="fullPath"><%= request.getContextPath() + "/publico" + mappingPath + ".do" %></bean:define>
 
 <div class="breadcumbs">
-	<a href="http://www.ist.utl.pt">IST</a> &gt;
+	<a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/introducao" %>"><bean:message key="title.candidate" bundle="CANDIDATE_RESOURCES"/></a> &gt;
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + "/candidaturas/licenciaturas" %>"><bean:message key="title.degrees" bundle="CANDIDATE_RESOURCES"/></a> &gt;
 	<bean:message key="title.application.name.over23" bundle="CANDIDATE_RESOURCES"/>
@@ -43,12 +43,12 @@
 	<li>Não sejam titulares de um curso superior, nem tenham frequência anterior do ensino superior.</li>
 </ul>
 
-<p><a href="http://www.ist.utl.pt/files/ensino/reg_maiores23.pdf">Regulamento (PDF, 68KB)</a></p>
+<p><a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>files/ensino/reg_maiores23.pdf">Regulamento (PDF, 68KB)</a></p>
 
 
 <h2 id="critsel">Critérios de selecção</h2>
 
-<p>A avaliação da capacidade para a frequência de um curso de licenciatura ou do 1º ciclo de um curso integrado do IST consta das seguintes componentes:</p>
+<p>A avaliação da capacidade para a frequência de um curso de licenciatura ou do 1º ciclo de um curso integrado do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> consta das seguintes componentes:</p>
 
 <ol>
 	<li>Apreciação do currículo escolar e profissional do candidato;</li>
@@ -61,7 +61,7 @@
 de três horas e será realizada numa única chamada. As componentes da prova poderão variar consoante o(s) curso(s) a que o
 candidato pretenda aceder.</p>
 
-<p><a href="http://www.ist.utl.pt/files/ensino/programas_23anos_20092010.pdf">Programa das provas de avaliação (PDF, 136KB)</a></p>
+<p><a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>files/ensino/programas_23anos_20092010.pdf">Programa das provas de avaliação (PDF, 136KB)</a></p>
 
 
 <h2 id="docnec">Documentos necessários</h2>
@@ -226,7 +226,7 @@ candidato pretenda aceder.</p>
 	</tr>
 	<tr>
 	<td class="align_r"><span class="marker">21 de Julho de 2009</span></td>
-	<td>Data limite para apresentação de recursos ao Presidente do IST</td>
+	<td>Data limite para apresentação de recursos ao Presidente do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></td>
 	</tr>
 	<tr>
 	<td class="align_r"><span class="marker">24 de Julho de 2009</span></td>

@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.User;
+
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
@@ -19,7 +20,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 public class RejectEnrolments extends PhdIndividualProgramProcessActivity {
 
     @Override
-    public void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+    public void activityPreConditions(PhdIndividualProgramProcess process, User userView) {
 
         if (!process.isCoordinatorForPhdProgram(userView.getPerson())) {
             throw new PreConditionNotValidException();
@@ -27,7 +28,7 @@ public class RejectEnrolments extends PhdIndividualProgramProcessActivity {
     }
 
     @Override
-    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
+    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, User userView, Object object) {
 
         final ManageEnrolmentsBean bean = (ManageEnrolmentsBean) object;
         final StudentCurricularPlan scp = process.getRegistration().getLastStudentCurricularPlan();

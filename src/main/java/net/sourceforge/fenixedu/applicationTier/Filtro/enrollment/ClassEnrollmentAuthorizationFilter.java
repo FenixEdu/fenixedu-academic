@@ -8,6 +8,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.SortedSet;
 
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlanEquivalencePlan;
@@ -34,7 +36,7 @@ public class ClassEnrollmentAuthorizationFilter {
     private static String comparableDateFormatString = "yyyyMMddHHmm";
 
     public void execute(Registration registration) throws FenixServiceException {
-        Person person = AccessControl.getUserView().getPerson();
+        Person person = Authenticate.getUser().getPerson();
 
         if (AcademicAuthorizationGroup.getProgramsForOperation(person, AcademicOperationType.STUDENT_ENROLMENTS).contains(
                 registration.getDegree())) {

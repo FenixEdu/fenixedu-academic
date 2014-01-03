@@ -8,7 +8,7 @@
 <em><bean:message key="label.departmentAdmOffice"/></em>
 <h2><bean:message key="label.visualize.teachers.expectations"/></h2>
 
-<logic:present role="DEPARTMENT_ADMINISTRATIVE_OFFICE">
+<logic:present role="role(DEPARTMENT_ADMINISTRATIVE_OFFICE)">
 
 	<logic:notEmpty name="executionYearBean">
 		<fr:form action="/listTeachersPersonalExpectations.do?method=listTeachersPersonalExpectationsForSelectedExecutionYear">

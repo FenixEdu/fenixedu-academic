@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.domain.library;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class LibraryDocument extends LibraryDocument_Base {
 
     public LibraryDocument() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     @Deprecated
@@ -15,7 +15,7 @@ public class LibraryDocument extends LibraryDocument_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

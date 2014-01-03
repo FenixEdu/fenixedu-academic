@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -41,7 +42,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 
     public Professorship() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         new ProfessorshipPermissions(this);
     }
 
@@ -573,7 +574,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

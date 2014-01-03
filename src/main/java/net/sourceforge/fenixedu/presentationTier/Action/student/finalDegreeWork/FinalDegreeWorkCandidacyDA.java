@@ -14,7 +14,6 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDegreesByExecutionYearAndType;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.AddFinalDegreeWorkProposalCandidacyForGroup;
@@ -53,8 +52,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -319,7 +319,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
         // dynaActionForm.get("executionDegreeOID");
         // if (executionDegreeOID != null && !executionDegreeOID.equals("")) {
         // // the student's curricular plan may not have an executionDegree
-        // IUserView userView = UserView.getUser();
+        // User userView = Authenticate.getUser();
         // checkCandidacyConditions(userView, executionDegreeOID);
 
         // request.setAttribute("infoGroup", infoGroup);
@@ -338,7 +338,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         final ExecutionDegree executionDegree = getDomainObject(request, "executionDegreeOID");
         if (executionDegree != null) {
-            final IUserView userView = UserView.getUser();
+            final User userView = Authenticate.getUser();
             try {
                 checkCandidacyConditions(userView, executionDegree);
                 EstablishFinalDegreeWorkStudentGroup.run(userView.getPerson(), executionDegree);
@@ -359,7 +359,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
         // String executionDegreeOID = (String)
         // dynaActionForm.get("executionDegreeOID");
         // if (executionDegreeOID != null && !executionDegreeOID.equals("")) {
-        // IUserView userView = UserView.getUser();
+        // User userView = Authenticate.getUser();
         // try {
         // EstablishFinalDegreeWorkStudentGroup.run(userView.getPerson(), new
         // Integer(executionDegreeOID));
@@ -380,9 +380,9 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
         String externalId = (String) dynaActionForm.get("externalId");
         String studentUsernameToAdd = (String) dynaActionForm.get("studentUsernameToAdd");
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         if (studentUsernameToAdd != null && !studentUsernameToAdd.equals("")
-                && !studentUsernameToAdd.equalsIgnoreCase(userView.getUtilizador()) && externalId != null
+                && !studentUsernameToAdd.equalsIgnoreCase(userView.getUsername()) && externalId != null
                 && !externalId.equals("")) {
 
             try {
@@ -404,11 +404,11 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
         String externalId = (String) dynaActionForm.get("externalId");
         String studentToRemove = (String) dynaActionForm.get("studentToRemove");
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         if (studentToRemove != null && !studentToRemove.equals("") && externalId != null && !externalId.equals("")) {
 
             try {
-                RemoveStudentFromFinalDegreeWorkStudentGroup.run(userView.getUtilizador(), externalId, studentToRemove);
+                RemoveStudentFromFinalDegreeWorkStudentGroup.run(userView.getUsername(), externalId, studentToRemove);
             } catch (FenixServiceException ex) {
                 prepareCandidacy(mapping, form, request, response);
                 throw ex;
@@ -426,7 +426,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
         String groupOID = (String) dynaActionForm.get("externalId");
 
         if (groupOID != null && !groupOID.equals("") && StringUtils.isNumeric(groupOID)) {
-            IUserView userView = UserView.getUser();
+            User userView = Authenticate.getUser();
 
             List finalDegreeWorkProposalHeaders = ReadAvailableFinalDegreeWorkProposalHeadersForGroup.run(groupOID);
             request.setAttribute("finalDegreeWorkProposalHeaders", finalDegreeWorkProposalHeaders);
@@ -463,7 +463,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
         String externalId = (String) dynaActionForm.get("externalId");
         String selectedGroupProposal = (String) dynaActionForm.get("selectedGroupProposal");
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         if (selectedGroupProposal != null && !selectedGroupProposal.equals("") && StringUtils.isNumeric(selectedGroupProposal)
                 && externalId != null && !externalId.equals("") && StringUtils.isNumeric(externalId)) {
             try {
@@ -489,7 +489,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
         String selectedGroupProposal = (String) dynaActionForm.get("selectedGroupProposal");
         String orderOfProposalPreference = request.getParameter("orderOfProposalPreference" + selectedGroupProposal);
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         if (selectedGroupProposal != null && !selectedGroupProposal.equals("") && StringUtils.isNumeric(selectedGroupProposal)
                 && externalId != null && !externalId.equals("") && StringUtils.isNumeric(externalId)
                 && orderOfProposalPreference != null && !orderOfProposalPreference.equals("")
@@ -506,7 +506,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
         return mapping.findForward("showCandidacyForm");
     }
 
-    private boolean checkCandidacyConditions(IUserView userView, final ExecutionDegree executionDegree)
+    private boolean checkCandidacyConditions(User userView, final ExecutionDegree executionDegree)
             throws FenixServiceException {
         return executionDegree == null || CheckCandidacyConditionsForFinalDegreeWork.run(userView, executionDegree);
     }
@@ -515,7 +515,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
             ExecutionDegree executionDegree) throws Exception {
         DynaActionForm dynaActionForm = (DynaActionForm) form;
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         InfoGroup infoGroup = ReadFinalDegreeWorkStudentGroupByUsername.run(userView.getPerson(), executionDegree);
 
@@ -548,7 +548,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
 
         if ((executionDegreeOID == null || executionDegreeOID.length() == 0 || executionDegreeOID.equals(""))
                 && infoExecutionDegrees != null && !infoExecutionDegrees.isEmpty()) {
-            IUserView userView = UserView.getUser();
+            User userView = Authenticate.getUser();
 
             InfoStudentCurricularPlan infoStudentCurricularPlan = getDefaultStudentCurricularPlan(userView);
             if (infoStudentCurricularPlan == null) {
@@ -568,7 +568,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
         }
     }
 
-    private InfoStudentCurricularPlan getDefaultStudentCurricularPlan(IUserView userView) throws FenixServiceException {
+    private InfoStudentCurricularPlan getDefaultStudentCurricularPlan(User userView) throws FenixServiceException {
         InfoStudentCurricularPlan infoStudentCurricularPlan =
                 getDefaultStudentCurricularPlan(userView, DegreeType.BOLONHA_MASTER_DEGREE);
         if (infoStudentCurricularPlan == null) {
@@ -583,7 +583,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
         return infoStudentCurricularPlan;
     }
 
-    private InfoStudentCurricularPlan getDefaultStudentCurricularPlan(IUserView userView, final DegreeType degreeType)
+    private InfoStudentCurricularPlan getDefaultStudentCurricularPlan(User userView, final DegreeType degreeType)
             throws FenixServiceException {
 
         return ReadActiveStudentCurricularPlanByDegreeType.run(userView, degreeType);
@@ -615,7 +615,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
     }
 
     private void filterExecutionDegreesForUser(final List infoExecutionDegrees) {
-        final IUserView userView = UserView.getUser();
+        final User userView = Authenticate.getUser();
         final Person person = userView == null ? null : userView.getPerson();
         final Student student = person == null ? null : person.getStudent();
         for (final Iterator<InfoExecutionDegree> iterator = infoExecutionDegrees.iterator(); iterator.hasNext();) {

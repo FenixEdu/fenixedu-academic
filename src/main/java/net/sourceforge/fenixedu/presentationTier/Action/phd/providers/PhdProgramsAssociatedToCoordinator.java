@@ -3,8 +3,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.phd.providers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
@@ -22,7 +23,7 @@ public class PhdProgramsAssociatedToCoordinator implements DataProvider {
     public Object provide(Object arg0, Object arg1) {
         List<PhdProgram> programs = new ArrayList<PhdProgram>();
 
-        for (PhdProgram program : RootDomainObject.getInstance().getPhdPrograms()) {
+        for (PhdProgram program : Bennu.getInstance().getPhdProgramsSet()) {
             if (program.isCoordinatorFor(AccessControl.getPerson(), ExecutionYear.readCurrentExecutionYear())) {
                 programs.add(program);
             }

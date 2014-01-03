@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.domain.gesdis;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author Leonor Almeida
@@ -15,7 +15,7 @@ public class CourseHistoric extends CourseHistoric_Base {
 
     public CourseHistoric() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void delete() {
@@ -25,7 +25,7 @@ public class CourseHistoric extends CourseHistoric_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransact
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
@@ -30,6 +29,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.Money;
 
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 
 public class StandaloneEnrolmentGratuityPR extends StandaloneEnrolmentGratuityPR_Base {

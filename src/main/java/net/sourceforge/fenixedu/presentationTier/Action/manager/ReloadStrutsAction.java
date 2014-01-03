@@ -7,8 +7,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.LogLevel;
-
 import org.apache.struts.Globals;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -41,9 +39,7 @@ public class ReloadStrutsAction extends Action {
         ActionServlet servlet = getServlet();
 
         if (servlet == null) {
-            if (LogLevel.WARN) {
-                logger.warn("action servlet is null, could not reload configuration");
-            }
+            logger.warn("action servlet is null, could not reload configuration");
             return null;
         }
 
@@ -67,15 +63,11 @@ public class ReloadStrutsAction extends Action {
         try {
             servlet.init();
         } catch (ServletException e) {
-            if (LogLevel.ERROR) {
-                logger.error("could not reload configuration, please redeploy the application");
-            }
+            logger.error("could not reload configuration, please redeploy the application");
             e.printStackTrace();
         }
 
-        if (LogLevel.INFO) {
-            logger.info("reloaded configuration");
-        }
+        logger.info("reloaded configuration");
         return mapping.findForward("df.page.main-page");
     }
 }

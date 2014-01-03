@@ -6,6 +6,7 @@
  */
 package net.sourceforge.fenixedu.constants.publication;
 
+
 /**
  * @author TJBF & PFON
  * 
@@ -23,8 +24,6 @@ public final class PublicationConstants {
     public static final int ZERO_VALUE = 0;
 
     public static final int ONE_VALUE = 1;
-
-    public static final String DEFAULT_ORGANIZATION = "IST";
 
     public static final String INIT_AUTHOR = "A";
 

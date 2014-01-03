@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -20,7 +21,7 @@ public class ActiveDepartmentsProvider implements DataProvider {
     @Override
     public Object provide(final Object source, final Object currentValue) {
         final List<Department> departments = new ArrayList<Department>();
-        for (final Department department : RootDomainObject.getInstance().getDepartments()) {
+        for (final Department department : Bennu.getInstance().getDepartmentsSet()) {
             if (department.getActive() != null && department.getActive().booleanValue()) {
                 departments.add(department);
             }

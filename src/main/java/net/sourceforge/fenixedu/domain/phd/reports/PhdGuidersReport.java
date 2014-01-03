@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 public class PhdGuidersReport extends PhdReport {
     private final ResourceBundle bundle;
@@ -35,7 +36,7 @@ public class PhdGuidersReport extends PhdReport {
         setHeaders(sheet);
 
         for (PhdIndividualProgramProcess process : processes) {
-            if (process.isAllowedToManageProcess(AccessControl.getUserView())) {
+            if (process.isAllowedToManageProcess(Authenticate.getUser())) {
                 fillProcess(process, sheet);
             }
         }

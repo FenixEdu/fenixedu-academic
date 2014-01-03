@@ -20,7 +20,7 @@
 <logic:notPresent name="bundleT">
 	<tiles:getAsString name="title" ignore="true" />
 </logic:notPresent>
-<bean:message key="institution.name" bundle="GLOBAL_RESOURCES" />
+<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%>
 </title> <%-- TITLE --%>
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -51,7 +51,7 @@ overflow: hidden;
 <!-- START HEADER -->
     <div id="logoist">
         <h1><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><a href="#">IAESTE</a></h1>
-        <!-- <img alt="[Logo] Instituto Superior Técnico" height="51" src="http://www.ist.utl.pt/img/wwwist.gif" width="234" /> -->
+        <!-- <img alt="[Logo] Instituto Superior Técnico" height="51" src="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>img/wwwist.gif" width="234" /> -->
     </div>
 <!-- END HEADER -->
 <!--START MAIN CONTENT -->

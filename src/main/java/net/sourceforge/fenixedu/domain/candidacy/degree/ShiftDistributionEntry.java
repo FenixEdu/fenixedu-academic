@@ -6,9 +6,10 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
@@ -24,7 +25,7 @@ public class ShiftDistributionEntry extends ShiftDistributionEntry_Base {
 
     private ShiftDistributionEntry() {
         super();
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
         super.setDistributed(Boolean.FALSE);
     }
 
@@ -109,7 +110,7 @@ public class ShiftDistributionEntry extends ShiftDistributionEntry_Base {
 
     static public List<ShiftDistributionEntry> readByAbstractNumber(Integer abstractNumber, final ExecutionYear executionYear) {
         final List<ShiftDistributionEntry> result = new ArrayList<ShiftDistributionEntry>();
-        for (final ShiftDistributionEntry entry : RootDomainObject.getInstance().getShiftDistributionEntries()) {
+        for (final ShiftDistributionEntry entry : Bennu.getInstance().getShiftDistributionEntriesSet()) {
             if (entry.getAbstractStudentNumber().equals(abstractNumber) && entry.isFor(executionYear)) {
                 result.add(entry);
             }
@@ -118,7 +119,7 @@ public class ShiftDistributionEntry extends ShiftDistributionEntry_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

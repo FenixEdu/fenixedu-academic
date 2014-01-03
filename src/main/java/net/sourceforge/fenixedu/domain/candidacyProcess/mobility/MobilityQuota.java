@@ -3,8 +3,9 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.mobility;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.period.MobilityApplicationPeriod;
@@ -14,7 +15,7 @@ public class MobilityQuota extends MobilityQuota_Base {
 
     public MobilityQuota() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public MobilityQuota(MobilityApplicationPeriod period, Degree degree, MobilityAgreement mobilityAgreement,
@@ -118,7 +119,7 @@ public class MobilityQuota extends MobilityQuota_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

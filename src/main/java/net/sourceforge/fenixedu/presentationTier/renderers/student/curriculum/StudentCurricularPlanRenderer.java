@@ -957,13 +957,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
         }
 
         private String getUsername(final Person person) {
-            if (person.hasTeacher()) {
-                return person.getTeacher().getRoleLoginAlias();
-            } else if (person.hasEmployee()) {
-                return person.getEmployee().getRoleLoginAlias();
-            } else {
-                return person.getIstUsername();
-            }
+            return person.getUsername();
         }
 
         private void generateLastEnrolmentEvaluationExamDateCellIfRequired(HtmlTableRow enrolmentRow, Enrolment enrolment) {

@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
@@ -26,10 +28,10 @@ public class ReadExecutionDegreeByCandidateIDAuthorizationFilter extends Filtro 
     }
 
     public void execute(String candidateID) throws NotAuthorizedException {
-        IUserView id = AccessControl.getUserView();
-        if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
-                || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, candidateID)) || (id == null)
-                || (id.getRoleTypes() == null)) {
+        User id = Authenticate.getUser();
+        if ((id != null && id.getPerson().getPersonRolesSet() != null && !containsRoleType(id.getPerson().getPersonRolesSet()))
+                || (id != null && id.getPerson().getPersonRolesSet() != null && !hasPrivilege(id, candidateID)) || (id == null)
+                || (id.getPerson().getPersonRolesSet() == null)) {
             throw new NotAuthorizedException();
         }
     }
@@ -50,12 +52,12 @@ public class ReadExecutionDegreeByCandidateIDAuthorizationFilter extends Filtro 
      * @param argumentos
      * @return
      */
-    private boolean hasPrivilege(IUserView id, String candidateID) {
-        if (id.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
+    private boolean hasPrivilege(User id, String candidateID) {
+        if (id.getPerson().hasRole(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
             return true;
         }
 
-        if (id.hasRoleType(RoleType.COORDINATOR)) {
+        if (id.getPerson().hasRole(RoleType.COORDINATOR)) {
             // Read The ExecutionDegree
 
             final Person person = id.getPerson();

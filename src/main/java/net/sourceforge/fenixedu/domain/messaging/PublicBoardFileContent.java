@@ -10,7 +10,7 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class PublicBoardFileContent extends PublicBoardFileContent_Base {
 
-    public PublicBoardFileContent() {
+    protected PublicBoardFileContent() {
         super();
     }
 

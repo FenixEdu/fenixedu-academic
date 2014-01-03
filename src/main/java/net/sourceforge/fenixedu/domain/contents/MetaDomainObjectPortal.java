@@ -3,20 +3,24 @@ package net.sourceforge.fenixedu.domain.contents;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.MetaDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import net.sourceforge.fenixedu.domain.contents.pathProcessors.AbstractPathProcessor;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+
 public class MetaDomainObjectPortal extends MetaDomainObjectPortal_Base {
 
-    public MetaDomainObjectPortal(MetaDomainObject metaDomainObject) {
+    public MetaDomainObjectPortal(String type) {
         super();
-        setMetaDomainObject(metaDomainObject);
+        setType(type);
     }
 
     @Override
     public MultiLanguageString getName() {
-        return super.getName() != null ? super.getName() : new MultiLanguageString(getMetaDomainObject().getType());
+        return super.getName() != null ? super.getName() : new MultiLanguageString(getType());
     }
 
     @Override
@@ -57,12 +61,12 @@ public class MetaDomainObjectPortal extends MetaDomainObjectPortal_Base {
     }
 
     public AbstractPathProcessor getStrategy() {
-        return AbstractPathProcessor.findStrategyFor(this.getMetaDomainObject().getType());
+        return AbstractPathProcessor.findStrategyFor(this.getType());
     }
 
     public boolean isContentPoolAvailable() {
         Collection<Content> childrenAsContent = getChildrenAsContent();
-        for (Content content : getPool()) {
+        for (Content content : getPoolSet()) {
             if (!childrenAsContent.contains(content)) {
                 return true;
             }
@@ -72,7 +76,6 @@ public class MetaDomainObjectPortal extends MetaDomainObjectPortal_Base {
 
     @Override
     protected void disconnect() {
-        setMetaDomainObject(null);
         for (Content content : getPoolSet()) {
             if (!content.hasAnyParents()) {
                 content.delete();
@@ -82,19 +85,13 @@ public class MetaDomainObjectPortal extends MetaDomainObjectPortal_Base {
         super.disconnect();
     }
 
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.contents.Content> getPool() {
-        return getPoolSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPool() {
-        return !getPoolSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasMetaDomainObject() {
-        return getMetaDomainObject() != null;
+    public static MetaDomainObjectPortal getPortal(final Class<?> type) {
+        return Iterables.tryFind(Bennu.getInstance().getMetaDomainObjectPortalSet(), new Predicate<MetaDomainObjectPortal>() {
+            @Override
+            public boolean apply(MetaDomainObjectPortal input) {
+                return input.getType().equals(type.getName());
+            }
+        }).orNull();
     }
 
 }

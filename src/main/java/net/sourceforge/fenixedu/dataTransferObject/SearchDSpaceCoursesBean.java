@@ -1,26 +1,110 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
+import javax.servlet.http.HttpServletRequest;
+
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.presentationTier.Action.manager.FileContentCreationBean.EducationalResourceType;
-import pt.utl.ist.fenix.tools.file.FileSearchCriteria;
-import pt.utl.ist.fenix.tools.file.FileSearchCriteria.SearchField;
-import pt.utl.ist.fenix.tools.file.FilesetMetadataQuery.ConjunctionType;
+import net.sourceforge.fenixedu.domain.FileContent;
+import net.sourceforge.fenixedu.domain.FileContent.EducationalResourceType;
+import net.sourceforge.fenixedu.domain.contents.Attachment;
+import net.sourceforge.fenixedu.domain.contents.Container;
+import net.sourceforge.fenixedu.domain.contents.Content;
+import pt.ist.fenixframework.FenixFramework;
 
-public class SearchDSpaceCoursesBean extends SearchDSpaceBean {
+import com.google.common.base.Strings;
 
-    ExecutionYear executionYear;
-    ExecutionSemester executionSemester;
-    List<EducationalResourceType> educationalResourceTypes;
+public class SearchDSpaceCoursesBean implements Serializable {
+    private static final long serialVersionUID = 7504933511981016145L;
 
-    public SearchDSpaceCoursesBean() {
-        super();
-        this.setExecutionYear(null);
-        this.setExecutionPeriod(null);
-        this.educationalResourceTypes = new ArrayList<EducationalResourceType>();
+    protected static final int pageSize = 15;
+
+    Vector<FileContent> results = null;
+
+    private int page = 1;
+
+    private ExecutionCourse course = null;
+    private ExecutionYear executionYear = null;
+    private ExecutionSemester executionSemester = null;
+    private List<EducationalResourceType> educationalResourceTypes = new ArrayList<>();
+
+    private String searchText = null;
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public String getSearchText() {
+        return searchText;
+    }
+
+    public void setSearchText(String searchText) {
+        this.searchText = searchText;
+    }
+
+//
+//    public FileSearchCriteria getSearchCriteria(int start) {
+//
+//        FileSearchCriteria criteria = new FileSearchCriteria(start, pageSize);
+////        List<SearchElement> elements = getSearchElements();
+////
+////        if (hasSearchElements()) {
+////            for (EducationalResourceType type : getEducationalResourceTypes()) {
+////                criteria.addExactMatchOrCriteria(SearchField.TYPE, type.getType());
+////            }
+////            for (SearchElement element : elements) {
+////                if (element.getConjunction().equals(ConjunctionType.AND)) {
+////                    criteria.addAndCriteria(element.getSearchField(), element.getQueryValue());
+////                }
+////                if (element.getConjunction().equals(ConjunctionType.OR)) {
+////                    criteria.addOrCriteria(element.getSearchField(), element.getQueryValue());
+////                }
+////            }
+////        }
+//        return criteria;
+//    }
+//
+//    protected boolean hasSearchElements() {
+////        for (SearchElement element : getSearchElements()) {
+////            if (element.queryValue.length() > 0) {
+////                return true;
+////            }
+////        }
+//        return false;
+//    }
+
+    public List<FileContent> getResults() {
+        if (results == null) {
+            return null;
+        }
+        return results.subList(0 + ((page - 1) * pageSize), Math.min(results.size(), pageSize + ((page - 1) * pageSize)));
+    }
+
+    public int getTotalItems() {
+        return results == null ? 0 : results.size();
+    }
+
+    public int getNumberOfPages() {
+        if (results == null) {
+            return 0;
+        }
+        int numberOfPages = results.size() / getPageSize();
+        numberOfPages += (results.size() % getPageSize() != 0) ? 1 : 0;
+        return numberOfPages;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = Math.max(1, Math.min(getNumberOfPages(), page));
     }
 
     public List<EducationalResourceType> getEducationalResourceTypes() {
@@ -29,6 +113,14 @@ public class SearchDSpaceCoursesBean extends SearchDSpaceBean {
 
     public void setEducationalResourceTypes(List<EducationalResourceType> educationalResourceTypes) {
         this.educationalResourceTypes = educationalResourceTypes;
+    }
+
+    public ExecutionCourse getCourse() {
+        return course;
+    }
+
+    public void setCourse(ExecutionCourse course) {
+        this.course = course;
     }
 
     public ExecutionYear getExecutionYear() {
@@ -47,42 +139,97 @@ public class SearchDSpaceCoursesBean extends SearchDSpaceBean {
         this.executionSemester = executionSemester;
     }
 
-    @Override
-    public String getSearchElementsAsParameters() {
-        String parameters = super.getSearchElementsAsParameters();
-        for (EducationalResourceType type : getEducationalResourceTypes()) {
-            parameters += "&amp;type=" + type.toString();
+    public void search() {
+        results = new Vector<>();
+        page = 1;
+        if (course.getExecutionPeriod().equals(executionSemester) && course.getExecutionYear().equals(executionYear)) {
+            search(course.getSite());
+        } else {
+            for (CurricularCourse curricular : course.getAssociatedCurricularCoursesSet()) {
+                for (ExecutionCourse execution : curricular.getAssociatedExecutionCoursesSet()) {
+                    if (executionSemester == null || execution.getExecutionPeriod().equals(executionSemester)) {
+                        if (executionYear == null || execution.getExecutionYear().equals(executionYear)) {
+                            search(execution.getSite());
+                        }
+                    }
+                }
+            }
         }
-        ExecutionYear executionYear = getExecutionYear();
-        ExecutionSemester period = getExecutionPeriod();
-        if (executionYear != null) {
-            parameters += "&amp;executionYearId=" + getExecutionYear().getExternalId();
-        }
-        if (period != null) {
-            parameters += "&amp;executionPeriodId=" + getExecutionPeriod().getExternalId();
-        }
-        return parameters;
     }
 
-    @Override
-    public FileSearchCriteria getSearchCriteria(int start) {
-
-        FileSearchCriteria criteria = new FileSearchCriteria(start, pageSize);
-        List<SearchElement> elements = getSearchElements();
-
-        if (hasSearchElements()) {
-            for (EducationalResourceType type : getEducationalResourceTypes()) {
-                criteria.addExactMatchOrCriteria(SearchField.TYPE, type.getType());
-            }
-            for (SearchElement element : elements) {
-                if (element.getConjunction().equals(ConjunctionType.AND)) {
-                    criteria.addAndCriteria(element.getSearchField(), element.getQueryValue());
+    protected void search(Container container) {
+        for (Content child : container.getChildrenAsContent()) {
+            if (child.isContainer()) {
+                search((Container) child);
+            } else if (child instanceof Attachment) {
+                FileContent file = ((Attachment) child).getFile();
+                if (!educationalResourceTypes.isEmpty() && !educationalResourceTypes.contains(file.getResourceType())) {
+                    continue;
                 }
-                if (element.getConjunction().equals(ConjunctionType.OR)) {
-                    criteria.addOrCriteria(element.getSearchField(), element.getQueryValue());
+                if (!Strings.isNullOrEmpty(searchText) && !file.getFilename().contains(searchText)
+                        && !file.getDisplayName().contains(searchText)) {
+                    continue;
                 }
+                results.add(file);
             }
         }
-        return criteria;
+    }
+
+    public String getSearchElementsAsParameters() {
+        StringBuilder parameters = new StringBuilder();
+        if (course != null) {
+            parameters.append("&amp;executionCourse=" + course.getExternalId());
+        }
+        if (executionYear != null) {
+            parameters.append("&amp;executionYearId=" + executionYear.getExternalId());
+        }
+        if (executionSemester != null) {
+            parameters.append("&amp;executionPeriodId=" + executionSemester.getExternalId());
+        }
+        for (EducationalResourceType type : getEducationalResourceTypes()) {
+            parameters.append("&amp;type=" + type.toString());
+        }
+        if (!Strings.isNullOrEmpty(searchText)) {
+            parameters.append("&amp;text=" + searchText);
+        }
+        if (parameters.length() == 0) {
+            parameters.append("&amp;");
+        }
+        return parameters.toString();
+    }
+
+    public static SearchDSpaceCoursesBean reconstructFromRequest(HttpServletRequest request) {
+        SearchDSpaceCoursesBean bean = new SearchDSpaceCoursesBean();
+
+        String executionCourseId = request.getParameter("executionCourse");
+        if (!Strings.isNullOrEmpty(executionCourseId)) {
+            bean.setCourse(FenixFramework.<ExecutionCourse> getDomainObject(executionCourseId));
+        }
+
+        String executionYearId = request.getParameter("executionYearId");
+        if (!Strings.isNullOrEmpty(executionYearId)) {
+            bean.setExecutionYear(FenixFramework.<ExecutionYear> getDomainObject(executionYearId));
+        }
+
+        String executionPeriodId = request.getParameter("executionPeriodId");
+        if (!Strings.isNullOrEmpty(executionPeriodId)) {
+            bean.setExecutionPeriod(FenixFramework.<ExecutionSemester> getDomainObject(executionPeriodId));
+        }
+
+        List<EducationalResourceType> typesList = new ArrayList<>();
+        String[] resourceTypes = request.getParameterValues("type");
+        if (resourceTypes != null) {
+            for (String type : resourceTypes) {
+                typesList.add(EducationalResourceType.valueOf(type));
+            }
+        }
+        bean.setEducationalResourceTypes(typesList);
+
+        String text = request.getParameter("text");
+        if (!Strings.isNullOrEmpty(text)) {
+            bean.setSearchText(text);
+        }
+
+        return bean;
     }
 }

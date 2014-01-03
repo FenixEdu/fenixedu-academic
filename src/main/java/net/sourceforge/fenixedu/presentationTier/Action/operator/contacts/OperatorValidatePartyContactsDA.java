@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.operator.contacts;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -7,11 +8,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactValidation;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressValidation;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.BundleUtil;
@@ -20,6 +20,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -45,11 +46,20 @@ public class OperatorValidatePartyContactsDA extends FenixDispatchAction {
                         PhysicalAddressValidation.PREDICATE_FILE);
 
         final Collection<PartyContactValidation> partyContactValidation =
-                RootDomainObject.getInstance().getInvalidPartyContactValidations();
-        final List<PartyContactValidation> invalidPartyContactValidations =
-                CollectionUtils.filter(partyContactValidation, predicate);
+                Bennu.getInstance().getInvalidPartyContactValidationsSet();
+        final List<PartyContactValidation> invalidPartyContactValidations = filter(partyContactValidation, predicate);
         request.setAttribute("partyContacts", invalidPartyContactValidations);
         return mapping.findForward("showPendingPartyContactsValidation");
+    }
+
+    private static <T> List<T> filter(Collection<T> collection, Predicate<T> predicate) {
+        final List<T> result = new ArrayList<T>();
+        for (final T each : collection) {
+            if (predicate.eval(each)) {
+                result.add(each);
+            }
+        }
+        return result;
     }
 
     public ActionForward validate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -65,7 +75,8 @@ public class OperatorValidatePartyContactsDA extends FenixDispatchAction {
     private void sendPhysicalAddressValidationEmail(PhysicalAddressValidation physicalAddressValidation) {
         final Person person = (Person) physicalAddressValidation.getPartyContact().getParty();
         final String subject =
-                BundleUtil.getMessageFromModuleOrApplication("manager", "label.contacts.validation.operator.email.subject");
+                BundleUtil.getMessageFromModuleOrApplication("manager", "label.contacts.validation.operator.email.subject",
+                        Unit.getInstitutionAcronym());
         final String state = StringUtils.uncapitalize(physicalAddressValidation.getState().getPresentationName());
         String body =
                 BundleUtil.getMessageFromModuleOrApplication("manager", "label.contacts.validation.operator.email.body",
@@ -76,8 +87,8 @@ public class OperatorValidatePartyContactsDA extends FenixDispatchAction {
         }
         final String sendingEmail = person.getEmailForSendingEmails();
         if (!StringUtils.isEmpty(sendingEmail)) {
-            new Message(RootDomainObject.getInstance().getSystemSender(), Collections.EMPTY_LIST, Collections.EMPTY_LIST,
-                    subject, body, sendingEmail);
+            new Message(Bennu.getInstance().getSystemSender(), Collections.EMPTY_LIST, Collections.EMPTY_LIST, subject, body,
+                    sendingEmail);
         }
     }
 

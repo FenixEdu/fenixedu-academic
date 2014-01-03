@@ -5,7 +5,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.coordinator.ReadCoordinatedDegrees;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
@@ -16,15 +15,15 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-
-import pt.ist.fenixWebFramework.security.UserView;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 public class ReadCoordinatedDegreesAction extends FenixAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         try {
 

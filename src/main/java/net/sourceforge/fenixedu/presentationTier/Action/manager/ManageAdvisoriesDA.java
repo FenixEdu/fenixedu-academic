@@ -10,13 +10,13 @@ import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.AnnouncementManagement;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -47,7 +47,7 @@ public class ManageAdvisoriesDA extends AnnouncementManagement {
 
     @Override
     protected Collection<AnnouncementBoard> boardsToView(HttpServletRequest request) throws Exception {
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
         final Collection<AnnouncementBoard> boardsToShow = new ArrayList<AnnouncementBoard>();
         for (AnnouncementBoard board : rootDomainObject.getInstitutionUnit().getBoards()) {
             if (board.getWriters() == null || board.getWriters().allows(userView)) {
