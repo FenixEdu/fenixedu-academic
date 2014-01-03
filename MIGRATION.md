@@ -15,6 +15,7 @@ Before migrating to Fenix 2.x, you must first ensure that:
 1. There are no instances of `FileLocalContent`.
 2. Username generation is now handled by the [bennu-user-management](https://github.com/FenixEdu/bennu-user-management) module. Ensure that your installation registers a custom `UsernameGenerator`.
 3. Ensure that your installation contains an implementation of `net.sourceforge.fenixedu.util.ConnectionManager`, otherwise SQL-based lookups will not work.
+4. If your institution has external applications using Fenix's Jersey Services, the URL must be updated. Instead of `https://fenix.xpto/jersey/services`, it is now at `https://fenix.xpto/api/fenix/jersey/services`. If you are using Bennu's `web-service-utils`, simply update your Host URL to contain the suffix `/api/fenix`.
 
 #### Migration
 
