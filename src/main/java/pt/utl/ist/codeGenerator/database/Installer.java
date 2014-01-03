@@ -51,7 +51,7 @@ public class Installer {
             super();
             this.countryCode = countryCode;
             
-            Country country = Planet.getEarth().getByAlfa3(countryCode);
+            pt.ist.standards.geographic.Country country = Planet.getEarth().getByAlfa3(countryCode);
             if (country == null) {
                 throw new RuntimeException("Country with code " + countryCode + " does not exist." );
             }
