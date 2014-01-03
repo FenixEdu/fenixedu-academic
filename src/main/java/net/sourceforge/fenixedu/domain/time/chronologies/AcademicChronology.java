@@ -57,7 +57,7 @@ public class AcademicChronology extends AssembledChronology {
 
     @Override
     protected void assemble(Fields fields) {
-        if (acAcademicYearsField != null) {
+        if (acAcademicYearsField == null) {
             acAcademicYearsField = new AcademicYearsDurationField(this);
             acAcademicYear = new AcademicYearDateTimeField(this);
 
