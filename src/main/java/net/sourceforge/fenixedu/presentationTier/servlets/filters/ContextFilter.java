@@ -29,7 +29,7 @@ public class ContextFilter implements Filter {
 
     static {
         String property = FenixConfigurationManager.getConfiguration().getContextFilterExceptions();
-        exceptions.addAll(Arrays.asList(property.split(";")));
+        exceptions.addAll(Arrays.asList(property.split(",")));
     }
 
     @Override
