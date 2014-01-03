@@ -438,6 +438,11 @@
 			<artifactId>bennu-io</artifactId>
 			<version>2.0.0-M6</version>
 		</dependency>
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>2.3</version>
+		</dependency>
 	</dependencies>
 
 	<profiles>

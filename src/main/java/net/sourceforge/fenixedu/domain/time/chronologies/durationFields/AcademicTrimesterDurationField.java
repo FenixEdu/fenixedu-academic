@@ -24,7 +24,7 @@ public class AcademicTrimesterDurationField extends DurationField {
     }
 
     @Override
-    public int compareTo(Object durationField) {
+    public int compareTo(DurationField durationField) {
         throw unsupported();
     }
 
