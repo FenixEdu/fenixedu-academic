@@ -417,6 +417,9 @@ public class FenixConfigurationManager {
 
         @ConfigurationProperty(key = "yAxisOffset", defaultValue = "0.3")
         public String yAxisOffset();
+
+        @ConfigurationProperty(key = "sotisURL", defaultValue = "../../sotis")
+        public String sotisURL();
     }
 
     private static HostAccessControl hostAccessControl = new HostAccessControl(getConfiguration().getHostControlName());

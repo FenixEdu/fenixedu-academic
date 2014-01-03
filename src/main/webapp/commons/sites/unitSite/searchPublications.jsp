@@ -30,6 +30,55 @@
 	</html:link>
 </p>
 
+<div class="infoop2">
+    <bean:message key="label.search.description" bundle="RESEARCHER_RESOURCES"/> 
+</div>
+
+<bean:define id="sotisURL">
+    <%= net.sourceforge.fenixedu.util.FenixConfigurationManager.getConfiguration().sotisURL() %>
+</bean:define>
+
+<bean:define id="lang">
+    <%= org.fenixedu.commons.i18n.I18N.getLocale().toLanguageTag() %>
+</bean:define>
+
+<script src="<%= sotisURL %>/js/sotis-embedded.js" data-sotis-use="search" data-sotis-links="yes" data-sotis-lang="<%= lang %>"></script>
+
+<%-- 
+
+
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext"%>
+<html:xhtml/>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
+<%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="date"%>
+<%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
+<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/collection-pager" prefix="cp" %>
+
+<bean:define id="showAction" name="showAction" scope="request" type="java.lang.String" />
+<bean:define id="searchAction" name="searchAction" scope="request" type="java.lang.String" />
+<bean:define id="showContextPath" name="showContextPath" scope="request" type="java.lang.String" />
+<bean:define id="searchContextPath" name="searchContextPath" scope="request" type="java.lang.String" />
+
+<bean:define id="showMethod" value="&method=showPublications" toScope="request" />
+<bean:define id="searchMethod" value="&method=prepareSearchPublication" toScope="request" />
+<bean:define id="siteID" name="<%= FilterFunctionalityContext.CONTEXT_KEY%>" property="selectedContainer.externalId"/>
+<bean:define id="showArguments" value="<%= "siteID=" + siteID %>" toScope="request" />
+<bean:define id="searchArguments" value="<%=  "siteID=" + siteID %>" toScope="request" />
+
+<bean:define id="searchPublicationLabelKey" name="searchPublicationLabelKey" scope="request" type="java.lang.String" />
+
+<p>
+	<bean:message key="link.Search" bundle="RESEARCHER_RESOURCES" />: 
+	<html:link page="<%= showContextPath + showAction + showArguments + showMethod %>">
+		<bean:message key="<%=searchPublicationLabelKey%>" bundle="RESEARCHER_RESOURCES" />
+	</html:link> | 
+	<html:link	page="<%= searchContextPath + searchAction + searchArguments + searchMethod %>">
+		<bean:message key="label.search.publications.ist" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="RESEARCHER_RESOURCES" />
+	</html:link>
+</p>
+
 <bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.dataTransferObject.SearchDSpacePublicationBean" />
 
 <fr:form id="searchForm" action="<%= searchContextPath + searchAction + searchArguments + "&method=searchPublication" %>">
@@ -110,8 +159,8 @@
 			<html:submit><bean:message key="label.search" /></html:submit>
 	</fr:form>
 
-<logic:present name="bean" property="results">
-<logic:notEmpty name="bean" property="results">
+<logic:present name="bean" property="searchElementsAsParameters">
+<logic:notEmpty name="bean" property="searchElementsAsParameters">
 
 <p><bean:message key="label.hitCount" />: <strong><fr:view name="bean" property="totalItems"/></strong></p>
 <logic:notEqual name="numberOfPages" value="1">
@@ -121,48 +170,6 @@
 	pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages" numberOfVisualizedPages="11"/>
 </p>
 </logic:notEqual>
-
-
-<ul>
-<logic:iterate id="result" name="bean" property="results" type="net.sourceforge.fenixedu.domain.research.result.ResearchResult">
-	<logic:present name="result">
-	<bean:define id="resultId" name="result" property="externalId"/>
-	<bean:define id="schema" name="result" property="schema" type="java.lang.String"/>
-	
-	<li class="mtop1">
-	
-		<fr:view name="result" layout="nonNullValues" schema="<%= schema %>">
-			<fr:layout>
-				<fr:property name="classes" value="mbottom025"/>
-				<fr:property name="htmlSeparator" value=", "/>
-				<fr:property name="indentation" value="false"/>
-			</fr:layout>
-																
-			<fr:destination name="view.publication" path="<%="/showResearchResult.do?resultId=" + resultId + "&method=showPublication" %>"/>
-		</fr:view>
-		
-        		<logic:notEqual name="result" property="class.simpleName" value="Unstructured">
-        		(<html:link target="_blank" page="<%="/bibtexExport.do?method=exportPublicationToBibtex&publicationId=" + resultId%>"><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.exportToBibTeX" /></html:link>)
-        		</logic:notEqual> 
-	
-			<%-- <p class="mvert0" style="color: #777;"><bean:message key="label.files" bundle="RESEARCHER_RESOURCES"/>:</p> --%>
-			<ul class="nobullet mvert05" style="color: #777;">						
-				<logic:iterate id="file" name="result" property="resultDocumentFiles">
-					<li class="mvert025"><img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="icon_file" bundle="IMAGE_RESOURCES"/>">
-						<fr:view name="file" property="displayName"/> 
- 
-		(<a href="<fr:view name="file" property="downloadUrl"/>"><fr:view name="file" property="filename"/></a>),  
-						<fr:view name="file" property="size" layout="fileSize"/>, 
-						<bean:message key="label.fileAvailableFor" bundle="RESEARCHER_RESOURCES"/>:
-						<em><fr:view name="file" property="fileResultPermittedGroupType"/></em>
-					</li>
-				</logic:iterate>
-			</ul>
-	</li>
-	</logic:present> 
-</logic:iterate>
-
-</ul>
 
 
 <logic:notEqual name="numberOfPages" value="1">
@@ -176,7 +183,7 @@
 
 </logic:notEmpty>
 
-<logic:empty name="bean" property="results">
+<logic:empty name="bean" property="searchElementsAsParameters">
 	<bean:message key="label.search.noResultsFound" /> 
 </logic:empty>
 </logic:present>
@@ -184,3 +191,5 @@
 <script type="text/javascript" language="javascript">
 switchGlobal();
 </script>
+
+--%>
