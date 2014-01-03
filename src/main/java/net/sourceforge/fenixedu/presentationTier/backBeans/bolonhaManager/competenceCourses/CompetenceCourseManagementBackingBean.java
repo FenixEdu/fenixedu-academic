@@ -50,10 +50,10 @@ import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.BundleUtil;
-import org.apache.commons.lang.StringUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 
@@ -1058,7 +1058,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         return null;
     }
 
-    public void setTransferToCompetenceCourseGroupUnitID(Integer transferToCompetenceCourseGroupUnitID) {
+    public void setTransferToCompetenceCourseGroupUnitID(String transferToCompetenceCourseGroupUnitID) {
         this.getViewState().setAttribute("transferToCompetenceCourseGroupUnitID", transferToCompetenceCourseGroupUnitID);
     }
 
