@@ -151,7 +151,8 @@ public class CourseLoadAndResponsiblesReportFile extends CourseLoadAndResponsibl
 
         row.setCell(executionCourse != null ? executionCourse.isDissertation() ? "DISS" : executionCourse
                 .getProjectTutorialCourse() ? "A" : "B" : "");
-        row.setCell(executionCourse != null ? executionCourse.getUnitCreditValue().toString() : "");
+        row.setCell(executionCourse != null && executionCourse.getUnitCreditValue() != null ? executionCourse
+                .getUnitCreditValue().toString() : "");
     }
 
     private CompetenceCourseLoad findCompetenceCourseLoad(final CurricularCourse curricularCourse,

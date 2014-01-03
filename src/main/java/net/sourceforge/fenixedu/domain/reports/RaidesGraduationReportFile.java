@@ -1,9 +1,7 @@
 package net.sourceforge.fenixedu.domain.reports;
 
 import java.math.BigDecimal;
-import java.util.Collections;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -44,7 +42,6 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
         createHeaders(spreadsheet);
 
         System.out.println("BEGIN report for " + getDegreeType().name());
-        int count = 0;
 
         for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansToProcess(executionYear)) {
             final Registration registration = studentCurricularPlan.getRegistration();
@@ -67,29 +64,25 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 
                         }
 
-                        LinkedList<RegistrationState> states = new LinkedList<RegistrationState>();
-                        for (RegistrationState state : registration.getRegistrationStates()) {
-                            if (!state.getStateDate().isAfter(executionYear.getEndDateYearMonthDay().toDateMidnight())) {
-                                states.add(state);
+                        boolean isToAddRegistration = false;
+                        for (RegistrationState state : registration.getRegistrationStates(executionYear)) {
+                            if (state.isActive() || state.getStateType() == RegistrationStateType.CONCLUDED) {
+                                isToAddRegistration = true;
+                                break;
                             }
                         }
-                        Collections.sort(states, RegistrationState.DATE_COMPARATOR);
-                        RegistrationStateType lastState =
-                                states.isEmpty() ? RegistrationStateType.REGISTERED : states.getLast().getStateType();
-
-                        if ((lastState.isActive() || lastState == RegistrationStateType.CONCLUDED)
+                        if (isToAddRegistration
                                 && (cycleCGroup.isConcluded(executionYear.getPreviousExecutionYear()) == ConclusionValue.CONCLUDED)) {
                             reportRaidesGraduate(spreadsheet, registration, getFullRegistrationPath(registration), executionYear,
                                     cycleType, true, registrationConclusionBean.getConclusionDate(),
                                     registrationConclusionBean.getAverage());
-                        } else if ((lastState.isActive() || lastState == RegistrationStateType.CONCLUDED)
+                        } else if (isToAddRegistration
                                 && registration.getLastDegreeCurricularPlan().hasExecutionDegreeFor(executionYear)) {
                             reportRaidesGraduate(spreadsheet, registration, getFullRegistrationPath(registration), executionYear,
                                     cycleType, false, null, registrationConclusionBean.getAverage());
                         }
                     }
                 }
-                count++;
             }
         }
 
@@ -111,7 +104,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
     private void collectStudentCurricularPlansFor(final ExecutionYear executionYear, final Set<StudentCurricularPlan> result) {
         for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesByType(this.getDegreeType())) {
             for (StudentCurricularPlan studentCurricularPlan : executionDegree.getDegreeCurricularPlan()
-                    .getStudentCurricularPlans()) {
+                    .getStudentCurricularPlansSet()) {
                 if (!studentCurricularPlan.getStartDateYearMonthDay().isAfter(executionYear.getEndDateYearMonthDay())) {
                     result.add(studentCurricularPlan);
                 }

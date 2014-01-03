@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.domain.CurricularYear"%>
 <%@ page language="java" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
@@ -86,7 +87,7 @@
 		</tr>
 		<logic:iterate id="infoClass" name="<%= PresentationConstants.LIST_INFOCLASS %>" scope="request">
 			<bean:define id="classOID" name="infoClass" property="externalId"/>
-			<bean:define id="curricularYearOID" name="infoClass" property="anoCurricular"/>
+			<bean:define id="curricularYearInt" type="java.lang.Integer" name="infoClass" property="anoCurricular"/>
 			<bean:define id="executionDegreeOID" name="infoClass" property="infoExecutionDegree.externalId"/>
 			<tr>
 				<td>
@@ -95,13 +96,13 @@
 				<td>
 					<html:link page="<%= "/manageClass.do?method=prepare&amp;"
 							+ PresentationConstants.CLASS_VIEW_OID + "="
-							+ pageContext.findAttribute("classOID")	+ "&amp;"
+							+ classOID + "&amp;"
 							+ PresentationConstants.ACADEMIC_INTERVAL + "="
 							+ pageContext.findAttribute(PresentationConstants.ACADEMIC_INTERVAL) + "&amp;"
 							+ PresentationConstants.CURRICULAR_YEAR_OID + "="
-							+ pageContext.findAttribute("curricularYearOID") + "&amp;"
+							+ CurricularYear.readByYear(curricularYearInt).getExternalId() + "&amp;"
 							+ PresentationConstants.EXECUTION_DEGREE_OID	+ "="
-							+ pageContext.findAttribute("executionDegreeOID") %>">
+							+ executionDegreeOID %>">
 						<bean:write name="infoClass" property="nome"/>
 					</html:link>
 				</td>

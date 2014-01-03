@@ -44,8 +44,6 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
     protected void beforeRedefineEntry() {
     }
 
-    private transient AcademicChronology academicChronology;
-
     public static final Comparator<AcademicCalendarEntry> COMPARATOR_BY_BEGIN_DATE = new Comparator<AcademicCalendarEntry>() {
 
         @Override
@@ -447,10 +445,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
     }
 
     public AcademicChronology getAcademicChronology() {
-        if (academicChronology == null) {
-            academicChronology = getRootEntry().getAcademicChronology();
-        }
-        return academicChronology;
+        return getRootEntry().getAcademicChronology();
     }
 
     public List<AcademicCalendarEntry> getChildEntriesWithTemplateEntries() {

@@ -11,6 +11,8 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 
 import org.joda.time.YearMonthDay;
@@ -46,8 +48,6 @@ public class RaidesDfaReportFile extends RaidesDfaReportFile_Base {
         createHeaders(spreadsheet);
 
         System.out.println("BEGIN report for " + getDegreeType().name());
-        int count = 0;
-
         for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansToProcess(executionYear)) {
             final Registration registration = studentCurricularPlan.getRegistration();
 
@@ -68,17 +68,23 @@ public class RaidesDfaReportFile extends RaidesDfaReportFile_Base {
                             }
 
                         }
-
-                        if ((registration.isActive() || registration.isConcluded()) && conclusionYear != null) {
+                        boolean isToAddRegistration = false;
+                        boolean isActive = false;
+                        for (RegistrationState state : registration.getRegistrationStates(executionYear)) {
+                            if (state.isActive() || state.getStateType() == RegistrationStateType.CONCLUDED) {
+                                isToAddRegistration = true;
+                            }
+                            isActive |= state.isActive();
+                        }
+                        if (isToAddRegistration && conclusionYear != null) {
                             reportRaides(spreadsheet, registration, getFullRegistrationPath(registration), executionYear,
                                     cycleType, true, registrationConclusionBean.getConclusionDate());
-                        } else if (registration.isActive()) {
+                        } else if (isActive) {
                             reportRaides(spreadsheet, registration, getFullRegistrationPath(registration), executionYear,
                                     cycleType, false, null);
                         }
                     }
                 }
-                count++;
             }
         }
     }

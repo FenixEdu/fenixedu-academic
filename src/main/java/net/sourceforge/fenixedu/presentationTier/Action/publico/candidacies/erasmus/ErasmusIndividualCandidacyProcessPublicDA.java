@@ -169,11 +169,6 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
                 (DegreeOfficePublicCandidacyHashCode) PublicCandidacyHashCode.getPublicCandidacyCodeByHash(request
                         .getParameter("hash"));
 
-        /*
-         * For now just show the application so students can upload not
-         * submitted document files
-         */
-
         if (candidacyHashCode.getIndividualCandidacyProcess() != null) {
             request.setAttribute("individualCandidacyProcess", candidacyHashCode.getIndividualCandidacyProcess());
             return viewCandidacy(mapping, form, request, response);
@@ -648,6 +643,36 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
         request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
         return mapping.findForward("edit-candidacy-information");
+    }
+
+    @Override
+    public ActionForward editCandidacyDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws FenixServiceException, IOException {
+        ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
+        if (actionForwardError != null) {
+            return actionForwardError;
+        }
+        return super.editCandidacyDocuments(mapping, form, request, response);
+    }
+
+    @Override
+    public ActionForward editCandidacyProcessInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
+        if (actionForwardError != null) {
+            return actionForwardError;
+        }
+        return super.editCandidacyProcessInvalid(mapping, form, request, response);
+    }
+
+    @Override
+    public ActionForward prepareEditCandidacyDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
+        if (actionForwardError != null) {
+            return actionForwardError;
+        }
+        return super.prepareEditCandidacyDocuments(mapping, form, request, response);
     }
 
     public ActionForward editCandidacyInformationInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,

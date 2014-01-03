@@ -190,7 +190,7 @@
 
 <logic:equal value="false" name="isApplicationSubmissionPeriodValid">
 
-<% if(!individualCandidacyProcess.getValidatedByGri() || !individualCandidacyProcess.getValidatedByMobilityCoordinator()) { %>
+<%-- <% if(!individualCandidacyProcess.getValidatedByGri() || !individualCandidacyProcess.getValidatedByMobilityCoordinator()) { %>
 <fr:form action='<%= mappingPath + ".do" %>' id="editCandidacyForm">
 	<input type="hidden" name="method" id="methodForm"/>
 	<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
@@ -202,7 +202,8 @@
 		<a href="#" onclick="$('#methodForm').attr('value', 'prepareEditCandidacyDocuments'); $('#editCandidacyForm').submit();"> <b><bean:message key="label.edit.candidacy.documents" bundle="CANDIDATE_RESOURCES" /></b></a>
 	</p>
 </fr:form>	
-<% } %>
+<% } %> --%>
+<p><em><bean:message key="message.application.submission.period.ended" bundle="CANDIDATE_RESOURCES"/></em></p>
 
 </logic:equal>
 
@@ -259,9 +260,12 @@
 </table>
 </logic:notEmpty>
 
-<% if(!individualCandidacyProcess.getValidatedByGri() || !individualCandidacyProcess.getValidatedByMobilityCoordinator()) { %>
-<p><a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyDocuments';document.getElementById('editCandidacyForm').submit();"> <bean:message key="label.edit.candidacy.documents" bundle="CANDIDATE_RESOURCES" /></a></p>
-<% } %>
+
+<logic:equal value="true" name="isApplicationSubmissionPeriodValid">
+	<% if(!individualCandidacyProcess.getValidatedByGri() || !individualCandidacyProcess.getValidatedByMobilityCoordinator()) { %>
+	<p><a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyDocuments';document.getElementById('editCandidacyForm').submit();"> <bean:message key="label.edit.candidacy.documents" bundle="CANDIDATE_RESOURCES" /></a></p>
+	<% } %>
+</logic:equal>
 
 	<h2 class="mtop15 mbottom05"><bean:message key="label.erasmus.home.institution" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 

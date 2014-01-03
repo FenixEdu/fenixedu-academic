@@ -252,11 +252,15 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
         private List<BibliographicInformation> buildBibliographicInformation(final CurricularCourse curricularCourse,
                 final ExecutionSemester executionSemester) {
             final List<BibliographicInformation> result = new ArrayList<BibliographicInformation>();
-            for (final BibliographicReferences.BibliographicReference reference : curricularCourse.getCompetenceCourse()
-                    .getAllBibliographicReferences(executionSemester)) {
-                result.add(new BibliographicInformation(reference.getAuthors(), reference.getTitle(), reference.getReference(),
-                        reference.getYear()));
+
+            if (curricularCourse.getCompetenceCourse() != null) {
+                for (final BibliographicReferences.BibliographicReference reference : curricularCourse.getCompetenceCourse()
+                        .getAllBibliographicReferences(executionSemester)) {
+                    result.add(new BibliographicInformation(reference.getAuthors(), reference.getTitle(), reference
+                            .getReference(), reference.getYear()));
+                }
             }
+
             return result;
         }
 

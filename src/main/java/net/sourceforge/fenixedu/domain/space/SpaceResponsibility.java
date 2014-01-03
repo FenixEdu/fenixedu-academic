@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.predicates.SpacePredicates;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.collections.comparators.NullComparator;
 import org.joda.time.YearMonthDay;
 
 public class SpaceResponsibility extends SpaceResponsibility_Base {
@@ -23,7 +24,8 @@ public class SpaceResponsibility extends SpaceResponsibility_Base {
     public static final Comparator<SpaceResponsibility> COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL =
             new ComparatorChain();
     static {
-        ((ComparatorChain) COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL).addComparator(new BeanComparator("begin"));
+        ((ComparatorChain) COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL).addComparator(new BeanComparator("begin",
+                new NullComparator()));
         ((ComparatorChain) COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL).addComparator(new BeanComparator("unit.name",
                 Collator.getInstance()));
         ((ComparatorChain) COMPARATOR_BY_UNIT_NAME_AND_RESPONSIBILITY_INTERVAL).addComparator(DomainObjectUtil.COMPARATOR_BY_ID);
