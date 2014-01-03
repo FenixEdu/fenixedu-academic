@@ -378,6 +378,6 @@
 </fr:view>
 </logic:notEmpty>
 
-<div class="mtop15"><bean:message key="message.nape.contacts" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" arg1="<%=Instalation.getInstance().getAcademicDirectionEmailAddress() %>" bundle="CANDIDATE_RESOURCES"/></div>
+<div class="mtop15"><bean:message key="message.nape.contacts" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" arg1="<%=Instalation.getInstance().getInstituitionalEmailAddress("da") %>" bundle="CANDIDATE_RESOURCES"/></div>
 
 
