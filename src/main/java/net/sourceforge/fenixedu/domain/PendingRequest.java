@@ -8,10 +8,9 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
+import pt.ist.fenixframework.FenixFramework;
 
 public class PendingRequest extends PendingRequest_Base {
-
-    public static String buildVersion;
 
     public PendingRequest(HttpServletRequest request) {
         super();
@@ -19,7 +18,7 @@ public class PendingRequest extends PendingRequest_Base {
         setGenerationDate(new DateTime());
         setPost(!request.getMethod().equalsIgnoreCase("GET"));
         setUrl(request.getContextPath() + request.getServletPath());
-        setBuildVersion(buildVersion);
+        setBuildVersion(FenixFramework.getProject().getVersion());
         final String queryString = request.getQueryString();
         for (Object object : request.getParameterMap().keySet()) {
             String key = (String) object;
