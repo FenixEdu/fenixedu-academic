@@ -495,25 +495,6 @@
 				</plugins>
 			</build>
 		</profile>
-		<profile>
-			<id>GenerateDMLZip</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>pt.ist</groupId>
-						<artifactId>dml-maven-plugin</artifactId>
-						<version>${version.pt.ist.ff.maven.plugin}</version>
-						<executions>
-							<execution>
-								<goals>
-									<goal>package-dmls</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
 	</profiles>
 
 
