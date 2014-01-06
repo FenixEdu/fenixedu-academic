@@ -74,7 +74,7 @@
 
 
 <jsp:include page="deployWarning.jsp" flush="true"/>
-<jsp:include page="devMode.jsp" flush="true"/>
+
 
 <tiles:insert attribute="page-context" ignore="true"/>
 <jsp:include page="browserUpgradeMessage.jsp" flush="true"/>

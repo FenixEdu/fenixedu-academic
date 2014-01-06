@@ -25,7 +25,7 @@ public class FenixConfigurationManager {
 
         @ConfigurationProperty(key = "barra.as.authentication.broker",
                 description = "CAS ticket validation through barra: https://fenix-ashes.ist.utl.pt/fenixWiki/Barra",
-                defaultValue = "true")
+                defaultValue = "false")
         public Boolean barraAsAuthenticationBroker();
 
         @ConfigurationProperty(key = "barra.loginUrl",
