@@ -170,7 +170,7 @@ Before migrating to Fenix 2.x, you must first ensure that:
     }
     ```
 
-11. Also, run the following script to initilize the Instalation object
+11. Also, run the following script to initilize the Instalation object, adapting the default values to the instalation specific values.
 
 	```java
 	package pt.ist.fenix;
@@ -179,9 +179,9 @@ Before migrating to Fenix 2.x, you must first ensure that:
 	import org.fenixedu.bennu.scheduler.custom.CustomTask;
 
 	public class InstalationInitialization extends CustomTask {
-		private static String DEFAULT_INSTALATION_DOMAIN = "ist.utl.pt";
-		private static String DEFAULT_INSTALATION_NAME = ".IST";
-		private static String DEFAULT_INSTALATION_URL = "http://www.ist.utl.pt/";
+		private static String DEFAULT_INSTALATION_DOMAIN = "example.com";
+		private static String DEFAULT_INSTALATION_NAME = "InstalationExample";
+		private static String DEFAULT_INSTALATION_URL = "http://www.example.com/";
 
 		@Override
 		public void runTask() throws Exception {
