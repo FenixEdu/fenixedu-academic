@@ -62,7 +62,7 @@ public class ContentHierarchyTreeRenderer extends TreeRenderer {
                                 .getChild(new Predicate<HtmlComponent>() {
                                     @Override
                                     public boolean apply(HtmlComponent input) {
-                                        return input instanceof HtmlLink;
+                                        return input instanceof HtmlList;
                                     }
                                 });
 
