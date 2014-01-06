@@ -192,23 +192,9 @@ public class FenixConfigurationManager {
         @ConfigurationProperty(key = "ldap.user.importation.service.username")
         public String getLdapUserImportationServiceUsername();
 
-        @ConfigurationProperty(
-                key = "log.image.directory",
-                description = "directory to where dynamic images for log reports are generated. It must end with the applications context followed by images/logs",
-                defaultValue = "/home/<user>/workspace/fenix-head/web/images/logs")
-        public String getLogImageDirectory();
-
         @ConfigurationProperty(key = "login.page", description = "absolute path to the login page",
                 defaultValue = "http://localhost:8080/fenix/privado")
         public String getLoginPage();
-
-        @ConfigurationProperty(key = "log.profile.dir", description = "name of dir where profiling log will be stored",
-                defaultValue = "/tmp")
-        public String getLogProfileDir();
-
-        @ConfigurationProperty(key = "log.profile.filename", description = "name of file where profiling log will be stored",
-                defaultValue = "profileing.log")
-        public String getLogProfileFilename();
 
         @ConfigurationProperty(key = "mailingList.host.name")
         public String getMailingListHostName();
