@@ -14,13 +14,13 @@
 		</div>
 		<center class="button-holder">
 		<% if(AccessControl.getPerson() != null){%>
-		<a class="page-button" href="<%= request.getContextPath() + "/home.do" %>" target="_blank">
+		<a class="page-button" href="<%= request.getContextPath() + "/home.do" %>">
 			<bean:message key="local.private" bundle="GLOBAL_RESOURCES"/></a>
 		<% }%>
-		<a class="page-button" href="<%= request.getContextPath() + "/siteMap.do" %>" target="_blank">
+		<a class="page-button" href="<%= request.getContextPath() + "/siteMap.do" %>">
 			<bean:message key="local.site.map" bundle="GLOBAL_RESOURCES"/></a>
 		<% if(AccessControl.getPerson() != null){%>
-		<a class="page-button" href="<%= request.getContextPath() + "/exceptionHandlingAction.do?method=prepareSupportHelp" %>" target="_blank">
+		<a class="page-button" href="<%= request.getContextPath() + "/exceptionHandlingAction.do?method=prepareSupportHelp" %>">
 			<bean:message key="local.support.form" bundle="GLOBAL_RESOURCES"/></a>
 		<% }%>
 		</center>
