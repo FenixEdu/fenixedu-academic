@@ -134,9 +134,7 @@ public class RequestUtils {
         request.getSession(true);
 
         final PendingRequest pendingRequest = STORE_PENDING_REQUEST ? storeRequest(request) : null;
-        response.sendRedirect(generateRedirectLink(
-                FenixConfigurationManager.getHostRedirector().getRedirectPageLogin(request.getRequestURL().toString()),
-                pendingRequest));
+        response.sendRedirect(generateRedirectLink(FenixConfigurationManager.getConfiguration().getLoginPage(), pendingRequest));
     }
 
     public static String generateRedirectLink(String url, PendingRequest pendingRequest) {

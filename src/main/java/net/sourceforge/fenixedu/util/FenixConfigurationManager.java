@@ -53,9 +53,6 @@ public class FenixConfigurationManager {
         @ConfigurationProperty(key = "context.filter.exceptions", defaultValue = "/api")
         public String getContextFilterExceptions();
 
-        @ConfigurationProperty(key = "debug.actions", defaultValue = "false")
-        public Boolean getDebugActions();
-
         @ConfigurationProperty(key = "dspace.downloadUriFormat", defaultValue = "bitstream/{0}/{1}")
         public String getDspaceDownloadUriFormat();
 
@@ -165,10 +162,10 @@ public class FenixConfigurationManager {
                 description = "Twillio http or https protocol where the application will run", defaultValue = "http")
         public String getHTTPProtocol();
 
-        @ConfigurationProperty(key = "index.html.link.*",
+        @ConfigurationProperty(key = "index.page.redirect",
                 description = "host specific initial page to be displayed from applications root",
                 defaultValue = "fenixEduIndex.do")
-        public Map<String, String> getIndexHtmlLink();
+        public String getIndexPageRedirect();
 
         @ConfigurationProperty(key = "jersey.password")
         public String getJerseyPassword();
@@ -200,9 +197,6 @@ public class FenixConfigurationManager {
                 description = "directory to where dynamic images for log reports are generated. It must end with the applications context followed by images/logs",
                 defaultValue = "/home/<user>/workspace/fenix-head/web/images/logs")
         public String getLogImageDirectory();
-
-        @ConfigurationProperty(key = "login.html.link.*")
-        public Map<String, String> getLoginHtmlLink();
 
         @ConfigurationProperty(key = "login.page", description = "absolute path to the login page",
                 defaultValue = "http://localhost:8080/fenix/privado")
@@ -441,10 +435,9 @@ public class FenixConfigurationManager {
 
     private static HostAccessControl hostAccessControl = new HostAccessControl(getConfiguration().getHostControlName());
 
-    private static HostRedirector hostRedirector = new HostRedirector(getConfiguration().getIndexHtmlLink(), getConfiguration()
-            .getLoginHtmlLink());
-
-    private static PrinterManager printerManager = new PrinterManager(getConfiguration().getMarkSheetPrinters());
+    private static final class PrinterManagerHolder {
+        private static PrinterManager printerManager = new PrinterManager(getConfiguration().getMarkSheetPrinters());
+    }
 
     private static Boolean barraAsAuthenticationBroker = getConfiguration().barraAsAuthenticationBroker();
 
@@ -456,12 +449,8 @@ public class FenixConfigurationManager {
         return hostAccessControl;
     }
 
-    public static HostRedirector getHostRedirector() {
-        return hostRedirector;
-    }
-
     public static PrinterManager getPrinterManager() {
-        return printerManager;
+        return PrinterManagerHolder.printerManager;
     }
 
     public static Boolean isBarraAsAuthenticationBroker() {
