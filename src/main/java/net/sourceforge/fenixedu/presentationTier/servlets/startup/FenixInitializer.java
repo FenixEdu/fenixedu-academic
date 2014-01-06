@@ -43,7 +43,7 @@ import org.fenixedu.bennu.core.domain.exceptions.BennuCoreDomainException;
 import org.fenixedu.bennu.core.domain.groups.DynamicGroup;
 import org.fenixedu.bennu.core.domain.groups.Group;
 import org.fenixedu.bennu.core.presentationTier.servlets.filters.ExceptionHandlerFilter;
-import org.fenixedu.bennu.core.presentationTier.servlets.filters.ExceptionHandlerFilter.CustomeHandler;
+import org.fenixedu.bennu.core.presentationTier.servlets.filters.ExceptionHandlerFilter.CustomHandler;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -331,7 +331,7 @@ public class FenixInitializer implements ServletContextListener {
         });
     }
 
-    public static class FenixCustomExceptionHandler extends CustomeHandler {
+    public static class FenixCustomExceptionHandler implements CustomHandler {
         @Override
         public boolean isCustomizedFor(Throwable t) {
             return true;
