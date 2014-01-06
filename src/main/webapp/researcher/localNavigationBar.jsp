@@ -33,8 +33,8 @@
 	--%>
 </ul>
 
-<bean:define id="autoEvalProcesses" name="USER_SESSION_ATTRIBUTE" property="user.person.teacherEvaluationProcessFromEvalueeSet" type="java.util.List"/>
-<bean:define id="evalProcesses" name="USER_SESSION_ATTRIBUTE" property="user.person.teacherEvaluationProcessFromEvaluator" type="java.util.List"/>
+<bean:define id="autoEvalProcesses" name="LOGGED_USER_ATTRIBUTE" property="person.teacherEvaluationProcessFromEvalueeSet" type="java.util.List"/>
+<bean:define id="evalProcesses" name="LOGGED_USER_ATTRIBUTE" property="person.teacherEvaluationProcessFromEvaluator" type="java.util.List"/>
 <%
 	final Person person = AccessControl.getPerson();
 	if (person.isTeacherEvaluationCoordinatorCouncilMember() || !autoEvalProcesses.isEmpty() || !evalProcesses.isEmpty()) {
@@ -78,7 +78,7 @@
 	</ul>
 </logic:present>
 	
-<bean:define id="workingResearchUnits" name="USER_SESSION_ATTRIBUTE" property="user.person.workingResearchUnitsAndParents" type="java.util.List"/>
+<bean:define id="workingResearchUnits" name="LOGGED_USER_ATTRIBUTE" property="person.workingResearchUnitsAndParents" type="java.util.List"/>
 <logic:notEmpty name="workingResearchUnits">
 <ul>
 	<li class="navheader"><bean:message key="label.researchUnits" bundle="RESEARCHER_RESOURCES"/></li>

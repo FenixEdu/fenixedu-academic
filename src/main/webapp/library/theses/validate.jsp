@@ -11,8 +11,8 @@
 <bean:define id="thesisId" name="thesis" property="externalId" />
 <bean:define id="thesisState" name="thesis" property="libraryState.name" />
 <bean:define id="person"
-	name="USER_SESSION_ATTRIBUTE"
-	property="user.person" />
+	name="LOGGED_USER_ATTRIBUTE"
+	property="person" />
 
 <h2><bean:message key="thesis.validation.title.details" /></h2>
 

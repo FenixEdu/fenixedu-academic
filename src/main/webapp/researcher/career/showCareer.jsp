@@ -35,7 +35,7 @@
 <logic:present name="creating">
     <fr:form action="/career/careerManagement.do?method=showCareer">
 	    <fr:create id="createCareer" schema="researcher.career" type="net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer">
-	        <fr:hidden slot="person" name="USER_SESSION_ATTRIBUTE" property="user.person"/>
+	        <fr:hidden slot="person" name="LOGGED_USER_ATTRIBUTE" property="person"/>
 	        <fr:layout name="tabular">
 		        <fr:property name="classes" value="tstyle5 thlight thright"/>
 		        <fr:property name="columnClasses" value=",,tderror1 tdclear"/>

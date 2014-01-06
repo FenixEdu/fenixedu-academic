@@ -54,8 +54,7 @@ public class CreateContentsContextAction extends FenixAction {
     }
 
     private void sendLoginRedirect(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.sendRedirect(FenixConfigurationManager.getHostRedirector().getRedirectPageLogin(
-                request.getRequestURL().toString()));
+        response.sendRedirect(FenixConfigurationManager.getConfiguration().getLoginPage());
     }
 
     protected ActionForward menuActionForward(Content content, HttpServletRequest request) {

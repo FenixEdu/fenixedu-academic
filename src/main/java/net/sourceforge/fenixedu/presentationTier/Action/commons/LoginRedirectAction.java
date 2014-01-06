@@ -38,7 +38,7 @@ public class LoginRedirectAction extends Action {
     @Atomic
     public Boolean reconstructURL(HttpServletRequest request) {
         final PendingRequest pendingRequest = FenixFramework.getDomainObject(request.getParameter("pendingRequest"));
-        if (pendingRequest.getBuildVersion().equals(PendingRequest.buildVersion)) {
+        if (pendingRequest.getBuildVersion().equals(FenixFramework.getProject().getVersion())) {
             String url = pendingRequest.getUrl();
 
             final List<PendingRequestParameter> attributes = new ArrayList<PendingRequestParameter>();

@@ -10,7 +10,7 @@ public class OAuthProperties {
         @ConfigurationProperty(key = "fenix.api.oauth.code.timeout.seconds", defaultValue = "60")
         public Integer getCodeExpirationSeconds();
 
-        @ConfigurationProperty(key = "fenix.api.oauth.access.token.timeout.seconds", defaultValue = "3600")
+        @ConfigurationProperty(key = "fenix.api.oauth.access.token.timeout.seconds", defaultValue = "21600")
         public Integer getAccessTokenExpirationSeconds();
 
         @ConfigurationProperty(key = "fenix.api.news.rss.url")
@@ -19,7 +19,8 @@ public class OAuthProperties {
         @ConfigurationProperty(key = "fenix.api.events.rss.url")
         public String getFenixApiEventsRssUrl();
 
-        @ConfigurationProperty(key = "fenix.api.allow.ist.ids", defaultValue = "false")
+        @ConfigurationProperty(key = "fenix.api.allow.ist.ids", description = "allow managers to invoke api using _istid_ param",
+                defaultValue = "false")
         public Boolean getFenixApiAllowIstIds();
     }
 

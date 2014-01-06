@@ -17,20 +17,20 @@
 
 <p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
-<logic:notPresent name="USER_SESSION_ATTRIBUTE" property="user.person.user.username">
+<logic:notPresent name="LOGGED_USER_ATTRIBUTE" property="person.user.username">
 	<span class="error">
 		<bean:message key="message.resource.not.available.for.external.users" bundle="HOMEPAGE_RESOURCES"/>
 	</span>
 </logic:notPresent>
 
-<logic:present name="USER_SESSION_ATTRIBUTE" property="user.person.user.username">
+<logic:present name="LOGGED_USER_ATTRIBUTE" property="person.user.username">
 <html:form action="/manageHomepage">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="changeHomepageOptions"/>
 
 
-    <logic:present name="USER_SESSION_ATTRIBUTE" property="user.person.homepage">
-        <logic:present name="USER_SESSION_ATTRIBUTE" property="user.person.homepage.activated">
-            <logic:equal name="USER_SESSION_ATTRIBUTE" property="user.person.homepage.activated" value="true">
+    <logic:present name="LOGGED_USER_ATTRIBUTE" property="person.homepage">
+        <logic:present name="LOGGED_USER_ATTRIBUTE" property="person.homepage.activated">
+            <logic:equal name="LOGGED_USER_ATTRIBUTE" property="person.homepage.activated" value="true">
 				<p>
 					<span class="success0">
 						<bean:message key="label.homepage.activated.afirmative" bundle="HOMEPAGE_RESOURCES"/>.
@@ -54,21 +54,21 @@
     <% final String appContext = FenixConfigurationManager.getConfiguration().appContext(); %>
     <% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
 
-    <bean:define id="homepageURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/homepage/<bean:write name="USER_SESSION_ATTRIBUTE" property="user.person.user.username"/></bean:define>
+    <bean:define id="homepageURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/homepage/<bean:write name="LOGGED_USER_ATTRIBUTE" property="person.user.username"/></bean:define>
     <p>
     <bean:message key="person.homepage.adress" bundle="HOMEPAGE_RESOURCES"/>:
-    <logic:notPresent name="USER_SESSION_ATTRIBUTE" property="user.person.homepage">
+    <logic:notPresent name="LOGGED_USER_ATTRIBUTE" property="person.homepage">
         <bean:write name="homepageURL"/>
     </logic:notPresent>
-    <logic:present name="USER_SESSION_ATTRIBUTE" property="user.person.homepage">
-        <logic:notPresent name="USER_SESSION_ATTRIBUTE" property="user.person.homepage.activated">
+    <logic:present name="LOGGED_USER_ATTRIBUTE" property="person.homepage">
+        <logic:notPresent name="LOGGED_USER_ATTRIBUTE" property="person.homepage.activated">
                 <bean:write name="homepageURL"/>
         </logic:notPresent>
-        <logic:present name="USER_SESSION_ATTRIBUTE" property="user.person.homepage.activated">
-            <logic:equal name="USER_SESSION_ATTRIBUTE" property="user.person.homepage.activated" value="true">
+        <logic:present name="LOGGED_USER_ATTRIBUTE" property="person.homepage.activated">
+            <logic:equal name="LOGGED_USER_ATTRIBUTE" property="person.homepage.activated" value="true">
                 <html:link href="<%= homepageURL %>"><bean:write name="homepageURL"/></html:link>
             </logic:equal>
-            <logic:equal name="USER_SESSION_ATTRIBUTE" property="user.person.homepage.activated" value="false">
+            <logic:equal name="LOGGED_USER_ATTRIBUTE" property="person.homepage.activated" value="false">
                 <bean:write name="homepageURL"/>
             </logic:equal>
         </logic:present>
@@ -85,7 +85,7 @@
     </div>
 
 	<table class="tstyle5 thlight thright">
-		<logic:present name="USER_SESSION_ATTRIBUTE" property="user.person.employee.currentWorkingContract.workingUnit">
+		<logic:present name="LOGGED_USER_ATTRIBUTE" property="person.employee.currentWorkingContract.workingUnit">
 			<tr>
 				<th>
 					<bean:message key="label.homepage.showUnit" bundle="HOMEPAGE_RESOURCES"/>:
@@ -95,14 +95,14 @@
 				</td>
 				<td>
 					<p>
-						<bean:define id="currentUnit" name="USER_SESSION_ATTRIBUTE" property="user.person.employee.currentWorkingContract.workingUnit" toScope="request"/>
+						<bean:define id="currentUnit" name="LOGGED_USER_ATTRIBUTE" property="person.employee.currentWorkingContract.workingUnit" toScope="request"/>
 						<jsp:include page="unitStructure.jsp"/>
 					</p>
 				</td>
 			</tr>
 		</logic:present>
-		<logic:present name="USER_SESSION_ATTRIBUTE" property="user.person.teacher">
-			<logic:present name="USER_SESSION_ATTRIBUTE" property="user.person.employee.currentWorkingContract">
+		<logic:present name="LOGGED_USER_ATTRIBUTE" property="person.teacher">
+			<logic:present name="LOGGED_USER_ATTRIBUTE" property="person.employee.currentWorkingContract">
 				<tr>
 					<th>
 						<bean:message key="label.homepage.showCategory" bundle="HOMEPAGE_RESOURCES"/>:
@@ -111,8 +111,8 @@
 						<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showCategory" property="showCategory" value="true"/>
 					</td>
 					<td>
-						<logic:present name="USER_SESSION_ATTRIBUTE" property="user.person.teacher.category">
-							<bean:write name="USER_SESSION_ATTRIBUTE" property="user.person.teacher.category.name"/>
+						<logic:present name="LOGGED_USER_ATTRIBUTE" property="person.teacher.category">
+							<bean:write name="LOGGED_USER_ATTRIBUTE" property="person.teacher.category.name"/>
 						</logic:present>
 					</td>
 				</tr>
@@ -139,7 +139,7 @@
 					<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showActiveStudentCurricularPlans" property="showActiveStudentCurricularPlans" value="true"/>
 				</td>
 				<td>
-					<logic:iterate id="studentCurricularPlan" name="USER_SESSION_ATTRIBUTE" property="user.person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName" length="1">
+					<logic:iterate id="studentCurricularPlan" name="LOGGED_USER_ATTRIBUTE" property="person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName" length="1">
 						<logic:present  name="studentCurricularPlan" property="degreeCurricularPlan.degree.site" >
 							<app:contentLink name="studentCurricularPlan" property="degreeCurricularPlan.degree.site" target="_blank">
 								<logic:present name="studentCurricularPlan" property="specialization.name">
@@ -158,7 +158,7 @@
 							</app:contentLink>
 						</logic:present>
 					</logic:iterate>
-					<logic:iterate id="studentCurricularPlan" name="USER_SESSION_ATTRIBUTE" property="user.person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName" offset="1">
+					<logic:iterate id="studentCurricularPlan" name="LOGGED_USER_ATTRIBUTE" property="person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName" offset="1">
 						,
 						<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/showDegreeSite.do?method=showDescription&amp;degreeID=<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.externalId"/></bean:define>
 						<html:link href="<%= url %>">
@@ -210,7 +210,7 @@
 					<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showAlumniDegrees" property="showAlumniDegrees" value="true"/>
 				</td>
 				<td>
-					<logic:iterate id="studentCurricularPlan" name="USER_SESSION_ATTRIBUTE" property="user.person.completedStudentCurricularPlansSortedByDegreeTypeAndDegreeName" length="1">
+					<logic:iterate id="studentCurricularPlan" name="LOGGED_USER_ATTRIBUTE" property="person.completedStudentCurricularPlansSortedByDegreeTypeAndDegreeName" length="1">
 						<app:contentLink name="studentCurricularPlan" property="degreeCurricularPlan.degree.site">
 							<logic:present name="studentCurricularPlan" property="specialization.name">
 								<logic:equal name="studentCurricularPlan" property="specialization.name" value="STUDENT_CURRICULAR_PLAN_SPECIALIZATION">
@@ -227,7 +227,7 @@
 							<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.name"/>
 						</app:contentLink>
 					</logic:iterate>
-					<logic:iterate id="studentCurricularPlan" name="USER_SESSION_ATTRIBUTE" property="user.person.completedStudentCurricularPlansSortedByDegreeTypeAndDegreeName" offset="1">
+					<logic:iterate id="studentCurricularPlan" name="LOGGED_USER_ATTRIBUTE" property="person.completedStudentCurricularPlansSortedByDegreeTypeAndDegreeName" offset="1">
 						,
 						<app:contentLink name="studentCurricularPlan" property="degreeCurricularPlan.degree.site">
 							<logic:present name="studentCurricularPlan" property="specialization.name">
@@ -251,10 +251,10 @@
 	<tr><td class="leftcol"><bean:message key="label.homepage.showUnit" bundle="HOMEPAGE_RESOURCES"/>:</td>
 		<td>
 			<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showUnit" property="showUnit" value="true"/>
-			<logic:present name="USER_SESSION_ATTRIBUTE" property="user.person.employee.currentWorkingContract.workingUnit">
-				<bean:write name="USER_SESSION_ATTRIBUTE" property="user.person.employee.currentWorkingContract.workingUnit.name"/>
+			<logic:present name="LOGGED_USER_ATTRIBUTE" property="person.employee.currentWorkingContract.workingUnit">
+				<bean:write name="LOGGED_USER_ATTRIBUTE" property="person.employee.currentWorkingContract.workingUnit.name"/>
 			</logic:present>
-			<logic:iterate id="student" name="USER_SESSION_ATTRIBUTE" property="user.person.students">
+			<logic:iterate id="student" name="LOGGED_USER_ATTRIBUTE" property="person.students">
 				<logic:present name="student" property="activeStudentCurricularPlan">
 					<bean:write name="student" property="activeStudentCurricularPlan.degreeCurricularPlan.degree.presentationName"/>
 				</logic:present>
@@ -274,8 +274,8 @@
 			</td>
 		</tr>
 
-		<logic:present name="USER_SESSION_ATTRIBUTE" property="user.person.teacher">
-			<logic:present name="USER_SESSION_ATTRIBUTE" property="user.person.employee.currentWorkingContract">
+		<logic:present name="LOGGED_USER_ATTRIBUTE" property="person.teacher">
+			<logic:present name="LOGGED_USER_ATTRIBUTE" property="person.employee.currentWorkingContract">
 				<tr>
 					<th>
 						<bean:message key="label.homepage.showCurrentExecutionCourses" bundle="HOMEPAGE_RESOURCES"/>:
@@ -284,13 +284,13 @@
 						<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showCurrentExecutionCourses" property="showCurrentExecutionCourses" value="true"/>
 					</td>
 					<td>
-						<logic:iterate id="executionCourse" name="USER_SESSION_ATTRIBUTE" property="user.person.teacher.currentExecutionCourses" length="1">
+						<logic:iterate id="executionCourse" name="LOGGED_USER_ATTRIBUTE" property="person.teacher.currentExecutionCourses" length="1">
 							<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/executionCourse.do?method=firstPage&amp;executionCourseID=<bean:write name="executionCourse" property="externalId"/></bean:define>
 							<html:link href="<%= url %>">
 								<bean:write name="executionCourse" property="nome"/>
 							</html:link>
 						</logic:iterate>
-						<logic:iterate id="executionCourse" name="USER_SESSION_ATTRIBUTE" property="user.person.teacher.currentExecutionCourses" offset="1">
+						<logic:iterate id="executionCourse" name="LOGGED_USER_ATTRIBUTE" property="person.teacher.currentExecutionCourses" offset="1">
 							, 
 							<bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/publico/executionCourse.do?method=firstPage&amp;executionCourseID=<bean:write name="executionCourse" property="externalId"/></bean:define>
 							<html:link href="<%= url %>">

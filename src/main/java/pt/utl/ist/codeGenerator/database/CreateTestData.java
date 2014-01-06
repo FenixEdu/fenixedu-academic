@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CompetenceCourseType;
 import net.sourceforge.fenixedu.domain.Coordinator;
-import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
@@ -77,8 +76,6 @@ import net.sourceforge.fenixedu.domain.accounting.serviceAgreements.DegreeCurric
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
-import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
-import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
@@ -111,7 +108,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.SchoolUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
-import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
@@ -137,7 +133,6 @@ import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.Season;
 
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.YearMonthDay;
@@ -317,11 +312,14 @@ public class CreateTestData {
             return "Room" + roomCounter++;
         }
     }
+
     static AdministrativeOffice administrativeOffice;
+
     public static class CreateOrganizationalStructure {
         public void doIt(InstallationProcess process) {
             final CountryUnit countryUnit = getCountryUnit(process.country.getName());
-            final UniversityUnit universityUnit = createUniversityUnit(countryUnit, process.universityName, process.universityAcronym);
+            final UniversityUnit universityUnit =
+                    createUniversityUnit(countryUnit, process.universityName, process.universityAcronym);
             final SchoolUnit institutionUnit = createSchoolUnit(universityUnit, process.schoolName, process.schoolAcronym);
             getRootDomainObject().setInstitutionUnit(institutionUnit);
             final AggregateUnit serviceUnits = createAggregateUnit(institutionUnit, "Services");
@@ -346,9 +344,8 @@ public class CreateTestData {
 
         private UniversityUnit createUniversityUnit(final CountryUnit countryUnit, final String universityName,
                 final String universityAcronym) {
-            return UniversityUnit
-                    .createNewUniversityUnit(new MultiLanguageString(Language.getDefaultLanguage(), universityName),
-                            null, null, universityAcronym, new YearMonthDay(), null, countryUnit, null, null, false, null);
+            return UniversityUnit.createNewUniversityUnit(new MultiLanguageString(Language.getDefaultLanguage(), universityName),
+                    null, null, universityAcronym, new YearMonthDay(), null, countryUnit, null, null, false, null);
         }
 
         private AggregateUnit createAggregateUnit(final Unit parentUnit, final String unitName) {
@@ -396,7 +393,6 @@ public class CreateTestData {
         }
 
         private int areaCounter = 0;
-        
 
         private void createCompetenceCourseGroupUnit(final DepartmentUnit departmentUnit) {
             final ScientificAreaUnit scientificAreaUnit =
@@ -461,7 +457,7 @@ public class CreateTestData {
                         createExecutionDegrees(degreeCurricularPlan, getCampus());
                         degree.setAdministrativeOffice(administrativeOffice);
                         final DegreeSite degreeSite = degree.getSite();
-  
+
                         DegreeUnit.createNewInternalDegreeUnit(
                                 new MultiLanguageString(Language.getDefaultLanguage(), degree.getName()), null, null,
                                 degree.getSigla(), new YearMonthDay(), null, unit,
@@ -489,8 +485,7 @@ public class CreateTestData {
         private DegreeCurricularPlan createDegreeCurricularPlan(final Degree degree, InstallationProcess process) {
 
             final DegreeCurricularPlan degreeCurricularPlan =
-                    degree.createBolonhaDegreeCurricularPlan(degree.getSigla(), GradeScale.TYPE20,
-                            process.person);
+                    degree.createBolonhaDegreeCurricularPlan(degree.getSigla(), GradeScale.TYPE20, process.person);
 
             degreeCurricularPlan.setCurricularStage(CurricularStage.APPROVED);
             degreeCurricularPlan.setDescription("Bla bla bla. Desc. do plano curricular do curso. Bla bla bla");
@@ -980,7 +975,7 @@ public class CreateTestData {
         @Override
         public void doIt() {
             //final Person person = Role.getRoleByRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER).getAssociatedPersonsSet().iterator().next();
-            final Person person = Bennu.getInstance().getUsersSet().iterator().next().getPerson();
+            final Person person = Bennu.getInstance().getUserSet().iterator().next().getPerson();
             Role.getRoleByRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER).addAssociatedPersons(person);
             // final User userView = new Authenticate().mock(person, "://localhost");
             // UserView.setUser(userView);

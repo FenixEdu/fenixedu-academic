@@ -71,13 +71,6 @@ public class SearchDegreeLogAction extends FenixDispatchAction {
         // InfoExecutionDegree.newInfoFromDomain(executionDegree);
         // request.setAttribute(PresentationConstants.MASTER_DEGREE, degree);
 
-        /* Teste */
-        /*
-         * request.getSession().setAttribute(SetUserViewFilter.
-         * USER_SESSION_ATTRIBUTE,
-         * degree.getCoordinators().iterator().next().getTeacher().getPerson());
-         */
-
         return mapping.findForward("search");
     }
 

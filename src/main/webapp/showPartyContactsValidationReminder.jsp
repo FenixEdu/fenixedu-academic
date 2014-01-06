@@ -26,7 +26,7 @@
 			<div id="txt">
 				<h1><bean:message key="label.person.title.contactAndAuthorization.pending" bundle="APPLICATION_RESOURCES"/></h1>
 				<div class="warning1" style="margin: 20px; padding: 20px">
-					<bean:define id="person" name="USER_SESSION_ATTRIBUTE" property="user.person"/>
+					<bean:define id="person" name="LOGGED_USER_ATTRIBUTE" property="person"/>
 					<bean:define id="pendingContacts" name="person" property="allPendingPartyContacts"/>
 					<ul>
 					<logic:iterate id="pendingContact" name="pendingContacts">

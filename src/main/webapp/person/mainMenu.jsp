@@ -15,7 +15,7 @@
 	<li><html:link page="/parking.do?method=prepareParking"><bean:message key="label.parking"  bundle="PARKING_RESOURCES"/></html:link></li>
 	<li><html:link page="/validateEmail.do?method=prepare"><bean:message key="label.validate.email"/></html:link></li>
 	<li><html:link page="/irsDeclaration.do?method=viewIrsDocumentInformation"><bean:message key="label.irs.information" bundle="APPLICATION_RESOURCES"/></html:link></li>
-	<logic:present name="USER_SESSION_ATTRIBUTE" property="user.person.openAffiliationEvent">
+	<logic:present name="LOGGED_USER_ATTRIBUTE" property="person.openAffiliationEvent">
 	<li><html:link page="/payments.do?method=viewAccount"><bean:message key="label.accounting.person.payments.title" bundle="ACCOUNTING_RESOURCES"/></html:link></li>
 	</logic:present>
 	
@@ -35,7 +35,7 @@
 		
 	<!-- Vigilancy link for people who do not have ROLE TEACHER -->
 
-	<logic:notEmpty name="USER_SESSION_ATTRIBUTE" property="user.person.vigilantWrappers">
+	<logic:notEmpty name="LOGGED_USER_ATTRIBUTE" property="person.vigilantWrappers">
 		<logic:notPresent role="role(TEACHER)">
 	 		<li class="navheader"><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.vigilant"/></li>
 			<li><html:link  page="/vigilancy/vigilantManagement.do?method=prepareMap"><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.vigilant"/></html:link></li>
@@ -44,8 +44,8 @@
 
 	<logic:present role="role(MANAGER)">
 		<li class="navheader"><bean:message key="label.person.system.configuration"/></li>
-		<logic:notEqual name="USER_SESSION_ATTRIBUTE" property="user.username" value="ist24518"> 
-			<logic:notEqual name="USER_SESSION_ATTRIBUTE" property="user.username" value="ist24421">
+		<logic:notEqual name="LOGGED_USER_ATTRIBUTE" property="username" value="ist24518"> 
+			<logic:notEqual name="LOGGED_USER_ATTRIBUTE" property="username" value="ist24421">
 				<li>
 					<html:link page="/contentManagement.do?method=viewContainer">
 						<bean:message key="label.person.system.configuration.root.portal"/>

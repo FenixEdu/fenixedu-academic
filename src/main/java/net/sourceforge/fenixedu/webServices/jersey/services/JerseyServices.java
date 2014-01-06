@@ -115,7 +115,7 @@ public class JerseyServices {
             roles = new RoleType[0];
         }
         final StringBuilder builder = new StringBuilder();
-        for (final User user : Bennu.getInstance().getUsersSet()) {
+        for (final User user : Bennu.getInstance().getUserSet()) {
             if (!StringUtils.isEmpty(user.getUsername())) {
                 final Person person = user.getPerson();
                 if (roles.length == 0 || person.hasAnyRole(roles)) {
@@ -160,7 +160,7 @@ public class JerseyServices {
     @Produces(MediaType.APPLICATION_JSON)
     public String readUsers() {
         JSONArray users = new JSONArray();
-        for (final User user : Bennu.getInstance().getUsersSet()) {
+        for (final User user : Bennu.getInstance().getUserSet()) {
             if (!StringUtils.isEmpty(user.getUsername()) && user.getPerson() != null) {
                 JSONObject json = new JSONObject();
                 json.put("istId", user.getUsername());
@@ -212,7 +212,7 @@ public class JerseyServices {
         JSONArray researchers = new JSONArray();
 
         final Map<User, Set<Unit>> researchUnitMap = new HashMap<User, Set<Unit>>();
-        for (final User user : Bennu.getInstance().getUsersSet()) {
+        for (final User user : Bennu.getInstance().getUserSet()) {
             Person person = user.getPerson();
             if (!StringUtils.isEmpty(user.getUsername()) && person != null
                     && (person.hasRole(RoleType.TEACHER) || person.hasRole(RoleType.RESEARCHER))) {

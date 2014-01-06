@@ -127,7 +127,7 @@
     <div>
         <p><strong>Result</strong></p>
         <div style="border: 1px solid #000; padding: 20px 20px 20px 20px" >
-             <fr:edit id="input" name="USER_SESSION_ATTRIBUTE" property="user.person" schema="person.simple-edit"/>
+             <fr:edit id="input" name="LOGGED_USER_ATTRIBUTE" property="person" schema="person.simple-edit"/>
         </div>
     </div>
 </div>
@@ -187,22 +187,22 @@
                 <table border="1">
                     <tr>
                         <td>
-                            <fr:edit name="USER_SESSION_ATTRIBUTE" property="user.person" slot="name">
+                            <fr:edit name="LOGGED_USER_ATTRIBUTE" property="person" slot="name">
                                 <fr:layout>
                                     <fr:property name="size" value="50"/>
                                 </fr:layout>
                             </fr:edit>
                         </td>
                         <td>
-                            <fr:edit name="USER_SESSION_ATTRIBUTE" property="user.person" slot="gender"/>
+                            <fr:edit name="LOGGED_USER_ATTRIBUTE" property="person" slot="gender"/>
                         </td>
                         <td>
-                            <fr:edit name="USER_SESSION_ATTRIBUTE" property="user.person" slot="idDocumentType"/>
+                            <fr:edit name="LOGGED_USER_ATTRIBUTE" property="person" slot="idDocumentType"/>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <fr:edit name="USER_SESSION_ATTRIBUTE" property="user.person" slot="documentIdNumber">
+                            <fr:edit name="LOGGED_USER_ATTRIBUTE" property="person" slot="documentIdNumber">
                                 <fr:layout>
                                     <fr:property name="size" value="12"/>
                                     <fr:property name="maxLength" value="10"/>
@@ -210,7 +210,7 @@
                             </fr:edit>
                         </td>
                         <td>
-                            <fr:edit name="USER_SESSION_ATTRIBUTE" property="user.person" slot="expirationDateOfDocumentIdYearMonthDay"/>
+                            <fr:edit name="LOGGED_USER_ATTRIBUTE" property="person" slot="expirationDateOfDocumentIdYearMonthDay"/>
                         </td>
                     </tr>
                 </table>
@@ -284,7 +284,7 @@
                 <table border="1">
                     <tr>
                         <td>
-                            <fr:edit id="person-name-validated" name="USER_SESSION_ATTRIBUTE" property="user.person" slot="name"
+                            <fr:edit id="person-name-validated" name="LOGGED_USER_ATTRIBUTE" property="person" slot="name"
                                      validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
                                 <fr:layout>
                                     <fr:property name="size" value="50"/>

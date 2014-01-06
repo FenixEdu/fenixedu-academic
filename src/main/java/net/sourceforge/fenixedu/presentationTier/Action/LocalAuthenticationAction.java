@@ -61,7 +61,7 @@ public class LocalAuthenticationAction extends BaseAuthenticationAction {
         final String username = authenticationForm.getUsername();
         final String password = authenticationForm.getPassword();
 
-        return Authenticate.login(request.getSession(true), username, password).getUser();
+        return Authenticate.login(request.getSession(true), username, password);
     }
 
 }

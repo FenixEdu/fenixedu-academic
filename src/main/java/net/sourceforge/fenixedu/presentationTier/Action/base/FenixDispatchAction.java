@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.FenixActionForward;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.presentationTier.util.struts.StrutsMessageResourceProvider;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -39,6 +38,7 @@ import org.apache.struts.validator.DynaValidatorForm;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.components.state.LifeCycleConstants;
@@ -54,7 +54,7 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 public abstract class FenixDispatchAction extends DispatchAction implements ExceptionHandler {
 
     protected static final Bennu rootDomainObject = Bennu.getInstance();
-    private static boolean DEBUG_ACTIONS = FenixConfigurationManager.getConfiguration().getDebugActions();
+    private static boolean DEV_MODE = CoreConfiguration.getConfiguration().developmentMode();
     protected static final String ACTION_MESSAGES_REQUEST_KEY = "FENIX_ACTION_MESSAGES";
 
     @Override
@@ -68,7 +68,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
             saveMessages(request, actionMessages);
         }
 
-        if (DEBUG_ACTIONS) {
+        if (DEV_MODE) {
             System.out.println("CLASS: " + this.getClass().getName() + ", method: " + getFromRequest(request, "method"));
         }
 

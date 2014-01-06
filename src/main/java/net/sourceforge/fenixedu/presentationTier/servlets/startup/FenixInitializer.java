@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.servlets.startup;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -21,7 +20,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrat
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.DSpaceFileStorage;
 import net.sourceforge.fenixedu.domain.Instalation;
-import net.sourceforge.fenixedu.domain.PendingRequest;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
@@ -34,7 +32,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.externalServices.PhoneVa
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
-import net.sourceforge.fenixedu.presentationTier.servlets.startup.FenixInitializer.FenixCustomExceptionHandler;
 import net.sourceforge.fenixedu.presentationTier.util.ExceptionInformation;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.webServices.jersey.api.FenixJerseyAPIConfig;
@@ -46,7 +43,7 @@ import org.fenixedu.bennu.core.domain.exceptions.BennuCoreDomainException;
 import org.fenixedu.bennu.core.domain.groups.DynamicGroup;
 import org.fenixedu.bennu.core.domain.groups.Group;
 import org.fenixedu.bennu.core.presentationTier.servlets.filters.ExceptionHandlerFilter;
-import org.fenixedu.bennu.core.presentationTier.servlets.filters.ExceptionHandlerFilter.CustomeHandler;
+import org.fenixedu.bennu.core.presentationTier.servlets.filters.ExceptionHandlerFilter.CustomHandler;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,7 +59,6 @@ import pt.ist.fenixframework.plugins.remote.domain.RemoteSystem;
 import pt.utl.ist.fenix.tools.file.DSpaceFileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.dspace.DSpaceHttpClient;
-import pt.utl.ist.fenix.tools.util.FileUtils;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @WebListener
@@ -77,14 +73,6 @@ public class FenixInitializer implements ServletContextListener {
         logger.info("Initializing Fenix");
 
         Language.setDefaultLocale(Locale.getDefault());
-
-        try {
-            final InputStream inputStream = FenixInitializer.class.getResourceAsStream("/build.version");
-            PendingRequest.buildVersion = FileUtils.readFile(inputStream);
-            inputStream.close();
-        } catch (IOException e) {
-            throw new Error("Unable to load build version file");
-        }
 
         RemoteSystem.init();
 
@@ -343,7 +331,7 @@ public class FenixInitializer implements ServletContextListener {
         });
     }
 
-    public static class FenixCustomExceptionHandler extends CustomeHandler {
+    public static class FenixCustomExceptionHandler implements CustomHandler {
         @Override
         public boolean isCustomizedFor(Throwable t) {
             return true;

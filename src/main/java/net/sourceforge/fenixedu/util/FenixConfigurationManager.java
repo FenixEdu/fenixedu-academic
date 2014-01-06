@@ -9,22 +9,30 @@ import org.fenixedu.bennu.core.util.ConfigurationInvocationHandler;
 public class FenixConfigurationManager {
     @ConfigurationManager(description = "General Fenix Configuration")
     public interface ConfigurationProperties {
-        @ConfigurationProperty(key = "app.context")
+        @ConfigurationProperty(
+                key = "app.context",
+                description = "Must be changed to match tomcat context. If you're app is running in http://localhost:8080/xpto, app.context must be xpto.",
+                defaultValue = "fenix")
         public String appContext();
 
-        @ConfigurationProperty(key = "app.institution.AES128.secretKey")
+        @ConfigurationProperty(key = "app.institution.AES128.secretKey",
+                description = "Secret for Institution ID card generation", defaultValue = "aa0bbfaf79654df4")
         public String appInstitutionAES128SecretKey();
 
-        @ConfigurationProperty(key = "app.institution.PIN")
+        @ConfigurationProperty(key = "app.institution.PIN", description = "PIN for Institution ID card generation",
+                defaultValue = "0000")
         public String appInstitutionPIN();
 
-        @ConfigurationProperty(key = "barra.as.authentication.broker", defaultValue = "true")
+        @ConfigurationProperty(key = "barra.as.authentication.broker",
+                description = "CAS ticket validation through barra: https://fenix-ashes.ist.utl.pt/fenixWiki/Barra",
+                defaultValue = "false")
         public Boolean barraAsAuthenticationBroker();
 
-        @ConfigurationProperty(key = "barra.loginUrl")
+        @ConfigurationProperty(key = "barra.loginUrl",
+                description = "Login URL to use when barra is set as authentication broker")
         public String barraLoginUrl();
 
-        @ConfigurationProperty(key = "ciistCostCenterCode")
+        @ConfigurationProperty(key = "ciistCostCenterCode", description = "Deprecated, to be removed", defaultValue = "8431")
         public Integer getCIISTCostCenterCode();
 
         @ConfigurationProperty(key = "ciist.sms.gateway.url")
@@ -36,37 +44,38 @@ public class FenixConfigurationManager {
         @ConfigurationProperty(key = "ciist.sms.username")
         public String getCIISTSMSUsername();
 
-        @ConfigurationProperty(key = "consult.roles.admin.allowed.hosts")
+        @ConfigurationProperty(key = "consult.roles.admin.allowed.hosts", defaultValue = "127.0.0.1,localhost,192.168.1.101")
         public String getConsultRolesAdminAllowedHosts();
 
-        @ConfigurationProperty(key = "consult.roles.admin.password")
+        @ConfigurationProperty(key = "consult.roles.admin.password", defaultValue = "xPtO")
         public String getConsultRolesAdminPassword();
 
         @ConfigurationProperty(key = "context.filter.exceptions", defaultValue = "/api")
         public String getContextFilterExceptions();
 
-        @ConfigurationProperty(key = "debug.actions", defaultValue = "false")
-        public Boolean getDebugActions();
-
-        @ConfigurationProperty(key = "dspace.downloadUriFormat")
+        @ConfigurationProperty(key = "dspace.downloadUriFormat", defaultValue = "bitstream/{0}/{1}")
         public String getDspaceDownloadUriFormat();
 
         @ConfigurationProperty(key = "dspace.password")
         public String getDspacePassword();
 
-        @ConfigurationProperty(key = "dspace.rmi.server.name")
+        @ConfigurationProperty(key = "dspace.rmi.server.name", defaultValue = "DSpaceRMIRemoteManager")
         public String getDspaceRMIServerName();
 
-        @ConfigurationProperty(key = "dspace.serverUrl")
+        @ConfigurationProperty(key = "dspace.serverUrl", defaultValue = "https://localhost:8443/dspace")
         public String getDspaceServerUrl();
 
         @ConfigurationProperty(key = "dspace.username")
         public String getDspaceUsername();
 
-        @ConfigurationProperty(key = "email.admin.allowed.hosts")
+        @ConfigurationProperty(
+                key = "email.admin.allowed.hosts",
+                description = "comma seperated values of hosts and/or ip addresses that are allowed to call external email administration",
+                defaultValue = "")
         public String getEmailAdminAllowedHosts();
 
-        @ConfigurationProperty(key = "email.admin.password")
+        @ConfigurationProperty(key = "email.admin.password",
+                description = "password required to call external email administration", defaultValue = "xPtO!)&#.")
         public String getEmailAdminPassword();
 
         @ConfigurationProperty(key = "exportParkingData.password")
@@ -78,7 +87,9 @@ public class FenixConfigurationManager {
         @ConfigurationProperty(key = "exportParkingData.username")
         public String getExportParkingDataUsername();
 
-        @ConfigurationProperty(key = "external.application.workflow.equivalences.uri")
+        @ConfigurationProperty(key = "external.application.workflow.equivalences.uri",
+                description = "This equivalences workflow process now uses jersey so it uses its credentials",
+                defaultValue = "http://localhost:8080/dot/jersey/equivalenceplan/acceptNewProcess")
         public String getExternalApplicationWorkflowEquivalencesUri();
 
         @ConfigurationProperty(key = "external.application.workflow.equivalences.uri.secret")
@@ -108,38 +119,53 @@ public class FenixConfigurationManager {
         @ConfigurationProperty(key = "fenix.api.news.rss.url")
         public String getFenixApiNewsRSSUrl();
 
-        @ConfigurationProperty(key = "file.download.url.local.content")
+        @ConfigurationProperty(key = "file.download.url.local.content",
+                defaultValue = "http://localhost:8080/fenix/downloadFile/")
         public String getFileDownloadUrlLocalContent();
 
-        @ConfigurationProperty(key = "generic.application.email.confirmation.link")
+        @ConfigurationProperty(
+                key = "generic.application.email.confirmation.link",
+                defaultValue = "http://localhost:8080/fenix/publico/genericApplications.do?method=confirmEmail&contentContextPath_PATH=/candidaturas&confirmationCode=")
         public String getGenericApplicationEmailConfirmationLink();
 
-        @ConfigurationProperty(key = "generic.application.email.recommendation.link")
+        @ConfigurationProperty(
+                key = "generic.application.email.recommendation.link",
+                defaultValue = "http://localhost:8080/fenix/publico/genericApplications.do?method=uploadRecommendation&contentContextPath_PATH=/candidaturas&confirmationCode=")
         public String getGenericApplicationEmailRecommendationLink();
 
-        @ConfigurationProperty(key = "google.analytics.snippet")
+        @ConfigurationProperty(key = "google.analytics.snippet",
+                description = "Google Analytics snippet configuration (without <script> tags)")
         public String getGoogleAnalyticsSnippet();
 
-        @ConfigurationProperty(key = "gratuity.situation.creator.task.hour")
+        @ConfigurationProperty(
+                key = "gratuity.situation.creator.task.hour",
+                description = "Hour at which the task will be launched to create the gratuity situations. set to -1 to deactivate.",
+                defaultValue = "1")
         public String getGratuitySituationCreatorTaskHour();
 
-        @ConfigurationProperty(key = "host.control.name.*")
+        @ConfigurationProperty(
+                key = "host.control.name.*",
+                description = "Comma separated hostname values that are allowed to access the url host.control.name. See HostAccessControl.isAllowed(name, request)")
         public Map<String, String> getHostControlName();
 
-        @ConfigurationProperty(key = "http.host")
+        @ConfigurationProperty(
+                key = "http.host",
+                description = "Twillio host where the application will run. This is used by twilio so it can connect back to fenix",
+                defaultValue = "localhost")
         public String getHTTPHost();
 
-        @ConfigurationProperty(key = "http.port")
+        @ConfigurationProperty(key = "http.port", description = "Twillio port on which the application will be available",
+                defaultValue = "8080")
         public String getHTTPPort();
 
-        @ConfigurationProperty(key = "http.protocol")
+        @ConfigurationProperty(key = "http.protocol",
+                description = "Twillio http or https protocol where the application will run", defaultValue = "http")
         public String getHTTPProtocol();
 
-        @ConfigurationProperty(key = "index.html.link.*")
-        public Map<String, String> getIndexHtmlLink();
-
-        @ConfigurationProperty(key = "institution.url")
-        public String getInstitutionURL();
+        @ConfigurationProperty(key = "index.page.redirect",
+                description = "host specific initial page to be displayed from applications root",
+                defaultValue = "fenixEduIndex.do")
+        public String getIndexPageRedirect();
 
         @ConfigurationProperty(key = "jersey.password")
         public String getJerseyPassword();
@@ -147,13 +173,14 @@ public class FenixConfigurationManager {
         @ConfigurationProperty(key = "jersey.username")
         public String getJerseyUsername();
 
-        @ConfigurationProperty(key = "jndi.properties.file")
+        @ConfigurationProperty(key = "jndi.properties.file", description = "DSpace related",
+                defaultValue = "classpath://dspace.jndi.properties")
         public String getJNDIPropertiesFile();
 
         @ConfigurationProperty(key = "lastSemesterForCredits")
         public String getLastSemesterForCredits();
 
-        @ConfigurationProperty(key = "lastYearForCredits")
+        @ConfigurationProperty(key = "lastYearForCredits", defaultValue = "2010/2011")
         public String getLastYearForCredits();
 
         @ConfigurationProperty(key = "ldap.user.importation.service.password")
@@ -165,43 +192,33 @@ public class FenixConfigurationManager {
         @ConfigurationProperty(key = "ldap.user.importation.service.username")
         public String getLdapUserImportationServiceUsername();
 
-        @ConfigurationProperty(key = "log.image.directory")
-        public String getLogImageDirectory();
-
-        @ConfigurationProperty(key = "login.html.link.*")
-        public Map<String, String> getLoginHtmlLink();
-
-        @ConfigurationProperty(key = "login.page")
+        @ConfigurationProperty(key = "login.page", description = "absolute path to the login page",
+                defaultValue = "http://localhost:8080/fenix/privado")
         public String getLoginPage();
-
-        @ConfigurationProperty(key = "log.profile.dir")
-        public String getLogProfileDir();
-
-        @ConfigurationProperty(key = "log.profile.filename")
-        public String getLogProfileFilename();
 
         @ConfigurationProperty(key = "mailingList.host.name")
         public String getMailingListHostName();
 
-        @ConfigurationProperty(key = "mailSender.max.recipients")
+        @ConfigurationProperty(key = "mailSender.max.recipients", defaultValue = "50")
         public String getMailSenderMaxRecipients();
 
-        @ConfigurationProperty(key = "mail.smtp.host")
+        @ConfigurationProperty(key = "mail.smtp.host", description = "Cms Configuration")
         public String getMailSmtpHost();
 
-        @ConfigurationProperty(key = "mail.smtp.name")
+        @ConfigurationProperty(key = "mail.smtp.name", description = "Cms Configuration")
         public String getMailSmtpName();
 
         @ConfigurationProperty(key = "markSheet.printers.*")
         public Map<String, String> getMarkSheetPrinters();
 
-        @ConfigurationProperty(key = "merge.units.emails")
+        @ConfigurationProperty(key = "merge.units.emails",
+                description = "comma separated emails of persons who want to receive emails about merge of units.")
         public String getMergeUnitsEmails();
 
         @ConfigurationProperty(key = "monthlySmsLimit")
         public Integer getMonthlySmsLimit();
 
-        @ConfigurationProperty(key = "nameresolution.name")
+        @ConfigurationProperty(key = "nameresolution.name", defaultValue = "fenixRemoteRequests")
         public String getNameResolutionName();
 
         @ConfigurationProperty(key = "nameresolution.password")
@@ -219,43 +236,54 @@ public class FenixConfigurationManager {
         @ConfigurationProperty(key = "receipt.numberSeries.for.years")
         public String getReceiptNumberSeriesForYears();
 
-        @ConfigurationProperty(key = "rmi.port")
+        @ConfigurationProperty(key = "rmi.port", defaultValue = "0")
         public String getRMIPort();
 
-        @ConfigurationProperty(key = "rmi.registry.port")
+        @ConfigurationProperty(key = "rmi.registry.port", defaultValue = "1091")
         public String getRMIRegistryPort();
 
-        @ConfigurationProperty(key = "rmi.ssl")
+        @ConfigurationProperty(key = "rmi.ssl", defaultValue = "1")
         public String getRMISSL();
 
-        @ConfigurationProperty(key = "rmi.ssl.truststore")
+        @ConfigurationProperty(key = "rmi.ssl.truststore", defaultValue = "classpath://DSpaceClient.truststore")
         public String getRMISSLTruststore();
 
-        @ConfigurationProperty(key = "rmi.ssl.truststore.password")
+        @ConfigurationProperty(key = "rmi.ssl.truststore.password", defaultValue = "dspace")
         public String getRMISSLTruststorePassword();
 
-        @ConfigurationProperty(key = "rmi.stream.bytes.block")
+        @ConfigurationProperty(key = "rmi.stream.bytes.block", defaultValue = "512")
         public String getRMIStreamBytesBlock();
 
-        @ConfigurationProperty(key = "rmi.stream.bytes.max")
+        @ConfigurationProperty(key = "rmi.stream.bytes.max", defaultValue = "32768")
         public String getRMIStreamBytesMax();
 
-        @ConfigurationProperty(key = "rmi.stream.bytes.min")
+        @ConfigurationProperty(key = "rmi.stream.bytes.min", defaultValue = "2048")
         public String getRMIStreamBytesMin();
 
-        @ConfigurationProperty(key = "semester.for.from.enrolments")
+        @ConfigurationProperty(key = "semester.for.from.enrolments", defaultValue = "1")
         public String getSemesterForFromEnrolments();
 
-        @ConfigurationProperty(key = "semester.for.from.mark.sheet.managment")
+        @ConfigurationProperty(
+                key = "semester.for.from.mark.sheet.managment",
+                description = "indicates if pending request should be stored in database to recover current session after new login",
+                defaultValue = "2")
         public String getSemesterForFromMarkSheetManagment();
 
-        @ConfigurationProperty(key = "sibs.destinationInstitutionId")
+        @ConfigurationProperty(
+                key = "sibs.destinationInstitutionId",
+                description = "used in header payments file and represents entity service identification (i.e. sibs). Default value '50000000' (sibs identification)",
+                defaultValue = "50000000")
         public String getSibsDestinationInstitutionId();
 
-        @ConfigurationProperty(key = "sibs.entityCode")
+        @ConfigurationProperty(key = "sibs.entityCode",
+                description = "institution entity code to be used in atm machines with reference to perform payments",
+                defaultValue = "1111")
         public String getSibsEntityCode();
 
-        @ConfigurationProperty(key = "sibs.sourceInstitutionId")
+        @ConfigurationProperty(
+                key = "sibs.sourceInstitutionId",
+                description = "used in header payments file, and represents institution identification accordding to transfer service (i.e. sibs). Must be given by the entity that is peforming this service. Format: '9XXXXXXX'",
+                defaultValue = "11111111")
         public String getSibsSourceInstitutionId();
 
         @ConfigurationProperty(key = "sms.delivery.host")
@@ -294,34 +322,38 @@ public class FenixConfigurationManager {
         @ConfigurationProperty(key = "sms.gateway.username")
         public String getSMSGatewayUsername();
 
-        @ConfigurationProperty(key = "startExecutionYearForAllOptionalCurricularCoursesWithLessTenEnrolments")
+        @ConfigurationProperty(key = "startExecutionYearForAllOptionalCurricularCoursesWithLessTenEnrolments",
+                defaultValue = "2006/2007")
         public String getStartExecutionYearForAllOptionalCurricularCoursesWithLessTenEnrolments();
 
-        @ConfigurationProperty(key = "start.semester.for.bolonha.degrees")
+        @ConfigurationProperty(key = "start.semester.for.bolonha.degrees", defaultValue = "1")
         public String getStartSemesterForBolonhaDegrees();
 
-        @ConfigurationProperty(key = "start.semester.for.bolonha.transition")
+        @ConfigurationProperty(key = "start.semester.for.bolonha.transition", defaultValue = "1")
         public String getStartSemesterForBolonhaTransition();
 
-        @ConfigurationProperty(key = "startSemesterForCredits")
+        @ConfigurationProperty(key = "startSemesterForCredits", defaultValue = "2")
         public String getStartSemesterForCredits();
 
-        @ConfigurationProperty(key = "start.year.for.bolonha.degrees")
+        @ConfigurationProperty(key = "start.year.for.bolonha.degrees", defaultValue = "2006/2007")
         public String getStartYearForBolonhaDegrees();
 
-        @ConfigurationProperty(key = "start.year.for.bolonha.transition")
+        @ConfigurationProperty(key = "start.year.for.bolonha.transition", defaultValue = "2007/2008")
         public String getStartYearForBolonhaTransition();
 
-        @ConfigurationProperty(key = "startYearForCredits")
+        @ConfigurationProperty(key = "startYearForCredits", defaultValue = "2002/2003")
         public String getStartYearForCredits();
 
-        @ConfigurationProperty(key = "store.pending.request", defaultValue = "false")
+        @ConfigurationProperty(
+                key = "store.pending.request",
+                description = "indicates if pending request should be stored in database to recover current session after new login",
+                defaultValue = "true")
         public Boolean getStorePendingRequest();
 
-        @ConfigurationProperty(key = "tsdProcess.chart.height")
+        @ConfigurationProperty(key = "tsdProcess.chart.height", defaultValue = "480")
         public String getTSDProcessChartHeight();
 
-        @ConfigurationProperty(key = "tsdProcess.chart.width")
+        @ConfigurationProperty(key = "tsdProcess.chart.width", defaultValue = "640")
         public String getTSDProcessChartWidth();
 
         @ConfigurationProperty(key = "twilio.from.number")
@@ -363,19 +395,35 @@ public class FenixConfigurationManager {
         @ConfigurationProperty(key = "webServices.PersonManagement.getPersonInformation.username")
         public String getWebServicesPersonManagementGetPersonInformationUsername();
 
-        @ConfigurationProperty(key = "year.for.from.enrolments")
+        @ConfigurationProperty(key = "year.for.from.enrolments", defaultValue = "2004/2005")
         public String getYearForFromEnrolments();
 
-        @ConfigurationProperty(key = "year.for.from.mark.sheet.managment")
+        @ConfigurationProperty(key = "year.for.from.mark.sheet.managment",
+                description = "identifies the execution period after which mark sheet are to be managed in the fenix system.",
+                defaultValue = "2005/2006")
         public String getYearForFromMarkSheetManagment();
+
+        @ConfigurationProperty(key = "scaleRatio", defaultValue = "1200")
+        public String scaleRatio();
+
+        @ConfigurationProperty(key = "fontSize", defaultValue = "0.007")
+        public String fontSize();
+
+        @ConfigurationProperty(key = "padding", defaultValue = "0.025")
+        public String padding();
+
+        @ConfigurationProperty(key = "xAxisOffset", defaultValue = "0.075")
+        public String xAxisOffset();
+
+        @ConfigurationProperty(key = "yAxisOffset", defaultValue = "0.3")
+        public String yAxisOffset();
     }
 
     private static HostAccessControl hostAccessControl = new HostAccessControl(getConfiguration().getHostControlName());
 
-    private static HostRedirector hostRedirector = new HostRedirector(getConfiguration().getIndexHtmlLink(), getConfiguration()
-            .getLoginHtmlLink());
-
-    private static PrinterManager printerManager = new PrinterManager(getConfiguration().getMarkSheetPrinters());
+    private static final class PrinterManagerHolder {
+        private static PrinterManager printerManager = new PrinterManager(getConfiguration().getMarkSheetPrinters());
+    }
 
     private static Boolean barraAsAuthenticationBroker = getConfiguration().barraAsAuthenticationBroker();
 
@@ -387,12 +435,8 @@ public class FenixConfigurationManager {
         return hostAccessControl;
     }
 
-    public static HostRedirector getHostRedirector() {
-        return hostRedirector;
-    }
-
     public static PrinterManager getPrinterManager() {
-        return printerManager;
+        return PrinterManagerHolder.printerManager;
     }
 
     public static Boolean isBarraAsAuthenticationBroker() {

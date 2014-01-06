@@ -32,15 +32,15 @@
 		<a href="<%=institutionUrl%>" target="_blank"><%=institutionName %></a>
 	</h1>
 	<div id="authentication">
-		<logic:notPresent name="USER_SESSION_ATTRIBUTE">
+		<logic:notPresent name="LOGGED_USER_ATTRIBUTE">
 			<h1 id="logout">
 				<html:link styleClass="button" href="loginPage.jsp">Login</html:link>
 			</h1>
 		</logic:notPresent>
 		
-		<logic:present name="USER_SESSION_ATTRIBUTE">
+		<logic:present name="LOGGED_USER_ATTRIBUTE">
 			<p id="user">
-				<bean:write name="USER_SESSION_ATTRIBUTE" property="user.person.firstAndLastName"/>	
+				<bean:write name="LOGGED_USER_ATTRIBUTE" property="person.firstAndLastName"/>	
 			</p>
 		
 			<% if (CoreConfiguration.getConfiguration().developmentMode()) { %>

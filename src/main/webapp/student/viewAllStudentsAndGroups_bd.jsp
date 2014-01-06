@@ -56,7 +56,7 @@
 	
 		<bean:define id="infoSiteStudentInformation" name="infoSiteStudentAndGroup" property="infoSiteStudentInformation"/>
 		<bean:define id="infoStudentGroup" name="infoSiteStudentAndGroup" property="infoStudentGroup"/>
-		<bean:define id="username" name="USER_SESSION_ATTRIBUTE" property="user.username" type="java.lang.String"/>
+		<bean:define id="username" name="LOGGED_USER_ATTRIBUTE" property="username" type="java.lang.String"/>
 		<logic:equal name="infoSiteStudentInformation" property="username" value="<%= username %>">
 			<tr class="highlight">
 				<td>

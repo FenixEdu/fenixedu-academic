@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.documents;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -43,12 +42,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
     public ActionForward search(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         DocumentSearchBean searchBean = getRenderedObject();
-        List<GeneratedDocument> documents = new ArrayList<GeneratedDocument>();
-        for (GenericFile file : rootDomainObject.getFileSupport().getGenericFilesSet()) {
-            if (file instanceof GeneratedDocument) {
-                documents.add((GeneratedDocument) file);
-            }
-        }
+        List<GeneratedDocument> documents = GenericFile.getFiles(GeneratedDocument.class);
         if (searchBean.hasAddressee()) {
             SearchPerson.SearchParameters parameters =
                     new SearchParameters(searchBean.getAddressee().getName(), null, searchBean.getAddressee().getUsername(),

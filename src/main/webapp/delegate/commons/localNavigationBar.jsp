@@ -4,8 +4,6 @@
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 
-<bean:define id="userView" name="USER_SESSION_ATTRIBUTE"/>
-
 <logic:present role="role(DELEGATE)">
 	<ul>
 		<%--<li>
@@ -27,8 +25,8 @@
 			</html:link>
 		</li>
 		
-		<logic:present name="USER_SESSION_ATTRIBUTE" property="user.person.student">
-			<bean:define id="student" name="USER_SESSION_ATTRIBUTE" property="user.person.student" />
+		<logic:present name="LOGGED_USER_ATTRIBUTE" property="person.student">
+			<bean:define id="student" name="LOGGED_USER_ATTRIBUTE" property="person.student" />
 
 			<logic:present name="student" property="delegateFunction">
 				<bean:define id="degree" name="student" property="delegateFunction.unit.degree" />

@@ -159,7 +159,7 @@ Before migrating to Fenix 2.x, you must first ensure that:
     
         @Override
         public void runTask() throws Exception {
-            for (User user : Bennu.getInstance().getUsersSet()) {
+            for (User user : Bennu.getInstance().getUserSet()) {
                 Object original = user.getExpiration();
                 UserLoginPeriod.computeUserExpiration(user);
                 if (!Objects.equals(original, user.getExpiration())) {

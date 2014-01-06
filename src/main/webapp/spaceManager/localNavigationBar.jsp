@@ -12,7 +12,7 @@
 			</html:link>
 		</li>
 		
-		<bean:define id="person" name="USER_SESSION_ATTRIBUTE" property="user.person" type="net.sourceforge.fenixedu.domain.Person"/>		
+		<bean:define id="person" name="LOGGED_USER_ATTRIBUTE" property="person" type="net.sourceforge.fenixedu.domain.Person"/>		
 		<li>		
 			<html:link page="/roomClassification.do?method=viewRoomClassifications">
 				<bean:message key="space.manager.room.classification.title" bundle="SPACE_RESOURCES"/>

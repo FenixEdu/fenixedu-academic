@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 
-import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
@@ -29,6 +28,8 @@ import pt.ist.fenixWebFramework.renderers.schemas.Schema;
 import pt.ist.fenixWebFramework.renderers.schemas.SchemaSlotDescription;
 import pt.ist.fenixWebFramework.renderers.utils.RenderKit;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+
+import com.google.common.base.Predicate;
 
 public class VigilantTableRender extends OutputRenderer {
 
@@ -589,16 +590,13 @@ public class VigilantTableRender extends OutputRenderer {
             } else {
                 HtmlBlockContainer block = (HtmlBlockContainer) component;
                 if (block.getChildren().size() > 1) {
-                    super.applyStyle(block.getChild(new Predicate() {
-
+                    super.applyStyle(block.getChild(new Predicate<HtmlComponent>() {
                         @Override
-                        public boolean evaluate(Object arg0) {
-                            return arg0 instanceof HtmlTable;
+                        public boolean apply(HtmlComponent input) {
+                            return input instanceof HtmlTable;
                         }
-
                     }));
                 }
-
             }
         }
 

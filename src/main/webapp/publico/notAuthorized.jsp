@@ -9,6 +9,6 @@
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
-<logic:notPresent name="USER_SESSION_ATTRIBUTE">
+<logic:notPresent name="LOGGED_USER_ATTRIBUTE">
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a  href="<%= request.getContextPath() %>/privado">Login</a>
 </logic:notPresent>

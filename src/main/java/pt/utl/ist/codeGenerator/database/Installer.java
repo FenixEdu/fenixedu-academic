@@ -50,10 +50,10 @@ public class Installer {
                 String instituitionURL, String instituitionEmailDomain, String instalationName, String instalationDomain) {
             super();
             this.countryCode = countryCode;
-            
+
             pt.ist.standards.geographic.Country country = Planet.getEarth().getByAlfa3(countryCode);
             if (country == null) {
-                throw new RuntimeException("Country with code " + countryCode + " does not exist." );
+                throw new RuntimeException("Country with code " + countryCode + " does not exist.");
             }
 
             this.adminName = adminName;
@@ -405,7 +405,7 @@ public class Installer {
         person.setRootDomainObject(bennu);
         person.setCountry(process.country);
         person.setCountryOfBirth(process.country);
-        user.setPassword(process.adminPass);
+        user.changePassword(process.adminPass);
         process.person = person;
 
         EmailAddress.createEmailAddress(person, process.email, PartyContactType.PERSONAL, true, true, true, true, true, true);
