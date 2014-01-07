@@ -211,7 +211,7 @@ public abstract class Content extends Content_Base {
         for (final Node node : getParents()) {
             final Content child = node.getChild();
             node.delete();
-            if (child.getParentsSet().isEmpty()) {
+            if (child.getParentsSet().isEmpty() && child != this /* Already deleting this child, don't delete it again */) {
                 child.delete();
             }
         }
@@ -427,7 +427,7 @@ public abstract class Content extends Content_Base {
     @Override
     public void setAvailabilityPolicy(AvailabilityPolicy availabilityPolicy) {
         AvailabilityPolicy currentAvailabilityPolicy = getAvailabilityPolicy();
-	if (currentAvailabilityPolicy != null && currentAvailabilityPolicy != availabilityPolicy) {
+        if (currentAvailabilityPolicy != null && currentAvailabilityPolicy != availabilityPolicy) {
             currentAvailabilityPolicy.delete();
         }
         super.setAvailabilityPolicy(availabilityPolicy);

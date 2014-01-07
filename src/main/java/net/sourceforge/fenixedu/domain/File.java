@@ -17,8 +17,6 @@ import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.joda.time.DateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
@@ -27,8 +25,6 @@ import pt.utl.ist.fenix.tools.util.FileUtils;
 
 @Deprecated
 public abstract class File extends File_Base {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(File.class);
 
     protected void init(VirtualPath path, String filename, String displayName, Collection<FileSetMetaData> metadata,
             byte[] content, Group group) {
@@ -55,35 +51,12 @@ public abstract class File extends File_Base {
         }
     }
 
-//    public void storeToContentManager() {
-//        final FileDescriptor fileDescriptor =
-//                FileManagerFactory
-//                        .getFactoryInstance()
-//                        .getFileManager()
-//                        .saveFile(getLocalContent().getPath(), getFilename(), isPrivate(), getLocalContent().createMetadata(),
-//                                new ByteArrayInputStream(getLocalContent().getContent().getBytes()));
-//        setMimeType(fileDescriptor.getMimeType());
-//        setChecksum(fileDescriptor.getChecksum());
-//        setChecksumAlgorithm(fileDescriptor.getChecksumAlgorithm());
-//        setSize(new Long(fileDescriptor.getSize()));
-//        setExternalStorageIdentification(fileDescriptor.getUniqueId());
-//        getLocalContent().delete();
-//    }
-
     public boolean isPrivate() {
         if (getPermittedGroup() instanceof EveryoneGroup) {
             return false;
         }
         return true;
     }
-
-//    @Override
-//    public InputStream getStream() {
-//        if (getLocalContent() != null) {
-//            return new ByteArrayInputStream(getLocalContent().getContent().getBytes());
-//        }
-//        return super.getStream();
-//    }
 
     @Deprecated
     public byte[] getContents() {
@@ -108,7 +81,7 @@ public abstract class File extends File_Base {
     @Override
     public void delete() {
         disconnect();
-        deleteDomainObject();
+        super.delete();
     }
 
     public boolean isPersonAllowedToAccess(Person person) {
