@@ -87,6 +87,8 @@ Before migrating to Fenix 2.x, you must first ensure that:
     
     -- All existing files should be connected to the DSpace file storage
     UPDATE GENERIC_FILE SET OID_STORAGE = (SELECT OID_D_SPACE_FILE_STORAGE FROM BENNU), CONTENT_KEY = EXTERNAL_STORAGE_IDENTIFICATION;
+    -- And to the FileSupport root
+    UPDATE GENERIC_FILE SET OID_FILE_SUPPORT = (SELECT OID FROM FILE_SUPPORT);
     ```
 
 7. You can now safely start you application. It is now time to import some data and perform initial configurations.
