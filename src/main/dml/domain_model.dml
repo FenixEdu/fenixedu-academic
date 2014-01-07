@@ -1308,7 +1308,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         String checksum;
         String checksumAlgorithm;
         String externalStorageIdentification;
-        String mimeType;
         Group permittedGroup;
     }
     

@@ -7,8 +7,6 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.regex.Pattern;
 
-import javax.activation.MimetypesFileTypeMap;
-
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -29,7 +27,7 @@ public abstract class File extends File_Base {
     protected void init(VirtualPath path, String filename, String displayName, Collection<FileSetMetaData> metadata,
             byte[] content, Group group) {
         init(FileUtils.getFilenameOnly(filename), FileUtils.getFilenameOnly(displayName), content);
-        setMimeType(MimetypesFileTypeMap.getDefaultFileTypeMap().getContentType(filename));
+        setContentType(guessContentType(filename));
         setSize(new Long(content == null ? 0 : content.length));
         setPermittedGroup(group);
         setCreationDate(new DateTime());
@@ -137,11 +135,6 @@ public abstract class File extends File_Base {
     @Deprecated
     public boolean hasUploadTime() {
         return getUploadTime() != null;
-    }
-
-    @Deprecated
-    public boolean hasMimeType() {
-        return getMimeType() != null;
     }
 
     @Deprecated

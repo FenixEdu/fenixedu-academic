@@ -293,7 +293,7 @@ public class JerseyServices {
         if (file != null) {
             JsonObject info = new JsonObject();
             info.addProperty("filename", file.getFilename());
-            info.addProperty("mimeType", file.getMimeType());
+            info.addProperty("mimeType", file.getContentType());
             if (file instanceof ResearchResultDocumentFile) {
                 info.addProperty("group", ((ResearchResultDocumentFile) file).getFileResultPermittedGroupType().name());
             } else if (file instanceof ThesisFile) {

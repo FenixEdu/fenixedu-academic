@@ -102,7 +102,7 @@ public class CreateProjectSubmission {
 
         final ProjectSubmission projectSubmission = new ProjectSubmission(project, studentGroup, attends, projectSubmissionFile);
 
-        new ProjectSubmissionLog(projectSubmission.getSubmissionDateTime(), filename, projectSubmissionFile.getMimeType(),
+        new ProjectSubmissionLog(projectSubmission.getSubmissionDateTime(), filename, projectSubmissionFile.getContentType(),
                 projectSubmissionFile.getChecksum(), projectSubmissionFile.getChecksumAlgorithm(), bs.length, studentGroup,
                 attends, project);
 

@@ -192,7 +192,7 @@ public class GenericCandidaciesDA extends FenixDispatchAction {
                 && file.getGenericApplication() == application
                 && ((confirmationCode != null && application.getConfirmationCode() != null && application.getConfirmationCode()
                         .equals(confirmationCode)) || application.getGenericApplicationPeriod().isCurrentUserAllowedToMange())) {
-            response.setContentType(file.getMimeType());
+            response.setContentType(file.getContentType());
             response.addHeader("Content-Disposition", "attachment; filename=\"" + file.getFilename() + "\"");
             response.setContentLength(file.getSize().intValue());
             final DataOutputStream dos = new DataOutputStream(response.getOutputStream());
@@ -215,7 +215,7 @@ public class GenericCandidaciesDA extends FenixDispatchAction {
                 && file.getRecomentation().getConfirmationCode() != null
                 && ((file.getRecomentation().getGenericApplication().getGenericApplicationPeriod().isCurrentUserAllowedToMange()) || file
                         .getRecomentation().getConfirmationCode().equals(confirmationCode))) {
-            response.setContentType(file.getMimeType());
+            response.setContentType(file.getContentType());
             response.addHeader("Content-Disposition", "attachment; filename=\"" + file.getFilename() + "\"");
             response.setContentLength(file.getSize().intValue());
             final DataOutputStream dos = new DataOutputStream(response.getOutputStream());
