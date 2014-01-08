@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 3.1.0-->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="juryReport" pageWidth="595" pageHeight="842" columnWidth="469" leftMargin="70" rightMargin="56" topMargin="56" bottomMargin="14">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
@@ -266,10 +265,7 @@
 				<text><![CDATA[atribuir à Dissertação de Mestrado a nota final de   ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="256" y="452" width="196" height="20">
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-				</reportElement>
+				<reportElement x="256" y="452" width="196" height="20"/>
 				<textElement lineSpacing="Single">
 					<font size="12" pdfFontName="Helvetica"/>
 				</textElement>
