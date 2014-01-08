@@ -182,13 +182,13 @@ public class InstitutionPhdCandidacyPeriod extends InstitutionPhdCandidacyPeriod
         final String englishBody =
                 MessageFormat.format(String.format(
                         englishBundle.getString("message.phd.institution.email.body.missing.candidacy.validation"),
-                        PhdProperties.getPublicCandidacyAccessLink(), process.getCandidacyProcess().getCandidacyHashCode()
-                                .getValue()), Unit.getInstitutionAcronym());
+                        InstitutionPhdCandidacyProcessProperties.getPublicCandidacyAccessLink(new Locale("en", "EN")), process
+                                .getCandidacyProcess().getCandidacyHashCode().getValue()), Unit.getInstitutionAcronym());
         final String portugueseBody =
                 MessageFormat.format(String.format(
                         portugueseBundle.getString("message.phd.institution.email.body.missing.candidacy.validation"),
-                        PhdProperties.getPublicCandidacyAccessLink(), process.getCandidacyProcess().getCandidacyHashCode()
-                                .getValue()), Unit.getInstitutionAcronym());
+                        InstitutionPhdCandidacyProcessProperties.getPublicCandidacyAccessLink(new Locale("en", "EN")), process
+                                .getCandidacyProcess().getCandidacyHashCode().getValue()), Unit.getInstitutionAcronym());
 
         return new MultiLanguageString().with(Language.en, englishBody).with(Language.pt, portugueseBody);
     }
