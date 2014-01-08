@@ -53,7 +53,7 @@
 </p>
 
 
-<div class="mtop15" id="contacts"><bean:message key="message.nape.contacts" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" arg1="<%= Instalation.getInstance().getAcademicDirectionEmailAddress() %>" bundle="CANDIDATE_RESOURCES"/></div>
+<div class="mtop15" id="contacts"><bean:message key="message.nape.contacts" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" arg1="<%= Instalation.getInstance().getInstituitionalEmailAddress("da") %>" bundle="CANDIDATE_RESOURCES"/></div>
 
 <bean:define id="hash" name="hash"/> 
 <fr:form action='<%= mappingPath + ".do?method=prepareCandidacyCreation&hash=" + hash %>'>

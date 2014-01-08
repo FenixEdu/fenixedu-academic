@@ -28,4 +28,4 @@
 </p>
 
 <p>&nbsp;</p>
-<p id="contacts"><bean:message key="message.nape.contacts" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" arg1="<%=Instalation.getInstance().getAcademicDirectionEmailAddress() %>" bundle="CANDIDATE_RESOURCES"/></p>
+<p id="contacts"><bean:message key="message.nape.contacts" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" arg1="<%=Instalation.getInstance().getInstituitionalEmailAddress("da") %>" bundle="CANDIDATE_RESOURCES"/></p>

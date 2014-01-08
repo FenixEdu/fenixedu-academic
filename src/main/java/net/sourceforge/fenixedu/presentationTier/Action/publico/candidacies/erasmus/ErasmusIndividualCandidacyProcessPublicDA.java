@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.era
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -120,14 +119,12 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
     @Override
     protected String getCandidacyInformationLinkDefaultLanguage() {
-        String message = getStringFromDefaultBundle("link.candidacy.information.default.erasmus");
-        return MessageFormat.format(message, Instalation.getInstance().getNmciUrl());
+        return getStringFromDefaultBundle("link.candidacy.information.default.erasmus");
     }
 
     @Override
     protected String getCandidacyInformationLinkEnglish() {
-        String message = getStringFromDefaultBundle("link.candidacy.information.english.erasmus");
-        return MessageFormat.format(message, Instalation.getInstance().getNmciUrl());
+        return getStringFromDefaultBundle("link.candidacy.information.english.erasmus");
     }
 
     @Override
