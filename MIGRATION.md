@@ -12,7 +12,71 @@ Migrating to version 2.0 is a multi-step process that should take about 30 minut
 
 Before migrating to Fenix 2.x, you must first ensure that:
 
-1. There are no instances of `FileLocalContent`.
+##### Import Metadata From DSpace 
+1. This is a migration guide of EducationalResourceType metadata from DSpace to Fenix. 
+This metadata is used in resource search by execution course site interfaces.
+
+  1. Import all files to dspace including metadata
+
+    run script `pt.utl.ist.scripts.process.cron.file.UploadPendingFiles`
+
+  2. Grab FileContent instances OID and EXTERNAL_STORAGE_IDENTIFICATION from fenix DB
+    
+    ```
+    mysql fenix_production_db -A --skip-column-names -e "select OID, EXTERNAL_STORAGE_IDENTIFICATION from FILE where OID >> 32 = (SELECT DOMAIN_CLASS_ID FROM FF$DOMAIN_CLASS_INFO where DOMAIN_CLASS_NAME like 'net.sourceforge.fenixedu.domain.FileContent');" > filecontents.txt`
+   ```
+
+  3. Dump metadata for all files in dspace
+    ```
+    psql -ddspace -Udspace -c "select handle, text_value from handle inner join dcvalue on handle.resource_id = dcvalue.item_id where dc_type_id = 66;" -W > categories.txt
+    ```
+
+  4. Run the following python script to generate sql queries for file content resourcetype update
+
+    ```python
+    #this script reads from categories.txt and filecontents.txt files and generates migrate-categories.sql with the necessary SQL statements to update the file category directly in the fenix database.
+    import sys
+    def load_categories():
+        catsMap ={}
+        cats = open("categories.txt").readlines()
+        for cat in cats:
+            parts = cat.split("|");
+        	esi = parts[0].strip()
+        	category = parts[1].strip()
+        	catsMap[esi] = category
+        return catsMap
+    
+    
+    cats = load_categories()
+    def dump_categories_sql():
+        dump_file = open("migrate-categories.sql", "w")
+        lines = open('filecontents.txt').readlines()
+        for line in lines:
+    		parts = line.strip().split("\t")
+    		oid = parts[0].strip()
+    		esi = parts[1].strip()
+    		if esi == "NULL":
+    			sys.stderr.write("%s doesn't have esi.\n" % oid)
+    		if esi.endswith("/1"):
+    			esi = esi[:-2]
+    		if esi in cats:
+    			sql = "update GENERIC_FILE set RESOURCE_TYPE = '%s' where OID = %s;" % (cats[esi], oid)
+    			dump_file.write("%s\n" % sql)
+    	dump_file.close()
+    
+    dump_categories_sql()
+    ```
+
+  5. Create column in fenix db for resourcetype in file content
+    
+    ```
+    ALTER TABLE `GENERIC_FILE` ADD `RESOURCE_TYPE` text;
+    ```
+
+  6. Import resource type data to file contents in fenix (takes 2.5 minutes)
+
+    `mysql fenix_production_db -A < migrate-categories.sql`
+    
 2. Username generation is now handled by the [bennu-user-management](https://github.com/FenixEdu/bennu-user-management) module. Ensure that your installation registers a custom `UsernameGenerator`.
 3. Ensure that your installation contains an implementation of `net.sourceforge.fenixedu.util.ConnectionManager`, otherwise SQL-based lookups will not work.
 4. If your institution has external applications using Fenix's Jersey Services, the URL must be updated. Instead of `https://fenix.xpto/jersey/services`, it is now at `https://fenix.xpto/api/fenix/jersey/services`. If you are using Bennu's `web-service-utils`, simply update your Host URL to contain the suffix `/api/fenix`.
