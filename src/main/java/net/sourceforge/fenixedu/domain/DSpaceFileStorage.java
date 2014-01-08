@@ -3,16 +3,22 @@ package net.sourceforge.fenixedu.domain;
 import java.io.IOException;
 import java.io.InputStream;
 
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
+
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.methods.GetMethod;
 import org.fenixedu.bennu.core.domain.Bennu;
 
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.util.ByteArray;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
-import pt.utl.ist.fenix.tools.file.FileManagerFactory;
+
+import com.google.common.io.ByteStreams;
 
 @Deprecated
 public class DSpaceFileStorage extends DSpaceFileStorage_Base {
+    private static final String DSPACE_REMOTE_DOWNLOAD_SERVLET = "/DSpaceFileSetDownloadServlet";
 
     protected DSpaceFileStorage() {
         super();
@@ -41,26 +47,38 @@ public class DSpaceFileStorage extends DSpaceFileStorage_Base {
 
     @Override
     public byte[] read(String uniqueIdentification) {
-        InputStream inputStream = null;
         try {
-            inputStream = FileManagerFactory.getFactoryInstance().getFileManager().retrieveFile(uniqueIdentification);
-            return ByteArray.toBytes(inputStream);
+            return ByteStreams.toByteArray(readAsInputStream(uniqueIdentification));
         } catch (IOException e) {
             throw new Error(e);
-        } finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    throw new Error(e);
-                }
-            }
         }
     }
 
     @Override
     public InputStream readAsInputStream(String uniqueIdentification) {
-        return FileManagerFactory.getFactoryInstance().getFileManager().retrieveFile(uniqueIdentification);
+        HttpClient client = new HttpClient();
+
+        String remoteDownloadInterfaceUrl =
+                FenixConfigurationManager.getConfiguration().getDspaceServerUrl() + DSPACE_REMOTE_DOWNLOAD_SERVLET;
+
+        String username = FenixConfigurationManager.getConfiguration().getDspaceUsername();
+        String password = FenixConfigurationManager.getConfiguration().getDspacePassword();
+
+        String downloadUrl =
+                remoteDownloadInterfaceUrl + "?username=" + username + "&password=" + password + "&uniqueId="
+                        + uniqueIdentification;
+        GetMethod gm = new GetMethod(downloadUrl);
+
+        int result;
+        try {
+            result = client.executeMethod(gm);
+            if (result == HttpStatus.SC_OK) {
+                return gm.getResponseBodyAsStream();
+            }
+            throw new Error("Unable get stream for " + uniqueIdentification);
+        } catch (IOException e) {
+            throw new Error(e);
+        }
     }
 
 }

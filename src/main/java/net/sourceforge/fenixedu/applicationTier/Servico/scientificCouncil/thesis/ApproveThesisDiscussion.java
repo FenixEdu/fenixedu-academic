@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.thesi
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -33,9 +32,6 @@ import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
-import pt.utl.ist.fenix.tools.file.FileSetMetaData;
-import pt.utl.ist.fenix.tools.file.VirtualPath;
-import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -137,8 +133,8 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
         }
 
         Group group = ResearchResultDocumentFile.getPermittedGroup(groupType);
-        publication.addDocumentFile(getVirtualPath(thesis), getMetadata(thesis), dissertation.getContents(),
-                dissertation.getFilename(), dissertation.getDisplayName(), groupType, group);
+        publication.addDocumentFile(dissertation.getContents(), dissertation.getFilename(), dissertation.getDisplayName(),
+                groupType, group);
 
         publication.setThesis(thesis);
         author.addPersonRoleByRoleType(RoleType.RESEARCHER);
@@ -164,28 +160,6 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
 
     private static Month getMonth(Thesis thesis) {
         return Month.fromDateTime(thesis.getDiscussed());
-    }
-
-    private static Collection<FileSetMetaData> getMetadata(Thesis thesis) {
-        List<FileSetMetaData> metaData = new ArrayList<FileSetMetaData>();
-
-        metaData.add(FileSetMetaData.createAuthorMeta(thesis.getStudent().getPerson().getName()));
-        metaData.add(FileSetMetaData.createTitleMeta(thesis.getFinalTitle().getContent(thesis.getDissertation().getLanguage())));
-
-        return metaData;
-    }
-
-    private static VirtualPath getVirtualPath(Thesis thesis) {
-        VirtualPathNode[] nodes =
-                { new VirtualPathNode("Research", "Research"), new VirtualPathNode("Results", "Results"),
-                        new VirtualPathNode("Publications", "Publications") };
-
-        VirtualPath path = new VirtualPath();
-        for (VirtualPathNode node : nodes) {
-            path.addNode(node);
-        }
-
-        return path;
     }
 
     @Override

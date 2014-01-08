@@ -36,7 +36,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.file.FileManagerException;
 
 @Mapping(module = "SpaceManager", path = "/manageBlueprints", scope = "session", parameter = "method")
 @Forwards(value = {
@@ -83,9 +82,6 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
         } catch (DomainException ex) {
             saveActionMessageOnRequest(request, ex.getKey(), ex.getArgs());
             newBlueprint = spaceInformation.getSpace().getMostRecentBlueprint();
-        } catch (FileManagerException ex) {
-            saveActionMessageOnRequest(request, ex.getKey(), ex.getArgs());
-            newBlueprint = spaceInformation.getSpace().getMostRecentBlueprint();
         }
 
         return showBlueprintVersions(mapping, request, spaceInformation, newBlueprint);
@@ -128,9 +124,6 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
         } catch (DomainException ex) {
             saveActionMessageOnRequest(request, ex.getKey(), ex.getArgs());
             blueprint = spaceInformation.getSpace().getMostRecentBlueprint();
-        } catch (FileManagerException ex) {
-            saveActionMessageOnRequest(request, ex.getKey(), ex.getArgs());
-            blueprint = spaceInformation.getSpace().getMostRecentBlueprint();
         }
 
         return showBlueprintVersions(mapping, request, spaceInformation, blueprint);
@@ -146,9 +139,6 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
             DeleteBlueprintVersion.run(blueprint);
 
         } catch (DomainException ex) {
-            saveActionMessageOnRequest(request, ex.getKey(), ex.getArgs());
-            blueprint = spaceInformation.getSpace().getMostRecentBlueprint();
-        } catch (FileManagerException ex) {
             saveActionMessageOnRequest(request, ex.getKey(), ex.getArgs());
             blueprint = spaceInformation.getSpace().getMostRecentBlueprint();
         }
@@ -178,12 +168,6 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
         }
         final Blueprint blueprint = (Blueprint) obj;
         final BlueprintFile blueprintFile = blueprint.getBlueprintFile();
-
-        // If dspace worked properly we could do this...
-        // final byte[] blueprintBytes =
-        // FileManagerFactory.getFileManager().retrieveFile(blueprintFile.
-        // getExternalStorageIdentification());
-        // Science it doesn't, we'll do...
 
         final byte[] blueprintBytes = blueprintFile.getContentFile().getBytes();
         final InputStream inputStream = new ByteArrayInputStream(blueprintBytes);

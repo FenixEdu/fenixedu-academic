@@ -31,8 +31,6 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 
-import pt.utl.ist.fenix.tools.file.VirtualPath;
-import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
@@ -46,19 +44,12 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
             throw new DomainException("");
         }
         String filename = getFilename(teacher, executionSemester);
-        init(getfilePath(filename), filename, filename, null, content, null);
+        init(filename, filename, content, null);
     }
 
     private String getFilename(Teacher teacher, ExecutionSemester executionSemester) {
         return (teacher.getPerson().getIstUsername() + "_" + executionSemester.getName() + "_"
                 + executionSemester.getExecutionYear().getYear() + ".html").replaceAll(" ", "_").replaceAll("/", "_");
-    }
-
-    private VirtualPath getfilePath(String filename) {
-        final VirtualPath filePath = new VirtualPath();
-        filePath.addNode(new VirtualPathNode("TeacherCreditsDocuments", "TeacherCredits Documents"));
-        filePath.addNode(new VirtualPathNode("TeacherCreditsDocument" + getExternalId(), filename));
-        return filePath;
     }
 
     private String getTeacherCreditsFile(Teacher teacher, ExecutionSemester executionSemester, TeacherService teacherService)

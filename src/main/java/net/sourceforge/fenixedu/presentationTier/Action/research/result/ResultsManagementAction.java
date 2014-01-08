@@ -25,7 +25,6 @@ import org.slf4j.LoggerFactory;
 import pt.ist.fenixWebFramework.renderers.components.state.ViewDestination;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.file.FileManagerException;
 
 public class ResultsManagementAction extends FenixDispatchAction {
 
@@ -178,12 +177,7 @@ public class ResultsManagementAction extends FenixDispatchAction {
                     return destination.getActionForward();
                 }
             }
-
-        } else if (e instanceof FileManagerException) {
-            addActionMessage(request, "label.communicationError");
-            logger.error(e.getMessage(), e);
         } else {
-
             addMessage(request, e.getMessage());
             logger.error(e.getMessage(), e);
         }

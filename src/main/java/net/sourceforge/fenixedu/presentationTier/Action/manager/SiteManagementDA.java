@@ -52,7 +52,6 @@ import org.slf4j.LoggerFactory;
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.file.FileManagerException;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 /**
@@ -397,7 +396,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
             CreateFileContent.runCreateFileContent(bean.getSite(), container, file, bean.getFileName(), bean.getDisplayName(),
                     bean.getPermittedGroup(), getLoggedPerson(request), bean.getEducationalLearningResourceType());
 
-        } catch (FileManagerException e) {
+        } catch (DomainException e) {
             addErrorMessage(request, "unableToStoreFile", "errors.unableToStoreFile", bean.getFileName());
 
             return uploadFile(mapping, form, request, response);
@@ -456,7 +455,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 
         try {
             DeleteFileContent.runDeleteFileContent(fileContent);
-        } catch (FileManagerException e1) {
+        } catch (DomainException e1) {
             addErrorMessage(request, "items", "errors.unableToDeleteFile");
         }
 
@@ -529,7 +528,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
             Site site = fileItem.getSite();
             EditFilePermissions.runEditFilePermissions(site, fileItem, bean.getPermittedGroup());
             return mapping.findForward("section");
-        } catch (FileManagerException ex) {
+        } catch (DomainException ex) {
             addErrorMessage(request, "error.teacher.siteAdministration.editItemFilePermissions.unableToChangeFilePermissions");
 
             request.setAttribute("fileItemBean", bean);

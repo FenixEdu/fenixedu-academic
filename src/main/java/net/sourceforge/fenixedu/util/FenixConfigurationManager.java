@@ -53,14 +53,8 @@ public class FenixConfigurationManager {
         @ConfigurationProperty(key = "context.filter.exceptions", defaultValue = "/api")
         public String getContextFilterExceptions();
 
-        @ConfigurationProperty(key = "dspace.downloadUriFormat", defaultValue = "bitstream/{0}/{1}")
-        public String getDspaceDownloadUriFormat();
-
         @ConfigurationProperty(key = "dspace.password")
         public String getDspacePassword();
-
-        @ConfigurationProperty(key = "dspace.rmi.server.name", defaultValue = "DSpaceRMIRemoteManager")
-        public String getDspaceRMIServerName();
 
         @ConfigurationProperty(key = "dspace.serverUrl", defaultValue = "https://localhost:8443/dspace")
         public String getDspaceServerUrl();
@@ -173,10 +167,6 @@ public class FenixConfigurationManager {
         @ConfigurationProperty(key = "jersey.username")
         public String getJerseyUsername();
 
-        @ConfigurationProperty(key = "jndi.properties.file", description = "DSpace related",
-                defaultValue = "classpath://dspace.jndi.properties")
-        public String getJNDIPropertiesFile();
-
         @ConfigurationProperty(key = "lastSemesterForCredits")
         public String getLastSemesterForCredits();
 
@@ -235,30 +225,6 @@ public class FenixConfigurationManager {
 
         @ConfigurationProperty(key = "receipt.numberSeries.for.years")
         public String getReceiptNumberSeriesForYears();
-
-        @ConfigurationProperty(key = "rmi.port", defaultValue = "0")
-        public String getRMIPort();
-
-        @ConfigurationProperty(key = "rmi.registry.port", defaultValue = "1091")
-        public String getRMIRegistryPort();
-
-        @ConfigurationProperty(key = "rmi.ssl", defaultValue = "1")
-        public String getRMISSL();
-
-        @ConfigurationProperty(key = "rmi.ssl.truststore", defaultValue = "classpath://DSpaceClient.truststore")
-        public String getRMISSLTruststore();
-
-        @ConfigurationProperty(key = "rmi.ssl.truststore.password", defaultValue = "dspace")
-        public String getRMISSLTruststorePassword();
-
-        @ConfigurationProperty(key = "rmi.stream.bytes.block", defaultValue = "512")
-        public String getRMIStreamBytesBlock();
-
-        @ConfigurationProperty(key = "rmi.stream.bytes.max", defaultValue = "32768")
-        public String getRMIStreamBytesMax();
-
-        @ConfigurationProperty(key = "rmi.stream.bytes.min", defaultValue = "2048")
-        public String getRMIStreamBytesMin();
 
         @ConfigurationProperty(key = "semester.for.from.enrolments", defaultValue = "1")
         public String getSemesterForFromEnrolments();

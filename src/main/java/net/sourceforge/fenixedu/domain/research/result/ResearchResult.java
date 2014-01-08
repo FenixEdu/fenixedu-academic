@@ -28,8 +28,6 @@ import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.file.FileSetMetaData;
-import pt.utl.ist.fenix.tools.file.VirtualPath;
 
 public abstract class ResearchResult extends ResearchResult_Base {
 
@@ -126,20 +124,17 @@ public abstract class ResearchResult extends ResearchResult_Base {
         updateModifiedByAndDate();
     }
 
-    public ResearchResultDocumentFile addDocumentFile(final VirtualPath path, Collection<FileSetMetaData> metadata,
-            byte[] content, String filename, String displayName, FileResultPermittedGroupType permittedGroupType,
-            Group permittedGroup) {
+    public ResearchResultDocumentFile addDocumentFile(byte[] content, String filename, String displayName,
+            FileResultPermittedGroupType permittedGroupType, Group permittedGroup) {
         check(this, ResultPredicates.writePredicate);
-        return addDocumentFile(path, metadata, content, filename, displayName, permittedGroupType, permittedGroup, Boolean.TRUE);
+        return addDocumentFile(content, filename, displayName, permittedGroupType, permittedGroup, Boolean.TRUE);
     }
 
-    public ResearchResultDocumentFile addDocumentFile(final VirtualPath path, Collection<FileSetMetaData> metadata,
-            byte[] content, String filename, String displayName, FileResultPermittedGroupType permittedGroupType,
-            Group permittedGroup, Boolean isVisible) {
+    public ResearchResultDocumentFile addDocumentFile(byte[] content, String filename, String displayName,
+            FileResultPermittedGroupType permittedGroupType, Group permittedGroup, Boolean isVisible) {
         check(this, ResultPredicates.writePredicate);
         final ResearchResultDocumentFile documentFile =
-                new ResearchResultDocumentFile(path, metadata, content, this, filename, displayName, permittedGroupType,
-                        permittedGroup);
+                new ResearchResultDocumentFile(content, this, filename, displayName, permittedGroupType, permittedGroup);
         documentFile.setVisible(isVisible);
         updateModifiedByAndDate();
         return documentFile;

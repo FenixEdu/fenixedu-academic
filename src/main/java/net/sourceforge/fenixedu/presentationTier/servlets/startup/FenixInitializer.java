@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -56,9 +55,6 @@ import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriterF
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 import pt.ist.fenixframework.plugins.remote.domain.RemoteSystem;
-import pt.utl.ist.fenix.tools.file.DSpaceFileManagerFactory;
-import pt.utl.ist.fenix.tools.file.FileManagerFactory;
-import pt.utl.ist.fenix.tools.file.dspace.DSpaceHttpClient;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @WebListener
@@ -97,7 +93,7 @@ public class FenixInitializer implements ServletContextListener {
         registerContentInjectionRewriter();
         registerUncaughtExceptionHandler();
 
-        initializeFileManager();
+        initializeDSpaceFileStorage();
         initializeFenixAPI();
         initializeBennuManagersGroup();
 
@@ -124,32 +120,6 @@ public class FenixInitializer implements ServletContextListener {
     @Override
     public void contextDestroyed(ServletContextEvent arg0) {
 
-    }
-
-    private static void initializeFileManager() {
-        final Properties properties = new Properties();
-        properties.put("dspace.client.transport.class", DSpaceHttpClient.class.getName());
-        properties.put("file.manager.factory.implementation.class", DSpaceFileManagerFactory.class.getName());
-        properties.put("dspace.serverUrl", FenixConfigurationManager.getConfiguration().getDspaceServerUrl());
-        properties.put("dspace.downloadUriFormat", FenixConfigurationManager.getConfiguration().getDspaceDownloadUriFormat());
-        properties.put("dspace.username", FenixConfigurationManager.getConfiguration().getDspaceUsername());
-        properties.put("dspace.password", FenixConfigurationManager.getConfiguration().getDspacePassword());
-        properties.put("dspace.rmi.server.name", FenixConfigurationManager.getConfiguration().getDspaceRMIServerName());
-        properties.put("jndi.properties.file", FenixConfigurationManager.getConfiguration().getJNDIPropertiesFile());
-        properties.put("rmi.registry.port", FenixConfigurationManager.getConfiguration().getRMIRegistryPort());
-        properties.put("rmi.port", FenixConfigurationManager.getConfiguration().getRMIPort());
-        properties.put("rmi.ssl", FenixConfigurationManager.getConfiguration().getRMISSL());
-        properties.put("rmi.ssl.truststore", FenixConfigurationManager.getConfiguration().getRMISSLTruststore());
-        properties.put("rmi.ssl.truststore.password", FenixConfigurationManager.getConfiguration().getRMISSLTruststorePassword());
-        properties.put("rmi.stream.bytes.min", FenixConfigurationManager.getConfiguration().getRMIStreamBytesMin());
-        properties.put("rmi.stream.bytes.max", FenixConfigurationManager.getConfiguration().getRMIStreamBytesMax());
-        properties.put("rmi.stream.bytes.block", FenixConfigurationManager.getConfiguration().getRMIStreamBytesBlock());
-
-        FileManagerFactory.init(DSpaceFileManagerFactory.class.getName());
-
-        DSpaceFileManagerFactory.init(properties);
-
-        initializeDSpaceFileStorage();
     }
 
     private void startContactValidationServices() {

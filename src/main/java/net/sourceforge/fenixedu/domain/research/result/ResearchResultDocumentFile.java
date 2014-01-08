@@ -1,9 +1,6 @@
 package net.sourceforge.fenixedu.domain.research.result;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-
-import java.util.Collection;
-
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -12,8 +9,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.predicates.ResultPredicates;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.file.FileSetMetaData;
-import pt.utl.ist.fenix.tools.file.VirtualPath;
 
 public class ResearchResultDocumentFile extends ResearchResultDocumentFile_Base {
 
@@ -29,15 +24,14 @@ public class ResearchResultDocumentFile extends ResearchResultDocumentFile_Base 
         super();
     }
 
-    ResearchResultDocumentFile(final VirtualPath path, Collection<FileSetMetaData> metadata, byte[] content,
-            ResearchResult result, String filename, String displayName, FileResultPermittedGroupType permittedGroupType,
-            Group permittedGroup) {
+    ResearchResultDocumentFile(byte[] content, ResearchResult result, String filename, String displayName,
+            FileResultPermittedGroupType permittedGroupType, Group permittedGroup) {
         this();
         checkParameters(result, filename, displayName, permittedGroupType);
         super.setResult(result);
         super.setFileResultPermittedGroupType(permittedGroupType);
 //	init(filename, displayName, mimeType, checksum, checksumAlgorithm, size, externalStorageIdentification, permittedGroup);
-        init(path, filename, displayName, metadata, content, permittedGroup);
+        init(filename, displayName, content, permittedGroup);
     }
 
     public void setEdit(String displayName, FileResultPermittedGroupType fileResultPermittedGroupType) {

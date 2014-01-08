@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.research.result.CreateResultUnitAssociation;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.result.DeleteResultUnitAssociation;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultUnitAssociationCreationBean;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 
 import org.apache.struts.action.ActionForm;
@@ -20,7 +21,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.utl.ist.fenix.tools.file.FileManagerException;
 
 @Mapping(module = "researcher", path = "/result/resultAssociationsManagement", scope = "session", parameter = "method")
 @Forwards(value = {
@@ -66,7 +66,7 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
         try {
 
             CreateResultUnitAssociation.run(bean);
-        } catch (FileManagerException e) {
+        } catch (DomainException e) {
             logger.error(e.getMessage(), e);
             addActionMessage(request, "label.communicationError");
         } catch (Exception e) {
@@ -107,7 +107,7 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
         try {
 
             CreateResultUnitAssociation.run(bean);
-        } catch (FileManagerException e) {
+        } catch (DomainException e) {
             logger.error(e.getMessage(), e);
             addActionMessage(request, "label.communicationError");
         } catch (Exception e) {

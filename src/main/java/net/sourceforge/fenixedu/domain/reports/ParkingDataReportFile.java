@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
+import com.google.common.io.Files;
 import com.healthmarketscience.jackcess.Database;
 import com.healthmarketscience.jackcess.Table;
 
@@ -56,7 +57,7 @@ public class ParkingDataReportFile extends ParkingDataReportFile_Base {
 
             queueJobResult = new QueueJobResult();
             queueJobResult.setContentType("application/vnd.ms-access");
-            queueJobResult.setContent(pt.utl.ist.fenix.tools.file.utils.FileUtils.readByteArray(parkingDataFile));
+            queueJobResult.setContent(Files.toByteArray(parkingDataFile));
 
             logger.info("Job " + getFilename() + " completed");
         }

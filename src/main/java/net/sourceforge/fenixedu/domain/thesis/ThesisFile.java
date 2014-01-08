@@ -1,21 +1,16 @@
 package net.sourceforge.fenixedu.domain.thesis;
 
-import java.util.Collection;
-
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.ThesisFileReadersGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
-import pt.utl.ist.fenix.tools.file.FileSetMetaData;
-import pt.utl.ist.fenix.tools.file.VirtualPath;
 
 public class ThesisFile extends ThesisFile_Base {
 
-    public ThesisFile(VirtualPath path, String filename, String displayName, Collection<FileSetMetaData> metadata,
-            byte[] content, Group group) {
+    public ThesisFile(String filename, String displayName, byte[] content, Group group) {
         super();
-        init(path, filename, displayName, metadata, content, group);
+        init(filename, displayName, content, group);
     }
 
     @Override

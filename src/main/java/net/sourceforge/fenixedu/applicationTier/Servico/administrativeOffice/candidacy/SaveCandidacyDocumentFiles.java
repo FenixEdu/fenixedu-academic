@@ -5,8 +5,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.ca
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.CandidacyDocumentUploadBean;
@@ -24,9 +22,6 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import org.apache.commons.io.FileUtils;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.file.FileSetMetaData;
-import pt.utl.ist.fenix.tools.file.VirtualPath;
-import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -50,7 +45,6 @@ public class SaveCandidacyDocumentFiles {
                 Candidacy candidacy = candidacyDocument.getCandidacy();
                 Person person = candidacy.getPerson();
 
-                final Collection<FileSetMetaData> metadata = Collections.emptySet();
                 final byte[] content = read(candidacyDocumentUploadBean.getTemporaryFile());
 
                 if (candidacyDocument.getFile() != null) {
@@ -58,8 +52,8 @@ public class SaveCandidacyDocumentFiles {
                 }
 
                 final CandidacyDocumentFile candidacyDocumentFile =
-                        new CandidacyDocumentFile(getVirtualPath(candidacy), filename, filename, metadata, content,
-                                new GroupUnion(permittedGroup, new PersonGroup(person)));
+                        new CandidacyDocumentFile(filename, filename, content, new GroupUnion(permittedGroup, new PersonGroup(
+                                person)));
                 candidacyDocument.setFile(candidacyDocumentFile);
             }
         }
@@ -73,12 +67,4 @@ public class SaveCandidacyDocumentFiles {
             throw new Error(e);
         }
     }
-
-    private static VirtualPath getVirtualPath(Candidacy candidacy) {
-        final VirtualPath filePath = new VirtualPath();
-        filePath.addNode(new VirtualPathNode("Candidacies", "Candidacies"));
-        filePath.addNode(new VirtualPathNode("CANDIDACY" + candidacy.getNumber(), candidacy.getNumber().toString()));
-        return filePath;
-    }
-
 }

@@ -4,9 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.research.result.patent.AddDefaultDocumentToResearchResult;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.result.patent.DeleteResultPatent;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.result.patent.UpdateMetaInformation;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
 import net.sourceforge.fenixedu.presentationTier.Action.research.result.ResultsManagementAction;
 
@@ -20,7 +20,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.utl.ist.fenix.tools.file.FileManagerException;
 
 @Mapping(module = "researcher", path = "/patents/management", scope = "session", parameter = "method")
 @Forwards(value = {
@@ -67,13 +66,6 @@ public class ResultPatentsManagementAction extends ResultsManagementAction {
             HttpServletResponse response) throws FenixServiceException {
 
         final ResearchResultPatent patent = (ResearchResultPatent) getResultFromRequest(request);
-
-        try {
-            AddDefaultDocumentToResearchResult.run(patent);
-        } catch (FileManagerException e) {
-            logger.error(e.getMessage(), e);
-            addActionMessage(request, "label.communicationError");
-        }
         return showPatent(mapping, form, request, response);
     }
 
@@ -116,7 +108,7 @@ public class ResultPatentsManagementAction extends ResultsManagementAction {
 
         try {
             UpdateMetaInformation.run(patent);
-        } catch (FileManagerException e) {
+        } catch (DomainException e) {
             logger.error(e.getMessage(), e);
             addActionMessage(request, "label.communicationError");
         }

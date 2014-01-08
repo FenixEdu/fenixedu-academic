@@ -29,7 +29,6 @@ import javax.ws.rs.core.Response.Status;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -39,16 +38,13 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessNumber;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.photograph.PictureMode;
-import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile;
 import net.sourceforge.fenixedu.domain.research.result.publication.PreferredPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.PreferredPublication.PreferredComparator;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
-import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
 import net.sourceforge.fenixedu.util.ContentType;
 import net.sourceforge.fenixedu.webServices.ExportPublications;
 
@@ -273,37 +269,6 @@ public class JerseyServices {
     @Produces(MediaType.APPLICATION_XML)
     public byte[] readPublications() {
         return new ExportPublications().harverst();
-    }
-
-    @GET
-    @Path("publication")
-    public Response publicationFile(@QueryParam("storageId") String storageId) {
-        File file = File.readByExternalStorageIdentification(storageId);
-        if (file != null) {
-            return Response.ok().entity(file.getStream()).build();
-        }
-        throw new WebApplicationException(Status.NO_CONTENT);
-    }
-
-    @GET
-    @Path("publication/info")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String publicationInfo(@QueryParam("storageId") String storageId) {
-        File file = File.readByExternalStorageIdentification(storageId);
-        if (file != null) {
-            JsonObject info = new JsonObject();
-            info.addProperty("filename", file.getFilename());
-            info.addProperty("mimeType", file.getContentType());
-            if (file instanceof ResearchResultDocumentFile) {
-                info.addProperty("group", ((ResearchResultDocumentFile) file).getFileResultPermittedGroupType().name());
-            } else if (file instanceof ThesisFile) {
-                info.addProperty("group", ((ThesisFile) file).getDissertationThesis().getVisibility().name());
-            } else if (file instanceof PhdProgramProcessDocument) {
-                info.addProperty("group", "RESEARCHER");
-            }
-            return info.toString();
-        }
-        throw new WebApplicationException(Status.NO_CONTENT);
     }
 
     @GET

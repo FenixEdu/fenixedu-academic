@@ -43,7 +43,6 @@ import org.joda.time.DateTime;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.file.FileManagerException;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 /**
@@ -366,8 +365,6 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
 
             CreateFileContentForBoard.runCreateFileContentForBoard((AnnouncementBoard) bean.getFileHolder(), file,
                     bean.getFileName(), bean.getDisplayName(), bean.getPermittedGroup(), getLoggedPerson(request));
-        } catch (FileManagerException e) {
-            addErrorMessage(request, "unableToStoreFile", "errors.unableToStoreFile", bean.getFileName());
         } catch (DomainException e) {
             addErrorMessage(request, "board", e.getKey(), (Object[]) e.getArgs());
         } finally {

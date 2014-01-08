@@ -37,6 +37,7 @@ import pt.utl.ist.fenix.tools.util.excel.ExcelStyle;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
+import com.google.common.io.Files;
 import com.healthmarketscience.jackcess.Column;
 import com.healthmarketscience.jackcess.DataType;
 import com.healthmarketscience.jackcess.Database;
@@ -357,7 +358,7 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
             response.setContentType("application/vnd.ms-access");
             response.setHeader("Content-disposition", "attachment; filename=Cartões_XML.mdb");
             final ServletOutputStream writer = response.getOutputStream();
-            writer.write(pt.utl.ist.fenix.tools.file.utils.FileUtils.readByteArray(temp));
+            writer.write(Files.toByteArray(temp));
             writer.flush();
             writer.close();
 
@@ -387,7 +388,7 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
             response.setContentType("application/vnd.ms-access");
             response.setHeader("Content-disposition", "attachment; filename=Cartões_XML.mdb");
             final ServletOutputStream writer = response.getOutputStream();
-            writer.write(pt.utl.ist.fenix.tools.file.utils.FileUtils.readByteArray(temp));
+            writer.write(Files.toByteArray(temp));
             writer.flush();
             writer.close();
 

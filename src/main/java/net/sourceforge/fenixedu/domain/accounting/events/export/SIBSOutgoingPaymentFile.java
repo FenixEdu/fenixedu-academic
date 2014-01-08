@@ -39,14 +39,8 @@ import org.joda.time.YearMonthDay;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.file.VirtualPath;
-import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
-
-    private static final String ROOT_DIR_DESCRIPTION = "SIBS Payment Codes File";
-    private static final String ROOT_DIR = "SIBSOutgoingPaymentFile";
-
     private static final Comparator<SIBSOutgoingPaymentFile> SUCCESSFUL_SENT_DATE_TIME_COMPARATOR =
             new Comparator<SIBSOutgoingPaymentFile>() {
 
@@ -81,7 +75,7 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
             StringBuilder errorsBuilder = new StringBuilder();
             byte[] paymentFileContents = createPaymentFile(lastSuccessfulSentDateTime, errorsBuilder).getBytes("ASCII");
             setErrors(errorsBuilder.toString());
-            init(getVirtualPath(), outgoingFilename(), outgoingFilename(), null, paymentFileContents, null);
+            init(outgoingFilename(), outgoingFilename(), paymentFileContents, null);
         } catch (UnsupportedEncodingException e) {
             throw new DomainException(e.getMessage(), e);
         }
@@ -209,16 +203,6 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
             appendToErrors(errorsBuilder, event.getExternalId(), e);
         }
 
-    }
-
-    protected VirtualPath getVirtualPath() {
-        final VirtualPath filePath = new VirtualPath();
-        filePath.addNode(new VirtualPathNode(ROOT_DIR, ROOT_DIR_DESCRIPTION));
-
-        filePath.addNode(new VirtualPathNode(subjectExecutionYear().getName(), subjectExecutionYear().getName()));
-        filePath.addNode(new VirtualPathNode(outgoingFilename(), outgoingFilename()));
-
-        return filePath;
     }
 
     private static ExecutionYear subjectExecutionYear() {

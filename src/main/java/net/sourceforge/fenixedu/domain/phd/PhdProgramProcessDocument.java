@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.phd;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Set;
 
@@ -12,12 +11,8 @@ import net.sourceforge.fenixedu.domain.accessControl.PhdProcessGuidingsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.lang.StringUtils;
-
-import pt.utl.ist.fenix.tools.file.VirtualPath;
-import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
 
@@ -71,7 +66,7 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
         final Group guidingsGroup = new PhdProcessGuidingsGroup(individualProgramProcess);
 
         final Group group = new GroupUnion(roleGroup, coordinatorGroup, guidingsGroup);
-        super.init(getVirtualPath(), filename, filename, Collections.EMPTY_SET, content, group);
+        super.init(filename, filename, content, group);
     }
 
     protected void setDocumentVersion(PhdProgramProcess process, PhdIndividualProgramDocumentType documentType) {
@@ -99,21 +94,6 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
         if (documentType == null || content == null || content.length == 0 || StringUtils.isEmpty(filename)) {
             throw new DomainException("error.phd.PhdProgramProcessDocument.documentType.and.file.cannot.be.null");
         }
-    }
-
-    /**
-     * <pre>
-     * Format /PhdIndividualProgram/{processId}
-     * </pre>
-     * 
-     * @return
-     */
-    protected VirtualPath getVirtualPath() {
-        final VirtualPath filePath = new VirtualPath();
-        filePath.addNode(new VirtualPathNode("PhdIndividualProgram", "PhdIndividualProgram"));
-        filePath.addNode(new VirtualPathNode(getPhdProgramProcess().getIndividualProgramProcess().getExternalId().toString(),
-                getPhdProgramProcess().getIndividualProgramProcess().getExternalId().toString()));
-        return filePath;
     }
 
     @Override

@@ -1,6 +1,5 @@
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
-<%@page import="pt.utl.ist.fenix.tools.file.FileManagerFactory"%>
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %> 
@@ -26,15 +25,12 @@
 				<br/>
 				<table>
 				<logic:iterate id="infoFileItem" name="item" property="infoFileItems">
-				<bean:define id="itemCode" name="item" property="externalId" type="java.lang.String"/>
-				<bean:define id="displayName" name="infoFileItem" property="displayName" type="java.lang.String"/>
-				<bean:define id="externalStorageIdentification" name="infoFileItem" property="externalStorageIdentification" type="java.lang.String"/>
-				<bean:define id="filename" name="infoFileItem" property="htmlFriendlyFilename" type="java.lang.String"/>
-				<bean:define id="fileItemId" name="infoFileItem" property="externalId" type="java.lang.String"/>
+					<bean:define id="displayName" name="infoFileItem" property="displayName" type="java.lang.String"/>
+					<bean:define id="downloadUrl" name="infoFileItem" property="downloadUrl" type="java.lang.String"/>
 					<tr>
 						<td><img src="<%= request.getContextPath() %>/images/list-bullet.gif" alt="<bean:message key="list-bullet" bundle="IMAGE_RESOURCES" />" /></td>
 						<td>
-							<html:link href="<%= FileManagerFactory.getFileManager().formatDownloadUrl(externalStorageIdentification,filename) %>" ><bean:write name="infoFileItem" property="displayName"/></html:link>
+							<html:link href="<%= downloadUrl %>" ><bean:write name="infoFileItem" property="displayName"/></html:link>
 						</td>
 					</tr>	
 				</logic:iterate>

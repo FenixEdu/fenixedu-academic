@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.ExecuteFactoryMe
 import net.sourceforge.fenixedu.applicationTier.Servico.person.parking.AcceptRegulation;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.parking.CreateParkingParty;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.parking.RenewUnlimitedParkingRequest;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.parking.DocumentDeliveryType;
 import net.sourceforge.fenixedu.domain.parking.ParkingDocumentState;
 import net.sourceforge.fenixedu.domain.parking.ParkingFile;
@@ -36,7 +37,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.utl.ist.fenix.tools.file.FileManagerException;
 
 import com.google.common.io.ByteStreams;
 
@@ -198,15 +198,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
         }
 
         fillInDocumentStates(parkingForm, parkingRequestFactoryEditor);
-        try {
-            ExecuteFactoryMethod.run(parkingRequestFactoryEditor);
-        } catch (FileManagerException ex) {
-            ActionMessages actionMessages = getActionMessages(request);
-            actionMessages.add("fileError", new ActionMessage(ex.getKey(), ex.getArgs()));
-            saveMessages(request, actionMessages);
-            RenderUtils.invalidateViewState();
-            return mapping.getInputForward();
-        }
+        ExecuteFactoryMethod.run(parkingRequestFactoryEditor);
         return prepareParking(mapping, actionForm, request, response);
     }
 
@@ -539,7 +531,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
         fillInDocumentStates(parkingForm, parkingRequestFactoryCreator);
         try {
             ExecuteFactoryMethod.run(parkingRequestFactoryCreator);
-        } catch (FileManagerException ex) {
+        } catch (DomainException ex) {
             ActionMessages actionMessages = getActionMessages(request);
             actionMessages.add("fileError", new ActionMessage(ex.getKey(), ex.getArgs()));
             saveMessages(request, actionMessages);

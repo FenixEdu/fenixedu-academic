@@ -14,7 +14,6 @@ import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.file.VirtualPath;
 
 public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgreementDocumentFile_Base {
 
@@ -37,20 +36,20 @@ public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgree
         this.setCandidacyFileActive(Boolean.TRUE);
         addIndividualCandidacy(candidacy);
         setCandidacyFileType(IndividualCandidacyDocumentFileType.APPROVED_LEARNING_AGREEMENT);
-        init(getVirtualPath(candidacy), filename, filename, null, contents, null);
+        init(filename, filename, contents, null);
     }
 
-    protected ApprovedLearningAgreementDocumentFile(byte[] contents, String filename, VirtualPath path) {
+    protected ApprovedLearningAgreementDocumentFile(byte[] contents, String filename) {
         this();
         this.setCandidacyFileActive(Boolean.TRUE);
         setCandidacyFileType(IndividualCandidacyDocumentFileType.APPROVED_LEARNING_AGREEMENT);
-        init(path, filename, filename, null, contents, null);
+        init(filename, filename, contents, null);
     }
 
     @Atomic
     public static ApprovedLearningAgreementDocumentFile createCandidacyDocument(byte[] contents, String filename,
             String processName, String documentIdNumber) {
-        return new ApprovedLearningAgreementDocumentFile(contents, filename, obtainVirtualPath(processName, documentIdNumber));
+        return new ApprovedLearningAgreementDocumentFile(contents, filename);
     }
 
     @Atomic
@@ -178,6 +177,7 @@ public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgree
     public boolean isAbleToSendEmailToAcceptStudent() {
         return getProcess().isStudentAccepted() && isMostRecent() && getCandidacyFileActive();
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ApprovedLearningAgreementExecutedAction> getExecutedActions() {
         return getExecutedActionsSet();

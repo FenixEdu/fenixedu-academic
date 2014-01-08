@@ -35,7 +35,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.utl.ist.fenix.tools.file.FileManagerException;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 /**
@@ -160,11 +159,6 @@ public class ProjectSubmissionDispatchAction extends FenixDispatchAction {
                     createProjectSubmissionBean.getStudentGroup(), createProjectSubmissionBean.getPerson());
 
         } catch (DomainException ex) {
-            saveActionMessageOnRequest(request, ex.getKey(), ex.getArgs());
-
-            return prepareProjectSubmission(mapping, form, request, response);
-
-        } catch (FileManagerException ex) {
             saveActionMessageOnRequest(request, ex.getKey(), ex.getArgs());
 
             return prepareProjectSubmission(mapping, form, request, response);

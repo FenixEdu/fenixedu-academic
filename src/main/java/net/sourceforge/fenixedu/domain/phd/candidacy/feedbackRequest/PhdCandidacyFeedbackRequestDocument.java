@@ -8,9 +8,6 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 
 import org.apache.commons.lang.StringUtils;
 
-import pt.utl.ist.fenix.tools.file.VirtualPath;
-import pt.utl.ist.fenix.tools.file.VirtualPathNode;
-
 public class PhdCandidacyFeedbackRequestDocument extends PhdCandidacyFeedbackRequestDocument_Base {
 
     private PhdCandidacyFeedbackRequestDocument() {
@@ -58,22 +55,6 @@ public class PhdCandidacyFeedbackRequestDocument extends PhdCandidacyFeedbackReq
         } else {
             super.setDocumentVersion(1);
         }
-    }
-
-    /**
-     * <pre>
-     * Format /PhdIndividualProgram/{processId}
-     * </pre>
-     * 
-     * @return
-     */
-    @Override
-    protected VirtualPath getVirtualPath() {
-        final VirtualPath filePath = new VirtualPath();
-        filePath.addNode(new VirtualPathNode("PhdIndividualProgram", "PhdIndividualProgram"));
-        filePath.addNode(new VirtualPathNode(getElement().getProcess().getIndividualProgramProcess().getExternalId().toString(),
-                getElement().getProcess().getIndividualProgramProcess().getExternalId().toString()));
-        return filePath;
     }
 
     @Override

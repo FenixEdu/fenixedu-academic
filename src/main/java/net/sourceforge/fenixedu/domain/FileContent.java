@@ -1,12 +1,8 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.util.Collection;
-
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.contents.Attachment;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.file.FileSetMetaData;
-import pt.utl.ist.fenix.tools.file.VirtualPath;
 
 public class FileContent extends FileContent_Base {
 
@@ -30,17 +26,11 @@ public class FileContent extends FileContent_Base {
 
     protected FileContent() {
         super();
-
-        setAttachment(null);
-    }
-
-    public FileContent(VirtualPath path, String filename, String displayName, Collection<FileSetMetaData> metadata,
-            byte[] content, Group group) {
-        init(path, filename, displayName, metadata, content, group);
     }
 
     public FileContent(String filename, String displayName, byte[] content, Group group, EducationalResourceType type) {
-        init(null, filename, displayName, null, content, group);
+        this();
+        init(filename, displayName, content, group);
         setResourceType(type);
     }
 

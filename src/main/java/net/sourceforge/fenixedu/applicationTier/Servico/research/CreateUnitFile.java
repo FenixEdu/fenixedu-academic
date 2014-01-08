@@ -2,8 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.research;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Collections;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
@@ -17,9 +15,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import org.apache.commons.io.FileUtils;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.file.FileSetMetaData;
-import pt.utl.ist.fenix.tools.file.VirtualPath;
-import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class CreateUnitFile {
 
@@ -35,20 +30,9 @@ public class CreateUnitFile {
     public static void run(java.io.File file, String originalFilename, String displayName, String description, String tags,
             Group permittedGroup, Unit unit, Person person) throws FenixServiceException {
 
-        final Collection<FileSetMetaData> metaData = Collections.emptySet();
         final byte[] content = read(file);
-        new UnitFile(unit, person, description, tags, getVirtualPath(unit), originalFilename, displayName, metaData, content,
+        new UnitFile(unit, person, description, tags, originalFilename, displayName, content,
                 !isPublic(permittedGroup) ? new GroupUnion(permittedGroup, new PersonGroup(person)) : permittedGroup);
-    }
-
-    private static VirtualPath getVirtualPath(Unit unit) {
-
-        final VirtualPath filePath = new VirtualPath();
-
-        filePath.addNode(new VirtualPathNode("Research", "Research"));
-        filePath.addNode(new VirtualPathNode("ResearchUnit" + unit.getExternalId(), unit.getName()));
-
-        return filePath;
     }
 
     private static boolean isPublic(Group permittedGroup) {

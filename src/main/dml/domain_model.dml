@@ -552,22 +552,6 @@ valueType org.joda.time.YearMonthDay as YearMonthDay {
     internalizeWith net.sourceforge.fenixedu.util.date.SerializationTool.yearMonthDayDeserialize();
 }
 
-valueType pt.utl.ist.fenix.tools.file.FileSetMetaData as FileSetMetaData {
-    externalizeWith {
-        String toXMLString();
-    }
-
-    internalizeWith buildFromXMLString();
-}
-
-valueType pt.utl.ist.fenix.tools.file.VirtualPath as VirtualPath {
-    externalizeWith {
-        String toXMLString();
-    }
-
-    internalizeWith buildFromXMLString();
-}
-
 valueType pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString as MultiLanguageString {
     externalizeWith {
         String exportAsString();
