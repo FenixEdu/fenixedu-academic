@@ -34,6 +34,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 
@@ -170,7 +171,12 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
         BigDecimal scalePercentage = getScalePercentage(request);
 
         final String blueprintIdString = request.getParameter("blueprintId");
-        final Blueprint blueprint = FenixFramework.getDomainObject(blueprintIdString);
+        final DomainObject obj = FenixFramework.getDomainObject(blueprintIdString);
+        if (!(obj instanceof Blueprint)) {
+            response.setStatus(404);
+            return null;
+        }
+        final Blueprint blueprint = (Blueprint) obj;
         final BlueprintFile blueprintFile = blueprint.getBlueprintFile();
 
         // If dspace worked properly we could do this...

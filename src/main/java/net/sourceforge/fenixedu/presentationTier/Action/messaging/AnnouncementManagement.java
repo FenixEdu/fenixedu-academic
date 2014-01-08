@@ -41,6 +41,7 @@ import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 import pt.utl.ist.fenix.tools.util.FileUtils;
@@ -99,7 +100,8 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
 
     protected Announcement getRequestedAnnouncement(HttpServletRequest request) {
         String id = this.getAnnouncementId(request);
-        return id != null ? (Announcement) FenixFramework.getDomainObject(id) : null;
+        DomainObject obj = FenixFramework.getDomainObject(id);
+        return obj instanceof Announcement ? (Announcement) obj : null;
     }
 
     public ActionForward addBookmark(ActionMapping mapping, ActionForm form, HttpServletRequest request,

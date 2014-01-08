@@ -52,6 +52,7 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
 import bibtex.dom.BibtexEntry;
 import bibtex.dom.BibtexFile;
@@ -68,9 +69,10 @@ public class BibTexManagementDispatchAction extends FenixDispatchAction {
     public ActionForward exportPublicationToBibtex(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
-        ResearchResultPublication publication = FenixFramework.getDomainObject(request.getParameter("publicationId"));
+        DomainObject obj = FenixFramework.getDomainObject(request.getParameter("publicationId"));
 
-        if (publication != null) {
+        if (obj != null && obj instanceof ResearchResultPublication) {
+            ResearchResultPublication publication = (ResearchResultPublication) obj;
             BibtexEntry bibtexEntry = publication.exportToBibtexEntry();
             String bibtex = bibtexEntry.toString();
             request.setAttribute("bibtex", bibtex);

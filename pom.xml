@@ -3,12 +3,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-        <groupId>org.fenixedu</groupId>
-        <artifactId>fenix-framework-project</artifactId>
-        <version>1.3.0</version>
+		<groupId>org.fenixedu</groupId>
+		<artifactId>fenix-framework-project</artifactId>
+		<version>1.3.0</version>
 	</parent>
 
-    <groupId>pt.ist</groupId>
+	<groupId>pt.ist</groupId>
 	<artifactId>fenix</artifactId>
 	<packaging>jar</packaging>
 	<version>2.0.0-SNAPSHOT</version>
@@ -282,6 +282,12 @@
 			<artifactId>jdwglib</artifactId>
 			<version>1.0</version>
 		</dependency>
+		<!-- This dependency is needed by jdwglib -->
+		<dependency>
+			<groupId>com.iver.cit</groupId>
+			<artifactId>fmap</artifactId>
+			<version>0.5</version>
+		</dependency>
 		<dependency>
 			<groupId>com.twilio.sdk</groupId>
 			<artifactId>twilio-java-sdk</artifactId>
@@ -332,11 +338,11 @@
 			<artifactId>jersey-multipart</artifactId>
 			<version>1.14</version>
 		</dependency>
-        <dependency>
-            <groupId>pt.ist</groupId>
-            <artifactId>html-entities</artifactId>
-            <version>1.0</version>
-        </dependency>
+		<dependency>
+			<groupId>pt.ist</groupId>
+			<artifactId>html-entities</artifactId>
+			<version>1.0</version>
+		</dependency>
 		<dependency>
 			<groupId>pt.ist</groupId>
 			<artifactId>standards</artifactId>
@@ -383,14 +389,14 @@
 			<version>1.1.1</version>
 		</dependency>
 		<dependency>
-		    <groupId>commons-collections</groupId>
-		    <artifactId>commons-collections</artifactId>
-		    <version>3.2.1</version>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.1</version>
 		</dependency>
 		<dependency>
-		    <groupId>commons-io</groupId>
-		    <artifactId>commons-io</artifactId>
-		    <version>2.4</version>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
 		</dependency>
 		<dependency>
 			<groupId>avalon</groupId>
@@ -414,9 +420,9 @@
 			<version>1.2</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.fenixedu</groupId>
-		    <artifactId>fenixedu-commons</artifactId>
-		    <version>1.0.0-M3</version>
+			<groupId>org.fenixedu</groupId>
+			<artifactId>fenixedu-commons</artifactId>
+			<version>1.0.0-M3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.fenixedu</groupId>
