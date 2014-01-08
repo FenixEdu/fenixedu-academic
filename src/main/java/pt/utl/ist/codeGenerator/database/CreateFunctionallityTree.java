@@ -2206,7 +2206,7 @@ public class CreateFunctionallityTree {
                     x1301.addChild(x1316);
                     x1316.setTitle(MultiLanguageString.importFromString("en15:Search Contentspt19:Pesquisar Conteúdos"));
                     x1316.setNormalizedName(MultiLanguageString.importFromString("en15:search-contentspt21:pesquisa-de-conteudos"));
-                    x1316.setExecutionPath("/searchScormContent.do?method=prepareSearchForExecutionCourse");
+                    x1316.setExecutionPath("/searchFileContent.do?method=prepareSearchForExecutionCourse");
                     x1316.setVisible(true);
                     Functionality x1317 = new Functionality(MultiLanguageString.importFromString("pt14:Resultados QUC"));
                     x1301.addChild(x1317);

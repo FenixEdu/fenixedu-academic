@@ -13,14 +13,14 @@
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/checkall.js"></script>
 
 <html:xhtml/>
-<h2><bean:message key="label.search.scorm"/></h2>
+<h2><bean:message key="label.file.content.search"/></h2>
 
 	<div class="infoop2">
 		<bean:message key="label.information.about.search.line1"/>
 		<bean:message key="label.information.about.search.line2"/>
 	</div>
 
- 	<fr:form id="searchForm" action="<%= "/searchScormContent.do?method=searchScormContents" %>">
+ 	<fr:form id="searchForm" action="<%= "/searchFileContent.do?method=searchFileContent" %>">
 		<fr:hasMessages for="search" type="validation">
 			<p>
 			<span class="error0"><bean:message key="label.requiredFieldsNotPresent"/></span>
@@ -43,7 +43,7 @@
 					<fr:property name="defaultText" value="label.masterDegree.administrativeOffice.allExecutionYears"/>
 					<fr:property name="key" value="true"/>
 				</fr:layout>
-				<fr:destination name="postback" path="<%="/searchScormContent.do?method=changeTimeStamp" %>"/>
+				<fr:destination name="postback" path="<%="/searchFileContent.do?method=changeTimeStamp" %>"/>
 				</fr:edit>	
 	
 				<bean:message key="label.executionPeriod" bundle="APPLICATION_RESOURCES"/>:
@@ -55,7 +55,7 @@
 					<fr:property name="defaultText" value="label.masterDegree.administrativeOffice.allExecutionYears"/>
 					<fr:property name="key" value="true"/>
 				</fr:layout>
-				<fr:destination name="postback" path="<%="/searchScormContent.do?method=changeTimeStamp" %>"/>
+				<fr:destination name="postback" path="<%="/searchFileContent.do?method=changeTimeStamp" %>"/>
 				</fr:edit>
 			</td>
 		</tr>
@@ -115,7 +115,7 @@
 <p>
 <bean:message key="label.page" bundle="SITE_RESOURCES"/>: 
 <cp:collectionPages url="<%= 
-	"/publico/searchScormContent.do?method=moveIndex" + bean.getSearchElementsAsParameters()  %>" 
+	"/publico/searchFileContent.do?method=moveIndex" + bean.getSearchElementsAsParameters()  %>" 
 	pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages" numberOfVisualizedPages="10"/>
 </p>
 </logic:notEqual>
@@ -146,7 +146,7 @@
 <p>
 <bean:message key="label.page" bundle="SITE_RESOURCES"/>: 
 <cp:collectionPages url="<%= 
-    "/publico/searchScormContent.do?method=moveIndex" + bean.getSearchElementsAsParameters() %>" 
+    "/publico/searchFileContent.do?method=moveIndex" + bean.getSearchElementsAsParameters() %>" 
 	pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages" numberOfVisualizedPages="10"/>
 </p>
 </logic:notEqual>

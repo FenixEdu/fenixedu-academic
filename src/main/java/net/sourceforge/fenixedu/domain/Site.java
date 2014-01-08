@@ -14,8 +14,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.InternalPersonGroup;
 import net.sourceforge.fenixedu.domain.contents.Attachment;
@@ -29,6 +27,9 @@ import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.contents.Redirect;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -221,10 +222,6 @@ public abstract class Site extends Site_Base {
     }
 
     public boolean isFileClassificationSupported() {
-        return false;
-    }
-
-    public boolean isScormContentAccepted() {
         return false;
     }
 

@@ -22,9 +22,9 @@ import pt.ist.fenixframework.FenixFramework;
 
 import com.google.common.base.Strings;
 
-@Mapping(module = "publico", path = "/searchScormContent", parameter = "method")
-@Forwards(value = { @Forward(name = "search", path = "search-scorm-content") })
-public class SearchScormContentAction extends FenixDispatchAction {
+@Mapping(module = "publico", path = "/searchFileContent", parameter = "method")
+@Forwards(value = { @Forward(name = "search", path = "search-file-content") })
+public class SearchFileContentAction extends FenixDispatchAction {
     public ActionForward prepareSearchForExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
@@ -54,7 +54,7 @@ public class SearchScormContentAction extends FenixDispatchAction {
 
     }
 
-    public ActionForward searchScormContents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward searchFileContent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         SearchDSpaceCoursesBean bean = getRenderedObject("search");
         bean.search();

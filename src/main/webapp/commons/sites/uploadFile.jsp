@@ -43,29 +43,6 @@
 </li>
 </ul>
 
-<logic:equal name="site" property="scormContentAccepted" value="true">
-<p>
-<span>
-	<span class="pleft1">
-		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-			<bean:message key="title.item.file.upload" bundle="SITE_RESOURCES"/>
-	</span>
-	<span class="pleft1">
-		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-		<html:link page="<%= actionName + "?method=prepareUploadScormFile&amp;" + selectContainerString + "&amp;" + context %>">			
-		<bean:message key="link.scorm.uploadScormFile" bundle="SITE_RESOURCES"/>
-		</html:link>
-	</span>
-	<span class="pleft1">
-		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-		<html:link page="<%= actionName + "?method=prepareCreateScormFile&amp;" + selectContainerString + "&amp;" + context %>">			
-			<bean:message key="link.scorm.createScormFile" bundle="SITE_RESOURCES"/>
-		</html:link>
-	</span>
-</span>
-</p>
-</logic:equal>
-
 <logic:messagesPresent message="true">
 	<html:messages id="messages" message="true">
 		<p>

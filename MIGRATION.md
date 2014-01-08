@@ -159,7 +159,9 @@ This metadata is used in resource search by execution course site interfaces.
 
 8. Log in with a manager user. (The following steps assume that your installation has the core bennu UI modules).
 
-9. Go to `https://<url>/bennu-scheduler-ui/index.html#custom`, and run the following script to import User's private keys. You should change the path to the `keys.json` file being read, so that the path points to the file created in step 2), and is acessible by the Application Server.
+9. If you have functionalities with path: "/publico/searchScormContent.do" change them to "/publico/searchFileContent.do"
+
+10. Go to `https://<url>/bennu-scheduler-ui/index.html#custom`, and run the following script to import User's private keys. You should change the path to the `keys.json` file being read, so that the path points to the file created in step 2), and is acessible by the Application Server.
 
     ```java
     package pt.ist.fenix;
@@ -208,7 +210,7 @@ This metadata is used in resource search by execution course site interfaces.
     }
     ```
 
-10. Still in the Custom Task view, run the following script, to fill out the user's expiration dates
+11. Still in the Custom Task view, run the following script, to fill out the user's expiration dates
 
     ```java
     package pt.ist.fenix;
@@ -236,13 +238,13 @@ This metadata is used in resource search by execution course site interfaces.
     }
     ```
 
-11. Go to `https://<url>/bennu-io-ui/index.html` and configure the file storage that will be used for new files, and then, associate the file types with the desired storage.
+12. Go to `https://<url>/bennu-io-ui/index.html` and configure the file storage that will be used for new files, and then, associate the file types with the desired storage.
 
     Note that the provided `DSpaceFileStorage` is provided only as a legacy compatibility layer, and as such, it only allows reading from DSpace, and should NOT be used for new files.
 
-12. Go to `https://<url>/bennu-scheduler-ui/index.html` and configure the Schedules for the scripts that were previously run in Cron.
+13. Go to `https://<url>/bennu-scheduler-ui/index.html` and configure the Schedules for the scripts that were previously run in Cron.
 
-13. Your application should now be fully functional :)
+14. Your application should now be fully functional :)
 
 ## 1.1.0
  * Run etc/database_operations/run

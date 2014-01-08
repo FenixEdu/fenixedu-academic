@@ -149,9 +149,11 @@ public class GenerateSiteArchive extends FenixDispatchAction {
                 + "/publico/executionCourse.do\\?(executionCourseID=[0-9]+|&amp;|method=groupings)+", groupingsName));
         globalRules.add(new SimpleTransformRule(contextPath
                 + "/publico/executionCourse.do\\?(executionCourseID=[0-9]+|&amp;|method=evaluations)+", evaluationName));
-        globalRules.add(new SimpleTransformRule(contextPath
-                + "/publico/searchScormContent.do\\?(executionCourseID=[0-9]+|&amp;|method=prepareSearchForExecutionCourse)+",
-                "#"));
+        globalRules
+                .add(new SimpleTransformRule(
+                        contextPath
+                                + "/publico/searchFileContent.do\\?(executionCourseID=[0-9]+|&amp;|method=prepareSearchForExecutionCourse)+",
+                        "#"));
         globalRules.add(new SimpleTransformRule(contextPath + "/publico/executionCourse.do\\?.*?sectionID=([0-9]+).*",
                 "section-$1.html"));
         globalRules.add(new SimpleTransformRule(contextPath + "/publico/executionCourse.do\\?.*?method=rss.*", "#"));

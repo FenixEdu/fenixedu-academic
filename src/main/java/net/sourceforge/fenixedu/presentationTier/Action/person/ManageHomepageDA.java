@@ -38,11 +38,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
         value = {
                 @Forward(name = "addInstitutionSection", path = "homepage-add-institution-section", tileProperties = @Tile(
                         title = "private.personal.homepage.options")),
-                @Forward(name = "uploadScorm", path = "homepage-upload-scorm", tileProperties = @Tile(
-                        title = "private.personal.homepage.options")),
                 @Forward(name = "organizeItems", path = "homepage-organizeItems", tileProperties = @Tile(
-                        title = "private.personal.homepage.options")),
-                @Forward(name = "createScorm", path = "homepage-create-scorm", tileProperties = @Tile(
                         title = "private.personal.homepage.options")),
                 @Forward(name = "organizeFiles", path = "homepage-organizeFiles", tileProperties = @Tile(
                         title = "private.personal.homepage.options")),
