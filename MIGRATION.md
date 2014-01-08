@@ -83,7 +83,7 @@ Before migrating to Fenix 2.x, you must first ensure that:
     -- Rename FILE, as File now extends GenericFile
     DROP TABLE `GENERIC_FILE`;
     RENAME TABLE `FILE` TO `GENERIC_FILE`;
-    ALTER TABLE `GENERIC_FILE` CHANGE `CONTENT` `CONTENT_FILE` longblob, CHANGE `SIZE` `SIZE` bigint(20) default NULL, CHANGE `UPLOAD_TIME` `CREATION_DATE` timestamp NULL default NULL,CHANGE `MIME_TYPE` `CONTENT_TYPE` text,CHANGE `DISPLAY_NAME` `DISPLAY_NAME` text,CHANGE `FILENAME` `FILENAME` text, ADD `CONTENT_KEY` text, ADD `OID_STORAGE` bigint unsigned, add index (OID_STORAGE);
+    ALTER TABLE `GENERIC_FILE` CHANGE `CONTENT` `CONTENT_FILE` longblob, CHANGE `SIZE` `SIZE` bigint(20) default NULL, CHANGE `UPLOAD_TIME` `CREATION_DATE` timestamp NULL default NULL,CHANGE `MIME_TYPE` `CONTENT_TYPE` text,CHANGE `DISPLAY_NAME` `DISPLAY_NAME` text,CHANGE `FILENAME` `FILENAME` text, ADD `CONTENT_KEY` text, ADD `OID_STORAGE` bigint unsigned, add index (OID_STORAGE), ADD `OID_FILE_SUPPORT` bigint unsigned, add index (OID_FILE_SUPPORT);
     
     -- All existing files should be connected to the DSpace file storage
     UPDATE GENERIC_FILE SET OID_STORAGE = (SELECT OID_D_SPACE_FILE_STORAGE FROM BENNU), CONTENT_KEY = EXTERNAL_STORAGE_IDENTIFICATION;
