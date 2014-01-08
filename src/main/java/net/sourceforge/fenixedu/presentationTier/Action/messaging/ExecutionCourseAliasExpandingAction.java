@@ -15,6 +15,8 @@ import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
@@ -28,6 +30,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  */
 @Mapping(module = "external", path = "/expandAlias", scope = "request", validate = false, parameter = "method")
 public class ExecutionCourseAliasExpandingAction extends FenixAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(ExecutionCourseAliasExpandingAction.class);
 
     public static String emailAddressPrefix = "course-";
 
@@ -84,7 +88,7 @@ public class ExecutionCourseAliasExpandingAction extends FenixAction {
                 }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
                 result = "400 Got an exception when trying to send email: " + e.getClass().getName() + "\n";
             }
         } else {

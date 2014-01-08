@@ -36,6 +36,8 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.CategoryItemRenderer;
 import org.jfree.data.DefaultCategoryDataset;
 import org.joda.time.YearMonthDay;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -54,6 +56,9 @@ import pt.ist.fenixframework.FenixFramework;
         @Forward(name = "libraryAddOrRemoveOperators", path = "/library/operator/libraryAddOrRemoveOperators.jsp",
                 tileProperties = @Tile(title = "private.library.addorremoveoperators")) })
 public class LibraryOperatorDispatchAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(LibraryOperatorDispatchAction.class);
+
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         request.setAttribute("attendance", new LibraryAttendance());
@@ -163,7 +168,7 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
             response.getOutputStream().write(out.toByteArray());
             response.getOutputStream().close();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
 
         return null;

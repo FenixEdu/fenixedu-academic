@@ -9,11 +9,17 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgum
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongNumberOfArgumentsException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongTypeOfArgumentException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import pt.ist.fenixframework.FenixFramework;
 
 public class PersonGroup extends DomainBackedGroup<Person> {
 
     private static final long serialVersionUID = 1L;
+
+    private static final Logger logger = LoggerFactory.getLogger(PersonGroup.class);
 
     public PersonGroup(Person person) {
         super(person);
@@ -92,7 +98,7 @@ public class PersonGroup extends DomainBackedGroup<Person> {
             }
 
             if (person == null) {
-                System.out.println("accessControl.group.builder.person.doesNotExist" + String.valueOf(argument));
+                logger.info("accessControl.group.builder.person.doesNotExist" + String.valueOf(argument));
 //		throw new GroupDynamicExpressionException("accessControl.group.builder.person.doesNotExist", String
 //			.valueOf(argument));
             }

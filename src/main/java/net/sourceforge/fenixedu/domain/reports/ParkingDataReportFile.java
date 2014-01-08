@@ -17,6 +17,8 @@ import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
@@ -24,6 +26,8 @@ import com.healthmarketscience.jackcess.Database;
 import com.healthmarketscience.jackcess.Table;
 
 public class ParkingDataReportFile extends ParkingDataReportFile_Base {
+
+    private static final Logger logger = LoggerFactory.getLogger(ParkingDataReportFile.class);
 
     private static final String FILE_NAME = "Cartoes_XML.mdb";
 
@@ -54,7 +58,7 @@ public class ParkingDataReportFile extends ParkingDataReportFile_Base {
             queueJobResult.setContentType("application/vnd.ms-access");
             queueJobResult.setContent(pt.utl.ist.fenix.tools.file.utils.FileUtils.readByteArray(parkingDataFile));
 
-            System.out.println("Job " + getFilename() + " completed");
+            logger.info("Job " + getFilename() + " completed");
         }
         return queueJobResult;
     }

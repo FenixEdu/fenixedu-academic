@@ -21,17 +21,22 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.Atomic;
 
 public class GOPSendMessageService {
+
+    private static final Logger logger = LoggerFactory.getLogger(GOPSendMessageService.class);
+
     private static Sender GOP_SENDER = null;
 
     private static Sender getGOPSender() {
         if (GOP_SENDER == null) {
             GOP_SENDER = initGOPSender();
             if (GOP_SENDER == null) {
-                System.out.println("WARN: GOPSender couldn't be found, using SystemSender ...");
+                logger.warn("WARN: GOPSender couldn't be found, using SystemSender ...");
                 GOP_SENDER = Bennu.getInstance().getSystemSender();
             }
         }

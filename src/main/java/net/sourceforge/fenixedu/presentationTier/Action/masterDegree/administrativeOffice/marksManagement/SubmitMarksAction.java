@@ -34,6 +34,8 @@ import org.apache.struts.validator.DynaValidatorForm;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.YearMonthDay;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.FenixFramework;
 
@@ -42,6 +44,8 @@ import pt.ist.fenixframework.FenixFramework;
  * 
  */
 public class SubmitMarksAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(SubmitMarksAction.class);
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -141,7 +145,7 @@ public class SubmitMarksAction extends FenixDispatchAction {
                 actionErrors.add(e.getKey(), new ActionError(e.getKey(), e.getArgs()));
 
             } catch (FenixServiceException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
                 throw new FenixActionException(e);
             }
         }

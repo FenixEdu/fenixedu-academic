@@ -3,11 +3,16 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.externalServices;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
 public class PersonInformationFromUniqueCardDTO {
+
+    private static final Logger logger = LoggerFactory.getLogger(PersonInformationFromUniqueCardDTO.class);
 
     private String name;
 
@@ -237,7 +242,7 @@ public class PersonInformationFromUniqueCardDTO {
         builder.append("\ndistrict: " + district);
         builder.append("\nphoto: " + (photo != null));
 
-        System.out.println(builder.toString());
+        logger.info(builder.toString());
     }
 
     public String getIdentificationDocumentExtraDigit() {

@@ -8,8 +8,12 @@ import net.sourceforge.fenixedu.util.Money;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.joda.time.LocalDate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ReportStudentsUTLCandidatesForFirstYear extends ReportStudentsUTLCandidates {
+
+    private static final Logger logger = LoggerFactory.getLogger(ReportStudentsUTLCandidatesForFirstYear.class);
 
     public ReportStudentsUTLCandidatesForFirstYear(final ExecutionYear forExecutionYear, final HSSFSheet sheet) {
         super(forExecutionYear, sheet);
@@ -80,7 +84,7 @@ public class ReportStudentsUTLCandidatesForFirstYear extends ReportStudentsUTLCa
                         24);
                 addCellValue(row, onNullEmptyString(nif), 25);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
 
             i++;

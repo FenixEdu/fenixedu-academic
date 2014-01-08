@@ -16,11 +16,15 @@ import net.sourceforge.fenixedu.util.HostAccessControl;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "external", path = "/consultRoles", scope = "request", parameter = "method")
 public class ConsultRolesAction extends FenixAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(ConsultRolesAction.class);
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -51,7 +55,7 @@ public class ConsultRolesAction extends FenixAction {
             message = "Not authorized";
         } catch (Throwable ex) {
             message = ex.getMessage();
-            ex.printStackTrace();
+            logger.error(ex.getMessage(), ex);
         } finally {
             writeResponse(response, message);
         }

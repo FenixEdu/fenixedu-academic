@@ -3,8 +3,12 @@ package pt.ist.utl.fenix.utils;
 import java.util.Locale;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class NumberToWordsConverter {
+
+    private static final Logger logger = LoggerFactory.getLogger(NumberToWordsConverter.class);
 
     static private final String[] ONES = { "zero", "um", "dois", "três", "quatro", "cinco", "seis", "sete", "oito", "nove",
             "dez", "onze", "doze", "treze", "catorze", "quinze", "dezasseis", "dezassete", "dezoito", "dezanove" };
@@ -142,11 +146,11 @@ public class NumberToWordsConverter {
             int remainder = value % 1000;
             int nextRemainder = quotient % 1000;
 
-            System.out.print(StringUtils.rightPad("V: " + value, 11, ' ') + "\t");
-            System.out.print(StringUtils.rightPad("Q: " + quotient, 11, ' '));
-            System.out.print("\tR: " + remainder);
-            System.out.print("\tRQ: " + nextRemainder);
-            System.out.println("\twords: " + convert(value));
+            logger.info(StringUtils.rightPad("V: " + value, 11, ' ') + "\t");
+            logger.info(StringUtils.rightPad("Q: " + quotient, 11, ' '));
+            logger.info("\tR: " + remainder);
+            logger.info("\tRQ: " + nextRemainder);
+            logger.info("\twords: " + convert(value));
         }
     }
 

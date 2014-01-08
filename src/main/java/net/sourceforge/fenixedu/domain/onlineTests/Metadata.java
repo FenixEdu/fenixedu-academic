@@ -8,18 +8,22 @@ import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.utilTests.Element;
 import net.sourceforge.fenixedu.utilTests.ParseMetadata;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Susana Fernandes
  */
 
 public class Metadata extends Metadata_Base {
+
+    private static final Logger logger = LoggerFactory.getLogger(Metadata.class);
 
     public Metadata(final ExecutionCourse executionCourse, final String author, final String description,
             final String difficulty, final Calendar learningTime, final String mainSubject, final String secondarySubject,
@@ -48,7 +52,7 @@ public class Metadata extends Metadata_Base {
                 ParseMetadata parseMetadata = new ParseMetadata();
                 parseMetadata.parseMetadata(vector, this);
             } catch (final Exception ex) {
-                ex.printStackTrace();
+                logger.error(ex.getMessage(), ex);
                 throw new DomainException("failled.metadata.file.parse");
             }
         }

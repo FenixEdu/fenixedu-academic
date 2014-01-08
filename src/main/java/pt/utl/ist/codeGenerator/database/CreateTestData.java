@@ -74,7 +74,6 @@ import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.Admi
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreements.DegreeCurricularPlanServiceAgreement;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
@@ -136,6 +135,8 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.YearMonthDay;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
@@ -144,6 +145,8 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateTestData {
+
+    private static final Logger logger = LoggerFactory.getLogger(CreateTestData.class);
 
     public static abstract class AtomicAction extends Thread {
         @Atomic
@@ -160,7 +163,7 @@ public class CreateTestData {
         try {
             action.join();
         } catch (InterruptedException ie) {
-            System.out.println("Caught an interrupt during the execution of an atomic action, but proceeding anyway...");
+            logger.warn("Caught an interrupt during the execution of an atomic action, but proceeding anyway...");
         }
     }
 
@@ -744,7 +747,7 @@ public class CreateTestData {
                     }
                 }
             }
-            System.out.println("found no curricular period for: " + academicPeriod + " y " + y + " s " + s);
+            logger.info("found no curricular period for: " + academicPeriod + " y " + y + " s " + s);
             if (true) {
                 throw new Error();
             }

@@ -36,6 +36,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -54,6 +56,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 @Forwards(value = { @Forward(name = "allCandidaciesGrid", path = "/teacher/candidaciesGrid.jsp", tileProperties = @Tile(
         navLocal = "/teacher/showSeminariesIndex_bd.jsp", title = "private.seminars.viewapplications")) })
 public class ShowCandidacies extends FenixAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(ShowCandidacies.class);
 
     List doReadCandidacies(HttpServletRequest request) throws NotAuthorizedException, BDException {
         String modalityID;
@@ -127,7 +131,7 @@ public class ShowCandidacies extends FenixAction {
                 Collections.sort(candidaciesExtendedInfo, new BeanComparator("student.number"));
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new FenixActionException(e);
         }
         this.setAvaliableOptionsForInputQueries(request, userView);
@@ -168,7 +172,7 @@ public class ShowCandidacies extends FenixAction {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new FenixActionException(e);
         }
         Collections.sort(avaliableCurricularPlans, new BeanComparator("name")); // TODO

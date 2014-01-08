@@ -33,6 +33,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.RequestUtils;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
@@ -44,6 +46,8 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
  */
 @Mapping(path = "/exceptionHandlingAction", formBeanClass = ErrorMailForm.class)
 public class ExceptionHandlingAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(ExceptionHandlingAction.class);
 
     public static class ErrorMailForm extends FenixActionForm {
         private static final long serialVersionUID = -7707167674528047795L;
@@ -139,7 +143,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
                 email.send("suporte@dot.ist.utl.pt", "Localhost Error Report", mailBody);
             }
         } catch (Throwable t) {
-            t.printStackTrace();
+            logger.error(t.getMessage(), t);
             throw new Error(t);
         }
 
@@ -232,7 +236,7 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
         try {
             sendMail(request, requestBean, mailSubject, mailBody);
         } catch (Throwable t) {
-            t.printStackTrace();
+            logger.error(t.getMessage(), t);
             throw new Error(t);
         }
 

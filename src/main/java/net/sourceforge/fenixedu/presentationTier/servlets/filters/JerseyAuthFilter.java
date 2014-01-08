@@ -13,11 +13,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import pt.ist.fenixframework.plugins.remote.domain.RemoteHost;
 import pt.ist.fenixframework.plugins.remote.domain.RemoteSystem;
 
 @WebFilter(urlPatterns = "/api/fenix/jersey/services/*")
 public class JerseyAuthFilter implements Filter {
+
+    private static final Logger logger = LoggerFactory.getLogger(JerseyAuthFilter.class);
 
     final static String systemUsername = FenixConfigurationManager.getConfiguration().getJerseyUsername();
     final static String systemPassword = FenixConfigurationManager.getConfiguration().getJerseyPassword();
@@ -56,11 +62,11 @@ public class JerseyAuthFilter implements Filter {
         Boolean found = Boolean.FALSE;
         for (final RemoteHost remoteHost : RemoteSystem.getInstance().getRemoteHostsSet()) {
             if (remoteHost.matches(url, username, password)) {
-                System.out.println("[Jersey Server Invoke by client " + url);
+                logger.info("[Jersey Server Invoke by client " + url);
                 found = Boolean.TRUE;
             }
         }
-        System.out.println("[Jersey Server] Invoke by client " + url);
+        logger.info("[Jersey Server] Invoke by client " + url);
         return found;
     }
 

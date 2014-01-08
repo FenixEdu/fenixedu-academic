@@ -47,6 +47,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -70,6 +72,8 @@ import pt.ist.fenixframework.FenixFramework;
                 @Forward(name = "prepareEnrollmentChooseStudentWithoutRules",
                         path = "df.page.prepareEnrollmentChooseStudentWithoutRules"), @Forward(name = "exit", path = "/index.do") })
 public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction.class);
 
     private static final int MAX_CURRICULAR_YEARS = 5;
 
@@ -165,13 +169,12 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
                             getStudent(form), getDegreeType(form), executionSemester);
 
         } catch (NotAuthorizedException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             addActionMessage(request, "error.exception.notAuthorized2");
             return mapping.getInputForward();
 
         } catch (FenixServiceException e) {
-            e.printStackTrace();
-
+            logger.error(e.getMessage(), e);
             if (e.getMessage() != null && e.getMessage().endsWith("noCurricularPlans")) {
                 addActionMessage(request, e.getMessage(), studentNumber.toString());
             } else if (e.getMessage() != null && e.getMessage().endsWith("not.from.chosen.execution.year")) {
@@ -237,7 +240,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
             return mapping.getInputForward();
 
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             addActionMessage(request, "error.impossible.operations.unenroll", studentNumber.toString());
             return mapping.getInputForward();
         }
@@ -263,7 +266,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
                             executionSemester);
 
         } catch (NotAuthorizedException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             addActionMessage(request, "error.exception.notAuthorized2");
             return mapping.getInputForward();
 
@@ -370,12 +373,12 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
             }
 
         } catch (NotAuthorizedException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             addActionMessage(request, "error.exception.notAuthorized2");
             return mapping.getInputForward();
 
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             if (e.getMessage() != null && e.getMessage().endsWith("noCurricularPlans")) {
                 addActionMessage(request, e.getMessage(), studentNumber.toString());
             } else if (e.getMessage() != null && !e.getMessage().endsWith("noCurricularPlans")) {
@@ -437,12 +440,12 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
             }
 
         } catch (NotAuthorizedException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             addActionMessage(request, "error.exception.notAuthorized2");
             return mapping.getInputForward();
 
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             if (e.getMessage() != null && e.getMessage().endsWith("noCurricularPlans")) {
                 addActionMessage(request, e.getMessage(), studentNumber.toString());
             } else if (e.getMessage() != null && !e.getMessage().endsWith("noCurricularPlans")) {
@@ -550,7 +553,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
             return mapping.getInputForward();
 
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             addActionMessage(request, "error.impossible.operations.unenroll", studentCurricularPlan.getRegistration()
                     .getStudent().getNumber().toString());
             return mapping.getInputForward();
@@ -575,7 +578,7 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
                             studentCurricularPlan.getRegistration(), getDegreeType(form), executionSemester);
 
         } catch (NotAuthorizedException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             addActionMessage(request, "error.exception.notAuthorized2");
             return mapping.getInputForward();
 
@@ -625,12 +628,12 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
             }
 
         } catch (NotAuthorizedException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             addActionMessage(request, "error.exception.notAuthorized2");
             return mapping.getInputForward();
 
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             if (e.getMessage() != null && e.getMessage().endsWith("noCurricularPlans")) {
                 addActionMessage(request, e.getMessage(), studentNumber.toString());
             } else if (e.getMessage() != null && !e.getMessage().endsWith("noCurricularPlans")) {
@@ -675,12 +678,12 @@ public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends F
             }
 
         } catch (NotAuthorizedException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             addActionMessage(request, "error.exception.notAuthorized2");
             return mapping.getInputForward();
 
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             if (e.getMessage() != null && e.getMessage().endsWith("noCurricularPlans")) {
                 addActionMessage(request, e.getMessage(), studentNumber.toString());
             } else if (e.getMessage() != null && !e.getMessage().endsWith("noCurricularPlans")) {

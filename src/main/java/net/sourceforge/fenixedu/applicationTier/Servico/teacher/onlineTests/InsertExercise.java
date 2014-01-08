@@ -31,6 +31,8 @@ import net.sourceforge.fenixedu.utilTests.ParseMetadata;
 import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 
 import org.apache.struts.util.LabelValueBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.servlets.commons.UploadedFile;
 import pt.ist.fenixframework.Atomic;
@@ -42,6 +44,8 @@ import com.sun.faces.el.impl.parser.ParseException;
  * @author Susana Fernandes
  */
 public class InsertExercise {
+
+    private static final Logger logger = LoggerFactory.getLogger(InsertExercise.class);
 
     private static final double FILE_SIZE_LIMIT = Math.pow(2, 20);
 
@@ -152,7 +156,7 @@ public class InsertExercise {
                 xmlListMap.put("", xmlList);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return null;
         }
 

@@ -3,6 +3,9 @@ package net.sourceforge.fenixedu.presentationTier.renderers;
 import java.util.Collections;
 import java.util.Properties;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.Face;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
@@ -106,6 +109,8 @@ public class CaptchaRenderer extends InputRenderer {
 
     static public class CaptchaValidator extends HtmlValidator {
 
+        private static final Logger logger = LoggerFactory.getLogger(CaptchaRenderer.CaptchaValidator.class);
+
         private static final long serialVersionUID = 5199426957775725692L;
 
         private String responseId;
@@ -146,7 +151,7 @@ public class CaptchaRenderer extends InputRenderer {
                         setValid(true);
                     }
                 } catch (CaptchaServiceException e) {
-                    e.printStackTrace();
+                    logger.error(e.getMessage(), e);
                     setMessage("renderers.validator.invalid.captcha.value");
                     setValid(false);
                 }

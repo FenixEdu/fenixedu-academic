@@ -164,7 +164,7 @@ public class Email extends Email_Base {
         try {
             return string == null ? "" : MimeUtility.encodeText(string);
         } catch (final UnsupportedEncodingException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage(), e);
             return string;
         }
     }

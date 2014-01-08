@@ -35,11 +35,15 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class DegreeManagementBackingBean extends FenixBackingBean {
+
+    private static final Logger logger = LoggerFactory.getLogger(DegreeManagementBackingBean.class);
 
     private static final String SC_PACKAGE = "net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans";
 
@@ -663,7 +667,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
                 return "";
             } catch (FenixServiceException e) {
                 // TODO Auto-generated catch block
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
 
             this.addInfoMessage(scouncilBundle.getString("degreeOfficialPublication.created"));
@@ -717,7 +721,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
                         getSpecializationNamePt());
             } catch (FenixServiceException e) {
                 // TODO Auto-generated catch block
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
         }
 
@@ -755,20 +759,10 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
                         getSpecializationAreaToDelete());
             } catch (FenixServiceException e) {
                 // TODO Auto-generated catch block
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
             return "editDegreeOfficialPublication";
         }
-
-        // public String removeOfficialPublication() {
-        // try {
-        // DeleteDegreeOfficialPublication.run(getDegreeOfficialPublication());
-        // } catch (FenixServiceException e) {
-        // // TODO Auto-generated catch block
-        // e.printStackTrace();
-        // }
-        // return "editDegree";
-        // }
 
         public DegreeOfficialPublication getDegreeOfficialPublicationGoBack() {
             return degreeOfficialPublicationGoBack;
@@ -814,7 +808,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
                 ChangeDegreeOfficialPublicationReference.run(getDegreeOfficialPublication(), this.getNewOfficialReference());
             } catch (FenixServiceException e) {
                 // TODO Auto-generated catch block
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
         }
 
@@ -862,7 +856,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
         }
 
         public void removeOfficialPublication() {
-            System.out.println(this.degreeOfficialPublication);
+            logger.info(this.degreeOfficialPublication.toString());
         }
 
     }

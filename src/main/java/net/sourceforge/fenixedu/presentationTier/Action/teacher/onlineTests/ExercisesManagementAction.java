@@ -57,6 +57,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.bennu.core.domain.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.servlets.commons.UploadedFile;
 import pt.ist.fenixWebFramework.servlets.filters.RequestWrapperFilter;
@@ -65,6 +67,8 @@ import pt.ist.fenixWebFramework.servlets.filters.RequestWrapperFilter;
  * @author Susana Fernandes
  */
 public class ExercisesManagementAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(ExercisesManagementAction.class);
 
     public ActionForward prepareChooseExerciseType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
@@ -680,12 +684,12 @@ public class ExercisesManagementAction extends FenixDispatchAction {
                         .getAttribute(RequestWrapperFilter.FenixHttpServletRequestWrapper.ITEM_MAP_ATTRIBUTE)).get("xmlZipFile");
         for (final Entry<String, UploadedFile> entry : ((Hashtable<String, UploadedFile>) request
                 .getAttribute(RequestWrapperFilter.FenixHttpServletRequestWrapper.ITEM_MAP_ATTRIBUTE)).entrySet()) {
-            System.out.println(entry.getKey() + " " + entry.getValue());
-            System.out.println("   " + entry.getValue().getName());
-            System.out.println("   " + entry.getValue().getContentType());
-            System.out.println("   " + entry.getValue().getSize());
-            System.out.println("   " + entry.getValue().getInputStream());
-            System.out.println("   " + entry.getValue().getFileData());
+            logger.info(entry.getKey() + " " + entry.getValue());
+            logger.info("   " + entry.getValue().getName());
+            logger.info("   " + entry.getValue().getContentType());
+            logger.info("   " + entry.getValue().getSize());
+            logger.info("   " + entry.getValue().getInputStream());
+            logger.info("   " + entry.getValue().getFileData());
         }
         if (xmlZipFile == null || xmlZipFile.getFileData() == null || xmlZipFile.getFileData().length == 0) {
             error(request, "FileNotExist", "error.nullXmlZipFile");

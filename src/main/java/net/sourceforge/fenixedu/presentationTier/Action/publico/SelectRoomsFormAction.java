@@ -21,6 +21,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.FenixFramework;
 
@@ -29,6 +31,8 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class SelectRoomsFormAction extends FenixContextAction {
 
+    private static final Logger logger = LoggerFactory.getLogger(SelectRoomsFormAction.class);
+
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException {
@@ -36,7 +40,7 @@ public class SelectRoomsFormAction extends FenixContextAction {
         try {
             super.execute(mapping, form, request, response);
         } catch (Exception e1) {
-            e1.printStackTrace();
+            logger.error(e1.getMessage(), e1);
         }
 
         DynaActionForm roomForm = (DynaActionForm) form;

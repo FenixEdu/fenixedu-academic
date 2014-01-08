@@ -28,11 +28,15 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.codehaus.xfire.transport.http.EasySSLProtocolSocketFactory;
 import org.fenixedu.bennu.core.domain.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "external", path = "/setEmail", scope = "request", parameter = "method")
 public class SetEmailDA extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(SetEmailDA.class);
 
     public ActionForward setEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -68,7 +72,7 @@ public class SetEmailDA extends FenixDispatchAction {
             message = "User does not exist.";
         } catch (Throwable ex) {
             message = ex.getMessage();
-            ex.printStackTrace();
+            logger.error(ex.getMessage(), ex);
         } finally {
             final ServletOutputStream servletOutputStream = response.getOutputStream();
             response.setContentType("text/html");

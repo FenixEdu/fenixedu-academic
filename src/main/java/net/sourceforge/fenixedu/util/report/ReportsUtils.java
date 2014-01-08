@@ -159,8 +159,8 @@ public class ReportsUtils extends PropertiesManager {
             Rectangle pageSizeWithRotation = originalPdfReader.getPageSizeWithRotation(1);
             Rectangle pageSizeWithRotationStamper = toStampPdfReader.getPageSizeWithRotation(1);
 
-            System.out.println(String.format("[ %s, %s]", pageSizeWithRotation.getWidth(), pageSizeWithRotation.getHeight()));
-            System.out.println(String.format("[ %s, %s]", pageSizeWithRotationStamper.getWidth(),
+            logger.info(String.format("[ %s, %s]", pageSizeWithRotation.getWidth(), pageSizeWithRotation.getHeight()));
+            logger.info(String.format("[ %s, %s]", pageSizeWithRotationStamper.getWidth(),
                     pageSizeWithRotationStamper.getHeight()));
 
             Image image = Image.getInstance(importedPage);
@@ -174,7 +174,7 @@ public class ReportsUtils extends PropertiesManager {
 
             return stream.toByteArray();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new RuntimeException(e);
         }
     }
@@ -204,7 +204,7 @@ public class ReportsUtils extends PropertiesManager {
             }
         } catch (JRException e) {
             logger.info("Unable to print");
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return false;
         }
 

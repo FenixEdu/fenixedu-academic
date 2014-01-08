@@ -14,9 +14,15 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import pt.ist.fenixframework.Atomic;
 
 public class PersonFunctionSender extends PersonFunctionSender_Base {
+
+    private static final Logger logger = LoggerFactory.getLogger(PersonFunctionSender.class);
 
     public PersonFunctionSender(PersonFunction personFunction) {
         super();
@@ -60,7 +66,7 @@ public class PersonFunctionSender extends PersonFunctionSender_Base {
         PersonFunction delegateFunction = null;
         if (person.hasStudent()) {
             final Student delegate = person.getStudent();
-            System.out.println("Delegate: " + person.getName());
+            logger.info("Delegate: " + person.getName());
             final Registration lastRegistration = delegate.getLastActiveRegistration();
             // it should not be a delegate
             if (lastRegistration == null) {

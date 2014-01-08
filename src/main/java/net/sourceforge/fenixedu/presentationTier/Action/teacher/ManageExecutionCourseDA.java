@@ -57,6 +57,8 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.core.domain.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -66,6 +68,8 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ManageExecutionCourseDA extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(ManageExecutionCourseDA.class);
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -255,7 +259,8 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
                 final CompetenceCourse competenceCourse = competenceCourses.iterator().next();
                 final String pt = competenceCourse.getEvaluationMethod();
                 final String en = competenceCourse.getEvaluationMethodEn();
-                evaluationMethodMls = evaluationMethodMls.with(Language.pt, pt == null ? "" : pt).with(Language.en, en == null ? "" : en);
+                evaluationMethodMls =
+                        evaluationMethodMls.with(Language.pt, pt == null ? "" : pt).with(Language.en, en == null ? "" : en);
             }
             EditEvaluation.runEditEvaluation(executionCourse, evaluationMethodMls);
             evaluationMethod = executionCourse.getEvaluationMethod();
@@ -803,7 +808,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         try {
             return new Integer(id);
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return null;
         }
     }

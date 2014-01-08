@@ -19,10 +19,14 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class Project extends Project_Base {
+
+    private static final Logger logger = LoggerFactory.getLogger(Project.class);
 
     static {
         getRelationProjectGrouping().addListener(new RelationAdapter<Project, Grouping>() {
@@ -38,7 +42,7 @@ public class Project extends Project_Base {
                                             attend.getRegistration().getStudent().getPerson().getUsername());
                                 } catch (FenixServiceException e) {
                                     // TODO Auto-generated catch block
-                                    e.printStackTrace();
+                                    logger.error(e.getMessage(), e);
                                     groupCount--;
                                 }
                             }

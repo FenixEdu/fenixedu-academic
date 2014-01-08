@@ -25,15 +25,19 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
-import org.apache.commons.lang.StringUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class CardGenerationEntry extends CardGenerationEntry_Base {
+
+    private static final Logger logger = LoggerFactory.getLogger(CardGenerationEntry.class);
 
     public static class CardGenerationEntryDeleter implements FactoryExecutor {
 
@@ -568,7 +572,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
         }
         final String label = unit.getIdentificationCardLabel();
         if (label == null || label.isEmpty()) {
-            System.out.println("### " + name);
+            logger.debug("### " + name);
             throw new DomainException("message.unit.name.too.long: " + name, name);
         }
         return label;

@@ -39,6 +39,8 @@ import org.joda.time.DateTime;
 import org.joda.time.Partial;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -50,6 +52,8 @@ import pt.ist.fenixframework.FenixFramework;
 @Forwards({ @Forward(name = "viewTutorship", path = "/pedagogicalCouncil/tutorship/viewTutorship.jsp"),
         @Forward(name = "prepareCreateNewTutorship", path = "/pedagogicalCouncil/tutorship/createNewTutorship.jsp") })
 public class ViewTutorshipDA extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(ViewTutorshipDA.class);
 
     /**
      * TODO: Refactor 'success'
@@ -193,7 +197,7 @@ public class ViewTutorshipDA extends FenixDispatchAction {
             } catch (NotAuthorizedException fenixFilterExceptione) {
                 // TODO Auto-generated catch block
                 addActionMessage(request, fenixFilterExceptione.getMessage());
-                fenixFilterExceptione.printStackTrace();
+                logger.error(fenixFilterExceptione.getMessage(), fenixFilterExceptione);
             } catch (FenixServiceException e) {
                 addActionMessage(request, e.getMessage(), e.getArgs());
             }

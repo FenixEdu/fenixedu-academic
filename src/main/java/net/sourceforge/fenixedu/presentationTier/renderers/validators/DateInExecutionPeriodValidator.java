@@ -8,6 +8,8 @@ import java.text.ParseException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.validators.DateValidator;
 import pt.ist.fenixWebFramework.renderers.validators.HtmlChainValidator;
@@ -18,6 +20,8 @@ import pt.utl.ist.fenix.tools.util.DateFormatUtil;
  * 
  */
 public class DateInExecutionPeriodValidator extends DateValidator {
+
+    private static final Logger logger = LoggerFactory.getLogger(DateInExecutionPeriodValidator.class);
 
     public DateInExecutionPeriodValidator() {
         super();
@@ -44,7 +48,7 @@ public class DateInExecutionPeriodValidator extends DateValidator {
                 }
             } catch (ParseException e) {
                 setValid(false);
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
         }
     }

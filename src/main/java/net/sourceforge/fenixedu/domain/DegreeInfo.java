@@ -9,6 +9,8 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -17,6 +19,8 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
  * @author Tania Pousao Created on 30/Out/2003
  */
 public class DegreeInfo extends DegreeInfo_Base {
+
+    private static final Logger logger = LoggerFactory.getLogger(DegreeInfo.class);
 
     public static Comparator<DegreeInfo> COMPARATOR_BY_EXECUTION_YEAR = new Comparator<DegreeInfo>() {
         @Override
@@ -286,7 +290,7 @@ public class DegreeInfo extends DegreeInfo_Base {
                     String degreeType = JSONObject.escape(degreeInfo.getDegree().getDegreeType().toString());
                     String degreeName = JSONObject.escape(degreeInfo.getName().getContent());
                     String degreeOid = degreeInfo.getDegree().getExternalId();
-                    System.out.printf("with info : %s %s %s\n", degreeOid, degreeType, degreeName);
+                    logger.info("with info : {} {} {}\n", degreeOid, degreeType, degreeName);
                     obj.put("degreeOid", degreeOid);
                     obj.put("degreeType", degreeType);
                     obj.put("degreeName", degreeName);
@@ -298,7 +302,7 @@ public class DegreeInfo extends DegreeInfo_Base {
                 String degreeOid = degree.getExternalId();
                 String degreeType = JSONObject.escape(degree.getDegreeType().toString());
                 String degreeName = JSONObject.escape(degree.getNome());
-                System.out.printf("no info : %s %s %s\n", degreeOid, degreeType, degreeName);
+                logger.info("no info : {} {} {}\n", degreeOid, degreeType, degreeName);
                 obj.put("degreeOid", degreeOid);
                 obj.put("degreeType", degreeType);
                 obj.put("degreeName", degreeName);

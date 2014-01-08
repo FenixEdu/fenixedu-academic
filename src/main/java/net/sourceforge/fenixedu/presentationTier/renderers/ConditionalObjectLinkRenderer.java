@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import pt.ist.fenixWebFramework.renderers.ObjectLinkRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
@@ -8,7 +11,6 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderKit;
 import pt.ist.fenixWebFramework.renderers.utils.RendererPropertyUtils;
 
 public class ConditionalObjectLinkRenderer extends ObjectLinkRenderer {
-
     /**
      * This render is used to create a link out of an object if a given boolean
      * property is true. You choose the link format and some properties can be
@@ -24,6 +26,8 @@ public class ConditionalObjectLinkRenderer extends ObjectLinkRenderer {
      * 
      * @author pcma
      */
+
+    private static final Logger logger = LoggerFactory.getLogger(ConditionalObjectLinkRenderer.class);
 
     private String visibleIf;
 
@@ -47,7 +51,7 @@ public class ConditionalObjectLinkRenderer extends ObjectLinkRenderer {
                 try {
                     visible = (Boolean) RendererPropertyUtils.getProperty(getTargetObject(object), getVisibleIf(), false);
                 } catch (ClassCastException e) {
-                    e.printStackTrace();
+                    logger.error(e.getMessage(), e);
                 }
 
                 if (visible) {

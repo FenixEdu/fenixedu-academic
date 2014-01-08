@@ -24,8 +24,12 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.MessageResources;
 import org.apache.struts.validator.DynaValidatorForm;
 import org.fenixedu.bennu.core.domain.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MarksListAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(MarksListAction.class);
 
     public ActionForward loadFile(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -72,7 +76,7 @@ public class MarksListAction extends FenixDispatchAction {
                     (TeacherAdministrationSiteView) ReadStudentsAndMarksByEvaluation.runReadStudentsAndMarksByEvaluation(
                             executionCourseCode, evaluationCode);
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new FenixActionException(e.getMessage());
         }
 
@@ -133,7 +137,7 @@ public class MarksListAction extends FenixDispatchAction {
         try {
             PublishMarks.runPublishMarks(objectCode, evaluationCode, publishmentMessage, sendSMS, announcementTitle);
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new FenixActionException(e.getMessage());
         }
 

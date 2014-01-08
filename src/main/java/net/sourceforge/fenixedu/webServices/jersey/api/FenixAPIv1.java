@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import java.util.TreeSet;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -45,7 +44,6 @@ import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInform
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.domain.AdHocEvaluation;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -125,6 +123,8 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.DomainObject;
 import pt.utl.ist.fenix.tools.resources.DefaultResourceBundleProvider;
@@ -137,6 +137,8 @@ import com.qmino.miredot.annotations.ReturnType;
 @SuppressWarnings("unchecked")
 @Path("/v1")
 public class FenixAPIv1 {
+
+    private static final Logger logger = LoggerFactory.getLogger(FenixAPIv1.class);
 
     public final static String PERSONAL_SCOPE = "info";
     public final static String SCHEDULE_SCOPE = "schedule";
@@ -826,9 +828,7 @@ public class FenixAPIv1 {
                     new FenixDegreeInfo(description, objectives, designFor, requisites, profissionalExits, history,
                             operationRegime, gratuity, links);
         }
-        
-      
-       
+
         final List<FenixTeacher> teachers = new ArrayList<>();
         final Collection<Teacher> responsibleCoordinatorsTeachers = degree.getResponsibleCoordinatorsTeachers(executionYear);
 
@@ -1356,7 +1356,7 @@ public class FenixAPIv1 {
                     roomEvents);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw newApplicationError(Status.INTERNAL_SERVER_ERROR, "berserk!", "something went wrong");
         }
     }

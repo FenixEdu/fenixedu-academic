@@ -48,6 +48,8 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
@@ -84,6 +86,8 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
                 key = "error.credits.chooseExecutionPeriods", handler = org.apache.struts.action.ExceptionHandler.class,
                 path = "/creditsReport.do?method=prepare", scope = "request") })
 public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(ViewTeacherCreditsReportDispatchAction.class);
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixServiceException {
@@ -291,7 +295,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
                             ReadDepartmentTotalCreditsByPeriod.run(department.getDepartmentUnit(), beginExecutionSemester,
                                     endExecutionSemester);
                 } catch (ParseException e) {
-                    e.printStackTrace();
+                    logger.error(e.getMessage(), e);
                 }
                 ExecutionYear lastExecutionYear = null;
                 for (ExecutionYear executionYear = beginExecutionSemester.getExecutionYear(); executionYear != null

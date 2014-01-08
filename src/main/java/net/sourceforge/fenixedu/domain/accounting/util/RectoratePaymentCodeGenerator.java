@@ -11,8 +11,12 @@ import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.rectorate.RectoratePaymentCode;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RectoratePaymentCodeGenerator extends PaymentCodeGenerator {
+
+    private static final Logger logger = LoggerFactory.getLogger(RectoratePaymentCodeGenerator.class);
 
     public static Comparator<PaymentCode> COMPARATOR_BY_PAYMENT_SEQUENTIAL_DIGITS = new Comparator<PaymentCode>() {
         @Override
@@ -22,8 +26,7 @@ public class RectoratePaymentCodeGenerator extends PaymentCodeGenerator {
 
             int comparationResult = leftSequentialNumber.compareTo(rightSequentialNumber);
 
-            System.out.println(String.format("left [%s], right [%s], result [%s]", leftSequentialNumber, rightSequentialNumber,
-                    comparationResult));
+            logger.info("left [{}], right [{}], result [{}]", leftSequentialNumber, rightSequentialNumber, comparationResult);
 
             return (comparationResult == 0) ? leftPaymentCode.getExternalId().compareTo(rightPaymentCode.getExternalId()) : comparationResult;
         }

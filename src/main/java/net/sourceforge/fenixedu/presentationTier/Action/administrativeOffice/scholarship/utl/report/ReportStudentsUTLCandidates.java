@@ -16,10 +16,14 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.joda.time.LocalDate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ReportStudentsUTLCandidates implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    private static final Logger logger = LoggerFactory.getLogger(ReportStudentsUTLCandidates.class);
 
     protected ExecutionYear forExecutionYear;
     protected List<StudentLine> correctStudentLines;
@@ -111,7 +115,7 @@ public class ReportStudentsUTLCandidates implements java.io.Serializable {
                 addCellValue(row, onNullEmptyString(documentTypeName), 5);
                 addCellValue(row, onNullEmptyString(documentNumber), 6);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
 
             i++;
@@ -271,7 +275,7 @@ public class ReportStudentsUTLCandidates implements java.io.Serializable {
 
                 i++;
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
         }
     }

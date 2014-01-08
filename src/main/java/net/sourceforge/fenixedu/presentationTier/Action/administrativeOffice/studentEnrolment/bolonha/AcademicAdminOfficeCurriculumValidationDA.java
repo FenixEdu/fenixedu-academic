@@ -39,6 +39,8 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -62,6 +64,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 })
 public class AcademicAdminOfficeCurriculumValidationDA extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(AcademicAdminOfficeCurriculumValidationDA.class);
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -105,7 +109,7 @@ public class AcademicAdminOfficeCurriculumValidationDA extends FenixDispatchActi
     }
 
     public ActionForward enrolInDegreeModules(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean = getBolonhaStudentEnrollmentBeanFromViewState();
         try {
@@ -320,7 +324,7 @@ public class AcademicAdminOfficeCurriculumValidationDA extends FenixDispatchActi
     }
 
     public ActionForward doRegistrationConclusion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final RegistrationConclusionBean registrationConclusionBean = getRegistrationConclusionBeanFromViewState();
 
@@ -394,8 +398,8 @@ public class AcademicAdminOfficeCurriculumValidationDA extends FenixDispatchActi
                         element[1] != null ? CurriculumValidationEvaluationPhase.valueOf(element[1]) : null;
                 EnrolmentEvaluation evaluation = enrolment.getLatestEnrolmentEvaluationByTypeAndPhase(type, phase);
                 if (evaluation != null) {
-                    System.out.println(String.format("%s[%s][%s] State: %s", evaluation.getEnrolment().getName().getContent(),
-                            type, phase, evaluation.getEnrolmentEvaluationState().toString()));
+                    logger.info(String.format("%s[%s][%s] State: %s", evaluation.getEnrolment().getName().getContent(), type,
+                            phase, evaluation.getEnrolmentEvaluationState().toString()));
                 }
             }
 

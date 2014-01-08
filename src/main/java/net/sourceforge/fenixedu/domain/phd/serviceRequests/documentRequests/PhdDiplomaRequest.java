@@ -24,8 +24,12 @@ import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffi
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
 import org.joda.time.LocalDate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplomaRequest, IRectorateSubmissionBatchDocumentEntry {
+
+    private static final Logger logger = LoggerFactory.getLogger(PhdDiplomaRequest.class);
 
     protected PhdDiplomaRequest() {
         super();
@@ -261,7 +265,7 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
             DocumentRequestGeneratedDocument.store(this, documents.iterator().next().getReportFileName() + ".pdf", data);
             return data;
         } catch (JRException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new DomainException("error.phdDiplomaRequest.errorGeneratingDocument");
         }
     }

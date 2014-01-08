@@ -10,6 +10,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -20,6 +22,8 @@ import pt.ist.fenixframework.FenixFramework;
 @Forwards({ @Forward(name = "emailValidation", path = "emailValidation"),
         @Forward(name = "phoneValidation", path = "phoneValidation") })
 public class PartyContactValidationDA extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(PartyContactValidationDA.class);
 
     public ActionForward validate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
@@ -62,7 +66,7 @@ public class PartyContactValidationDA extends FenixDispatchAction {
             xml += String.format("<Play>%s/external/partyContactValidation/%s/end.mp3</Play>", host, lang);
         }
         xml += "</Response>";
-        System.out.println(xml);
+        logger.debug(xml);
         request.setAttribute("xml", xml);
         return mapping.findForward("phoneValidation");
     }

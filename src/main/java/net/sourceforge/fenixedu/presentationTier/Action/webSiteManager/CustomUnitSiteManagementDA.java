@@ -50,6 +50,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.YearMonthDay;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.model.MetaSlot;
@@ -59,6 +61,8 @@ import pt.utl.ist.fenix.tools.util.FileUtils;
 
 public class CustomUnitSiteManagementDA extends SiteManagementDA {
 
+    private static final Logger logger = LoggerFactory.getLogger(CustomUnitSiteManagementDA.class);
+
     private Integer getId(String id) {
         if (id == null || id.equals("")) {
             return null;
@@ -67,7 +71,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
         try {
             return new Integer(id);
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return null;
         }
     }

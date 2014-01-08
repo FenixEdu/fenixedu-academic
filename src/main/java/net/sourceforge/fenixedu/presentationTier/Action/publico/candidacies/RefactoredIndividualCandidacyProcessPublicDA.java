@@ -37,13 +37,15 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.IndividualCandidacyProcessDA;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
-import org.apache.commons.lang.StringUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.util.Pair;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -54,6 +56,8 @@ import com.octo.captcha.module.struts.CaptchaServicePlugin;
 import com.octo.captcha.service.CaptchaServiceException;
 
 public abstract class RefactoredIndividualCandidacyProcessPublicDA extends IndividualCandidacyProcessDA {
+
+    private static final Logger logger = LoggerFactory.getLogger(RefactoredIndividualCandidacyProcessPublicDA.class);
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -217,7 +221,7 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
             return true;
         } catch (CaptchaServiceException e) { // may be thrown if the id is not
             // valid
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             addActionMessage("captcha.error", request, "captcha.wrong.word");
             return false;
         }

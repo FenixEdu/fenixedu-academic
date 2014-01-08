@@ -122,6 +122,8 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 import org.fenixedu.bennu.core.domain.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -133,6 +135,8 @@ import pt.ist.fenixframework.FenixFramework;
  */
 @Deprecated
 public class TeacherAdministrationViewerDispatchAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(TeacherAdministrationViewerDispatchAction.class);
 
     public ActionForward instructions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
@@ -279,7 +283,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
                     TeacherResponsibleByExecutionCourse.run(userView.getUsername(), objectCode, curricularCourseCodeString);
 
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new FenixActionException(e);
         }
         if (isResponsible.booleanValue() == false) {
@@ -367,7 +371,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
                     TeacherResponsibleByExecutionCourse.run(userView.getUsername(), objectCode, curricularCourseCodeString);
 
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new FenixActionException(e);
         }
         if (isResponsible.booleanValue() == false) {
@@ -681,19 +685,19 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             c.setAccessible(true);
             siteComponent = (ISiteComponent) c.newInstance(new Object[] {});
         } catch (SecurityException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } catch (IllegalArgumentException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } catch (NoSuchMethodException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } catch (InstantiationException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } catch (InvocationTargetException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
         return siteComponent;
     }
@@ -830,7 +834,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             saveErrors(request, actionErrors);
             return prepareViewExecutionCourseProjects(mapping, form, request, response);
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new FenixActionException(e.getMessage());
         }
 
@@ -866,7 +870,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             return prepareViewExecutionCourseProjects(mapping, form, request, response);
 
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new FenixActionException(e.getMessage());
         }
 
@@ -1659,8 +1663,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
             groupPropertiesCode = groupPropertiesCodeString;
         } catch (Exception e) {
-            e.printStackTrace();
-
+            logger.error(e.getMessage(), e);
             actionErrors.add("errors.delete.groupPropertie", new ActionError(e.getMessage()));
             saveErrors(request, actionErrors);
 
@@ -1685,7 +1688,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             saveErrors(request, actionErrors2);
             return viewShiftsAndGroups(mapping, form, request, response);
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new FenixActionException(e.getMessage());
         }
         if (result.equals(Boolean.FALSE)) {
@@ -1774,7 +1777,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             saveErrors(request, actionErrors);
             return viewStudentGroupInformation(mapping, form, request, response);
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new FenixActionException(e.getMessage());
         }
 
@@ -2693,7 +2696,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
             return prepareViewExecutionCourseProjects(mapping, form, request, response);
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new FenixActionException(e.getMessage());
         }
 

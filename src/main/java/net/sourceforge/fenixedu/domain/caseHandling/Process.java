@@ -15,11 +15,15 @@ import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.dml.DomainClass;
 
 public abstract class Process extends Process_Base implements Comparable<Process> {
+
+    private static final Logger logger = LoggerFactory.getLogger(Process.class);
 
     private static Map<String, Activity<? extends Process>> startActivities;
 
@@ -39,7 +43,7 @@ public abstract class Process extends Process_Base implements Comparable<Process
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
         }
     }

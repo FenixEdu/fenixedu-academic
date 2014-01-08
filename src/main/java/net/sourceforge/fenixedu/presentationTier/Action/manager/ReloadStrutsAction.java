@@ -64,7 +64,7 @@ public class ReloadStrutsAction extends Action {
             servlet.init();
         } catch (ServletException e) {
             logger.error("could not reload configuration, please redeploy the application");
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
 
         logger.info("reloaded configuration");

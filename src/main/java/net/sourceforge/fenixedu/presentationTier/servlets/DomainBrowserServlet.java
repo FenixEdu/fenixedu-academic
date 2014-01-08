@@ -49,6 +49,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.core.exception.MissingObjectException;
@@ -62,6 +65,8 @@ import pt.ist.fenixframework.dml.Slot;
 public class DomainBrowserServlet extends HttpServlet {
 
     private static final long serialVersionUID = -3780027224510147325L;
+
+    private static final Logger logger = LoggerFactory.getLogger(DomainBrowserServlet.class);
 
     private static DomainModel domainModel;
     private static HashMap<DomainClass, String> domainClassesDescAttr = new HashMap<DomainClass, String>();
@@ -98,7 +103,7 @@ public class DomainBrowserServlet extends HttpServlet {
         } catch (MissingObjectException moe) {
             out.println("<P>No such object</P>");
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new Error("Error: " + e.getMessage());
         }
 
@@ -353,7 +358,7 @@ public class DomainBrowserServlet extends HttpServlet {
     }
 
     protected void renderWrongRelation(PrintWriter out, DomainObject obj, Role role) throws Exception {
-        System.out.println("wrong relation");
+        logger.info("wrong relation");
         out.println("<LI>");
         renderObjectId(out, obj);
         out.println("</LI>\n");

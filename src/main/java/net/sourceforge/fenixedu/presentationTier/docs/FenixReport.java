@@ -10,13 +10,17 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.util.DateI18NUtil;
 import net.sourceforge.fenixedu.util.JasperPrintProcessor;
-import org.apache.commons.lang.StringUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 abstract public class FenixReport implements Serializable {
+
+    private static final Logger logger = LoggerFactory.getLogger(FenixReport.class);
 
     @SuppressWarnings("rawtypes")
     final private Collection dataSource;
@@ -123,7 +127,7 @@ abstract public class FenixReport implements Serializable {
 
     protected void printParameters() {
         for (Map.Entry<String, Object> entry : parameters.entrySet()) {
-            System.out.println(String.format("%s - %s", entry.getKey(), entry.getValue()));
+            logger.info(String.format("%s - %s", entry.getKey(), entry.getValue()));
         }
 
     }

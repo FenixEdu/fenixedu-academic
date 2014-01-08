@@ -8,6 +8,8 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.Properties;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.tidy.Tidy;
 import org.w3c.tidy.TidyMessage;
@@ -17,6 +19,8 @@ import pt.ist.fenixWebFramework.renderers.components.converters.ConversionExcept
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public abstract class TidyConverter extends Converter {
+
+    private static final Logger logger = LoggerFactory.getLogger(TidyConverter.class);
 
     public static final String TIDY_PROPERTIES = "/HtmlEditor-Tidy.properties";
 
@@ -53,7 +57,7 @@ public abstract class TidyConverter extends Converter {
         try {
             return filterOutput(new String(outStream.toByteArray(), ENCODING));
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new ConversionException("tidy.converter.ending.notSupported.critical");
         }
     }
@@ -69,7 +73,7 @@ public abstract class TidyConverter extends Converter {
         try {
             properties.load(getClass().getResourceAsStream(getTidyProperties()));
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
 
         tidy.setConfigurationFromProps(properties);

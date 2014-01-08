@@ -23,6 +23,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -41,6 +43,9 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
         @Forward(name = "edit", path = "/internationalRelatOffice/internship/candidacy/editCandidate.jsp"),
         @Forward(name = "delete", path = "/internationalRelatOffice/internship/candidacy/deleteCandidate.jsp") })
 public class InternshipCandidacyDA extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(InternshipCandidacyDA.class);
+
     private static final ResourceBundle ENUMERATION_RESOURCES = ResourceBundle.getBundle("resources/EnumerationResources",
             new Locale("pt"));
 
@@ -205,7 +210,7 @@ public class InternshipCandidacyDA extends FenixDispatchAction {
             sheet.exportToXLSSheet(outputStream);
             outputStream.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
         return null;
     }

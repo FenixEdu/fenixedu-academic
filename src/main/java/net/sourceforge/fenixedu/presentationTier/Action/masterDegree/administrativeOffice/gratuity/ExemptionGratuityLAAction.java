@@ -23,6 +23,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.core.domain.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -41,6 +43,8 @@ import pt.ist.fenixframework.FenixFramework;
         tileProperties = @Tile(title = "teste47")) })
 public class ExemptionGratuityLAAction extends FenixLookupDispatchAction {
 
+    private static final Logger logger = LoggerFactory.getLogger(ExemptionGratuityLAAction.class);
+
     public ActionForward insertExemptionGratuity(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
@@ -50,7 +54,7 @@ public class ExemptionGratuityLAAction extends FenixLookupDispatchAction {
             infoGratuitySituation = (InfoGratuitySituation) EditGratuitySituationById.run(infoGratuitySituation);
 
         } catch (FenixServiceException exception) {
-            exception.printStackTrace();
+            logger.error(exception.getMessage(), exception);
             ActionErrors errors = new ActionErrors();
             errors.add("insertExemptionGratuity", new ActionError("error.impossible.insertExemptionGratuity"));
             saveErrors(request, errors);
@@ -61,8 +65,7 @@ public class ExemptionGratuityLAAction extends FenixLookupDispatchAction {
         return mapping.findForward("confirmationExemptionGratuity");
     }
 
-    private InfoGratuitySituation fillInfoGratuityValues(User userView, HttpServletRequest request,
-            DynaActionForm exemptionForm) {
+    private InfoGratuitySituation fillInfoGratuityValues(User userView, HttpServletRequest request, DynaActionForm exemptionForm) {
         Integer valueExemptionGratuity = Integer.valueOf((String) exemptionForm.get("valueExemptionGratuity"));
         String justificationExemptionGratuity = (String) exemptionForm.get("justificationExemptionGratuity");
         Double adHocValueExemptionGratuity = (Double) exemptionForm.get("adHocValueExemptionGratuity");
@@ -115,8 +118,7 @@ public class ExemptionGratuityLAAction extends FenixLookupDispatchAction {
 
         // Registration Curricular Plan
         InfoStudentCurricularPlan infoStudentCurricularPlan =
-                new InfoStudentCurricularPlan(
-                        FenixFramework.<StudentCurricularPlan> getDomainObject(studentCurricularPlanID));
+                new InfoStudentCurricularPlan(FenixFramework.<StudentCurricularPlan> getDomainObject(studentCurricularPlanID));
         infoGratuitySituation.setInfoStudentCurricularPlan(infoStudentCurricularPlan);
 
         // Gratuity Values
@@ -147,7 +149,7 @@ public class ExemptionGratuityLAAction extends FenixLookupDispatchAction {
             infoGratuitySituation = (InfoGratuitySituation) EditGratuitySituationById.run(infoGratuitySituation);
 
         } catch (FenixServiceException exception) {
-            exception.printStackTrace();
+            logger.error(exception.getMessage(), exception);
             errors.add("removeExemptionGratuity", new ActionError("error.impossible.removeExemptionGratuity"));
             saveErrors(request, errors);
             mapping.getInputForward();

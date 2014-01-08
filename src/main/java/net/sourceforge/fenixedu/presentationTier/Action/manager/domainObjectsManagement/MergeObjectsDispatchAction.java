@@ -29,6 +29,8 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -48,6 +50,8 @@ import pt.ist.fenixframework.dml.Slot;
 @Forwards(value = { @Forward(name = "displayObjects", path = "/manager/personManagement/mergeObjects.jsp"),
         @Forward(name = "chooseObjects", path = "/manager/personManagement/chooseObjectsToMerge.jsp") })
 public class MergeObjectsDispatchAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(MergeObjectsDispatchAction.class);
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
@@ -227,7 +231,7 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
         try {
             DeleteObjectByOID.run(objectExternalId);
         } catch (DomainException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return chooseObjects(mapping, form, request, response);
         }
         request.setAttribute("domainClasses", getClasses());

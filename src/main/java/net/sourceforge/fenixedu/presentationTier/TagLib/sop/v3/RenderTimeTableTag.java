@@ -36,8 +36,12 @@ import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.SpaceMa
 import org.apache.struts.Globals;
 import org.apache.struts.util.MessageResources;
 import org.apache.struts.util.RequestUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class RenderTimeTableTag extends TagSupport {
+
+    private static final Logger logger = LoggerFactory.getLogger(RenderTimeTableTag.class);
 
     private LessonSlotContentRenderer lessonSlotContentRenderer = null;
 
@@ -104,7 +108,7 @@ public final class RenderTimeTableTag extends TagSupport {
                 startTimeTableHour = new Integer(0);
             }
         } catch (ClassCastException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             infoLessonList = null;
         }
         if (infoLessonList == null) {

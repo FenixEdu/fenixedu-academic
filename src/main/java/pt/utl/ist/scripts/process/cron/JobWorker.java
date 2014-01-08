@@ -4,11 +4,15 @@ import net.sourceforge.fenixedu.domain.QueueJob;
 import net.sourceforge.fenixedu.domain.QueueJobResult;
 
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.CallableWithoutException;
 import pt.ist.fenixframework.FenixFramework;
 
 public class JobWorker {
+
+    private static final Logger logger = LoggerFactory.getLogger(JobWorker.class);
 
     private final String queueJobOid;
     private final QueueJobResult queueJobResult = new QueueJobResult();
@@ -33,14 +37,13 @@ public class JobWorker {
                 queueJobResult.setJobStartTime(queueJob.getJobStartTime());
                 queueJobResult.setRequestDate(queueJob.getRequestDate());
 
-                System.out.print("Starting job " + queueJob.getExternalId());
+                logger.info("Starting job " + queueJob.getExternalId());
                 if (queueJob.getFailedCounter() > 0) {
-                    System.out.println(" (" + queueJob.getFailedCounter().intValue() + " failures)");
+                    logger.info(" (" + queueJob.getFailedCounter().intValue() + " failures)");
                 } else {
-                    System.out.println("");
+                    logger.info("");
                 }
 
-                // if (queueJob.getFailedCounter() < 3) {
                 queueJobResult.setJobStartTime(new DateTime());
                 try {
                     final QueueJobResult result = queueJob.execute();
@@ -50,18 +53,15 @@ public class JobWorker {
                     }
                     queueJobResult.setDone(Boolean.TRUE);
                 } catch (Throwable t) {
-                    t.printStackTrace();
-                    System.out.println("Failed queued job execution!");
-                    System.out.print("Job OID: " + queueJob.getExternalId() + " User: " + queueJob.getPerson().getIstUsername()
+                    logger.error(t.getMessage(), t);
+                    logger.info("Failed queued job execution!");
+                    logger.info("Job OID: " + queueJob.getExternalId() + " User: " + queueJob.getPerson().getIstUsername()
                             + " Start Time: " + queueJob.getJobStartTime());
                     queueJobResult.setThrowable(t);
                     queueJobResult.setFailedCounter(queueJob.getFailedCounter() + 1);
-                    System.out.println(" Failure Count: " + queueJob.getFailedCounter() + " times");
+                    logger.info(" Failure Count: " + queueJob.getFailedCounter() + " times");
                     queueJobResult.setDone(Boolean.FALSE);
                 }
-                // } else {
-                // System.out.println("Cowardly refusing to run job! Too many failures.");
-                // }
                 return null;
             }
 

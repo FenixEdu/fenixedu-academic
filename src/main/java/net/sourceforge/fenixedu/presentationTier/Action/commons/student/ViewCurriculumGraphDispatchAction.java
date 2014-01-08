@@ -34,12 +34,16 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.CategoryItemRenderer;
 import org.jfree.data.CategoryDataset;
 import org.jfree.data.DefaultCategoryDataset;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/viewCurriculumGraph", module = "academicAdministration")
 public class ViewCurriculumGraphDispatchAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(ViewCurriculumGraphDispatchAction.class);
 
     public ActionForward createAreaXYChart(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
@@ -83,7 +87,7 @@ public class ViewCurriculumGraphDispatchAction extends FenixDispatchAction {
             response.getOutputStream().write(out.toByteArray());
             response.getOutputStream().close();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
 
         return null;

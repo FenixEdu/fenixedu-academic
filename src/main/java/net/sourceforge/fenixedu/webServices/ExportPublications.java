@@ -31,6 +31,8 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -43,6 +45,9 @@ import pt.utl.ist.sotis.conversion.ConversionException;
 import pt.utl.ist.sotis.conversion.SotisMarshaller;
 
 public class ExportPublications {
+
+    private static final Logger logger = LoggerFactory.getLogger(ExportPublications.class);
+
     public byte[] harverst() {
         try {
             SotisMarshaller marshaller = new SotisMarshaller();
@@ -294,7 +299,7 @@ public class ExportPublications {
                             }
                         }
                     } catch (ConversionException e) {
-                        e.printStackTrace();
+                        logger.error(e.getMessage(), e);
                     }
                 }
             }

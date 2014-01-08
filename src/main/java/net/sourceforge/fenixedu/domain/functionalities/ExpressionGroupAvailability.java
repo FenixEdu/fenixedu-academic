@@ -7,6 +7,9 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupExpressionException;
 import net.sourceforge.fenixedu.domain.contents.Content;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * This class represents an availability policy base on groups created from
  * expression group language.
@@ -14,6 +17,8 @@ import net.sourceforge.fenixedu.domain.contents.Content;
  * @author cfgi
  */
 public class ExpressionGroupAvailability extends ExpressionGroupAvailability_Base {
+
+    private static final Logger logger = LoggerFactory.getLogger(ExpressionGroupAvailability.class);
 
     /** cached not persisted group */
     private ExpressionGroup group;
@@ -102,10 +107,10 @@ public class ExpressionGroupAvailability extends ExpressionGroupAvailability_Bas
         try {
             return getTargetGroup().allows(new GroupContextFromFunctionality(context), context.getUserView());
         } catch (GroupDynamicExpressionException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw e;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new GroupDynamicExpressionException(e, "accessControl.group.expression.evaluation.error");
         }
     }

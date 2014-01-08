@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 
 public class UICourseGroup extends UIDegreeModule {
+
     public static final String COMPONENT_TYPE =
             "net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UICourseGroup";
 

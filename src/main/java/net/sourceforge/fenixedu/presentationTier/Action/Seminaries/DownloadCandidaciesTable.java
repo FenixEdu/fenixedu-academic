@@ -27,6 +27,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
@@ -39,6 +41,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  */
 @Mapping(module = "teacher", path = "/getTabSeparatedCandidacies", scope = "request")
 public class DownloadCandidaciesTable extends FenixAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(DownloadCandidaciesTable.class);
+
     static final String COLUMNS_HEADERS =
             "Nº\tNome\tMédia\tCadeiras Feitas\tAprovado\tE-Mail\tSeminário\tCurso\tDisciplina\tModalidade\tTema\tMotivação\tCaso1\tCaso2\tCaso3\tCaso4\tCaso5";
 
@@ -153,7 +158,7 @@ public class DownloadCandidaciesTable extends FenixAction {
                 document += "\n";
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new FenixActionException(e);
         }
         try {

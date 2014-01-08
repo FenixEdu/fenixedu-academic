@@ -36,14 +36,19 @@ import net.sourceforge.fenixedu.domain.phd.ThesisSubjectOrder;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
-import org.apache.commons.lang.StringUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.Partial;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ExportPhdIndividualProgramProcessesInHtml {
+
+    private static final Logger logger = LoggerFactory.getLogger(ExportPhdIndividualProgramProcessesInHtml.class);
+
     // TODO: IST-<Collaboration>: collaboration must be added as argument
     static final private String APPLICATION_NAME = "Application to the IST-EPFL Joint Doctoral Initiative";
     static final private String APPLICATION_PREFIX_LINK = "";
@@ -280,16 +285,16 @@ public class ExportPhdIndividualProgramProcessesInHtml {
                 count++;
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } finally {
             if (zip != null) {
                 try {
                     zip.flush();
                     zip.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    logger.error(e.getMessage(), e);
                 }
             }
         }

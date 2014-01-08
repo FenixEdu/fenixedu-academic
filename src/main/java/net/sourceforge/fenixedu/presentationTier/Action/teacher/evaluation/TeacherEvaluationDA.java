@@ -39,6 +39,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -59,6 +61,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
                 tileProperties = @Tile(bundle = "TITLES_RESOURCES",
                         title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation")) })
 public class TeacherEvaluationDA extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(TeacherEvaluationDA.class);
 
     public ActionForward viewAutoEvaluation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
@@ -451,7 +455,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
             writer.close();
             response.flushBuffer();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
         return null;
     }
@@ -500,7 +504,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
             writer.close();
             response.flushBuffer();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
         return null;
     }

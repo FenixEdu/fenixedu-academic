@@ -1,10 +1,15 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.validators;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.renderers.validators.HtmlChainValidator;
 import pt.ist.fenixWebFramework.renderers.validators.HtmlValidator;
 
 public class TextLengthValidator extends HtmlValidator {
+
+    private static final Logger logger = LoggerFactory.getLogger(TextLengthValidator.class);
 
     public static enum TextType {
         character, word, paragraph
@@ -47,7 +52,7 @@ public class TextLengthValidator extends HtmlValidator {
         try {
             this.type = TextType.valueOf(type);
         } catch (RuntimeException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
     }
 

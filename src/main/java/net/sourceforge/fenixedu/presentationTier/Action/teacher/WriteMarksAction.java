@@ -32,12 +32,17 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.upload.FormFile;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Tânia Pousão
  * 
  */
 public class WriteMarksAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(WriteMarksAction.class);
+
     public ActionForward loadFile(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
@@ -125,7 +130,7 @@ public class WriteMarksAction extends FenixDispatchAction {
         try {
             siteView = InsertEvaluationMarks.runInsertEvaluationMarks(objectCode, evaluationCode, hashMarks);
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new FenixActionException(e);
         }
         request.setAttribute("siteView", siteView);

@@ -21,6 +21,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -45,6 +47,8 @@ import pt.ist.fenixframework.FenixFramework;
         @Forward(name = "editFile", path = "websiteManager-editFile"),
         @Forward(name = "listAnnouncementBoards", path = "websiteManager-list-announcement-boards") })
 public class WebSiteAnnouncementManagement extends AnnouncementManagement {
+
+    private static final Logger logger = LoggerFactory.getLogger(WebSiteAnnouncementManagement.class);
 
     private static final int UP = -1;
 
@@ -274,7 +278,7 @@ public class WebSiteAnnouncementManagement extends AnnouncementManagement {
         try {
             return new Integer(id);
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return null;
         }
     }

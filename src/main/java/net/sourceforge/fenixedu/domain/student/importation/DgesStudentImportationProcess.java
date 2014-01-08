@@ -48,11 +48,15 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class DgesStudentImportationProcess extends DgesStudentImportationProcess_Base {
+
+    private static final Logger logger = LoggerFactory.getLogger(DgesStudentImportationProcess.class);
 
     private transient PrintWriter LOG_WRITER = null;
 
@@ -94,7 +98,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 
             importCandidates();
         } catch (Throwable a) {
-            a.printStackTrace();
+            logger.error(a.getMessage(), a);
             throw new RuntimeException(a);
         }
 
@@ -172,7 +176,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
         for (final DegreeCandidateDTO degreeCandidateDTO : degreeCandidateDTOs) {
 
             if (++processed % 150 == 0) {
-                System.out.println("Processed :" + processed);
+                logger.info("Processed :" + processed);
             }
 
             logCandidate(degreeCandidateDTO);

@@ -14,6 +14,8 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -21,6 +23,8 @@ import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 
 public class ExternalApplication extends ExternalApplication_Base {
+
+    private static final Logger logger = LoggerFactory.getLogger(ExternalApplication.class);
 
     public ExternalApplication() {
         super();
@@ -89,7 +93,7 @@ public class ExternalApplication extends ExternalApplication_Base {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
     }
 

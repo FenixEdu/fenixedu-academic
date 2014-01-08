@@ -9,6 +9,9 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongNumberOfArgumentsException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongTypeOfArgumentException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Custom group builder that can be used to create a group with explicitly
  * register a builder for it. This builder accepts the type of the group to
@@ -25,6 +28,8 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
  */
 @Deprecated
 class CustomGroupBuilder implements GroupBuilder {
+
+    private static final Logger logger = LoggerFactory.getLogger(CustomGroupBuilder.class);
 
     @Override
     public Group build(Object[] arguments) {
@@ -56,7 +61,7 @@ class CustomGroupBuilder implements GroupBuilder {
             throw new GroupDynamicExpressionException(e, "accessControl.group.builder.custom.constructor.doesNotExist", Arrays
                     .asList(arguments).toString());
         } catch (InvocationTargetException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new GroupDynamicExpressionException(e, "accessControl.group.builder.custom.constructor.exception", Arrays
                     .asList(arguments).toString());
         } catch (GroupDynamicExpressionException e) {

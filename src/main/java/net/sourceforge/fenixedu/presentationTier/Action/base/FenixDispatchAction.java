@@ -39,6 +39,8 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.components.state.LifeCycleConstants;
@@ -52,6 +54,8 @@ import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public abstract class FenixDispatchAction extends DispatchAction implements ExceptionHandler {
+
+    private static final Logger logger = LoggerFactory.getLogger(FenixDispatchAction.class);
 
     protected static final Bennu rootDomainObject = Bennu.getInstance();
     private static boolean DEV_MODE = CoreConfiguration.getConfiguration().developmentMode();
@@ -69,7 +73,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         }
 
         if (DEV_MODE) {
-            System.out.println("CLASS: " + this.getClass().getName() + ", method: " + getFromRequest(request, "method"));
+            logger.info("CLASS: " + this.getClass().getName() + ", method: " + getFromRequest(request, "method"));
         }
 
         return actionForward;
@@ -203,7 +207,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 
         // show exception in output to ease finding the problem when
         // messages are not shown in page
-        e.printStackTrace();
+        logger.error(e.getMessage(), e);
         return input;
     }
 

@@ -31,11 +31,15 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.YearMonthDay;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
+
+    private static final Logger logger = LoggerFactory.getLogger(RaidesPhdReportFile.class);
 
     public RaidesPhdReportFile() {
         super();
@@ -63,7 +67,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
         int civilYear = executionYear.getBeginCivilYear();
         fillSpreadsheet(spreadsheet);
 
-        System.out.println("BEGIN report for " + getDegreeType().name());
+        logger.info("BEGIN report for " + getDegreeType().name());
 
         List<PhdIndividualProgramProcess> retrieveProcesses = retrieveProcesses(executionYear);
 

@@ -8,22 +8,25 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.security.Authenticate;
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author David Santos in Mar 1, 2004
  */
 
 public class MasterDegreeEnrollmentWithoutRulesAuthorizationFilter extends Filtro {
+
+    private static final Logger logger = LoggerFactory.getLogger(MasterDegreeEnrollmentWithoutRulesAuthorizationFilter.class);
 
     public static final MasterDegreeEnrollmentWithoutRulesAuthorizationFilter instance =
             new MasterDegreeEnrollmentWithoutRulesAuthorizationFilter();
@@ -48,7 +51,7 @@ public class MasterDegreeEnrollmentWithoutRulesAuthorizationFilter extends Filtr
 
             return null;
         } catch (Exception exception) {
-            exception.printStackTrace();
+            logger.error(exception.getMessage(), exception);
             return "noAuthorization";
         }
     }

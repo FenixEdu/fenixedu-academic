@@ -133,7 +133,7 @@ public abstract class Content extends Content_Base {
         try {
             return getAvailabilityPolicy().isAvailable(context);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return false;
         }
     }

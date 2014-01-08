@@ -16,6 +16,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -32,6 +34,8 @@ import pt.utl.ist.fenix.tools.util.FileUtils;
 @Forwards({ @Forward(name = "prepareUploadPage", path = "/gep/inquiries/uploadInquiriesResults.jsp", tileProperties = @Tile(
         title = "private.gep.surveys.importresults")) })
 public class UploadInquiriesResultsDA extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(UploadInquiriesResultsDA.class);
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
@@ -55,7 +59,7 @@ public class UploadInquiriesResultsDA extends FenixDispatchAction {
         } catch (IOException e) {
             addErrorMessage(request, e.getMessage(), e.getMessage());
         } catch (DomainException e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage(), e);
             addErrorMessage(request, e.getKey(), e.getKey(), e.getArgs());
         }
         return prepare(mapping, actionForm, request, response);

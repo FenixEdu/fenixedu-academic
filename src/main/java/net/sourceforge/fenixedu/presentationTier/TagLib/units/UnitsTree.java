@@ -18,12 +18,16 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author mrsp
  * 
  */
 public class UnitsTree extends TagSupport {
+
+    private static final Logger logger = LoggerFactory.getLogger(UnitsTree.class);
 
     private String initialUnit;
 
@@ -41,7 +45,7 @@ public class UnitsTree extends TagSupport {
         try {
             pageContext.getOut().print(tree);
         } catch (IOException e) {
-            e.printStackTrace(System.out);
+            logger.error(e.getMessage(), e);
         }
         return SKIP_BODY;
     }
