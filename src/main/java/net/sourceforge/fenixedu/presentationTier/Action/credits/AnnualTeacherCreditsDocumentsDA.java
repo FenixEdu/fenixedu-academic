@@ -20,7 +20,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(module = "scientificCouncil", path = "/annualTeachingCreditsDocument", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "showAnnualTeacherCreditsDocument", path = "/credits/showAnnualTeacherCreditsDocument.jsp",
         tileProperties = @Tile(head = "/commons/blank.jsp", navGeral = "/commons/blank.jsp", navLocal = "/commons/blank.jsp",
                 bodyContext = "/commons/blank.jsp", extend = "df.layout.blank")) })
