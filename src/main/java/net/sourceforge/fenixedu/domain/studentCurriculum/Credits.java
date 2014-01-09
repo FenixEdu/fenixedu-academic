@@ -203,7 +203,7 @@ public class Credits extends Credits_Base {
     }
 
     protected void disconnect() {
-        for (; hasAnyDismissals(); getDismissals().iterator().next().delete()) {
+        for (; hasAnyDismissals(); getDismissals().iterator().next().deleteFrom()) {
             ;
         }
 
