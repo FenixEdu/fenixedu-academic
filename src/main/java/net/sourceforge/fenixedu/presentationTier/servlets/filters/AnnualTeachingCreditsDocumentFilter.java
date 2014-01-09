@@ -66,7 +66,9 @@ public class AnnualTeachingCreditsDocumentFilter implements Filter {
             try {
                 pdfStreamToReturn = getAnnualTeacherCreditsDocument(arg0, arg1, arg2, teacher, executionYear, null);
             } finally {
-                response.reset();
+                if (!response.isCommitted()) {
+                    response.reset();
+                }
             }
             response.getOutputStream().write(pdfStreamToReturn.toByteArray());
             response.setContentType("application/pdf");
@@ -89,7 +91,9 @@ public class AnnualTeachingCreditsDocumentFilter implements Filter {
                                         executionYear, RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
                         documentsWithoutConfidentionalInformation.put(annualTeachingCredits, pdfStreamToReturn);
                     } finally {
-                        response.resetBuffer();
+                        if (!response.isCommitted()) {
+                            response.resetBuffer();
+                        }
                     }
                     try {
                         ByteArrayOutputStream pdfStreamToReturn =
@@ -97,7 +101,9 @@ public class AnnualTeachingCreditsDocumentFilter implements Filter {
                                         executionYear, RoleType.SCIENTIFIC_COUNCIL);
                         documentsWithConfidentionalInformation.put(annualTeachingCredits, pdfStreamToReturn);
                     } finally {
-                        response.resetBuffer();
+                        if (!response.isCommitted()) {
+                            response.resetBuffer();
+                        }
                     }
                 }
                 closeAnnualCreditsState(annualCreditsState, documentsWithConfidentionalInformation,
