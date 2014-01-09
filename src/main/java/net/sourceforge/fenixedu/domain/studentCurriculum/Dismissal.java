@@ -207,7 +207,7 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
         return (getCurricularCourse() == curricularCourse) ? this : null;
     }
 
-    void deleteFrom() {
+    void deleteFromCredits() {
         createCurriculumLineLog(EnrolmentAction.UNENROL);
         setCredits(null);
         super.delete();
