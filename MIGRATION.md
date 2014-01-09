@@ -150,7 +150,7 @@ This metadata is used in resource search by execution course site interfaces.
     ALTER TABLE `GENERIC_FILE` CHANGE `CONTENT` `CONTENT_FILE` longblob, CHANGE `SIZE` `SIZE` bigint(20) default NULL, CHANGE `UPLOAD_TIME` `CREATION_DATE` timestamp NULL default NULL,CHANGE `MIME_TYPE` `CONTENT_TYPE` text,CHANGE `DISPLAY_NAME` `DISPLAY_NAME` text,CHANGE `FILENAME` `FILENAME` text, ADD `CONTENT_KEY` text, ADD `OID_STORAGE` bigint unsigned, add index (OID_STORAGE), ADD `OID_FILE_SUPPORT` bigint unsigned, add index (OID_FILE_SUPPORT);
     
     -- All existing files should be connected to the DSpace file storage
-    UPDATE GENERIC_FILE SET OID_STORAGE = (SELECT OID_D_SPACE_FILE_STORAGE FROM BENNU), CONTENT_KEY = EXTERNAL_STORAGE_IDENTIFICATION;
+    UPDATE GENERIC_FILE SET OID_STORAGE = (SELECT OID_D_SPACE_FILE_STORAGE FROM BENNU), CONTENT_KEY = OID;
     -- And to the FileSupport root
     UPDATE GENERIC_FILE SET OID_FILE_SUPPORT = (SELECT OID FROM FILE_SUPPORT);
     ```

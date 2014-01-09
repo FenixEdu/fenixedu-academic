@@ -13,6 +13,7 @@ import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
+import pt.ist.fenixframework.FenixFramework;
 
 import com.google.common.io.ByteStreams;
 
@@ -40,7 +41,8 @@ public class DSpaceFileStorage extends DSpaceFileStorage_Base {
     @Override
     public String store(String uniqueIdentification, byte[] content) {
         if (content == null) {
-            new DeleteFileRequest(AccessControl.getPerson(), uniqueIdentification, true);
+            File file = FenixFramework.getDomainObject(uniqueIdentification);
+            new DeleteFileRequest(AccessControl.getPerson(), file.getExternalStorageIdentification(), true);
         }
         throw new UnsupportedOperationException("dspace storage is read-only");
     }
@@ -56,6 +58,7 @@ public class DSpaceFileStorage extends DSpaceFileStorage_Base {
 
     @Override
     public InputStream readAsInputStream(String uniqueIdentification) {
+        File file = FenixFramework.getDomainObject(uniqueIdentification);
         HttpClient client = new HttpClient();
 
         String remoteDownloadInterfaceUrl =
@@ -66,7 +69,7 @@ public class DSpaceFileStorage extends DSpaceFileStorage_Base {
 
         String downloadUrl =
                 remoteDownloadInterfaceUrl + "?username=" + username + "&password=" + password + "&uniqueId="
-                        + uniqueIdentification;
+                        + file.getExternalStorageIdentification();
         GetMethod gm = new GetMethod(downloadUrl);
 
         int result;
