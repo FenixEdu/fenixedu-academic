@@ -7,11 +7,11 @@ import java.util.Map;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
+import org.fenixedu.commons.StringNormalizer;
 
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
 import net.sourceforge.fenixedu.domain.institutionalRelations.academic.Program;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class MobilityProgramProvider implements AutoCompleteProvider<MobilityProgram> {
 

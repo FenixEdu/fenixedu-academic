@@ -39,12 +39,12 @@ import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.StringNormalizer;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.DomainObject;
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public abstract class Space extends Space_Base {
 
@@ -509,8 +509,7 @@ public abstract class Space extends Space_Base {
         if (nameWords != null) {
             String spacePresentationName = getSpaceInformation().getPresentationName();
             if (spacePresentationName != null) {
-                String[] spaceIdentificationWords = spacePresentationName.trim().split(" ");
-                StringNormalizer.normalize(spaceIdentificationWords);
+                String[] spaceIdentificationWords = StringNormalizer.normalize(spacePresentationName).trim().split(" ");
                 int j, i;
                 for (i = 0; i < nameWords.length; i++) {
                     if (!nameWords[i].equals("")) {
@@ -535,8 +534,7 @@ public abstract class Space extends Space_Base {
     public static String[] getIdentificationWords(String name) {
         String[] identificationWords = null;
         if (name != null && !StringUtils.isEmpty(name.trim())) {
-            identificationWords = name.trim().split(" ");
-            StringNormalizer.normalize(identificationWords);
+            identificationWords = StringNormalizer.normalize(name).trim().split(" ");
         }
         return identificationWords;
     }

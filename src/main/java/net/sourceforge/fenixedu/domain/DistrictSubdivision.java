@@ -5,10 +5,11 @@ import java.util.Comparator;
 import java.util.TreeSet;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.StringNormalizer;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
 import org.apache.commons.lang.StringUtils;
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 //TODO: Refactor remaining object to use district subdivision instead of strings
 public class DistrictSubdivision extends DistrictSubdivision_Base {
@@ -57,11 +58,11 @@ public class DistrictSubdivision extends DistrictSubdivision_Base {
     }
 
     static public Collection<DistrictSubdivision> findByName(String name, int size) {
-        String normalizedName = StringNormalizer.normalize(name).toLowerCase();
+        String normalizedName = StringNormalizer.normalize(name);
         Collection<DistrictSubdivision> result = new TreeSet<DistrictSubdivision>(COMPARATOR_BY_NAME);
 
         for (DistrictSubdivision districtSubdivision : Bennu.getInstance().getDistrictSubdivisionsSet()) {
-            if (StringNormalizer.normalize(districtSubdivision.getName()).toLowerCase().contains(normalizedName)) {
+            if (StringNormalizer.normalize(districtSubdivision.getName()).contains(normalizedName)) {
                 result.add(districtSubdivision);
                 if (result.size() >= size) {
                     break;

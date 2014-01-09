@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.StringNormalizer;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class PersonNamePart extends PersonNamePart_Base {
 
@@ -29,7 +29,7 @@ public class PersonNamePart extends PersonNamePart_Base {
     }
 
     public static String normalize(final String string) {
-        return StringNormalizer.normalize(string.trim()).toLowerCase();
+        return StringNormalizer.normalize(string.trim());
     }
 
     public static String[] getNameParts(final String name) {

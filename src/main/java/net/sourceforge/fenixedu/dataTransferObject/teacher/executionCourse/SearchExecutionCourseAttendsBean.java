@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.util.WorkingStudentSelectionType;
 import pt.utl.ist.fenix.tools.predicates.AndPredicate;
 import pt.utl.ist.fenix.tools.predicates.InlinePredicate;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
-import pt.utl.ist.fenix.tools.util.StringAppender;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class SearchExecutionCourseAttendsBean implements Serializable {
@@ -71,7 +70,7 @@ public class SearchExecutionCourseAttendsBean implements Serializable {
     public enum StudentAttendsStateType {
         ENROLED, NOT_ENROLED, IMPROVEMENT, SPECIAL_SEASON;
         public String getQualifiedName() {
-            return StringAppender.append(StudentAttendsStateType.class.getSimpleName(), ".", name());
+            return StudentAttendsStateType.class.getSimpleName() + "." + name();
         }
     }
 

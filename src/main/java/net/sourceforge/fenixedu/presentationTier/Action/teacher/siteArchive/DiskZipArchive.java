@@ -8,8 +8,6 @@ import java.util.zip.ZipOutputStream;
 
 import javax.servlet.http.HttpServletResponse;
 
-import pt.utl.ist.fenix.tools.file.utils.FileUtils;
-
 /**
  * The <tt>DiskZipArchive</tt> saves all contents to disk and when {@link #finish()} is called creates the Zip file and writes it
  * to the
@@ -44,7 +42,7 @@ public class DiskZipArchive extends DiskArchive {
 
         zipStream.close();
 
-        FileUtils.deleteDirectory(getRoot());
+        pt.utl.ist.fenix.tools.util.FileUtils.deleteDirectory(getRoot());
     }
 
     private void writeZipEntries(ZipOutputStream zipStream, String prefix, File dir) throws IOException {

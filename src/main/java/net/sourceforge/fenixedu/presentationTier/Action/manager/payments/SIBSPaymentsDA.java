@@ -3,8 +3,10 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager.payments;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.ResourceBundle;
@@ -28,12 +30,15 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.commons.StringNormalizer;
+
+import com.google.common.io.ByteStreams;
+import com.google.common.io.Files;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 @Mapping(path = "/SIBSPayments", module = "manager")
 @Forwards({ @Forward(name = "prepareUploadSIBSPaymentFiles", path = "/manager/payments/prepareUploadSIBSPaymentFiles.jsp") })
@@ -120,7 +125,7 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
             File zipFile = pt.utl.ist.fenix.tools.util.FileUtils.copyToTemporaryFile(bean.getInputStream());
             File unzipDir = null;
             try {
-                unzipDir = pt.utl.ist.fenix.tools.file.utils.FileUtils.unzipFile(zipFile);
+                unzipDir = pt.utl.ist.fenix.tools.util.FileUtils.unzipFile(zipFile);
                 if (!unzipDir.isDirectory()) {
                     addActionMessage("error", request, "error.manager.SIBS.zipException", bean.getFilename());
                     return prepareUploadSIBSPaymentFiles(mapping, form, request, response);
@@ -135,7 +140,17 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
             recursiveZipProcess(unzipDir, request);
 
         } else if (StringUtils.endsWithIgnoreCase(bean.getFilename(), PAYMENT_FILE_EXTENSION)) {
-            File file = pt.utl.ist.fenix.tools.util.FileUtils.copyToTemporaryFile(bean.getInputStream(), bean.getFilename());
+            InputStream inputStream = bean.getInputStream();
+            File dir = Files.createTempDir();
+            File tmp = new File(dir, bean.getFilename());
+            tmp.deleteOnExit();
+            
+            try (OutputStream out = new FileOutputStream(tmp)) {
+                ByteStreams.copy(inputStream, out);
+            } finally {
+                inputStream.close();
+            }
+            File file = tmp;
             ProcessResult result = new ProcessResult(request);
             result.addMessage("label.manager.SIBS.processingFile", file.getName());
             try {

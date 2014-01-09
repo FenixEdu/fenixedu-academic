@@ -14,11 +14,10 @@ import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PersonNot
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PersonSearchByNameMismatchException;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PossiblePersonCandidatesException;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.SocialSecurityNumberMismatchException;
+
 import org.apache.commons.lang.StringUtils;
-
+import org.fenixedu.commons.StringNormalizer;
 import org.joda.time.YearMonthDay;
-
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class PhdMigrationIndividualPersonalData extends PhdMigrationIndividualPersonalData_Base {
 

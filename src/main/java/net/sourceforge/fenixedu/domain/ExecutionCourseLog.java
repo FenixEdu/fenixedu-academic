@@ -5,14 +5,13 @@ import java.util.Collection;
 import java.util.Collections;
 
 import net.sourceforge.fenixedu.util.BundleUtil;
-import pt.utl.ist.fenix.tools.util.StringAppender;
 
 public class ExecutionCourseLog extends ExecutionCourseLog_Base {
 
     public enum ExecutionCourseLogTypes {
         PROFESSORSHIP, CURRICULAR, CONTENT, GROUPS_AND_SHIFTS, EVALUATION;
         public String getQualifiedName() {
-            return StringAppender.append(ExecutionCourseLogTypes.class.getSimpleName(), ".", name());
+            return ExecutionCourseLogTypes.class.getSimpleName() + "." + name();
         }
 
         private static final Collection<ExecutionCourseLogTypes> typesAsList = Collections.unmodifiableList(Arrays

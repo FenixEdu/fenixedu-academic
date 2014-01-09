@@ -30,8 +30,6 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.utl.ist.fenix.tools.util.StringAppender;
-
 public class Email extends Email_Base {
 
     private static final Logger LOG = LoggerFactory.getLogger(Email.class);
@@ -170,8 +168,7 @@ public class Email extends Email_Base {
     }
 
     protected static String constructFromString(final String fromName, String fromAddress) {
-        return (fromName == null || fromName.length() == 0) ? fromAddress : StringAppender.append(fromName.replace(',', ' '),
-                " <", fromAddress, ">");
+        return (fromName == null || fromName.length() == 0) ? fromAddress : fromName.replace(',', ' ') + " <" + fromAddress + ">";
     }
 
     private class EmailMimeMessage extends MimeMessage {

@@ -1,8 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors;
 
+import org.fenixedu.commons.StringNormalizer;
+
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.util.FenixStringTools;
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public abstract class SiteElementPathProcessor extends PathProcessor {

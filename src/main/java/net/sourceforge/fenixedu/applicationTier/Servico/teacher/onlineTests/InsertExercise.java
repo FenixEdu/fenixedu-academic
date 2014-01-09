@@ -169,7 +169,7 @@ public class InsertExercise {
         File zipFile = pt.utl.ist.fenix.tools.util.FileUtils.copyToTemporaryFile(zipInputStream);
         File unzipDir = null;
         try {
-            unzipDir = pt.utl.ist.fenix.tools.file.utils.FileUtils.unzipFile(zipFile);
+            unzipDir = pt.utl.ist.fenix.tools.util.FileUtils.unzipFile(zipFile);
             if (!unzipDir.isDirectory()) {
                 throw new IOException("error");
             }

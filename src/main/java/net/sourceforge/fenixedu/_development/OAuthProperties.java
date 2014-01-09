@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu._development;
 
-import org.fenixedu.bennu.core.annotation.ConfigurationManager;
-import org.fenixedu.bennu.core.annotation.ConfigurationProperty;
-import org.fenixedu.bennu.core.util.ConfigurationInvocationHandler;
+import org.fenixedu.commons.configuration.ConfigurationInvocationHandler;
+import org.fenixedu.commons.configuration.ConfigurationManager;
+import org.fenixedu.commons.configuration.ConfigurationProperty;
 
 public class OAuthProperties {
     @ConfigurationManager(description = "OAuth Properties")

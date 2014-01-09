@@ -7,9 +7,9 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.bennu.core.annotation.ConfigurationManager;
-import org.fenixedu.bennu.core.annotation.ConfigurationProperty;
-import org.fenixedu.bennu.core.util.ConfigurationInvocationHandler;
+import org.fenixedu.commons.configuration.ConfigurationInvocationHandler;
+import org.fenixedu.commons.configuration.ConfigurationManager;
+import org.fenixedu.commons.configuration.ConfigurationProperty;
 
 public class InstitutionPhdCandidacyProcessProperties {
     @ConfigurationManager(description = "Phd Institution Public Candidacy Properties")

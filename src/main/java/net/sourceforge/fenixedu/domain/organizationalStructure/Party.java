@@ -64,11 +64,11 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.StringNormalizer;
 import org.joda.time.DateTime;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -589,8 +589,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
             return true;
         }
         if (getName() != null) {
-            String[] personNameWords = getName().trim().split(" ");
-            StringNormalizer.normalize(personNameWords);
+            String[] personNameWords = StringNormalizer.normalize(getName()).trim().split(" ");
             int j, i;
             for (i = 0; i < nameWords.length; i++) {
                 if (!nameWords[i].equals("")) {

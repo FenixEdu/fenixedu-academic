@@ -38,6 +38,7 @@ import net.sourceforge.fenixedu.util.InquiriesUtil;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -47,7 +48,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -133,7 +133,7 @@ public class SendEmailReminderAction extends FenixDispatchAction {
             return false;
         }
         String emailAddress = student.getPerson().getDefaultEmailAddress().getValue();
-        if (!EmailSender.emailAddressFormatIsValid(emailAddress)) {
+        if (!EmailValidator.getInstance().isValid(emailAddress)) {
             return false;
         }
 

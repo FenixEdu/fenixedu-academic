@@ -69,6 +69,7 @@ import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.StringNormalizer;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
@@ -81,8 +82,6 @@ import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 import pt.utl.ist.fenix.tools.util.CollectionUtils;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import pt.utl.ist.fenix.tools.util.StringAppender;
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -148,7 +147,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
             @Override
             public void beforeAdd(final ExecutionCourse executionCourse, final CurricularCourse curricularCourse) {
-                if (executionCourse != null && curricularCourse != null && executionCourse.getAssociatedCurricularCoursesSet().size() == 0) {
+                if (executionCourse != null && curricularCourse != null
+                        && executionCourse.getAssociatedCurricularCoursesSet().size() == 0) {
                     ExecutionCourse previous = null;
                     for (final ExecutionCourse otherExecutionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {
                         if (previous == null || otherExecutionCourse.getExecutionPeriod().isAfter(previous.getExecutionPeriod())) {
@@ -1312,7 +1312,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         for (ShiftType shiftType : shift.getSortedTypes()) {
             typesName.append(shiftType.getSiglaTipoAula());
         }
-        return StringAppender.append(getSigla(), typesName.toString(), number);
+        return getSigla() + typesName.toString() + number;
     }
 
     public SortedSet<Shift> getShiftsByTypeOrderedByShiftName(final ShiftType shiftType) {
@@ -2065,8 +2065,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         if (nameWords != null) {
             String courseName = getNome() + " " + getSigla();
             if (courseName != null) {
-                String[] courseNameWords = courseName.trim().split(" ");
-                StringNormalizer.normalize(courseNameWords);
+                String[] courseNameWords = StringNormalizer.normalize(courseName).trim().split(" ");
                 int j, i;
                 for (i = 0; i < nameWords.length; i++) {
                     if (!nameWords[i].equals("")) {

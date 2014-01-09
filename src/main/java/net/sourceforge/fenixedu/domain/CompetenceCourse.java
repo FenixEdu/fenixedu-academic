@@ -15,6 +15,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.commons.collections.CollectionUtils;
+
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
@@ -36,9 +37,9 @@ import net.sourceforge.fenixedu.util.UniqueAcronymCreator;
 
 import org.apache.commons.collections.Predicate;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.StringNormalizer;
 import org.joda.time.YearMonthDay;
 
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -1177,7 +1178,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public boolean matchesName(String name) {
-        name = StringNormalizer.normalizeAndReplaceNonAlphaNumeric(name, " ");
+        name = StringNormalizer.normalize(name).replaceAll("[^0-9a-zA-Z]", " ").trim();
         for (final CompetenceCourseInformation information : getCompetenceCourseInformations()) {
             if (StringNormalizer.normalize(information.getName()).matches(".*" + name.replaceAll(" ", ".*") + ".*")) {
                 return true;
@@ -1190,7 +1191,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         if (getCode() == null) {
             return false;
         }
-        code = StringNormalizer.normalizeAndReplaceNonAlphaNumeric(code, " ");
+        code = StringNormalizer.normalize(code).replaceAll("[^0-9a-zA-Z]", " ").trim();
         return (StringNormalizer.normalize(getCode()).matches(".*" + code.replaceAll(" ", ".*") + ".*"));
     }
 

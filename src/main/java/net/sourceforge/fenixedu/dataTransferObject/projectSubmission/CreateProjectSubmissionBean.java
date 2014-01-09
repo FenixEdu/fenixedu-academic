@@ -3,11 +3,12 @@ package net.sourceforge.fenixedu.dataTransferObject.projectSubmission;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import org.fenixedu.commons.StringNormalizer;
+
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class CreateProjectSubmissionBean implements Serializable {
 

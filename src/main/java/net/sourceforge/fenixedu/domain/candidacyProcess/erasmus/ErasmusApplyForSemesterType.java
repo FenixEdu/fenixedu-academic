@@ -4,7 +4,6 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
-import pt.utl.ist.fenix.tools.util.StringAppender;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum ErasmusApplyForSemesterType implements IPresentableEnum {
@@ -15,11 +14,11 @@ public enum ErasmusApplyForSemesterType implements IPresentableEnum {
     }
 
     protected String qualifiedName() {
-        return StringAppender.append(this.getClass().getSimpleName(), ".", name());
+        return this.getClass().getSimpleName() + "." + name();
     }
 
     protected String fullQualifiedName() {
-        return StringAppender.append(this.getClass().getName(), ".", name());
+        return this.getClass().getName() + "." + name();
     }
 
     protected String localizedName() {

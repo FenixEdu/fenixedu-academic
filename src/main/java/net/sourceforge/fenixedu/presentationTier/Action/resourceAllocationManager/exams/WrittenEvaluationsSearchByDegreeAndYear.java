@@ -34,7 +34,6 @@ import org.apache.struts.util.MessageResources;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.utl.ist.fenix.tools.util.StringAppender;
 
 @Mapping(module = "resourceAllocationManager", path = "/searchWrittenEvaluationsByDegreeAndYear",
         input = "/searchWrittenEvaluationsByDegreeAndYear.do?method=prepare&page=0",
@@ -59,13 +58,15 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
         for (final ExecutionDegree executionDegree : ExecutionDegree.filterByAcademicInterval(academicInterval)) {
             final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
             final Degree degree = degreeCurricularPlan.getDegree();
-            executionDegreeLabelValueBeans.add(new LabelValueBean(StringAppender.append(
-                    enumMessages.getMessage(getLocale(request), degree.getDegreeType().toString()), " ",
-                    messages.getMessage(getLocale(request), "public.degree.information.label.in"), " ",
-                    degree.getNameFor(academicInterval).getContent(),
+            String part =
                     addAnotherInfoToLabel(executionDegree, academicInterval) ? " - "
-                            + executionDegree.getDegreeCurricularPlan().getName() : ""), executionDegree.getExternalId()
-                    .toString()));
+                            + executionDegree.getDegreeCurricularPlan().getName() : "";
+            executionDegreeLabelValueBeans.add(new LabelValueBean(enumMessages.getMessage(getLocale(request), degree
+                    .getDegreeType().toString())
+                    + " "
+                    + messages.getMessage(getLocale(request), "public.degree.information.label.in")
+                    + " "
+                    + degree.getNameFor(academicInterval).getContent() + part, executionDegree.getExternalId().toString()));
         }
         Collections.sort(executionDegreeLabelValueBeans, new BeanComparator("label"));
         request.setAttribute("executionDegreeLabelValueBeans", executionDegreeLabelValueBeans);

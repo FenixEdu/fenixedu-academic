@@ -22,8 +22,6 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import pt.utl.ist.fenix.tools.util.StringAppender;
-
 public class TransactionStatistics extends CronTask {
 
     private static class Statistics {
@@ -157,10 +155,9 @@ public class TransactionStatistics extends CronTask {
     }
 
     private String makeFullQuery(final String queryPrefix, final DateTime conditionValue, final DateTime endConfitionValue) {
-        return endConfitionValue == null ? StringAppender.append(queryPrefix, sinceConditionPrefix,
-                dateTimeFormatter.print(conditionValue), conditionPostfix) : StringAppender.append(queryPrefix,
-                sinceConditionPrefix, dateTimeFormatter.print(conditionValue), conditionPostfix, endConditionPrefix,
-                dateTimeFormatter.print(endConfitionValue), conditionPostfix);
+        return endConfitionValue == null ? queryPrefix + sinceConditionPrefix + dateTimeFormatter.print(conditionValue)
+                + conditionPostfix : queryPrefix + sinceConditionPrefix + dateTimeFormatter.print(conditionValue)
+                + conditionPostfix + endConditionPrefix + dateTimeFormatter.print(endConfitionValue) + conditionPostfix;
     }
 
 }

@@ -4,8 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
+import org.fenixedu.commons.StringNormalizer;
 
 public class FenixStringTools {
 

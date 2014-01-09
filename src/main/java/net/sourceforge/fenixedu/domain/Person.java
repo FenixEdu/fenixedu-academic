@@ -160,10 +160,12 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.user.management.UserLoginPeriod;
 import org.fenixedu.bennu.user.management.UserManager;
+import org.fenixedu.commons.StringNormalizer;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
@@ -174,9 +176,7 @@ import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
-import pt.utl.ist.fenix.tools.smtp.EmailSender;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -932,7 +932,7 @@ public class Person extends Person_Base {
         if (!hasAnyPartyContact(MobilePhone.class)) {
             MobilePhone.createMobilePhone(this, infoPerson.getTelemovel(), PartyContactType.PERSONAL, false);
         }
-        if (!hasAnyPartyContact(EmailAddress.class) && EmailSender.emailAddressFormatIsValid(infoPerson.getEmail())) {
+        if (!hasAnyPartyContact(EmailAddress.class) && EmailValidator.getInstance().isValid(infoPerson.getEmail())) {
             EmailAddress.createEmailAddress(this, infoPerson.getEmail(), PartyContactType.PERSONAL, false);
         }
         if (!hasAnyPartyContact(WebAddress.class) && !StringUtils.isEmpty(infoPerson.getEnderecoWeb())) {
@@ -2546,8 +2546,7 @@ public class Person extends Person_Base {
             if (isSpecified(documentIdNumber)) {
                 for (final IdDocument idDocument : Bennu.getInstance().getIdDocumentsSet()) {
                     final String[] documentIdNumberValues =
-                            documentIdNumber == null ? null : StringNormalizer.normalize(documentIdNumber).toLowerCase()
-                                    .split("\\p{Space}+");
+                            documentIdNumber == null ? null : StringNormalizer.normalize(documentIdNumber).split("\\p{Space}+");
                     if (matchesAnyCriteriaField(documentIdNumberValues, documentIdNumber, idDocument.getValue())) {
                         people.add(idDocument.getPerson());
                     }
@@ -2569,7 +2568,7 @@ public class Person extends Person_Base {
         }
 
         private boolean areNamesPresent(final String name, final String[] searchNameParts) {
-            final String nameNormalized = StringNormalizer.normalize(name).toLowerCase();
+            final String nameNormalized = StringNormalizer.normalize(name);
             for (String searchNamePart : searchNameParts) {
                 final String namePart = searchNamePart;
                 if (!nameNormalized.contains(namePart)) {
@@ -2640,8 +2639,8 @@ public class Person extends Person_Base {
 
     private boolean validNickname(final String name) {
         if (name != null && name.length() > 0) {
-            final String normalizedName = StringNormalizer.normalize(name.replace('-', ' ')).toLowerCase();
-            final String normalizedPersonName = StringNormalizer.normalize(getName().replace('-', ' ')).toLowerCase();
+            final String normalizedName = StringNormalizer.normalize(name.replace('-', ' '));
+            final String normalizedPersonName = StringNormalizer.normalize(getName().replace('-', ' '));
 
             final String[] nameParts = normalizedName.split(" ");
             final String[] personNameParts = normalizedPersonName.split(" ");

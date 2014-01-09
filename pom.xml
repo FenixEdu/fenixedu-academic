@@ -162,7 +162,7 @@
 		<dependency>
 			<groupId>org.fenixedu</groupId>
 			<artifactId>bennu-renderers</artifactId>
-			<version>3.0.0-M3</version>
+			<version>3.0.0-RC1</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.jasperreports</groupId>
@@ -256,6 +256,12 @@
 			<groupId>pt.ist</groupId>
 			<artifactId>sotis-metadata</artifactId>
 			<version>1.0.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>pt.ist</groupId>
+                    <artifactId>fenix-tools</artifactId>
+                </exclusion>
+            </exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.oracle</groupId>
@@ -420,14 +426,19 @@
 			<version>1.2</version>
 		</dependency>
 		<dependency>
+		    <groupId>pt.ist</groupId>
+		    <artifactId>fenix-legacy-tools</artifactId>
+		    <version>1.0.0</version>
+		</dependency>
+		<dependency>
 			<groupId>org.fenixedu</groupId>
 			<artifactId>fenixedu-commons</artifactId>
-			<version>1.0.0-M3</version>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.fenixedu</groupId>
 			<artifactId>bennu-core</artifactId>
-			<version>2.0.0-M6</version>
+			<version>2.0.0-RC1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.fenixedu</groupId>
@@ -437,12 +448,12 @@
 		<dependency>
 			<groupId>org.fenixedu</groupId>
 			<artifactId>bennu-scheduler</artifactId>
-			<version>2.0.0-M6</version>
+			<version>2.0.0-RC1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.fenixedu</groupId>
 			<artifactId>bennu-io</artifactId>
-			<version>2.0.0-M6</version>
+			<version>2.0.0-RC1</version>
 		</dependency>
 		<dependency>
 			<groupId>joda-time</groupId>

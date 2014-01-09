@@ -14,8 +14,8 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
+import org.fenixedu.commons.StringNormalizer;
 
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -31,7 +31,7 @@ public class SearchEventEditionByMultiLanguageString implements AutoCompleteProv
         if (value == null) {
             result.addAll(objects);
         } else {
-            String[] values = StringNormalizer.normalize(value).toLowerCase().split("\\p{Space}+");
+            String[] values = StringNormalizer.normalize(value).split("\\p{Space}+");
 
             for (EventEdition object : objects) {
                 try {
@@ -44,7 +44,7 @@ public class SearchEventEditionByMultiLanguageString implements AutoCompleteProv
                     for (Language language : objectMLS.getAllLanguages()) {
                         String objectValue = objectMLS.getContent(language);
 
-                        String normalizedValue = StringNormalizer.normalize(objectValue).toLowerCase();
+                        String normalizedValue = StringNormalizer.normalize(objectValue);
 
                         boolean matches = true;
                         for (String value2 : values) {

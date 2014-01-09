@@ -13,8 +13,7 @@ import net.sourceforge.fenixedu.util.FenixStringTools;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.fenixedu.bennu.core.domain.Bennu;
-
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
+import org.fenixedu.commons.StringNormalizer;
 
 public class Researcher extends Researcher_Base {
 

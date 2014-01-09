@@ -58,7 +58,6 @@ import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.StringAppender;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
@@ -412,8 +411,7 @@ public class ContextUtils {
         final List<LabelValueBean> executionPeriodLabelValueBeans = new ArrayList<LabelValueBean>();
         for (final ExecutionSemester executionSemester : executionSemesters) {
             infoExecutionPeriods.add(InfoExecutionPeriod.newInfoFromDomain(executionSemester));
-            final String name =
-                    StringAppender.append(executionSemester.getName(), " - ", executionSemester.getExecutionYear().getYear());
+            final String name = executionSemester.getName() + " - " + executionSemester.getExecutionYear().getYear();
             final LabelValueBean labelValueBean = new LabelValueBean(name, executionSemester.getExternalId().toString());
             executionPeriodLabelValueBeans.add(labelValueBean);
         }

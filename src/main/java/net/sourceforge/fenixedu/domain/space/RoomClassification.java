@@ -19,7 +19,6 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.utl.ist.fenix.tools.util.CollectionUtils;
-import pt.utl.ist.fenix.tools.util.StringAppender;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class RoomClassification extends RoomClassification_Base {
@@ -114,7 +113,7 @@ public class RoomClassification extends RoomClassification_Base {
                 absoluteCode = normalizedCode;
             } else {
                 final String parentCode = getParentRoomClassification().getAbsoluteCode();
-                absoluteCode = StringAppender.append(parentCode, ".", normalizedCode);
+                absoluteCode = parentCode + "." + normalizedCode;
             }
         }
         return absoluteCode;
@@ -127,7 +126,7 @@ public class RoomClassification extends RoomClassification_Base {
                 presentationCode = code;
             } else {
                 final String parentCode = getParentRoomClassification().getPresentationCode();
-                presentationCode = StringAppender.append(parentCode, ".", code);
+                presentationCode = parentCode + "." + code;
             }
         }
         return presentationCode;

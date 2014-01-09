@@ -45,7 +45,6 @@ import org.apache.struts.util.MessageResources;
 
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import pt.utl.ist.fenix.tools.util.StringAppender;
 
 public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
 
@@ -156,8 +155,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
         final List<SelectItem> selectItems = new ArrayList<SelectItem>();
         for (final ExecutionSemester executionSemester : executionPeriods) {
             final SelectItem selectItem = new SelectItem();
-            selectItem.setLabel(StringAppender.append(executionSemester.getName(), " - ", executionSemester.getExecutionYear()
-                    .getYear()));
+            selectItem.setLabel(executionSemester.getName() + " - " + executionSemester.getExecutionYear().getYear());
             selectItem.setValue(executionSemester.getExternalId());
             selectItems.add(selectItem);
         }

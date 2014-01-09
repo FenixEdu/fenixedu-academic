@@ -36,7 +36,6 @@ import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 import pt.utl.ist.fenix.tools.predicates.ResultCollection;
-import pt.utl.ist.fenix.tools.util.StringAppender;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -420,7 +419,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 
         public String getLocalizedName() {
             return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(
-                    StringAppender.append(ConclusionValue.class.getSimpleName(), ".", name()));
+                    ConclusionValue.class.getSimpleName() + "." + name());
         }
     }
 

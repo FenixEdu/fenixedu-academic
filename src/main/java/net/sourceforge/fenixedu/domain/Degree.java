@@ -46,13 +46,12 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import net.sourceforge.fenixedu.util.MarkType;
-import org.apache.commons.lang.StringUtils;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
-import pt.utl.ist.fenix.tools.util.StringAppender;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -1227,7 +1226,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public String constructSchoolClassPrefix(final Integer curricularYear) {
-        return isBolonhaDegree() ? StringAppender.append(getSigla(), "0", curricularYear.toString()) : StringUtils.EMPTY;
+        return isBolonhaDegree() ? getSigla() + "0" + curricularYear.toString() : StringUtils.EMPTY;
     }
 
     public List<StudentCurricularPlan> getLastStudentCurricularPlans() {

@@ -11,8 +11,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.beanutils.PropertyUtils;
-
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
+import org.fenixedu.commons.StringNormalizer;
 
 public abstract class AbstractSearchObjects<T> {
 
@@ -25,7 +24,7 @@ public abstract class AbstractSearchObjects<T> {
             result = (List<T>) objects;
         } else {
             result = new ArrayList<T>();
-            String[] values = StringNormalizer.normalize(value).toLowerCase().split("\\p{Space}+");
+            String[] values = StringNormalizer.normalize(value).split("\\p{Space}+");
 
             outter: for (T object : objects) {
                 try {
@@ -35,7 +34,7 @@ public abstract class AbstractSearchObjects<T> {
                         continue;
                     }
 
-                    String normalizedValue = StringNormalizer.normalize(objectValue).toLowerCase();
+                    String normalizedValue = StringNormalizer.normalize(objectValue);
 
                     for (int i = 0; i < values.length; i++) {
                         String part = values[i];

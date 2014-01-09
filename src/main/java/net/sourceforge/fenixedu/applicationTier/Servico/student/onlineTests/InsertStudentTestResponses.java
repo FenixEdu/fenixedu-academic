@@ -41,7 +41,6 @@ import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.StringAppender;
 
 public class InsertStudentTestResponses {
 
@@ -57,8 +56,7 @@ public class InsertStudentTestResponses {
         ServiceMonitoring.logService(InsertStudentTestResponses.class, registration, studentNumber, distributedTestId, response,
                 path);
 
-        String logIdString =
-                StringAppender.append("student num", studentNumber.toString(), " testId ", distributedTestId.toString());
+        String logIdString = "student num" + studentNumber.toString() + " testId " + distributedTestId.toString();
         InfoSiteStudentTestFeedback infoSiteStudentTestFeedback = new InfoSiteStudentTestFeedback();
         path = path.replace('\\', '/');
         if (registration == null) {
@@ -91,8 +89,8 @@ public class InsertStudentTestResponses {
                 Response thisResponse = response[studentTestQuestion.getTestQuestionOrder().intValue() - 1];
 
                 if (logger.isDebugEnabled()) {
-                    logger.debug(StringAppender.append(logIdString, " infoStudentTestQuestion.getResonse()= ",
-                            getLogString(new Response[] { thisResponse })));
+                    logger.debug(logIdString + " infoStudentTestQuestion.getResonse()= "
+                            + getLogString(new Response[] { thisResponse }));
                 }
 
                 if (thisResponse.isResponsed()) {

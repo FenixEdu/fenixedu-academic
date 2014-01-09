@@ -39,6 +39,7 @@ import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.StringNormalizer;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
@@ -46,7 +47,6 @@ import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -347,11 +347,11 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
             final DegreeCurricularPlan degreeCurricularPlan, final CurricularYear curricularYear, final String name) {
 
         final String normalizedName =
-                (name != null) ? StringNormalizer.normalize(name).toLowerCase().replaceAll("%", ".*") : null;
+                (name != null) ? StringNormalizer.normalize(name).replaceAll("%", ".*") : null;
         final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
 
         for (final ExecutionCourse executionCourse : getAssociatedExecutionCourses()) {
-            final String executionCourseName = StringNormalizer.normalize(executionCourse.getNome()).toLowerCase();
+            final String executionCourseName = StringNormalizer.normalize(executionCourse.getNome());
             if (normalizedName != null && executionCourseName.matches(normalizedName)) {
                 if (executionCourse.hasScopeInGivenSemesterAndCurricularYearInDCP(curricularYear, degreeCurricularPlan)) {
                     result.add(executionCourse);

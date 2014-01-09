@@ -10,8 +10,7 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
-
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
+import org.fenixedu.commons.StringNormalizer;
 
 /**
  * 
@@ -301,7 +300,7 @@ public class StringFormatter {
 
         if (StringUtils.isNotBlank(string)) {
             String spacesReplacedString = removeDuplicateSpaces(string.trim());
-            result = StringNormalizer.normalize(spacesReplacedString).toLowerCase();
+            result = StringNormalizer.normalize(spacesReplacedString);
         }
 
         return result;

@@ -15,9 +15,9 @@ import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.StringNormalizer;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 /**
  * @author Ricardo Rodrigues
@@ -46,7 +46,7 @@ public class SearchPartyCarPlate {
 
     private static boolean satisfiedName(ParkingParty parkingParty, String nameSearch) {
         if (!StringUtils.isEmpty(nameSearch)) {
-            String[] nameValues = StringNormalizer.normalize(nameSearch).toLowerCase().split("\\p{Space}+");
+            String[] nameValues = StringNormalizer.normalize(nameSearch).split("\\p{Space}+");
             return areNamesPresent(parkingParty.getParty().getName(), nameValues);
         }
         return true;
@@ -65,7 +65,7 @@ public class SearchPartyCarPlate {
     }
 
     private static boolean areNamesPresent(String name, String[] searchNameParts) {
-        String nameNormalized = StringNormalizer.normalize(name).toLowerCase();
+        String nameNormalized = StringNormalizer.normalize(name);
         for (String searchNamePart : searchNameParts) {
             String namePart = searchNamePart;
             if (!nameNormalized.contains(namePart)) {
