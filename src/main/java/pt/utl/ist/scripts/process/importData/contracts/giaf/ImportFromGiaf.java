@@ -20,8 +20,7 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.ServiceExempti
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.scheduler.CronTask;
-
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
+import org.fenixedu.commons.StringNormalizer;
 
 public abstract class ImportFromGiaf extends CronTask {
 

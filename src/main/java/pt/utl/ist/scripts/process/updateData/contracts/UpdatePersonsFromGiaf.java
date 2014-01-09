@@ -23,15 +23,15 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessi
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportGiaf;
 import net.sourceforge.fenixedu.util.StringFormatter;
-import org.apache.commons.lang.StringUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.scheduler.annotation.Task;
+import org.fenixedu.commons.StringNormalizer;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.scripts.process.importData.contracts.giaf.ImportFromGiaf;
 import pt.utl.ist.scripts.process.updateData.fixNames.DBField2Cap;
 
