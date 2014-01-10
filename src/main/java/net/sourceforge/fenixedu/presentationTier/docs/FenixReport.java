@@ -37,8 +37,6 @@ abstract public class FenixReport implements Serializable {
 
     private final Language language;
 
-    static final public Locale[] suportedLocales = { Language.getDefaultLocale(), new Locale("en") };
-
     static final protected String EMPTY_STR = StringUtils.EMPTY;
 
     static final protected String SINGLE_SPACE = " ";

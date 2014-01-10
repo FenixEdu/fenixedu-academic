@@ -46,6 +46,7 @@ import net.sourceforge.fenixedu.util.StringFormatter;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -112,7 +113,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
                 }
             case DIPLOMA_SUPPLEMENT_REQUEST:
                 List<T> result = new ArrayList<T>();
-                for (Locale locale : DiplomaSupplement.suportedLocales) {
+                for (Locale locale : CoreConfiguration.supportedLocales()) {
                     result.add((T) new DiplomaSupplement(documentRequest, locale));
                 }
                 return result;

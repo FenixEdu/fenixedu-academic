@@ -1,258 +1,347 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="diplomaSupplementBody2_without_entries" pageWidth="445" pageHeight="538" whenNoDataType="NoDataSection" columnWidth="445" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true">
-	<property name="ireport.scriptlethandling" value="0"/>
-	<property name="ireport.encoding" value="UTF-8"/>
-	<import value="net.sf.jasperreports.engine.*"/>
-	<import value="java.util.*"/>
-	<import value="net.sf.jasperreports.engine.data.*"/>
-	<parameter name="universityName" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="institutionName" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="universityPrincipal" class="net.sourceforge.fenixedu.domain.Person" isForPrompting="false"/>
-	<parameter name="day" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="registration" class="net.sourceforge.fenixedu.domain.student.Registration" isForPrompting="false"/>
-	<parameter name="registrationNumber" class="java.lang.Integer" isForPrompting="false"/>
-	<parameter name="name" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="familyName" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="givenName" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="birthDay" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="nationality" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="documentIdType" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="documentIdNumber" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="documentIdExpiration" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="degreeFilteredName" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="graduateTitle" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="prevailingScientificArea" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="qualificationLevel" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="years" class="java.lang.Integer" isForPrompting="false"/>
-	<parameter name="semesters" class="java.lang.Integer" isForPrompting="false"/>
-	<parameter name="weeksOfStudyPerYear" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="ectsCredits" class="java.lang.Long" isForPrompting="false"/>
-	<parameter name="programmeRequirements" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="classificationSystem" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="finalAverage" class="java.lang.Integer" isForPrompting="false"/>
-	<parameter name="finalAverageQualified" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="ectsGradeConversionTable" class="net.sourceforge.fenixedu.domain.degreeStructure.EctsComparabilityTable" isForPrompting="false"/>
-	<parameter name="ectsGradePercentagesTable" class="net.sourceforge.fenixedu.domain.degreeStructure.EctsComparabilityPercentages" isForPrompting="false"/>
-	<parameter name="bundle" class="java.util.ResourceBundle" isForPrompting="false"/>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String">
-		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="diplomaSupplementBody2_without_entries"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="366"
+		 pageHeight="538"
+		 columnWidth="366"
+		 columnSpacing="0"
+		 leftMargin="0"
+		 rightMargin="0"
+		 topMargin="0"
+		 bottomMargin="0"
+		 whenNoDataType="NoDataSection"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="universityName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="institutionName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="universityPrincipal" isForPrompting="false" class="net.sourceforge.fenixedu.domain.Person"/>
+	<parameter name="day" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="registration" isForPrompting="false" class="net.sourceforge.fenixedu.domain.student.Registration"/>
+	<parameter name="registrationNumber" isForPrompting="false" class="java.lang.Integer"/>
+	<parameter name="name" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="familyName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="givenName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="birthDay" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="nationality" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="documentIdType" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="documentIdNumber" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="documentIdExpiration" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="degreeFilteredName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="graduateTitle" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="prevailingScientificArea" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="qualificationLevel" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="years" isForPrompting="false" class="java.lang.Integer"/>
+	<parameter name="semesters" isForPrompting="false" class="java.lang.Integer"/>
+	<parameter name="weeksOfStudyPerYear" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="ectsCredits" isForPrompting="false" class="java.lang.Long"/>
+	<parameter name="programmeRequirements" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="classificationSystem" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="finalAverage" isForPrompting="false" class="java.lang.Integer"/>
+	<parameter name="finalAverageQualified" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="ectsGradeConversionTable" isForPrompting="false" class="net.sourceforge.fenixedu.domain.degreeStructure.EctsComparabilityTable"/>
+	<parameter name="ectsGradePercentagesTable" isForPrompting="false" class="net.sourceforge.fenixedu.domain.degreeStructure.EctsComparabilityPercentages"/>
+	<parameter name="bundle" isForPrompting="false" class="java.util.ResourceBundle"/>
+	<parameter name="SUBREPORT_DIR" isForPrompting="true" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["./"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="academicUnitIdentifiers" class="java.util.Collection" isForPrompting="false"/>
-	<parameter name="isExemptedFromStudy" class="java.lang.Boolean" isForPrompting="false"/>
-	<parameter name="thesisFinalGrade" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="isForPhd" class="java.lang.Boolean" isForPrompting="false"/>
-	<group name="body">
-		<groupExpression><![CDATA[]]></groupExpression>
-		<groupHeader>
-			<band height="138" splitType="Stretch">
-				<textField isBlankWhenNull="false">
-					<reportElement key="textField-16" x="0" y="-1" width="445" height="14"/>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
+	<parameter name="academicUnitIdentifiers" isForPrompting="false" class="java.util.Collection"/>
+	<parameter name="isExemptedFromStudy" isForPrompting="false" class="java.lang.Boolean"/>
+	<parameter name="thesisFinalGrade" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="isForPhd" isForPrompting="false" class="java.lang.Boolean"/>
+
+
+		<group  name="body" >
+			<groupExpression><![CDATA[]]></groupExpression>
+			<groupHeader>
+			<band height="107"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="-1"
+						width="366"
+						height="14"
+						key="textField-16"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial Black" size="8" isBold="false" isItalic="false" pdfFontName="Arial_Black.ttf" isPdfEmbedded="true"/>
+						<font fontName="Serif" pdfFontName="Times-Roman" size="10" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.four").toUpperCase()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.four").toUpperCase()]]></textFieldExpression>
 				</textField>
-				<textField isBlankWhenNull="false">
-					<reportElement key="textField-17" x="0" y="18" width="445" height="13"/>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="18"
+						width="366"
+						height="13"
+						key="textField-17"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial" size="9" isBold="false" isItalic="false" pdfFontName="Arial.ttf" isPdfEmbedded="true"/>
+						<font fontName="Serif" pdfFontName="Times-Roman" size="8" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.four.one")]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.four.one")]]></textFieldExpression>
 				</textField>
-				<textField isBlankWhenNull="false">
-					<reportElement key="textField-18" x="0" y="47" width="445" height="13"/>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="47"
+						width="366"
+						height="13"
+						key="textField-18"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial" size="9" isBold="false" isItalic="false" pdfFontName="Arial.ttf" isPdfEmbedded="true"/>
+						<font fontName="Serif" pdfFontName="Times-Roman" size="8" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.four.two")]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.four.two")]]></textFieldExpression>
 				</textField>
-				<textField isBlankWhenNull="false">
-					<reportElement key="textField-19" positionType="Float" x="0" y="76" width="444" height="13"/>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="76"
+						width="366"
+						height="13"
+						key="textField-19"
+						positionType="Float"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial" size="9" isBold="false" isItalic="false" pdfFontName="Arial.ttf" isPdfEmbedded="true"/>
+						<font fontName="Serif" pdfFontName="Times-Roman" size="8" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.four.three")]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.four.three")]]></textFieldExpression>
 				</textField>
-				<textField isBlankWhenNull="false">
-					<reportElement key="textField-37" x="13" y="32" width="432" height="13"/>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="13"
+						y="32"
+						width="352"
+						height="13"
+						key="textField-37"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial" size="9" isBold="false" isItalic="false" pdfFontName="Arial.ttf" isPdfEmbedded="true"/>
+						<font fontName="Serif" pdfFontName="Times-Roman" size="8" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.four.one.one")]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.four.one.one")]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField-38" stretchType="RelativeToTallestObject" x="12" y="62" width="433" height="13"/>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="12"
+						y="62"
+						width="353"
+						height="13"
+						key="textField-38"
+						stretchType="RelativeToTallestObject"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Justified" lineSpacing="Single">
-						<font fontName="Arial" size="9" isBold="false" isItalic="false" pdfFontName="Arial.ttf" isPdfEmbedded="true"/>
+						<font fontName="Serif" pdfFontName="Times-Roman" size="8" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$P{programmeRequirements}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{programmeRequirements}]]></textFieldExpression>
 				</textField>
-				<textField isBlankWhenNull="false">
-					<reportElement key="textField-112" positionType="Float" x="22" y="94" width="422" height="13">
-						<printWhenExpression><![CDATA[$P{isExemptedFromStudy}]]></printWhenExpression>
-					</reportElement>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="22"
+						y="89"
+						width="343"
+						height="13"
+						key="textField-112"
+						positionType="Float">
+							<printWhenExpression><![CDATA[$P{isExemptedFromStudy}]]></printWhenExpression>
+						</reportElement>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial" size="9" isBold="false" isItalic="false" pdfFontName="Arial.ttf" isPdfEmbedded="true"/>
+						<font fontName="Serif" pdfFontName="Times-Roman" size="8" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("phd.diploma.supplement.is.exempted.from.study")]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("phd.diploma.supplement.is.exempted.from.study")]]></textFieldExpression>
 				</textField>
 			</band>
-		</groupHeader>
-		<groupFooter>
-			<band height="300" splitType="Stretch">
-				<textField isBlankWhenNull="false">
-					<reportElement key="textField-56" positionType="Float" x="0" y="7" width="444" height="13"/>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
+			</groupHeader>
+			<groupFooter>
+			<band height="92"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="-3"
+						width="366"
+						height="13"
+						key="textField-56"
+						positionType="Float"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial" size="9" isBold="false" isItalic="false" pdfFontName="Arial.ttf" isPdfEmbedded="true"/>
+						<font fontName="Arial" pdfFontName="Times-Roman" size="8" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.four.four")]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.four.four")]]></textFieldExpression>
 				</textField>
-				<textField isBlankWhenNull="false">
-					<reportElement key="textField-109" positionType="Float" x="0" y="45" width="444" height="13"/>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="27"
+						width="366"
+						height="13"
+						key="textField-109"
+						positionType="Float"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial" size="9" isBold="false" isItalic="false" pdfFontName="Arial.ttf" isPdfEmbedded="true"/>
+						<font fontName="Arial" pdfFontName="Times-Roman" size="8" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.four.five")]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.four.five")]]></textFieldExpression>
 				</textField>
-				<textField isBlankWhenNull="false">
-					<reportElement key="textField-113" positionType="Float" x="13" y="67" width="432" height="13">
-						<printWhenExpression><![CDATA[$P{isExemptedFromStudy}]]></printWhenExpression>
-					</reportElement>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="13"
+						y="42"
+						width="352"
+						height="13"
+						key="textField-113"
+						positionType="Float">
+							<printWhenExpression><![CDATA[$P{isExemptedFromStudy}]]></printWhenExpression>
+						</reportElement>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial" size="9" isBold="false" isItalic="false" pdfFontName="Arial.ttf" isPdfEmbedded="true"/>
+						<font fontName="Arial" pdfFontName="Times-Roman" size="8" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("phd.diploma.supplement.is.exempted.from.study")]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("phd.diploma.supplement.is.exempted.from.study")]]></textFieldExpression>
 				</textField>
-				<textField isBlankWhenNull="false">
-					<reportElement key="textField-114" positionType="Float" x="10" y="26" width="432" height="13">
-						<printWhenExpression><![CDATA[$P{isExemptedFromStudy}]]></printWhenExpression>
-					</reportElement>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="10"
+						y="12"
+						width="356"
+						height="13"
+						key="textField-114"
+						positionType="Float">
+							<printWhenExpression><![CDATA[$P{isExemptedFromStudy}]]></printWhenExpression>
+						</reportElement>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial" size="9" isBold="false" isItalic="false" pdfFontName="Arial.ttf" isPdfEmbedded="true"/>
+						<font fontName="Arial" pdfFontName="Times-Roman" size="8" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("phd.diploma.supplement.is.exempted.from.study")]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("phd.diploma.supplement.is.exempted.from.study")]]></textFieldExpression>
 				</textField>
-				<textField isBlankWhenNull="false">
-					<reportElement key="textField-115" positionType="Float" x="0" y="88" width="444" height="13">
-						<printWhenExpression><![CDATA[$P{isForPhd}]]></printWhenExpression>
-					</reportElement>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="58"
+						width="366"
+						height="13"
+						key="textField-115"
+						positionType="Float">
+							<printWhenExpression><![CDATA[$P{isForPhd}]]></printWhenExpression>
+						</reportElement>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial" size="9" isBold="false" isItalic="false" pdfFontName="Arial.ttf" isPdfEmbedded="true"/>
+						<font fontName="Arial" pdfFontName="Times-Roman" size="8" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.four.six")]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.four.six")]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField-116" stretchType="RelativeToTallestObject" x="13" y="108" width="432" height="13">
-						<printWhenExpression><![CDATA[$P{isForPhd}]]></printWhenExpression>
-					</reportElement>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="13"
+						y="72"
+						width="352"
+						height="13"
+						key="textField-116"
+						stretchType="RelativeToTallestObject">
+							<printWhenExpression><![CDATA[$P{isForPhd}]]></printWhenExpression>
+						</reportElement>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
 					<textElement textAlignment="Justified" lineSpacing="Single">
-						<font fontName="Arial" size="9" isBold="false" isItalic="false" pdfFontName="Arial.ttf" isPdfEmbedded="true"/>
+						<font fontName="Arial" pdfFontName="Times-Roman" size="8" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$P{thesisFinalGrade}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{thesisFinalGrade}]]></textFieldExpression>
 				</textField>
 			</band>
-		</groupFooter>
-	</group>
-	<background>
-		<band splitType="Stretch"/>
-	</background>
-	<title>
-		<band splitType="Stretch"/>
-	</title>
-	<pageHeader>
-		<band splitType="Stretch"/>
-	</pageHeader>
-	<columnHeader>
-		<band splitType="Stretch"/>
-	</columnHeader>
-	<detail>
-		<band height="13" splitType="Stretch"/>
-	</detail>
-	<columnFooter>
-		<band splitType="Stretch"/>
-	</columnFooter>
-	<pageFooter>
-		<band splitType="Stretch"/>
-	</pageFooter>
-	<summary>
-		<band splitType="Stretch"/>
-	</summary>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
 </jasperReport>
