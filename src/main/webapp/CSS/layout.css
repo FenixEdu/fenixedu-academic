@@ -21,12 +21,16 @@ padding: 0;
 }
 
 /* APPLICATION NAME */
-.applicationName {
+.applicationName  {
 	display: inline;
-	padding-left: 25px;
-	position: relative;
-	top: 15px;
+	position: absolute;
+	bottom: 5px;
+	left: 25px;
+	height: 30px;
+	width: 130px;
+	word-wrap: break-word;
 	font-family: KlavikaBold, sans-serif;
+	margin: 0;
 }
 .applicationName-subtle {
 	font-family: KlavikaLightPlain, sans-serif;
@@ -88,6 +92,8 @@ padding: 0;
 float: left;
 width: 100%;
 font-size: 11px;
+position: relative; 
+padding-top: 20px;
 }
 #navtop ul {
 margin: 0;
