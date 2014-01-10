@@ -107,13 +107,16 @@ This metadata is used in resource search by execution course site interfaces.
     update USER set OID_BENNU = OID_ROOT_DOMAIN_OBJECT;
     -- Users with a defined UserUId have their username attribute populated
     update USER set USERNAME = USER_U_ID;
-    -- For others, we don't quite know what to do yet
-    update USER set USERNAME = '<unknown>' where USERNAME is null;
     
     -- Login Periods are now managed in Bennu User Management
     RENAME TABLE `LOGIN_PERIOD` TO `USER_LOGIN_PERIOD`;
     ALTER TABLE `USER_LOGIN_PERIOD` ADD `OID_USER` bigint unsigned, add index (OID_USER);
     update USER_LOGIN_PERIOD set OID_USER = (SELECT OID_USER from IDENTIFICATION where IDENTIFICATION.OID = OID_LOGIN);
+    
+    -- Remove users with no username
+    DELETE FROM `USER_LOGIN_PERIOD` WHERE OID_USER IN (SELECT OID FROM USER WHERE USERNAME IS NULL);
+    UPDATE `PARTY` SET OID_USER = NULL WHERE OID_USER IN (SELECT OID FROM USER WHERE USERNAME IS NULL);
+    DELETE FROM `USER` WHERE USERNAME IS NULL;
     
     -- Update DomainClassInfo entries, so that no OIDs need changing
     update FF$DOMAIN_CLASS_INFO set DOMAIN_CLASS_NAME = 'org.fenixedu.bennu.core.domain.Bennu' where DOMAIN_CLASS_NAME = 'net.sourceforge.fenixedu.domain.RootDomainObject';
