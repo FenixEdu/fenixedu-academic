@@ -50,7 +50,7 @@ public class FenixConfigurationManager {
         @ConfigurationProperty(key = "consult.roles.admin.password", defaultValue = "xPtO")
         public String getConsultRolesAdminPassword();
 
-        @ConfigurationProperty(key = "context.filter.exceptions", defaultValue = "/api")
+        @ConfigurationProperty(key = "context.filter.exceptions", defaultValue = "/bennu,/bankai,/theme")
         public String getContextFilterExceptions();
 
         @ConfigurationProperty(key = "dspace.password")
@@ -223,7 +223,7 @@ public class FenixConfigurationManager {
         @ConfigurationProperty(key = "receipt.min.year.to.create", defaultValue = "2006")
         public Integer getReceiptMinYearToCreate();
 
-        @ConfigurationProperty(key = "receipt.numberSeries.for.years")
+        @ConfigurationProperty(key = "receipt.numberSeries.for.years", defaultValue = "")
         public String getReceiptNumberSeriesForYears();
 
         @ConfigurationProperty(key = "semester.for.from.enrolments", defaultValue = "1")
