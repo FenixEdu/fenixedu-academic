@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.webServices.jersey.beans.publico;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixDegree.FenixTeacher;
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixDegreeExtended.FenixTeacher;
 
-public class FenixCourse {
+public class FenixCourseExtended {
 
     public static class FenixCompetence {
 
@@ -158,12 +158,13 @@ public class FenixCourse {
     Integer numberOfAttendingStudents;
     String announcementLink;
     String summaryLink;
+    String url;
     List<FenixCompetence> moreInfo;
     List<FenixTeacher> teachers;
 
-    public FenixCourse(String acronym, String name, String evaluationMethod, String academicTerm,
-            Integer numberOfAttendingStudents, String announcementLink, String summaryLink, List<FenixCompetence> moreInfo,
-            List<FenixTeacher> teachers) {
+    public FenixCourseExtended(String acronym, String name, String evaluationMethod, String academicTerm,
+            Integer numberOfAttendingStudents, String announcementLink, String summaryLink, String url,
+            List<FenixCompetence> moreInfo, List<FenixTeacher> teachers) {
         super();
         this.acronym = acronym;
         this.name = name;
@@ -174,6 +175,7 @@ public class FenixCourse {
         this.summaryLink = summaryLink;
         this.moreInfo = moreInfo;
         this.teachers = teachers;
+        this.url = url;
     }
 
     public String getAcronym() {
@@ -230,6 +232,14 @@ public class FenixCourse {
 
     public void setSummaryLink(String summaryLink) {
         this.summaryLink = summaryLink;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public List<FenixCompetence> getMoreInfo() {

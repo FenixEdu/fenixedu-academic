@@ -13,9 +13,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(value = FenixCourseEvaluation.AdHocEvaluation.class, name = "AD_HOC"), })
 public abstract class FenixCourseEvaluation {
 
-    public FenixCourseEvaluation(String name) {
-        super();
-        this.name = name;
+    public FenixCourseEvaluation(String name, FenixPeriod evaluationPeriod) {
+        setName(name);
+        setEvaluationPeriod(evaluationPeriod);
     }
 
     public abstract static class WrittenEvaluation extends FenixCourseEvaluation {
@@ -58,47 +58,18 @@ public abstract class FenixCourseEvaluation {
 
         }
 
-        String day;
-        String beginningTime;
-        String endTime;
         Boolean isInEnrolmentPeriod;
         FenixInterval enrollmentPeriod;
 
         List<Room> rooms;
 
-        public WrittenEvaluation(String name, String day, String beginningTime, String endTime, Boolean isInEnrolmentPeriod,
+        public WrittenEvaluation(String name, FenixPeriod evaluationPeriod, Boolean isInEnrolmentPeriod,
                 String enrollmentPeriodStart, String enrolmentPeriodEnd, List<Room> rooms) {
-            super(name);
-            this.day = day;
-            this.beginningTime = beginningTime;
-            this.endTime = endTime;
+            super(name, evaluationPeriod);
+            setEvaluationPeriod(evaluationPeriod);
             this.isInEnrolmentPeriod = isInEnrolmentPeriod;
             enrollmentPeriod = new FenixInterval(enrollmentPeriodStart, enrolmentPeriodEnd);
             this.rooms = rooms;
-        }
-
-        public String getDay() {
-            return day;
-        }
-
-        public void setDay(String day) {
-            this.day = day;
-        }
-
-        public String getBeginningTime() {
-            return beginningTime;
-        }
-
-        public void setBeginningTime(String beginningTime) {
-            this.beginningTime = beginningTime;
-        }
-
-        public String getEndTime() {
-            return endTime;
-        }
-
-        public void setEndTime(String endTime) {
-            this.endTime = endTime;
         }
 
         public Boolean getIsInEnrolmentPeriod() {
@@ -129,70 +100,26 @@ public abstract class FenixCourseEvaluation {
 
     public static class Test extends WrittenEvaluation {
 
-        public Test(String name, String day, String beginningTime, String endTime, Boolean isEnrolmentPeriod,
-                String enrollmentPeriodStart, String enrolmentPeriodEnd, List<Room> rooms) {
-            super(name, day, beginningTime, endTime, isEnrolmentPeriod, enrollmentPeriodStart, enrolmentPeriodEnd, rooms);
+
+        public Test(String name, FenixPeriod evaluationPeriod, Boolean isEnrolmentPeriod, String enrollmentPeriodStart,
+                String enrolmentPeriodEnd, List<Room> rooms) {
+            super(name, evaluationPeriod, isEnrolmentPeriod, enrollmentPeriodStart, enrolmentPeriodEnd, rooms);
         }
     }
 
     public static class Exam extends WrittenEvaluation {
 
-        public Exam(String name, String day, String beginningTime, String endTime, Boolean isEnrolmentPeriod,
-                String enrollmentPeriodStart, String enrolmentPeriodEnd, List<Room> rooms) {
-            super(name, day, beginningTime, endTime, isEnrolmentPeriod, enrollmentPeriodStart, enrolmentPeriodEnd, rooms);
+        public Exam(String name, FenixPeriod evaluationPeriod, Boolean isEnrolmentPeriod, String enrollmentPeriodStart,
+                String enrolmentPeriodEnd, List<Room> rooms) {
+            super(name, evaluationPeriod, isEnrolmentPeriod, enrollmentPeriodStart, enrolmentPeriodEnd, rooms);
         }
 
     }
 
     public static class Project extends FenixCourseEvaluation {
 
-        String beginningDay;
-        String beginningTime;
-        String endDay;
-        String endTime;
-
-        private Project(String name) {
-            super(name);
-        }
-
-        public Project(String name, String beginningDay, String beginningTime, String endDay, String endTime) {
-            this(name);
-            this.beginningDay = beginningDay;
-            this.beginningTime = beginningTime;
-            this.endDay = endDay;
-            this.endTime = endTime;
-        }
-
-        public String getBeginningDay() {
-            return beginningDay;
-        }
-
-        public void setBeginningDay(String beginningDay) {
-            this.beginningDay = beginningDay;
-        }
-
-        public String getBeginningTime() {
-            return beginningTime;
-        }
-
-        public void setBeginningTime(String beginningTime) {
-            this.beginningTime = beginningTime;
-        }
-
-        public String getEndDay() {
-            return endDay;
-        }
-
-        public void setEndDay(String endDay) {
-            this.endDay = endDay;
-        }
-
-        public String getEndTime() {
-            return endTime;
-        }
-
-        public void setEndTime(String endTime) {
-            this.endTime = endTime;
+        public Project(String name, FenixPeriod evaluationPeriod) {
+            super(name, evaluationPeriod);
         }
 
     }
@@ -200,7 +127,11 @@ public abstract class FenixCourseEvaluation {
     public static class OnlineTest extends FenixCourseEvaluation {
 
         public OnlineTest(String name) {
-            super(name);
+            this(name, new FenixPeriod());
+        }
+
+        public OnlineTest(String name, FenixPeriod evaluationPeriod) {
+            super(name, evaluationPeriod);
         }
 
     }
@@ -209,7 +140,11 @@ public abstract class FenixCourseEvaluation {
         String description;
 
         public AdHocEvaluation(String name, String description) {
-            super(name);
+            this(name, description, new FenixPeriod());
+        }
+
+        public AdHocEvaluation(String name, String description, FenixPeriod evaluationPeriod) {
+            super(name, evaluationPeriod);
             this.description = description;
         }
 
@@ -224,6 +159,7 @@ public abstract class FenixCourseEvaluation {
     }
 
     String name;
+    FenixPeriod evaluationPeriod;
 
     public String getName() {
         return name;
@@ -231,6 +167,14 @@ public abstract class FenixCourseEvaluation {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public FenixPeriod getEvaluationPeriod() {
+        return evaluationPeriod;
+    }
+
+    public void setEvaluationPeriod(FenixPeriod evaluationPeriod) {
+        this.evaluationPeriod = evaluationPeriod;
     }
 
 }

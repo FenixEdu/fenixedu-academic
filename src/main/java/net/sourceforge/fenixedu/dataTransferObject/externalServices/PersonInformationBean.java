@@ -34,9 +34,11 @@ public class PersonInformationBean {
     private List<String> personalEmails = new ArrayList<String>();
     private List<String> workEmails = new ArrayList<String>();
     private List<String> personCategories;
-    private String teacherDepartment;
+    private Department teacherDepartment;
+
     private String employeeUnit;
     private List<String> studentDegrees;
+    private List<Registration> studentRegistrations;
     private String campus;
     private List<EnrolledCourseBean> enrolledCoursesBeans = new ArrayList<EnrolledCourseBean>();
     private List<EnrolledLessonBean> lessonsSchedule = new ArrayList<EnrolledLessonBean>();
@@ -70,8 +72,11 @@ public class PersonInformationBean {
         }
 
         setStudentDegrees(new ArrayList<String>());
+        setStudentRegistrations(new ArrayList<Registration>());
         if (person.hasStudent()) {
+
             for (Registration registration : person.getStudent().getActiveRegistrations()) {
+                getStudentRegistrations().add(registration);
                 getStudentDegrees().add(registration.getDegree().getPresentationName());
                 for (Attends attend : registration.getAttendsForExecutionPeriod(ExecutionSemester.readActualExecutionSemester())) {
                     if (attend.hasEnrolment()) {
@@ -94,7 +99,7 @@ public class PersonInformationBean {
         if (person.hasTeacher()) {
             Department department = person.getTeacher().getCurrentWorkingDepartment();
             if (department != null) {
-                setTeacherDepartment(department.getRealName());
+                setTeacherDepartment(department);
             }
         }
 
@@ -170,11 +175,15 @@ public class PersonInformationBean {
     }
 
     public String getTeacherDepartment() {
-        return teacherDepartment;
+        return teacherDepartment.getRealName();
     }
 
-    public void setTeacherDepartment(String teacherDepartment) {
+    public void setTeacherDepartment(Department teacherDepartment) {
         this.teacherDepartment = teacherDepartment;
+    }
+
+    public Department getTeacherDepartmentUnit() {
+        return teacherDepartment;
     }
 
     public String getEmployeeUnit() {
@@ -247,5 +256,13 @@ public class PersonInformationBean {
 
     public List<EnrolledLessonBean> getLessonsSchedule() {
         return lessonsSchedule;
+    }
+
+    public List<Registration> getStudentRegistrations() {
+        return studentRegistrations;
+    }
+
+    public void setStudentRegistrations(List<Registration> studentRegistrations) {
+        this.studentRegistrations = studentRegistrations;
     }
 }

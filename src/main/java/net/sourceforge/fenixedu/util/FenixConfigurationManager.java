@@ -375,6 +375,11 @@ public class FenixConfigurationManager {
         barraAsAuthenticationBroker = state;
     }
 
+    /**
+     * The absolute URL for the Fenix instalation.
+     * It ends with the defined appContext without slash at the end.
+     * 
+     */
     public static String getFenixUrl() {
         final String appName = FenixConfigurationManager.getConfiguration().getHTTPHost();
         final String appContext = FenixConfigurationManager.getConfiguration().appContext();
@@ -392,5 +397,4 @@ public class FenixConfigurationManager {
         HOST = StringUtils.removeEnd(HOST, "/");
         return HOST;
     }
-
 }

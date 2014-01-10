@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.webServices.jersey.beans.publico;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.webServices.jersey.beans.FenixCourse;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -53,10 +55,9 @@ public class FenixSpace {
 
             public static class LessonEvent extends RoomEvent {
                 public String info;
-                public WrittenEvaluationEvent.ExecutionCourse course;
+                public FenixCourse course;
 
-                public LessonEvent(String start, String end, String weekday, String info,
-                        WrittenEvaluationEvent.ExecutionCourse course) {
+                public LessonEvent(String start, String end, String weekday, String info, FenixCourse course) {
                     super(start, end, weekday);
                     this.info = info;
                     this.course = course;
@@ -66,24 +67,10 @@ public class FenixSpace {
 
             public static abstract class WrittenEvaluationEvent extends RoomEvent {
 
-                public static class ExecutionCourse {
-                    public String acronym;
-                    public String name;
-                    public String id;
-
-                    public ExecutionCourse(String acronym, String name, String id) {
-                        super();
-                        this.acronym = acronym;
-                        this.name = name;
-                        this.id = id;
-                    }
-
-                }
-
                 public static class TestEvent extends WrittenEvaluationEvent {
                     public String description;
 
-                    public TestEvent(String start, String end, String weekday, List<ExecutionCourse> courses, String description) {
+                    public TestEvent(String start, String end, String weekday, List<FenixCourse> courses, String description) {
                         super(start, end, weekday, courses);
                         this.description = description;
                     }
@@ -93,16 +80,16 @@ public class FenixSpace {
                 public static class ExamEvent extends WrittenEvaluationEvent {
                     public Integer season;
 
-                    public ExamEvent(String start, String end, String weekday, List<ExecutionCourse> courses, Integer season) {
+                    public ExamEvent(String start, String end, String weekday, List<FenixCourse> courses, Integer season) {
                         super(start, end, weekday, courses);
                         this.season = season;
                     }
 
                 }
 
-                public List<WrittenEvaluationEvent.ExecutionCourse> courses;
+                public List<FenixCourse> courses;
 
-                public WrittenEvaluationEvent(String start, String end, String weekday, List<ExecutionCourse> courses) {
+                public WrittenEvaluationEvent(String start, String end, String weekday, List<FenixCourse> courses) {
                     super(start, end, weekday);
                     this.courses = courses;
                 }
@@ -161,11 +148,16 @@ public class FenixSpace {
 
     public String id;
     public String name;
+    @JsonInclude(Include.NON_NULL)
     public String type;
     @JsonInclude(Include.NON_NULL)
     public List<FenixSpace> containedSpaces;
     @JsonInclude(Include.NON_NULL)
     public FenixSpace parentSpace;
+
+    public FenixSpace(String id, String name) {
+        this(id, name, null);
+    }
 
     public FenixSpace(String id, String name, String type) {
         this.id = id;

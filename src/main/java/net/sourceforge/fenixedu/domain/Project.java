@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -14,9 +15,10 @@ import java.util.Map;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.GroupEnrolment;
-import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
+import net.sourceforge.fenixedu.domain.util.icalendar.EvaluationEventBean;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.EvaluationType;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -315,18 +317,20 @@ public class Project extends Project_Base {
         return result;
     }
 
-    public List<EventBean> getAllEvents(ExecutionCourse executionCourse, String scheme, String serverName, int serverPort) {
-        List<EventBean> result = new ArrayList<EventBean>();
-        result.add(new EventBean("Inicio " + this.getName() + " : " + executionCourse.getNome(), this.getProjectBeginDateTime(),
-                this.getProjectBeginDateTime().plusHours(1), false, null, null, this.getDescription()));
+    public List<EvaluationEventBean> getAllEvents(ExecutionCourse executionCourse) {
+        List<EvaluationEventBean> result = new ArrayList<EvaluationEventBean>();
+        result.add(new EvaluationEventBean("Inicio " + this.getName() + " : " + executionCourse.getNome(), this
+                .getProjectBeginDateTime(), this.getProjectBeginDateTime().plusHours(1), false, null, null,
+                this.getDescription(), Collections.singleton(executionCourse)));
         if (this.getOnlineSubmissionsAllowed()) {
-            String url =
-                    scheme + "://" + serverName + ((serverPort == 80 || serverPort == 443) ? "" : ":" + serverPort) + "/privado";
-            result.add(new EventBean("Fim " + this.getName() + " : " + executionCourse.getNome(), this.getProjectEndDateTime()
-                    .minusHours(1), this.getProjectEndDateTime(), false, "Sistema Fenix", url, this.getDescription()));
+            String url = FenixConfigurationManager.getFenixUrl() + "/privado";
+            result.add(new EvaluationEventBean("Fim " + this.getName() + " : " + executionCourse.getNome(), this
+                    .getProjectEndDateTime().minusHours(1), this.getProjectEndDateTime(), false, null, url,
+                    this.getDescription(), Collections.singleton(executionCourse)));
         } else {
-            result.add(new EventBean("Fim " + this.getName() + " : " + executionCourse.getNome(), this.getProjectEndDateTime()
-                    .minusHours(1), this.getProjectEndDateTime(), false, null, null, this.getDescription()));
+            result.add(new EvaluationEventBean("Fim " + this.getName() + " : " + executionCourse.getNome(), this
+                    .getProjectEndDateTime().minusHours(1), this.getProjectEndDateTime(), false, null, null, this
+                    .getDescription(), Collections.singleton(executionCourse)));
         }
         return result;
     }

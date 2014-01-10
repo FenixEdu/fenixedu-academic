@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.webServices.jersey.beans.publico;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
@@ -15,13 +16,20 @@ public class FenixCourseGroup {
     public static class GroupedCourse {
 
         String name;
-        String degrees;
+        List<FenixDegree> degrees;
         String id;
 
         public GroupedCourse(final ExecutionCourse executionCourse) {
-            this.name = executionCourse.getName();
-            this.id = executionCourse.getExternalId();
-            this.degrees = executionCourse.getDegreePresentationString();
+            setName(executionCourse.getName());
+            setId(executionCourse.getExternalId());
+            setDegrees(executionCourse);
+        }
+
+        private void setDegrees(ExecutionCourse executionCourse) {
+            this.degrees = new ArrayList<>();
+            for (Degree degree : executionCourse.getDegreesSortedByDegreeName()) {
+                degrees.add(new FenixDegree(degree));
+            }
         }
 
         public String getName() {
@@ -40,11 +48,11 @@ public class FenixCourseGroup {
             this.id = id;
         }
 
-        public String getDegrees() {
+        public List<FenixDegree> getDegrees() {
             return degrees;
         }
 
-        public void setDegrees(String degrees) {
+        public void setDegrees(List<FenixDegree> degrees) {
             this.degrees = degrees;
         }
 
@@ -134,6 +142,14 @@ public class FenixCourseGroup {
 
     public void setIdealCapacity(final Integer idealCapacity) {
         this.idealCapacity = idealCapacity;
+    }
+
+    public List<GroupedCourse> getAssociatedCourses() {
+        return associatedCourses;
+    }
+
+    public void setAssociatedCourses(List<GroupedCourse> associatedCourses) {
+        this.associatedCourses = associatedCourses;
     }
 
 }

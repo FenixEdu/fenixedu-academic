@@ -1,8 +1,16 @@
 package net.sourceforge.fenixedu.webServices.jersey.beans;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.student.Registration;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -50,17 +58,46 @@ public class FenixPerson {
 
     public static class TeacherFenixRole extends FenixRole {
 
-        String department;
+        public static class FenixDepartment {
 
-        public TeacherFenixRole(String department) {
-            this.department = department;
+            public FenixDepartment(String name, String acronym) {
+                super();
+                this.name = name;
+                this.acronym = acronym;
+            }
+
+            String name;
+            String acronym;
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getAcronym() {
+                return acronym;
+            }
+
+            public void setAcronym(String acronym) {
+                this.acronym = acronym;
+            }
+
         }
 
-        public String getDepartment() {
+        private FenixDepartment department;
+
+        public TeacherFenixRole(Department department) {
+            setDepartment(new FenixDepartment(department.getName(), department.getAcronym()));
+        }
+
+        public FenixDepartment getDepartment() {
             return department;
         }
 
-        public void setDepartment(String department) {
+        public void setDepartment(FenixDepartment department) {
             this.department = department;
         }
 
@@ -68,25 +105,86 @@ public class FenixPerson {
 
     public static class StudentFenixRole extends FenixRole {
 
-        List<String> degrees;
+        public static class FenixRegistration {
 
-        public StudentFenixRole(List<String> degrees) {
-            this.degrees = degrees;
+            public FenixRegistration(Registration registration) {
+                setName(registration.getDegreeName());
+                setAcronym(registration.getDegree().getSigla());
+                setId(registration.getDegree().getExternalId());
+                academicTerms = new TreeSet<>();
+                for (ExecutionSemester semester : registration.getEnrolmentsExecutionPeriods()) {
+                    academicTerms.add(semester.getQualifiedName());
+                }
+            }
+
+            String name;
+            String acronym;
+            String id;
+            Collection<String> academicTerms;
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getAcronym() {
+                return acronym;
+            }
+
+            public void setAcronym(String acronym) {
+                this.acronym = acronym;
+            }
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
+
+            public Collection<String> getAcademicTerms() {
+                return academicTerms;
+            }
+
+            public void setAcademicTerms(List<String> academicTerms) {
+                this.academicTerms = academicTerms;
+            }
+
         }
 
-        public List<String> getDegrees() {
-            return degrees;
+        List<FenixRegistration> registrations;
+
+        public StudentFenixRole(List<Registration> registrations) {
+            this.registrations = new ArrayList<>();
+            for (Registration registration : registrations) {
+                this.registrations.add(new FenixRegistration(registration));
+            }
         }
 
-        public void setDegrees(List<String> degrees) {
-            this.degrees = degrees;
+        public List<FenixRegistration> getRegistrations() {
+            return registrations;
+        }
+
+        public void setRegistrations(List<FenixRegistration> registrations) {
+            this.registrations = registrations;
         }
 
     }
 
-    public static class AlumniFenixRole extends FenixRole {
+    public static class AlumniFenixRole extends StudentFenixRole {
 
-        public AlumniFenixRole() {
+        public AlumniFenixRole(List<Registration> registrations) {
+            super(registrations);
+        }
+
+        @Override
+        @JsonProperty("concludedRegistrations")
+        public List<FenixRegistration> getRegistrations() {
+            return super.getRegistrations();
         }
 
     }
