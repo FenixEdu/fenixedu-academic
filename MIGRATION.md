@@ -23,49 +23,51 @@ This metadata is used in resource search by execution course site interfaces.
   2. Grab FileContent instances OID and EXTERNAL_STORAGE_IDENTIFICATION from fenix DB
     
     ```
-    mysql fenix_production_db -A --skip-column-names -e "select OID, EXTERNAL_STORAGE_IDENTIFICATION from FILE where OID >> 32 = (SELECT DOMAIN_CLASS_ID FROM FF$DOMAIN_CLASS_INFO where DOMAIN_CLASS_NAME like 'net.sourceforge.fenixedu.domain.FileContent');" > filecontents.txt`
+    mysql fenix_production_db -A --skip-column-names -e "select OID, EXTERNAL_STORAGE_IDENTIFICATION from FILE where OID >> 32 = (SELECT DOMAIN_CLASS_ID FROM FF\$DOMAIN_CLASS_INFO where DOMAIN_CLASS_NAME like 'net.sourceforge.fenixedu.domain.FileContent');" > filecontents.txt
    ```
 
   3. Dump metadata for all files in dspace
     ```
-    psql -ddspace -Udspace -c "select handle, text_value from handle inner join dcvalue on handle.resource_id = dcvalue.item_id where dc_type_id = 66;" -W > categories.txt
+    psql -t -ddspace -Udspace -c "select handle, text_value from handle inner join dcvalue on handle.resource_id = dcvalue.item_id where dc_type_id = 66;" > categories.txt
     ```
 
   4. Run the following python script to generate sql queries for file content resourcetype update
 
-    ```python
-    #this script reads from categories.txt and filecontents.txt files and generates migrate-categories.sql with the necessary SQL statements to update the file category directly in the fenix database.
-    import sys
-    def load_categories():
-        catsMap ={}
-        cats = open("categories.txt").readlines()
-        for cat in cats:
-            parts = cat.split("|");
-        	esi = parts[0].strip()
-        	category = parts[1].strip()
-        	catsMap[esi] = category
-        return catsMap
-    
-    
-    cats = load_categories()
-    def dump_categories_sql():
-        dump_file = open("migrate-categories.sql", "w")
-        lines = open('filecontents.txt').readlines()
-        for line in lines:
-    		parts = line.strip().split("\t")
-    		oid = parts[0].strip()
-    		esi = parts[1].strip()
-    		if esi == "NULL":
-    			sys.stderr.write("%s doesn't have esi.\n" % oid)
-    		if esi.endswith("/1"):
-    			esi = esi[:-2]
-    		if esi in cats:
-    			sql = "update GENERIC_FILE set RESOURCE_TYPE = '%s' where OID = %s;" % (cats[esi], oid)
-    			dump_file.write("%s\n" % sql)
-    	dump_file.close()
-    
-    dump_categories_sql()
-    ```
+	```python
+	#this script reads from categories.txt and filecontents.txt files and generates migrate-categories.sql with the necessary SQL statements to update the file category directly in the fenix database.
+	import sys
+	def load_categories():
+	    catsMap ={}
+	    cats = open("categories.txt").readlines()
+	    for cat in cats:
+	        scat = cat.strip()
+	        if len(scat) == 0:
+	            continue;
+	        parts = scat.split("|");
+	        esi = parts[0].strip()
+	        category = parts[1].strip()
+	        catsMap[esi] = category
+	    return catsMap
+	
+	cats = load_categories()
+	def dump_categories_sql():
+	    dump_file = open("migrate-categories.sql", "w")
+	    lines = open('filecontents.txt').readlines()
+	    for line in lines:
+	        parts = line.strip().split("\t")
+	        oid = parts[0].strip()
+	        esi = parts[1].strip()
+	        if esi == "NULL":
+	            sys.stderr.write("%s doesn't have esi.\n" % oid)
+	        if esi.endswith("/1"):
+	            esi = esi[:-2]
+	        if esi in cats:
+	            sql = "update GENERIC_FILE set RESOURCE_TYPE = '%s' where OID = %s;" % (cats[esi], oid)
+	            dump_file.write("%s\n" % sql)
+	    dump_file.close()
+	
+	dump_categories_sql()
+	```
 
   5. Create column in fenix db for resourcetype in file content
     
