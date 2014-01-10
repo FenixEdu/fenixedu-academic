@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.servlets.filters;
 
-import pt.ist.fenixWebFramework.security.UserView;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -20,6 +18,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
 import net.sourceforge.fenixedu.domain.AppUserSession;
 import net.sourceforge.fenixedu.domain.AuthScope;
+import net.sourceforge.fenixedu.domain.ExternalApplication;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -30,6 +29,8 @@ import org.apache.amber.oauth2.common.exception.OAuthSystemException;
 import org.apache.amber.oauth2.common.message.OAuthResponse;
 import org.apache.amber.oauth2.common.message.OAuthResponse.OAuthErrorResponseBuilder;
 import org.apache.commons.lang.StringUtils;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 @WebFilter(urlPatterns = "/api/fenix/*")
 public class JerseyOAuth2Filter implements Filter {
@@ -121,6 +122,15 @@ public class JerseyOAuth2Filter implements Filter {
         try {
             FenixOAuthToken fenixAccessToken = FenixOAuthToken.parse(accessToken);
             AppUserSession appUserSession = fenixAccessToken.getAppUserSession();
+            ExternalApplication externalApplication = appUserSession.getAppUserAuthorization().getApplication();
+
+            if (externalApplication.isDeleted()) {
+                return sendError(response, "accessTokenInvalidFormat", "Access Token not recognized.");
+            }
+
+            if (externalApplication.isBanned()) {
+                return sendError(response, "appBanned", "The application has been banned.");
+            }
 
             if (!validScope(appUserSession, uri)) {
                 return sendError(response, "invalidScope", "Application doesn't have permissions to this endpoint.");
@@ -128,7 +138,6 @@ public class JerseyOAuth2Filter implements Filter {
 
             if (!appUserSession.matchesAccessToken(accessToken)) {
                 return sendError(response, "accessTokenInvalid", "Access Token doesn't match.");
-
             }
 
             if (!appUserSession.isAccessTokenValid()) {

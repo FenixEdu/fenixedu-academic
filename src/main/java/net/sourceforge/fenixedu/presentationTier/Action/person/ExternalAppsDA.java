@@ -149,14 +149,51 @@ public class ExternalAppsDA extends FenixDispatchAction {
         return mapping.findForward("viewAllSessions");
     }
 
+    @Atomic
     public ActionForward deleteApplication(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
         ExternalApplication application = getDomainObject(request, "appOid");
 
-        application.delete();
+        application.setDeleted();
 
         return manageApplications(mapping, actionForm, request, response);
+
+    }
+
+    @Atomic
+    public ActionForward deleteApplicationAdmin(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+
+        ExternalApplication application = getDomainObject(request, "appOid");
+
+        application.setDeleted();
+
+        return redirect("/externalApps.do?method=viewAllApplications", request, true);
+
+    }
+
+    @Atomic
+    public ActionForward banApplicationAdmin(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+
+        ExternalApplication application = getDomainObject(request, "appOid");
+
+        application.setBanned();
+
+        return redirect("/externalApps.do?method=viewAllApplications", request, true);
+
+    }
+
+    @Atomic
+    public ActionForward unbanApplicationAdmin(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+
+        ExternalApplication application = getDomainObject(request, "appOid");
+
+        application.setActive();
+
+        return redirect("/externalApps.do?method=viewAllApplications", request, true);
 
     }
 
@@ -171,9 +208,30 @@ public class ExternalAppsDA extends FenixDispatchAction {
     public ActionForward manageApplications(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        request.setAttribute("appsOwned", getUser().getOwnedAppSet());
+        Set<ExternalApplication> externalApplicationsSet = getUser().getOwnedAppSet();
+
+        Set<ExternalApplication> externalApplications =
+                FluentIterable.from(externalApplicationsSet).filter(new Predicate<ExternalApplication>() {
+                    @Override
+                    public boolean apply(ExternalApplication externalApplication) {
+                        return externalApplication.isActive();
+                    }
+                }).toSet();
+
+        Set<ExternalApplication> externalApplicationsBanned =
+                FluentIterable.from(externalApplicationsSet).filter(new Predicate<ExternalApplication>() {
+                    @Override
+                    public boolean apply(ExternalApplication externalApplication) {
+                        return externalApplication.isBanned();
+                    }
+                }).toSet();
+
+        request.setAttribute("appsOwned", externalApplications);
+        request.setAttribute("appsBanned", externalApplicationsBanned);
+
         addAllowIstIds(request);
         return mapping.findForward("manageApplications");
+
     }
 
     /** This will show individual authorizations */

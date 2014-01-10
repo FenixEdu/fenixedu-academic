@@ -236,15 +236,14 @@
 	
 	<slot name="appUserAuthorizationCount" key="oauthapps.label.app.authorizations"/>
 	
-	<slot name="description" layout="longText" key="oauthapps.label.app.description"/>
 	<slot name="scopes" layout="flowLayout">
 		<property name="eachLayout" value="values"></property>
 		<property name="eachSchema" value="oauthapps.view.scope.name"></property>
 		<property name="htmlSeparator" value=", "></property>
 	</slot>
-	<slot name="siteUrl" key="oauthapps.label.app.site.url" />
-	<slot name="redirectUrl" key="oauthapps.label.app.redirect.url" />
+	<slot name="redirectUrl" key="oauthapps.label.app.redirect.url" />	
 	
+	<slot name="state" key="oauthapps.label.state" />				
 </schema>
 
 <schema name="oauthapps.view.scope.name" type="net.sourceforge.fenixedu.domain.AuthScope">
