@@ -435,7 +435,7 @@
 					<reportElement
 						x="6"
 						y="108"
-						width="52"
+						width="80"
 						height="13"
 						key="textField-59"
 						positionType="Float">

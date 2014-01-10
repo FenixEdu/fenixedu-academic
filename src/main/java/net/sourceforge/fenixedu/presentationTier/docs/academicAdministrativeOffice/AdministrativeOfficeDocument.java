@@ -4,11 +4,13 @@ import java.math.BigDecimal;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.OptionalEnrolment;
@@ -113,7 +115,10 @@ public class AdministrativeOfficeDocument extends FenixReport {
                 }
             case DIPLOMA_SUPPLEMENT_REQUEST:
                 List<T> result = new ArrayList<T>();
-                for (Locale locale : CoreConfiguration.supportedLocales()) {
+                Set<Locale> definedLocales = new HashSet<Locale>(CoreConfiguration.supportedLocales());
+                definedLocales.remove(Locale.getDefault());
+                result.add((T) new DiplomaSupplement(documentRequest, Locale.getDefault()));
+                for (Locale locale : definedLocales) {
                     result.add((T) new DiplomaSupplement(documentRequest, locale));
                 }
                 return result;
