@@ -153,6 +153,15 @@ abstract public class ExecutionInterval extends ExecutionInterval_Base {
         return result;
     }
 
+    public static ExecutionInterval getExecutionInterval(String qualifiedName) {
+        for (ExecutionInterval interval : Bennu.getInstance().getExecutionIntervalsSet()) {
+            if (interval.getQualifiedName().equals(qualifiedName)) {
+                return interval;
+            }
+        }
+        return null;
+    }
+
     public static ExecutionInterval getExecutionInterval(AcademicInterval academicInterval) {
         for (ExecutionInterval interval : Bennu.getInstance().getExecutionIntervalsSet()) {
             if (interval.getAcademicInterval().equals(academicInterval)) {

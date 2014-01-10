@@ -2,13 +2,15 @@ package net.sourceforge.fenixedu.webServices.jersey.beans;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+
 public class FenixPersonCourses {
 
     public static class FenixEnrolment extends FenixCourse {
         String grade;
 
-        public FenixEnrolment(String id, String acronym, String name, String grade) {
-            super(id, acronym, name);
+        public FenixEnrolment(ExecutionCourse course, String grade) {
+            super(course);
             setGrade(grade);
         }
 
@@ -22,7 +24,6 @@ public class FenixPersonCourses {
 
     }
 
-    private String academicTerm;
     private List<FenixEnrolment> enrolments;
     private List<FenixCourse> teaching;
 
@@ -30,19 +31,10 @@ public class FenixPersonCourses {
 
     }
 
-    public FenixPersonCourses(String academicTerm, List<FenixEnrolment> enrolments, List<FenixCourse> teaching) {
+    public FenixPersonCourses(List<FenixEnrolment> enrolments, List<FenixCourse> teaching) {
         super();
-        this.academicTerm = academicTerm;
         this.enrolments = enrolments;
         this.teaching = teaching;
-    }
-
-    public String getAcademicTerm() {
-        return academicTerm;
-    }
-
-    public void setAcademicTerm(String academicTerm) {
-        this.academicTerm = academicTerm;
     }
 
     public List<FenixEnrolment> getEnrolments() {

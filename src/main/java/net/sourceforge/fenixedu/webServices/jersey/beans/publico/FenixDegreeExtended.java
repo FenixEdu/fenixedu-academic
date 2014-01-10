@@ -151,7 +151,8 @@ public class FenixDegreeExtended extends FenixDegree {
 
     }
 
-    private String year;
+    private String currentAcademicTerm;
+    private List<String> academicTerms;
     private String type;
     private String typeName;
     private String url;
@@ -159,12 +160,9 @@ public class FenixDegreeExtended extends FenixDegree {
     private FenixDegreeInfo info;
     private List<FenixTeacher> teachers;
 
-    public FenixDegreeExtended() {
-        this(null, null, null, null, null, null, null, null, null, null);
-    }
-
-    public FenixDegreeExtended(String year, String id, String name, String type, String acronym, String typeName, String url,
-            List<FenixSpace> campus, FenixDegreeInfo info, List<FenixTeacher> teachers) {
+    public FenixDegreeExtended(String currentAcademicTerm, List<String> academicTerms, String id, String name, String type,
+            String acronym, String typeName, String url, List<FenixSpace> campus, FenixDegreeInfo info,
+            List<FenixTeacher> teachers) {
         super(id, name, acronym);
         this.type = type;
         this.acronym = acronym;
@@ -173,14 +171,24 @@ public class FenixDegreeExtended extends FenixDegree {
         this.campus = campus;
         this.info = info;
         this.teachers = teachers;
+        this.currentAcademicTerm = currentAcademicTerm;
+        this.academicTerms = academicTerms;
     }
 
-    public String getYear() {
-        return year;
+    public String getCurrentAcademicTerm() {
+        return currentAcademicTerm;
     }
 
-    public void setYear(String year) {
-        this.year = year;
+    public void setCurrentAcademicTerm(String currentAcademicTerm) {
+        this.currentAcademicTerm = currentAcademicTerm;
+    }
+
+    public List<String> getAcademicTerms() {
+        return academicTerms;
+    }
+
+    public void setAcademicTerms(List<String> academicTerms) {
+        this.academicTerms = academicTerms;
     }
 
     @Override
