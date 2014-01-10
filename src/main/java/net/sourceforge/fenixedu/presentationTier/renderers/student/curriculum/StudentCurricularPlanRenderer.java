@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Grade;
@@ -70,7 +71,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
     private static final String CELL_CLASSES =
             "scplancolident, scplancolcurricularcourse, scplancoldegreecurricularplan, scplancolenrollmentstate, "
                     + "scplancolenrollmenttype, scplancolgrade, scplancolweight, scplancolects, "
-                    + "scplancolenrolmentevaluationtype, scplancolyear, scplancolsemester, scplancolexamdate, scplancolgraderesponsible";
+                    + "scplancolenrolmentevaluationtype, scplancolyear, scplancolsemester, scplancolexamdate, scplancolgraderesponsible, scplancolstatistics";
 
     public static enum EnrolmentStateFilterType {
         ALL, APPROVED, APPROVED_OR_ENROLED;
@@ -309,6 +310,10 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
     private String getCreatorCellClass() {
         return getCellClasses()[12];
+    }
+
+    private String getStatisticsLinkCellClass() {
+        return getCellClasses()[13];
     }
 
     public boolean isDetailed() {
@@ -839,6 +844,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
                 generateEnrolmentLastEnrolmentEvaluationTypeCell(enrolmentRow, enrolment);
                 generateExecutionYearCell(enrolmentRow, enrolment);
                 generateSemesterCell(enrolmentRow, enrolment);
+                generateStatisticsLinkCell(enrolmentRow, enrolment);
                 generateLastEnrolmentEvaluationExamDateCellIfRequired(enrolmentRow, enrolment);
                 generateGradeResponsibleIfRequired(enrolmentRow, enrolment);
                 generateSpacerCellsIfRequired(enrolmentRow);
@@ -1000,6 +1006,22 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
             }
 
             generateCellWithText(row, semester, getEnrolmentSemesterCellClass());
+        }
+
+        private void generateStatisticsLinkCell(final HtmlTableRow row, final Enrolment enrolment) {
+            if (!enrolment.getStudent().hasAnyActiveRegistration()) {
+                generateCellWithText(row, EMPTY_INFO, getStatisticsLinkCellClass());
+            } else {
+                ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(enrolment.getExecutionPeriod());
+
+                final HtmlInlineContainer inlineContainer = new HtmlInlineContainer();
+
+                inlineContainer.addChild(createExecutionCourseStatisticsLink(applicationResources.getString("label.statistics"),
+                        executionCourse));
+                final HtmlTableCell cell = row.createCell();
+                cell.setClasses(getStatisticsLinkCellClass());
+                cell.setBody(inlineContainer);
+            }
         }
 
         private void generateExecutionYearCell(HtmlTableRow row, final ICurriculumEntry entry) {
@@ -1178,6 +1200,16 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
                 result.setUrl("/publico/showCourseSite.do?method=showCurricularCourseSite");
             }
 
+            return result;
+        }
+
+        private HtmlLink createExecutionCourseStatisticsLink(final String text, final ExecutionCourse executionCourse) {
+            final HtmlLink result = new HtmlLink();
+            result.setBody(new HtmlText(text));
+            result.setParameter("executionCourseId", executionCourse.getExternalId());
+            result.setParameter("method", "showExecutionCourseStatistics");
+            result.setModuleRelative(false);
+            result.setUrl("/student/showStudentStatistics.do");
             return result;
         }
 

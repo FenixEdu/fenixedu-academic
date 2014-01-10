@@ -1,0 +1,51 @@
+{
+  "evaluation-statistics": {
+    "title": "Statistic Measures",
+    "total-students": "Total Students: ",
+    "approved": "Approved: ",
+    "no-attends": "Did not Attend: ",
+    "mean": "Mean: ",
+    "extent": "Min & Max: ",
+    "median": "Median: ",
+    "students": "students"
+  },
+  "histogram": {
+    "min-grade": "Minimum grade",
+    "mean": "Mean",
+    "self-id": "You",
+    "y-label": "Frequency",
+    "hover-text": "hover the mouse at the chart's bars to see details here",
+    "table-columns": {"id":"ID", "name": "Name", "grade": "Grade", "photo":"Photo"}
+  },
+  "donuts": {
+    "not-evaluated-grades": "Not Evaluated",
+    "negative-grades": "Negative Grades",
+    "positive-grades": "Positive Grades"
+  },
+  "sunburst": {
+    "not-evaluated": "Not Evaluated",
+    "flunked": "Flunked",
+    "approved": "Approved",
+    "0-4": "0-4",
+    "5-9": "5-9",
+    "10-14": "10-14",
+    "15-20": "15-20",
+    "of": "of",
+    "students": "students"
+  },
+  "overall-statistics": {
+    "title": "Statistic Measures",
+    "approved": "Approved: ",
+    "flunked": "Flunked: ",
+    "no-attends": "Did not Attend: ",
+    "mean": "Mean: ",
+    "extent": "Min & Max: "
+  },
+  "progress-bars": {
+    "required-ects": "required ECTS",
+    "ects-of": "ECTS of"
+  },
+  "bubbles": {
+    "approved": "Approved"
+  }
+}
