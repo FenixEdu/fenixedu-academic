@@ -110,12 +110,42 @@ public class FenixSchedule {
 
     public static class FenixShift {
 
+        public static class FenixShiftOccupation {
+            public FenixShiftOccupation(Integer current, Integer max) {
+                super();
+                this.current = current;
+                this.max = max;
+            }
+
+            Integer current;
+            Integer max;
+
+            public Integer getCurrent() {
+                return current;
+            }
+
+            public void setCurrent(Integer current) {
+                this.current = current;
+            }
+
+            public Integer getMax() {
+                return max;
+            }
+
+            public void setMax(Integer max) {
+                this.max = max;
+            }
+
+        }
+
         String name;
+        FenixShiftOccupation occupation;
         List<String> types = new ArrayList<>();
         List<FenixLessonOccurence> lessons = new ArrayList<>();
 
         public FenixShift(final Shift shift) {
             this.name = shift.getNome();
+            setOccupation(new FenixShiftOccupation(shift.getStudentsSet().size(), shift.getLotacao()));
             for (CourseLoad courseLoad : shift.getCourseLoadsSet()) {
                 final ShiftType type = courseLoad.getType();
                 if (type != null) {
@@ -154,6 +184,14 @@ public class FenixSchedule {
 
         public void setTypes(List<String> types) {
             this.types = types;
+        }
+
+        public FenixShiftOccupation getOccupation() {
+            return occupation;
+        }
+
+        public void setOccupation(FenixShiftOccupation occupation) {
+            this.occupation = occupation;
         }
 
     }

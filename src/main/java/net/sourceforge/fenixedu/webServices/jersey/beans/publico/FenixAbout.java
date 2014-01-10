@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.webServices.jersey.beans.publico;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
@@ -39,6 +40,7 @@ public class FenixAbout {
     String institutionName = null;
     String institutionUrl = null;
     List<FenixRSSFeed> rssFeeds = new ArrayList<>();
+    String currentAcademicTerm;
 
     private FenixAbout() {
         final Bennu instance = Bennu.getInstance();
@@ -47,6 +49,7 @@ public class FenixAbout {
             institutionName = unit.getName();
             institutionUrl = unit.getDefaultWebAddressUrl();
         }
+        currentAcademicTerm = ExecutionSemester.readActualExecutionSemester().getQualifiedName();
         rssFeeds.add(new FenixRSSFeed("News", FenixConfigurationManager.getConfiguration().getFenixApiNewsRSSUrl()));
         rssFeeds.add(new FenixRSSFeed("Events", FenixConfigurationManager.getConfiguration().getFenixApiEventsRSSUrl()));
     }

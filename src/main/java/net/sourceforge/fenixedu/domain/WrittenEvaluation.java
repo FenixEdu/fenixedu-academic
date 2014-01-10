@@ -372,7 +372,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     private boolean checkValidHours(Date beginning, Date end) {
         if (beginning.after(end)) {
-            throw new DomainException("error.data.exame.inv�lida");
+            throw new DomainException("error.data.exame.invalida");
         }
         return true;
     }
@@ -619,6 +619,16 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : registration.getWrittenEvaluationEnrolments()) {
             if (writtenEvaluationEnrolment.getWrittenEvaluation() == this) {
                 return writtenEvaluationEnrolment;
+            }
+        }
+        return null;
+    }
+
+    public WrittenEvaluationEnrolment getWrittenEvaluationEnrolmentFor(final Student student) {
+        for (Registration registration : student.getActiveRegistrations()) {
+            final WrittenEvaluationEnrolment evaluationEnrolment = getWrittenEvaluationEnrolmentFor(registration);
+            if (evaluationEnrolment != null) {
+                return evaluationEnrolment;
             }
         }
         return null;

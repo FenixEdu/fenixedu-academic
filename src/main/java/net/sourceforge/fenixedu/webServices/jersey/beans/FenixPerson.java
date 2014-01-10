@@ -194,7 +194,7 @@ public class FenixPerson {
     FenixPhoto photo;
 
     String name;
-    String istId;
+    String username;
     String email;
 
     List<String> personalEmails;
@@ -202,14 +202,14 @@ public class FenixPerson {
     List<String> webAddresses;
     List<String> workWebAddresses;
 
-    public FenixPerson(String campus, Set<FenixRole> roles, FenixPhoto photo, String name, String istId, String email,
+    public FenixPerson(String campus, Set<FenixRole> roles, FenixPhoto photo, String name, String username, String email,
             List<String> personalEmails, List<String> workEmails, List<String> webAddresses, List<String> workWebAddresses) {
         super();
         this.campus = campus;
         this.roles = roles;
         this.photo = photo;
         this.name = name;
-        this.istId = istId;
+        this.username = username;
         this.email = email;
         this.personalEmails = personalEmails;
         this.workEmails = workEmails;
@@ -249,12 +249,12 @@ public class FenixPerson {
         this.name = name;
     }
 
-    public String getIstId() {
-        return istId;
+    public String getUsername() {
+        return username;
     }
 
-    public void setIstId(String istId) {
-        this.istId = istId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {

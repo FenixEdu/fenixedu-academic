@@ -48,7 +48,7 @@ public class FenixCurriculum {
     private FenixDegree degree;
     private String start;
     private String end;
-    private BigDecimal ects;
+    private BigDecimal credits;
     private BigDecimal average;
     private Integer calculatedAverage;
     private Boolean isFinished;
@@ -59,13 +59,13 @@ public class FenixCurriculum {
 
     }
 
-    public FenixCurriculum(FenixDegree degree, String start, String end, BigDecimal ects, BigDecimal average,
+    public FenixCurriculum(FenixDegree degree, String start, String end, BigDecimal credits, BigDecimal average,
             Integer calculatedAverage, Boolean isFinished, List<ApprovedCourse> approvedCourses) {
         super();
         this.degree = degree;
         this.start = start;
         this.end = end;
-        this.ects = ects;
+        this.credits = credits;
         this.average = average;
         this.calculatedAverage = calculatedAverage;
         this.isFinished = isFinished;
@@ -97,12 +97,12 @@ public class FenixCurriculum {
         this.end = end;
     }
 
-    public BigDecimal getEcts() {
-        return ects;
+    public BigDecimal getCredits() {
+        return credits;
     }
 
-    public void setEcts(BigDecimal ects) {
-        this.ects = ects;
+    public void setCredits(BigDecimal ects) {
+        this.credits = ects;
     }
 
     public BigDecimal getAverage() {
