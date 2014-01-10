@@ -250,16 +250,17 @@ This metadata is used in resource search by execution course site interfaces.
 	import org.fenixedu.bennu.scheduler.custom.CustomTask;
 
 	public class InstalationInitialization extends CustomTask {
-		private static String DEFAULT_INSTALATION_DOMAIN = "example.com";
-		private static String DEFAULT_INSTALATION_NAME = "InstalationExample";
-		private static String DEFAULT_INSTALATION_URL = "http://www.example.com/";
+		private static String DEFAULT_INSTALATION_DOMAIN = "ees.example.edu";
+		private static String DEFAULT_INSTALATION_EMAIL_DOMAIN = "ees.example.edu";
+		private static String DEFAULT_INSTALATION_NAME = "EES FenixEdu";
+		private static String DEFAULT_INSTALATION_URL = "http://fenixedu.ees.example.edu/";
 
 		@Override
 		public void runTask() throws Exception {
 			Instalation instalation = Bennu.getInstance().getInstalation();
 			instalation.setInstalationDomain(DEFAULT_INSTALATION_DOMAIN);
 			instalation.setInstalationName(DEFAULT_INSTALATION_NAME);
-			instalation.setInstituitionEmailDomain(DEFAULT_INSTALATION_DOMAIN);
+			instalation.setInstituitionEmailDomain(DEFAULT_INSTALATION_EMAIL_DOMAIN);
 			instalation.setInstituitionURL(DEFAULT_INSTALATION_URL);
 			taskLog("The Instalation has been initialized with specific IST values");
 		}
