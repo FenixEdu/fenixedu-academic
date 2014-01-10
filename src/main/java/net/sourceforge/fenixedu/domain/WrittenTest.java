@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.EventSpaceOccupation;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
+import net.sourceforge.fenixedu.domain.util.icalendar.EvaluationEventBean;
 import net.sourceforge.fenixedu.predicates.WrittenTestPredicates;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.EvaluationType;
@@ -266,8 +266,8 @@ public class WrittenTest extends WrittenTest_Base {
     }
 
     @Override
-    public List<EventBean> getAllEvents(Registration registration, String scheme, String serverName, int serverPort) {
-        return getAllEvents(this.getDescription(), registration, scheme, serverName, serverPort);
+    public List<EvaluationEventBean> getAllEvents(Registration registration) {
+        return getAllEvents(this.getDescription(), registration);
     }
 
     public boolean getCanRequestRoom() {

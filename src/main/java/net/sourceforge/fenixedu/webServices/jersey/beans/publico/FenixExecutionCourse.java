@@ -6,17 +6,15 @@ public class FenixExecutionCourse {
     String credits;
     String name;
     String id;
-    String ecYear;
-    String sem;
+    String academicTerm;
 
-    public FenixExecutionCourse(String acronym, String credits, String name, String id, String ecYear, String sem) {
+    public FenixExecutionCourse(String acronym, String credits, String name, String id, String academicTerm) {
         super();
         this.acronym = acronym;
         this.credits = credits;
         this.name = name;
         this.id = id;
-        this.ecYear = ecYear;
-        this.sem = sem;
+        this.academicTerm = academicTerm;
     }
 
     public String getAcronym() {
@@ -51,20 +49,11 @@ public class FenixExecutionCourse {
         this.id = id;
     }
 
-    public String getEcYear() {
-        return ecYear;
+    public String getAcademicTerm() {
+        return academicTerm;
     }
 
-    public void setEcYear(String ecYear) {
-        this.ecYear = ecYear;
+    public void setAcademicTerm(String academicTerm) {
+        this.academicTerm = academicTerm;
     }
-
-    public String getSem() {
-        return sem;
-    }
-
-    public void setSem(String sem) {
-        this.sem = sem;
-    }
-
 }

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
@@ -16,16 +15,15 @@ public class FenixCourseStudents {
     public static class FenixCourseStudent {
 
         String username;
-        String degree;
-        String degreeId;
+        String name;
+        FenixDegree degree;
 
         public FenixCourseStudent(final Attends attends) {
             final Registration registration = attends.getRegistration();
             final Person person = registration.getPerson();
-            this.username = person.getUsername();
-            final Degree degree = registration.getDegree();
-            this.degree = degree.getSigla();
-            this.degreeId = degree.getExternalId();
+            setUsername(person.getUsername());
+            setName(person.getName());
+            setDegree(new FenixDegree(registration.getDegree()));
         }
 
         public String getUsername() {
@@ -36,20 +34,20 @@ public class FenixCourseStudents {
             this.username = username;
         }
 
-        public String getDegree() {
+        public FenixDegree getDegree() {
             return degree;
         }
 
-        public void setDegree(String degree) {
+        public void setDegree(FenixDegree degree) {
             this.degree = degree;
         }
 
-        public String getDegreeId() {
-            return degreeId;
+        public String getName() {
+            return name;
         }
 
-        public void setDegreeId(String degreeId) {
-            this.degreeId = degreeId;
+        public void setName(String name) {
+            this.name = name;
         }
 
     }

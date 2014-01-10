@@ -1,71 +1,34 @@
 package net.sourceforge.fenixedu.webServices.jersey.beans;
 
 import java.util.List;
+import java.util.Set;
+
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixPeriod;
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixSpace;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize.Typing;
 
 public class FenixCalendar {
 
     public static class FenixCalendarEvent {
-        String startDay;
-        String endDay;
-        String startTime;
-        String endTime;
-        String location;
+        FenixPeriod eventPeriod;
+        Set<FenixSpace> location;
         String title;
-        String url;
-        String note;
-        Boolean isAllDay;
 
-        public FenixCalendarEvent(String startDay, String endDay, String startTime, String endTime, String location,
-                String title, String url, String note, Boolean isAllDay) {
+        public FenixCalendarEvent(FenixPeriod eventPeriod, Set<FenixSpace> location, String title) {
             super();
-            this.startDay = startDay;
-            this.endDay = endDay;
-            this.startTime = startTime;
-            this.endTime = endTime;
+            this.eventPeriod = eventPeriod;
             this.location = location;
             this.title = title;
-            this.url = url;
-            this.note = note;
-            this.isAllDay = isAllDay;
         }
 
-        public String getStartDay() {
-            return startDay;
-        }
-
-        public void setStartDay(String startDay) {
-            this.startDay = startDay;
-        }
-
-        public String getEndDay() {
-            return endDay;
-        }
-
-        public void setEndDay(String endDay) {
-            this.endDay = endDay;
-        }
-
-        public String getStartTime() {
-            return startTime;
-        }
-
-        public void setStartTime(String startTime) {
-            this.startTime = startTime;
-        }
-
-        public String getEndTime() {
-            return endTime;
-        }
-
-        public void setEndTime(String endTime) {
-            this.endTime = endTime;
-        }
-
-        public String getLocation() {
+        public Set<FenixSpace> getLocation() {
             return location;
         }
 
-        public void setLocation(String location) {
+        public void setLocation(Set<FenixSpace> location) {
             this.location = location;
         }
 
@@ -77,33 +40,68 @@ public class FenixCalendar {
             this.title = title;
         }
 
-        public String getUrl() {
-            return url;
+        public FenixPeriod getEventPeriod() {
+            return eventPeriod;
         }
 
-        public void setUrl(String url) {
-            this.url = url;
+        public void setEventPeriod(FenixPeriod eventPeriod) {
+            this.eventPeriod = eventPeriod;
         }
 
-        public String getNote() {
-            return note;
+    }
+
+    public static class FenixClassEvent extends FenixCalendarEvent {
+
+        FenixCourse course;
+
+        public FenixClassEvent(FenixPeriod eventPeriod, Set<FenixSpace> location, String title, FenixCourse course) {
+            super(eventPeriod, location, title);
+            setCourse(course);
         }
 
-        public void setNote(String note) {
-            this.note = note;
+        @Override
+        @JsonProperty("classPeriod")
+        public FenixPeriod getEventPeriod() {
+            return super.getEventPeriod();
         }
 
-        public Boolean getIsAllDay() {
-            return isAllDay;
+        public void setCourse(FenixCourse course) {
+            this.course = course;
         }
 
-        public void setIsAllDay(Boolean isAllDay) {
-            this.isAllDay = isAllDay;
+        public FenixCourse getCourse() {
+            return course;
+        }
+    }
+
+    public static class FenixEvaluationEvent extends FenixCalendarEvent {
+
+        Set<FenixCourse> courses;
+
+        public FenixEvaluationEvent(FenixPeriod eventPeriod, Set<FenixSpace> location, String title, Set<FenixCourse> courses) {
+            super(eventPeriod, location, title);
+            setCourses(courses);
+        }
+
+        @Override
+        @JsonProperty("evaluationPeriod")
+        public FenixPeriod getEventPeriod() {
+            return super.getEventPeriod();
+        }
+
+        public Set<FenixCourse> getCourses() {
+            return courses;
+        }
+
+        public void setCourses(Set<FenixCourse> courses) {
+            this.courses = courses;
         }
 
     }
 
     private String year;
+
+    @JsonSerialize(typing = Typing.DYNAMIC)
     private List<FenixCalendarEvent> events;
 
     public FenixCalendar(String year, List<FenixCalendarEvent> events) {

@@ -4,44 +4,6 @@ import java.util.List;
 
 public class FenixPersonCourses {
 
-    public static class FenixCourse {
-        String id;
-        String acronym;
-        String name;
-
-        public FenixCourse(String id, String acronym, String name) {
-            super();
-            this.id = id;
-            this.acronym = acronym;
-            this.name = name;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getAcronym() {
-            return acronym;
-        }
-
-        public void setAcronym(String acronym) {
-            this.acronym = acronym;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-    }
-
     public static class FenixEnrolment extends FenixCourse {
         String grade;
 
@@ -60,8 +22,7 @@ public class FenixPersonCourses {
 
     }
 
-    private String year;
-    private Integer semester;
+    private String academicTerm;
     private List<FenixEnrolment> enrolments;
     private List<FenixCourse> teaching;
 
@@ -69,28 +30,19 @@ public class FenixPersonCourses {
 
     }
 
-    public FenixPersonCourses(String year, Integer semester, List<FenixEnrolment> enrolments, List<FenixCourse> teaching) {
+    public FenixPersonCourses(String academicTerm, List<FenixEnrolment> enrolments, List<FenixCourse> teaching) {
         super();
-        this.year = year;
-        this.semester = semester;
+        this.academicTerm = academicTerm;
         this.enrolments = enrolments;
         this.teaching = teaching;
     }
 
-    public String getYear() {
-        return year;
+    public String getAcademicTerm() {
+        return academicTerm;
     }
 
-    public void setYear(String year) {
-        this.year = year;
-    }
-
-    public Integer getSemester() {
-        return semester;
-    }
-
-    public void setSemester(Integer semester) {
-        this.semester = semester;
+    public void setAcademicTerm(String academicTerm) {
+        this.academicTerm = academicTerm;
     }
 
     public List<FenixEnrolment> getEnrolments() {
