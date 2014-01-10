@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 3.1.0-->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="approveJuryForm" pageWidth="595" pageHeight="842" columnWidth="469" leftMargin="70" rightMargin="56" topMargin="56" bottomMargin="14">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
@@ -39,12 +38,9 @@
 	<group name="a" isReprintHeaderOnEachPage="true">
 		<groupExpression><![CDATA[]]></groupExpression>
 		<groupHeader>
-			<band height="460" isSplitAllowed="false">
+			<band height="460" splitType="Prevent">
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField-19" x="0" y="128" width="469" height="45">
-						<property name="local_mesure_unity" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					</reportElement>
+					<reportElement key="textField-19" x="0" y="128" width="469" height="45"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -92,105 +88,49 @@
 "\nAfiliação: " + $P{juryPresidentAffiliation}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="jury-1" x="27" y="25" width="442" height="1">
-						<property name="local_mesure_unitwidth" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-						<property name="local_mesure_unitx" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-						<property name="local_mesure_unity" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					</reportElement>
+					<reportElement key="jury-1" x="27" y="25" width="442" height="1"/>
 					<graphicElement>
 						<pen lineWidth="0.25" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-39" x="42" y="40" width="427" height="1">
-						<property name="local_mesure_unitwidth" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-						<property name="local_mesure_unitx" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-						<property name="local_mesure_unity" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					</reportElement>
+					<reportElement key="line-39" x="42" y="40" width="427" height="1"/>
 					<graphicElement>
 						<pen lineWidth="0.25" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-40" x="27" y="91" width="442" height="1">
-						<property name="local_mesure_unity" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.y" value="px"/>
-						<property name="local_mesure_unitwidth" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-						<property name="local_mesure_unitx" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					</reportElement>
+					<reportElement key="line-40" x="27" y="91" width="442" height="1"/>
 					<graphicElement>
 						<pen lineWidth="0.25" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-41" x="42" y="106" width="427" height="1">
-						<property name="local_mesure_unitwidth" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-						<property name="local_mesure_unitx" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-						<property name="local_mesure_unity" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					</reportElement>
+					<reportElement key="line-41" x="42" y="106" width="427" height="1"/>
 					<graphicElement>
 						<pen lineWidth="0.25" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-42" x="37" y="121" width="432" height="1">
-						<property name="local_mesure_unitwidth" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-						<property name="local_mesure_unitx" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-						<property name="local_mesure_unity" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					</reportElement>
+					<reportElement key="line-42" x="37" y="121" width="432" height="1"/>
 					<graphicElement>
 						<pen lineWidth="0.25" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-43" x="27" y="142" width="442" height="1">
-						<property name="local_mesure_unitx" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-						<property name="local_mesure_unitwidth" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-						<property name="local_mesure_unity" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					</reportElement>
+					<reportElement key="line-43" x="27" y="142" width="442" height="1"/>
 					<graphicElement>
 						<pen lineWidth="0.25" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-44" x="42" y="157" width="427" height="1">
-						<property name="local_mesure_unitwidth" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-						<property name="local_mesure_unitx" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-						<property name="local_mesure_unity" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					</reportElement>
+					<reportElement key="line-44" x="42" y="157" width="427" height="1"/>
 					<graphicElement>
 						<pen lineWidth="0.25" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-45" x="37" y="172" width="432" height="1">
-						<property name="local_mesure_unity" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.y" value="px"/>
-						<property name="local_mesure_unitx" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-						<property name="local_mesure_unitwidth" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					</reportElement>
+					<reportElement key="line-45" x="37" y="172" width="432" height="1"/>
 					<graphicElement>
 						<pen lineWidth="0.25" lineStyle="Solid"/>
 					</graphicElement>
@@ -261,10 +201,7 @@
 					<text><![CDATA[HOMOLOGAÇÃO DO JÚRI PELO CONSELHO CIENTÍFICO *]]></text>
 				</staticText>
 				<staticText>
-					<reportElement key="staticText-8" positionType="FixRelativeToBottom" x="0" y="413" width="469" height="15">
-						<property name="local_mesure_unitwidth" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					</reportElement>
+					<reportElement key="staticText-8" positionType="FixRelativeToBottom" x="0" y="413" width="469" height="15"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -277,97 +214,49 @@
 					<text><![CDATA[(*) Esta homologação só é necessária no caso do coordenador de curso ser orientador/coorientador da tese.]]></text>
 				</staticText>
 				<line>
-					<reportElement key="line-52" positionType="FixRelativeToBottom" x="46" y="403" width="423" height="1">
-						<property name="local_mesure_unity" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.y" value="px"/>
-						<property name="local_mesure_unitx" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-						<property name="local_mesure_unitwidth" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					</reportElement>
+					<reportElement key="line-52" positionType="FixRelativeToBottom" x="46" y="403" width="423" height="1"/>
 					<graphicElement>
 						<pen lineWidth="0.25" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-53" positionType="FixRelativeToBottom" x="22" y="383" width="102" height="1">
-						<property name="local_mesure_unitwidth" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-						<property name="local_mesure_unitx" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					</reportElement>
+					<reportElement key="line-53" positionType="FixRelativeToBottom" x="22" y="383" width="102" height="1"/>
 					<graphicElement>
 						<pen lineWidth="0.25" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-54" positionType="FixRelativeToBottom" x="189" y="383" width="280" height="1">
-						<property name="local_mesure_unitx" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-						<property name="local_mesure_unitwidth" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					</reportElement>
+					<reportElement key="line-54" positionType="FixRelativeToBottom" x="189" y="383" width="280" height="1"/>
 					<graphicElement>
 						<pen lineWidth="0.25" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-55" x="37" y="55" width="432" height="1">
-						<property name="local_mesure_unitwidth" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-						<property name="local_mesure_unitx" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-						<property name="local_mesure_unity" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					</reportElement>
+					<reportElement key="line-55" x="37" y="55" width="432" height="1"/>
 					<graphicElement>
 						<pen lineWidth="0.25" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-43" x="27" y="193" width="442" height="1">
-						<property name="local_mesure_unitx" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-						<property name="local_mesure_unitwidth" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-						<property name="local_mesure_unity" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					</reportElement>
+					<reportElement key="line-43" x="27" y="193" width="442" height="1"/>
 					<graphicElement>
 						<pen lineWidth="0.25" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-44" x="42" y="208" width="427" height="1">
-						<property name="local_mesure_unitwidth" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-						<property name="local_mesure_unitx" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-						<property name="local_mesure_unity" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					</reportElement>
+					<reportElement key="line-44" x="42" y="208" width="427" height="1"/>
 					<graphicElement>
 						<pen lineWidth="0.25" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-45" x="37" y="223" width="432" height="1">
-						<property name="local_mesure_unity" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.y" value="px"/>
-						<property name="local_mesure_unitx" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-						<property name="local_mesure_unitwidth" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					</reportElement>
+					<reportElement key="line-45" x="37" y="223" width="432" height="1"/>
 					<graphicElement>
 						<pen lineWidth="0.25" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField-19" x="0" y="179" width="469" height="45">
-						<property name="local_mesure_unity" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					</reportElement>
+					<reportElement key="textField-19" x="0" y="179" width="469" height="45"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -382,10 +271,7 @@
 "\nAfiliação: " + $P{vowel3Affiliation}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField-19" x="0" y="230" width="469" height="45">
-						<property name="local_mesure_unity" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					</reportElement>
+					<reportElement key="textField-19" x="0" y="230" width="469" height="45"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -400,51 +286,25 @@
 "\nAfiliação: " + $P{vowel4Affiliation}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-43" x="27" y="244" width="442" height="1">
-						<property name="local_mesure_unitx" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-						<property name="local_mesure_unitwidth" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-						<property name="local_mesure_unity" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					</reportElement>
+					<reportElement key="line-43" x="27" y="244" width="442" height="1"/>
 					<graphicElement>
 						<pen lineWidth="0.25" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-45" x="37" y="274" width="432" height="1">
-						<property name="local_mesure_unity" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.y" value="px"/>
-						<property name="local_mesure_unitx" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-						<property name="local_mesure_unitwidth" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					</reportElement>
+					<reportElement key="line-45" x="37" y="274" width="432" height="1"/>
 					<graphicElement>
 						<pen lineWidth="0.25" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-44" x="42" y="259" width="427" height="1">
-						<property name="local_mesure_unitwidth" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-						<property name="local_mesure_unitx" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-						<property name="local_mesure_unity" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					</reportElement>
+					<reportElement key="line-44" x="42" y="259" width="427" height="1"/>
 					<graphicElement>
 						<pen lineWidth="0.25" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-53" positionType="FixRelativeToBottom" x="22" y="317" width="102" height="1">
-						<property name="local_mesure_unitwidth" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-						<property name="local_mesure_unitx" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					</reportElement>
+					<reportElement key="line-53" positionType="FixRelativeToBottom" x="22" y="317" width="102" height="1"/>
 					<graphicElement>
 						<pen lineWidth="0.25" lineStyle="Solid"/>
 					</graphicElement>
@@ -476,25 +336,13 @@
 					<textFieldExpression class="java.lang.String"><![CDATA["Data: " + $P{date}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement key="line-52" positionType="FixRelativeToBottom" x="46" y="337" width="423" height="1">
-						<property name="local_mesure_unity" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.y" value="px"/>
-						<property name="local_mesure_unitx" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-						<property name="local_mesure_unitwidth" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					</reportElement>
+					<reportElement key="line-52" positionType="FixRelativeToBottom" x="46" y="337" width="423" height="1"/>
 					<graphicElement>
 						<pen lineWidth="0.25" lineStyle="Solid"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement key="line-54" positionType="FixRelativeToBottom" x="189" y="317" width="280" height="1">
-						<property name="local_mesure_unitx" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-						<property name="local_mesure_unitwidth" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					</reportElement>
+					<reportElement key="line-54" positionType="FixRelativeToBottom" x="189" y="317" width="280" height="1"/>
 					<graphicElement>
 						<pen lineWidth="0.25" lineStyle="Solid"/>
 					</graphicElement>
@@ -522,7 +370,7 @@
 		<band/>
 	</background>
 	<title>
-		<band height="69" isSplitAllowed="false">
+		<band height="69" splitType="Prevent">
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField-1" x="0" y="0" width="469" height="26"/>
 				<box>
@@ -550,12 +398,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA["Curso em " + $P{studentDegreeName}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement key="line-1" x="60" y="45" width="409" height="1">
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
+				<reportElement key="line-1" x="60" y="45" width="409" height="1"/>
 				<graphicElement>
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</graphicElement>
@@ -563,7 +406,7 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="230" isSplitAllowed="false">
+		<band height="230" splitType="Prevent">
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField-5" x="0" y="-12" width="469" height="46"/>
 				<box>
@@ -580,27 +423,13 @@
 "\nNome: " + $P{studentName}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement key="line-3" x="34" y="18" width="30" height="1">
-					<property name="local_mesure_unity" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
+				<reportElement key="line-3" x="34" y="18" width="30" height="1"/>
 				<graphicElement>
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-4" x="27" y="33" width="442" height="1">
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="local_mesure_unity" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-				</reportElement>
+				<reportElement key="line-4" x="27" y="33" width="442" height="1"/>
 				<graphicElement>
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</graphicElement>
@@ -619,12 +448,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA["DISSERTAÇÃO"]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement key="line-37" x="26" y="197" width="443" height="1">
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
+				<reportElement key="line-37" x="26" y="197" width="443" height="1"/>
 				<graphicElement>
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</graphicElement>
@@ -660,40 +484,19 @@
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-41" x="42" y="88" width="427" height="1">
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unity" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-				</reportElement>
+				<reportElement key="line-41" x="42" y="88" width="427" height="1"/>
 				<graphicElement>
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-40" x="27" y="73" width="442" height="1">
-					<property name="local_mesure_unity" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-				</reportElement>
+				<reportElement key="line-40" x="27" y="73" width="442" height="1"/>
 				<graphicElement>
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-42" x="37" y="103" width="432" height="1">
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unity" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-				</reportElement>
+				<reportElement key="line-42" x="37" y="103" width="432" height="1"/>
 				<graphicElement>
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</graphicElement>
@@ -715,23 +518,13 @@
 "\nAfiliação: " + $P{orientatorAffiliation}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement key="line-44" x="42" y="139" width="427" height="1">
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unity" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-				</reportElement>
+				<reportElement key="line-44" x="42" y="139" width="427" height="1"/>
 				<graphicElement>
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</graphicElement>
 			</line>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-19" x="0" y="110" width="469" height="45">
-					<property name="local_mesure_unity" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-				</reportElement>
+				<reportElement key="textField-19" x="0" y="110" width="469" height="45"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -746,33 +539,19 @@
 "\nAfiliação: " + $P{coorientatorAffiliation}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement key="line-43" x="27" y="124" width="442" height="1">
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="local_mesure_unity" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-				</reportElement>
+				<reportElement key="line-43" x="27" y="124" width="442" height="1"/>
 				<graphicElement>
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-45" x="37" y="154" width="432" height="1">
-					<property name="local_mesure_unity" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-				</reportElement>
+				<reportElement key="line-45" x="37" y="154" width="432" height="1"/>
 				<graphicElement>
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line-2" x="0" y="204" width="469" height="1"/>
+				<reportElement key="line-2" x="0" y="208" width="469" height="1"/>
 				<graphicElement>
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</graphicElement>
@@ -783,13 +562,13 @@
 		<band/>
 	</columnHeader>
 	<detail>
-		<band isSplitAllowed="false"/>
+		<band splitType="Prevent"/>
 	</detail>
 	<columnFooter>
-		<band isSplitAllowed="false"/>
+		<band splitType="Prevent"/>
 	</columnFooter>
 	<pageFooter>
-		<band isSplitAllowed="false"/>
+		<band splitType="Prevent"/>
 	</pageFooter>
 	<summary>
 		<band/>
