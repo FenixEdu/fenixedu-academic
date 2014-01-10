@@ -23,8 +23,7 @@ public class ReadExecutionPeriodsByDegreeCurricularPlan {
     public static List run(String degreeCurricularPlanID) {
 
         // Start date of the DegreeCurricularPlan
-        final Date startDate =
-                FenixFramework.<DegreeCurricularPlan> getDomainObject(degreeCurricularPlanID).getInitialDate();
+        final Date startDate = FenixFramework.<DegreeCurricularPlan> getDomainObject(degreeCurricularPlanID).getInitialDate();
 
         // End date of the current year
         final Date endDate = ExecutionYear.readCurrentExecutionYear().getEndDate();

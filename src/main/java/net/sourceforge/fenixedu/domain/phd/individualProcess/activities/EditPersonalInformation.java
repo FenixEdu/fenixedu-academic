@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.domain.phd.individualProcess.activities;
 
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+
+import org.fenixedu.bennu.core.domain.User;
 
 public class EditPersonalInformation extends PhdIndividualProgramProcessActivity {
 

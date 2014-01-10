@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy;
 
-
 import net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod;
 
 import org.joda.time.DateTime;

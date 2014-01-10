@@ -75,6 +75,7 @@ public class ProfessionalCareer extends ProfessionalCareer_Base {
         this.setFunction(infoProfessionalCareer.getFunction());
 
     }
+
     @Deprecated
     public boolean hasFunction() {
         return getFunction() != null;

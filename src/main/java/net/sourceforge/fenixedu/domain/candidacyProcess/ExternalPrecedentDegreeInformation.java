@@ -83,6 +83,7 @@ public class ExternalPrecedentDegreeInformation extends ExternalPrecedentDegreeI
         }
         return hasConclusionDate() ? getConclusionDate().getYear() : null;
     }
+
     @Deprecated
     public boolean hasGradeSum() {
         return getGradeSum() != null;
@@ -103,6 +104,7 @@ public class ExternalPrecedentDegreeInformation extends ExternalPrecedentDegreeI
         return getSourceInstitution() != null;
     }
 
+    @Override
     @Deprecated
     public boolean hasConclusionDate() {
         return getConclusionDate() != null;
@@ -113,6 +115,7 @@ public class ExternalPrecedentDegreeInformation extends ExternalPrecedentDegreeI
         return getApprovedEcts() != null;
     }
 
+    @Override
     @Deprecated
     public boolean hasInstitution() {
         return getInstitution() != null;

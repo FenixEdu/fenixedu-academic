@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public abstract class EctsConversionTable extends EctsConversionTable_Base implements IEctsConversionTable {
     protected void init(AcademicInterval year, EctsComparabilityTable table) {
@@ -37,6 +37,7 @@ public abstract class EctsConversionTable extends EctsConversionTable_Base imple
         setIndex(null);
         deleteDomainObject();
     }
+
     @Deprecated
     public boolean hasYear() {
         return getYear() != null;

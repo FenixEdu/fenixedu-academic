@@ -5,8 +5,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
@@ -14,6 +12,9 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.Season;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class Exam extends Exam_Base {

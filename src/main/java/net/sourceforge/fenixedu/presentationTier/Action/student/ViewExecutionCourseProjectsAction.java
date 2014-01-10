@@ -62,8 +62,7 @@ public class ViewExecutionCourseProjectsAction extends FenixContextAction {
             return mapping.findForward("insucess");
         }
 
-        ISiteComponent viewProjectsComponent =
-                ReadExecutionCourseProjects.run(executionCourseCodeString, userView.getUsername());
+        ISiteComponent viewProjectsComponent = ReadExecutionCourseProjects.run(executionCourseCodeString, userView.getUsername());
 
         InfoExecutionCourse infoExecutionCourse = ReadExecutionCourseByOID.run(executionCourseCodeString);
         request.setAttribute("infoExecutionCourse", infoExecutionCourse);

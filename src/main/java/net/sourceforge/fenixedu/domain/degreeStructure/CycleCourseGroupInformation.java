@@ -2,10 +2,11 @@ package net.sourceforge.fenixedu.domain.degreeStructure;
 
 import java.util.Comparator;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -63,6 +64,7 @@ public class CycleCourseGroupInformation extends CycleCourseGroupInformation_Bas
         this.setGraduatedTitle(mls.with(Language.pt, editGraduatedTitle).with(Language.en, editGraduatedTitleEn));
         checkParameters();
     }
+
     @Deprecated
     public boolean hasBennu() {
         return getRootDomainObject() != null;

@@ -27,8 +27,7 @@ public class SelectExecutionCourse {
                 DegreeCurricularPlan.readByNameAndDegreeSigla(infoExecutionDegree.getInfoDegreeCurricularPlan().getName(),
                         infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla());
         if (degreeCurricularPlan != null) {
-            ExecutionSemester executionSemester =
-                    FenixFramework.getDomainObject(infoExecutionPeriod.getExternalId());
+            ExecutionSemester executionSemester = FenixFramework.getDomainObject(infoExecutionPeriod.getExternalId());
             List<ExecutionCourse> executionCourseList =
                     degreeCurricularPlan.getExecutionCoursesByExecutionPeriodAndSemesterAndYear(executionSemester,
                             curricularYear, infoExecutionPeriod.getSemester());

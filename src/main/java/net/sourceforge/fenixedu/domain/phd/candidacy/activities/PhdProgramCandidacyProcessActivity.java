@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.domain.phd.candidacy.activities;
 
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.log.PhdLog;
+
+import org.fenixedu.bennu.core.domain.User;
 
 public abstract class PhdProgramCandidacyProcessActivity extends Activity<PhdProgramCandidacyProcess> {
 

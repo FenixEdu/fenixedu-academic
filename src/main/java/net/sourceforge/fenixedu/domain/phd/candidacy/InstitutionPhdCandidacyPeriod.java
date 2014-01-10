@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.util.phd.InstitutionPhdCandidacyProcessProperties;
-import net.sourceforge.fenixedu.util.phd.PhdProperties;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;

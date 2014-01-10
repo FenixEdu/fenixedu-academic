@@ -87,7 +87,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
 
     @Override
     public ActionForward execute(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
-            final HttpServletResponse response) throws FenixActionException,  FenixServiceException {
+            final HttpServletResponse response) throws FenixActionException, FenixServiceException {
 
         final SearchExecutionCourseAttendsBean executionCourseAttendsBean = getRenderedObject("downloadViewState");
         executionCourseAttendsBean.getExecutionCourse().searchAttends(executionCourseAttendsBean);

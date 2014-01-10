@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
-
 import net.sourceforge.fenixedu.domain.util.workflow.IState;
 import net.sourceforge.fenixedu.domain.util.workflow.StateBean;
 import net.sourceforge.fenixedu.domain.util.workflow.StateMachine;

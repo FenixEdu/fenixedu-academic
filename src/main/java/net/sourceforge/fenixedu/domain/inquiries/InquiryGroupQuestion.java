@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class InquiryGroupQuestion extends InquiryGroupQuestion_Base {
 
@@ -92,6 +92,7 @@ public class InquiryGroupQuestion extends InquiryGroupQuestion_Base {
         setRootDomainObject(null);
         super.deleteDomainObject();
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion> getInquiryQuestions() {
         return getInquiryQuestionsSet();

@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.domain.student;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.dataTransferObject.student.ManageEnrolmentModelBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * 

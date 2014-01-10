@@ -140,6 +140,7 @@ public class SibsPaymentFileProcessReport extends SibsPaymentFileProcessReport_B
         setRootDomainObject(null);
         super.deleteDomainObject();
     }
+
     @Deprecated
     public boolean hasBennu() {
         return getRootDomainObject() != null;

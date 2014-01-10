@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.phd.individualProcess.activities;
 
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+
+import org.fenixedu.bennu.core.domain.User;
 
 public class ValidatedByCandidate extends PhdIndividualProgramProcessActivity {
 

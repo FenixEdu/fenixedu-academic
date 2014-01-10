@@ -23,12 +23,12 @@ public class DepartmentSiteManagementDA extends CustomUnitSiteManagementDA {
     }
 
     @Override
-    protected void removeUnitSiteManager(UnitSite site, Person person) throws  FenixServiceException {
+    protected void removeUnitSiteManager(UnitSite site, Person person) throws FenixServiceException {
         RemoveUnitSiteManager.runRemoveDepartmentSiteManager(site, person);
     }
 
     @Override
-    protected void addUnitSiteManager(UnitSite site, Person person) throws  FenixServiceException {
+    protected void addUnitSiteManager(UnitSite site, Person person) throws FenixServiceException {
         AddUnitSiteManager.runAddDepartmentSiteManager(site, person);
     }
 

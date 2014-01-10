@@ -2,12 +2,12 @@ package net.sourceforge.fenixedu.domain.accounting;
 
 import java.util.Comparator;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.util.Money;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
 
 public class CreditNoteEntry extends CreditNoteEntry_Base {
 

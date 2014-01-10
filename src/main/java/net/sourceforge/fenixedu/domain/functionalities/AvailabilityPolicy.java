@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.domain.functionalities;
 
 import java.util.UUID;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * An <code>AvailabilityPolicy</code> allows a functionality to indicate whom
@@ -43,6 +43,7 @@ public abstract class AvailabilityPolicy extends AvailabilityPolicy_Base {
     }
 
     public abstract Group getTargetGroup();
+
     @Deprecated
     public boolean hasBennu() {
         return getRootDomainObject() != null;

@@ -32,7 +32,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class ManageOtherServiceDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareEditOtherService(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
         OtherService otherService = FenixFramework.getDomainObject((String) getFromRequest(request, "otherServiceOid"));
         if (otherService != null) {
             request.setAttribute("otherService", otherService);
@@ -47,7 +47,7 @@ public class ManageOtherServiceDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward deleteOtherService(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
         OtherService otherService = FenixFramework.getDomainObject((String) getFromRequest(request, "otherServiceOid"));
         request.setAttribute("teacherOid", otherService.getTeacherService().getTeacher().getExternalId());
         request.setAttribute("executionYearOid", otherService.getTeacherService().getExecutionPeriod().getExecutionYear()

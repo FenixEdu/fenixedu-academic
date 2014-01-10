@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.resource;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public abstract class ResourceAllocation extends ResourceAllocation_Base {
 
@@ -72,6 +72,7 @@ public abstract class ResourceAllocation extends ResourceAllocation_Base {
     public boolean isNotLessonSpaceOccupation() {
         return isLessonInstanceSpaceOccupation() || isLessonSpaceOccupation();
     }
+
     @Deprecated
     public boolean hasResource() {
         return getResource() != null;

@@ -6,6 +6,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.phd.PhdElementsList;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
+
 import org.apache.commons.lang.StringUtils;
 
 public class PhdCandidacySharedDocumentsList extends PhdElementsList<PhdIndividualProgramDocumentType> {

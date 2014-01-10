@@ -3,8 +3,6 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Comparator;
 import java.util.Date;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.SupportLessonDTO;
 import net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -14,6 +12,8 @@ import net.sourceforge.fenixedu.util.CalendarUtil;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.WeekDay;
 import net.sourceforge.fenixedu.util.date.TimePeriod;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author Fernanda Quit�rio 17/10/2003

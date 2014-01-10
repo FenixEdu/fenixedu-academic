@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.domain.phd.individualProcess.activities;
 
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
+
+import org.fenixedu.bennu.core.domain.User;
 
 public class RequestPublicThesisPresentation extends PhdIndividualProgramProcessActivity {
 

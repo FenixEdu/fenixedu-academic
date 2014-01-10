@@ -112,8 +112,8 @@ public class InsuranceEvent extends InsuranceEvent_Base implements IInsuranceEve
     @Override
     protected List<AccountingEventPaymentCode> updatePaymentCodes() {
         final EntryDTO entryDTO = calculateEntries(new DateTime()).iterator().next();
-        getNonProcessedPaymentCodes().iterator().next().update(new YearMonthDay(), calculatePaymentCodeEndDate(), entryDTO.getAmountToPay(),
-                entryDTO.getAmountToPay());
+        getNonProcessedPaymentCodes().iterator().next()
+                .update(new YearMonthDay(), calculatePaymentCodeEndDate(), entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
 
         return getNonProcessedPaymentCodes();
 

@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.AcademicAdministrativeOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;

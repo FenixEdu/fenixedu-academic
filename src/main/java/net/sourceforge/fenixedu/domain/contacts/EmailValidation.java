@@ -3,10 +3,11 @@ package net.sourceforge.fenixedu.domain.contacts;
 import java.util.Collections;
 import java.util.UUID;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.ist.fenixframework.Atomic;
 
 public class EmailValidation extends EmailValidation_Base {

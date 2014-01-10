@@ -18,6 +18,7 @@ public class InquiryRegentAnswer extends InquiryRegentAnswer_Base {
         setRootDomainObject(null);
         super.deleteDomainObject();
     }
+
     @Deprecated
     public boolean hasProfessorship() {
         return getProfessorship() != null;

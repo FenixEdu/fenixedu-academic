@@ -539,6 +539,7 @@ public class GratuityEventWithPaymentPlan extends GratuityEventWithPaymentPlan_B
     public boolean isPaymentPlanChangeAllowed() {
         return true;
     }
+
     @Deprecated
     public boolean hasGratuityPaymentPlan() {
         return getGratuityPaymentPlan() != null;

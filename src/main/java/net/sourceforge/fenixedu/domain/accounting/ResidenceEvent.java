@@ -94,13 +94,13 @@ public class ResidenceEvent extends ResidenceEvent_Base {
     }
 
     public DateTime getPaymentDate() {
-        return getNonAdjustingTransactions().isEmpty() ? null : getNonAdjustingTransactions().iterator().next().getTransactionDetail()
-                .getWhenRegistered();
+        return getNonAdjustingTransactions().isEmpty() ? null : getNonAdjustingTransactions().iterator().next()
+                .getTransactionDetail().getWhenRegistered();
     }
 
     public PaymentMode getPaymentMode() {
-        return getNonAdjustingTransactions().isEmpty() ? null : getNonAdjustingTransactions().iterator().next().getTransactionDetail()
-                .getPaymentMode();
+        return getNonAdjustingTransactions().isEmpty() ? null : getNonAdjustingTransactions().iterator().next()
+                .getTransactionDetail().getPaymentMode();
     }
 
     @Override
@@ -119,8 +119,11 @@ public class ResidenceEvent extends ResidenceEvent_Base {
     @Override
     protected List<AccountingEventPaymentCode> updatePaymentCodes() {
         final EntryDTO entryDTO = calculateEntries(new DateTime()).iterator().next();
-        getNonProcessedPaymentCodes().iterator().next().update(new YearMonthDay(), getPaymentLimitDate().toYearMonthDay(),
-                entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
+        getNonProcessedPaymentCodes()
+                .iterator()
+                .next()
+                .update(new YearMonthDay(), getPaymentLimitDate().toYearMonthDay(), entryDTO.getAmountToPay(),
+                        entryDTO.getAmountToPay());
 
         return getNonProcessedPaymentCodes();
     }

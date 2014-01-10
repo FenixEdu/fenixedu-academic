@@ -4,13 +4,14 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.DegreeCoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+
+import org.fenixedu.bennu.core.domain.User;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 

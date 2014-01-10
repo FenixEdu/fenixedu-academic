@@ -428,7 +428,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
         Collection<AdministrativeOffice> allAdministrativeOffices = rootDomainObject.getAdministrativeOfficesSet();
         ResourceBundle bundle = getResourceBundle("resources/EnumerationResources");
-        
+
         for (AdministrativeOffice administrativeOffice : allAdministrativeOffices) {
             selectItem = new SelectItem();
             String name =

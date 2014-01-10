@@ -2,12 +2,13 @@ package net.sourceforge.fenixedu.presentationTier.Action.credits.departmentAdmOf
 
 import java.util.ArrayList;
 
-import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.security.Authenticate;
-
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.credits.util.DepartmentCreditsBean;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ManageDepartmentCreditsPool;
+
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "departmentAdmOffice", path = "/creditsPool", scope = "request", parameter = "method")

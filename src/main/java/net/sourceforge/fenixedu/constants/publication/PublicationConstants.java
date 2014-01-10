@@ -6,7 +6,6 @@
  */
 package net.sourceforge.fenixedu.constants.publication;
 
-
 /**
  * @author TJBF & PFON
  * 

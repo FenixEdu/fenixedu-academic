@@ -109,8 +109,8 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 
         try {
             studentsNotEnroled =
-                    (InfoSiteStudentsWithoutGroup) ReadStudentsWithoutGroup.run(groupPropertiesCodeString,
-                            userView.getUsername());
+                    (InfoSiteStudentsWithoutGroup) ReadStudentsWithoutGroup
+                            .run(groupPropertiesCodeString, userView.getUsername());
 
         } catch (ExistingServiceException e) {
             ActionErrors actionErrors1 = new ActionErrors();
@@ -164,8 +164,7 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
         List<String> studentUsernames = Arrays.asList((String[]) enrolmentForm.get("studentsNotEnroled"));
 
         try {
-            GroupEnrolment.run(groupPropertiesCodeString, shiftCodeString, groupNumber, studentUsernames,
-                    userView.getUsername());
+            GroupEnrolment.run(groupPropertiesCodeString, shiftCodeString, groupNumber, studentUsernames, userView.getUsername());
 
         } catch (NonExistingServiceException e) {
             ActionErrors actionErrors1 = new ActionErrors();

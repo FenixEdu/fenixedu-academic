@@ -7,11 +7,12 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.ist.fenixframework.Atomic;
 
 public class SantanderSequenceNumberGenerator extends SantanderSequenceNumberGenerator_Base {

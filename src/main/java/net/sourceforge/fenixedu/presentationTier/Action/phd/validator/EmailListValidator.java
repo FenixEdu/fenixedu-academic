@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.validator;
 
 import org.apache.commons.lang.StringUtils;
+
 import pt.ist.fenixWebFramework.renderers.validators.HtmlValidator;
 import pt.utl.ist.fenix.tools.util.EMail;
 

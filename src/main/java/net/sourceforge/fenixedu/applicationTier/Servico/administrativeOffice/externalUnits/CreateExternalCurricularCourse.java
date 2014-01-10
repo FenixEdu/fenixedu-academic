@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits.CreateExternalCurricularCourseBean;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;

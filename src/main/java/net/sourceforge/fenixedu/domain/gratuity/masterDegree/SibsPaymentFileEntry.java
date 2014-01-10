@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed

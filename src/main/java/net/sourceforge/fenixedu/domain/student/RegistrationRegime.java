@@ -93,6 +93,7 @@ public class RegistrationRegime extends RegistrationRegime_Base {
     public boolean hasRegime(final RegistrationRegimeType type) {
         return getRegimeType() == type;
     }
+
     @Deprecated
     public boolean hasRegistration() {
         return getRegistration() != null;

@@ -161,8 +161,9 @@ public class FenixCourse {
     List<FenixCompetence> moreInfo;
     List<FenixTeacher> teachers;
 
-    public FenixCourse(String acronym, String name, String evaluationMethod, String academicTerm, Integer numberOfAttendingStudents,
-            String announcementLink, String summaryLink, List<FenixCompetence> moreInfo, List<FenixTeacher> teachers) {
+    public FenixCourse(String acronym, String name, String evaluationMethod, String academicTerm,
+            Integer numberOfAttendingStudents, String announcementLink, String summaryLink, List<FenixCompetence> moreInfo,
+            List<FenixTeacher> teachers) {
         super();
         this.acronym = acronym;
         this.name = name;

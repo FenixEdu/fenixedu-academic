@@ -107,6 +107,7 @@ public class InternshipCandidacy extends InternshipCandidacy_Base {
         setRootDomainObject(null);
         super.deleteDomainObject();
     }
+
     @Deprecated
     public boolean hasStreet() {
         return getStreet() != null;

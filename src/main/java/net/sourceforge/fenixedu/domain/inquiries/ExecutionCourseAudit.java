@@ -1,11 +1,12 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.ist.fenixframework.Atomic;
 
 public class ExecutionCourseAudit extends ExecutionCourseAudit_Base {
@@ -77,6 +78,7 @@ public class ExecutionCourseAudit extends ExecutionCourseAudit_Base {
         }
         return getAvailableProcess();
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.ExecutionCourseAuditFile> getExecutionCourseAuditFiles() {
         return getExecutionCourseAuditFilesSet();

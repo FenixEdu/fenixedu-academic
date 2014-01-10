@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.domain;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.InvalidMarkDomainException;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.student.Registration;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class Mark extends Mark_Base {
 

@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -26,8 +25,7 @@ public class EditCurriculum {
     public static void run(InfoCurriculum infoCurriculum, String language, String username) throws FenixServiceException {
         check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
         CurricularCourse curricularCourse =
-                (CurricularCourse) FenixFramework.getDomainObject(infoCurriculum.getInfoCurricularCourse()
-                        .getExternalId());
+                (CurricularCourse) FenixFramework.getDomainObject(infoCurriculum.getInfoCurricularCourse().getExternalId());
 
         if (curricularCourse == null) {
             throw new NonExistingServiceException();

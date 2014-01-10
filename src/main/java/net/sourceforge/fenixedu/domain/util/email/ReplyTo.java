@@ -4,10 +4,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Person;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public abstract class ReplyTo extends ReplyTo_Base {
 

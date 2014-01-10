@@ -70,7 +70,7 @@ public class PrintGuideDispatchAction extends FenixDispatchAction {
         try {
             Object args[] = { number, year, version };
 
-            infoGuide = (InfoGuide) ChooseGuide.runChooseGuide(number, year, version);
+            infoGuide = ChooseGuide.runChooseGuide(number, year, version);
         } catch (FenixServiceException e) {
             throw new FenixActionException();
         }

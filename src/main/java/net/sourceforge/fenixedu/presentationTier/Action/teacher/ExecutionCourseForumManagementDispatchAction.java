@@ -35,7 +35,7 @@ public class ExecutionCourseForumManagementDispatchAction extends ForunsManageme
     }
 
     public ActionForward viewForuns(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException,  FenixServiceException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException {
 
         ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
 

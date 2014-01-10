@@ -199,6 +199,7 @@ public class EctsTableIndex extends EctsTableIndex_Base {
         }
         throw new NoEctsComparabilityTableFound(year, cycleType);
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.EctsConversionTable> getTable() {
         return getTableSet();

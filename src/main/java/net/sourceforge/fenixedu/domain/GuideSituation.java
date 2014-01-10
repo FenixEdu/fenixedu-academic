@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Date;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.util.State;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)

@@ -7,8 +7,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.AcademicProgram;
@@ -34,6 +32,8 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
+
+import org.fenixedu.bennu.core.domain.User;
 
 public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividualCandidacyProcess_Base {
 

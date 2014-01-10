@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy;
 
-
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;

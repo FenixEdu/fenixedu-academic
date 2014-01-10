@@ -72,6 +72,7 @@ public class OptionalDismissal extends OptionalDismissal_Base {
     public boolean isOptional() {
         return true;
     }
+
     @Deprecated
     public boolean hasEctsCredits() {
         return getEctsCredits() != null;

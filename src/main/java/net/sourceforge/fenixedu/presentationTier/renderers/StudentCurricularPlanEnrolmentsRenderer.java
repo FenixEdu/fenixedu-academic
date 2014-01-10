@@ -253,18 +253,19 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
             while (!courseGroupsToEnrol.isEmpty() || !curriculumGroups.isEmpty()) {
 
                 if (!curriculumGroups.isEmpty() && courseGroupsToEnrol.isEmpty()) {
-                    generateModules(blockContainer, studentCurricularPlan, curriculumGroups.iterator().next(), executionSemester, depth
-                            + getWidthDecreasePerLevel());
+                    generateModules(blockContainer, studentCurricularPlan, curriculumGroups.iterator().next(), executionSemester,
+                            depth + getWidthDecreasePerLevel());
                     curriculumGroups.remove(0);
                 } else if (curriculumGroups.isEmpty() && !courseGroupsToEnrol.isEmpty()) {
-                    generateCourseGroupToEnroll(blockContainer, courseGroupsToEnrol.iterator().next(), depth + getWidthDecreasePerLevel());
+                    generateCourseGroupToEnroll(blockContainer, courseGroupsToEnrol.iterator().next(), depth
+                            + getWidthDecreasePerLevel());
                     courseGroupsToEnrol.remove(0);
                 } else {
                     Context context = courseGroupsToEnrol.iterator().next().getContext();
                     CurriculumGroup curriculumGroup = (CurriculumGroup) curriculumGroups.iterator().next().getCurriculumModule();
                     if (curriculumGroup.getChildOrder(executionSemester) <= context.getChildOrder()) {
-                        generateModules(blockContainer, studentCurricularPlan, curriculumGroups.iterator().next(), executionSemester, depth
-                                + getWidthDecreasePerLevel());
+                        generateModules(blockContainer, studentCurricularPlan, curriculumGroups.iterator().next(),
+                                executionSemester, depth + getWidthDecreasePerLevel());
                         curriculumGroups.remove(0);
                     } else {
                         generateCourseGroupToEnroll(blockContainer, courseGroupsToEnrol.iterator().next(), depth

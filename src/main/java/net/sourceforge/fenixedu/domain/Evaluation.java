@@ -3,11 +3,11 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.EvaluationType;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public abstract class Evaluation extends Evaluation_Base {
 

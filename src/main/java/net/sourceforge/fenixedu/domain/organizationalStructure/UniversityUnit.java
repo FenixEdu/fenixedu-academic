@@ -176,6 +176,7 @@ public class UniversityUnit extends UniversityUnit_Base {
     public String getFullPresentationName() {
         return getName();
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusVacancy> getErasmusVacancy() {
         return getErasmusVacancySet();

@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.student;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class StudentNumber extends StudentNumber_Base {
 
@@ -22,6 +22,7 @@ public class StudentNumber extends StudentNumber_Base {
         setStudent(null);
         super.deleteDomainObject();
     }
+
     @Deprecated
     public boolean hasStudent() {
         return getStudent() != null;

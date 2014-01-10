@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.domain.teacherServiceDistribution;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ShiftType;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class TSDProfessorship extends TSDProfessorship_Base {
 
@@ -48,6 +48,7 @@ public class TSDProfessorship extends TSDProfessorship_Base {
         setRootDomainObject(null);
         super.deleteDomainObject();
     }
+
     @Deprecated
     public boolean hasHoursManual() {
         return getHoursManual() != null;

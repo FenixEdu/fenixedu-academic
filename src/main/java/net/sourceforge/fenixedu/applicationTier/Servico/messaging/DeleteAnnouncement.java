@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.messaging;
 
-
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import pt.ist.fenixframework.Atomic;
 

@@ -161,6 +161,7 @@ public class DegreeChangeIndividualCandidacyPR extends DegreeChangeIndividualCan
         return new DegreeChangeIndividualCandidacyPR(new DateTime(), null, getServiceAgreementTemplate(),
                 amountForInstitutionStudent, amountForExternalStudent);
     }
+
     @Deprecated
     public boolean hasAmountForInstitutionStudent() {
         return getAmountForInstitutionStudent() != null;

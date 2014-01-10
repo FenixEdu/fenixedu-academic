@@ -217,6 +217,7 @@ public class ResearchUnit extends ResearchUnit_Base {
             return ResearchUnitBasedSender.newInstance(this);
         }
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Person> getPublicationCollaborators() {
         return getPublicationCollaboratorsSet();

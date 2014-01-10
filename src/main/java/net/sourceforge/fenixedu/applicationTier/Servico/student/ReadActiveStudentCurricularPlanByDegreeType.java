@@ -4,17 +4,16 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
+
+import org.fenixedu.bennu.core.domain.User;
+
 import pt.ist.fenixframework.Atomic;
 
 /**

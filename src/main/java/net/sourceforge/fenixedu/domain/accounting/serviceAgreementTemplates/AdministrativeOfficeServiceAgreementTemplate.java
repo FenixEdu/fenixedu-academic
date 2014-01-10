@@ -26,6 +26,7 @@ public class AdministrativeOfficeServiceAgreementTemplate extends Administrative
         checkParameters(administrativeOffice);
         addAdministrativeOffice(administrativeOffice);
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice> getAdministrativeOffice() {
         return getAdministrativeOfficeSet();

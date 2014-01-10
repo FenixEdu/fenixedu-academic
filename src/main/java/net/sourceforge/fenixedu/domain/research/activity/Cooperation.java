@@ -86,6 +86,8 @@ public class Cooperation extends Cooperation_Base implements ParticipationsInter
             addParticipations(cooperationParticipation);
         }
     }
+
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.research.activity.CooperationParticipation> getParticipations() {
         return getParticipationsSet();

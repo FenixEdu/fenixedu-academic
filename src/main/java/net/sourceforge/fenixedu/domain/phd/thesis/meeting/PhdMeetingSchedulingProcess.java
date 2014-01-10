@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
@@ -21,6 +19,8 @@ import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.ScheduleThe
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.SkipScheduleFirstThesisMeeting;
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.SubmitThesisMeetingMinutes;
 
+import org.fenixedu.bennu.core.domain.User;
+
 public class PhdMeetingSchedulingProcess extends PhdMeetingSchedulingProcess_Base {
 
     @StartActivity
@@ -32,8 +32,7 @@ public class PhdMeetingSchedulingProcess extends PhdMeetingSchedulingProcess_Bas
         }
 
         @Override
-        protected PhdMeetingSchedulingProcess executeActivity(PhdMeetingSchedulingProcess process, User userView,
-                Object object) {
+        protected PhdMeetingSchedulingProcess executeActivity(PhdMeetingSchedulingProcess process, User userView, Object object) {
 
             final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
             final PhdMeetingSchedulingProcess result = new PhdMeetingSchedulingProcess(bean.getThesisProcess());
@@ -127,11 +126,13 @@ public class PhdMeetingSchedulingProcess extends PhdMeetingSchedulingProcess_Bas
         return (PhdMeetingSchedulingProcessState) super.getMostRecentState();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingProcessState> getStates() {
         return getStatesSet();
     }
 
+    @Override
     @Deprecated
     public boolean hasAnyStates() {
         return !getStatesSet().isEmpty();

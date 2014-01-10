@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.DepartmentAdministrativeOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;

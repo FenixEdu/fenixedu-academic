@@ -7,10 +7,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
+
+import org.fenixedu.bennu.core.domain.User;
 
 /**
  * @deprecated Use Bennu Groups instead

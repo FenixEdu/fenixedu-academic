@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.DeleteTSDProfessorship;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetExtraCreditsToTSDTeacher;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetTSDProfessorship;
-import org.apache.commons.collections.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TSDTeacherDTOEntry;
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TeacherServiceDistributionDTOEntry;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
@@ -33,6 +32,7 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherService
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -438,8 +438,7 @@ public class TSDProfessorshipAction extends FenixDispatchAction {
         }
     }
 
-    private TSDProfessorship getSelectedTSDProfessorship(User userView, DynaActionForm dynaForm)
-            throws FenixServiceException {
+    private TSDProfessorship getSelectedTSDProfessorship(User userView, DynaActionForm dynaForm) throws FenixServiceException {
         return FenixFramework.getDomainObject((String) dynaForm.get("tsdProfessorship"));
     }
 

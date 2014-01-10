@@ -5,9 +5,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
-
 import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionUnit;
+
+import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
 
 public class SearchOtherFormationInstitutions implements AutoCompleteProvider<AcademicalInstitutionUnit> {
 

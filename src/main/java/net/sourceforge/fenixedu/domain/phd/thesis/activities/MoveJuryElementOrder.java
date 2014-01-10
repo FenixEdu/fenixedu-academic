@@ -6,11 +6,12 @@ package net.sourceforge.fenixedu.domain.phd.thesis.activities;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
+
+import org.fenixedu.bennu.core.domain.User;
+
 import pt.utl.ist.fenix.tools.util.Pair;
 
 public class MoveJuryElementOrder extends PhdThesisActivity {

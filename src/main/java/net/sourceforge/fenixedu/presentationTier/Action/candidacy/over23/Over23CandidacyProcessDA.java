@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23CandidacyPr
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.Over23CandidacyPeriod;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;

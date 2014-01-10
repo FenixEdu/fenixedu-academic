@@ -63,6 +63,7 @@ public class PersonExtension extends PersonExtension_Base {
         Person person = getPerson();
         return (person == null) ? null : person.getRootDomainObject();
     }
+
     @Deprecated
     public boolean hasExtension() {
         return getExtension() != null;

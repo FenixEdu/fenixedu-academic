@@ -25,6 +25,7 @@ public class PersonProfessionalContract extends PersonProfessionalContract_Base 
         return getContractSituation() != null && getBeginDate() != null
                 && (getEndDate() == null || !getBeginDate().isAfter(getEndDate()));
     }
+
     @Deprecated
     public boolean hasModifiedDate() {
         return getModifiedDate() != null;

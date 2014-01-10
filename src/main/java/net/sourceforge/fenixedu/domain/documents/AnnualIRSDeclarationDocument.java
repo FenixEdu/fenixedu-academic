@@ -61,6 +61,7 @@ public class AnnualIRSDeclarationDocument extends AnnualIRSDeclarationDocument_B
     static public AnnualIRSDeclarationDocument create(Person addressee, Person operator, byte[] content, Integer year) {
         return new AnnualIRSDeclarationDocument(addressee, operator, buildFilename(addressee, year), content, year);
     }
+
     @Deprecated
     public boolean hasYear() {
         return getYear() != null;

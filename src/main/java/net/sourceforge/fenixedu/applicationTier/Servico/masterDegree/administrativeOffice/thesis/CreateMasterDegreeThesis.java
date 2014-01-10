@@ -33,9 +33,9 @@ import pt.ist.fenixframework.FenixFramework;
 public class CreateMasterDegreeThesis {
 
     @Atomic
-    public static void run(User userView, String studentCurricularPlanID, String dissertationTitle,
-            List<String> guidersNumbers, List<String> assistentGuidersNumbers, List<String> externalGuidersIDs,
-            List<String> externalAssistentGuidersIDs) throws FenixServiceException {
+    public static void run(User userView, String studentCurricularPlanID, String dissertationTitle, List<String> guidersNumbers,
+            List<String> assistentGuidersNumbers, List<String> externalGuidersIDs, List<String> externalAssistentGuidersIDs)
+            throws FenixServiceException {
         check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
 
         // check duplicate guiders and assistent guiders

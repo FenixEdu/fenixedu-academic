@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.multiple;
 
-import org.apache.commons.collections.CollectionUtils;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.fenixedu.bennu.core.domain.Bennu;
 

@@ -1,9 +1,10 @@
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class UnitAcronym extends UnitAcronym_Base {

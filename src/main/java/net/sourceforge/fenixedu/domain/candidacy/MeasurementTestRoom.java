@@ -2,10 +2,11 @@ package net.sourceforge.fenixedu.domain.candidacy;
 
 import java.util.Comparator;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class MeasurementTestRoom extends MeasurementTestRoom_Base {

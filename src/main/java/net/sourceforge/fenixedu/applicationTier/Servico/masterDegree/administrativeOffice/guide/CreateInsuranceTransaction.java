@@ -10,8 +10,6 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.List;
 
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideEntry;
@@ -22,6 +20,9 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
+
+import org.fenixedu.bennu.core.domain.User;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 

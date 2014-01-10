@@ -2,14 +2,15 @@ package net.sourceforge.fenixedu.domain.reports;
 
 import java.util.Set;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.NonRegularTeachingService;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
+
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
@@ -42,8 +43,7 @@ public class TeachersByShiftReportFile extends TeachersByShiftReportFile_Base {
         spreadsheet.setHeader("OID professorship");
 
         //TODO remove when the main external teachers structure is global for everyone
-        Set<NonRegularTeachingService> nonRegularTeachingServices =
-                Bennu.getInstance().getNonRegularTeachingServicesSet();
+        Set<NonRegularTeachingService> nonRegularTeachingServices = Bennu.getInstance().getNonRegularTeachingServicesSet();
 
         for (ExecutionSemester executionSemester : getExecutionYear().getExecutionPeriods()) {
             //TODO remove this cycle when the main external teachers structure is global for everyone

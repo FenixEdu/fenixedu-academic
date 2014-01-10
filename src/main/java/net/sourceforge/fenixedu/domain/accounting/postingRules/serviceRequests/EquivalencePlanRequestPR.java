@@ -131,6 +131,7 @@ public class EquivalencePlanRequestPR extends EquivalencePlanRequestPR_Base {
 
         return this.getMaximumAmount().getAmountAsString();
     }
+
     @Deprecated
     public boolean hasMaximumAmount() {
         return getMaximumAmount() != null;

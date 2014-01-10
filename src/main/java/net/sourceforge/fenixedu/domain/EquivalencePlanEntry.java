@@ -10,13 +10,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.util.LogicOperator;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 

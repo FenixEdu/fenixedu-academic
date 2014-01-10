@@ -81,8 +81,8 @@ public class CreateGuide {
         Person person = (Person) FenixFramework.getDomainObject(infoGuide.getInfoPerson().getExternalId());
         ExecutionDegree executionDegree = FenixFramework.getDomainObject(infoGuide.getInfoExecutionDegree().getExternalId());
         final Party contributor =
-                infoGuide.getInfoContributor() != null ? FenixFramework.<Party> getDomainObject(infoGuide
-                        .getInfoContributor().getExternalId()) : person;
+                infoGuide.getInfoContributor() != null ? FenixFramework.<Party> getDomainObject(infoGuide.getInfoContributor()
+                        .getExternalId()) : person;
 
         Guide guide = new Guide();
         guide.setExecutionDegree(executionDegree);

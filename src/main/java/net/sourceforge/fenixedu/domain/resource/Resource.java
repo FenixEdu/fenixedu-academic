@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.resource;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public abstract class Resource extends Resource_Base {
 
@@ -66,6 +66,7 @@ public abstract class Resource extends Resource_Base {
     public boolean isAllocatableSpace() {
         return false;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.resource.ResourceResponsibility> getResourceResponsibility() {
         return getResourceResponsibilitySet();

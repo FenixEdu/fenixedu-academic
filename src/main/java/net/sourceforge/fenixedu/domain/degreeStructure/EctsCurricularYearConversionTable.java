@@ -19,6 +19,7 @@ public abstract class EctsCurricularYearConversionTable extends EctsCurricularYe
         setCurricularYear(null);
         super.delete();
     }
+
     @Deprecated
     public boolean hasCurricularYear() {
         return getCurricularYear() != null;

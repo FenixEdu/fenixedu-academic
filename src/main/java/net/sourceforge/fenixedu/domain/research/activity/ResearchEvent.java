@@ -3,8 +3,6 @@ package net.sourceforge.fenixedu.domain.research.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -12,6 +10,8 @@ import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchA
 import net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class ResearchEvent extends ResearchEvent_Base implements ParticipationsInterface {
 

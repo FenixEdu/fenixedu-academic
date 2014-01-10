@@ -116,6 +116,7 @@ public class PhdStudentReingressionRequest extends PhdStudentReingressionRequest
 
         }
     }
+
     @Deprecated
     public boolean hasPhdStudentReingressionRequestDocument() {
         return getPhdStudentReingressionRequestDocument() != null;

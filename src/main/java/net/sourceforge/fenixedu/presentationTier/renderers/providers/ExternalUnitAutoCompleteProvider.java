@@ -5,10 +5,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
-
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
+
+import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
 
 public class ExternalUnitAutoCompleteProvider implements AutoCompleteProvider<Unit> {
 

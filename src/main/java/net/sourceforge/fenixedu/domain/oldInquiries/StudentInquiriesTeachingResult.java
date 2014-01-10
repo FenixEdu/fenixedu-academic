@@ -679,8 +679,7 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
     public static Boolean deleteTeachingResults(UploadStudentInquiriesTeachingResultsBean teachingBean) {
         boolean deletedItems = false;
         List<StudentInquiriesTeachingResult> toDelete = new ArrayList<StudentInquiriesTeachingResult>();
-        for (StudentInquiriesTeachingResult teachingResult : Bennu.getInstance()
-                .getStudentInquiriesTeachingResultsSet()) {
+        for (StudentInquiriesTeachingResult teachingResult : Bennu.getInstance().getStudentInquiriesTeachingResultsSet()) {
             if (StringUtils.isEmpty(teachingBean.getKeyExecutionCourseHeader())) {
                 if (teachingBean.getResultsDate().equals(teachingResult.getResultsDate())) {
                     toDelete.add(teachingResult);

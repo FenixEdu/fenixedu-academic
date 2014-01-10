@@ -121,8 +121,7 @@ public class InsertExecutionDegreeDispatchAction extends FenixDispatchAction {
         DynaActionForm dynaForm = (DynaValidatorForm) form;
 
         InfoExecutionYear infoExecutionYear =
-                new InfoExecutionYear(FenixFramework.<ExecutionYear> getDomainObject((String) dynaForm
-                        .get("executionYearId")));
+                new InfoExecutionYear(FenixFramework.<ExecutionYear> getDomainObject((String) dynaForm.get("executionYearId")));
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan(degreeCurricularPlan);
 
         InfoExecutionDegreeEditor infoExecutionDegree = new InfoExecutionDegreeEditor();

@@ -4,11 +4,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.QueueJob;
+
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.scheduler.CronTask;
 import org.fenixedu.bennu.scheduler.annotation.Task;
-
-import net.sourceforge.fenixedu.domain.QueueJob;
 
 @Task(englishTitle = "JobQueueDispatcher")
 public class JobQueueDispatcher extends CronTask {

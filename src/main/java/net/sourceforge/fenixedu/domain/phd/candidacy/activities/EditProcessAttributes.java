@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.domain.phd.candidacy.activities;
 
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
+
+import org.fenixedu.bennu.core.domain.User;
 
 public class EditProcessAttributes extends PhdProgramCandidacyProcessActivity {
 

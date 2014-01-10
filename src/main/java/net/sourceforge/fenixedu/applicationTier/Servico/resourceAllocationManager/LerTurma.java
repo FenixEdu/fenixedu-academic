@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
-
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -18,8 +17,7 @@ public class LerTurma {
     public static InfoClass run(String className, InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod) {
         check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
         final ExecutionDegree executionDegree = FenixFramework.getDomainObject(infoExecutionDegree.getExternalId());
-        final ExecutionSemester executionSemester =
-                FenixFramework.getDomainObject(infoExecutionPeriod.getExternalId());
+        final ExecutionSemester executionSemester = FenixFramework.getDomainObject(infoExecutionPeriod.getExternalId());
 
         final SchoolClass turma = executionDegree.findSchoolClassesByExecutionPeriodAndName(executionSemester, className);
 

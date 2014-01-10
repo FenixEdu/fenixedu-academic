@@ -5,7 +5,6 @@ import javax.servlet.jsp.JspException;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.struts.taglib.logic.ConditionalTagBase;
 import org.fenixedu.bennu.core.security.Authenticate;

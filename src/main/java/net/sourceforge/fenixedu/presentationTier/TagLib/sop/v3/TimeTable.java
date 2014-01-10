@@ -100,8 +100,10 @@ public class TimeTable {
 
         DayColumn dayColumn = (DayColumn) this.days.get(dayIndex);
 
-        int startIndex = getHourIndex(infoShowOccupation.getBeginHourMinuteSecond(), this.minimumHourInMinutes, this.slotSize.intValue());
-        int endIndex = getHourIndex(infoShowOccupation.getEndHourMinuteSecond(), this.minimumHourInMinutes, this.slotSize.intValue());
+        int startIndex =
+                getHourIndex(infoShowOccupation.getBeginHourMinuteSecond(), this.minimumHourInMinutes, this.slotSize.intValue());
+        int endIndex =
+                getHourIndex(infoShowOccupation.getEndHourMinuteSecond(), this.minimumHourInMinutes, this.slotSize.intValue());
 
         /* break lesson in slots */
         for (int hourIndex = startIndex; hourIndex < endIndex; hourIndex++) {

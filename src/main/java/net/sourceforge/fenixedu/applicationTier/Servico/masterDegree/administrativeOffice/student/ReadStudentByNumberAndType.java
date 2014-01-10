@@ -6,7 +6,6 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student;
 
-
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;

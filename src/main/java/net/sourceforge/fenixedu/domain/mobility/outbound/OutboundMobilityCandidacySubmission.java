@@ -4,9 +4,10 @@ import java.math.BigDecimal;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.student.Registration;
+
 import org.fenixedu.bennu.core.domain.Bennu;
 
-import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixframework.Atomic;
 
 public class OutboundMobilityCandidacySubmission extends OutboundMobilityCandidacySubmission_Base implements

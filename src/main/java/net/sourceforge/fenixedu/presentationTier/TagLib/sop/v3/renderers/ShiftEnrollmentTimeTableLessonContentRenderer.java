@@ -115,8 +115,8 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer extends LessonSlotCon
             strBuffer.append(site.getReversePath());
             strBuffer.append("\">");
             strBuffer.append(executionCourse.getSigla()).append("</a>");
-            strBuffer.append("&nbsp;").append("&nbsp;(").append(infoLessonInstanceAggregation.getShift().getShiftTypesCodePrettyPrint())
-                    .append(")&nbsp;");
+            strBuffer.append("&nbsp;").append("&nbsp;(")
+                    .append(infoLessonInstanceAggregation.getShift().getShiftTypesCodePrettyPrint()).append(")&nbsp;");
 
             final AllocatableSpace allocatableSpace = infoLessonInstanceAggregation.getAllocatableSpace();
             if (allocatableSpace != null) {

@@ -12,6 +12,7 @@ public class InquiryDelegateAnswer extends InquiryDelegateAnswer_Base {
         setExecutionCourse(executionCourse);
         setExecutionDegree(executionDegree);
     }
+
     @Deprecated
     public boolean hasExecutionCourse() {
         return getExecutionCourse() != null;

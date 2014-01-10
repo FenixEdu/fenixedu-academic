@@ -166,8 +166,8 @@ public class PrepareConsultCurricularPlanDispatchAction extends FenixContextDisp
         List infoExecutionPeriodList = ReadExecutionPeriodsByExecutionYear.run(executionYear);
 
         request.setAttribute(PresentationConstants.EXECUTION_PERIOD, infoExecutionPeriodList.iterator().next());
-        request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, ((InfoExecutionPeriod) infoExecutionPeriodList.iterator().next())
-                .getExternalId().toString());
+        request.setAttribute(PresentationConstants.EXECUTION_PERIOD_OID, ((InfoExecutionPeriod) infoExecutionPeriodList
+                .iterator().next()).getExternalId().toString());
         RequestUtils.setExecutionPeriodToRequest(request, (InfoExecutionPeriod) infoExecutionPeriodList.iterator().next());
 
         // ----------------------------------------------------------

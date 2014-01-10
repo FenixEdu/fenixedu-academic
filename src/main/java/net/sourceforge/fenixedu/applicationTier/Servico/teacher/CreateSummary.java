@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-
 import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingDepartmentAdmOfficeAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;

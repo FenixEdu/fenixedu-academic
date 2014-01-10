@@ -2,10 +2,10 @@ package net.sourceforge.fenixedu.presentationTier.renderers;
 
 import java.util.Collection;
 
-import org.apache.commons.collections.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;

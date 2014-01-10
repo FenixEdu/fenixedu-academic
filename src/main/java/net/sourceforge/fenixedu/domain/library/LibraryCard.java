@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.domain.library;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardDTO;
 import net.sourceforge.fenixedu.domain.documents.LibraryMissingCardsDocument;
 import net.sourceforge.fenixedu.domain.documents.LibraryMissingLettersDocument;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class LibraryCard extends LibraryCard_Base {
 
@@ -53,6 +53,7 @@ public class LibraryCard extends LibraryCard_Base {
         }
         return null;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.documents.LibraryMissingCardsDocument> getDocument() {
         return getDocumentSet();

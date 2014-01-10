@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -10,6 +8,8 @@ import net.sourceforge.fenixedu.domain.TeacherAutoEvaluationDefinitionPeriod;
 import net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod;
 import net.sourceforge.fenixedu.domain.TeacherPersonalExpectationsEvaluationPeriod;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class TeacherPersonalExpectation extends TeacherPersonalExpectation_Base {
 
@@ -153,6 +153,7 @@ public class TeacherPersonalExpectation extends TeacherPersonalExpectation_Base 
         setCompanySocialOrgans(infoTeacherPersonalExpectation.getCompanySocialOrgans());
         setCompanyPositions(infoTeacherPersonalExpectation.getCompanyPositions());
     }
+
     @Deprecated
     public boolean hasGraduationsDescription() {
         return getGraduationsDescription() != null;

@@ -24,6 +24,7 @@ public class FirstTimeCandidacyLog extends FirstTimeCandidacyLog_Base {
     protected Bennu getRootDomainObject() {
         return Bennu.getInstance();
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.log.FirstTimeCandidacyLogEntry> getFirstTimeCandidacyLogEntry() {
         return getFirstTimeCandidacyLogEntrySet();

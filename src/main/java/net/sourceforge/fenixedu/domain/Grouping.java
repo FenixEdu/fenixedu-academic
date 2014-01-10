@@ -19,13 +19,13 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
 import net.sourceforge.fenixedu.util.ProposalState;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author joaosa & rmalo

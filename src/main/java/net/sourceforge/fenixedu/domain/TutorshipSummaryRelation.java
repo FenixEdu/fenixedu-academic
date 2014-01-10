@@ -1,8 +1,9 @@
 package net.sourceforge.fenixedu.domain;
 
+import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorshipSummaryRelationBean;
+
 import org.fenixedu.bennu.core.domain.Bennu;
 
-import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorshipSummaryRelationBean;
 import pt.ist.fenixframework.Atomic;
 
 public class TutorshipSummaryRelation extends TutorshipSummaryRelation_Base {

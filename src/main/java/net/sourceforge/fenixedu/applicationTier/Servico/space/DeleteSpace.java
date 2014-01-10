@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.space;
 
-
 import net.sourceforge.fenixedu.domain.space.Space;
 import pt.ist.fenixframework.Atomic;
 

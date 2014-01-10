@@ -17,14 +17,11 @@ import org.fenixedu.bennu.core.security.Authenticate;
  */
 public class CurricularCourseStatisticsStatusBridge {
 
-    public static Map<User, Collection<String>> processedDegreeCurricularPlans =
-            new HashMap<User, Collection<String>>();
+    public static Map<User, Collection<String>> processedDegreeCurricularPlans = new HashMap<User, Collection<String>>();
 
-    public static Map<User, Collection<String>> processingDegreeCurricularPlans =
-            new HashMap<User, Collection<String>>();
+    public static Map<User, Collection<String>> processingDegreeCurricularPlans = new HashMap<User, Collection<String>>();
 
-    public static Map<User, Collection<String>> toProcessDegreeCurricularPlans =
-            new HashMap<User, Collection<String>>();
+    public static Map<User, Collection<String>> toProcessDegreeCurricularPlans = new HashMap<User, Collection<String>>();
 
     public static Collection<String> readProcessedDegreeCurricularPlans() {
         Collection<String> degreeCurricularPlans = processedDegreeCurricularPlans.get(getUserVIew());

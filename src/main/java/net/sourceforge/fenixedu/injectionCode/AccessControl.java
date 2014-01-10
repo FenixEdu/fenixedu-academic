@@ -4,10 +4,11 @@
 
 package net.sourceforge.fenixedu.injectionCode;
 
+import net.sourceforge.fenixedu.domain.Person;
+
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
-import net.sourceforge.fenixedu.domain.Person;
 import pt.ist.fenixframework.DomainObject;
 
 /**

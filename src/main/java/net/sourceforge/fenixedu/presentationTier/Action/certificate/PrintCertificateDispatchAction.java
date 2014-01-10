@@ -64,7 +64,9 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
             if (enrolmentList.size() == 0) {
                 anoLectivo = infoExecutionYear.getYear();
             } else {
-                anoLectivo = ((InfoEnrolment) enrolmentList.iterator().next()).getInfoExecutionPeriod().getInfoExecutionYear().getYear();
+                anoLectivo =
+                        ((InfoEnrolment) enrolmentList.iterator().next()).getInfoExecutionPeriod().getInfoExecutionYear()
+                                .getYear();
             }
             if (certificate.equals("Matrícula")) {
                 request.setAttribute(PresentationConstants.MATRICULA, certificate.toUpperCase());
@@ -109,12 +111,13 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
                     if (result instanceof InfoEnrolmentInExtraCurricularCourse) {
                         extraEnrolment.add(infoEnrolment2);
                         anoLectivo =
-                                ((InfoEnrolment) extraEnrolment.iterator().next()).getInfoExecutionPeriod().getInfoExecutionYear().getYear();
+                                ((InfoEnrolment) extraEnrolment.iterator().next()).getInfoExecutionPeriod()
+                                        .getInfoExecutionYear().getYear();
                     } else {
                         normalEnrolment.add(infoEnrolment2);
                         anoLectivo =
-                                ((InfoEnrolment) normalEnrolment.iterator().next()).getInfoExecutionPeriod().getInfoExecutionYear()
-                                        .getYear();
+                                ((InfoEnrolment) normalEnrolment.iterator().next()).getInfoExecutionPeriod()
+                                        .getInfoExecutionYear().getYear();
                     }
                 }
                 if (normalEnrolment.size() != 0) {
@@ -149,13 +152,13 @@ public class PrintCertificateDispatchAction extends FenixDispatchAction {
                         if (infoEnrolment2.getEnrolment().isExtraCurricular()) {
                             extraEnrolment.add(infoEnrolment2);
                             anoLectivo =
-                                    ((InfoEnrolment) extraEnrolment.iterator().next()).getInfoExecutionPeriod().getInfoExecutionYear()
-                                            .getYear();
+                                    ((InfoEnrolment) extraEnrolment.iterator().next()).getInfoExecutionPeriod()
+                                            .getInfoExecutionYear().getYear();
                         } else {
                             normalEnrolment.add(infoEnrolment2);
                             anoLectivo =
-                                    ((InfoEnrolment) normalEnrolment.iterator().next()).getInfoExecutionPeriod().getInfoExecutionYear()
-                                            .getYear();
+                                    ((InfoEnrolment) normalEnrolment.iterator().next()).getInfoExecutionPeriod()
+                                            .getInfoExecutionYear().getYear();
                         }
                     }
 

@@ -56,8 +56,8 @@ public abstract class AbstractReadProfessorshipsAction extends Action {
         return mapping.findForward("list-professorships");
     }
 
-    protected void extraPreparation(User userView, InfoTeacher infoTeacher, HttpServletRequest request,
-            DynaActionForm dynaForm) throws Exception {
+    protected void extraPreparation(User userView, InfoTeacher infoTeacher, HttpServletRequest request, DynaActionForm dynaForm)
+            throws Exception {
     }
 
     protected InfoTeacher getInfoTeacher(HttpServletRequest request, DynaActionForm dynaForm) throws Exception {
@@ -71,6 +71,6 @@ public abstract class AbstractReadProfessorshipsAction extends Action {
         return infoTeacher;
     }
 
-    abstract List getDetailedProfessorships(User userView, String teacherId, DynaActionForm actionForm,
-            HttpServletRequest request) throws FenixServiceException;
+    abstract List getDetailedProfessorships(User userView, String teacherId, DynaActionForm actionForm, HttpServletRequest request)
+            throws FenixServiceException;
 }

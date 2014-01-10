@@ -20,6 +20,7 @@ public class FirstTimeCandidacyLogEntry extends FirstTimeCandidacyLogEntry_Base 
     protected Bennu getRootDomainObject() {
         return Bennu.getInstance();
     }
+
     @Deprecated
     public boolean hasFirstTimeCandidacyLog() {
         return getFirstTimeCandidacyLog() != null;

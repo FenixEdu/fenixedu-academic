@@ -248,6 +248,7 @@ public class Article extends Article_Base {
     public String getNumber() {
         return this.getJournalIssue().getNumber();
     }
+
     @Deprecated
     public boolean hasFirstPage() {
         return getFirstPage() != null;

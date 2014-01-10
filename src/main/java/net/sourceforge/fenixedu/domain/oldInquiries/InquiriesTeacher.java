@@ -6,8 +6,6 @@ package net.sourceforge.fenixedu.domain.oldInquiries;
 
 import java.util.Map;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.AffiliatedTeacherDTO;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InfoInquiriesTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InquiriesQuestion;
@@ -18,6 +16,8 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author Jo�o Fialho & Rita Ferreira
@@ -115,6 +115,7 @@ public class InquiriesTeacher extends InquiriesTeacher_Base {
         inquiriesTeacher.setTeacherOpenToClearDoubts(answersMap.get("teacherOpenToClearDoubts").getValueAsInteger());
         inquiriesTeacher.setTeacherGlobalClassification(answersMap.get("teacherGlobalClassification").getValueAsInteger());
     }
+
     @Deprecated
     public boolean hasTeacherInterestStimulation() {
         return getTeacherInterestStimulation() != null;

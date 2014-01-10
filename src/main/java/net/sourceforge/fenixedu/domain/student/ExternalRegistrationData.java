@@ -40,6 +40,7 @@ public class ExternalRegistrationData extends ExternalRegistrationData_Base {
         setRegistration(null);
         super.deleteDomainObject();
     }
+
     @Deprecated
     public boolean hasRegistration() {
         return getRegistration() != null;

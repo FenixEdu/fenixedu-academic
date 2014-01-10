@@ -7,14 +7,14 @@ package net.sourceforge.fenixedu.domain.accessControl;
 import java.util.Collection;
 import java.util.Set;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>

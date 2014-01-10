@@ -226,8 +226,7 @@ public class StudentExternalEnrolmentsDA extends FenixDispatchAction {
     }
 
     protected Unit getExternalUnit(final HttpServletRequest request, ActionForm actionForm) {
-        return FenixFramework.getDomainObject(getStringFromRequestOrForm(request, (DynaActionForm) actionForm,
-                "externalUnitId"));
+        return FenixFramework.getDomainObject(getStringFromRequestOrForm(request, (DynaActionForm) actionForm, "externalUnitId"));
     }
 
     protected ExternalCurricularCourse getExternalCurricularCourseByID(final String externalCurricularCourseID) {

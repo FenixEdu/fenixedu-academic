@@ -1,9 +1,10 @@
 package net.sourceforge.fenixedu.domain.research.activity;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class EventConferenceArticlesAssociation extends EventConferenceArticlesAssociation_Base {

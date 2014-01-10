@@ -83,8 +83,8 @@ public class CurriculumValidationDocumentRequestsManagementDispatchAction extend
             AdministrativeOfficeDocument document =
                     AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator.create(documentRequest).iterator().next();
             conlusionDate =
-                    (String) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator.create(documentRequest).iterator().next()
-                            .getParameters().get("conclusionDate");
+                    (String) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator.create(documentRequest).iterator()
+                            .next().getParameters().get("conclusionDate");
             degreeDescription = (String) document.getParameters().get("degreeFilteredName");
             graduatedTitle = (String) document.getParameters().get("graduateTitle");
         }

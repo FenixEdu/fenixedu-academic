@@ -9,10 +9,10 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+import net.sourceforge.fenixedu.domain.person.RoleType;
+
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
-
-import net.sourceforge.fenixedu.domain.person.RoleType;
 
 public class ManagerFilter implements Filter {
 

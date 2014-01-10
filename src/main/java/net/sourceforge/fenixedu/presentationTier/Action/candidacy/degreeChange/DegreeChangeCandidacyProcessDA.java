@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChang
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.DegreeChangeCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
 
 import org.apache.poi.hssf.util.Region;

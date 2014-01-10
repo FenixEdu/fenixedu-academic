@@ -73,6 +73,7 @@ public class ExternalScholarshipPhdGratuityContribuitionEvent extends ExternalSc
     public boolean isFctScholarshipPhdGratuityContribuitionEvent() {
         return true;
     }
+
     @Deprecated
     public boolean hasPhdGratuityExternalScholarshipExemption() {
         return getPhdGratuityExternalScholarshipExemption() != null;

@@ -13,12 +13,12 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
+
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.bennu.core.util.CoreConfiguration.CasConfig;
-
-import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 public class CASFilter implements Filter {
 

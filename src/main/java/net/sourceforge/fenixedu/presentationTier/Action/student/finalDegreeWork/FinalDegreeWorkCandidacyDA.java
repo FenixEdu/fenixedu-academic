@@ -382,8 +382,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
 
         User userView = Authenticate.getUser();
         if (studentUsernameToAdd != null && !studentUsernameToAdd.equals("")
-                && !studentUsernameToAdd.equalsIgnoreCase(userView.getUsername()) && externalId != null
-                && !externalId.equals("")) {
+                && !studentUsernameToAdd.equalsIgnoreCase(userView.getUsername()) && externalId != null && !externalId.equals("")) {
 
             try {
                 AddStudentToFinalDegreeWorkStudentGroup.run(externalId, studentUsernameToAdd);
@@ -506,8 +505,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
         return mapping.findForward("showCandidacyForm");
     }
 
-    private boolean checkCandidacyConditions(User userView, final ExecutionDegree executionDegree)
-            throws FenixServiceException {
+    private boolean checkCandidacyConditions(User userView, final ExecutionDegree executionDegree) throws FenixServiceException {
         return executionDegree == null || CheckCandidacyConditionsForFinalDegreeWork.run(userView, executionDegree);
     }
 

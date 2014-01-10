@@ -47,8 +47,8 @@ public class GenericApplicationRecomentation extends GenericApplicationRecomenta
     }
 
     private String generateConfirmationLink() {
-        return FenixConfigurationManager.getConfiguration().getGenericApplicationEmailRecommendationLink() + getConfirmationCode()
-                + "&recommendationExternalId=" + getExternalId();
+        return FenixConfigurationManager.getConfiguration().getGenericApplicationEmailRecommendationLink()
+                + getConfirmationCode() + "&recommendationExternalId=" + getExternalId();
     }
 
     @Deprecated

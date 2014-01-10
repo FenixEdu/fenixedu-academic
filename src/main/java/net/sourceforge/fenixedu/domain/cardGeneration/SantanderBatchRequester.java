@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.cardGeneration;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.Person;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class SantanderBatchRequester extends SantanderBatchRequester_Base {
 

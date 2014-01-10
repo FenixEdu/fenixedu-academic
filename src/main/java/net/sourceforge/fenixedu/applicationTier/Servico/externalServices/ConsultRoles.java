@@ -3,12 +3,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.externalServices;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
+
+import org.fenixedu.bennu.core.domain.User;
+
 import pt.ist.fenixframework.Atomic;
 
 public class ConsultRoles {

@@ -14,14 +14,15 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.WeakHashMap;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode;
 import net.sourceforge.fenixedu.domain.contents.FunctionalityCall;
 import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.functionalities.exceptions.IllegalOrderInModuleException;
 import net.sourceforge.fenixedu.domain.functionalities.exceptions.MatchPathConflictException;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**

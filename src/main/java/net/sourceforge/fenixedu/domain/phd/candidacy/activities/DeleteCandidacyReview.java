@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.domain.phd.candidacy.activities;
 
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
+
+import org.fenixedu.bennu.core.domain.User;
 
 public class DeleteCandidacyReview extends PhdProgramCandidacyProcessActivity {
 

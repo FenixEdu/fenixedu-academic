@@ -35,6 +35,7 @@ public class StudentDataShareAuthorization extends StudentDataShareAuthorization
     public boolean isStudentDataShareAuthorization() {
         return true;
     }
+
     @Deprecated
     public boolean hasStudent() {
         return getStudent() != null;

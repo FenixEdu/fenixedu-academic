@@ -54,8 +54,8 @@ public class ReadStudentMarksListByCurricularCourse {
     private static final ReadStudentMarksListByCurricularCourse serviceInstance = new ReadStudentMarksListByCurricularCourse();
 
     @Atomic
-    public static List runReadStudentMarksListByCurricularCourse(User userView, String curricularCourseID,
-            String executionYear) throws ExcepcaoInexistente, FenixServiceException, NotAuthorizedException {
+    public static List runReadStudentMarksListByCurricularCourse(User userView, String curricularCourseID, String executionYear)
+            throws ExcepcaoInexistente, FenixServiceException, NotAuthorizedException {
         StudentListByCurricularCourseAuthorizationFilter.instance.execute(curricularCourseID);
         return serviceInstance.run(userView, curricularCourseID, executionYear);
     }

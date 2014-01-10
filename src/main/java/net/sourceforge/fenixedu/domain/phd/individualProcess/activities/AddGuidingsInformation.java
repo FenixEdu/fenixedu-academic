@@ -2,13 +2,13 @@ package net.sourceforge.fenixedu.domain.phd.individualProcess.activities;
 
 import java.util.List;
 
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdGuiderAcceptanceLetter;
+
+import org.fenixedu.bennu.core.domain.User;
 
 public class AddGuidingsInformation extends PhdIndividualProgramProcessActivity {
 

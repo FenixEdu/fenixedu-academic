@@ -1,10 +1,11 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.DomainObject;
 
@@ -50,6 +51,7 @@ public class EctsCycleGraduationGradeConversionTable extends EctsCycleGraduation
         setSchool(null);
         super.delete();
     }
+
     @Deprecated
     public boolean hasSchool() {
         return getSchool() != null;

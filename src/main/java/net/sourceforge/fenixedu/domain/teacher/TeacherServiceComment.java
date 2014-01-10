@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.teacher;
 
 import net.sourceforge.fenixedu.util.BundleUtil;
 
-import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 
@@ -16,7 +15,7 @@ public class TeacherServiceComment extends TeacherServiceComment_Base {
         setLastModifiedDate(new DateTime());
         setTeacherService(teacherService);
         setCreationDate(new DateTime());
-        setCreatedBy(((User) Authenticate.getUser()).getPerson());
+        setCreatedBy(Authenticate.getUser().getPerson());
         new TeacherServiceLog(getTeacherService(), BundleUtil.getStringFromResourceBundle(
                 "resources.TeacherCreditsSheetResources", "label.teacher.teacherServiceComment.create", content,
                 getCreationDate().toString("yyyy-MM-dd HH:mm")));
@@ -32,7 +31,7 @@ public class TeacherServiceComment extends TeacherServiceComment_Base {
     }
 
     public boolean getCanEdit() {
-        return ((User) Authenticate.getUser()).getPerson().equals(getCreatedBy());
+        return Authenticate.getUser().getPerson().equals(getCreatedBy());
     }
 
     @Atomic
@@ -44,6 +43,7 @@ public class TeacherServiceComment extends TeacherServiceComment_Base {
         setCreatedBy(null);
         super.delete();
     }
+
     @Deprecated
     public boolean hasCreatedBy() {
         return getCreatedBy() != null;

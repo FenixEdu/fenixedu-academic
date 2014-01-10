@@ -27,7 +27,9 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalCurriculumGroup
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
+
 import org.apache.commons.lang.StringUtils;
+
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 

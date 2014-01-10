@@ -4,10 +4,11 @@ import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 
 import java.util.List;
 
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
+
+import org.fenixedu.bennu.core.domain.User;
+
 import pt.ist.fenixframework.Atomic;
 
 public class ProcessSibsPaymentFile {

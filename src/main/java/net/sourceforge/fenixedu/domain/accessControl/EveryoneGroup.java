@@ -3,10 +3,10 @@ package net.sourceforge.fenixedu.domain.accessControl;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
+
+import org.fenixedu.bennu.core.domain.User;
 
 /**
  * This groups represents the group of everyone. All person belong to this group

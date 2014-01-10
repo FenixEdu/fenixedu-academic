@@ -2,8 +2,6 @@ package net.sourceforge.fenixedu.domain.credits.util;
 
 import java.io.Serializable;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
@@ -14,6 +12,9 @@ import net.sourceforge.fenixedu.domain.teacher.evaluation.FacultyEvaluationProce
 import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationMark;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationProcess;
 import net.sourceforge.fenixedu.util.BundleUtil;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.ist.fenixframework.Atomic;
 
 public class ReductionServiceBean implements Serializable {

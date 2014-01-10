@@ -21,8 +21,7 @@ public class ThesisLibraryPendingOperation extends ThesisLibraryPendingOperation
     }
 
     public ThesisLibraryPendingOperation(String thesisId, String performerId, String comment) {
-        this(FenixFramework.<Thesis> getDomainObject(thesisId), FenixFramework.<Person> getDomainObject(performerId),
-                comment);
+        this(FenixFramework.<Thesis> getDomainObject(thesisId), FenixFramework.<Person> getDomainObject(performerId), comment);
     }
 
     @Override
@@ -34,6 +33,7 @@ public class ThesisLibraryPendingOperation extends ThesisLibraryPendingOperation
     public String getLibraryReference() {
         return null;
     }
+
     @Deprecated
     public boolean hasPendingComment() {
         return getPendingComment() != null;

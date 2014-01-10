@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
-import org.apache.commons.lang.StringUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;

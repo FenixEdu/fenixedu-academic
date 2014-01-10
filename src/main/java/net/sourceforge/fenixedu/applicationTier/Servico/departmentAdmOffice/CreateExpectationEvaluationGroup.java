@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice;
 
-
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ExpectationEvaluationGroup;

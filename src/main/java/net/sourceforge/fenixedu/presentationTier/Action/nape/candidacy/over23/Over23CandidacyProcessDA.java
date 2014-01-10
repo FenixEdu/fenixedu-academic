@@ -90,7 +90,7 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
     }
 
     public ActionForward executeSendInformationToJury(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         try {
             executeActivity(getProcess(request), "SendInformationToJury", null);
         } catch (final DomainException e) {
@@ -164,7 +164,7 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
     }
 
     public ActionForward executeIntroduceCandidacyResults(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
         try {
             executeActivity(getProcess(request), "IntroduceCandidacyResults",
                     getRenderedObject("over23IndividualCandidacyResultBeans"));
@@ -184,7 +184,7 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
     }
 
     public ActionForward prepareExecutePublishCandidacyResults(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
         try {
             executeActivity(getProcess(request), "PublishCandidacyResults", null);
         } catch (final DomainException e) {

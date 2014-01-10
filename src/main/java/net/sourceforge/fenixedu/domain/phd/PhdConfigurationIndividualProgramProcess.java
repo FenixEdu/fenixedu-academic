@@ -34,6 +34,7 @@ public class PhdConfigurationIndividualProgramProcess extends PhdConfigurationIn
     public Boolean isMigratedProcess() {
         return getMigratedProcess();
     }
+
     @Deprecated
     public boolean hasIsBolonha() {
         return getIsBolonha() != null;

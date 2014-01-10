@@ -3,10 +3,10 @@ package net.sourceforge.fenixedu.domain.raides;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.SchoolLevelType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class DegreeDesignation extends DegreeDesignation_Base {
 
@@ -51,6 +51,7 @@ public class DegreeDesignation extends DegreeDesignation_Base {
         setRootDomainObject(null);
         deleteDomainObject();
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Unit> getInstitutionUnit() {
         return getInstitutionUnitSet();

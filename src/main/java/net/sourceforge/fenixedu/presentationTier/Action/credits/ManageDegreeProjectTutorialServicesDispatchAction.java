@@ -23,7 +23,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class ManageDegreeProjectTutorialServicesDispatchAction extends FenixDispatchAction {
 
     public ActionForward showProjectTutorialServiceDetails(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
 
         String professorshipID = (String) getFromRequest(request, "professorshipID");
         Professorship professorship = FenixFramework.getDomainObject(professorshipID);

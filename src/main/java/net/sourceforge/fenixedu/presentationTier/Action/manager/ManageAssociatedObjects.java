@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.Admi
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.manager.ManageAssociatedObjects.AssociatedObjectsBean;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -29,14 +28,14 @@ import pt.ist.fenixframework.Atomic;
         @Forward(name = "createDepartment", path = "/manager/createDepartment.jsp"),
         @Forward(name = "createAcademicOffice", path = "/manager/createAcademicOffice.jsp") })
 public class ManageAssociatedObjects extends FenixDispatchAction {
-    public static class AssociatedObjectsBean implements Serializable{
+    public static class AssociatedObjectsBean implements Serializable {
         private boolean active;
         private String code;
         private String name;
         private String realName;
         private String realNameEn;
         private AdministrativeOfficeType type;
-        
+
         public boolean isActive() {
             return active;
         }
@@ -102,7 +101,7 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
         request.setAttribute("bean", new AssociatedObjectsBean());
         return mapping.findForward("createDepartment");
     }
-    
+
     public ActionForward createDepartment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         AssociatedObjectsBean bean = getRenderedObject("department");
@@ -121,22 +120,22 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
         department.setRealNameEn(bean.getRealNameEn());
         department.setRootDomainObject(Bennu.getInstance());
     }
-    
+
     public ActionForward prepareAcademicOffice(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         request.setAttribute("bean", new AssociatedObjectsBean());
         return mapping.findForward("createAcademicOffice");
     }
-    
+
     public ActionForward createAcademicOffice(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         AssociatedObjectsBean bean = getRenderedObject("office");
         createAcademicOffice(bean);
         return list(mapping, form, request, response);
     }
-    
+
     @Atomic
-    private void createAcademicOffice(AssociatedObjectsBean bean){
+    private void createAcademicOffice(AssociatedObjectsBean bean) {
         AdministrativeOffice office = new AdministrativeOffice();
         office.setAdministrativeOfficeType(bean.getType());
         new AdministrativeOfficeServiceAgreementTemplate(office);

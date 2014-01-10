@@ -24,7 +24,8 @@ public class SwitchPublishedExamsFlag {
         final List<ExecutionDegree> executionDegrees = ExecutionDegree.filterByAcademicInterval(academicInterval);
         ExecutionSemester executionSemester = (ExecutionSemester) ExecutionInterval.getExecutionInterval(academicInterval);
 
-        final Boolean isToRemove = new Boolean(executionDegrees.iterator().next().getPublishedExamMapsSet().contains(executionSemester));
+        final Boolean isToRemove =
+                new Boolean(executionDegrees.iterator().next().getPublishedExamMapsSet().contains(executionSemester));
 
         for (final ExecutionDegree executionDegree : executionDegrees) {
             if (isToRemove) {

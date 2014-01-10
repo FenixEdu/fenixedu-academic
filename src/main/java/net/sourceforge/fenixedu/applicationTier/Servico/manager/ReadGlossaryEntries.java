@@ -3,10 +3,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.dataTransferObject.support.InfoGlossaryEntry;
 import net.sourceforge.fenixedu.domain.support.GlossaryEntry;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.ist.fenixframework.Atomic;
 
 public class ReadGlossaryEntries {

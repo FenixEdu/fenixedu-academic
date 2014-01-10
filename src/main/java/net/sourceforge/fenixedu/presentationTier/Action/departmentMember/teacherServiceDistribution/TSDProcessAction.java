@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CopyTSDProcess;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.CreateTSDProcess;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.DeleteTSDProcess;
-import org.apache.commons.collections.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -20,6 +19,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -299,8 +299,7 @@ public class TSDProcessAction extends FenixDispatchAction {
         return prepareForTSDProcessEdition(mapping, form, request, response);
     }
 
-    private ExecutionYear getSelectedExecutionYear(User userView, DynaActionForm dynaForm,
-            List<ExecutionYear> executionYearList) {
+    private ExecutionYear getSelectedExecutionYear(User userView, DynaActionForm dynaForm, List<ExecutionYear> executionYearList) {
         ExecutionYear selectedExecutionYear = getDomainObject(dynaForm, "executionYear");
 
         if (selectedExecutionYear == null) {

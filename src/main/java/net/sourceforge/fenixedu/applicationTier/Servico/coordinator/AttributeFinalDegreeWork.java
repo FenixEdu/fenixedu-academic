@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
-
 import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;

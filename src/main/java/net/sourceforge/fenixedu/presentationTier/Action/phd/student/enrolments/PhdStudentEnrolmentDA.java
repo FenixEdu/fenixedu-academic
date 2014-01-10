@@ -134,7 +134,7 @@ public class PhdStudentEnrolmentDA extends BolonhaStudentEnrollmentDispatchActio
 
     @Override
     public ActionForward enrolInOptionalCurricularCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         final BolonhaStudentOptionalEnrollmentBean bean = getBolonhaStudentOptionalEnrollmentBeanFromViewState();
         addCompetenceCoursesAvalailableToEnrol(request, bean.getStudentCurricularPlan());
@@ -149,7 +149,7 @@ public class PhdStudentEnrolmentDA extends BolonhaStudentEnrollmentDispatchActio
 
     @Override
     public ActionForward enrolInCycleCourseGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         throw new RuntimeException("error.PhdStudentEnrolmentBean.unsupported.operation");
     }
 

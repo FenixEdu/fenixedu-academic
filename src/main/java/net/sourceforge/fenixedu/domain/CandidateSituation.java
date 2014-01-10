@@ -2,10 +2,10 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Date;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class CandidateSituation extends CandidateSituation_Base {
 

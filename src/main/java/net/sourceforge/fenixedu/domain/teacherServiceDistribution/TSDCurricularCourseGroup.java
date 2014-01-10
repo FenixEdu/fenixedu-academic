@@ -113,6 +113,7 @@ public class TSDCurricularCourseGroup extends TSDCurricularCourseGroup_Base {
         }
 
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularCourse> getTSDCurricularCourses() {
         return getTSDCurricularCoursesSet();

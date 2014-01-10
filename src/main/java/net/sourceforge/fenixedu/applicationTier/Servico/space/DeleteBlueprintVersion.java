@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.space;
 
-
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Blueprint;

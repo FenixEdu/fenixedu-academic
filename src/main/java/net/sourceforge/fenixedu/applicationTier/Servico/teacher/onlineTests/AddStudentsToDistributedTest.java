@@ -79,7 +79,8 @@ public class AddStudentsToDistributedTest {
                     if (question == null) {
                         throw new InvalidArgumentsServiceException();
                     }
-                    if (question.getSubQuestions().size() >= 1 && question.getSubQuestions().iterator().next().getItemId() != null) {
+                    if (question.getSubQuestions().size() >= 1
+                            && question.getSubQuestions().iterator().next().getItemId() != null) {
                         studentTestQuestion.setItemId(question.getSubQuestions().iterator().next().getItemId());
                     }
                     studentTestQuestion.setQuestion(question);

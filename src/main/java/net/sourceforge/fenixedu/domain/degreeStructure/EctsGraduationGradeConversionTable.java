@@ -14,6 +14,7 @@ public abstract class EctsGraduationGradeConversionTable extends EctsGraduationG
         setCycle(cycle);
         setPercentages(percentages);
     }
+
     @Deprecated
     public boolean hasPercentages() {
         return getPercentages() != null;

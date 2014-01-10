@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.util.email;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.util.Email;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class MessageTransportResult extends MessageTransportResult_Base {
 

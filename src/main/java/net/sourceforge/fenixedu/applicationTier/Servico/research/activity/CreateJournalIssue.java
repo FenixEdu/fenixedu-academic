@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.activity;
 
-
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.CreateIssueBean;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;

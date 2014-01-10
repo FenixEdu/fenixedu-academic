@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.SiteManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Item;

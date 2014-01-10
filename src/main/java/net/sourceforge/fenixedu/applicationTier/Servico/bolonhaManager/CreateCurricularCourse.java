@@ -24,8 +24,7 @@ public class CreateCurricularCourse {
         ExecutionSemester beginExecutionPeriod = readBeginExecutionPeriod(curricularCourseArgs);
         ExecutionSemester endExecutionPeriod = readEndExecutionPeriod(curricularCourseArgs);
 
-        final CompetenceCourse competenceCourse =
-                FenixFramework.getDomainObject(curricularCourseArgs.getCompetenceCourseID());
+        final CompetenceCourse competenceCourse = FenixFramework.getDomainObject(curricularCourseArgs.getCompetenceCourseID());
         if (competenceCourse == null) {
             throw new FenixServiceException("error.noCompetenceCourse");
         }

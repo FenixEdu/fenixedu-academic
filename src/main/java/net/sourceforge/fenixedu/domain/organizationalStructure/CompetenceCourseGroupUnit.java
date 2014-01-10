@@ -187,6 +187,7 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
             }
         }
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest> getCompetenceCourseInformationChangeRequests() {
         return getCompetenceCourseInformationChangeRequestsSet();

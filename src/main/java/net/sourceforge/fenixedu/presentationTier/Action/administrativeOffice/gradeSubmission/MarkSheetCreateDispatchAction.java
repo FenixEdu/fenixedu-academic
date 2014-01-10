@@ -123,7 +123,7 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
     }
 
     public ActionForward createMarkSheetStepTwo(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         MarkSheetManagementCreateBean createBean =
                 (MarkSheetManagementCreateBean) RenderUtils.getViewState("edit-invisible").getMetaObject().getObject();
@@ -146,7 +146,7 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
     }
 
     public ActionForward createMarkSheetStepTwoInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         /*
          * - This method is used when a validation error occurs. Instead of
          * creating a new bean we use the existing one. - If we dont't use this

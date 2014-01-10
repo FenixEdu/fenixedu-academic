@@ -109,8 +109,7 @@ public class ListVigilanciesForEvaluationDispatchAction extends FenixDispatchAct
             HttpServletResponse response) throws FenixServiceException {
 
         IViewState viewState = RenderUtils.getViewState("variantBean");
-        WrittenEvaluation evaluation =
-                (WrittenEvaluation) FenixFramework.getDomainObject(request.getParameter("evaluationOID"));
+        WrittenEvaluation evaluation = (WrittenEvaluation) FenixFramework.getDomainObject(request.getParameter("evaluationOID"));
         if (viewState != null) {
             List<Vigilancy> vigilancies = evaluation.getActiveOtherVigilancies();
             VariantBean bean = (VariantBean) viewState.getMetaObject().getObject();

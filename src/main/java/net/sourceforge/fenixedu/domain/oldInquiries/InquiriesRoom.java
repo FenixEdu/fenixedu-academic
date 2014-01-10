@@ -4,11 +4,11 @@
  */
 package net.sourceforge.fenixedu.domain.oldInquiries;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InfoInquiriesRoom;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author Jo�o Fialho & Rita Ferreira
@@ -39,6 +39,7 @@ public class InquiriesRoom extends InquiriesRoom_Base {
         this.setSpaceAdequation(infoInquiriesRoom.getSpaceAdequation());
 
     }
+
     @Deprecated
     public boolean hasInquiriesCourse() {
         return getInquiriesCourse() != null;

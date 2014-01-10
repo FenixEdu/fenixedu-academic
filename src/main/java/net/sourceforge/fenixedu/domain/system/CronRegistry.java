@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.domain.system;
 
 import java.util.Set;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class CronRegistry extends CronRegistry_Base {
 

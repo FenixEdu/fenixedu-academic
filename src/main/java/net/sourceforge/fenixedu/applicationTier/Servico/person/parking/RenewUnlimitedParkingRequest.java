@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.person.parking;
 
-
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest;
 import pt.ist.fenixframework.Atomic;
 

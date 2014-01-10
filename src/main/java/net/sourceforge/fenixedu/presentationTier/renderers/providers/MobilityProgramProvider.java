@@ -5,13 +5,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
-import org.fenixedu.commons.StringNormalizer;
-
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
 import net.sourceforge.fenixedu.domain.institutionalRelations.academic.Program;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
+import org.fenixedu.commons.StringNormalizer;
 
 public class MobilityProgramProvider implements AutoCompleteProvider<MobilityProgram> {
 

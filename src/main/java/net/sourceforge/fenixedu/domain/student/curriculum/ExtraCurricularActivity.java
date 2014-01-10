@@ -111,6 +111,7 @@ public class ExtraCurricularActivity extends ExtraCurricularActivity_Base {
         setRootDomainObject(null);
         deleteDomainObject();
     }
+
     @Deprecated
     public boolean hasStudent() {
         return getStudent() != null;

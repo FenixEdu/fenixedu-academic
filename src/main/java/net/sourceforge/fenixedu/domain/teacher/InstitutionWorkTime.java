@@ -2,9 +2,6 @@ package net.sourceforge.fenixedu.domain.teacher;
 
 import java.util.Date;
 
-import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.security.Authenticate;
-
 import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InstitutionWorkTimeDTO;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -13,6 +10,9 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.CalendarUtil;
 import net.sourceforge.fenixedu.util.WeekDay;
 import net.sourceforge.fenixedu.util.date.TimePeriod;
+
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import pt.ist.fenixframework.Atomic;
 
 public class InstitutionWorkTime extends InstitutionWorkTime_Base {
@@ -47,7 +47,7 @@ public class InstitutionWorkTime extends InstitutionWorkTime_Base {
     }
 
     private RoleType getUserRoleType() {
-        Person person = ((User) Authenticate.getUser()).getPerson();
+        Person person = Authenticate.getUser().getPerson();
         if (person.hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
             return RoleType.SCIENTIFIC_COUNCIL;
         } else if (person.hasRole(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)) {

@@ -22,8 +22,8 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import org.apache.commons.lang.StringUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;

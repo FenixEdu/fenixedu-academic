@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.domain.phd.individualProcess.activities;
 
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlertBean;
+
+import org.fenixedu.bennu.core.domain.User;
 
 public class AddCustomAlert extends PhdIndividualProgramProcessActivity {
 

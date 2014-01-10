@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ClosePunctualRoomsOccupationRequest;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.RoomsReserveBean;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
@@ -30,6 +29,7 @@ public class CreateNewRoomsReserveComment {
             }
         }
     }
+
     // Service Invokers migrated from Berserk
 
     private static final CreateNewRoomsReserveComment serviceInstance = new CreateNewRoomsReserveComment();

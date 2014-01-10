@@ -167,8 +167,7 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
         request.setAttribute("executionCourseName", executionCourseName);
 
         InfoExecutionPeriod infoExecutionPeriod =
-                InfoExecutionPeriod
-                        .newInfoFromDomain(FenixFramework.<ExecutionSemester> getDomainObject(executionPeriodOID));
+                InfoExecutionPeriod.newInfoFromDomain(FenixFramework.<ExecutionSemester> getDomainObject(executionPeriodOID));
 
         if ((executionCourseName != null) && (executionCourseName.length() == 0)) {
             executionCourseName = null;

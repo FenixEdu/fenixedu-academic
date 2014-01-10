@@ -10,9 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.DeployNotifier;
+
 import org.fenixedu.bennu.core.domain.Bennu;
 
-import net.sourceforge.fenixedu.domain.DeployNotifier;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @WebServlet(urlPatterns = "/ajax/DeployNotifierServlet")

@@ -2,11 +2,11 @@ package net.sourceforge.fenixedu.domain.phd.thesis.activities;
 
 import java.util.List;
 
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
+
+import org.fenixedu.bennu.core.domain.User;
 
 public class UploadDocuments extends PhdThesisActivity {
 

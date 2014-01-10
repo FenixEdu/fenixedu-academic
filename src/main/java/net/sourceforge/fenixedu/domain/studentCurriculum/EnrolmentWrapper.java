@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 abstract public class EnrolmentWrapper extends EnrolmentWrapper_Base {
 
@@ -46,6 +46,7 @@ abstract public class EnrolmentWrapper extends EnrolmentWrapper_Base {
             throw new DomainException("error.EnrolmentWrapper.unknown.enrolment");
         }
     }
+
     @Deprecated
     public boolean hasBennu() {
         return getRootDomainObject() != null;

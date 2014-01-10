@@ -2,9 +2,10 @@ package net.sourceforge.fenixedu.domain.parking;
 
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.dataTransferObject.parking.VehicleBean;
+
 import org.fenixedu.bennu.core.domain.Bennu;
 
-import net.sourceforge.fenixedu.dataTransferObject.parking.VehicleBean;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class Vehicle extends Vehicle_Base {
@@ -190,6 +191,7 @@ public class Vehicle extends Vehicle_Base {
         setRootDomainObject(null);
         deleteDomainObject();
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.parking.NewParkingDocument> getNewParkingDocuments() {
         return getNewParkingDocumentsSet();

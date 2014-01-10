@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities;
 
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -17,6 +15,8 @@ import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeeting;
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingProcessStateType;
+
+import org.fenixedu.bennu.core.domain.User;
 
 public class ScheduleFirstThesisMeeting extends PhdMeetingSchedulingActivity {
 

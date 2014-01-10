@@ -18,8 +18,10 @@ public class AlumniManagement implements IAlumniManagement {
     private static final String storedUsername;
 
     static {
-        storedUsername = FenixConfigurationManager.getConfiguration().getWebServicesPersonManagementgetPersonInformationUsername();
-        storedPassword = FenixConfigurationManager.getConfiguration().getWebServicesPersonManagementgetPersonInformationPassword();
+        storedUsername =
+                FenixConfigurationManager.getConfiguration().getWebServicesPersonManagementgetPersonInformationUsername();
+        storedPassword =
+                FenixConfigurationManager.getConfiguration().getWebServicesPersonManagementgetPersonInformationPassword();
     }
 
     @Override

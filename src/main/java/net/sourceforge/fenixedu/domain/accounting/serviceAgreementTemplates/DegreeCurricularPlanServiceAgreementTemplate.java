@@ -3,8 +3,6 @@ package net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -15,6 +13,8 @@ import net.sourceforge.fenixedu.domain.accounting.paymentPlans.FullGratuityPayme
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class DegreeCurricularPlanServiceAgreementTemplate extends DegreeCurricularPlanServiceAgreementTemplate_Base {
 

@@ -255,13 +255,15 @@ public class CreateExecutionDegreesForExecutionYearBean extends FenixBackingBean
     public String createExecutionDegrees() throws FenixActionException {
 
         Calendar lessonSeason1BeginDate = Calendar.getInstance();
-        lessonSeason1BeginDate.set(getLessonSeason1BeginYear(), getLessonSeason1BeginMonth(), getLessonSeason1BeginDay(), 0, 0, 0);
+        lessonSeason1BeginDate
+                .set(getLessonSeason1BeginYear(), getLessonSeason1BeginMonth(), getLessonSeason1BeginDay(), 0, 0, 0);
 
         Calendar lessonSeason1EndDate = Calendar.getInstance();
         lessonSeason1EndDate.set(getLessonSeason1EndYear(), getLessonSeason1EndMonth(), getLessonSeason1EndDay(), 23, 59, 59);
 
         Calendar lessonSeason2BeginDate = Calendar.getInstance();
-        lessonSeason2BeginDate.set(getLessonSeason2BeginYear(), getLessonSeason2BeginMonth(), getLessonSeason2BeginDay(), 0, 0, 0);
+        lessonSeason2BeginDate
+                .set(getLessonSeason2BeginYear(), getLessonSeason2BeginMonth(), getLessonSeason2BeginDay(), 0, 0, 0);
 
         Calendar lessonSeason2EndDate = Calendar.getInstance();
         lessonSeason2EndDate.set(getLessonSeason2EndYear(), getLessonSeason2EndMonth(), getLessonSeason2EndDay(), 23, 59, 59);
@@ -271,7 +273,8 @@ public class CreateExecutionDegreesForExecutionYearBean extends FenixBackingBean
                 getLessonSeason2BeginDayPart2(), 0, 0, 0);
 
         Calendar lessonSeason2EndDatePart2 = Calendar.getInstance();
-        lessonSeason2EndDatePart2.set(getLessonSeason2EndYear(), getLessonSeason2EndMonthPart2(), getLessonSeason2EndDayPart2(), 23, 59, 59);
+        lessonSeason2EndDatePart2.set(getLessonSeason2EndYear(), getLessonSeason2EndMonthPart2(), getLessonSeason2EndDayPart2(),
+                23, 59, 59);
 
         Calendar examsSeason1BeginDate = Calendar.getInstance();
         examsSeason1BeginDate.set(getExamsSeason1BeginYear(), getExamsSeason1BeginMonth(), getExamsSeason1BeginDay(), 0, 0, 0);

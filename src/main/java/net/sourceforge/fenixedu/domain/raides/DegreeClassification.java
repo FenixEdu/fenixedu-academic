@@ -39,6 +39,7 @@ public class DegreeClassification extends DegreeClassification_Base {
         }
         return null;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.raides.DegreeDesignation> getDegreeDesignations() {
         return getDegreeDesignationsSet();

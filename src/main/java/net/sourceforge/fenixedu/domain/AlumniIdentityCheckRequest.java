@@ -90,7 +90,7 @@ public class AlumniIdentityCheckRequest extends AlumniIdentityCheckRequest_Base 
         AlumniIdentityCheckRequest request;
         Iterator<AlumniIdentityCheckRequest> iter = Bennu.getInstance().getAlumniIdentityRequestSet().iterator();
         while (iter.hasNext()) {
-            request = (AlumniIdentityCheckRequest) iter.next();
+            request = iter.next();
             if (request.getApproved() != null) {
                 pendingRequests.add(request);
             }

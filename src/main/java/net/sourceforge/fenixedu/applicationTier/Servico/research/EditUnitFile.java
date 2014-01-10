@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research;
 
-
 import net.sourceforge.fenixedu.domain.UnitFile;
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;

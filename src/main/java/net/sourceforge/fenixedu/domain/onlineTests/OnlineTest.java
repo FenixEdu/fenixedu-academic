@@ -3,12 +3,12 @@ package net.sourceforge.fenixedu.domain.onlineTests;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.EvaluationType;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class OnlineTest extends OnlineTest_Base {
 

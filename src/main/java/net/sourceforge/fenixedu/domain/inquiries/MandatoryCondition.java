@@ -17,6 +17,7 @@ public class MandatoryCondition extends MandatoryCondition_Base {
         }
         return result;
     }
+
     @Deprecated
     public boolean hasMinimumNumberOfChars() {
         return getMinimumNumberOfChars() != null;

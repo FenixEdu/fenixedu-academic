@@ -230,6 +230,7 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
         return getBegin() != null;
     }
 
+    @Override
     @Deprecated
     public boolean hasContextCourseGroup() {
         return getContextCourseGroup() != null;

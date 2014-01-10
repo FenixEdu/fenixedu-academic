@@ -4,12 +4,11 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.TreeSet;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.commons.StringNormalizer;
-
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.StringNormalizer;
 
 //TODO: Refactor remaining object to use district subdivision instead of strings
 public class DistrictSubdivision extends DistrictSubdivision_Base {

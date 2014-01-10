@@ -70,7 +70,8 @@ public class ReadStudentsByIdArray {
         for (LabelValueBean lvb : (ArrayList<LabelValueBean>) lavelValueBeanList) {
             if (!lvb.getLabel().equals(" (Ficha Fechada)")) {
                 Integer number = Integer.parseInt(lvb.getValue());
-                studentList.add(InfoStudent.newInfoFromDomain(Registration.readAllStudentsBetweenNumbers(number, number).iterator().next()));
+                studentList.add(InfoStudent.newInfoFromDomain(Registration.readAllStudentsBetweenNumbers(number, number)
+                        .iterator().next()));
             }
         }
 

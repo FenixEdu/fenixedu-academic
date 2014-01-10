@@ -3,9 +3,9 @@
  */
 package net.sourceforge.fenixedu.domain.credits;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.credits.event.CreditsEvent;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author jpvl

@@ -5,8 +5,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.dataTransferObject.commons.CurricularCourseByExecutionSemesterBean;
 import net.sourceforge.fenixedu.domain.AcademicProgram;
@@ -24,6 +22,8 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProce
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.fenixedu.bennu.core.domain.User;
 
 public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCandidacyProcess_Base {
 
@@ -141,8 +141,8 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
         }
 
         @Override
-        protected StandaloneIndividualCandidacyProcess executeActivity(StandaloneIndividualCandidacyProcess dummy,
-                User userView, Object object) {
+        protected StandaloneIndividualCandidacyProcess executeActivity(StandaloneIndividualCandidacyProcess dummy, User userView,
+                Object object) {
             return new StandaloneIndividualCandidacyProcess((StandaloneIndividualCandidacyProcessBean) object);
         }
     }

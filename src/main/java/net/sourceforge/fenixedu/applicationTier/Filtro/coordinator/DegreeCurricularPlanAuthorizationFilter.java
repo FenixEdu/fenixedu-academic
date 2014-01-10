@@ -4,13 +4,13 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro.coordinator;
 
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.framework.DomainObjectAuthorizationFilter;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+
+import org.fenixedu.bennu.core.domain.User;
 
 public class DegreeCurricularPlanAuthorizationFilter extends DomainObjectAuthorizationFilter {
 

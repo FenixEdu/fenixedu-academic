@@ -38,6 +38,7 @@ public class InternshipCandidacySession extends InternshipCandidacySession_Base 
         }
         return current;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.internship.InternshipCandidacy> getInternshipCandidacy() {
         return getInternshipCandidacySet();

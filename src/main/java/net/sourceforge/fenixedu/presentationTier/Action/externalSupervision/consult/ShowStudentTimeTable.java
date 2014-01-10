@@ -27,7 +27,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class ShowStudentTimeTable extends ViewStudentTimeTable {
 
     public ActionForward prepareForSupervisor(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException,  FenixServiceException {
+            HttpServletResponse response) throws FenixActionException, FenixServiceException {
 
         final String personId = request.getParameter("personId");
         Person person = FenixFramework.getDomainObject(personId);

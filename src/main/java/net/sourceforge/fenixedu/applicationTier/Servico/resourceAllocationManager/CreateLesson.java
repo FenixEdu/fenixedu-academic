@@ -33,8 +33,7 @@ public class CreateLesson {
         check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
 
         final ExecutionSemester executionSemester =
-                FenixFramework.getDomainObject(infoShift.getInfoDisciplinaExecucao().getInfoExecutionPeriod()
-                        .getExternalId());
+                FenixFramework.getDomainObject(infoShift.getInfoDisciplinaExecucao().getInfoExecutionPeriod().getExternalId());
 
         final Shift shift = FenixFramework.getDomainObject(infoShift.getExternalId());
 

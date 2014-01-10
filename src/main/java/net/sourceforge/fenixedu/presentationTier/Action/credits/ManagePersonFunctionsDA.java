@@ -40,8 +40,7 @@ public class ManagePersonFunctionsDA extends FenixDispatchAction {
             HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception {
         PersonFunctionBean personFunctionBean = getRenderedObject();
         if (personFunctionBean == null) {
-            PersonFunction personFunction =
-                    FenixFramework.getDomainObject((String) getFromRequest(request, "personFunctionOid"));
+            PersonFunction personFunction = FenixFramework.getDomainObject((String) getFromRequest(request, "personFunctionOid"));
             personFunctionBean = new PersonFunctionBean(personFunction);
         }
         request.setAttribute("personFunctionBean", personFunctionBean);
@@ -62,8 +61,7 @@ public class ManagePersonFunctionsDA extends FenixDispatchAction {
 
     public ActionForward deletePersonFunctionShared(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception {
-        PersonFunction personFunction =
-                FenixFramework.getDomainObject((String) getFromRequest(request, "personFunctionOid"));
+        PersonFunction personFunction = FenixFramework.getDomainObject((String) getFromRequest(request, "personFunctionOid"));
         PersonFunctionBean personFunctionBean = new PersonFunctionBean(personFunction);
         request.setAttribute("teacherOid", personFunction.getPerson().getTeacher().getExternalId());
         request.setAttribute("executionYearOid", getFromRequest(request, "executionYearOid"));

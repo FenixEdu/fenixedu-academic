@@ -44,8 +44,7 @@ public class ChangeGuideSituation {
 
     @Atomic
     public static void run(Integer guideNumber, Integer guideYear, Integer guideVersion, Date paymentDate, String remarks,
-            String situationOfGuideString, String paymentType, User userView) throws ExcepcaoInexistente,
-            FenixServiceException {
+            String situationOfGuideString, String paymentType, User userView) throws ExcepcaoInexistente, FenixServiceException {
         check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
 
         Guide guide = Guide.readByNumberAndYearAndVersion(guideNumber, guideYear, guideVersion);

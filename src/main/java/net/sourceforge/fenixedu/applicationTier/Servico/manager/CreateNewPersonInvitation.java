@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.dataTransferObject.person.InvitedPersonBean;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Invitation;

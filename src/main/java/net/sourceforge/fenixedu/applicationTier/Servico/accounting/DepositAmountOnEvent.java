@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.accounting;
 
-
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.DepositAmountBean;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;

@@ -3,10 +3,10 @@ package net.sourceforge.fenixedu.domain.person;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.StringNormalizer;
-
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class PersonNamePart extends PersonNamePart_Base {
 

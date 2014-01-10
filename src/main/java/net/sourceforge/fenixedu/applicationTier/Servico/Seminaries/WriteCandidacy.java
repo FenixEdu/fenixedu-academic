@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.SeminaryCoordinatorOrStudentFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;

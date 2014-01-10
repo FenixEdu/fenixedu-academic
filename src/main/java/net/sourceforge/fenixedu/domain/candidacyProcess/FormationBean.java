@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.dataTransferObject.alumni.formation.IFormation;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
+
 import org.apache.commons.lang.StringUtils;
 
 public class FormationBean implements Serializable, IFormation {

@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice;
 
-
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import pt.ist.fenixframework.Atomic;
 

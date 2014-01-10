@@ -181,8 +181,7 @@ public abstract class RequestUtils {
                 request.setAttribute("degreeInitials", executionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla());
             }
             request.setAttribute("degreeCurricularPlanID", executionDegree.getInfoDegreeCurricularPlan().getExternalId());
-            request.setAttribute("executionDegree",
-                    FenixFramework.getDomainObject(executionDegree.getExternalId()));
+            request.setAttribute("executionDegree", FenixFramework.getDomainObject(executionDegree.getExternalId()));
         }
 
     }

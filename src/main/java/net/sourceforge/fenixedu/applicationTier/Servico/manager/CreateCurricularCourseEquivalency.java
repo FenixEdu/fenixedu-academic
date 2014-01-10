@@ -24,8 +24,7 @@ public class CreateCurricularCourseEquivalency {
             final String oldCurricularCourseID) {
         final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
         final CurricularCourse curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(curricularCourseID);
-        final CurricularCourse oldCurricularCourse =
-                (CurricularCourse) FenixFramework.getDomainObject(oldCurricularCourseID);
+        final CurricularCourse oldCurricularCourse = (CurricularCourse) FenixFramework.getDomainObject(oldCurricularCourseID);
 
         new CurricularCourseEquivalence(degreeCurricularPlan, curricularCourse, Collections.singleton(oldCurricularCourse));
     }

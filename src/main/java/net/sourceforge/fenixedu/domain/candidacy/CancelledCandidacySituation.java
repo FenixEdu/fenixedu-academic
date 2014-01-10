@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.domain.candidacy;
 
-import org.fenixedu.bennu.core.security.Authenticate;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.security.Authenticate;
 
 public class CancelledCandidacySituation extends CancelledCandidacySituation_Base {
 

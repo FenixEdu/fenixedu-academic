@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class InquiryGlobalComment extends InquiryGlobalComment_Base {
 
@@ -36,6 +36,7 @@ public class InquiryGlobalComment extends InquiryGlobalComment_Base {
         setRootDomainObject(null);
         super.deleteDomainObject();
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment> getInquiryResultComments() {
         return getInquiryResultCommentsSet();

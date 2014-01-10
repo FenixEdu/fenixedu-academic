@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.domain.phd.individualProcess.activities;
 
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.guidance.PhdGuidanceDocument;
+
+import org.fenixedu.bennu.core.domain.User;
 
 public class UploadGuidanceDocument extends PhdIndividualProgramProcessActivity {
 

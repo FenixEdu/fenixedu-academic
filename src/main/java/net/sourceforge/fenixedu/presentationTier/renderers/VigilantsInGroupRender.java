@@ -187,7 +187,8 @@ public class VigilantsInGroupRender extends InputRenderer {
 
         @Override
         protected int getNumberOfColumns() {
-            return (this.metaObjects == null || this.metaObjects.size() == 0) ? 0 : this.metaObjects.iterator().next().getSlots().size()
+            return (this.metaObjects == null || this.metaObjects.size() == 0) ? 0 : this.metaObjects.iterator().next().getSlots()
+                    .size()
                     + groups.size();
         }
 

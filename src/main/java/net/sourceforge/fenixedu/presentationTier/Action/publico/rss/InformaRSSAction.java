@@ -37,7 +37,7 @@ public abstract class InformaRSSAction extends FenixAction {
         } else {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             response.getWriter().write(HttpStatus.getStatusText(HttpStatus.SC_NOT_FOUND));
-            response.getWriter().close();            
+            response.getWriter().close();
         }
         return null;
     }

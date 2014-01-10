@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student.administrativeOfficeServices;
 
-
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.ExecutionDegreeBean;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.IngressionInformationBean;

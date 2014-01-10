@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.gesdis;
 
-
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;

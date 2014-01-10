@@ -174,6 +174,7 @@ public abstract class PartyContactValidation extends PartyContactValidation_Base
             triggerValidationProcess();
         }
     }
+
     @Deprecated
     public boolean hasBennu() {
         return getRootDomainObject() != null;

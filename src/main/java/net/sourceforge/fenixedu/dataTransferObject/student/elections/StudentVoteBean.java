@@ -7,16 +7,15 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.security.Authenticate;
-
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.elections.DelegateElectionPeriod;
 import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 public class StudentVoteBean implements Serializable {
 

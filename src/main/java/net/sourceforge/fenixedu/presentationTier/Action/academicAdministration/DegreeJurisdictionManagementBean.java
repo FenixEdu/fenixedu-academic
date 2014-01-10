@@ -6,11 +6,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class DegreeJurisdictionManagementBean implements Serializable {
     private static final long serialVersionUID = -3115602761325408245L;

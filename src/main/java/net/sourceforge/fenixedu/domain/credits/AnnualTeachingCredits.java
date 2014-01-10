@@ -156,6 +156,7 @@ public class AnnualTeachingCredits extends AnnualTeachingCredits_Base {
         }
         return lastAnnualTeachingCreditsDocument;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.credits.AnnualTeachingCreditsDocument> getAnnualTeachingCreditsDocument() {
         return getAnnualTeachingCreditsDocumentSet();

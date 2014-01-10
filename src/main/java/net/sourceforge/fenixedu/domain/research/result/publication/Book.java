@@ -245,6 +245,7 @@ public class Book extends Book_Base {
     public Boolean getIsPossibleSelectPersonRole() {
         return true;
     }
+
     @Deprecated
     public boolean hasEdition() {
         return getEdition() != null;

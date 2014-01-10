@@ -28,12 +28,14 @@ public class EditUnitAnnouncementBoard extends CreateUnitAnnouncementBoard {
         board.setWriters(this.buildGroup(parameters.writersGroupType, board.getParty()));
         board.setManagers(this.buildGroup(parameters.managementGroupType, board.getParty()));
     }
+
     // Service Invokers migrated from Berserk
 
     private static final EditUnitAnnouncementBoard serviceInstance = new EditUnitAnnouncementBoard();
 
     @Atomic
-    public static void runEditUnitAnnouncementBoard(UnitAnnouncementBoard board, UnitAnnouncementBoardParameters parameters) throws FenixServiceException  {
+    public static void runEditUnitAnnouncementBoard(UnitAnnouncementBoard board, UnitAnnouncementBoardParameters parameters)
+            throws FenixServiceException {
         serviceInstance.run(board, parameters);
     }
 

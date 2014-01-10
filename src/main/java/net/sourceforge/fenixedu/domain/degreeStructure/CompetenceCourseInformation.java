@@ -8,8 +8,6 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -24,6 +22,8 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.CompetenceCourseLoadBean;
 import net.sourceforge.fenixedu.util.StringFormatter;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * Represents a set of attributes that defines a CompetenceCourse in a given

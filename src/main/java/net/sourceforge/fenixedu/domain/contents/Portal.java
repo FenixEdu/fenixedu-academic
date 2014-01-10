@@ -1,8 +1,9 @@
 package net.sourceforge.fenixedu.domain.contents;
 
+import net.sourceforge.fenixedu.domain.Site;
+
 import org.fenixedu.bennu.core.domain.Bennu;
 
-import net.sourceforge.fenixedu.domain.Site;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.DomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;

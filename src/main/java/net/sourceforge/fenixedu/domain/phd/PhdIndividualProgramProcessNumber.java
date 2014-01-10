@@ -5,10 +5,10 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class PhdIndividualProgramProcessNumber extends PhdIndividualProgramProcessNumber_Base implements
         Comparable<PhdIndividualProgramProcessNumber> {

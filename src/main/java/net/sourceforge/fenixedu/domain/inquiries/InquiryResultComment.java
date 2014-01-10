@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.Person;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class InquiryResultComment extends InquiryResultComment_Base {
 
@@ -35,6 +35,7 @@ public class InquiryResultComment extends InquiryResultComment_Base {
         setRootDomainObject(null);
         super.deleteDomainObject();
     }
+
     @Deprecated
     public boolean hasInquiryResult() {
         return getInquiryResult() != null;

@@ -15,8 +15,10 @@ public class RetrieveCandidacySummaryFile implements IRetrieveCandidacySummaryFi
     private static final String storedUsername;
 
     static {
-        storedUsername = FenixConfigurationManager.getConfiguration().getWebServicesPersonManagementGetPersonInformationUsername();
-        storedPassword = FenixConfigurationManager.getConfiguration().getWebServicesPersonManagementGetPersonInformationPassword();
+        storedUsername =
+                FenixConfigurationManager.getConfiguration().getWebServicesPersonManagementGetPersonInformationUsername();
+        storedPassword =
+                FenixConfigurationManager.getConfiguration().getWebServicesPersonManagementGetPersonInformationPassword();
     }
 
     @Override

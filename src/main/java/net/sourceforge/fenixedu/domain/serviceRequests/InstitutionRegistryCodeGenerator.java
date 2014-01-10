@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class InstitutionRegistryCodeGenerator extends InstitutionRegistryCodeGenerator_Base {
     public InstitutionRegistryCodeGenerator() {
@@ -38,6 +38,7 @@ public class InstitutionRegistryCodeGenerator extends InstitutionRegistryCodeGen
     public RegistryCode createRegistryFor(IDiplomaRequest request) {
         return new RegistryCode(this, request);
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.RegistryCode> getRegistryCode() {
         return getRegistryCodeSet();

@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
-
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;

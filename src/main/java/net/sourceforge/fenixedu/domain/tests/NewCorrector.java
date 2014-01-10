@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.domain.tests;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.tests.predicates.Predicate;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class NewCorrector extends NewCorrector_Base implements Positionable {
 

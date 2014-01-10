@@ -3,8 +3,6 @@ package net.sourceforge.fenixedu.domain.accessControl.groups;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.accessControl.DomainBackedGroup;
@@ -13,6 +11,8 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class InternalOrExternalTeacherGroup extends DomainBackedGroup<Person> {
 

@@ -4,8 +4,8 @@ import java.util.Comparator;
 
 import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniJobBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import org.apache.commons.lang.StringUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;

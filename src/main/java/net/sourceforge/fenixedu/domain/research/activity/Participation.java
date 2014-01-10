@@ -3,10 +3,10 @@ package net.sourceforge.fenixedu.domain.research.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public abstract class Participation extends Participation_Base {
 

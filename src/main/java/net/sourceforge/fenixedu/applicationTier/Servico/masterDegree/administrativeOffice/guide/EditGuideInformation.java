@@ -245,8 +245,7 @@ public class EditGuideInformation {
         Person person = Person.readPersonByUsername(infoGuide.getInfoPerson().getUsername());
         Party contributor = Party.readByContributorNumber(infoGuide.getInfoContributor().getContributorNumber());
 
-        ExecutionDegree executionDegree =
-                FenixFramework.getDomainObject(infoGuide.getInfoExecutionDegree().getExternalId());
+        ExecutionDegree executionDegree = FenixFramework.getDomainObject(infoGuide.getInfoExecutionDegree().getExternalId());
         Guide guide = new Guide();
 
         // Set the fields

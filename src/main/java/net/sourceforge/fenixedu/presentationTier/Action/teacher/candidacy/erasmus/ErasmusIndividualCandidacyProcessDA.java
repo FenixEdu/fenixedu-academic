@@ -11,10 +11,9 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProce
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
-import org.apache.commons.lang.StringUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -60,7 +59,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
     }
 
     public ActionForward executeSetCoordinatorValidation(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
         try {
             MobilityIndividualApplicationProcessBean bean = getIndividualCandidacyProcessBean();
 

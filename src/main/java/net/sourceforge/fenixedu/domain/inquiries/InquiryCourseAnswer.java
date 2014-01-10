@@ -60,6 +60,7 @@ public class InquiryCourseAnswer extends InquiryCourseAnswer_Base {
         final int numberOfEnrolments = studentCurricularPlan.getEnrolments(inquiryRegistry.getCurricularCourse()).size();
         return numberOfEnrolments;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Shift> getEnrolledShifts() {
         return getEnrolledShiftsSet();

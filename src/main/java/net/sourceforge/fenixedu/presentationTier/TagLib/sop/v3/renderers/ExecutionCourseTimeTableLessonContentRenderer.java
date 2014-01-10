@@ -82,8 +82,7 @@ public class ExecutionCourseTimeTableLessonContentRenderer extends LessonSlotCon
                 strBuffer.append(allocatableSpace.getNome()).append("&amp;objectCode=");
                 strBuffer.append(executionSemester.getExternalId());
                 strBuffer.append("&amp;executionPeriodOID=");
-                strBuffer.append(executionSemester.getExternalId())
-                        .append("'>");
+                strBuffer.append(executionSemester.getExternalId()).append("'>");
                 strBuffer.append(allocatableSpace.getNome()).append("</a>");
             }
 

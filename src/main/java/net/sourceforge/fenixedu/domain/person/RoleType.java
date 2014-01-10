@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.domain.person;
 
-import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum RoleType implements IPresentableEnum {
 

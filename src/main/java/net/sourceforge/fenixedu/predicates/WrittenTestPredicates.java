@@ -1,11 +1,10 @@
 package net.sourceforge.fenixedu.predicates;
 
+import net.sourceforge.fenixedu.domain.WrittenTest;
+import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
+
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
-
-import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
 
 public class WrittenTestPredicates {
 

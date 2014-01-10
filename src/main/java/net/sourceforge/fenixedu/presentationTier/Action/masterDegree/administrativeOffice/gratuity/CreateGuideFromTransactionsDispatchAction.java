@@ -190,8 +190,7 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
      * @return
      * @throws FenixActionException
      */
-    private InfoGratuitySituation readGratuitySituation(User userView, String gratuitySituationId)
-            throws FenixActionException {
+    private InfoGratuitySituation readGratuitySituation(User userView, String gratuitySituationId) throws FenixActionException {
         InfoGratuitySituation infoGratuitySituation = null;
 
         try {

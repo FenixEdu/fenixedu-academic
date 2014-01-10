@@ -3,8 +3,6 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeMapping;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -18,6 +16,8 @@ import net.sourceforge.fenixedu.domain.period.SecondCycleCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.StandaloneCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.util.PeriodState;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 abstract public class ExecutionInterval extends ExecutionInterval_Base {
 

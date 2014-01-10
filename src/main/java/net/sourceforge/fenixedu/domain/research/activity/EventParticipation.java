@@ -88,6 +88,7 @@ public class EventParticipation extends EventParticipation_Base {
     public boolean scopeMatches(ScopeType type) {
         return this.getEvent().getLocationType().equals(type);
     }
+
     @Deprecated
     public boolean hasEvent() {
         return getEvent() != null;

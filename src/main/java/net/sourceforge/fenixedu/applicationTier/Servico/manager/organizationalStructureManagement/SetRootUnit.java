@@ -1,12 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement;
 
-
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 
 public class SetRootUnit {

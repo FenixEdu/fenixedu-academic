@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdR
 import net.sourceforge.fenixedu.domain.serviceRequests.IRegistryDiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
-import org.apache.commons.lang.StringUtils;
 
 import org.apache.commons.lang.WordUtils;
 import org.joda.time.LocalDate;
@@ -97,9 +96,9 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
             diplomaTypeQualifier = "label.diploma.type.qualifier.unknown";
         }
 
-        addParameter("degreeRegistrationDiploma",
-                MessageFormat.format(getResourceBundle().getString("label.phd.registryDiploma.degreeRegistrationDiploma"),
-                        new Object[] { getResourceBundle().getString(diplomaTypeQualifier) }));
+        addParameter("degreeRegistrationDiploma", MessageFormat.format(
+                getResourceBundle().getString("label.phd.registryDiploma.degreeRegistrationDiploma"),
+                new Object[] { getResourceBundle().getString(diplomaTypeQualifier) }));
         addParameter("portugueseRepublic_1", getResourceBundle().getString("label.phd.registryDiploma.portugueseRepublic.part1"));
         addParameter("portugueseRepublic_2", getResourceBundle().getString("label.phd.registryDiploma.portugueseRepublic.part2"));
     }
@@ -225,8 +224,7 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
         final DegreeType degreeType = request.getDegreeType();
         if (degreeType.hasAnyCycleTypes()) {
             res.append(cycle.getDescription(getLocale()));
-            res.append(" ").append(getResourceBundle().getString("label.of.both"))
-                    .append(" ");
+            res.append(" ").append(getResourceBundle().getString("label.of.both")).append(" ");
         }
         if (!degree.isEmpty()) {
             res.append(degreeType.getFilteredName(getLocale()));
@@ -245,14 +243,12 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
             final DegreeType degreeType = request.getDegreeType();
             if (degreeType.hasAnyCycleTypes()) {
                 res.append(cycle.getDescription(getLocale()));
-                res.append(" ").append(getResourceBundle().getString("label.of.both"))
-                        .append(" ");
+                res.append(" ").append(getResourceBundle().getString("label.of.both")).append(" ");
             }
 
             if (!degree.isEmpty()) {
                 res.append(degreeType.getFilteredName(getLocale()));
-                res.append(" ").append(getResourceBundle().getString("label.in"))
-                        .append(" ");
+                res.append(" ").append(getResourceBundle().getString("label.in")).append(" ");
             }
 
             res.append(degree.getNameI18N(request.getConclusionYear()).getContent(getLanguage()));
@@ -262,8 +258,7 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
             final StringBuilder res = new StringBuilder();
             res.append(getResourceBundle().getString("label.phd.doctoral.program.designation"));
             res.append(" ").append(getResourceBundle().getString("label.in"));
-            res.append(" ").append(
-                    request.getPhdIndividualProgramProcess().getPhdProgram().getName().getContent(getLanguage()));
+            res.append(" ").append(request.getPhdIndividualProgramProcess().getPhdProgram().getName().getContent(getLanguage()));
 
             return res.toString();
         }

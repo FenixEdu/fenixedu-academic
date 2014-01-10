@@ -212,8 +212,8 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
         }
 
         @Override
-        protected PhdCandidacyFeedbackRequestProcess executeActivity(PhdCandidacyFeedbackRequestProcess noProcess,
-                User userView, Object object) {
+        protected PhdCandidacyFeedbackRequestProcess executeActivity(PhdCandidacyFeedbackRequestProcess noProcess, User userView,
+                Object object) {
 
             final PhdCandidacyFeedbackRequestProcessBean bean = (PhdCandidacyFeedbackRequestProcessBean) object;
             final PhdCandidacyFeedbackRequestProcess process = new PhdCandidacyFeedbackRequestProcess();
@@ -237,8 +237,8 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
         }
 
         @Override
-        protected PhdCandidacyFeedbackRequestProcess executeActivity(PhdCandidacyFeedbackRequestProcess process,
-                User userView, Object object) {
+        protected PhdCandidacyFeedbackRequestProcess executeActivity(PhdCandidacyFeedbackRequestProcess process, User userView,
+                Object object) {
 
             final PhdCandidacyFeedbackRequestProcessBean bean = (PhdCandidacyFeedbackRequestProcessBean) object;
             process.setSharedDocuments(new PhdCandidacySharedDocumentsList(bean.getSharedDocuments()));
@@ -257,8 +257,8 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
         }
 
         @Override
-        protected PhdCandidacyFeedbackRequestProcess executeActivity(PhdCandidacyFeedbackRequestProcess process,
-                User userView, Object object) {
+        protected PhdCandidacyFeedbackRequestProcess executeActivity(PhdCandidacyFeedbackRequestProcess process, User userView,
+                Object object) {
 
             final PhdCandidacyFeedbackRequestElementBean bean = (PhdCandidacyFeedbackRequestElementBean) object;
 
@@ -337,8 +337,8 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
         }
 
         @Override
-        protected PhdCandidacyFeedbackRequestProcess executeActivity(PhdCandidacyFeedbackRequestProcess process,
-                User userView, Object object) {
+        protected PhdCandidacyFeedbackRequestProcess executeActivity(PhdCandidacyFeedbackRequestProcess process, User userView,
+                Object object) {
 
             ((PhdCandidacyFeedbackRequestElement) object).delete();
             return process;
@@ -355,8 +355,8 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
         }
 
         @Override
-        protected PhdCandidacyFeedbackRequestProcess executeActivity(PhdCandidacyFeedbackRequestProcess process,
-                User userView, Object object) {
+        protected PhdCandidacyFeedbackRequestProcess executeActivity(PhdCandidacyFeedbackRequestProcess process, User userView,
+                Object object) {
 
             final PhdProgramDocumentUploadBean bean = (PhdProgramDocumentUploadBean) object;
 
@@ -432,11 +432,14 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
         activities.add(new DownloadCandidacyFeedbackDocuments());
         activities.add(new ExternalUploadCandidacyFeedback());
     }
+
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackState> getStates() {
         return getStatesSet();
     }
 
+    @Override
     @Deprecated
     public boolean hasAnyStates() {
         return !getStatesSet().isEmpty();

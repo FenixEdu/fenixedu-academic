@@ -19,8 +19,7 @@ public class InsertStudentsFinalEvaluation {
             throw new NonExistingServiceException();
         }
 
-        final EnrolmentEvaluation enrolmentEvaluation =
-                FenixFramework.getDomainObject(infoEnrolmentEvaluation.getExternalId());
+        final EnrolmentEvaluation enrolmentEvaluation = FenixFramework.getDomainObject(infoEnrolmentEvaluation.getExternalId());
         enrolmentEvaluation.insertStudentFinalEvaluationForMasterDegree(infoEnrolmentEvaluation.getGradeValue(),
                 teacher.getPerson(), evaluationDate);
     }

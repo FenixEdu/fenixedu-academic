@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.domain.reports;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
@@ -17,6 +15,9 @@ import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalRepo
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
 import net.sourceforge.fenixedu.domain.research.result.publication.Unstructured;
 import net.sourceforge.fenixedu.util.BundleUtil;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
@@ -43,7 +44,8 @@ public class PublicationReportFile extends PublicationReportFile_Base {
         spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.GEPResources", "link.username"));
         spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.GEPResources", "link.publication.title"));
         spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.GEPResources", "link.publication.year"));
-        spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.GEPResources", "link.publication.journalOrEvent"));
+        spreadsheet
+                .setHeader(BundleUtil.getStringFromResourceBundle("resources.GEPResources", "link.publication.journalOrEvent"));
         spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.GEPResources", "link.publication.id"));
 
         for (final ResearchResult researchResult : Bennu.getInstance().getResultsSet()) {

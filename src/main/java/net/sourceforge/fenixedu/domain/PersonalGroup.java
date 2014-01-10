@@ -2,11 +2,11 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Set;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
 
 public class PersonalGroup extends PersonalGroup_Base implements IGroup {
 

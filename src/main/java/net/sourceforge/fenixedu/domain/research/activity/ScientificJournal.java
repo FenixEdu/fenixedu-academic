@@ -3,14 +3,14 @@ package net.sourceforge.fenixedu.domain.research.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
 import net.sourceforge.fenixedu.domain.research.result.publication.Article;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class ScientificJournal extends ScientificJournal_Base implements ParticipationsInterface {
 
@@ -103,6 +103,8 @@ public class ScientificJournal extends ScientificJournal_Base implements Partici
             addParticipations(scientificJournalParticipation);
         }
     }
+
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.research.activity.ScientificJournalParticipation> getParticipations() {
         return getParticipationsSet();

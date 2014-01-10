@@ -3,9 +3,10 @@ package net.sourceforge.fenixedu.domain.contents;
 import java.util.Collection;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.contents.pathProcessors.AbstractPathProcessor;
+
 import org.fenixedu.bennu.core.domain.Bennu;
 
-import net.sourceforge.fenixedu.domain.contents.pathProcessors.AbstractPathProcessor;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.google.common.base.Predicate;

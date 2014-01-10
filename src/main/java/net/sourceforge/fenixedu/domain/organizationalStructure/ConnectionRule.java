@@ -23,6 +23,7 @@ public class ConnectionRule extends ConnectionRule_Base {
         setRootDomainObject(null);
         deleteDomainObject();
     }
+
     @Deprecated
     public boolean hasAccountabilityType() {
         return getAccountabilityType() != null;

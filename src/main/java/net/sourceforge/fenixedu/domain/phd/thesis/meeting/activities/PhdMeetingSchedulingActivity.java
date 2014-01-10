@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities;
 
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -13,6 +11,8 @@ import net.sourceforge.fenixedu.domain.phd.log.PhdLog;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingProcess;
 import net.sourceforge.fenixedu.util.phd.PhdProperties;
+
+import org.fenixedu.bennu.core.domain.User;
 
 abstract public class PhdMeetingSchedulingActivity extends Activity<PhdMeetingSchedulingProcess> {
 

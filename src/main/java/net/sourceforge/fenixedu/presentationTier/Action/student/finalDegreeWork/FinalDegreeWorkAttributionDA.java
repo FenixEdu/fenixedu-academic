@@ -123,7 +123,8 @@ public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
         final ExecutionYear executionYear;
         final String executionYearOID = (String) finalDegreeWorkAttributionForm.get("executionYearOID");
         executionYear =
-                executionYearOID == null || executionYearOID.equals("") ? ExecutionYear.readCurrentExecutionYear() : FenixFramework.<ExecutionYear> getDomainObject(executionYearOID);
+                executionYearOID == null || executionYearOID.equals("") ? ExecutionYear.readCurrentExecutionYear() : FenixFramework
+                        .<ExecutionYear> getDomainObject(executionYearOID);
         return prepare(mapping, finalDegreeWorkAttributionForm, request, executionYear);
     }
 

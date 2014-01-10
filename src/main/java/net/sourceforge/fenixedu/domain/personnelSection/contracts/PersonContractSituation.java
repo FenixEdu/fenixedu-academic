@@ -196,6 +196,7 @@ public class PersonContractSituation extends PersonContractSituation_Base {
         Integer daysBetween = interval.toPeriod(PeriodType.days()).getDays();
         return (daysBetween == null || daysBetween >= 90);
     }
+
     @Deprecated
     public boolean hasModifiedDate() {
         return getModifiedDate() != null;

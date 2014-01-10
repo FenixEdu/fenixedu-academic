@@ -60,6 +60,7 @@ public class TeacherMasterDegreeService extends TeacherMasterDegreeService_Base 
         }
         super.setHours(hours);
     }
+
     @Deprecated
     public boolean hasCredits() {
         return getCredits() != null;

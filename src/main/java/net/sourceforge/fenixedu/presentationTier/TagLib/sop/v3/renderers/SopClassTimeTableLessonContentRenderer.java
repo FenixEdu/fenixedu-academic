@@ -65,8 +65,8 @@ public class SopClassTimeTableLessonContentRenderer extends LessonSlotContentRen
             if (allocatableSpace != null) {
                 strBuffer.append(" <a href='");
                 strBuffer.append(context).append("/resourceAllocationManager/");
-                strBuffer.append("pesquisarSala.do?name=").append(allocatableSpace.getNome())
-                        .append("'>").append(allocatableSpace.getNome()).append("</a>");
+                strBuffer.append("pesquisarSala.do?name=").append(allocatableSpace.getNome()).append("'>")
+                        .append(allocatableSpace.getNome()).append("</a>");
             }
 
             if (lesson.getFrequency().equals(FrequencyType.BIWEEKLY)) {
@@ -111,8 +111,8 @@ public class SopClassTimeTableLessonContentRenderer extends LessonSlotContentRen
             strBuffer.append("<a href='");
             strBuffer.append(context).append("/resourceAllocationManager/")
                     .append("manageShift.do?method=prepareEditShift&amp;page=0").append("&amp;shift_oid=")
-                    .append(shift.getExternalId()).append("&amp;execution_course_oid=")
-                    .append(executionCourse.getExternalId()).append("&amp;" + PresentationConstants.ACADEMIC_INTERVAL + "=")
+                    .append(shift.getExternalId()).append("&amp;execution_course_oid=").append(executionCourse.getExternalId())
+                    .append("&amp;" + PresentationConstants.ACADEMIC_INTERVAL + "=")
                     .append(executionCourse.getAcademicInterval().getResumedRepresentationInStringFormat())
                     .append("&amp;curricular_year_oid=").append(infoCurricularYear.getExternalId())
                     .append("&amp;execution_degree_oid=").append(infoExecutionDegree.getExternalId()).append("'>")
@@ -122,8 +122,8 @@ public class SopClassTimeTableLessonContentRenderer extends LessonSlotContentRen
             if (allocatableSpace != null) {
                 strBuffer.append(" <a href='");
                 strBuffer.append(context).append("/resourceAllocationManager/");
-                strBuffer.append("pesquisarSala.do?name=").append(allocatableSpace.getNome())
-                        .append("'>").append(allocatableSpace.getNome()).append("</a>");
+                strBuffer.append("pesquisarSala.do?name=").append(allocatableSpace.getNome()).append("'>")
+                        .append(allocatableSpace.getNome()).append("</a>");
             }
 
         } else if (showOccupation instanceof InfoExam) {

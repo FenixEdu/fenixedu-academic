@@ -4,10 +4,10 @@
  */
 package net.sourceforge.fenixedu.domain.teacher;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoOldPublication;
 import net.sourceforge.fenixedu.domain.Teacher;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author Leonor Almeida

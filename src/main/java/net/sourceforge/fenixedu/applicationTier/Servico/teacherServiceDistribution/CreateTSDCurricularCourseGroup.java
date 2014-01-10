@@ -21,8 +21,7 @@ public class CreateTSDCurricularCourseGroup {
         TSDCurricularCourseGroup tsdCurricularCourseGroup = null;
 
         for (String tsdCurricularCourseId : tsdCurricularCourseToGroupArray) {
-            TSDCurricularCourse tsdCurricularCourse =
-                    (TSDCurricularCourse) FenixFramework.getDomainObject(tsdCurricularCourseId);
+            TSDCurricularCourse tsdCurricularCourse = (TSDCurricularCourse) FenixFramework.getDomainObject(tsdCurricularCourseId);
 
             if (tsdCurricularCourse != null) {
                 tsdCurricularCourseList.add(tsdCurricularCourse);

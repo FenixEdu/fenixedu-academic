@@ -203,4 +203,3 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
     }
 
 }
-

@@ -202,8 +202,7 @@ public class DegreeChangeCandidacyProcess extends DegreeChangeCandidacyProcess_B
         }
 
         @Override
-        protected DegreeChangeCandidacyProcess executeActivity(DegreeChangeCandidacyProcess dummy, User userView,
-                Object object) {
+        protected DegreeChangeCandidacyProcess executeActivity(DegreeChangeCandidacyProcess dummy, User userView, Object object) {
             final CandidacyProcessBean bean = (CandidacyProcessBean) object;
             return new DegreeChangeCandidacyProcess((ExecutionYear) bean.getExecutionInterval(), bean.getStart(), bean.getEnd());
         }
@@ -218,8 +217,7 @@ public class DegreeChangeCandidacyProcess extends DegreeChangeCandidacyProcess_B
         }
 
         @Override
-        protected DegreeChangeCandidacyProcess executeActivity(DegreeChangeCandidacyProcess process, User userView,
-                Object object) {
+        protected DegreeChangeCandidacyProcess executeActivity(DegreeChangeCandidacyProcess process, User userView, Object object) {
             final CandidacyProcessBean bean = (CandidacyProcessBean) object;
             process.edit(bean.getStart(), bean.getEnd());
             return process;
@@ -243,8 +241,7 @@ public class DegreeChangeCandidacyProcess extends DegreeChangeCandidacyProcess_B
         }
 
         @Override
-        protected DegreeChangeCandidacyProcess executeActivity(DegreeChangeCandidacyProcess process, User userView,
-                Object object) {
+        protected DegreeChangeCandidacyProcess executeActivity(DegreeChangeCandidacyProcess process, User userView, Object object) {
             process.setState(CandidacyProcessState.SENT_TO_COORDINATOR);
             return process;
         }
@@ -267,8 +264,7 @@ public class DegreeChangeCandidacyProcess extends DegreeChangeCandidacyProcess_B
         }
 
         @Override
-        protected DegreeChangeCandidacyProcess executeActivity(DegreeChangeCandidacyProcess process, User userView,
-                Object object) {
+        protected DegreeChangeCandidacyProcess executeActivity(DegreeChangeCandidacyProcess process, User userView, Object object) {
             process.setState(CandidacyProcessState.SENT_TO_SCIENTIFIC_COUNCIL);
             return process;
         }
@@ -286,8 +282,7 @@ public class DegreeChangeCandidacyProcess extends DegreeChangeCandidacyProcess_B
         }
 
         @Override
-        protected DegreeChangeCandidacyProcess executeActivity(DegreeChangeCandidacyProcess process, User userView,
-                Object object) {
+        protected DegreeChangeCandidacyProcess executeActivity(DegreeChangeCandidacyProcess process, User userView, Object object) {
             return process; // for now, nothing to be done
         }
     }
@@ -304,8 +299,7 @@ public class DegreeChangeCandidacyProcess extends DegreeChangeCandidacyProcess_B
         }
 
         @Override
-        protected DegreeChangeCandidacyProcess executeActivity(DegreeChangeCandidacyProcess process, User userView,
-                Object object) {
+        protected DegreeChangeCandidacyProcess executeActivity(DegreeChangeCandidacyProcess process, User userView, Object object) {
             return process; // for now, nothing to be done
         }
     }
@@ -320,8 +314,7 @@ public class DegreeChangeCandidacyProcess extends DegreeChangeCandidacyProcess_B
         }
 
         @Override
-        protected DegreeChangeCandidacyProcess executeActivity(DegreeChangeCandidacyProcess process, User userView,
-                Object object) {
+        protected DegreeChangeCandidacyProcess executeActivity(DegreeChangeCandidacyProcess process, User userView, Object object) {
             return process; // for now, nothing to be done
         }
     }
@@ -336,8 +329,7 @@ public class DegreeChangeCandidacyProcess extends DegreeChangeCandidacyProcess_B
         }
 
         @Override
-        protected DegreeChangeCandidacyProcess executeActivity(DegreeChangeCandidacyProcess process, User userView,
-                Object object) {
+        protected DegreeChangeCandidacyProcess executeActivity(DegreeChangeCandidacyProcess process, User userView, Object object) {
             final CandidacyProcessSelectDegreesBean bean = (CandidacyProcessSelectDegreesBean) object;
             final List<Degree> degrees = bean.getDegrees();
             process.getDegreeSet().addAll(degrees);

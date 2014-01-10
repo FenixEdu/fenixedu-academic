@@ -3,8 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.enrollment;
 import java.util.List;
 import java.util.Map;
 
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.EnrollmentWithoutRulesAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.MasterDegreeEnrollmentWithoutRulesAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -18,6 +16,9 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+
+import org.fenixedu.bennu.core.domain.User;
+
 import pt.ist.fenixframework.Atomic;
 
 public class WriteBolonhaEnrolmentsList extends WriteEnrollmentsList {

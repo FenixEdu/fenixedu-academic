@@ -52,6 +52,7 @@ public class ProgramCertificateRequestPR extends ProgramCertificateRequestPR_Bas
     protected boolean isUrgent(final Event event) {
         return ((CertificateRequestEvent) event).isUrgentRequest();
     }
+
     @Deprecated
     public boolean hasAmountFirstPage() {
         return getAmountFirstPage() != null;

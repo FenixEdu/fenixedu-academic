@@ -620,11 +620,11 @@ public class A3ESDegreeProcess implements Serializable {
                     }
                     for (int j = i; j < 3; j++) {
                         JSONObject academic = new JSONObject();
-                            academic.put("year", StringUtils.EMPTY);
-                            academic.put("degree", StringUtils.EMPTY);
-                            academic.put("area", StringUtils.EMPTY);
-                            academic.put("ies", StringUtils.EMPTY);
-                            academic.put("rank", StringUtils.EMPTY);
+                        academic.put("year", StringUtils.EMPTY);
+                        academic.put("degree", StringUtils.EMPTY);
+                        academic.put("area", StringUtils.EMPTY);
+                        academic.put("ies", StringUtils.EMPTY);
+                        academic.put("rank", StringUtils.EMPTY);
                         academicArray.add(academic);
                     }
                     file.put("form-academic", academicArray);

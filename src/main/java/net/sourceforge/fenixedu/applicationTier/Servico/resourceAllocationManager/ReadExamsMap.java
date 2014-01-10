@@ -66,8 +66,7 @@ public class ReadExamsMap {
                         infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getSigla());
 
         if (degreeCurricularPlan != null) {
-            ExecutionSemester executionSemester =
-                    FenixFramework.getDomainObject(infoExecutionPeriod.getExternalId());
+            ExecutionSemester executionSemester = FenixFramework.getDomainObject(infoExecutionPeriod.getExternalId());
             // Obtain execution courses and associated information
             // of the given execution degree for each curricular year
             // persistentSupportecified

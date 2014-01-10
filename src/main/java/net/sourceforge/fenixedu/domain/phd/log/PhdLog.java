@@ -3,10 +3,10 @@ package net.sourceforge.fenixedu.domain.phd.log;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcess;
+
+import org.fenixedu.bennu.core.domain.User;
 
 public class PhdLog {
 

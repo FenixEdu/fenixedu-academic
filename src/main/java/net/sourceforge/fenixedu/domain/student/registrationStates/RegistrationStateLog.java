@@ -53,6 +53,7 @@ public class RegistrationStateLog extends RegistrationStateLog_Base {
         setRegistration(null);
         super.deleteDomainObject();
     }
+
     @Deprecated
     public boolean hasRegistration() {
         return getRegistration() != null;

@@ -6,8 +6,6 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
@@ -18,6 +16,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * Rules for authorizations for academic operations.
@@ -355,6 +355,7 @@ public class PersistentAcademicAuthorizationGroup extends PersistentAcademicAuth
     private boolean isProgramAllowedAsTarget() {
         return getOperation().isProgramAllowedAsTarget();
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.AcademicProgram> getProgram() {
         return getProgramSet();

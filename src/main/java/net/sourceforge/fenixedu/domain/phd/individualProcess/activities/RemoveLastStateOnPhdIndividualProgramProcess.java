@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.domain.phd.individualProcess.activities;
 
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+
+import org.fenixedu.bennu.core.domain.User;
 
 public class RemoveLastStateOnPhdIndividualProgramProcess extends PhdIndividualProgramProcessActivity {
 

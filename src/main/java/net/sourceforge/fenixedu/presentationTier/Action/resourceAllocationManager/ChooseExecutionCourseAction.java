@@ -49,8 +49,7 @@ public class ChooseExecutionCourseAction extends FenixDateAndTimeAndClassAndExec
         Integer page = (Integer) chooseCourseForm.get("page");
 
         if (courseInitials != null && !courseInitials.equals("")) {
-            final ExecutionSemester executionSemester =
-                    FenixFramework.getDomainObject(infoExecutionPeriod.getExternalId());
+            final ExecutionSemester executionSemester = FenixFramework.getDomainObject(infoExecutionPeriod.getExternalId());
             final ExecutionCourse executionCourse = executionSemester.getExecutionCourseByInitials(courseInitials);
             final InfoExecutionCourse infoCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
 

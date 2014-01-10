@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.domain.research.result;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.PublicationArea;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class ResultTeacher extends ResultTeacher_Base {
 

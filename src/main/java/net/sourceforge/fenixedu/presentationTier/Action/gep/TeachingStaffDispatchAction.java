@@ -154,7 +154,8 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
 
         final Unit institution =
                 StringUtils.isEmpty(nonAffiliatedTeacherInstitutionID) ? (Unit) InsertInstitution
-                        .run(nonAffiliatedTeacherInstitutionName) : (Unit) FenixFramework.getDomainObject(nonAffiliatedTeacherInstitutionID);
+                        .run(nonAffiliatedTeacherInstitutionName) : (Unit) FenixFramework
+                        .getDomainObject(nonAffiliatedTeacherInstitutionID);
 
         NonAffiliatedTeacher.associateToInstitutionAndExecutionCourse(nonAffiliatedTeacherName, institution,
                 FenixFramework.<ExecutionCourse> getDomainObject((String) dynaActionForm.get("executionCourseID")));

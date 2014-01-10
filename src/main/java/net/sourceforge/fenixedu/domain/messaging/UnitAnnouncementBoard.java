@@ -66,6 +66,7 @@ public class UnitAnnouncementBoard extends UnitAnnouncementBoard_Base {
 
         return base + actionPath.toString();
     }
+
     @Deprecated
     public boolean hasUnitPermittedManagementGroupType() {
         return getUnitPermittedManagementGroupType() != null;

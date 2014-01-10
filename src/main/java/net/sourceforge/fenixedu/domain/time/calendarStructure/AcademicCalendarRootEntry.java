@@ -210,6 +210,7 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
     protected boolean associatedWithDomainEntities() {
         return false;
     }
+
     @Deprecated
     public boolean hasBennuForRootEntries() {
         return getRootDomainObjectForRootEntries() != null;

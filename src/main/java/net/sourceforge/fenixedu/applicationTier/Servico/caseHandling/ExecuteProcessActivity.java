@@ -2,11 +2,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.caseHandling;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.caseHandling.Process;
+
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
-import net.sourceforge.fenixedu.domain.caseHandling.Process;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.Pair;
 

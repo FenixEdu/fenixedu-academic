@@ -2,10 +2,6 @@ package pt.utl.ist.scripts.process.cron.accounting;
 
 import java.util.Locale;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.scheduler.CronTask;
-import org.fenixedu.bennu.scheduler.annotation.Task;
-
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -17,6 +13,11 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.InvocationResult;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.scheduler.CronTask;
+import org.fenixedu.bennu.scheduler.annotation.Task;
+
 import pt.ist.fenixframework.CallableWithoutException;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.resources.DefaultResourceBundleProvider;

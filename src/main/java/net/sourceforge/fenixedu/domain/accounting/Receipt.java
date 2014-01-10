@@ -32,7 +32,8 @@ public class Receipt extends Receipt_Base {
 
     public static final String GENERIC_CONTRIBUTOR_PARTY_NUMBER = " ";
 
-    private static final Integer MIN_YEAR_TO_CREATE_RECEIPTS = FenixConfigurationManager.getConfiguration().getReceiptMinYearToCreate();
+    private static final Integer MIN_YEAR_TO_CREATE_RECEIPTS = FenixConfigurationManager.getConfiguration()
+            .getReceiptMinYearToCreate();
 
     private static final Map<Integer, String> NUMBER_SERIES_BY_YEAR = new HashMap<Integer, String>();
 

@@ -2,14 +2,15 @@ package net.sourceforge.fenixedu.domain.phd.candidacy;
 
 import java.util.UUID;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
-import org.apache.commons.lang.StringUtils;
 import net.sourceforge.fenixedu.util.phd.PhdProperties;
+
+import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.ist.fenixframework.Atomic;
 
 public class PhdProgramPublicCandidacyHashCode extends PhdProgramPublicCandidacyHashCode_Base {

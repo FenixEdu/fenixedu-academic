@@ -47,7 +47,8 @@ public class SeeStudentCurricularPlansAction extends FenixAction {
         }
 
         request.setAttribute("studentCurricularPlansList", studentCurricularPlansList);
-        request.setAttribute("student", ((InfoStudentCurricularPlan) studentCurricularPlansList.iterator().next()).getInfoStudent());
+        request.setAttribute("student",
+                ((InfoStudentCurricularPlan) studentCurricularPlansList.iterator().next()).getInfoStudent());
 
         return mapping.findForward("viewStudentCurricularPlans");
     }

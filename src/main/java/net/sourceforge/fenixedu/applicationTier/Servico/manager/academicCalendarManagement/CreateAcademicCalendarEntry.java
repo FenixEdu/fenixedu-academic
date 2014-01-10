@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.academicCalendarManagement;
 
-
 import net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry;

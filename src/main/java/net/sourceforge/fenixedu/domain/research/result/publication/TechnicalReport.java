@@ -200,6 +200,7 @@ public class TechnicalReport extends TechnicalReport_Base {
     public String getSchema() {
         return usedSchema;
     }
+
     @Deprecated
     public boolean hasNumber() {
         return getNumber() != null;

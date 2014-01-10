@@ -4,9 +4,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import org.joda.time.YearMonthDay;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.ScientificCouncilSite;
@@ -17,6 +14,10 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
+
+import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ScientificCouncilUnit extends ScientificCouncilUnit_Base {
 
@@ -98,8 +99,8 @@ public class ScientificCouncilUnit extends ScientificCouncilUnit_Base {
             AccountabilityType accountabilityType, String webAddress, UnitClassification classification,
             Boolean canBeResponsibleOfSpaces, Campus campus) {
         ScientificCouncilUnit scu = new ScientificCouncilUnit();
-        scu.init(name, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress, classification,
-                null, canBeResponsibleOfSpaces, campus);
+        scu.init(name, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress, classification, null,
+                canBeResponsibleOfSpaces, campus);
         scu.addParentUnit(parentUnit, accountabilityType);
         return scu;
     }

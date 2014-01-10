@@ -46,6 +46,7 @@ public class PersonProfessionalExemption extends PersonProfessionalExemption_Bas
                         .toPeriod(PeriodType.days()).getDays();
         return (daysBetween == null || daysBetween >= 90);
     }
+
     @Deprecated
     public boolean hasModifiedDate() {
         return getModifiedDate() != null;

@@ -24,7 +24,7 @@ public class DepartmentMemberCreditsReportsDA extends CreditsReportsDA {
 
     @Override
     public ActionForward prepareExportDepartmentCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
         User userView = Authenticate.getUser();
         DepartmentCreditsBean departmentCreditsBean = new DepartmentCreditsBean();
         List<Department> availableDepartments = new ArrayList<Department>();

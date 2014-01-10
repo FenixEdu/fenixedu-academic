@@ -51,8 +51,8 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
         Partial end;
         if (currentExecutionYear != null) {
             begin = CalendarEntryBean.getPartialFromYearMonthDay(currentExecutionYear.getBeginDateYearMonthDay());
-            end = CalendarEntryBean.getPartialFromYearMonthDay(currentExecutionYear.getEndDateYearMonthDay());            
-        }else{
+            end = CalendarEntryBean.getPartialFromYearMonthDay(currentExecutionYear.getEndDateYearMonthDay());
+        } else {
             begin = CalendarEntryBean.getPartialFromYearMonthDay(new YearMonthDay());
             end = CalendarEntryBean.getPartialFromYearMonthDay(new YearMonthDay().plusMonths(3));
         }

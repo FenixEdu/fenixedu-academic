@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Comparator;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 //TODO: Refactor remaining object to use district instead of strings
 public class District extends District_Base {

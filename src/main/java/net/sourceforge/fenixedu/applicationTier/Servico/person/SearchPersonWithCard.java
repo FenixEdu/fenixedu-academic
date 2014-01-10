@@ -63,6 +63,7 @@ public class SearchPersonWithCard extends SearchPerson {
         }
         return true;
     }
+
     // Service Invokers migrated from Berserk
 
     private static final SearchPersonWithCard serviceInstance = new SearchPersonWithCard();

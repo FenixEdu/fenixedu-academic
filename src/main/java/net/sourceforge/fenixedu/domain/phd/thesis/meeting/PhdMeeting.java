@@ -64,6 +64,7 @@ public class PhdMeeting extends PhdMeeting_Base {
         setMeetingDate(bean.getScheduledDate());
         setMeetingPlace(bean.getScheduledPlace());
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingMinutesDocument> getDocuments() {
         return getDocumentsSet();

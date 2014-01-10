@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.domain;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.student.Registration;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class WrittenEvaluationEnrolment extends WrittenEvaluationEnrolment_Base {
 

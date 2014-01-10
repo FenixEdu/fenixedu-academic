@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -26,6 +24,8 @@ import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidExceptio
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
+
+import org.fenixedu.bennu.core.domain.User;
 
 public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividualCandidacyProcess_Base {
 

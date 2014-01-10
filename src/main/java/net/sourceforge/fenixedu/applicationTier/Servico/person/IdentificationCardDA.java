@@ -16,9 +16,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "person", path = "/identificationCard", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "show.card.information", path = "/person/identificationCard/showCardInformation.jsp")
-})
+@Forwards(value = { @Forward(name = "show.card.information", path = "/person/identificationCard/showCardInformation.jsp") })
 public class IdentificationCardDA extends FenixDispatchAction {
 
     public ActionForward prepare(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,

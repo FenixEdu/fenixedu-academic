@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.util.FenixStringTools;
 
 import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
 import org.fenixedu.commons.StringNormalizer;

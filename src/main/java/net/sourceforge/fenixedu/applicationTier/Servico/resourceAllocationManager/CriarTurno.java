@@ -4,7 +4,6 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
-
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftEditor;

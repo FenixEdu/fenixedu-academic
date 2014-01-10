@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistributi
 import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.MergeTeacherServiceDistributions;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetCoursesAndTeachersValuationPermission;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacherServiceDistribution.SetPersonPermissionsOnTSDProcess;
-import org.apache.commons.collections.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.PersonPermissionsDTOEntry;
 import net.sourceforge.fenixedu.dataTransferObject.teacherServiceDistribution.TeacherServiceDistributionDTOEntry;
 import net.sourceforge.fenixedu.domain.Employee;
@@ -32,6 +31,7 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherService
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -64,7 +64,8 @@ public class TeacherServiceDistributionSupportAction extends FenixDispatchAction
                 TeacherServiceDistributionDTOEntry.getTeacherServiceDistributionOptionEntriesForPerson(
                         tsdProcess.getCurrentTSDProcessPhase(), userView.getPerson(), true, false);
         TeacherServiceDistribution selectedTeacherServiceDistribution =
-                getSelectedTeacherServiceDistribution(dynaForm, tsdOptionEntryList.iterator().next().getTeacherServiceDistribution());
+                getSelectedTeacherServiceDistribution(dynaForm, tsdOptionEntryList.iterator().next()
+                        .getTeacherServiceDistribution());
 
         List<TSDTeacher> tsdTeacherList = new ArrayList<TSDTeacher>();
         List<TSDCourse> tsdCourseList = new ArrayList<TSDCourse>();

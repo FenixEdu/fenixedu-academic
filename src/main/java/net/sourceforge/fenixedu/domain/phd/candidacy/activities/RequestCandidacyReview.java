@@ -3,8 +3,6 @@ package net.sourceforge.fenixedu.domain.phd.candidacy.activities;
 import java.util.Arrays;
 import java.util.List;
 
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.domain.Instalation;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -14,6 +12,8 @@ import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService.AlertMessage;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessStateBean;
+
+import org.fenixedu.bennu.core.domain.User;
 
 public class RequestCandidacyReview extends PhdProgramCandidacyProcessActivity {
 

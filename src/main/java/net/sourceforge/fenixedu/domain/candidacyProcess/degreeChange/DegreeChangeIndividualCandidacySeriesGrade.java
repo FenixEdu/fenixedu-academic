@@ -21,6 +21,7 @@ public class DegreeChangeIndividualCandidacySeriesGrade extends DegreeChangeIndi
         setRootDomainObject(null);
         deleteDomainObject();
     }
+
     @Deprecated
     public boolean hasApprovedEctsRate() {
         return getApprovedEctsRate() != null;

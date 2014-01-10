@@ -3,12 +3,12 @@ package net.sourceforge.fenixedu.domain.teacherServiceDistribution;
 import java.math.BigDecimal;
 import java.util.List;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class TSDCurricularLoad extends TSDCurricularLoad_Base {
 
@@ -120,6 +120,7 @@ public class TSDCurricularLoad extends TSDCurricularLoad_Base {
                 Math.ceil((SchoolClassCalculationMethod.SHIFT_BASED.equals(getSchoolClassCalculationMethod())) ? getNumberOfShifts() : getNumberOfShifts()
                         * getFrequency())).intValue();
     }
+
     @Deprecated
     public boolean hasHoursManual() {
         return getHoursManual() != null;

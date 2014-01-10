@@ -145,6 +145,7 @@ public class StudentTestQuestion extends StudentTestQuestion_Base {
             getStudentSubQuestions().set(i, newSubQuestion);
         }
     }
+
     @Deprecated
     public boolean hasStudent() {
         return getStudent() != null;

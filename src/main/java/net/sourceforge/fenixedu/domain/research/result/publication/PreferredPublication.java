@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.domain.research.result.publication;
 
 import java.util.Comparator;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.Person;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class PreferredPublication extends PreferredPublication_Base {
     public static class PreferredComparator implements Comparator<ResearchResultPublication> {
@@ -72,6 +72,7 @@ public class PreferredPublication extends PreferredPublication_Base {
         setRootDomainObject(null);
         deleteDomainObject();
     }
+
     @Deprecated
     public boolean hasPreferredPublication() {
         return getPreferredPublication() != null;

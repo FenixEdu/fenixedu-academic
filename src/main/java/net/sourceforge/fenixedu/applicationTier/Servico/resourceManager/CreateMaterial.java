@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceManager;
 
-
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.dataTransferObject.resourceManager.MaterialBean;
 import net.sourceforge.fenixedu.dataTransferObject.resourceManager.MaterialBean.MaterialType;

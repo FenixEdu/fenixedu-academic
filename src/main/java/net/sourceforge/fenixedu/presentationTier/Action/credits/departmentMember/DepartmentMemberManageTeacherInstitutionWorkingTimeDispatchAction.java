@@ -33,7 +33,7 @@ public class DepartmentMemberManageTeacherInstitutionWorkingTimeDispatchAction e
 
     @Override
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
         InstitutionWorkTime institutionWorkTime =
                 FenixFramework.getDomainObject((String) getFromRequest(request, "institutionWorkTimeOid"));
         Teacher teacher = institutionWorkTime.getTeacherService().getTeacher();
@@ -57,7 +57,7 @@ public class DepartmentMemberManageTeacherInstitutionWorkingTimeDispatchAction e
     }
 
     public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws NumberFormatException,  FenixServiceException {
+            throws NumberFormatException, FenixServiceException {
         return delete(mapping, form, request, response, RoleType.DEPARTMENT_MEMBER);
     }
 

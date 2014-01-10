@@ -252,6 +252,7 @@ public class Inproceedings extends Inproceedings_Base {
     public Boolean getIsPossibleSelectPersonRole() {
         return true;
     }
+
     @Deprecated
     public boolean hasFirstPage() {
         return getFirstPage() != null;

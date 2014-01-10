@@ -3,12 +3,13 @@ package net.sourceforge.fenixedu.domain.util;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.Sender;
+
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.scheduler.CronTask;
 import org.fenixedu.bennu.scheduler.annotation.Task;
 
-import net.sourceforge.fenixedu.domain.util.email.Message;
-import net.sourceforge.fenixedu.domain.util.email.Sender;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Task(englishTitle = "Message Task")

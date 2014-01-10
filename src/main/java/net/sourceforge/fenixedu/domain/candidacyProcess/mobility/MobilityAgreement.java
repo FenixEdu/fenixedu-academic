@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.mobility;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class MobilityAgreement extends MobilityAgreement_Base {
 

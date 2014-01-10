@@ -7,9 +7,9 @@ package net.sourceforge.fenixedu.domain.reimbursementGuide;
 
 import java.util.Calendar;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">Jo�o Mota </a> 13/Nov/2003

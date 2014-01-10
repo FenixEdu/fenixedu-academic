@@ -18,6 +18,7 @@ public class QuestionAnswer extends QuestionAnswer_Base {
         setRootDomainObject(null);
         super.deleteDomainObject();
     }
+
     @Deprecated
     public boolean hasInquiryAnswer() {
         return getInquiryAnswer() != null;

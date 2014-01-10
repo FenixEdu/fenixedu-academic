@@ -22,6 +22,7 @@ public class SecondCycleIndividualCandidacySeriesGrade extends SecondCycleIndivi
         setRootDomainObject(null);
         deleteDomainObject();
     }
+
     @Deprecated
     public boolean hasProfessionalExperience() {
         return getProfessionalExperience() != null;

@@ -136,7 +136,7 @@ public class TimeTableRenderer {
                                     infoLessonWrapper.getLessonSlot().getInfoLessonWrapper().getInfoShowOccupation();
                             strBuffer.append(" title='")
                                     .append(this.lessonSlotContentRenderer.renderTitleText(infoLessonWrapper.getLessonSlot()))
-                                .append("'");
+                                    .append("'");
                         }
                         strBuffer.append(">");
 
@@ -147,7 +147,8 @@ public class TimeTableRenderer {
                             final String context = request.getContextPath();
                             strBuffer.append(this.lessonSlotContentRenderer.render(context, infoLessonWrapper.getLessonSlot()));
                             if (getSlotCssClass(infoLessonWrapper, hourIndex).equalsIgnoreCase("period-single-slot")) {
-                                strBuffer.append(this.lessonSlotContentRenderer.renderSecondLine(context, infoLessonWrapper.getLessonSlot()));
+                                strBuffer.append(this.lessonSlotContentRenderer.renderSecondLine(context,
+                                        infoLessonWrapper.getLessonSlot()));
                             }
                             if (this.lessonSlotContentRenderer instanceof ShiftEnrollmentTimeTableLessonContentRenderer) {
                                 if (getSlotCssClass(infoLessonWrapper, hourIndex).equalsIgnoreCase("period-single-slot")) {
@@ -162,7 +163,8 @@ public class TimeTableRenderer {
                             if (infoLessonWrapper != null && !infoLessonWrapper.isSecondRowAlreadyAppended()) {
                                 final HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
                                 final String context = request.getContextPath();
-                                strBuffer.append(this.lessonSlotContentRenderer.renderSecondLine(context, infoLessonWrapper.getLessonSlot()));
+                                strBuffer.append(this.lessonSlotContentRenderer.renderSecondLine(context,
+                                        infoLessonWrapper.getLessonSlot()));
                             }
                             if (this.lessonSlotContentRenderer instanceof ShiftEnrollmentTimeTableLessonContentRenderer
                                     && getSlotCssClass((InfoLessonWrapper) slotLessons.get(slotIndex + "-" + dayIndex), hourIndex)

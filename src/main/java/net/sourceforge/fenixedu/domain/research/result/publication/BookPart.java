@@ -275,6 +275,7 @@ public class BookPart extends BookPart_Base {
     public Boolean getIsPossibleSelectPersonRole() {
         return true;
     }
+
     @Deprecated
     public boolean hasChapter() {
         return getChapter() != null;

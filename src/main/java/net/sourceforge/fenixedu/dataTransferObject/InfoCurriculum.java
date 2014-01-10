@@ -50,7 +50,8 @@ public class InfoCurriculum extends InfoObject implements ISiteComponent {
     }
 
     public ExecutionYear getExecutionYear() {
-        return this.executionYearId == null || this.executionYearId == null ? ExecutionYear.readCurrentExecutionYear() : FenixFramework.<ExecutionYear> getDomainObject(this.executionYearId);
+        return this.executionYearId == null || this.executionYearId == null ? ExecutionYear.readCurrentExecutionYear() : FenixFramework
+                .<ExecutionYear> getDomainObject(this.executionYearId);
     }
 
     public InfoCurriculum(InfoCurricularCourse infoCurricularCourse) {

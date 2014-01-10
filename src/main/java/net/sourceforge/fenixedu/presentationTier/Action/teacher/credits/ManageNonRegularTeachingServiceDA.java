@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.Interval;
 
@@ -38,7 +37,7 @@ public class ManageNonRegularTeachingServiceDA extends FenixDispatchAction {
 
     public ActionForward showNonRegularTeachingService(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        Person person = ((User) Authenticate.getUser()).getPerson();
+        Person person = Authenticate.getUser().getPerson();
 
         ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
         request.setAttribute("professorships", person.getProfessorshipsByExecutionSemester(executionSemester));

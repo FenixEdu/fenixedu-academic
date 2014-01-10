@@ -60,6 +60,7 @@ public class ReceiptPrintVersion extends ReceiptPrintVersion_Base {
         setRootDomainObject(null);
         super.deleteDomainObject();
     }
+
     @Deprecated
     public boolean hasBennu() {
         return getRootDomainObject() != null;

@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.domain.classProperties;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.util.classProperties.GeneralClassPropertyName;
 import net.sourceforge.fenixedu.util.classProperties.GeneralClassPropertyValue;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author David Santos in Apr 7, 2004

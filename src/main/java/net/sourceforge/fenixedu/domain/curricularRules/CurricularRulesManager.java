@@ -121,8 +121,7 @@ public class CurricularRulesManager {
     private static CurricularRule createRestrictionBetweenDegreeModules(DegreeModule toApplyRule, ExecutionSemester begin,
             ExecutionSemester end, CurricularRuleParametersDTO parametersDTO) {
 
-        final DegreeModule precedenceDegreeModule =
-                FenixFramework.getDomainObject(parametersDTO.getSelectedDegreeModuleID());
+        final DegreeModule precedenceDegreeModule = FenixFramework.getDomainObject(parametersDTO.getSelectedDegreeModuleID());
         final CourseGroup contextCourseGroup =
                 (CourseGroup) FenixFramework.getDomainObject(parametersDTO.getContextCourseGroupID());
 
@@ -162,8 +161,7 @@ public class CurricularRulesManager {
     private static CurricularRule createRestrictionEnroledDegreeModule(DegreeModule toApplyRule, ExecutionSemester begin,
             ExecutionSemester end, CurricularRuleParametersDTO parametersDTO) {
 
-        final DegreeModule enroledDegreeModule =
-                FenixFramework.getDomainObject(parametersDTO.getSelectedDegreeModuleID());
+        final DegreeModule enroledDegreeModule = FenixFramework.getDomainObject(parametersDTO.getSelectedDegreeModuleID());
         final CourseGroup contextCourseGroup =
                 (CourseGroup) FenixFramework.getDomainObject(parametersDTO.getContextCourseGroupID());
 

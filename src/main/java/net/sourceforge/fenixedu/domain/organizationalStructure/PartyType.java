@@ -3,9 +3,9 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 import java.util.Collections;
 import java.util.Set;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class PartyType extends PartyType_Base {
 

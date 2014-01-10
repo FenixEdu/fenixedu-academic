@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class CompetenceCourseLoad extends CompetenceCourseLoad_Base implements Comparable {
 

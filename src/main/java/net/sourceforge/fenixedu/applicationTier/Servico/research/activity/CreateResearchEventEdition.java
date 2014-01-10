@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.activity;
 
-
 import net.sourceforge.fenixedu.dataTransferObject.research.activity.ResearchEventEditionCreationBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultEventAssociationBean;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;

@@ -27,7 +27,7 @@ public class ListFirstTimeEnrolmentMasterDegreeStudents extends FenixBackingBean
         super();
     }
 
-    public Collection getStudentCurricularPlans() throws  FenixServiceException {
+    public Collection getStudentCurricularPlans() throws FenixServiceException {
 
         if (getSelectedExecutionYear() == null || getSelectedExecutionYear().length() == 0) {
             return new ArrayList();
@@ -36,7 +36,7 @@ public class ListFirstTimeEnrolmentMasterDegreeStudents extends FenixBackingBean
         return ListMasterDegreeStudents.run(getSelectedExecutionYear());
     }
 
-    public List<SelectItem> getExecutionYears() throws  FenixServiceException {
+    public List<SelectItem> getExecutionYears() throws FenixServiceException {
         List<SelectItem> result = new ArrayList<SelectItem>();
         List<InfoExecutionYear> executionYears = ReadNotClosedExecutionYears.run();
 

@@ -1,9 +1,10 @@
 package net.sourceforge.fenixedu.domain.accounting.events;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public abstract class ExemptionJustification extends ExemptionJustification_Base {

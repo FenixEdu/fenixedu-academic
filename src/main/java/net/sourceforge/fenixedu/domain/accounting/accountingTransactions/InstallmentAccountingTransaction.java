@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.domain.accounting.accountingTransactions;
 
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransactionDetail;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Installment;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.fenixedu.bennu.core.domain.User;
 
 public class InstallmentAccountingTransaction extends InstallmentAccountingTransaction_Base {
 
@@ -50,6 +50,7 @@ public class InstallmentAccountingTransaction extends InstallmentAccountingTrans
         super.setInstallment(null);
         super.delete();
     }
+
     @Deprecated
     public boolean hasInstallment() {
         return getInstallment() != null;

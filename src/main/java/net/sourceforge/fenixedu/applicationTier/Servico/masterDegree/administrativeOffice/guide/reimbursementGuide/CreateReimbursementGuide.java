@@ -10,8 +10,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.guide.InvalidGuideSituationServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.guide.InvalidReimbursementValueServiceException;
@@ -27,6 +25,9 @@ import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntr
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import net.sourceforge.fenixedu.util.State;
+
+import org.fenixedu.bennu.core.domain.User;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 

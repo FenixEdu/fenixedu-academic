@@ -4,13 +4,14 @@ import java.io.StringReader;
 import java.util.Set;
 import java.util.logging.Logger;
 
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.NodeGroup;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupContextRequiredException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupExpressionException;
+
+import org.fenixedu.bennu.core.domain.User;
+
 import antlr.RecognitionException;
 import antlr.TokenStreamException;
 import antlr.TokenStreamRecognitionException;

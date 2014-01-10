@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 public abstract class StudentsPerformanceGridDispatchAction extends FenixDispatchAction {
 
     protected PerformanceGridTableDTO createPerformanceGridTable(HttpServletRequest request, List<Tutorship> tutors,
-            ExecutionYear entryYear, ExecutionYear monitoringYear)  {
+            ExecutionYear entryYear, ExecutionYear monitoringYear) {
 
         PerformanceGridTableDTO performanceGridTable = null;
         try {

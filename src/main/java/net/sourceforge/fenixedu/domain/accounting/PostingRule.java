@@ -373,6 +373,7 @@ public abstract class PostingRule extends PostingRule_Base {
         }
         return result;
     }
+
     @Deprecated
     public boolean hasServiceAgreementTemplate() {
         return getServiceAgreementTemplate() != null;

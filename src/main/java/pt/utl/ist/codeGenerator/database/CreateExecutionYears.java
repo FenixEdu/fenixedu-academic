@@ -13,7 +13,6 @@ import org.joda.time.YearMonthDay;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
-
 public class CreateExecutionYears {
     public static void createExecutionYears() {
         Language.setLocale(Language.getDefaultLocale());
@@ -35,8 +34,8 @@ public class CreateExecutionYears {
         final YearMonthDay end = new YearMonthDay(year + 1, 8, 31);
 
         AcademicYearCE academicYear =
-                new AcademicYearCE(rootEntry, new MultiLanguageString(getYearString(year)), null,
-                        start.toDateTimeAtMidnight(), end.toDateTimeAtMidnight(), rootEntry);
+                new AcademicYearCE(rootEntry, new MultiLanguageString(getYearString(year)), null, start.toDateTimeAtMidnight(),
+                        end.toDateTimeAtMidnight(), rootEntry);
 
         ExecutionYear executionYear = ExecutionYear.getExecutionYear(academicYear);
 
@@ -98,4 +97,3 @@ public class CreateExecutionYears {
         return Integer.toString(year) + '/' + (year + 1);
     }
 }
-

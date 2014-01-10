@@ -2,10 +2,10 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.over23;
 
 import java.util.Comparator;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class Over23IndividualCandidacyDegreeEntry extends Over23IndividualCandidacyDegreeEntry_Base {
 

@@ -3,11 +3,11 @@
  */
 package net.sourceforge.fenixedu.domain.phd.thesis.activities;
 
-import org.fenixedu.bennu.core.domain.User;
-
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
+
+import org.fenixedu.bennu.core.domain.User;
 
 public class DeleteJuryElement extends PhdThesisActivity {
 

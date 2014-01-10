@@ -3,10 +3,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers;
 import java.util.Collection;
 import java.util.Map;
 
-import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
-
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
+
+import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
+
 import pt.ist.fenixframework.FenixFramework;
 
 public class SearchCurriculumGroupsForRegistration implements AutoCompleteProvider<CurriculumGroup> {

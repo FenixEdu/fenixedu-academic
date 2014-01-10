@@ -5,13 +5,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.research.result.publication.ConferenceArticles;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class EventEdition extends EventEdition_Base implements ParticipationsInterface {
@@ -75,8 +76,8 @@ public class EventEdition extends EventEdition_Base implements ParticipationsInt
      * This method is responsible for deleting the object and all its references
      */
     public void delete() {
-        for (; !this.getEventConferenceArticlesAssociations().isEmpty(); this.getEventConferenceArticlesAssociations().iterator().next()
-                .delete()) {
+        for (; !this.getEventConferenceArticlesAssociations().isEmpty(); this.getEventConferenceArticlesAssociations().iterator()
+                .next().delete()) {
             ;
         }
 

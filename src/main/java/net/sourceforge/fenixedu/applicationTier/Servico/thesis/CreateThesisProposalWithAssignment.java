@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.thesis;
 
-
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
@@ -50,7 +49,8 @@ public class CreateThesisProposalWithAssignment {
     private static final CreateThesisProposalWithAssignment serviceInstance = new CreateThesisProposalWithAssignment();
 
     @Atomic
-    public static Thesis runCreateThesisProposalWithAssignment(DegreeCurricularPlan degreeCurricularPlan, Student student, Proposal proposal, Thesis previousThesis) {
+    public static Thesis runCreateThesisProposalWithAssignment(DegreeCurricularPlan degreeCurricularPlan, Student student,
+            Proposal proposal, Thesis previousThesis) {
         return serviceInstance.run(degreeCurricularPlan, student, proposal, previousThesis);
     }
 

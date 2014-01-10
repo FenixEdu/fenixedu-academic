@@ -361,6 +361,7 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
         return getCreatedBy() != null;
     }
 
+    @Override
     @Deprecated
     public boolean hasExecutionPeriod() {
         return getExecutionPeriod() != null;

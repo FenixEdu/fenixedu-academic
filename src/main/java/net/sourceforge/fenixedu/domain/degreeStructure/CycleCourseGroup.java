@@ -12,7 +12,9 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
 import org.apache.commons.lang.StringUtils;
+
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -59,8 +61,7 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
             result.append(getDegreeType().getGraduateTitle(getCycleType(), locale));
 
             final String degreeFilteredName = getDegree().getFilteredName(executionYear, locale);
-            result.append(" ").append(
-                    ResourceBundle.getBundle("resources/ApplicationResources", locale).getString("label.in"));
+            result.append(" ").append(ResourceBundle.getBundle("resources/ApplicationResources", locale).getString("label.in"));
 
             final MultiLanguageString mls = getGraduateTitleSuffix();
             final String suffix = mls == null ? null : mls.getContent(Language.valueOf(locale.getLanguage()));
@@ -162,6 +163,7 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
 
         return new CycleCourseGroupInformation(this, executionYear, graduatedTitle, graduatedTitleEn);
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroupInformation> getCycleCourseGroupInformation() {
         return getCycleCourseGroupInformationSet();

@@ -183,6 +183,7 @@ public class CronScriptState extends CronScriptState_Base {
         }
         deleteDomainObject();
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.system.CronScriptInvocation> getCronScriptInvocations() {
         return getCronScriptInvocationsSet();

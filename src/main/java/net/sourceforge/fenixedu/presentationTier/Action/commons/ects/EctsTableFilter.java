@@ -7,11 +7,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.fenixedu.commons.StringNormalizer;
-
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.AcademicIntervalConverter;
+
+import org.fenixedu.commons.StringNormalizer;
+
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;

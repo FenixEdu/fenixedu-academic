@@ -1,8 +1,9 @@
 package net.sourceforge.fenixedu.domain.phd.candidacy;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
 import org.fenixedu.bennu.core.domain.Bennu;
 
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixframework.Atomic;
 
 public class PhdCandidacyRefereeLetter extends PhdCandidacyRefereeLetter_Base {

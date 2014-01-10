@@ -3,10 +3,11 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Comparator;
 import java.util.List;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.BundleUtil;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class LessonPlanning extends LessonPlanning_Base {

@@ -36,8 +36,7 @@ public class EditCompetenceCourseLoad {
                         courseLoad.getTrainingPeriodHours(), courseLoad.getTutorialOrientationHours(),
                         courseLoad.getAutonomousWorkHours(), courseLoad.getEctsCredits(), courseLoad.getOrder(), academicPeriod);
             } else {
-                final CompetenceCourseLoad competenceCourseLoad =
-                        FenixFramework.getDomainObject(courseLoad.getIdentification());
+                final CompetenceCourseLoad competenceCourseLoad = FenixFramework.getDomainObject(courseLoad.getIdentification());
 
                 if (competenceCourseLoad != null && courseLoad.getAction().equals("edit")) {
                     competenceCourseLoad.edit(courseLoad.getTheoreticalHours(), courseLoad.getProblemsHours(),

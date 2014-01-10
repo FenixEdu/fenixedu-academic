@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -30,8 +29,7 @@ public class InsertCurricularCourseScopeAtCurricularCourse {
         CurricularSemester curricularSemester = null;
         try {
             curricularSemester =
-                    FenixFramework.getDomainObject(infoCurricularCourseScope.getInfoCurricularSemester()
-                            .getExternalId());
+                    FenixFramework.getDomainObject(infoCurricularCourseScope.getInfoCurricularSemester().getExternalId());
             if (curricularSemester == null) {
                 throw new NonExistingServiceException("message.non.existing.curricular.semester", null);
             }

@@ -32,13 +32,13 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.commons.StringNormalizer;
 
-import com.google.common.io.ByteStreams;
-import com.google.common.io.Files;
-
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+import com.google.common.io.ByteStreams;
+import com.google.common.io.Files;
 
 @Mapping(path = "/SIBSPayments", module = "manager")
 @Forwards({ @Forward(name = "prepareUploadSIBSPaymentFiles", path = "/manager/payments/prepareUploadSIBSPaymentFiles.jsp") })
@@ -144,7 +144,7 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
             File dir = Files.createTempDir();
             File tmp = new File(dir, bean.getFilename());
             tmp.deleteOnExit();
-            
+
             try (OutputStream out = new FileOutputStream(tmp)) {
                 ByteStreams.copy(inputStream, out);
             } finally {

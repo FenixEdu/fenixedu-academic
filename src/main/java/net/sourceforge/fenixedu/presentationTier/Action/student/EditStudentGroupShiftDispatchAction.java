@@ -63,8 +63,7 @@ public class EditStudentGroupShiftDispatchAction extends FenixDispatchAction {
         String groupPropertiesCode = groupPropertiesCodeString;
 
         try {
-            VerifyStudentGroupAtributes
-                    .run(groupPropertiesCode, null, studentGroupCode, userView.getUsername(), new Integer(4));
+            VerifyStudentGroupAtributes.run(groupPropertiesCode, null, studentGroupCode, userView.getUsername(), new Integer(4));
 
         } catch (NotAuthorizedException e) {
             ActionErrors actionErrors2 = new ActionErrors();

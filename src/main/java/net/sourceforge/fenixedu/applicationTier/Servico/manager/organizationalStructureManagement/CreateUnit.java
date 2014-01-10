@@ -107,7 +107,7 @@ public class CreateUnit {
             case MANAGEMENT_COUNCIL:
                 return ManagementCouncilUnit.createManagementCouncilUnit(unitName, unitNameCard, costCenterCode, acronym, begin,
                         end, parentUnit, accountabilityType, webAddress, classification, canBeResponsibleOfSpaces, campus);
-                
+
             case SCIENTIFIC_COUNCIL:
                 return ScientificCouncilUnit.createScientificCouncilUnit(unitName, unitNameCard, costCenterCode, acronym, begin,
                         end, parentUnit, accountabilityType, webAddress, classification, canBeResponsibleOfSpaces, campus);

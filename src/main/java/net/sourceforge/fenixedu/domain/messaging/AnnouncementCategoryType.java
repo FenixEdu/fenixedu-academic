@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.messaging;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-
 import org.fenixedu.bennu.core.domain.Bennu;
 
 public enum AnnouncementCategoryType {

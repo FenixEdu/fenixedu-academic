@@ -3,8 +3,6 @@ package net.sourceforge.fenixedu.domain.phd.migration;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -16,6 +14,8 @@ import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean.PhdParticipantSele
 import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean.PhdParticipantType;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.IncompleteFieldsException;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PhdMigrationGuidingNotFoundException;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class PhdMigrationGuiding extends PhdMigrationGuiding_Base {
     public static final String IST_INSTITUTION_CODE = "1518";

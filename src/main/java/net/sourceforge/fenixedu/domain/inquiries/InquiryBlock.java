@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class InquiryBlock extends InquiryBlock_Base {
 
@@ -38,6 +38,7 @@ public class InquiryBlock extends InquiryBlock_Base {
         }
         super.deleteDomainObject();
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryTemplate> getInquiries() {
         return getInquiriesSet();

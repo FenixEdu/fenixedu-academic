@@ -53,8 +53,8 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
         }
 
         @Override
-        protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess noProcess,
-                User userView, Object object) {
+        protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess noProcess, User userView,
+                Object object) {
             PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) object;
 
             final PublicPresentationSeminarProcess result =
@@ -687,11 +687,14 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 
         return getIndividualProgramProcess().getWhenStartedStudies();
     }
+
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarState> getStates() {
         return getStatesSet();
     }
 
+    @Override
     @Deprecated
     public boolean hasAnyStates() {
         return !getStatesSet().isEmpty();
