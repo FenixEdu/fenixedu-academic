@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
@@ -150,7 +151,8 @@ public class StatusAndApprovalReportFile extends StatusAndApprovalReportFile_Bas
                                     stringBuilder.append(studentStatuteBean.getStudentStatute().getStatuteType());
                                 }
                                 row.setCell(stringBuilder.toString());
-                                row.setCell(registration.getCycleType(executionSemester.getExecutionYear()).getDescription());
+                                CycleType cycleType = registration.getCycleType(executionSemester.getExecutionYear());
+                                row.setCell(cycleType != null ? cycleType.getDescription() : "");
                                 row.setCell(registration.getRegimeType(executionSemester.getExecutionYear()).getLocalizedName());
                                 row.setCell(Integer.toString(enrolmentAndAprovalCounter.getEnrolments()));
                                 row.setCell(Integer.toString(enrolmentAndAprovalCounter.getAprovals()));
