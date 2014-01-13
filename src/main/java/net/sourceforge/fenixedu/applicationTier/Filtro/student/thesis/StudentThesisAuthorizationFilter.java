@@ -1,10 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro.student.thesis;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 public class StudentThesisAuthorizationFilter {
 
@@ -27,7 +28,7 @@ public class StudentThesisAuthorizationFilter {
     }
 
     private Student getStudent() {
-        IUserView userView = AccessControl.getUserView();
+        User userView = Authenticate.getUser();
         return userView.getPerson().getStudent();
     }
 

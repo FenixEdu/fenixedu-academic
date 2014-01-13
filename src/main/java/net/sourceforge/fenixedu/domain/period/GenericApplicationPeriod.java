@@ -4,15 +4,14 @@ import java.util.Comparator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.candidacy.GenericApplication;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -38,7 +37,7 @@ public class GenericApplicationPeriod extends GenericApplicationPeriod_Base {
         super();
         setTitle(title);
         setDescription(description);
-        setPeriodNumber(RootDomainObject.getInstance().getCandidacyPeriodsSet().size());
+        setPeriodNumber(Bennu.getInstance().getCandidacyPeriodsSet().size());
         init(ExecutionYear.readCurrentExecutionYear(), start, end);
     }
 
@@ -49,7 +48,7 @@ public class GenericApplicationPeriod extends GenericApplicationPeriod_Base {
     public static SortedSet<GenericApplicationPeriod> getPeriods() {
         final SortedSet<GenericApplicationPeriod> result =
                 new TreeSet<GenericApplicationPeriod>(GenericApplicationPeriod.COMPARATOR_BY_DATES);
-        for (final CandidacyPeriod candidacyPeriod : RootDomainObject.getInstance().getCandidacyPeriods()) {
+        for (final CandidacyPeriod candidacyPeriod : Bennu.getInstance().getCandidacyPeriodsSet()) {
             if (candidacyPeriod instanceof GenericApplicationPeriod) {
                 result.add((GenericApplicationPeriod) candidacyPeriod);
             }
@@ -86,9 +85,9 @@ public class GenericApplicationPeriod extends GenericApplicationPeriod_Base {
     }
 
     public boolean isCurrentUserAllowedToMange() {
-        final IUserView userView = AccessControl.getUserView();
+        final User userView = Authenticate.getUser();
         return userView != null
-                && (userView.hasRoleType(RoleType.MANAGER) || getManagerSet().contains(userView.getPerson().getUser()));
+                && (userView.getPerson().hasRole(RoleType.MANAGER) || getManagerSet().contains(userView.getPerson().getUser()));
     }
 
     @Deprecated

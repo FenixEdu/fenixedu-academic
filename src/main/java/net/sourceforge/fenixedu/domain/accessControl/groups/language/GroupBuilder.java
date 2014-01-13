@@ -8,7 +8,9 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
  * expects to improve error detection and report during the expression parsing.
  * 
  * @author cfgi
+ * @deprecated Use Bennu Groups instead
  */
+@Deprecated
 public interface GroupBuilder {
 
     /**

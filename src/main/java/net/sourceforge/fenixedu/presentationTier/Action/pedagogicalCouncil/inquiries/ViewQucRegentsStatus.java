@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.inquiries.RegentInquiryTemplate;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -25,6 +24,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -61,7 +61,7 @@ public class ViewQucRegentsStatus extends FenixDispatchAction {
         final ExecutionSemester executionPeriod = regentInquiryTemplate.getExecutionPeriod();
 
         final Map<Person, RegentBean> regentsMap = new HashMap<Person, RegentBean>();
-        for (Professorship professorship : RootDomainObject.getInstance().getProfessorships()) {
+        for (Professorship professorship : Bennu.getInstance().getProfessorshipsSet()) {
             if (professorship.getExecutionCourse().getExecutionPeriod() == executionPeriod) {
                 Person person = professorship.getPerson();
                 boolean isToAnswer = person.hasToAnswerRegentInquiry(professorship);

@@ -39,7 +39,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 public class ViewExecutionCourseForunsDispatchAction extends ForunsManagement {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException,  FenixServiceException {
+            throws FenixActionException, FenixServiceException {
 
         SortedSet<Attends> attendsForCurrentExecutionPeriod =
                 new TreeSet<Attends>(Attends.ATTENDS_COMPARATOR_BY_EXECUTION_COURSE_NAME);

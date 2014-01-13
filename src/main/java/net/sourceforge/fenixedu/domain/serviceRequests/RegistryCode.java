@@ -5,11 +5,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IRectorateSubmissionBatchDocumentEntry;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.LocalDate;
 
 public class RegistryCode extends RegistryCode_Base {
@@ -82,7 +82,7 @@ public class RegistryCode extends RegistryCode_Base {
         return Integer.parseInt(getCode().substring(getCode().length() - 2, getCode().length()));
     }
 
-    protected RootDomainObject getRootDomainObject() {
+    protected Bennu getRootDomainObject() {
         return getRegistryCodeGenerator().getRootDomainObject();
     }
 
@@ -103,7 +103,7 @@ public class RegistryCode extends RegistryCode_Base {
             throw new DomainException("error.RegistryCode.invalid.year");
         }
 
-        for (InstitutionRegistryCodeGenerator generator : RootDomainObject.getInstance().getRegistryCodeGenerator()) {
+        for (InstitutionRegistryCodeGenerator generator : Bennu.getInstance().getRegistryCodeGeneratorSet()) {
             if (!generator.hasInstitution()) {
                 continue;
             }

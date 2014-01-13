@@ -6,11 +6,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -22,13 +20,14 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.commons.StringNormalizer;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class SearchPerson implements Serializable {
 
@@ -119,8 +118,7 @@ public class SearchPerson implements Serializable {
         private static String[] getNameWords(String name) {
             String[] nameWords = null;
             if (name != null && !StringUtils.isEmpty(name.trim())) {
-                nameWords = name.trim().split(" ");
-                StringNormalizer.normalize(nameWords);
+                nameWords = StringNormalizer.normalize(name).trim().split(" ");
             }
             return nameWords;
         }
@@ -397,13 +395,8 @@ public class SearchPerson implements Serializable {
                 return true;
             }
             String normalizedUsername = StringNormalizer.normalize(usernameToSearch.trim());
-            for (LoginAlias alias : person.getLoginAlias()) {
-                String normalizedAlias = StringNormalizer.normalize(alias.getAlias());
-                if (normalizedAlias.indexOf(normalizedUsername) != -1) {
-                    return true;
-                }
-            }
-            return false;
+            String normalizedAlias = StringNormalizer.normalize(person.getUsername());
+            return normalizedAlias.indexOf(normalizedUsername) != 1;
         }
 
         protected boolean verifyDegreeType(final Degree degree, final DegreeType degreeType, final Person person) {

@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.domain.FinalEvaluation;
 import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Summary;
@@ -60,6 +59,9 @@ import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.util.BundleUtil;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -380,7 +382,7 @@ public class MergeExecutionCourses {
 
             message.append(BundleUtil.getStringFromResourceBundle("resources.GlobalResources",
                     "mergeExecutionCourses.email.greetings"));
-            SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
+            SystemSender systemSender = Bennu.getInstance().getSystemSender();
             new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST,
                     BundleUtil.getStringFromResourceBundle("resources.GlobalResources", "mergeExecutionCourses.email.subject",
                             new String[] { executionCourseTo.getNome() }), message.toString(), bccs);

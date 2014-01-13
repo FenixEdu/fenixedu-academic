@@ -1,13 +1,16 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.ist.fenixframework.Atomic;
 
 public class NonRegularTeachingService extends NonRegularTeachingService_Base {
 
     public NonRegularTeachingService(Professorship professorship, Shift shift, Double percentage) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setPercentage(percentage);
         setProfessorship(professorship);
         setShift(shift);
@@ -54,7 +57,7 @@ public class NonRegularTeachingService extends NonRegularTeachingService_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

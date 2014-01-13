@@ -7,10 +7,14 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import org.apache.struts.taglib.TagUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class CollectionPagerTag extends TagSupport {
+
+    private static final Logger logger = LoggerFactory.getLogger(CollectionPagerTag.class);
 
     private String url;
 
@@ -30,7 +34,7 @@ public class CollectionPagerTag extends TagSupport {
         try {
             pageContext.getOut().print(pages);
         } catch (IOException e) {
-            e.printStackTrace(System.out);
+            logger.error(e.getMessage(), e);
         }
         return SKIP_BODY;
     }

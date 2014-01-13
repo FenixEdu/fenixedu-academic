@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.thesis;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;

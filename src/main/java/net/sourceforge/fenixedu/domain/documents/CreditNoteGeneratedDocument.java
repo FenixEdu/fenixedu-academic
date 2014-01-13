@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.documents;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
@@ -8,6 +7,9 @@ import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.Acad
 import net.sourceforge.fenixedu.domain.accounting.CreditNote;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.util.CoreConfiguration;
+
 import pt.ist.fenixframework.Atomic;
 
 /**
@@ -33,10 +35,11 @@ public class CreditNoteGeneratedDocument extends CreditNoteGeneratedDocument_Bas
 
     @Atomic
     public static void store(CreditNote source, String filename, byte[] content) {
-        if (PropertiesManager.getBooleanProperty(CONFIG_DSPACE_DOCUMENT_STORE)) {
+        if (!CoreConfiguration.getConfiguration().developmentMode()) {
             new CreditNoteGeneratedDocument(source, source.getReceipt().getPerson(), AccessControl.getPerson(), filename, content);
         }
     }
+
     @Deprecated
     public boolean hasSource() {
         return getSource() != null;

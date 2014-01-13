@@ -8,7 +8,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -16,6 +15,7 @@ import net.sourceforge.fenixedu.domain.vigilancy.strategies.Strategy;
 import net.sourceforge.fenixedu.domain.vigilancy.strategies.StrategyFactory;
 import net.sourceforge.fenixedu.domain.vigilancy.strategies.StrategySugestion;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -24,7 +24,7 @@ public class VigilantGroup extends VigilantGroup_Base {
 
     public VigilantGroup() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public double getPointsAverage() {
@@ -297,7 +297,7 @@ public class VigilantGroup extends VigilantGroup_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

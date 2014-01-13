@@ -6,7 +6,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.ElectionPeriodBean;
 import net.sourceforge.fenixedu.domain.CurricularYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -24,7 +26,7 @@ public class CurricularYearsGivenDegreeTypeProvider implements DataProvider {
                 curricularYearsSet.add(CurricularYear.readByYear(i));
             }
         } else {
-            curricularYearsSet.addAll(RootDomainObject.getInstance().getCurricularYears());
+            curricularYearsSet.addAll(Bennu.getInstance().getCurricularYearsSet());
         }
 
         Collections.sort(curricularYearsSet, CurricularYear.CURRICULAR_YEAR_COMPARATORY_BY_YEAR);

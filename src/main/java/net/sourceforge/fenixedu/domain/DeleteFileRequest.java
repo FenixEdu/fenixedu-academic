@@ -1,10 +1,12 @@
 package net.sourceforge.fenixedu.domain;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 public class DeleteFileRequest extends DeleteFileRequest_Base {
 
     private DeleteFileRequest() {
         super();
-        this.setRootDomainObject(RootDomainObject.getInstance());
+        this.setRootDomainObject(Bennu.getInstance());
     }
 
     public DeleteFileRequest(Person person, String storageID, Boolean deleteItem) {
@@ -15,7 +17,7 @@ public class DeleteFileRequest extends DeleteFileRequest_Base {
     public DeleteFileRequest(Person person, String storageID) {
         this();
         this.setExternalStorageIdentification(storageID);
-        this.setRequestorIstUsername(person.hasIstUsername() ? person.getIstUsername() : person.getMostImportantAlias());
+        this.setRequestorIstUsername(person.getUsername());
         this.setDeleteItem(Boolean.TRUE);
     }
 
@@ -23,8 +25,9 @@ public class DeleteFileRequest extends DeleteFileRequest_Base {
         setRootDomainObject(null);
         super.deleteDomainObject();
     }
+
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

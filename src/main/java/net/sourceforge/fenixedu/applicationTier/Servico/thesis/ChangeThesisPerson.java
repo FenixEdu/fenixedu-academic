@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.thesis;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.InsertExternalPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;

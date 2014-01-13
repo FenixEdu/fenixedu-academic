@@ -1,13 +1,14 @@
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class InstitutionRegistryCodeGenerator extends InstitutionRegistryCodeGenerator_Base {
     public InstitutionRegistryCodeGenerator() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     protected Integer getNextNumber(CycleType cycle) {
@@ -37,6 +38,7 @@ public class InstitutionRegistryCodeGenerator extends InstitutionRegistryCodeGen
     public RegistryCode createRegistryFor(IDiplomaRequest request) {
         return new RegistryCode(this, request);
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.RegistryCode> getRegistryCode() {
         return getRegistryCodeSet();
@@ -48,7 +50,7 @@ public class InstitutionRegistryCodeGenerator extends InstitutionRegistryCodeGen
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.domain.candidacy;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.fenixedu.bennu.core.security.Authenticate;
+
 public class CancelledCandidacySituation extends CancelledCandidacySituation_Base {
 
     public CancelledCandidacySituation(Candidacy candidacy, Person person) {
@@ -16,7 +18,7 @@ public class CancelledCandidacySituation extends CancelledCandidacySituation_Bas
     }
 
     public CancelledCandidacySituation(Candidacy candidacy) {
-        this(candidacy, (AccessControl.getUserView() != null) ? AccessControl.getPerson() : null);
+        this(candidacy, (Authenticate.getUser() != null) ? AccessControl.getPerson() : null);
     }
 
     @Override

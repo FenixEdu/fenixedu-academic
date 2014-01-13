@@ -5,8 +5,10 @@ import java.util.Comparator;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.StringUtils;
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
+
+import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.StringNormalizer;
 
 //TODO: Refactor remaining object to use district subdivision instead of strings
 public class DistrictSubdivision extends DistrictSubdivision_Base {
@@ -22,7 +24,7 @@ public class DistrictSubdivision extends DistrictSubdivision_Base {
 
     private DistrictSubdivision() {
         super();
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
     }
 
     public DistrictSubdivision(final String code, final String name, final District district) {
@@ -55,11 +57,11 @@ public class DistrictSubdivision extends DistrictSubdivision_Base {
     }
 
     static public Collection<DistrictSubdivision> findByName(String name, int size) {
-        String normalizedName = StringNormalizer.normalize(name).toLowerCase();
+        String normalizedName = StringNormalizer.normalize(name);
         Collection<DistrictSubdivision> result = new TreeSet<DistrictSubdivision>(COMPARATOR_BY_NAME);
 
-        for (DistrictSubdivision districtSubdivision : RootDomainObject.getInstance().getDistrictSubdivisions()) {
-            if (StringNormalizer.normalize(districtSubdivision.getName()).toLowerCase().contains(normalizedName)) {
+        for (DistrictSubdivision districtSubdivision : Bennu.getInstance().getDistrictSubdivisionsSet()) {
+            if (StringNormalizer.normalize(districtSubdivision.getName()).contains(normalizedName)) {
                 result.add(districtSubdivision);
                 if (result.size() >= size) {
                     break;
@@ -74,7 +76,7 @@ public class DistrictSubdivision extends DistrictSubdivision_Base {
         DistrictSubdivision result = null;
 
         if (!StringUtils.isEmpty(code)) {
-            for (final DistrictSubdivision iter : RootDomainObject.getInstance().getDistrictSubdivisions()) {
+            for (final DistrictSubdivision iter : Bennu.getInstance().getDistrictSubdivisionsSet()) {
                 if (iter.getCode().equalsIgnoreCase(code)) {
                     result = iter;
                 }
@@ -150,7 +152,7 @@ public class DistrictSubdivision extends DistrictSubdivision_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

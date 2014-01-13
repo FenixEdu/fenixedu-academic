@@ -11,7 +11,7 @@
 <bean:define id="thesisId" name="thesis" property="externalId" />
 <bean:define id="thesisState" name="thesis" property="libraryState.name" />
 <bean:define id="person"
-	name="<%=pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE%>"
+	name="LOGGED_USER_ATTRIBUTE"
 	property="person" />
 
 <h2><bean:message key="thesis.validation.title.details" /></h2>

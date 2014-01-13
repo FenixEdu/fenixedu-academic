@@ -8,10 +8,12 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.predicates.ResultPredicates;
 import net.sourceforge.fenixedu.util.BundleUtil;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.ist.fenixframework.FenixFramework;
 
 public class ResultParticipation extends ResultParticipation_Base {
@@ -60,7 +62,7 @@ public class ResultParticipation extends ResultParticipation_Base {
 
     private ResultParticipation() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     /**
@@ -251,13 +253,14 @@ public class ResultParticipation extends ResultParticipation_Base {
         }
         return text.toString();
     }
+
     @Deprecated
     public boolean hasResult() {
         return getResult() != null;
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -35,12 +35,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 public class CreatePersonAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws  FenixServiceException {
+            throws FenixServiceException {
         return mapping.findForward("Prepare");
     }
 
     public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws  FenixServiceException {
+            throws FenixServiceException {
 
         final Person person = (Person) RenderUtils.getViewState().getMetaObject().getObject();
 

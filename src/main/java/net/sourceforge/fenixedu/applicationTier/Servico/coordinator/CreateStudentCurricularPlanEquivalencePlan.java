@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
-
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlanEquivalencePlan;
 import net.sourceforge.fenixedu.domain.student.Registration;

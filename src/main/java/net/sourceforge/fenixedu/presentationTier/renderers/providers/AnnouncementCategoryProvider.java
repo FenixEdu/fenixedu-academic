@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyArrayConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -14,7 +15,7 @@ public class AnnouncementCategoryProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-        return RootDomainObject.getInstance().getCategoriesSet();
+        return Bennu.getInstance().getCategoriesSet();
     }
 
 }

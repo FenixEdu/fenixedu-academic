@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.publicRelationsOffice;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
+import org.fenixedu.commons.StringNormalizer;
 
 public class UsernameFileBean implements Serializable {
 

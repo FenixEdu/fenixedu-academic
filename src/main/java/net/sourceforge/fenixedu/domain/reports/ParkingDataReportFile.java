@@ -8,22 +8,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.QueueJobResult;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
 import net.sourceforge.fenixedu.domain.parking.Vehicle;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
+import com.google.common.io.Files;
 import com.healthmarketscience.jackcess.Database;
 import com.healthmarketscience.jackcess.Table;
 
 public class ParkingDataReportFile extends ParkingDataReportFile_Base {
+
+    private static final Logger logger = LoggerFactory.getLogger(ParkingDataReportFile.class);
 
     private static final String FILE_NAME = "Cartoes_XML.mdb";
 
@@ -45,16 +50,16 @@ public class ParkingDataReportFile extends ParkingDataReportFile_Base {
     public QueueJobResult execute() throws Exception {
         QueueJobResult queueJobResult = null;
 
-        final String inputFilename = PropertiesManager.getProperty("export.parking.data.report.input.file");
+        final String inputFilename = FenixConfigurationManager.getConfiguration().getExportParkingDataReportInputFile();
         if (inputFilename != null) {
             File parkingDataFile = FileUtils.copyToTemporaryFile(new FileInputStream(inputFilename));
             renderReport(parkingDataFile);
 
             queueJobResult = new QueueJobResult();
             queueJobResult.setContentType("application/vnd.ms-access");
-            queueJobResult.setContent(pt.utl.ist.fenix.tools.file.utils.FileUtils.readByteArray(parkingDataFile));
+            queueJobResult.setContent(Files.toByteArray(parkingDataFile));
 
-            System.out.println("Job " + getFilename() + " completed");
+            logger.info("Job " + getFilename() + " completed");
         }
         return queueJobResult;
     }

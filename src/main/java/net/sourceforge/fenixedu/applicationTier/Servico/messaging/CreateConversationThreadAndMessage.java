@@ -30,7 +30,8 @@ public class CreateConversationThreadAndMessage extends ForumService {
     private static final CreateConversationThreadAndMessage serviceInstance = new CreateConversationThreadAndMessage();
 
     @Atomic
-    public static void runCreateConversationThreadAndMessage(CreateConversationThreadAndMessageBean createConversationThreadAndMessageBean) {
+    public static void runCreateConversationThreadAndMessage(
+            CreateConversationThreadAndMessageBean createConversationThreadAndMessageBean) {
         serviceInstance.run(createConversationThreadAndMessageBean);
     }
 

@@ -13,7 +13,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYearsByDegreeCurricularPlanID;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.degree.execution.ReadExecutionDegreesByExecutionYearAndDegreeType;
@@ -45,14 +44,18 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.util.MessageResources;
-
-import pt.ist.fenixWebFramework.security.UserView;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Tânia Pousão
  * 
  */
 public class StudentsGratuityListAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(StudentsGratuityListAction.class);
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -104,7 +107,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         ActionErrors errors = new ActionErrors();
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         DynaActionForm studentListForm = (DynaActionForm) actionForm;
         String executionYear = (String) studentListForm.get("executionYear");
@@ -164,7 +167,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
     public ActionForward studentsGratuityList(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         ActionErrors errors = new ActionErrors();
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         // read data from form
         String executionYear = null;
@@ -190,7 +193,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
         try {
             executionDegreeId = findExecutionDegreeId(degree);
         } catch (NumberFormatException exception) {
-            exception.printStackTrace();
+            logger.error(exception.getMessage(), exception);
             errors.add("noList", new ActionError("error.masterDegree.gratuity.impossible.studentsGratuityList"));
             saveErrors(request, errors);
             return mapping.getInputForward();
@@ -208,7 +211,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
                             .runReadGratuitySituationListByExecutionDegreeAndSpecialization(executionDegreeId, executionYear,
                                     specialization, situation);
         } catch (FenixServiceException exception) {
-            exception.printStackTrace();
+            logger.error(exception.getMessage(), exception);
             if (exception.getMessage().startsWith("error.impossible.noGratuityValues.degreeName")) {
                 String msgError = exception.getMessage().substring(0, exception.getMessage().indexOf(">"));
                 String nameExecutionDegree =
@@ -245,7 +248,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         ActionErrors errors = new ActionErrors();
         DynaActionForm studentGratuityListForm = (DynaActionForm) actionForm;
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         // data from request
         String executionYearString = null;
@@ -279,7 +282,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
                     ReadExecutionDegreeByDegreeCurricularPlanID.runReadExecutionDegreeByDegreeCurricularPlanID(
                             degreeCurricularPlanID, executionYearString);
         } catch (FenixServiceException exception) {
-            exception.printStackTrace();
+            logger.error(exception.getMessage(), exception);
             saveErrors(request, errors);
             return mapping.getInputForward();
         }
@@ -302,7 +305,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
                             .runReadGratuitySituationListByExecutionDegreeAndSpecialization(infoExecutionDegree.getExternalId(),
                                     infoExecutionDegree.getInfoExecutionYear().getYear(), specialization, situation);
         } catch (FenixServiceException exception) {
-            exception.printStackTrace();
+            logger.error(exception.getMessage(), exception);
             saveErrors(request, errors);
             // return mapping.getInputForward();
         }
@@ -337,7 +340,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         ActionErrors errors = new ActionErrors();
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         DynaActionForm studentGratuityListForm = (DynaActionForm) actionForm;
 
         String degree = (String) studentGratuityListForm.get("degree");
@@ -346,7 +349,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
         try {
             executionDegreeID = findExecutionDegreeId(degree);
         } catch (NumberFormatException exception) {
-            exception.printStackTrace();
+            logger.error(exception.getMessage(), exception);
             errors.add("noList", new ActionError("error.masterDegree.gratuity.impossible.studentsGratuityList"));
             saveErrors(request, errors);
             return mapping.getInputForward();
@@ -431,7 +434,7 @@ public class StudentsGratuityListAction extends FenixDispatchAction {
                     externalId = idInString;
                 }
             } catch (NumberFormatException numberFormatException) {
-                numberFormatException.printStackTrace();
+                logger.error(numberFormatException.getMessage(), numberFormatException);
                 throw new NumberFormatException();
             }
         }

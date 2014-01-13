@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -18,14 +19,13 @@ import java.util.TreeSet;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.QualificationType;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState;
@@ -36,13 +36,19 @@ import net.sourceforge.fenixedu.domain.phd.ThesisSubjectOrder;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
-import net.sourceforge.fenixedu.util.StringUtils;
 
+import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.Partial;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ExportPhdIndividualProgramProcessesInHtml {
+
+    private static final Logger logger = LoggerFactory.getLogger(ExportPhdIndividualProgramProcessesInHtml.class);
+
     // TODO: IST-<Collaboration>: collaboration must be added as argument
     static final private String APPLICATION_NAME = "Application to the IST-EPFL Joint Doctoral Initiative";
     static final private String APPLICATION_PREFIX_LINK = "";
@@ -79,7 +85,7 @@ public class ExportPhdIndividualProgramProcessesInHtml {
         final Map<PhdProgramFocusArea, Set<PhdProgramPublicCandidacyHashCode>> candidates =
                 new TreeMap<PhdProgramFocusArea, Set<PhdProgramPublicCandidacyHashCode>>(PhdProgramFocusArea.COMPARATOR_BY_NAME);
 
-        for (final PublicCandidacyHashCode hashCode : RootDomainObject.getInstance().getCandidacyHashCodesSet()) {
+        for (final PublicCandidacyHashCode hashCode : Bennu.getInstance().getCandidacyHashCodesSet()) {
             if (hashCode.isFromPhdProgram() && hashCode.hasCandidacyProcess()) {
 
                 final PhdProgramPublicCandidacyHashCode phdHashCode = (PhdProgramPublicCandidacyHashCode) hashCode;
@@ -195,7 +201,8 @@ public class ExportPhdIndividualProgramProcessesInHtml {
         page.rowStart().headerStartWithStyle("width: 125px;").write("Candidacy Date:").headerEnd()
                 .column(process.getCandidacyDate().toString("dd/MM/yyyy")).rowEnd();
         page.rowStart().header("Area:").column(process.getPhdProgramFocusArea().getName().getContent()).rowEnd();
-        page.rowStart().header("IST Phd Program:").column(process.getPhdProgram().getName().getContent(Language.en)).rowEnd();
+        page.rowStart().header(Unit.getInstitutionAcronym() + " Phd Program:")
+                .column(process.getPhdProgram().getName().getContent(Language.en)).rowEnd();
         page.rowStart().header("EPFL Phd Program:").column(process.getExternalPhdProgram().getName().getContent(Language.en));
         page.rowStart().header("Title:").column(string(process.getThesisTitle())).rowEnd();
         page.rowStart().header("Collaboration:").column(process.getCollaborationTypeName()).rowEnd();
@@ -278,16 +285,16 @@ public class ExportPhdIndividualProgramProcessesInHtml {
                 count++;
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } finally {
             if (zip != null) {
                 try {
                     zip.flush();
                     zip.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    logger.error(e.getMessage(), e);
                 }
             }
         }
@@ -603,7 +610,7 @@ public class ExportPhdIndividualProgramProcessesInHtml {
         }
 
         public Page write(final String value) throws IOException {
-            writer.write(value.getBytes(PropertiesManager.DEFAULT_CHARSET));
+            writer.write(value.getBytes(Charset.defaultCharset().name()));
             writer.write("\n".getBytes());
             return this;
         }

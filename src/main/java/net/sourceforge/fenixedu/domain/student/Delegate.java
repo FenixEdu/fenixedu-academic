@@ -2,16 +2,16 @@ package net.sourceforge.fenixedu.domain.student;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DegreeUnit;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.Interval;
 
 public class Delegate extends Delegate_Base {
 
     public Delegate() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public boolean isActiveForExecutionYear(final ExecutionYear executionYear) {
@@ -48,7 +48,7 @@ public class Delegate extends Delegate_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

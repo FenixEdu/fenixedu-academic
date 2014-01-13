@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.accessControl.DegreeStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DegreeTeachersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import pt.ist.fenixframework.Atomic;
 
 public class CoordinatorSender extends CoordinatorSender_Base {
@@ -23,7 +24,6 @@ public class CoordinatorSender extends CoordinatorSender_Base {
         setFromAddress(Sender.getNoreplyMail());
         addReplyTos(new CurrentUserReplyTo());
         setMembers(new DegreeAllCoordinatorsGroup(degree));
-        setFromName(getMembers().getName());
         Group current = new CurrentDegreeCoordinatorsGroup(degree);
         Group teachers = new DegreeTeachersGroup(degree);
         Group students = new DegreeStudentsGroup(degree);
@@ -36,11 +36,11 @@ public class CoordinatorSender extends CoordinatorSender_Base {
         addRecipients(createRecipient(students));
         addRecipients(createRecipient(new AllTeachersGroup()));
         addRecipients(createRecipient(new AllStudentsGroup()));
+        setFromName(createFromName());
     }
 
-    @Override
-    public String getFromName() {
-        return getMembers().getName();
+    public String createFromName() {
+        return String.format("%s (%s: %s)", Unit.getInstitutionAcronym(), getDegree().getSigla(), "Coordenação");
     }
 
     @Atomic
@@ -48,6 +48,7 @@ public class CoordinatorSender extends CoordinatorSender_Base {
         CoordinatorSender sender = degree.getSender();
         return sender == null ? new CoordinatorSender(degree) : sender;
     }
+
     @Deprecated
     public boolean hasDegree() {
         return getDegree() != null;

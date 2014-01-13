@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
@@ -23,6 +22,8 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.CompetenceCourseLoadBean;
 import net.sourceforge.fenixedu.util.StringFormatter;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * Represents a set of attributes that defines a CompetenceCourse in a given
@@ -60,7 +61,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
 
     public CompetenceCourseInformation() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public CompetenceCourseInformation(CompetenceCourseInformation existingInformation) {
@@ -353,7 +354,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

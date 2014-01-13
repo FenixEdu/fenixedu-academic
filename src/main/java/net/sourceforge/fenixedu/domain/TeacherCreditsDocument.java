@@ -31,8 +31,6 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 
-import pt.utl.ist.fenix.tools.file.VirtualPath;
-import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
@@ -46,19 +44,12 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
             throw new DomainException("");
         }
         String filename = getFilename(teacher, executionSemester);
-        init(getfilePath(filename), filename, filename, null, content, null);
+        init(filename, filename, content, null);
     }
 
     private String getFilename(Teacher teacher, ExecutionSemester executionSemester) {
         return (teacher.getPerson().getIstUsername() + "_" + executionSemester.getName() + "_"
                 + executionSemester.getExecutionYear().getYear() + ".html").replaceAll(" ", "_").replaceAll("/", "_");
-    }
-
-    private VirtualPath getfilePath(String filename) {
-        final VirtualPath filePath = new VirtualPath();
-        filePath.addNode(new VirtualPathNode("TeacherCreditsDocuments", "TeacherCredits Documents"));
-        filePath.addNode(new VirtualPathNode("TeacherCreditsDocument" + getExternalId(), filename));
-        return filePath;
     }
 
     private String getTeacherCreditsFile(Teacher teacher, ExecutionSemester executionSemester, TeacherService teacherService)
@@ -79,7 +70,7 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
         htmlText.append("<h1 style=\"text-align: center;\">").append(executionSemester.getName()).append(" ")
                 .append(executionSemester.getExecutionYear().getYear()).append("</h1>");
         htmlText.append("<table class=\"tb01\"><tr><td><strong>Nome:</strong>").append(teacher.getPerson().getName());
-        htmlText.append("</td><td><strong>IST Id:</strong>").append(teacher.getPerson().getIstUsername());
+        htmlText.append("</td><td><strong>Username:</strong>").append(teacher.getPerson().getIstUsername());
         htmlText.append("</td></tr><tr><td><strong>Categoria:</strong>");
 
         ProfessionalCategory categoryByPeriod = teacher.getCategoryByPeriod(executionSemester);
@@ -115,7 +106,7 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
         htmlText.append("<li><b>").append(creditLineDTO.getThesesCredits())
                 .append("</b> (Diss) - Créditos provenientes de Dissertações</li>");
         htmlText.append("<li><b>").append(creditLineDTO.getInstitutionWorkingHours())
-                .append("</b> (P) - Horas semanais de permanência no IST</li>");
+                .append("</b> (P) - Horas semanais de permanência no " + Unit.getInstitutionAcronym() + "</li>");
         htmlText.append("<li><b>").append(creditLineDTO.getOtherCredits())
                 .append("</b> (O) - Créditos enquadrados na categoria outros</li>");
         htmlText.append("<li><b>").append(creditLineDTO.getManagementCredits())
@@ -246,7 +237,7 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
                     .append("</p>");
         }
 
-        htmlText.append("<h3>5) Permanência no IST</h3>");
+        htmlText.append("<h3>5) Permanência no " + Unit.getInstitutionAcronym() + "</h3>");
         ComparatorChain comparatorChain = new ComparatorChain();
         BeanComparator weekDayComparator = new BeanComparator("weekDay");
         BeanComparator startTimeComparator = new BeanComparator("startTime");
@@ -368,6 +359,7 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
 
         return htmlText.toString();
     }
+
     @Deprecated
     public boolean hasTeacherCredits() {
         return getTeacherCredits() != null;

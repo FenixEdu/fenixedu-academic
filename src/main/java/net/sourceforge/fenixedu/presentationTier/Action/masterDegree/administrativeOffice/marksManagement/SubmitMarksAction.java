@@ -9,7 +9,6 @@ import java.util.HashSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -32,9 +31,12 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.YearMonthDay;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -42,6 +44,8 @@ import pt.ist.fenixframework.FenixFramework;
  * 
  */
 public class SubmitMarksAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(SubmitMarksAction.class);
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -52,7 +56,7 @@ public class SubmitMarksAction extends FenixDispatchAction {
 
         // Get students List
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
         try {
             infoSiteEnrolmentEvaluation = ReadStudentsAndMarksByCurricularCourse.run(curricularCourseCode, null);
@@ -141,7 +145,7 @@ public class SubmitMarksAction extends FenixDispatchAction {
                 actionErrors.add(e.getKey(), new ActionError(e.getKey(), e.getArgs()));
 
             } catch (FenixServiceException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
                 throw new FenixActionException(e);
             }
         }

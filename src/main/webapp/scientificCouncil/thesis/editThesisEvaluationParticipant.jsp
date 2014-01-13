@@ -30,7 +30,14 @@
 	final String schemaName = type == ThesisParticipationType.ORIENTATOR ? "thesis.jury.proposal.participant.edit.with.credits" :
 	    	type == ThesisParticipationType.COORIENTATOR ? "thesis.jury.proposal.participant.edit.with.credits.co" :
 	    	    "thesis.jury.proposal.participant.edit";
+	final String pageTitle = type == ThesisParticipationType.ORIENTATOR ? "title.scientificCouncil.thesis.review.orientator.edit" :
+    	type == ThesisParticipationType.COORIENTATOR ? "title.scientificCouncil.thesis.review.coorientator.edit" : 
+    	    type == ThesisParticipationType.PRESIDENT ? "title.scientificCouncil.thesis.review.president.edit" : 
+    	        "title.scientificCouncil.thesis.review.vowels.edit";
 %>
+
+<h3 class="separator2 mtop2"><bean:message key="<%= pageTitle %>"/></h3>
+
 <div style="margin-left: 35px; width: 90%;">
 <fr:edit name="thesisEvaluationParticipant"
          action="<%= "/manageSecondCycleThesis.do?method=showThesisDetails&amp;thesisOid=" + thesis.getExternalId() %>"
@@ -42,5 +49,3 @@
     <fr:destination name="cancel" path="<%= "/manageSecondCycleThesis.do?method=showThesisDetails&amp;thesisOid=" + thesis.getExternalId() %>"/>
 </fr:edit>
 </div>
-
-<jsp:include page="viewThesisJury.jsp"/>

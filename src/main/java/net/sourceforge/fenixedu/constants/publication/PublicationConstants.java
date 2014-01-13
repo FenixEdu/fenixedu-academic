@@ -24,8 +24,6 @@ public final class PublicationConstants {
 
     public static final int ONE_VALUE = 1;
 
-    public static final String DEFAULT_ORGANIZATION = "IST";
-
     public static final String INIT_AUTHOR = "A";
 
     public static final String INIT_PERSON = "P";

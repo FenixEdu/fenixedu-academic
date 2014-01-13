@@ -1,13 +1,15 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import pt.ist.fenixframework.FenixFramework;
 
 public class DeleteProfessorshipAuthorizationFilter extends AuthorizationByRoleFilter {
@@ -20,7 +22,7 @@ public class DeleteProfessorshipAuthorizationFilter extends AuthorizationByRoleF
     }
 
     public void execute(String executionCourseID, String selectedTeacherID) throws NotAuthorizedException {
-        IUserView id = AccessControl.getUserView();
+        User id = Authenticate.getUser();
 
         try {
             final Person loggedPerson = id.getPerson();
@@ -33,7 +35,8 @@ public class DeleteProfessorshipAuthorizationFilter extends AuthorizationByRoleF
                 selectedProfessorship = teacher.getProfessorshipByExecutionCourse(executionCourse);
             }
 
-            if ((id == null) || (selectedProfessorship == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
+            if ((id == null) || (selectedProfessorship == null) || (id.getPerson().getPersonRolesSet() == null)
+                    || !id.getPerson().hasRole(getRoleType())
                     || isSamePersonAsBeingRemoved(loggedPerson, selectedProfessorship.getPerson())
                     || selectedProfessorship.getResponsibleFor()) {
                 throw new NotAuthorizedException();

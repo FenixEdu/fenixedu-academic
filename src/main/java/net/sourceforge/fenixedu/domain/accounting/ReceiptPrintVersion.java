@@ -2,17 +2,17 @@ package net.sourceforge.fenixedu.domain.accounting;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 public class ReceiptPrintVersion extends ReceiptPrintVersion_Base {
 
     private ReceiptPrintVersion() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     ReceiptPrintVersion(Receipt receipt, Person person) {
@@ -60,8 +60,9 @@ public class ReceiptPrintVersion extends ReceiptPrintVersion_Base {
         setRootDomainObject(null);
         super.deleteDomainObject();
     }
+
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

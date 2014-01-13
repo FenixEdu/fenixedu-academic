@@ -18,6 +18,7 @@ public class InquiryTeacherAnswer extends InquiryTeacherAnswer_Base {
         setRootDomainObject(null);
         super.deleteDomainObject();
     }
+
     @Deprecated
     public boolean hasAllowAcademicPublicizing() {
         return getAllowAcademicPublicizing() != null;

@@ -1,38 +1,37 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.contents.Attachment;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.file.FileSetMetaData;
-import pt.utl.ist.fenix.tools.file.VirtualPath;
 
 public class FileContent extends FileContent_Base {
 
+    public enum EducationalResourceType {
+        EXERCISE("exercise"), SIMULATION("simulation"), QUESTIONNARIE("questionnaire"), FIGURE("figure"), SLIDE("slide"), TABLE(
+                "table"), EXAM("exam"), TEST("test"), INFORMATIONS("informations"), MARKSHEET("marksheet"), PROJECT_SUBMISSION(
+                "projectSubmission"), LABORATORY_GUIDE("laboratoryGuide"), DIDACTIL_TEXT("didactilText"),
+        STUDY_BOOK("studyBook"), SITE_CONTENT("siteContent"), PROGRAM("program"), SUPPORT_TEXT("supportText");
+
+        private String type;
+
+        private EducationalResourceType(String type) {
+            this.type = type;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+    }
+
     protected FileContent() {
         super();
-
-        setAttachment(null);
     }
 
-    protected FileContent(Attachment attachment) {
-        super();
-
-        setAttachment(attachment);
-    }
-
-    public FileContent(Attachment attachment, VirtualPath path, String filename, String displayName,
-            Collection<FileSetMetaData> metadata, byte[] content, Group group) {
-        this(attachment);
-        init(path, filename, displayName, metadata, content, group);
-    }
-
-    public FileContent(VirtualPath path, String filename, String displayName, Collection<FileSetMetaData> metadata,
-            byte[] content, Group group) {
-        init(path, filename, displayName, metadata, content, group);
+    public FileContent(String filename, String displayName, byte[] content, Group group, EducationalResourceType type) {
+        this();
+        init(filename, displayName, content, group);
+        setResourceType(type);
     }
 
     @Override
@@ -47,18 +46,6 @@ public class FileContent extends FileContent_Base {
 
     public static FileContent readByOID(String externalId) {
         return FenixFramework.getDomainObject(externalId);
-    }
-
-    public static List<FileContent> readAllFileItems() {
-        List<FileContent> fileItems = new ArrayList<FileContent>();
-
-        for (File file : RootDomainObject.getInstance().getFiles()) {
-            if (file instanceof FileContent) {
-                fileItems.add((FileContent) file);
-            }
-        }
-
-        return fileItems;
     }
 
     public Site getSite() {
@@ -91,6 +78,7 @@ public class FileContent extends FileContent_Base {
             attachment.logItemFilePermittedGroup();
         }
     }
+
     @Deprecated
     public boolean hasAttachment() {
         return getAttachment() != null;

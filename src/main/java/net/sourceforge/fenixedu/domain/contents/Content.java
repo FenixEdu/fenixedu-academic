@@ -11,7 +11,6 @@ import java.util.UUID;
 import java.util.regex.Pattern;
 
 import net.sourceforge.fenixedu.domain.Item;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
@@ -24,11 +23,12 @@ import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.functionalities.GroupAvailability;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.StringNormalizer;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -47,7 +47,7 @@ public abstract class Content extends Content_Base {
     public Content() {
         super();
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         // setOjbConcreteClass(getClass().getName());
         setCreationDate(new DateTime());
         setContentId(UUID.randomUUID().toString());
@@ -133,7 +133,7 @@ public abstract class Content extends Content_Base {
         try {
             return getAvailabilityPolicy().isAvailable(context);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return false;
         }
     }
@@ -211,7 +211,7 @@ public abstract class Content extends Content_Base {
         for (final Node node : getParents()) {
             final Content child = node.getChild();
             node.delete();
-            if (child.getParentsSet().isEmpty()) {
+            if (child.getParentsSet().isEmpty() && child != this /* Already deleting this child, don't delete it again */) {
                 child.delete();
             }
         }
@@ -427,7 +427,7 @@ public abstract class Content extends Content_Base {
     @Override
     public void setAvailabilityPolicy(AvailabilityPolicy availabilityPolicy) {
         AvailabilityPolicy currentAvailabilityPolicy = getAvailabilityPolicy();
-        if (currentAvailabilityPolicy != null) {
+        if (currentAvailabilityPolicy != null && currentAvailabilityPolicy != availabilityPolicy) {
             currentAvailabilityPolicy.delete();
         }
         super.setAvailabilityPolicy(availabilityPolicy);
@@ -558,7 +558,7 @@ public abstract class Content extends Content_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

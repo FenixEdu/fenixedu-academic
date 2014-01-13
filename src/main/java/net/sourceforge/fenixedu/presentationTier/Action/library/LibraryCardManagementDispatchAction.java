@@ -41,6 +41,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.fenixedu.commons.StringNormalizer;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -48,7 +49,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -341,7 +341,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
         List<LibraryCardDTO> cardDTOList = new ArrayList<LibraryCardDTO>();
         List<LibraryCard> cardList = new ArrayList<LibraryCard>();
 
-        for (LibraryCard libraryCard : rootDomainObject.getLibraryCards()) {
+        for (LibraryCard libraryCard : rootDomainObject.getLibraryCardsSet()) {
             if (libraryCard.getCardEmitionDate() == null) {
                 cardDTOList.add(new LibraryCardDTO(libraryCard));
                 cardList.add(libraryCard);
@@ -442,7 +442,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
         List<LibraryCardDTO> cardDTOList = new ArrayList<LibraryCardDTO>();
         List<LibraryCard> cardList = new ArrayList<LibraryCard>();
 
-        for (LibraryCard libraryCard : rootDomainObject.getLibraryCards()) {
+        for (LibraryCard libraryCard : rootDomainObject.getLibraryCardsSet()) {
             if (libraryCard.getLetterGenerationDate() == null) {
                 if (result.equalsIgnoreCase("no")
                         && (libraryCard.getPartyClassification().equals(PartyClassification.EMPLOYEE) || libraryCard
@@ -699,7 +699,7 @@ public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 
     private List<Integer> getExistingPins() {
         List<Integer> pins = new ArrayList<Integer>();
-        for (LibraryCard libraryCard : rootDomainObject.getLibraryCards()) {
+        for (LibraryCard libraryCard : rootDomainObject.getLibraryCardsSet()) {
             if (libraryCard.getPin() != null) {
                 pins.add(libraryCard.getPin());
             }

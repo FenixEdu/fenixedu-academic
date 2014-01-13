@@ -1,15 +1,16 @@
 package net.sourceforge.fenixedu.domain.degree.finalProject;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 public class TeacherDegreeFinalProjectStudent extends TeacherDegreeFinalProjectStudent_Base implements ICreditsEventOriginator {
 
     public TeacherDegreeFinalProjectStudent() {
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public TeacherDegreeFinalProjectStudent(ExecutionSemester executionSemester, Teacher teacher, Registration registration) {
@@ -32,6 +33,7 @@ public class TeacherDegreeFinalProjectStudent extends TeacherDegreeFinalProjectS
         setRootDomainObject(null);
         super.deleteDomainObject();
     }
+
     @Deprecated
     public boolean hasStudent() {
         return getStudent() != null;
@@ -48,7 +50,7 @@ public class TeacherDegreeFinalProjectStudent extends TeacherDegreeFinalProjectS
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

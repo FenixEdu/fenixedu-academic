@@ -35,8 +35,7 @@ public class UnitBasedSender extends UnitBasedSender_Base {
 
     @Override
     public String getFromName() {
-        final Unit unit = getUnit();
-        return unit.getName();
+        return String.format("%s (%s)", Unit.getInstitutionAcronym(), getUnit().getName());
     }
 
     @Override

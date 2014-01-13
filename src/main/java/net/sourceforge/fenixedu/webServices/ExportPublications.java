@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
@@ -29,8 +28,11 @@ import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis.ThesisType;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -43,6 +45,9 @@ import pt.utl.ist.sotis.conversion.ConversionException;
 import pt.utl.ist.sotis.conversion.SotisMarshaller;
 
 public class ExportPublications {
+
+    private static final Logger logger = LoggerFactory.getLogger(ExportPublications.class);
+
     public byte[] harverst() {
         try {
             SotisMarshaller marshaller = new SotisMarshaller();
@@ -53,7 +58,7 @@ public class ExportPublications {
             Set<ScientificJournal> journals = new HashSet<ScientificJournal>();
             Set<EventEdition> eventEditions = new HashSet<EventEdition>();
 
-            for (ResearchResult result : RootDomainObject.getInstance().getResultsSet()) {
+            for (ResearchResult result : Bennu.getInstance().getResultsSet()) {
                 if (result instanceof ResearchResultPublication) {
                     ResearchResultPublication publication = (ResearchResultPublication) result;
                     String type = publication.getClass().getSimpleName().toLowerCase();
@@ -294,7 +299,7 @@ public class ExportPublications {
                             }
                         }
                     } catch (ConversionException e) {
-                        e.printStackTrace();
+                        logger.error(e.getMessage(), e);
                     }
                 }
             }

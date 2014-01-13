@@ -97,7 +97,8 @@ public class CreateGuideDispatchAction extends FenixDispatchAction {
                         DocumentType.RANK_RECOGNITION_AND_EQUIVALENCE_PROCESS);
 
         final InfoExecutionDegree infoExecutionDegree =
-                InfoExecutionDegree.newInfoFromDomain(FenixFramework.<ExecutionDegree> getDomainObject((String) createGuideForm.get("executionDegreeID")));
+                InfoExecutionDegree.newInfoFromDomain(FenixFramework.<ExecutionDegree> getDomainObject((String) createGuideForm
+                        .get("executionDegreeID")));
 
         try {
 

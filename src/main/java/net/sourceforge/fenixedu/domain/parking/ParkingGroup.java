@@ -2,18 +2,18 @@ package net.sourceforge.fenixedu.domain.parking;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class ParkingGroup extends ParkingGroup_Base {
 
     public ParkingGroup(String groupName) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setGroupName(groupName);
     }
 
     public static Collection<ParkingGroup> getAll() {
-        return RootDomainObject.getInstance().getParkingGroups();
+        return Bennu.getInstance().getParkingGroupsSet();
     }
 
     @Deprecated
@@ -37,7 +37,7 @@ public class ParkingGroup extends ParkingGroup_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

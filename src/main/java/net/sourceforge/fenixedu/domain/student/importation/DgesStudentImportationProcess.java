@@ -48,11 +48,15 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class DgesStudentImportationProcess extends DgesStudentImportationProcess_Base {
+
+    private static final Logger logger = LoggerFactory.getLogger(DgesStudentImportationProcess.class);
 
     private transient PrintWriter LOG_WRITER = null;
 
@@ -94,7 +98,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 
             importCandidates();
         } catch (Throwable a) {
-            a.printStackTrace();
+            logger.error(a.getMessage(), a);
             throw new RuntimeException(a);
         }
 
@@ -172,7 +176,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
         for (final DegreeCandidateDTO degreeCandidateDTO : degreeCandidateDTOs) {
 
             if (++processed % 150 == 0) {
-                System.out.println("Processed :" + processed);
+                logger.info("Processed :" + processed);
             }
 
             logCandidate(degreeCandidateDTO);
@@ -209,7 +213,6 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 
             if (!person.hasStudent()) {
                 new Student(person);
-                person.setIstUsername();
                 logCreatedStudent(person.getStudent());
             }
 
@@ -377,7 +380,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
     }
 
     private void logCandidateIsTeacher(DegreeCandidateDTO degreeCandidateDTO, Person person) {
-        LOG_WRITER.println(String.format("CANDIDATE WITH ID %s IS TEACHER WITH IST ID %s",
+        LOG_WRITER.println(String.format("CANDIDATE WITH ID %s IS TEACHER WITH USERNAME %s",
                 degreeCandidateDTO.getDocumentIdNumber(), person.getIstUsername()));
     }
 
@@ -392,7 +395,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
     }
 
     String getUniversityAcronym() {
-        return getDgesStudentImportationForCampus().isCampusAlameda() ? ALAMEDA_UNIVERSITY : TAGUS_UNIVERSITY;
+        return "ALAMEDA".equals(getDgesStudentImportationForCampus().getName()) ? ALAMEDA_UNIVERSITY : TAGUS_UNIVERSITY;
     }
 
     public static boolean canRequestJob() {

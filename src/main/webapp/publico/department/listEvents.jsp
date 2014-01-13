@@ -5,12 +5,13 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/messaging" prefix="messaging" %>
+<%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
 
 <html:xhtml/>
 
 <div class="breadcumbs mvert0">
     <bean:define id="institutionUrl">
-        <bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/>
+        <%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>
     </bean:define>
     <bean:define id="structureUrl">
         <bean:message key="link.institution.structure" bundle="GLOBAL_RESOURCES"/>
@@ -264,7 +265,7 @@ if (month != null && year!=null)
 	<logic:present name="announcementBoard">
 		<bean:define id="board" name="announcementBoard" type="net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard"/>
 		<%
-		final String appContext = net.sourceforge.fenixedu._development.PropertiesManager.getProperty("app.context");
+		final String appContext = FenixConfigurationManager.getConfiguration().appContext();
 		final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
 	    final String module = org.apache.struts.util.ModuleUtils.getInstance().getModuleConfig(request).getPrefix();
 		%>

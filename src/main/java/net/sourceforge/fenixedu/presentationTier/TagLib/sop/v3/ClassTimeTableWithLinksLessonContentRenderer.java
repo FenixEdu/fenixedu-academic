@@ -102,7 +102,8 @@ public class ClassTimeTableWithLinksLessonContentRenderer extends LessonSlotCont
             strBuffer.append(site.getReversePath());
             strBuffer.append("\">");
             strBuffer.append(executionCourse.getSigla()).append("</a>");
-            strBuffer.append("&nbsp;").append("&nbsp;(").append(aggregation.getShift().getShiftTypesCodePrettyPrint()).append(")&nbsp;");
+            strBuffer.append("&nbsp;").append("&nbsp;(").append(aggregation.getShift().getShiftTypesCodePrettyPrint())
+                    .append(")&nbsp;");
 
             final AllocatableSpace allocatableSpace = aggregation.getAllocatableSpace();
             if (allocatableSpace != null) {

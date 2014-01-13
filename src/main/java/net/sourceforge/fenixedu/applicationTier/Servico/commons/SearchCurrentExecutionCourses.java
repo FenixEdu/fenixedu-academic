@@ -10,12 +10,11 @@ import java.util.Map;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.beanutils.PropertyUtils;
-
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
+import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
+import org.fenixedu.commons.StringNormalizer;
 
 public class SearchCurrentExecutionCourses implements AutoCompleteProvider<ExecutionCourse> {
 
@@ -29,7 +28,7 @@ public class SearchCurrentExecutionCourses implements AutoCompleteProvider<Execu
         if (value == null) {
             result.addAll(objects);
         } else {
-            String[] values = StringNormalizer.normalize(value).toLowerCase().split("\\p{Space}+");
+            String[] values = StringNormalizer.normalize(value).split("\\p{Space}+");
 
             outter: for (ExecutionCourse object : objects) {
                 try {
@@ -39,7 +38,7 @@ public class SearchCurrentExecutionCourses implements AutoCompleteProvider<Execu
                         continue;
                     }
 
-                    String normalizedValue = StringNormalizer.normalize(objectValue.toString()).toLowerCase();
+                    String normalizedValue = StringNormalizer.normalize(objectValue.toString());
 
                     for (int i = 0; i < values.length; i++) {
                         String part = values[i];

@@ -6,17 +6,17 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -35,7 +35,7 @@ public class MergeExternalUnits {
 
             if (sendMail != null && sendMail.booleanValue()) {
 
-                String emails = PropertiesManager.getProperty("merge.units.emails");
+                String emails = FenixConfigurationManager.getConfiguration().getMergeUnitsEmails();
                 if (!StringUtils.isEmpty(emails)) {
 
                     Set<String> resultEmails = new HashSet<String>();
@@ -55,7 +55,7 @@ public class MergeExternalUnits {
                                     new String[] { person.getName(), person.getUsername(), fromUnitName, fromUnitID,
                                             destinationUnit.getName(), destinationUnit.getExternalId().toString() });
 
-                    SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
+                    SystemSender systemSender = Bennu.getInstance().getSystemSender();
                     new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST, subject, body,
                             resultEmails);
                 }

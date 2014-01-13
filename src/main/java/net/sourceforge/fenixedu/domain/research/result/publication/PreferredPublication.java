@@ -3,7 +3,8 @@ package net.sourceforge.fenixedu.domain.research.result.publication;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class PreferredPublication extends PreferredPublication_Base {
     public static class PreferredComparator implements Comparator<ResearchResultPublication> {
@@ -59,7 +60,7 @@ public class PreferredPublication extends PreferredPublication_Base {
     public PreferredPublication(Person person, ResearchResultPublication preferredPublication,
             PreferredPublicationPriority priority) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setPersonThatPrefers(person);
         setPreferredPublication(preferredPublication);
         setPriority(priority);
@@ -71,13 +72,14 @@ public class PreferredPublication extends PreferredPublication_Base {
         setRootDomainObject(null);
         deleteDomainObject();
     }
+
     @Deprecated
     public boolean hasPreferredPublication() {
         return getPreferredPublication() != null;
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -8,7 +8,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.Instalation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
@@ -19,19 +19,25 @@ import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.Atomic;
 
 public class GOPSendMessageService {
+
+    private static final Logger logger = LoggerFactory.getLogger(GOPSendMessageService.class);
+
     private static Sender GOP_SENDER = null;
 
     private static Sender getGOPSender() {
         if (GOP_SENDER == null) {
             GOP_SENDER = initGOPSender();
             if (GOP_SENDER == null) {
-                System.out.println("WARN: GOPSender couldn't be found, using SystemSender ...");
-                GOP_SENDER = RootDomainObject.getInstance().getSystemSender();
+                logger.warn("WARN: GOPSender couldn't be found, using SystemSender ...");
+                GOP_SENDER = Bennu.getInstance().getSystemSender();
             }
         }
         return GOP_SENDER;
@@ -134,11 +140,11 @@ public class GOPSendMessageService {
     private static Set<String> getGOPEmail(Collection<ExecutionDegree> degrees) {
         Set<String> emails = new HashSet<String>();
         for (ExecutionDegree executionDegree : degrees) {
-            if (executionDegree.getCampus().isCampusAlameda()) {
-                emails.add(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "email.gop.alameda"));
-            }
-            if (executionDegree.getCampus().isCampusTaguspark()) {
-                emails.add(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "email.gop.taguspark"));
+            final String emailFromApplicationResources =
+                    BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "email.gop."
+                            + executionDegree.getCampus().getName());
+            if (!StringUtils.isEmpty(emailFromApplicationResources)) {
+                emails.add(emailFromApplicationResources);
             }
         }
         return emails;

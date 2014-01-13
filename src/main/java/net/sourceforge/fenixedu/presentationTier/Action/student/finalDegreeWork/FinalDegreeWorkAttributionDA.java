@@ -10,7 +10,6 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ConfirmAttributionOfFinalDegreeWork;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroup;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupProposal;
@@ -29,8 +28,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -123,12 +123,13 @@ public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
         final ExecutionYear executionYear;
         final String executionYearOID = (String) finalDegreeWorkAttributionForm.get("executionYearOID");
         executionYear =
-                executionYearOID == null || executionYearOID.equals("") ? ExecutionYear.readCurrentExecutionYear() : FenixFramework.<ExecutionYear> getDomainObject(executionYearOID);
+                executionYearOID == null || executionYearOID.equals("") ? ExecutionYear.readCurrentExecutionYear() : FenixFramework
+                        .<ExecutionYear> getDomainObject(executionYearOID);
         return prepare(mapping, finalDegreeWorkAttributionForm, request, executionYear);
     }
 
     private FinalDegreeWorkGroup findGroup(final ExecutionYear executionYear) {
-        final IUserView userView = UserView.getUser();
+        final User userView = Authenticate.getUser();
         for (final Registration registration : userView.getPerson().getStudent().getRegistrationsSet()) {
             for (final GroupStudent groupStudent : registration.getAssociatedGroupStudentsSet()) {
                 final FinalDegreeWorkGroup group = groupStudent.getFinalDegreeDegreeWorkGroup();
@@ -149,11 +150,11 @@ public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
 
         String selectedGroupProposalOID = (String) finalDegreeWorkAttributionForm.get("selectedGroupProposal");
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         if (selectedGroupProposalOID != null && !selectedGroupProposalOID.equals("")) {
 
-            ConfirmAttributionOfFinalDegreeWork.run(userView.getUtilizador(), selectedGroupProposalOID);
+            ConfirmAttributionOfFinalDegreeWork.run(userView.getUsername(), selectedGroupProposalOID);
         }
 
         return mapping.findForward("prepareShowFinalDegreeWorkList");

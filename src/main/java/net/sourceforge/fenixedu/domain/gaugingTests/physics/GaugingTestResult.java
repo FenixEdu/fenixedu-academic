@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.domain.gaugingTests.physics;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">Jo�o Mota </a> 26/Nov/2003
@@ -14,7 +14,7 @@ public class GaugingTestResult extends GaugingTestResult_Base {
 
     public GaugingTestResult() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public Double getCf() {
@@ -27,7 +27,7 @@ public class GaugingTestResult extends GaugingTestResult_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

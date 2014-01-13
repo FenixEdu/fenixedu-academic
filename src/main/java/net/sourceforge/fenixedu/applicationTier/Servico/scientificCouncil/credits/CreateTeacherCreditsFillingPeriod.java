@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits;
 
-
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.dataTransferObject.teacherCredits.TeacherCreditsPeriodBean;
 import net.sourceforge.fenixedu.predicates.RolePredicates;

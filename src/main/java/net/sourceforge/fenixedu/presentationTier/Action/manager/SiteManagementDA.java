@@ -18,8 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateFileContent;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateScormFile;
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateScormPackage;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteFileContent;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteItem;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteSection;
@@ -28,6 +26,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.AddFunctionalityT
 import net.sourceforge.fenixedu.applicationTier.Servico.person.ApplyStructureModifications;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.RemoveContentFromContainer;
 import net.sourceforge.fenixedu.domain.FileContent;
+import net.sourceforge.fenixedu.domain.FileContent.EducationalResourceType;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
@@ -47,11 +46,12 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.file.FileManagerException;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 /**
@@ -76,6 +76,8 @@ import pt.utl.ist.fenix.tools.util.FileUtils;
  * @author cfgi
  */
 public abstract class SiteManagementDA extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(SiteManagementDA.class);
 
     private static final int MAX_FILE_SIZE = 66060288;
 
@@ -143,7 +145,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
         FileContentCreationBean bean = new FileContentCreationBean(container, site);
 
         if (!site.isFileClassificationSupported()) {
-            bean.setEducationalLearningResourceType(FileContentCreationBean.EducationalResourceType.SITE_CONTENT);
+            bean.setEducationalLearningResourceType(EducationalResourceType.SITE_CONTENT);
             request.setAttribute("skipFileClassification", true);
         }
 
@@ -303,7 +305,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
         List<String> errors = validationErrors(bean);
         if (errors.isEmpty()) {
             try {
-                return fileUpload(mapping, form, request, response, false);
+                return internalFileUpload(mapping, form, request, response);
             } catch (DomainException e) {
                 addErrorMessage(request, "section", e.getKey(), (Object[]) e.getArgs());
                 return reportUploadError(mapping, request, bean, errors);
@@ -329,38 +331,6 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
         request.setAttribute("fileItemCreator", bean);
 
         return mapping.findForward("uploadFile");
-    }
-
-    public ActionForward scormFileUpload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        Site site = getSite(request);
-        if (!site.isScormContentAccepted()) {
-            throw new DomainException("site.scorm.notAccepted");
-        }
-
-        FileContentCreationBean bean = (FileContentCreationBean) RenderUtils.getViewState("creator").getMetaObject().getObject();
-        List<String> errors = validationErrors(bean);
-        if (errors.isEmpty()) {
-            try {
-                return fileUpload(mapping, form, request, response, true);
-            } catch (DomainException e) {
-                addErrorMessage(request, "section", e.getKey(), (Object[]) e.getArgs());
-                return reportScormUploadError(mapping, form, request, response, bean, errors);
-            }
-        } else {
-            return reportScormUploadError(mapping, form, request, response, bean, errors);
-        }
-    }
-
-    private ActionForward reportScormUploadError(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response, FileContentCreationBean bean, List<String> errors) throws Exception {
-        bean.setFile(null);
-        RenderUtils.invalidateViewState("file");
-        for (String error : errors) {
-            addActionMessage(request, error, (String[]) null);
-        }
-        return prepareUploadScormFile(mapping, form, request, response);
     }
 
     private List<String> validationErrors(FileContentCreationBean bean) {
@@ -389,8 +359,8 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
         return errors;
     }
 
-    private ActionForward fileUpload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response, boolean scormFileUpload) throws Exception {
+    private ActionForward internalFileUpload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
 
         IViewState viewState = RenderUtils.getViewState("creator");
         if (viewState == null) {
@@ -413,155 +383,27 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
             formFileInputStream = bean.getFile();
             if (formFileInputStream == null) {
                 addErrorMessage(request, "unableToStoreFile", "errors.unableToStoreFile", bean.getFileName());
-                return scormFileUpload ? prepareCreateScormFile(mapping, form, request, response) : uploadFile(mapping, form,
-                        request, response);
+                return uploadFile(mapping, form, request, response);
             }
 
             if (bean.getFileSize() > MAX_FILE_SIZE) {
                 addErrorMessage(request, "fileMaxSizeExceeded", "errors.file.max.size.exceeded", MAX_FILE_SIZE);
-                return scormFileUpload ? prepareCreateScormFile(mapping, form, request, response) : uploadFile(mapping, form,
-                        request, response);
+                return uploadFile(mapping, form, request, response);
             }
 
             file = FileUtils.copyToTemporaryFile(formFileInputStream);
 
-            if (scormFileUpload) {
-                CreateScormPackage.runCreateScormPackage(bean.getSite(), container, file, bean.getFileName(),
-                        bean.getDisplayName(), bean.getPermittedGroup(), getLoggedPerson(request),
-                        bean.getEducationalLearningResourceType());
-            } else {
-                CreateFileContent.runCreateFileContent(bean.getSite(), container, file, bean.getFileName(),
-                        bean.getDisplayName(), bean.getPermittedGroup(), getLoggedPerson(request),
-                        bean.getEducationalLearningResourceType());
-            }
-
-        } catch (FileManagerException e) {
-            addErrorMessage(request, "unableToStoreFile", "errors.unableToStoreFile", bean.getFileName());
-
-            return scormFileUpload ? prepareCreateScormFile(mapping, form, request, response) : uploadFile(mapping, form,
-                    request, response);
-
-        } finally {
-            if (formFileInputStream != null) {
-                formFileInputStream.close();
-            }
-            if (file != null) {
-                file.delete();
-            }
-        }
-
-        return mapping.findForward("section");
-    }
-
-    public ActionForward prepareUploadScormFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        putScormCreationBeanInRequest(request);
-        return mapping.findForward("uploadScorm");
-    }
-
-    public ActionForward prepareCreateScormFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        putScormCreationBeanInRequest(request);
-        return mapping.findForward("createScorm");
-    }
-
-    private void putScormCreationBeanInRequest(HttpServletRequest request) {
-
-        Site site = getSite(request);
-        ScormCreationBean bean = new ScormCreationBean(getSelectContainer(request), site);
-
-        if (!site.isFileClassificationSupported()) {
-            bean.setEducationalLearningResourceType(FileContentCreationBean.EducationalResourceType.SITE_CONTENT);
-            request.setAttribute("skipFileClassification", true);
-        }
-
-        bean.setAuthorsName(site.getAuthorName());
-        ScormCreationBean possibleBean = getRenderedObject("scormPackage");
-        if (possibleBean != null) {
-            bean.copyValuesFrom(possibleBean);
-        }
-        request.setAttribute("bean", bean);
-    }
-
-    public ActionForward validateScormForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        ScormCreationBean bean = getRenderedObject("scormPackage");
-
-        if (bean.isValid() && validationErrors(bean).isEmpty()) {
-            return createScormFile(mapping, form, request, response);
-        }
-
-        addActionMessage(request, "label.missingRequiredFields", (String[]) null);
-
-        selectItem(request);
-        request.setAttribute("bean", bean);
-
-        return mapping.findForward("createScorm");
-    }
-
-    public ActionForward createScormFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        Site site = getSite(request);
-        if (!site.isScormContentAccepted()) {
-            throw new DomainException("site.scorm.notAccepted");
-        }
-
-        ScormCreationBean bean = getRenderedObject("scormPackage");
-
-        String displayName = bean.getDisplayName();
-        if (displayName == null || displayName.length() == 0 || displayName.trim().length() == 0) {
-            displayName = getFilenameOnly(bean.getFileName());
-        }
-
-        InputStream vcardFile = bean.getVirtualCardFile();
-        InputStream formFileInputStream = null;
-        File file = null;
-
-        Container container = bean.getFileHolder();
-        if (container instanceof Item) {
-            selectItem(request);
-        } else {
-            selectSection(request);
-        }
-
-        String resourceLocation = container.getReversePath();
-        bean.setTechnicalLocation(resourceLocation);
-
-        try {
-            if (bean.getVirtualCardFilename() != null && bean.getVirtualCardFilename().length() > 0) {
-                String vcardContent = readContentOfVCard(vcardFile);
-                bean.setVcardContent(vcardContent);
-            }
-
-            formFileInputStream = bean.getFile();
-            file = FileUtils.copyToTemporaryFile(formFileInputStream);
-
-            CreateScormFile.runCreateScormFile(new CreateScormFile.CreateScormFileItemForItemArgs(site, container, file, bean
-                    .getFileName(), displayName, bean.getPermittedGroup(), bean.getMetaInformation(), getLoggedPerson(request),
-                    bean.getEducationalLearningResourceType()));
+            CreateFileContent.runCreateFileContent(bean.getSite(), container, file, bean.getFileName(), bean.getDisplayName(),
+                    bean.getPermittedGroup(), getLoggedPerson(request), bean.getEducationalLearningResourceType());
 
         } catch (DomainException e) {
-            addActionMessage(request, e.getMessage(), e.getArgs());
-            RenderUtils.invalidateViewState("scormPackage");
-            return prepareCreateScormFile(mapping, form, request, response);
-        } catch (FenixServiceException e) {
-            addActionMessage(request, "error.scormfilupload", (String[]) null);
-            RenderUtils.invalidateViewState("scormPackage");
-            return prepareCreateScormFile(mapping, form, request, response);
-        } catch (IOException e) {
-            addActionMessage(request, "error.unableToReadVCard", (String[]) null);
-            RenderUtils.invalidateViewState("scormPackage");
-            return prepareCreateScormFile(mapping, form, request, response);
+            addErrorMessage(request, "unableToStoreFile", "errors.unableToStoreFile", bean.getFileName());
+
+            return uploadFile(mapping, form, request, response);
+
         } finally {
             if (formFileInputStream != null) {
                 formFileInputStream.close();
-            }
-            if (vcardFile != null) {
-                vcardFile.close();
             }
             if (file != null) {
                 file.delete();
@@ -613,7 +455,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 
         try {
             DeleteFileContent.runDeleteFileContent(fileContent);
-        } catch (FileManagerException e1) {
+        } catch (DomainException e1) {
             addErrorMessage(request, "items", "errors.unableToDeleteFile");
         }
 
@@ -686,7 +528,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
             Site site = fileItem.getSite();
             EditFilePermissions.runEditFilePermissions(site, fileItem, bean.getPermittedGroup());
             return mapping.findForward("section");
-        } catch (FileManagerException ex) {
+        } catch (DomainException ex) {
             addErrorMessage(request, "error.teacher.siteAdministration.editItemFilePermissions.unableToChangeFilePermissions");
 
             request.setAttribute("fileItemBean", bean);
@@ -789,7 +631,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
         try {
             return new Integer(id);
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return null;
         }
     }

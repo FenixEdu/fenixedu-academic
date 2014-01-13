@@ -12,7 +12,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.contents.Attachment;
@@ -23,7 +22,12 @@ import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class ContentFilter implements Filter {
+
+    private static final Logger logger = LoggerFactory.getLogger(ContentFilter.class);
 
     private static final String SECTION_PATH = "/publico/viewGenericContent.do?method=viewSection";
 
@@ -72,11 +76,11 @@ public class ContentFilter implements Filter {
 
         Content content = functionalityContext.getSelectedContent();
 
-        if (LogLevel.INFO) {
+        if (logger.isDebugEnabled()) {
             if (content == null) {
-                System.out.println(httpServletRequest.getRequestURI() + " ---> null");
+                logger.debug(httpServletRequest.getRequestURI() + " ---> null");
             } else {
-                System.out.println(httpServletRequest.getRequestURI() + " ---> " + content.getClass().getName());
+                logger.debug(httpServletRequest.getRequestURI() + " ---> " + content.getClass().getName());
             }
         }
 

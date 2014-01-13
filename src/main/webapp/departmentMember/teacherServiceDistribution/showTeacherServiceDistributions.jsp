@@ -3,8 +3,8 @@
 <%@ page import="net.sourceforge.fenixedu.domain.Person" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
-<%@page import="net.sourceforge.fenixedu.applicationTier.IUserView"%>
-<%@page import="pt.ist.fenixWebFramework.security.UserView"%>
+<%@page import="org.fenixedu.bennu.core.security.Authenticate"%>
+<%@page import="org.fenixedu.bennu.core.domain.User"%>
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
@@ -87,7 +87,7 @@
 			<th>
 			</th>
 		</tr>
-		<% IUserView userView = UserView.getUser(); %>
+		<% User userView = Authenticate.getUser(); %>
 		<% Person person = userView.getPerson(); %>
 	<logic:iterate name="tsdProcessList" id="tsdProcess">	
 		<tr>

@@ -1,20 +1,17 @@
 package net.sourceforge.fenixedu.domain.parking;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import pt.utl.ist.fenix.tools.file.VirtualPath;
-import pt.utl.ist.fenix.tools.file.VirtualPathNode;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class NewParkingDocument extends NewParkingDocument_Base {
 
     public NewParkingDocument() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public NewParkingDocument(NewParkingDocumentType parkingDocumentType, ParkingFile parkingFile, Vehicle vehicle) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setParkingDocumentType(parkingDocumentType);
         setParkingFile(parkingFile);
         setVehicle(vehicle);
@@ -22,7 +19,7 @@ public class NewParkingDocument extends NewParkingDocument_Base {
 
     public NewParkingDocument(NewParkingDocumentType parkingDocumentType, ParkingFile parkingFile, ParkingRequest parkingRequest) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setParkingDocumentType(parkingDocumentType);
         setParkingFile(parkingFile);
         setParkingRequest(parkingRequest);
@@ -39,18 +36,9 @@ public class NewParkingDocument extends NewParkingDocument_Base {
 
     public NewParkingDocument copyParkingDocument(final Vehicle vehicle) {
         final ParkingFile parkingFile =
-                new ParkingFile(getFilePath(vehicle), getParkingFile().getFilename(), getParkingFile().getFilename(),
-                        getParkingFile().getContents(), getParkingFile().getPermittedGroup());
+                new ParkingFile(getParkingFile().getFilename(), getParkingFile().getFilename(), getParkingFile().getContents(),
+                        getParkingFile().getPermittedGroup());
         return new NewParkingDocument(getParkingDocumentType(), parkingFile, vehicle);
-    }
-
-    protected VirtualPath getFilePath(final Vehicle vehicle) {
-        Party party = vehicle.getParkingParty().getParty();
-        final VirtualPath filePath = new VirtualPath();
-        filePath.addNode(new VirtualPathNode("ParkingFiles", "Parking Files"));
-        filePath.addNode(new VirtualPathNode("Party" + party.getExternalId(), party.getName()));
-        filePath.addNode(new VirtualPathNode("V" + vehicle.getExternalId(), "Vehicle ID"));
-        return filePath;
     }
 
     @Deprecated
@@ -64,7 +52,7 @@ public class NewParkingDocument extends NewParkingDocument_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

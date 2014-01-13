@@ -26,8 +26,7 @@ public class EditGratuitySituationById {
         }
 
         StudentCurricularPlan studentCurricularPlan =
-                FenixFramework.getDomainObject(infoGratuitySituation.getInfoStudentCurricularPlan()
-                        .getExternalId());
+                FenixFramework.getDomainObject(infoGratuitySituation.getInfoStudentCurricularPlan().getExternalId());
 
         GratuityValues gratuityValues =
                 FenixFramework.getDomainObject(infoGratuitySituation.getInfoGratuityValues().getExternalId());

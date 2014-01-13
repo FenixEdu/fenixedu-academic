@@ -33,8 +33,8 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.serviceRequests.AcademicServiceRequestsManagementDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.util.StringUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -80,7 +80,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
         if (doc != null) {
             final ServletOutputStream writer = response.getOutputStream();
             try {
-                response.setContentLength(doc.getSize());
+                response.setContentLength(doc.getSize().intValue());
                 response.setContentType("application/pdf");
                 response.addHeader("Content-Disposition", "attachment; filename=" + doc.getFilename());
                 writer.write(doc.getContents());

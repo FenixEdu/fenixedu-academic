@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
@@ -20,19 +19,20 @@ import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.ScheduleThe
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.SkipScheduleFirstThesisMeeting;
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.SubmitThesisMeetingMinutes;
 
+import org.fenixedu.bennu.core.domain.User;
+
 public class PhdMeetingSchedulingProcess extends PhdMeetingSchedulingProcess_Base {
 
     @StartActivity
     static public class StartThesisMeetings extends PhdMeetingSchedulingActivity {
 
         @Override
-        protected void activityPreConditions(PhdMeetingSchedulingProcess process, IUserView userView) {
+        protected void activityPreConditions(PhdMeetingSchedulingProcess process, User userView) {
             // Activity on main process ensures access control
         }
 
         @Override
-        protected PhdMeetingSchedulingProcess executeActivity(PhdMeetingSchedulingProcess process, IUserView userView,
-                Object object) {
+        protected PhdMeetingSchedulingProcess executeActivity(PhdMeetingSchedulingProcess process, User userView, Object object) {
 
             final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
             final PhdMeetingSchedulingProcess result = new PhdMeetingSchedulingProcess(bean.getThesisProcess());
@@ -57,7 +57,7 @@ public class PhdMeetingSchedulingProcess extends PhdMeetingSchedulingProcess_Bas
     }
 
     @Override
-    public boolean isAllowedToManageProcess(IUserView userView) {
+    public boolean isAllowedToManageProcess(User userView) {
         return this.getIndividualProgramProcess().isAllowedToManageProcess(userView);
     }
 
@@ -82,7 +82,7 @@ public class PhdMeetingSchedulingProcess extends PhdMeetingSchedulingProcess_Bas
     }
 
     @Override
-    public boolean canExecuteActivity(IUserView userView) {
+    public boolean canExecuteActivity(User userView) {
         return false;
     }
 
@@ -126,11 +126,13 @@ public class PhdMeetingSchedulingProcess extends PhdMeetingSchedulingProcess_Bas
         return (PhdMeetingSchedulingProcessState) super.getMostRecentState();
     }
 
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingProcessState> getStates() {
         return getStatesSet();
     }
 
+    @Override
     @Deprecated
     public boolean hasAnyStates() {
         return !getStatesSet().isEmpty();

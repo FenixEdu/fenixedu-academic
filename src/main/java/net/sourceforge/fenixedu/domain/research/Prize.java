@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -13,28 +12,16 @@ import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
 import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import pt.ist.fenixframework.dml.runtime.RelationAdapter;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class Prize extends Prize_Base {
 
-    static {
-        getRelationPrizeWinners().addListener(new RelationAdapter<Prize, Party>() {
-            @Override
-            public void afterRemove(Prize prize, Party party) {
-                if (prize != null && party != null) {
-                    if (prize.getParties().isEmpty()) {
-                        prize.delete();
-                    }
-                }
-                super.afterRemove(prize, party);
-            }
-        });
-    }
-
     private Prize() {
         super();
-        this.setRootDomainObject(RootDomainObject.getInstance());
+        this.setRootDomainObject(Bennu.getInstance());
     }
 
     public Prize(MultiLanguageString name, MultiLanguageString description, Integer year) {
@@ -177,7 +164,7 @@ public class Prize extends Prize_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

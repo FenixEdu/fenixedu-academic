@@ -7,8 +7,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPersonByUsernameOrIstUsername;
+import net.sourceforge.fenixedu.domain.Instalation;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.util.HostAccessControl;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.lang.CharEncoding;
 import org.apache.commons.lang.StringUtils;
@@ -34,7 +35,7 @@ public class RetrieveUserInformation extends ExternalInterfaceDispatchAction {
     public ActionForward getUserEmailAndUniqueUsername(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        if (!HostAccessControl.isAllowed(this, request)) {
+        if (!FenixConfigurationManager.getHostAccessControl().isAllowed(this, request)) {
             writeResponse(response, NOT_AUTHORIZED_CODE, "");
         } else {
             final String username = request.getParameter("username");
@@ -51,7 +52,7 @@ public class RetrieveUserInformation extends ExternalInterfaceDispatchAction {
                     responseCode = SUCCESS_CODE;
 
                     final String uniqueUsername = person.getIstUsername();
-                    final String email = String.format("%s@ist.utl.pt", uniqueUsername);
+                    final String email = Instalation.getInstance().getInstituitionalEmailAddress(uniqueUsername);
                     responseMessage =
                             "email=" + URLEncoder.encode(email, ENCODING) + "&" + "uniqueUsername="
                                     + URLEncoder.encode(uniqueUsername, ENCODING);

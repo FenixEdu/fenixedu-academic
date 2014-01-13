@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.gesdis;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -15,7 +14,10 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -33,11 +35,11 @@ public class EditCourseInformationAuthorizationFilter extends AuthorizationByRol
     }
 
     public void execute(String courseReportID, InfoCourseReport infoCourseReport, String newReport) throws NotAuthorizedException {
-        IUserView id = AccessControl.getUserView();
+        User id = Authenticate.getUser();
 
         try {
-            if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType()))) || (id == null)
-                    || (id.getRoleTypes() == null) || (!isResponsibleFor(id, infoCourseReport))) {
+            if (((id != null && id.getPerson().getPersonRolesSet() != null && !id.getPerson().hasRole(getRoleType())))
+                    || (id == null) || (id.getPerson().getPersonRolesSet() == null) || (!isResponsibleFor(id, infoCourseReport))) {
                 throw new NotAuthorizedException();
             }
         } catch (RuntimeException e) {
@@ -45,7 +47,7 @@ public class EditCourseInformationAuthorizationFilter extends AuthorizationByRol
         }
     }
 
-    private boolean isResponsibleFor(IUserView id, InfoCourseReport infoCourseReport) {
+    private boolean isResponsibleFor(User id, InfoCourseReport infoCourseReport) {
         final Person person = id.getPerson();
 
         InfoExecutionCourse infoExecutionCourse = infoCourseReport.getInfoExecutionCourse();

@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.accounting;
 
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import pt.ist.fenixframework.Atomic;

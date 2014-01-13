@@ -15,7 +15,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -37,6 +36,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.bennu.core.domain.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -53,6 +55,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "chooseForGenerateFiles", path = "/manager/generateFiles/chooseForGenerateFiles.jsp"),
         @Forward(name = "firstPage", path = "/manager/generateFiles/welcomeScreen.jsp") })
 public class GenerateFilesAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(GenerateFilesAction.class);
 
     private static final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -98,7 +102,7 @@ public class GenerateFilesAction extends FenixDispatchAction {
 
     public ActionForward generateGratuityFile(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String fileType = request.getParameter("file");
         request.setAttribute("file", fileType);
@@ -137,7 +141,7 @@ public class GenerateFilesAction extends FenixDispatchAction {
             return mapping.getInputForward();
 
         } catch (FenixServiceException exception) {
-            exception.printStackTrace();
+            logger.error(exception.getMessage(), exception);
             addErrorMessage(request, "noList", "error.generateFiles.emptyList");
             return mapping.getInputForward();
         }

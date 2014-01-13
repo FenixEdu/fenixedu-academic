@@ -10,16 +10,20 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.dml.DomainClass;
 
 public abstract class Process extends Process_Base implements Comparable<Process> {
+
+    private static final Logger logger = LoggerFactory.getLogger(Process.class);
 
     private static Map<String, Activity<? extends Process>> startActivities;
 
@@ -39,7 +43,7 @@ public abstract class Process extends Process_Base implements Comparable<Process
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
         }
     }
@@ -70,7 +74,7 @@ public abstract class Process extends Process_Base implements Comparable<Process
         return activity;
     }
 
-    public static <T extends Process> T createNewProcess(IUserView userView, Class<? extends Process> processClass, Object object) {
+    public static <T extends Process> T createNewProcess(User userView, Class<? extends Process> processClass, Object object) {
         try {
             return (T) getStartActivity(processClass).execute(null, userView, object);
         } catch (InstantiationException e) {
@@ -80,7 +84,7 @@ public abstract class Process extends Process_Base implements Comparable<Process
         }
     }
 
-    public static <T extends Process> T createNewProcess(IUserView userView, String processName, Object object) {
+    public static <T extends Process> T createNewProcess(User userView, String processName, Object object) {
         return (T) getStartActivity(processName).execute(null, userView, object);
     }
 
@@ -88,10 +92,10 @@ public abstract class Process extends Process_Base implements Comparable<Process
 
     public Process() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
-    public final Process executeActivity(IUserView userView, String activityId, Object object) {
+    public final Process executeActivity(User userView, String activityId, Object object) {
         Activity activity = getActivity(activityId);
 
         return activity.execute(this, userView, object);
@@ -115,7 +119,7 @@ public abstract class Process extends Process_Base implements Comparable<Process
         return getExternalId().compareTo(process.getExternalId());
     }
 
-    public List<Activity> getAllowedActivities(final IUserView userView) {
+    public List<Activity> getAllowedActivities(final User userView) {
         final List<Activity> result = new ArrayList<Activity>();
         for (final Activity activity : getActivities()) {
             try {
@@ -162,7 +166,7 @@ public abstract class Process extends Process_Base implements Comparable<Process
         return logs;
     }
 
-    public abstract boolean canExecuteActivity(IUserView userView);
+    public abstract boolean canExecuteActivity(User userView);
 
     public abstract String getDisplayName();
 
@@ -177,7 +181,7 @@ public abstract class Process extends Process_Base implements Comparable<Process
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -5,7 +5,6 @@ import java.net.MalformedURLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.MetaDomainObject;
 import net.sourceforge.fenixedu.domain.ScientificCouncilSite;
 import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.UnitSiteVisualizationDA;
@@ -38,8 +37,7 @@ public class ViewScientificCouncilSiteDA extends UnitSiteVisualizationDA {
 
     @Override
     protected String getDirectLinkContext(HttpServletRequest request) {
-        MetaDomainObjectPortal portal =
-                (MetaDomainObjectPortal) MetaDomainObject.getMeta(ScientificCouncilSite.class).getAssociatedPortal();
+        MetaDomainObjectPortal portal = MetaDomainObjectPortal.getPortal(ScientificCouncilSite.class);
         try {
             return RequestUtils.absoluteURL(request, portal.getNormalizedName().getContent()).toString();
         } catch (MalformedURLException e) {

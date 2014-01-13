@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.coordinator.transition;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest;
@@ -21,6 +19,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -41,8 +40,7 @@ public class ManageCompetenceCourseInformationChangeRequests extends FenixDispat
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        Set<Department> departments = DomainObjectUtil.readAllDomainObjects(Department.class);
-        request.setAttribute("departments", departments);
+        request.setAttribute("departments", Bennu.getInstance().getDepartmentsSet());
 
         return mapping.findForward("manageVersions");
     }
@@ -101,7 +99,8 @@ public class ManageCompetenceCourseInformationChangeRequests extends FenixDispat
     private CompetenceCourseInformationChangeRequest getChangeRequest(HttpServletRequest request) {
         String competenceCourseInformationChangeRequestId = request.getParameter("changeRequestID");
         CompetenceCourseInformationChangeRequest changeRequest =
-                (CompetenceCourseInformationChangeRequest) FenixFramework.getDomainObject(competenceCourseInformationChangeRequestId);
+                (CompetenceCourseInformationChangeRequest) FenixFramework
+                        .getDomainObject(competenceCourseInformationChangeRequestId);
         return changeRequest;
     }
 

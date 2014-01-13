@@ -3,7 +3,8 @@ package net.sourceforge.fenixedu.domain.phd;
 import java.util.Comparator;
 
 import jvstm.cps.ConsistencyPredicate;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class ThesisSubjectOrder extends ThesisSubjectOrder_Base {
 
@@ -16,7 +17,7 @@ public class ThesisSubjectOrder extends ThesisSubjectOrder_Base {
 
     public ThesisSubjectOrder() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public ThesisSubjectOrder(ThesisSubject subject, PhdIndividualProgramProcess phdProcess, int order) {
@@ -59,7 +60,7 @@ public class ThesisSubjectOrder extends ThesisSubjectOrder_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -5,11 +5,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -61,7 +61,7 @@ public class PhdNotification extends PhdNotification_Base {
         super.setType(type);
         super.setYear(new LocalDate().getYear());
         super.setNumber(generateNumber(getYear()));
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
         super.setCandidacyProcess(candidacyProcess);
         super.setState(PhdNotificationState.EMITTED);
 
@@ -91,7 +91,7 @@ public class PhdNotification extends PhdNotification_Base {
     private List<PhdNotification> getNotificationsForYear(int year) {
         final List<PhdNotification> result = new ArrayList<PhdNotification>();
 
-        for (final PhdNotification each : RootDomainObject.getInstance().getPhdNotifications()) {
+        for (final PhdNotification each : Bennu.getInstance().getPhdNotificationsSet()) {
             if (each.isFor(year)) {
                 result.add(each);
             }
@@ -123,7 +123,7 @@ public class PhdNotification extends PhdNotification_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

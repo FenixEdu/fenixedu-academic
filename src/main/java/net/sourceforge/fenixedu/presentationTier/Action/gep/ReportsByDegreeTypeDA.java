@@ -40,9 +40,9 @@ import net.sourceforge.fenixedu.domain.reports.TutorshipProgramReportFile;
 import net.sourceforge.fenixedu.domain.reports.WrittenEvaluationReportFile;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -151,7 +151,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
         Predicate predicate = new FindSelectedGepReports(executionYear, degreeType, reportClass);
 
         List<GepReportFile> selectedJobs =
-                (List<GepReportFile>) org.apache.commons.collections.CollectionUtils.select(rootDomainObject.getQueueJob(),
+                (List<GepReportFile>) org.apache.commons.collections.CollectionUtils.select(rootDomainObject.getQueueJobSet(),
                         predicate);
 
         return getValidCounterForReports(selectedJobs.size());
@@ -710,7 +710,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
         Predicate predicate = new FindSelectedGepReports(executionYear, degreeType, reportClass);
 
         List<GepReportFile> selectedJobs =
-                (List<GepReportFile>) org.apache.commons.collections.CollectionUtils.select(rootDomainObject.getQueueJob(),
+                (List<GepReportFile>) org.apache.commons.collections.CollectionUtils.select(rootDomainObject.getQueueJobSet(),
                         predicate);
         String reportName = "";
         if (selectedJobs.size() > 0) {

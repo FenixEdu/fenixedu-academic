@@ -1,10 +1,11 @@
 package net.sourceforge.fenixedu.domain.contents.pathProcessors;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitAcronym;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public abstract class AbstractAcronymPathProcess<T extends Site> extends AbstractPathProcessor {
 
@@ -17,7 +18,7 @@ public abstract class AbstractAcronymPathProcess<T extends Site> extends Abstrac
 
     private Content getSite() {
         if (site == null) {
-            for (UnitAcronym acronym : RootDomainObject.getInstance().getUnitAcronyms()) {
+            for (UnitAcronym acronym : Bennu.getInstance().getUnitAcronymsSet()) {
                 if (acronym.getAcronym().equalsIgnoreCase(getAcronym())) {
                     Unit unit = acronym.getUnits().iterator().next();
                     site = (T) unit.getSite();

@@ -6,14 +6,14 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="e"%>
 <html:xhtml/>
 
-<logic:present role="PERSON">
+<logic:present role="role(PERSON)">
 
 	<em><bean:message key="label.person.main.title" /></em>
 	<h2><bean:message key="label.validate.email"/></h2>
 
 
 	<div class="infoop2 mtop1">
-		<bean:message key="message.validate.email"/>
+		<bean:message key="message.validate.email" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/>
 	</div>
 			
 

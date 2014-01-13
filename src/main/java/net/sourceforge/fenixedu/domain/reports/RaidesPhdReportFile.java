@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -27,15 +26,20 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.Credits;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.YearMonthDay;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
+
+    private static final Logger logger = LoggerFactory.getLogger(RaidesPhdReportFile.class);
 
     public RaidesPhdReportFile() {
         super();
@@ -63,7 +67,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
         int civilYear = executionYear.getBeginCivilYear();
         fillSpreadsheet(spreadsheet);
 
-        System.out.println("BEGIN report for " + getDegreeType().name());
+        logger.info("BEGIN report for " + getDegreeType().name());
 
         List<PhdIndividualProgramProcess> retrieveProcesses = retrieveProcesses(executionYear);
 
@@ -86,7 +90,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
     private List<PhdIndividualProgramProcess> retrieveProcesses(ExecutionYear executionYear) {
         List<PhdIndividualProgramProcess> phdIndividualProgramProcessList = new ArrayList<PhdIndividualProgramProcess>();
 
-        for (PhdProgram program : RootDomainObject.getInstance().getPhdPrograms()) {
+        for (PhdProgram program : Bennu.getInstance().getPhdProgramsSet()) {
             phdIndividualProgramProcessList.addAll(program.getIndividualProgramProcesses());
         }
 

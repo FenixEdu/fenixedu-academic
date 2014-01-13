@@ -13,7 +13,8 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.security.Authenticate;
 
 public class CycleEnrolmentBean implements Serializable {
 
@@ -106,7 +107,7 @@ public class CycleEnrolmentBean implements Serializable {
     }
 
     private boolean isStudent() {
-        return AccessControl.getUserView().hasRoleType(RoleType.STUDENT);
+        return Authenticate.getUser().getPerson().hasRole(RoleType.STUDENT);
     }
 
     private DegreeCurricularPlan getDegreeCurricularPlan() {

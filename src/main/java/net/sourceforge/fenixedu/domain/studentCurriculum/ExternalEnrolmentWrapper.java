@@ -38,6 +38,7 @@ public class ExternalEnrolmentWrapper extends ExternalEnrolmentWrapper_Base {
         super.setEnrolment(null);
         super.delete();
     }
+
     @Deprecated
     public boolean hasEnrolment() {
         return getEnrolment() != null;

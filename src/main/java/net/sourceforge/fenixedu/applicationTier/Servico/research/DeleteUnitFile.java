@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research;
 
-
 import net.sourceforge.fenixedu.domain.UnitFile;
 import pt.ist.fenixframework.Atomic;
 

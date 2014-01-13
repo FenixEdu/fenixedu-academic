@@ -3,11 +3,11 @@ package net.sourceforge.fenixedu.domain.accessControl;
 import java.util.Collection;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 public abstract class AbstractExecutionCourseTeachersGroup extends ExecutionCourseGroup {

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission;
 
-import static net.sourceforge.fenixedu.util.StringUtils.isEmpty;
+import static org.apache.commons.lang.StringUtils.isEmpty;
 
 import java.io.Serializable;
 import java.util.Comparator;

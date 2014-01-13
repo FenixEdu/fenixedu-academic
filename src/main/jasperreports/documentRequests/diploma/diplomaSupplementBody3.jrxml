@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="diplomaSupplementBody3" pageWidth="445" pageHeight="538" whenNoDataType="NoDataSection" columnWidth="445" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="diplomaSupplementBody3" pageWidth="366" pageHeight="366" whenNoDataType="NoDataSection" columnWidth="366" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<import value="net.sf.jasperreports.engine.*"/>
@@ -32,12 +32,12 @@
 	<parameter name="professionalStatus" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="aditionalInfoSources" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="extraCurricularActivities" class="java.lang.String" isForPrompting="false"/>
-	<group name="body">
+	<group name="body" isStartNewPage="true">
 		<groupExpression><![CDATA[]]></groupExpression>
 		<groupHeader>
-			<band height="538" splitType="Stretch">
+			<band height="336" splitType="Stretch">
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField-1" x="0" y="1" width="445" height="14"/>
+					<reportElement key="textField-1" x="0" y="1" width="366" height="14"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -45,12 +45,12 @@
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial Black" size="8" isBold="false" isItalic="false" pdfFontName="Arial_Black.ttf" isPdfEmbedded="true"/>
+						<font fontName="Serif" size="10" isBold="false" isItalic="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.five").toUpperCase()]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField-17" x="0" y="19" width="445" height="13"/>
+					<reportElement key="textField-17" x="0" y="24" width="366" height="13"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -58,12 +58,25 @@
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial" size="9" isBold="false" isItalic="false" pdfFontName="Arial.ttf" isPdfEmbedded="true"/>
+						<font fontName="Serif" size="8" isBold="false" isItalic="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.five.one")]]></textFieldExpression>
 				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+					<reportElement key="textField-37" positionType="Float" x="13" y="37" width="353" height="22"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Justified" lineSpacing="Single">
+						<font fontName="Serif" size="8" isBold="false" isItalic="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{accessToHigherLevelOfEducation}]]></textFieldExpression>
+				</textField>
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField-18" positionType="Float" x="0" y="50" width="445" height="13"/>
+					<reportElement key="textField-18" positionType="Float" x="0" y="59" width="366" height="13"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -71,12 +84,25 @@
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial" size="9" isBold="false" isItalic="false" pdfFontName="Arial.ttf" isPdfEmbedded="true"/>
+						<font fontName="Serif" size="8" isBold="false" isItalic="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.five.two")]]></textFieldExpression>
 				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+					<reportElement key="textField-38" positionType="Float" x="12" y="72" width="353" height="13"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Justified" lineSpacing="Single">
+						<font fontName="Serif" size="8" isBold="false" isItalic="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{professionalStatus}]]></textFieldExpression>
+				</textField>
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField-22" positionType="Float" x="0" y="89" width="445" height="14"/>
+					<reportElement key="textField-22" positionType="Float" x="0" y="98" width="366" height="14"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -84,12 +110,12 @@
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial Black" size="8" isBold="false" isItalic="false" pdfFontName="Arial_Black.ttf" isPdfEmbedded="true"/>
+						<font fontName="Serif" size="10" isBold="false" isItalic="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.six").toUpperCase()]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField-25" positionType="Float" x="0" y="107" width="444" height="13"/>
+					<reportElement key="textField-25" positionType="Float" x="0" y="119" width="366" height="13"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -97,12 +123,12 @@
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial" size="9" isBold="false" isItalic="false" pdfFontName="Arial.ttf" isPdfEmbedded="true"/>
+						<font fontName="Serif" size="8" isBold="false" isItalic="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.six.one")]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField-30" positionType="Float" x="9" y="121" width="435" height="13"/>
+					<reportElement key="textField-30" positionType="Float" x="9" y="132" width="353" height="13"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -110,38 +136,12 @@
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Justified" lineSpacing="Single">
-						<font fontName="Arial" size="9" isBold="false" isItalic="false" pdfFontName="Arial.ttf" isPdfEmbedded="true"/>
+						<font fontName="Serif" size="8" isBold="false" isItalic="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$P{extraCurricularActivities}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField-37" positionType="Float" x="13" y="33" width="432" height="13"/>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Justified" lineSpacing="Single">
-						<font fontName="Arial" size="9" isBold="false" isItalic="false" pdfFontName="Arial.ttf" isPdfEmbedded="true"/>
-					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$P{accessToHigherLevelOfEducation}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField-38" positionType="Float" x="12" y="65" width="433" height="13"/>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Justified" lineSpacing="Single">
-						<font fontName="Arial" size="9" isBold="false" isItalic="false" pdfFontName="Arial.ttf" isPdfEmbedded="true"/>
-					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$P{professionalStatus}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField-41" positionType="Float" x="0" y="138" width="444" height="13"/>
+					<reportElement key="textField-41" positionType="Float" x="0" y="145" width="366" height="13"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -149,12 +149,12 @@
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial" size="9" isBold="false" isItalic="false" pdfFontName="Arial.ttf" isPdfEmbedded="true"/>
+						<font fontName="Serif" size="8" isBold="false" isItalic="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.six.two")]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField-42" positionType="Float" x="9" y="149" width="435" height="13"/>
+					<reportElement key="textField-42" positionType="Float" x="9" y="158" width="353" height="13"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -162,12 +162,12 @@
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial" size="9" isBold="false" isItalic="false" pdfFontName="Arial.ttf" isPdfEmbedded="true"/>
+						<font fontName="Serif" size="8" isBold="false" isItalic="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.six.two.body")]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField-43" positionType="Float" x="0" y="178" width="445" height="14"/>
+					<reportElement key="textField-43" positionType="Float" x="0" y="187" width="366" height="14"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -175,12 +175,12 @@
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial Black" size="8" isBold="false" isItalic="false" pdfFontName="Arial_Black.ttf" isPdfEmbedded="true"/>
+						<font fontName="Serif" size="10" isBold="false" isItalic="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.seven").toUpperCase()]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField-44" positionType="Float" x="0" y="196" width="444" height="13"/>
+					<reportElement key="textField-44" positionType="Float" x="0" y="208" width="366" height="13"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -188,12 +188,12 @@
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial" size="9" isBold="false" isItalic="false" pdfFontName="Arial.ttf" isPdfEmbedded="true"/>
+						<font fontName="Serif" size="8" isBold="false" isItalic="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.seven.one")]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.seven.one")  + " " + $P{day}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField-45" positionType="Float" x="9" y="207" width="435" height="13"/>
+					<reportElement key="textField-46" positionType="Float" x="0" y="229" width="366" height="13"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -201,25 +201,12 @@
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial" size="9" isBold="false" isItalic="false" pdfFontName="Arial.ttf" isPdfEmbedded="true"/>
-					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$P{day}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField-46" positionType="Float" x="0" y="224" width="444" height="13"/>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial" size="9" isBold="false" isItalic="false" pdfFontName="Arial.ttf" isPdfEmbedded="true"/>
+						<font fontName="Serif" size="8" isBold="false" isItalic="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.seven.two")]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField-47" positionType="Float" x="93" y="253" width="351" height="13"/>
+					<reportElement key="textField-47" positionType="Float" x="0" y="257" width="366" height="13"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -227,12 +214,12 @@
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial" size="9" isBold="false" isItalic="false" pdfFontName="Arial.ttf" isPdfEmbedded="true"/>
+						<font fontName="Serif" size="8" isBold="false" isItalic="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA["_____________________________________________"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField-48" positionType="Float" x="113" y="266" width="332" height="13"/>
+					<reportElement key="textField-48" positionType="Float" x="0" y="270" width="366" height="13"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -240,12 +227,12 @@
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial" size="9" isBold="false" isItalic="false" pdfFontName="Arial.ttf" isPdfEmbedded="true"/>
+						<font fontName="Serif" size="8" isBold="false" isItalic="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA["António Manuel da Cruz Serra"]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA["Prof. Arlindo Manuel Limede de Oliveira"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField-49" positionType="Float" x="0" y="287" width="444" height="13"/>
+					<reportElement key="textField-49" positionType="Float" x="0" y="291" width="366" height="13"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -253,12 +240,12 @@
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial" size="9" isBold="false" isItalic="false" pdfFontName="Arial.ttf" isPdfEmbedded="true"/>
+						<font fontName="Serif" size="8" isBold="false" isItalic="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.seven.three")]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.seven.three") + " " + $P{bundle}.getString("diploma.supplement.seven.three.one") + " "+ $P{institutionName}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField-50" positionType="Float" x="9" y="299" width="435" height="13"/>
+					<reportElement key="textField-51" positionType="Float" x="0" y="312" width="366" height="13"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -266,20 +253,7 @@
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial" size="9" isBold="false" isItalic="false" pdfFontName="Arial.ttf" isPdfEmbedded="true"/>
-					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.seven.three.one")]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField-51" positionType="Float" x="0" y="319" width="444" height="13"/>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial" size="9" isBold="false" isItalic="false" pdfFontName="Arial.ttf" isPdfEmbedded="true"/>
+						<font fontName="Serif" size="8" isBold="false" isItalic="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.seven.four")]]></textFieldExpression>
 				</textField>

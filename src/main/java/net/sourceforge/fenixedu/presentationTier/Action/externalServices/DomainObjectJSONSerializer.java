@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
-import org.json.JSONException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -27,7 +26,7 @@ public class DomainObjectJSONSerializer {
     }
 
     public static JSONObject getDomainObject(DomainObject obj) throws SecurityException, NoSuchMethodException,
-            IllegalArgumentException, IllegalAccessException, InvocationTargetException, JSONException {
+            IllegalArgumentException, IllegalAccessException, InvocationTargetException {
         final JSONObject jsonObject = new JSONObject();
         final Class<? extends DomainObject> clazz = obj.getClass();
         final String objClassName = clazz.getName();

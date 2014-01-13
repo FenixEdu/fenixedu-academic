@@ -644,8 +644,6 @@
                   <forward path="manage-execution-course-confirmSectionDelete" name="confirmSectionDelete"></forward>
                   <forward path="manage-execution-course-editSectionPermissions" name="editSectionPermissions"></forward>
                   <forward path="manage-execution-course-editItemPermissions" name="editItemPermissions"></forward>
-                  <forward path="create-scorm" name="createScorm"></forward>
-                  <forward path="upload-scorm" name="uploadScorm"></forward>
                   <forward path="manage-execution-course-pool" name="addInstitutionSection"></forward>
             </action>
             <action type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA" input="/createProgram.do?method=prepareCreateProgram&amp;page=0" scope="request" name="programForm" parameter="method" path="/createProgram">
@@ -1021,8 +1019,6 @@
             <action scope="request" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseSiteDA" parameter="method" name="fileForm" path="/fileUpload">
                   <forward path="manage-execution-course-section" name="section"></forward>
                   <forward path="manage-execution-course-uploadFile" name="uploadFile"></forward>
-                  <forward path="create-scorm" name="createScorm"></forward>
-                  <forward path="upload-scorm" name="uploadScorm"></forward>
             </action>
             <action type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" parameter="method" path="/fileDelete">
                   <forward path="/viewSection.jsp" name="viewSection"></forward>
@@ -1104,7 +1100,7 @@
             <!-- End of action mappings for tests -->
       </action-mappings>
       <!-- ========== Controller Configuration ================================ -->
-      <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"></controller>
+      <controller processorClass="pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessor"></controller>
       <!-- ========== Message Resources Definitions ============================ -->
       <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
       <message-resources null="false" key="DEFAULT" parameter="resources.ApplicationResources"></message-resources>

@@ -21,9 +21,10 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeFi
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
+import net.sourceforge.fenixedu.util.FenixStringTools;
 import net.sourceforge.fenixedu.util.Money;
-import net.sourceforge.fenixedu.util.StringUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -312,7 +313,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 
     final private void reportEntry(final StringBuilder result, final ICurriculumEntry entry, final Map<Unit, String> unitIDs) {
         result.append(
-                StringUtils.multipleLineRightPadWithSuffix(getCurriculumEntryName(unitIDs, entry), LINE_LENGTH, END_CHAR,
+                FenixStringTools.multipleLineRightPadWithSuffix(getCurriculumEntryName(unitIDs, entry), LINE_LENGTH, END_CHAR,
                         getCreditsAndGradeInfo(entry))).append(LINE_BREAK);
     }
 

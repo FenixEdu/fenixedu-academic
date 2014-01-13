@@ -19,8 +19,8 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.util.StringUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -70,13 +70,6 @@ public class SearchDegreeLogAction extends FenixDispatchAction {
         // final InfoExecutionDegree infoExecutionDegree =
         // InfoExecutionDegree.newInfoFromDomain(executionDegree);
         // request.setAttribute(PresentationConstants.MASTER_DEGREE, degree);
-
-        /* Teste */
-        /*
-         * request.getSession().setAttribute(SetUserViewFilter.
-         * USER_SESSION_ATTRIBUTE,
-         * degree.getCoordinators().iterator().next().getTeacher().getPerson());
-         */
 
         return mapping.findForward("search");
     }

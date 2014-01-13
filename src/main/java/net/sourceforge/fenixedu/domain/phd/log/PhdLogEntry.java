@@ -2,17 +2,17 @@ package net.sourceforge.fenixedu.domain.phd.log;
 
 import java.util.Locale;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcess;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 public class PhdLogEntry extends PhdLogEntry_Base {
 
     private PhdLogEntry() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     private PhdLogEntry(final String activityClassName, final String message, final PhdProgramProcess process) {

@@ -1,5 +1,6 @@
+<%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
 <html>
-	<META http-equiv="refresh" content="0;URL=<%= net.sourceforge.fenixedu.presentationTier.util.HostRedirector.getRedirectPageIndex(request.getRequestURL().toString()) %>">
+	<META http-equiv="refresh" content="0;URL=<%= FenixConfigurationManager.getConfiguration().getIndexPageRedirect() %>">
 <body>
 </body>
 </html>

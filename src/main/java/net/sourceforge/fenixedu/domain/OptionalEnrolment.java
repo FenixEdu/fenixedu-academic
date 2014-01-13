@@ -12,8 +12,10 @@ import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.log.OptionalEnrolmentLog;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
+
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -155,7 +157,7 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
         optionalEnrolment.setEnrollmentState(enrolment.getEnrollmentState());
         optionalEnrolment.setExecutionPeriod(enrolment.getExecutionPeriod());
         optionalEnrolment.setEnrolmentEvaluationType(enrolment.getEnrolmentEvaluationType());
-        optionalEnrolment.setCreatedBy(AccessControl.getUserView().getUtilizador());
+        optionalEnrolment.setCreatedBy(Authenticate.getUser().getUsername());
         optionalEnrolment.setCreationDateDateTime(enrolment.getCreationDateDateTime());
         optionalEnrolment.setEnrolmentCondition(enrolment.getEnrolmentCondition());
         optionalEnrolment.setCurriculumGroup(curriculumGroup);
@@ -186,6 +188,7 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
             throw new DomainException("error.OptionalEnrolment.invalid.optional.curricularCourse");
         }
     }
+
     @Deprecated
     public boolean hasOptionalCurricularCourse() {
         return getOptionalCurricularCourse() != null;

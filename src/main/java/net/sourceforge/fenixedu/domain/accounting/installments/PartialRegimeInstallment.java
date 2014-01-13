@@ -1,8 +1,5 @@
 package net.sourceforge.fenixedu.domain.accounting.installments;
 
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -21,6 +18,9 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
+import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class PartialRegimeInstallment extends PartialRegimeInstallment_Base {
 

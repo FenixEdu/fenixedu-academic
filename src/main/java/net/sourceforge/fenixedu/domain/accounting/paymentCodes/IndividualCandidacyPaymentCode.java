@@ -4,19 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.Money;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
+
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Sets;
 
 public class IndividualCandidacyPaymentCode extends IndividualCandidacyPaymentCode_Base {
 
@@ -36,7 +38,7 @@ public class IndividualCandidacyPaymentCode extends IndividualCandidacyPaymentCo
 
     public static IndividualCandidacyPaymentCode getAvailablePaymentCodeAndUse(final PaymentCodeType paymentCodeType,
             final YearMonthDay date, Event event, Person person) {
-        Set<PaymentCode> individualCandidacyPaymentCodes = RootDomainObject.getInstance().getPaymentCodesSet();
+        Set<PaymentCode> individualCandidacyPaymentCodes = Bennu.getInstance().getPaymentCodesSet();
 
         for (PaymentCode paymentCode : individualCandidacyPaymentCodes) {
 
@@ -60,7 +62,7 @@ public class IndividualCandidacyPaymentCode extends IndividualCandidacyPaymentCo
             final YearMonthDay date) {
         List<IndividualCandidacyPaymentCode> result = new ArrayList<IndividualCandidacyPaymentCode>();
 
-        Set<PaymentCode> individualCandidacyPaymentCodes = RootDomainObject.getInstance().getPaymentCodesSet();
+        Set<PaymentCode> individualCandidacyPaymentCodes = Bennu.getInstance().getPaymentCodesSet();
         for (PaymentCode paymentCode : individualCandidacyPaymentCodes) {
 
             if (!(paymentCode instanceof IndividualCandidacyPaymentCode)) {
@@ -98,7 +100,7 @@ public class IndividualCandidacyPaymentCode extends IndividualCandidacyPaymentCo
 
     protected static IndividualCandidacyPaymentCode getAvailablePaymentCodeForReuse() {
         Set<IndividualCandidacyPaymentCode> individualCandidacyPaymentCodes =
-                DomainObjectUtil.readAllDomainObjects(IndividualCandidacyPaymentCode.class);
+                Sets.newHashSet(Iterables.filter(Bennu.getInstance().getPaymentCodesSet(), IndividualCandidacyPaymentCode.class));
 
         for (IndividualCandidacyPaymentCode paymentCode : individualCandidacyPaymentCodes) {
             if (paymentCode.isAvailableForReuse()) {

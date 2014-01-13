@@ -34,7 +34,7 @@
 
 <div class="infoop2">
 	<p class="mvert05"><b><bean:message key="label.teacher.name.short"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacher" property="person.name"/></p>
-	<p class="mvert05"><b><bean:message key="label.teacher.id.short" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacher" property="teacherId"/></p>
+	<p class="mvert05"><b><bean:message key="label.teacher.id.short" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacher" property="teacherId"/></p>
 	<logic:notEmpty name="teacherCategory">
 		<p class="mvert05"><b><bean:message key="label.category" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacherCategory"/></p>
 	</logic:notEmpty>	
@@ -486,9 +486,9 @@
 </logic:equal>
 
 <%-- ========================== TEACHER INSTITUTION WORKING TIME ============================ --%>
-<h3 class="mtop2 separator2"><span>5) <bean:message key="label.teacherCreditsSheet.institutionWorkingTime" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
+<h3 class="mtop2 separator2"><span>5) <bean:message key="label.teacherCreditsSheet.institutionWorkingTime" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
 
-<p class="mbottom0"><strong><bean:message key="label.teacherCreditsSheet.institutionWorkingTime.items" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong></p>
+<p class="mbottom0"><strong><bean:message key="label.teacherCreditsSheet.institutionWorkingTime.items" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong></p>
 
 <logic:present name="institutionWorkTimeList">
 	<table class="tstyle4 mbottom05">
@@ -520,7 +520,7 @@
 	<table class="tstyle4 mbottom05">
 		<tr>
 			<td colspan="3">
-				<i><bean:message key="label.teacherCreditsSheet.noInstitutionWorkingTime" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></i>			
+				<i><bean:message key="label.teacherCreditsSheet.noInstitutionWorkingTime" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></i>			
 			</td>
 		</tr>
 	</table>

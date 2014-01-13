@@ -4,18 +4,18 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongNumberOfArgumentsException;
 
-import org.apache.jcs.access.exception.InvalidArgumentException;
-
 /**
  * An operator represents a dynamic argument that obtains it's value by using a
  * specific operation available to the group expression. The operation can
  * receive arguments and thus be parameterizable.
  * 
  * @author cfgi
+ * @deprecated Use Bennu Groups instead
  */
+@Deprecated
 public abstract class OperatorArgument extends DynamicArgument {
 
-    private ArgumentList arguments;
+    private final ArgumentList arguments;
 
     public OperatorArgument() {
         super();

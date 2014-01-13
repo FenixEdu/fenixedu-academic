@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.precedences;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author David Santos in Jun 9, 2004
@@ -10,7 +10,7 @@ public abstract class RestrictionByCurricularCourse extends RestrictionByCurricu
 
     public RestrictionByCurricularCourse() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     @Override

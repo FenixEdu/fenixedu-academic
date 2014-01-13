@@ -188,6 +188,7 @@ public class ResearchResultPatent extends ResearchResultPatent_Base {
         Partial approvalDate = getApprovalDate();
         return approvalDate.get(DateTimeFieldType.year());
     }
+
     @Deprecated
     public boolean hasPatentNumber() {
         return getPatentNumber() != null;

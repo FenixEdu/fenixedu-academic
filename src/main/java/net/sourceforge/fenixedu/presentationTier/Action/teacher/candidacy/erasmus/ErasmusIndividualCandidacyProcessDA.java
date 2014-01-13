@@ -11,13 +11,13 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProce
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
-import net.sourceforge.fenixedu.util.StringUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -34,7 +34,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
 
     @Override
     protected List<Activity> getAllowedActivities(final IndividualCandidacyProcess process) {
-        List<Activity> activities = process.getAllowedActivities(AccessControl.getUserView());
+        List<Activity> activities = process.getAllowedActivities(Authenticate.getUser());
         ArrayList<Activity> resultActivities = new ArrayList<Activity>();
 
         for (Activity activity : activities) {
@@ -59,7 +59,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
     }
 
     public ActionForward executeSetCoordinatorValidation(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
         try {
             MobilityIndividualApplicationProcessBean bean = getIndividualCandidacyProcessBean();
 

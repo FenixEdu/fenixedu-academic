@@ -1,9 +1,6 @@
 package net.sourceforge.fenixedu.domain.parking;
 
-import java.util.Collections;
-
 import net.sourceforge.fenixedu.domain.accessControl.Group;
-import pt.utl.ist.fenix.tools.file.VirtualPath;
 
 public class ParkingFile extends ParkingFile_Base {
 
@@ -13,9 +10,9 @@ public class ParkingFile extends ParkingFile_Base {
         super();
     }
 
-    public ParkingFile(VirtualPath virtualPath, String filename, String displayName, byte[] content, Group permittedGroup) {
+    public ParkingFile(String filename, String displayName, byte[] content, Group permittedGroup) {
         this();
-        init(virtualPath, filename, displayName, Collections.EMPTY_SET, content, permittedGroup);
+        init(filename, displayName, content, permittedGroup);
     }
 
     @Override
@@ -23,6 +20,7 @@ public class ParkingFile extends ParkingFile_Base {
         setNewParkingDocument(null);
         super.delete();
     }
+
     @Deprecated
     public boolean hasNewParkingDocument() {
         return getNewParkingDocument() != null;

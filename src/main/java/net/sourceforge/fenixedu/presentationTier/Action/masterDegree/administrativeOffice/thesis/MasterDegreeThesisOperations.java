@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -83,7 +82,7 @@ public class MasterDegreeThesisOperations extends FenixDispatchAction {
         DynaActionForm masterDegreeThesisForm = (DynaActionForm) form;
 
         String[] teachersNumbersArray = (String[]) masterDegreeThesisForm.get(teachersNumbersListField);
-        List<String> teachersNumbersList = CollectionUtils.toList(teachersNumbersArray);
+        List<String> teachersNumbersList = Arrays.asList(teachersNumbersArray);
         teachersNumbersList.remove(null);
         return teachersNumbersList;
 

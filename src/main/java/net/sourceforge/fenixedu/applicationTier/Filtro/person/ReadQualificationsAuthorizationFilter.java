@@ -1,9 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro.person;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 public class ReadQualificationsAuthorizationFilter {
 
@@ -17,10 +18,10 @@ public class ReadQualificationsAuthorizationFilter {
     }
 
     public void execute(String user) throws NotAuthorizedException {
-        IUserView id = AccessControl.getUserView();
+        User id = Authenticate.getUser();
         try {
             // Verify if needed fields are null
-            if ((id == null) || (id.getRoleTypes() == null)) {
+            if ((id == null) || (id.getPerson().getPersonRolesSet() == null)) {
                 throw new NotAuthorizedException();
             }
 
@@ -30,7 +31,7 @@ public class ReadQualificationsAuthorizationFilter {
             // 2: The user ir a Teacher and the qualification is his own
             boolean valid = false;
 
-            if (id.hasRoleType(getRoleTypeTeacher())) {
+            if (id.getPerson().hasRole(getRoleTypeTeacher())) {
                 valid = true;
             }
 

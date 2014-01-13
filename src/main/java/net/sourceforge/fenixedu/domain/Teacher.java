@@ -59,6 +59,8 @@ import net.sourceforge.fenixedu.util.State;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
@@ -91,7 +93,7 @@ public class Teacher extends Teacher_Base {
     public Teacher(Person person) {
         super();
         setPerson(person);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public String getTeacherId() {
@@ -99,7 +101,7 @@ public class Teacher extends Teacher_Base {
     }
 
     public static Teacher readByIstId(String istId) {
-        User user = User.readUserByUserUId(istId);
+        User user = User.findByUsername(istId);
         if (user != null) {
             return user.getPerson().getTeacher();
         } else {
@@ -463,7 +465,8 @@ public class Teacher extends Teacher_Base {
             for (DegreeTeachingService teachingService : teachingServices) {
                 duration =
                         duration.plus(new Duration(new Double((teachingService.getPercentage() / 100)
-                                * teachingService.getShift().getCourseLoadWeeklyAverage().doubleValue() * 3600 * 1000).longValue()));
+                                * teachingService.getShift().getCourseLoadWeeklyAverage().doubleValue() * 3600 * 1000)
+                                .longValue()));
             }
         }
         return duration;
@@ -976,7 +979,7 @@ public class Teacher extends Teacher_Base {
 
     public static List<Teacher> readByNumbers(Collection<String> teacherId) {
         List<Teacher> selectedTeachers = new ArrayList<Teacher>();
-        for (final Teacher teacher : RootDomainObject.getInstance().getTeachers()) {
+        for (final Teacher teacher : Bennu.getInstance().getTeachersSet()) {
             if (teacherId.contains(teacher.getPerson().getIstUsername())) {
                 selectedTeachers.add(teacher);
             }
@@ -1281,15 +1284,6 @@ public class Teacher extends Teacher_Base {
 
     private RoleType getRoleType() {
         return RoleType.TEACHER;
-    }
-
-    public String getRoleLoginAlias() {
-        final List<LoginAlias> roleLoginAlias = getPerson().getLoginIdentification().getRoleLoginAlias(getRoleType());
-        if (roleLoginAlias.isEmpty() || roleLoginAlias.size() > 1) {
-            return "D" + getPerson().getEmployee().getEmployeeNumber();
-        } else {
-            return roleLoginAlias.iterator().next().getAlias();
-        }
     }
 
     public boolean teachesAt(final Campus campus) {
@@ -1746,7 +1740,7 @@ public class Teacher extends Teacher_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

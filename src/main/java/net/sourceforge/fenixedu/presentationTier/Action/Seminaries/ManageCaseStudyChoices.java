@@ -12,7 +12,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.GetCaseStudiesByEquivalencyID;
 import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.GetCaseStudiesByThemeID;
 import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.GetEquivalency;
@@ -35,6 +34,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.core.domain.User;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -143,7 +143,7 @@ public class ManageCaseStudyChoices extends FenixAction {
         return destiny;
     }
 
-    public InfoSeminaryWithEquivalencies readSeminaryById(IUserView userView, String id) throws FenixActionException {
+    public InfoSeminaryWithEquivalencies readSeminaryById(User userView, String id) throws FenixActionException {
         InfoSeminaryWithEquivalencies seminary = null;
         try {
             seminary = GetSeminary.runGetSeminary(id);
@@ -153,10 +153,10 @@ public class ManageCaseStudyChoices extends FenixAction {
         return seminary;
     }
 
-    public InfoStudent readStudentByUserView(IUserView userView) throws FenixActionException {
+    public InfoStudent readStudentByUserView(User userView) throws FenixActionException {
         InfoStudent student = null;
         try {
-            student = ReadStudentByUsername.runReadStudentByUsername(userView.getUtilizador());
+            student = ReadStudentByUsername.runReadStudentByUsername(userView.getUsername());
         } catch (Exception e) {
             throw new FenixActionException();
         }
@@ -175,7 +175,7 @@ public class ManageCaseStudyChoices extends FenixAction {
         String themeIDString = request.getParameter("themeID");
         String motivation = request.getParameter("motivation");
         String submition = request.getParameter("submition");
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         String equivalencyID = null;
         String themeID = null;
         if (equivalencyIDString == null) {

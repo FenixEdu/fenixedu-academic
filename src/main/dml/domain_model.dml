@@ -36,7 +36,6 @@ enum net.sourceforge.fenixedu.domain.GrantOwnerType                             
 enum net.sourceforge.fenixedu.domain.GuideState                                                                           as GuideState;
 enum net.sourceforge.fenixedu.domain.JobApplicationType                                                                   as JobApplicationType;
 enum net.sourceforge.fenixedu.domain.Level                                                                                as Level;
-enum net.sourceforge.fenixedu.domain.LoginAliasType                                                                       as LoginAliasType;
 enum net.sourceforge.fenixedu.domain.MarkSheetState                                                                       as MarkSheetState;
 enum net.sourceforge.fenixedu.domain.MarkSheetType                                                                        as MarkSheetType;
 enum net.sourceforge.fenixedu.domain.OccupationPeriodType                                                                 as OccupationPeriodType;
@@ -221,6 +220,7 @@ enum net.sourceforge.fenixedu.domain.contacts.PartyContactValidationState 						
 enum net.sourceforge.fenixedu.domain.SchoolPeriodDuration																  as SchoolPeriodDuration;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplateType                                  as MobilityEmailTemplateType;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacySeriesGradeState                                 as IndividualCandidacySeriesGradeState;
+enum net.sourceforge.fenixedu.domain.FileContent.EducationalResourceType                                                  as EducationalResourceType;
 /*
  * Value types that need special externalization
  */
@@ -340,6 +340,7 @@ valueType net.sourceforge.fenixedu.domain.util.EmailAddressList as EmailAddressL
         String toString();
     }
 }
+
 
 valueType net.sourceforge.fenixedu.util.ByteArray as ByteArray {
     externalizeWith {
@@ -549,22 +550,6 @@ valueType org.joda.time.YearMonthDay as YearMonthDay {
     }
 
     internalizeWith net.sourceforge.fenixedu.util.date.SerializationTool.yearMonthDayDeserialize();
-}
-
-valueType pt.utl.ist.fenix.tools.file.FileSetMetaData as FileSetMetaData {
-    externalizeWith {
-        String toXMLString();
-    }
-
-    internalizeWith buildFromXMLString();
-}
-
-valueType pt.utl.ist.fenix.tools.file.VirtualPath as VirtualPath {
-    externalizeWith {
-        String toXMLString();
-    }
-
-    internalizeWith buildFromXMLString();
 }
 
 valueType pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString as MultiLanguageString {
@@ -1303,16 +1288,14 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
     class photograph.PictureOriginal extends photograph.Picture {
     }
 
-    class File  {
+    class File extends .org.fenixedu.bennu.io.domain.GenericFile {
         String checksum;
         String checksumAlgorithm;
-        String displayName;
         String externalStorageIdentification;
-        String filename;
-        String mimeType;
         Group permittedGroup;
-        Integer size;
-        DateTime uploadTime;
+    }
+    
+    class DSpaceFileStorage extends .org.fenixedu.bennu.io.domain.FileStorage {
     }
     
 		class teacher.evaluation.TeacherEvaluationFile extends File {
@@ -1327,15 +1310,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
 		}
     	
 
-    class FileLocalContent  {
-       VirtualPath path;
-       ByteArray content;
-    }
-    
-    class FileLocalContentMetadata  {
-       FileSetMetaData entry;
-    }
-    
     class log.FirstYearShiftsCapacityToggleLog  {
     	DateTime creationDate;
     }
@@ -1361,6 +1335,7 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
     
     
         class FileContent extends File {
+        	EducationalResourceType resourceType;
         }
 
             class messaging.PublicBoardFileContent extends FileContent {
@@ -1394,7 +1369,7 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         }
 
         class space.BlueprintFile extends File {
-            ByteArray content;
+            ByteArray contentFile;
         }
 
         class tests.PictureMaterialFile extends File {
@@ -1501,20 +1476,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         LocalDate date;
     }
 
-	class StrikeDayTask extends .pt.ist.fenixframework.plugins.scheduler.domain.Task {
-	}
-
-    class Identification  {
-        Boolean active;
-        DateTime beginDateDateTime;
-        DateTime endDateDateTime;
-    }
-
-        class Login extends Identification {
-            Boolean isPassInKerberos;
-            String password;
-        }
-
     class InsuranceValue  {
         BigDecimal annualValueBigDecimal;
         YearMonthDay endDateYearMonthDay;
@@ -1547,21 +1508,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
 
     class Locality  {
         String name;
-    }
-
-    class LoginAlias  {
-        String alias;
-        RoleType roleType;
-        LoginAliasType type;
-    }
-
-    class LoginPeriod  {
-        YearMonthDay beginDate;
-        YearMonthDay endDate;
-    }
-
-    class LoginRequest  {
-        String hash;
     }
 
     class ManagementGroups  {
@@ -1766,14 +1712,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
             Group vehiclesAccessGroup;          
         }
 
-
-    class RootDomainObject  {
-    }
-    
-    relation RootDomainObjectDomainRoot {
-        .pt.ist.fenixframework.DomainRoot playsRole domainRoot;
-        RootDomainObject playsRole rootDomainObject;
-    }
 
     class SchoolClass  {
         Integer anoCurricular;
@@ -2022,19 +1960,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         String name;
     }
 
-    class User  {
-        DateTime currentLoginDateTimeDateTime;
-        String currentLoginHost;
-        DateTime lastLoginDateTimeDateTime;
-        DateTime logoutDateTime;
-        String lastLoginHost;
-        String userUId;
-        
-        ByteArray privateKey;   
-        DateTime privateKeyCreation;
-        DateTime privateKeyValidity;
-    }
-
     class WrittenEvaluationEnrolment  {
     }
 
@@ -2042,6 +1967,8 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         String name;
         PersistentGroupMembersType type;
     }
+    
+    class accessControl.RoleCustomGroup extends .org.fenixedu.bennu.core.domain.groups.CustomGroup;
 
     class accounting.Account  {
         AccountType accountType;
@@ -6116,10 +6043,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         String keyPrinters;
     }
 
-    class util.UsernameCounter  {
-        Integer invitationCounter;
-    }
-
     class vigilancy.ExamCoordinator  {
         Boolean allowedToCreateGroups;
     }
@@ -6392,10 +6315,6 @@ class elections.DelegateElectionCandidacyPeriod extends elections.DelegateElecti
 class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionPeriod {
 }
 
-    class MetaDomainObject  {
-        String type;
-    }
-
     class contents.Content  {
         String contentId;
         DateTime creationDate;
@@ -6471,6 +6390,7 @@ class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionP
             }
 
             class contents.MetaDomainObjectPortal extends contents.Portal {
+                String type;
             }
 
             class contents.ContentJump extends contents.Portal {
@@ -7875,6 +7795,12 @@ class ExternalUser  {
 }	
 	
 	
+class UserPrivateKey {
+    ByteArray privateKey;
+    DateTime privateKeyCreation;
+    DateTime privateKeyValidity;
+}
+
 /* Students, Teacher and Courses Inquiries */	
 
 class inquiries.InquiryTemplate  {
@@ -8134,12 +8060,6 @@ class phd.debts.PhdGratuityPriceQuirk  {
 	Money gratuity;
 }
 
-class util.MessageTask extends .pt.ist.fenixframework.plugins.scheduler.domain.Task {
-}
-
-class util.EmailTask extends .pt.ist.fenixframework.plugins.scheduler.domain.Task {
-}
-
 class raides.DegreeDesignation  {
 	String code;
 	String description;
@@ -8260,14 +8180,39 @@ class AppUserSession {
 class AppUserAuthorization {
 }
 
+class Instalation {
+	String instituitionURL;
+	String instituitionEmailDomain;
+	String instalationName;
+	String instalationDomain;
+}
+
 /*
  * Relations definitions
  * 
  */
 
+relation BennuInstalation {
+	.org.fenixedu.bennu.core.domain.Bennu playsRole bennu {
+		multiplicity 1..1;
+	}
+	Instalation playsRole instalation {
+		multiplicity 0..1;
+	}
+}
+
+relation RootDomainObjectDSpaceFileStorage {
+	.org.fenixedu.bennu.core.domain.Bennu playsRole bennu {
+		multiplicity 1..1;
+	}
+	
+	DSpaceFileStorage playsRole dSpaceFileStorage {
+		multiplicity 0..1;
+	}
+}
 
 relation RootDomainObjectOutboundMobilityCandidacyContestGroup {
-	RootDomainObject playsRole rootDomainObject {
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
 		multiplicity 1..1;
 	}
 	mobility.outbound.OutboundMobilityCandidacyContestGroup playsRole outboundMobilityCandidacyContestGroup {
@@ -8276,7 +8221,7 @@ relation RootDomainObjectOutboundMobilityCandidacyContestGroup {
 }
 
 relation RootDomainObjectOutboundMobilityCandidacyPeriodConfirmationOption {
-	RootDomainObject playsRole rootDomainObject {
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
 		multiplicity 1..1;
 	}
 	mobility.outbound.OutboundMobilityCandidacyPeriodConfirmationOption playsRole outboundMobilityCandidacyPeriodConfirmationOption {
@@ -8303,7 +8248,7 @@ relation SubmissionConfirmationOption {
 }
 
 relation RootDomainObjectOutboundMobilityCandidacyContest {
-	RootDomainObject playsRole rootDomainObject {
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
 		multiplicity 1..1;
 	}
 	mobility.outbound.OutboundMobilityCandidacyContest playsRole outboundMobilityCandidacyContest {
@@ -8312,7 +8257,7 @@ relation RootDomainObjectOutboundMobilityCandidacyContest {
 }
 
 relation RootDomainObjectOutboundMobilityCandidacySubmission {
-	RootDomainObject playsRole rootDomainObject {
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
 		multiplicity 1..1;
 	}
 	mobility.outbound.OutboundMobilityCandidacySubmission playsRole outboundMobilityCandidacySubmission {
@@ -8321,7 +8266,7 @@ relation RootDomainObjectOutboundMobilityCandidacySubmission {
 }
 
 relation RootDomainObjectOutboundMobilityCandidacy {
-	RootDomainObject playsRole rootDomainObject {
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
 		multiplicity 1..1;
 	}
 	mobility.outbound.OutboundMobilityCandidacy playsRole outboundMobilityCandidacy {
@@ -8330,7 +8275,7 @@ relation RootDomainObjectOutboundMobilityCandidacy {
 }
 
 relation RootDomainObjectOutboundMobilityCandidacySubmissionGrade {
-	RootDomainObject playsRole rootDomainObject {
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
 		multiplicity 1..1;
 	}
 	mobility.outbound.OutboundMobilityCandidacySubmissionGrade playsRole outboundMobilityCandidacySubmissionGrade {
@@ -8482,7 +8427,7 @@ relation DomainOperationLogRootDomainObject {
 	DomainOperationLog playsRole domainOperationLogs {
 		multiplicity*;
 	}
-	RootDomainObject playsRole rootDomainObject{
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject{
 		multiplicity 1..1;
 	}
 }
@@ -8524,98 +8469,98 @@ relation PersonViewedPersonInformationLog {
 }
 
 relation RootDomainObjectInquiryTemplate {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     inquiries.InquiryTemplate playsRole inquiryTemplates {
         multiplicity *;
     }
 }
 	
 relation RootDomainObjectInquiryBlock {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     inquiries.InquiryBlock playsRole inquiryBlocks {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectInquiryGroupQuestion {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     inquiries.InquiryGroupQuestion playsRole inquiryGroupsQuestions {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectInquiryQuestion {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     inquiries.InquiryQuestion playsRole inquiryQuestions {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectInquiryQuestionHeader {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     inquiries.InquiryQuestionHeader playsRole inquiryQuestionHeaders {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectQuestionCondition {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	inquiries.QuestionCondition playsRole questionsConditions {
 		multiplicity *;
 	}
 }
 
 relation RootDomainObjectStudentInquiryRegistry {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     inquiries.StudentInquiryRegistry playsRole studentsInquiryRegistries {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectInquiryAnswer {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	inquiries.InquiryAnswer playsRole inquiriesAnswers {
 		multiplicity *;
 	}
 }
 
 relation RootDomainObjectQuestionAnswer {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	inquiries.QuestionAnswer playsRole questionAnswers {
 		multiplicity *;
 	}
 }
 
 relation RootDomainObjectStudentInquiryExecutionPeriod {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	inquiries.StudentInquiryExecutionPeriod playsRole studentsInquiriesExecutionPeriod {
 		multiplicity *;
 	}
 }
 
 relation RootDomainObjectInquiryResult {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	inquiries.InquiryResult playsRole inquiryResults {
 		multiplicity *;
 	}
 }
 
 relation RootDomainObjectInquiryResultComment {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	inquiries.InquiryResultComment playsRole inquiryResultComments {
 		multiplicity *;
 	}
 }
 
 relation RootDomainObjectInquiryGlobalComment {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	inquiries.InquiryGlobalComment playsRole inquiryGlobalComments {
 		multiplicity *;
 	}
 }
 
 relation RootDomainObjectExecutionCourseAudit {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	inquiries.ExecutionCourseAudit playsRole executionCourseAudits {
 		multiplicity *;
 	}
@@ -9026,21 +8971,21 @@ relation ExecutionCourseAuditFileExecutionCourseAudit {
 /* End of Inquiries */
 
 relation RootDomainObjectMeasurementTest {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     candidacy.MeasurementTest playsRole measurementTests {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectMeasurementTestShift {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     candidacy.MeasurementTestShift playsRole measurementTestShifts {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectMeasurementTestRoom {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     candidacy.MeasurementTestRoom playsRole measurementTestRooms {
         multiplicity *;
     }
@@ -9092,18 +9037,24 @@ relation MeasurementTestCampus {
     }
 }
 
+
+relation RootDomainObjectDefaultCampus {
+	space.Campus playsRole defaultCampus;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole defaultCampusRootDomainObject;
+}
+
 /* Phd Module */
 
 
 relation PhdProgramRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     phd.PhdProgram playsRole phdPrograms {
         multiplicity *;
     }
 }
 
 relation PhdProgramInformationRootDomainObject {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	phd.PhdProgramInformation playsRole phdProgramInformations {
 		multiplicity *;
 	}
@@ -9119,14 +9070,14 @@ relation PhdProgramPhdProgramInformation {
 }
 
 relation PhdProgramFocusAreaRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     phd.PhdProgramFocusArea playsRole phdProgramFocusAreas {
         multiplicity *;
     }
 }
 
 relation ThesisSubjectsRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     phd.ThesisSubject playsRole thesisSubjects {
         multiplicity *;
     }
@@ -9147,7 +9098,7 @@ relation TeacherThesisSubjects {
 }
 
 relation ThesisSubjectOrdersRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     phd.ThesisSubjectOrder playsRole thesisSubjectOrders {
         multiplicity *;
     }
@@ -9177,7 +9128,7 @@ relation PhdProgramPhdProgramFocusArea {
 }
 
 relation PhdIndividualProgramProcessNumberRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     phd.PhdIndividualProgramProcessNumber playsRole phdIndividualProcessNumbers {
         multiplicity *;
     }
@@ -9324,7 +9275,7 @@ relation PhdProgramProcessDocumentPerson {
 }
     
 relation PhdParticipantRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     phd.PhdParticipant playsRole phdParticipants {
         multiplicity *;
     }
@@ -9338,7 +9289,7 @@ relation InternalPhdParticipantPerson {
 }
 
 relation phd.PhdProcessState {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     phd.PhdProcessState playsRole phdProgramStates {
         multiplicity *;
     }
@@ -9427,7 +9378,7 @@ relation PhdCandidacyFeedbackRequestProcessStates {
 }
 
 relation PhdCandidacyRefereeLetterRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     phd.candidacy.PhdCandidacyRefereeLetter playsRole phdCandidacyRefereeLetters {
         multiplicity *;
     }
@@ -9458,21 +9409,21 @@ relation PhdCandidacyRefereeLetterCountry {
 }
 
 relation RootDomainObjectPhdAlert {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Alert playsRole alerts {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectPhdAlertActive {
-    RootDomainObject playsRole rootDomainObjectForActiveAlerts;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectForActiveAlerts;
     Alert playsRole activeAlerts {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectPhdAlertMessage {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     phd.alert.PhdAlertMessage playsRole phdAlertMessages {
         multiplicity *;
     }
@@ -9525,14 +9476,14 @@ relation PhdAlertMessagePhdIndividualProgramProcess {
 
 
 relation RootDomainObjectPhdStudyPlan {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     phd.PhdStudyPlan playsRole phdStudyPlans {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectPhdStudyPlanEntry {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     phd.PhdStudyPlanEntry playsRole phdStudyPlanEntries {
         multiplicity *;
     }
@@ -9565,7 +9516,7 @@ relation DegreePhdStudyPlan {
 }
 
 relation PhdNotificationRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     phd.notification.PhdNotification playsRole phdNotifications {
         multiplicity *;
     }
@@ -9589,14 +9540,14 @@ relation PhdIndividualProgramProcessPhdThesisProcess {
 }
 
 relation RootDomainObjectThesisJuryElement {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     phd.thesis.ThesisJuryElement playsRole phdThesisJuryElements {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectPhdMeeting {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	phd.thesis.meeting.PhdMeeting playsRole phdMeetings {
 		multiplicity *;
 	}
@@ -9627,7 +9578,7 @@ relation PhdParticipantThesisJuryElement {
 }
 
 relation RootDomainObjectPhdCandidacyFeedbackRequestElement {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestElement playsRole phdCandidacyFeedbackElements {
         multiplicity *;
     }
@@ -9660,7 +9611,7 @@ relation PhdStudentReingressionRequestDocumentPhdStudentReingressionRequest {
 }
 
 relation RootDomainObjectPhdConfigurationIndividualProgramProcess {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	phd.PhdConfigurationIndividualProgramProcess playsRole phdConfigurationIndividualProgramProcess {
 		multiplicity *;
 	}
@@ -9677,28 +9628,28 @@ relation PhdReporterReviewAlertPhdParticipant {
 }
 
 relation PhdMigrationProcessRootDomainObject {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	phd.migration.PhdMigrationProcess playsRole phdMigrationProcesses {
 		multiplicity *;
 	}
 }
 
 relation phd.migration.PhdIndividualProcessDataRootDomainObject {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	phd.migration.PhdMigrationIndividualProcessData playsRole phdMigrationIndividualProcessData {
 		multiplicity *;
 	}
 }
 
 relation PhdIndividualPersonalDataRootDomainObject {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	phd.migration.PhdMigrationIndividualPersonalData playsRole phdMigrationIndividualPersonalData {
 		multiplicity *;
 	}
 }
 
 relation phd.migration.PhdGuidingRootDomainObject {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	phd.migration.PhdMigrationGuiding playsRole phdMigrationGuidings {
 		multiplicity *;
 	}
@@ -9755,7 +9706,7 @@ relation PhdEmailPerson {
 }
 
 relation PhdProgramContextPeriodRootDomainObject {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	phd.PhdProgramContextPeriod playsRole phdProgramContextPeriods {
 		multiplicity *;
 	}
@@ -9806,7 +9757,7 @@ relation PhdIndividualProgramProcessPhdConclusionProcess {
 }
 
 relation PhdConclusionProcessRootDomainObject {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	phd.conclusion.PhdConclusionProcess playsRole phdConclusionProcesses {
 		multiplicity *;
 	}
@@ -9825,7 +9776,7 @@ relation PhdGuiderAcceptanceLetterPhdParticipant {
 }
 
 relation PhdLogEntryRootDomainObject {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	phd.log.PhdLogEntry playsRole phdLogEntries {
 		multiplicity *;
 	}
@@ -9881,7 +9832,7 @@ relation AcademicServiceRequestAcademicServiceRequestYear {
 }
 
 relation AcademicServiceRequestYearRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     serviceRequests.AcademicServiceRequestYear playsRole academicServiceRequestYears {
         multiplicity *;
     }
@@ -9919,7 +9870,7 @@ relation InstitutionRegistryCodeGeneratorRootDomainObject {
     serviceRequests.InstitutionRegistryCodeGenerator playsRole registryCodeGenerator {
         multiplicity *;
     }
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 }
 
 relation RegistryCodeGeneratorInstitution {
@@ -9947,7 +9898,7 @@ relation RectorateSubmissionBatchRootDomainObject {
     serviceRequests.RectorateSubmissionBatch playsRole rectorateSubmissionBatch {
         multiplicity *;
     }
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 }
 
 relation AdministrativeOfficeRectorateSubmissionBatch {
@@ -10131,7 +10082,7 @@ relation AccountTransactionEntry {
 }
 
 relation AccountTransactionUser {
-    User playsRole responsibleUser;
+    .org.fenixedu.bennu.core.domain.User playsRole responsibleUser;
     accounting.AccountingTransaction playsRole accountingTransactions {
         multiplicity *;
     }
@@ -10215,7 +10166,7 @@ relation AdministrativeOfficeEvent {
 relation AdministrativeOfficeUnit {
     administrativeOffice.AdministrativeOffice playsRole administrativeOffice;
     organizationalStructure.Unit playsRole unit {
-    	multiplicity 1..1;
+    	multiplicity 0..1;
     }
 }
 
@@ -10429,7 +10380,7 @@ relation RootDomainObjectLibraryDocument {
   library.LibraryDocument playsRole libraryDocument {
     multiplicity *;
   }
-  RootDomainObject playsRole rootDomainObject;
+  .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 }
 
 relation LibraryDocumentLibraryMissingCardsDocument { 
@@ -10495,7 +10446,7 @@ relation CandidacyModality {
 }
 
 relation CandidacyRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     candidacy.Candidacy playsRole candidacies {
         multiplicity *;
     }
@@ -10602,7 +10553,7 @@ relation EctsTableIndexRoot {
 	degreeStructure.EctsTableIndex playsRole ectsTableIndex {
 		multiplicity *;
 	}
-	RootDomainObject playsRole rootDomainObject {
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
 		multiplicity 1..1;
 	}
 }
@@ -10767,7 +10718,7 @@ relation PersonIsUnavailable {
 }
 
 relation VigilantWrapperRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     vigilancy.VigilantWrapper playsRole vigilantWrappers {
         multiplicity *;
     }
@@ -11217,14 +11168,14 @@ relation DegreeUnit {
 }
 
 relation DeleteFileLogRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     DeleteFileLog playsRole DeleteFileLogs {
         multiplicity *;
     }
 }
 
 relation DeleteFileRequestRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     DeleteFileRequest playsRole DeleteFileRequests {
         multiplicity *;
     }
@@ -11234,7 +11185,7 @@ relation DepartmentCreditsPoolRootDomainObject {
     DepartmentCreditsPool playsRole departmentCreditsPools {
         multiplicity *;
     }
-   	RootDomainObject playsRole rootDomainObject;
+   	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 }
 
 relation DepartmentCreditsPoolDepartment {
@@ -11375,21 +11326,21 @@ relation FakeEnrollmentPerson {
 }
 
 relation FakeEnrollmentRootDomainObject {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	FakeEnrollment playsRole fakeEnrollments {
 		multiplicity *;
 	}
 }
 
 relation FakeShiftRootDomainObject {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	FakeShift playsRole fakeShifts {
 		multiplicity *;
 	}
 }
 
 relation FakeShiftEnrollmentRootDomainObject {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	FakeShiftEnrollment playsRole fakeShiftEnrollments {
 		multiplicity *;
 	}
@@ -11929,7 +11880,7 @@ relation FirstYearShiftsCapacityLogWithExecutionSemester {
 }
 
 relation FirstYearShiftsCapacityLogWithUser {
-	User playsRole creator;
+	.org.fenixedu.bennu.core.domain.User playsRole creator;
 	log.FirstYearShiftsCapacityToggleLog playsRole firstYearShiftsCapacityToggleLog {
 		multiplicity *;
 	}
@@ -12430,20 +12381,6 @@ relation LessonShift {
     Shift playsRole shift;
 }
 
-relation LoginAliasLogin {
-    Login playsRole login;
-    LoginAlias playsRole alias {
-        multiplicity *;
-    }
-}
-
-relation LoginLoginPeriod {
-    Login playsRole login;
-    LoginPeriod playsRole loginPeriods {
-        multiplicity *;
-    }
-}
-
 relation MakeExportProposal {
     ExportGrouping playsRole exportGroupingSenders {
         multiplicity *;
@@ -12815,7 +12752,7 @@ relation ParticipationParty {
 }
 
 relation ParticipationRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     research.activity.Participation playsRole participations {
         multiplicity *;
     }
@@ -12862,21 +12799,21 @@ relation PartyPartySocialSecurityNumber {
 }
 
 relation RootDomainObjectConclusionProcess {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     student.curriculum.ConclusionProcess playsRole conclusionProcesses {
         multiplicity *; 
     }
 }
 
 relation RootDomainObjectConclusionProcessVersion {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     student.curriculum.ConclusionProcessVersion playsRole conclusionProcessVersions {
         multiplicity *; 
     }
 }
 
 relation RootDomainObjectPartySocialSecurityNumber {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     organizationalStructure.PartySocialSecurityNumber playsRole partySocialSecurityNumbers {
         multiplicity *;
     }
@@ -12978,7 +12915,7 @@ relation PaymentCodeGratuitySituation {
 }
 
 relation RootDomainObjectPaymentCodeMapping {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     accounting.PaymentCodeMapping playsRole paymentCodeMappings {
         multiplicity *;
     }
@@ -13037,7 +12974,7 @@ relation PermissionUnitQuestion {
 }
 
 relation PersistentAccessGroupRoot {
-	RootDomainObject playsRole rootDomainObject {
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
 		multiplicity 0..1;
 	}
 	accessControl.PersistentAccessGroup playsRole persistentAccessGroup {
@@ -13046,7 +12983,7 @@ relation PersistentAccessGroupRoot {
 }
 
 relation PersistentAccessGroupDeletedRoot {
-	RootDomainObject playsRole deletedRootDomainObject {
+	.org.fenixedu.bennu.core.domain.Bennu playsRole deletedRootDomainObject {
 		multiplicity 0..1;
 	}
 	accessControl.PersistentAccessGroup playsRole deletedPersistentAccessGroup {
@@ -13113,6 +13050,13 @@ relation PersistentGroupMembersUnit {
     accessControl.PersistentGroupMembers playsRole persistentGroups {
         multiplicity *;
     }
+}
+
+relation RoleCustomGroupRole {
+    Role playsRole role {
+        multiplicity 1..1;
+    }
+    accessControl.RoleCustomGroup playsRole roleCustomGroup;
 }
 
 relation PersonAccountPerson {
@@ -13342,7 +13286,7 @@ relation PrecedentDegreeInformationStudentCurricularPlan {
 }
 
 relation PrizeRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     research.Prize playsRole prizes {
         multiplicity *;
     }
@@ -13713,14 +13657,14 @@ relation RegistrationDataByExecutionYearRootDomainObject {
     student.RegistrationDataByExecutionYear playsRole registrationDataByExecutionYear {
         multiplicity *;
     }
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 }
 
 relation RegistrationRegimeRootDomainObject {
     student.RegistrationRegime playsRole registrationRegimes {
         multiplicity *;
     }
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 }
 
 relation RegistrationSourceDestiny {
@@ -13814,7 +13758,7 @@ relation RegistrationProtocolRootDomainObject {
 	student.RegistrationProtocol playsRole registrationProtocols {
 		multiplicity *;
 	}
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 }
 
 relation ReimbursementGuideEntryGuideEntry {
@@ -13861,7 +13805,7 @@ relation ResearcherRootDomainObject {
     research.Researcher playsRole researchers {
         multiplicity *;
     }
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 }
 
 relation ResearcherPerson {
@@ -13894,7 +13838,7 @@ relation PreferredPublicationRootDomainObject {
     research.result.publication.PreferredPublication playsRole preferredPublication {
         multiplicity *;
     }
-    RootDomainObject playsRole rootDomainObject {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
     	multiplicity 1..1;
     }
 }
@@ -14009,481 +13953,481 @@ relation RoomSummary {
 }
 
 relation RootDomainExamCoordinator {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     vigilancy.ExamCoordinator playsRole examCoordinators {
         multiplicity *;
     }
 }
 
 relation RootDomainMarkSheet {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     MarkSheet playsRole markSheets {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectAcademicCalendarRootEntry {
-    RootDomainObject playsRole rootDomainObjectForRootEntries;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectForRootEntries;
     time.calendarStructure.AcademicCalendarRootEntry playsRole academicCalendars {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectDefaultAcademicCalendar {
-    RootDomainObject playsRole rootDomainObjectForDefaultRootEntry;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectForDefaultRootEntry;
     time.calendarStructure.AcademicCalendarRootEntry playsRole defaultAcademicCalendar;
 }
 
 relation RootDomainObjectAcademicCalendarEntry {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     time.calendarStructure.AcademicCalendarEntry playsRole academicCalendarEntries {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectAcademicServiceRequest {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     serviceRequests.AcademicServiceRequest playsRole academicServiceRequests {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectAcademicServiceRequestSituation {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     serviceRequests.AcademicServiceRequestSituation playsRole academicServiceRequestSituations {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectAccount {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     accounting.Account playsRole accounts {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectAccountTransaction {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     accounting.AccountingTransaction playsRole accountingTransactions {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectAccountability {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     organizationalStructure.Accountability playsRole accountabilitys {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectAccountabilityType {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     organizationalStructure.AccountabilityType playsRole accountabilityTypes {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectAccountingEvent {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     accounting.Event playsRole accountingEvents {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectAccountingDiscount {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     accounting.Discount playsRole discounts {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectAccountingTransactionDetail {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     accounting.AccountingTransactionDetail playsRole accountingTransactionDetails {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectAdministrativeOffice {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     administrativeOffice.AdministrativeOffice playsRole administrativeOffices {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectAdvise {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     teacher.Advise playsRole advises {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectArticleAssociation {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     research.activity.ArticleAssociation playsRole articleAssociations {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectAttends {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Attends playsRole attendss {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectBibliographicReference {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     BibliographicReference playsRole bibliographicReferences {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectBlueprint {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     space.Blueprint playsRole blueprints {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectBranch {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Branch playsRole branchs {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCandidacy {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Seminaries.SeminaryCandidacy playsRole candidacys {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCandidacyDocument {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     candidacy.CandidacyDocument playsRole candidacyDocument {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCandidacySituation {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     candidacy.CandidacySituation playsRole candidacySituations {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCandidateEnrolment {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     CandidateEnrolment playsRole candidateEnrolments {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCandidateSituation {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     CandidateSituation playsRole candidateSituations {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCareer {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     teacher.Career playsRole careers {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCaseStudy {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Seminaries.CaseStudy playsRole caseStudys {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCaseStudyChoice {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Seminaries.CaseStudyChoice playsRole caseStudyChoices {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCompetenceCourse {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     CompetenceCourse playsRole competenceCourses {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCompetenceCourseInformation {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     degreeStructure.CompetenceCourseInformation playsRole competenceCourseInformations {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCompetenceCourseLoad {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     degreeStructure.CompetenceCourseLoad playsRole competenceCourseLoads {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectConnectionRule {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     organizationalStructure.ConnectionRule playsRole connectionRules {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectContext {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     degreeStructure.Context playsRole contexts {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectContributor {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Contributor playsRole contributors {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCooperation {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     research.activity.Cooperation playsRole cooperations {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCoordinator {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Coordinator playsRole coordinators {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCostCenter {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     CostCenter playsRole costCenters {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCountry {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Country playsRole countrys {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCourseEquivalency {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Seminaries.CourseEquivalency playsRole courseEquivalencys {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCourseHistoric {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     gesdis.CourseHistoric playsRole courseHistorics {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCourseReport {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     gesdis.CourseReport playsRole courseReports {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCreditLine {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     credits.CreditLine playsRole creditLines {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCreditNote {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     accounting.CreditNote playsRole creditNotes {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCreditNoteEntry {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     accounting.CreditNoteEntry playsRole creditNoteEntries {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCredits {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     studentCurriculum.Credits playsRole credits {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCreditsInAnySecundaryArea {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     CreditsInAnySecundaryArea playsRole creditsInAnySecundaryAreas {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCreditsInScientificArea {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     CreditsInScientificArea playsRole creditsInScientificAreas {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCronRegistry {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     system.CronRegistry playsRole cronRegistry {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCronScriptInvocation {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     system.CronScriptInvocation playsRole cronScriptInvocations {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCronScriptState {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     system.CronScriptState playsRole cronScriptStates {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCurricularCourseEquivalence {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     CurricularCourseEquivalence playsRole curricularCourseEquivalences {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCurricularCourseScope {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     CurricularCourseScope playsRole curricularCourseScopes {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCurricularPeriod {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     curricularPeriod.CurricularPeriod playsRole curricularPeriods {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCurricularRule {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     curricularRules.CurricularRule playsRole curricularRules {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCurricularSemester {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     CurricularSemester playsRole curricularSemesters {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCurricularYear {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     CurricularYear playsRole curricularYears {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCurriculum {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Curriculum playsRole curriculums {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCurriculumModule {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     studentCurriculum.CurriculumModule playsRole curriculumModules {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectDegree {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Degree playsRole degrees {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectDegreeCurricularPlan {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     DegreeCurricularPlan playsRole degreeCurricularPlans {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectDegreeInfo {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     DegreeInfo playsRole degreeInfos {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectDegreeInfoCandidacy {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     DegreeInfoCandidacy playsRole degreeInfoCandidacys {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectDegreeInfoFuture {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     DegreeInfoFuture playsRole degreeInfoFutures {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectDegreeModule {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     degreeStructure.DegreeModule playsRole degreeModules {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectDepartment {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Department playsRole departments {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectDistributedTest {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     onlineTests.DistributedTest playsRole distributedTests {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectDistrict {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     District playsRole districts {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectDistrictSubdivision {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     DistrictSubdivision playsRole districtSubdivisions {
         multiplicity *;
     }
@@ -14497,1350 +14441,1296 @@ relation DistrictDistrictSubdivision {
 }
 
 relation RootDomainObjectDomainObjectActionLog {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     DomainObjectActionLog playsRole domainObjectActionLogs {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectDomainObjectActionLogEntry {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     DomainObjectActionLogEntry playsRole domainObjectActionLogEntries {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectEarthUnit {
-    RootDomainObject playsRole rootDomainObjectForEarthUnit;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectForEarthUnit;
     organizationalStructure.Unit playsRole earthUnit;
     }
 
 relation RootDomainObjectEmail {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     util.Email playsRole emails {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectEmployee {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Employee playsRole employees {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectEmployeeHistoric {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     EmployeeHistoric playsRole employeeHistorics {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectEnrolmentEvaluation {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     EnrolmentEvaluation playsRole enrolmentEvaluations {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectCurriculumLineLog {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     log.CurriculumLineLog playsRole curriculumLineLogs {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectEnrolmentPeriod {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     EnrolmentPeriod playsRole enrolmentPeriods {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectEnrolmentWrapper {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     studentCurriculum.EnrolmentWrapper playsRole enrolmentWrappers {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectEntry {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     accounting.Entry playsRole entries {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectEquivalencePlan {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     EquivalencePlan playsRole equivalencePlans {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectEquivalencePlanEntry {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     EquivalencePlanEntry playsRole equivalencePlanEntries {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectEvaluation {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Evaluation playsRole evaluations {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectEvaluationMethod {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     EvaluationMethod playsRole evaluationMethods {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectEvent {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     research.activity.ResearchEvent playsRole events {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectEventConferenceArticlesAssociation {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     research.activity.EventConferenceArticlesAssociation playsRole eventConferenceArticlesAssociations {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectEventEdition {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     research.activity.EventEdition playsRole eventEditions {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectExecutionCourse {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     ExecutionCourse playsRole executionCourses {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectExecutionDegree {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     ExecutionDegree playsRole executionDegrees {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectExecutionPeriod {
-    RootDomainObject playsRole rootDomainObjectForExecutionPeriod;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectForExecutionPeriod;
     ExecutionSemester playsRole executionPeriods {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectExecutionYear {
-    RootDomainObject playsRole rootDomainObjectForExecutionYear;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectForExecutionYear;
     ExecutionYear playsRole executionYears {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectExecutionInterval {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     ExecutionInterval playsRole executionIntervals {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectExemption {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     accounting.Exemption playsRole exemptions {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectExemptionJustification {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     accounting.events.ExemptionJustification playsRole exemptionJustifications {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectExpectationEvaluationGroup {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     ExpectationEvaluationGroup playsRole expectationEvaluationGroups {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectExportGrouping {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     ExportGrouping playsRole exportGroupings {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectExternalActivity {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     teacher.ExternalActivity playsRole externalActivitys {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectExternalCurricularCourse {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     ExternalCurricularCourse playsRole externalCurricularCourses {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectExternalEnrolment {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     studentCurriculum.ExternalEnrolment playsRole externalEnrolments {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectExternalInstitutionUnit {
-    RootDomainObject playsRole rootDomainObjectForExternalInstitutionUnit;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectForExternalInstitutionUnit;
     organizationalStructure.Unit playsRole externalInstitutionUnit;
     }
 
 relation RootDomainObjectExternalRegistrationData {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     student.ExternalRegistrationData playsRole externalRegistrationDatas {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectFAQEntry {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     support.FAQEntry playsRole fAQEntrys {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectFAQSection {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     support.FAQSection playsRole fAQSections {
         multiplicity *;
     }
 }
 
-relation RootDomainObjectFile {
-    RootDomainObject playsRole rootDomainObject;
-    File playsRole files {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectFileLocalContents {
-    RootDomainObject playsRole rootDomainObject;
-    FileLocalContent playsRole fileLocalContents {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectFirstYearShiftsCapacityToggleLog {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     log.FirstYearShiftsCapacityToggleLog playsRole firstYearShiftsCapacityToggleLogs {
         multiplicity *;
     }
 }
 
-relation FileLocalContents {
-    File playsRole file;
-    FileLocalContent playsRole localContent;
-}
-
-relation FileLocalContentMetadatas {
-    FileLocalContent playsRole content;
-    FileLocalContentMetadata playsRole metadata {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectPhotographs {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Photograph playsRole photographs {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectPendingPhotographs {
-    RootDomainObject playsRole pendingHolder;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole pendingHolder;
     Photograph playsRole pendingPhotographs {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectForumSubscription {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     messaging.ForumSubscription playsRole forumSubscriptions {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectFunctionalityPrinters {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     util.FunctionalityPrinters playsRole functionalityPrinters {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectGaugingTestResult {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     gaugingTests.physics.GaugingTestResult playsRole gaugingTestResults {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectGeneralClassProperty {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     classProperties.GeneralClassProperty playsRole generalClassPropertys {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectGenericEvent {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     GenericEvent playsRole genericEvents {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectGlossaryEntry {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     support.GlossaryEntry playsRole glossaryEntrys {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectGratuitySituation {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     GratuitySituation playsRole gratuitySituations {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectGratuityValues {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     GratuityValues playsRole gratuityValuess {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectGroup {
-    RootDomainObject playsRole rootDomainObject;
-    finalDegreeWork.FinalDegreeWorkGroup playsRole groups {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+    finalDegreeWork.FinalDegreeWorkGroup playsRole finalDegreeWorkGroups {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectGroupProposal {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     finalDegreeWork.GroupProposal playsRole groupProposals {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectGroupStudent {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     finalDegreeWork.GroupStudent playsRole groupStudents {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectGrouping {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Grouping playsRole groupings {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectGuide {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Guide playsRole guides {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectGuideEntry {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     GuideEntry playsRole guideEntrys {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectGuideSituation {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     GuideSituation playsRole guideSituations {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectHasAvailabilityPolicy {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     functionalities.AvailabilityPolicy playsRole availabilityPolicy {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectHoliday {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Holiday playsRole holidays {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectIdDocument {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     person.IdDocument playsRole idDocuments {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectIdDocumentTypeObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     person.IdDocumentTypeObject playsRole idDocumentTypes {
         multiplicity *;
     }
 }
 
-relation RootDomainObjectIdentification {
-    RootDomainObject playsRole rootDomainObject;
-    Identification playsRole identifications {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectInquiriesCourse {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     oldInquiries.InquiriesCourse playsRole inquiriesCourses {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectInquiriesRegistry {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     oldInquiries.InquiriesRegistry playsRole inquiriesRegistrys {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectInquiriesRoom {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     oldInquiries.InquiriesRoom playsRole inquiriesRooms {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectInquiriesStudentExecutionPeriod {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     oldInquiries.InquiriesStudentExecutionPeriod playsRole inquiriesStudentExecutionPeriods {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectInquiriesTeacher {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     oldInquiries.InquiriesTeacher playsRole inquiriesTeachers {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectInquiryResponsePeriod {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     oldInquiries.InquiryResponsePeriod playsRole inquiryResponsePeriods {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectInstallment {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     accounting.Installment playsRole installments {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectInstitutionUnit {
-    RootDomainObject playsRole rootDomainObjectForInstitutionUnit;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectForInstitutionUnit;
     organizationalStructure.Unit playsRole institutionUnit;
 }
 
 relation RootDomainObjectInsuranceValue {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     InsuranceValue playsRole insuranceValues {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectJournalIssues {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     research.activity.JournalIssue playsRole journalIssues {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectLesson {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Lesson playsRole lessons {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectLessonPlanning {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     LessonPlanning playsRole lessonPlannings {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectLocality {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Locality playsRole localities {
         multiplicity *;
     }
 }
 
-relation RootDomainObjectLoginAlias {
-    RootDomainObject playsRole rootDomainObject;
-    LoginAlias playsRole loginAlias {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectLoginPeriod {
-    RootDomainObject playsRole rootDomainObject;
-    LoginPeriod playsRole loginPeriods {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectLoginRequest {
-    RootDomainObject playsRole rootDomainObject;
-    LoginRequest playsRole loginRequests {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectManagementGroups {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     ManagementGroups playsRole managementGroups {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectMark {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Mark playsRole marks {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectMasterDegreeCandidate {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     MasterDegreeCandidate playsRole masterDegreeCandidates {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectMasterDegreeProofVersion {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     MasterDegreeProofVersion playsRole masterDegreeProofVersions {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectMasterDegreeThesis {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     MasterDegreeThesis playsRole masterDegreeThesiss {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectMasterDegreeThesisDataVersion {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     MasterDegreeThesisDataVersion playsRole masterDegreeThesisDataVersions {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectMetadata {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     onlineTests.Metadata playsRole metadatas {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectModality {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Seminaries.Modality playsRole modalitys {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectNewAnswer {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     tests.NewAnswer playsRole answers {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectNewCorrector {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     tests.NewCorrector playsRole correctors {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectNewGroupElement {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     tests.NewGroupElement playsRole groupElements {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectNewParkingDocument {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     parking.NewParkingDocument playsRole newParkingDocuments {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectNewPermissionUnit {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     tests.NewPermissionUnit playsRole permissionUnits {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectNewPresentationMaterial {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     tests.NewPresentationMaterial playsRole presentationMaterials {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectNewTestElement {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     tests.NewTestElement playsRole newTestElements {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectNewTestGroup {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     tests.NewTestGroup playsRole testGroups {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectNonAffiliatedTeacher {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     NonAffiliatedTeacher playsRole nonAffiliatedTeachers {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectNotNeedToEnrollInCurricularCourse {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     degree.enrollment.NotNeedToEnrollInCurricularCourse playsRole notNeedToEnrollInCurricularCourses {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectOccupationPeriod {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     OccupationPeriod playsRole occupationPeriods {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectOccupationPeriodReference {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     OccupationPeriodReference playsRole occupationPeriodReferences {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectOldInquiriesCoursesRes {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     oldInquiries.OldInquiriesCoursesRes playsRole oldInquiriesCoursesRess {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectOldInquiriesSummary {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     oldInquiries.OldInquiriesSummary playsRole oldInquiriesSummarys {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectOldInquiriesTeachersRes {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     oldInquiries.OldInquiriesTeachersRes playsRole oldInquiriesTeachersRess {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectOldPublication {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     teacher.OldPublication playsRole oldPublications {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectOrientation {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     teacher.Orientation playsRole orientations {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectParkingGroup {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     parking.ParkingGroup playsRole parkingGroups {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectParkingParty {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     parking.ParkingParty playsRole parkingParties {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectParkingPartyHistory {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     parking.ParkingPartyHistory playsRole parkingPartyHistories {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectParkingRequest {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     parking.ParkingRequest playsRole parkingRequests {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectParkingRequestPeriod {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     parking.ParkingRequestPeriod playsRole parkingRequestPeriods {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectParty {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     organizationalStructure.Party playsRole partys {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectPartyContact {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     contacts.PartyContact playsRole partyContacts {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectInvalidPartyContact {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     contacts.PartyContactValidation playsRole invalidPartyContactValidations {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectPartyType {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     organizationalStructure.PartyType playsRole partyTypes {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectPaymentCode {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     accounting.PaymentCode playsRole paymentCodes {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectPaymentPhase {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     PaymentPhase playsRole paymentPhases {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectPaymentPlan {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     accounting.PaymentPlan playsRole paymentPlans {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectPersistentGroupMembers {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     accessControl.PersistentGroupMembers playsRole persistentGroupMembers {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectPersonAccount {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     PersonAccount playsRole personAccounts {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectPersonName {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     person.PersonName playsRole personName {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectPersonNamePart {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     person.PersonNamePart playsRole personNamePart {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectPersonalGroup {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     PersonalGroup playsRole personalGroups {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectPostingRule {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     accounting.PostingRule playsRole postingRules {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectPrecedence {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     precedences.Precedence playsRole precedences {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectPrecedentDegreeInformation {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     student.PrecedentDegreeInformation playsRole precedentDegreeInformation {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectPrice {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Price playsRole prices {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectProfessorship {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Professorship playsRole professorships {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectProject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     research.project.Project playsRole projects {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectProjectEventAssociation {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     research.project.ProjectEventAssociation playsRole projectEventAssociations {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectProjectParticipation {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     research.project.ProjectParticipation playsRole projectParticipations {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectProjectSubmission {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     ProjectSubmission playsRole projectSubmissions {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectProjectSubmissionLog {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     ProjectSubmissionLog playsRole projectSubmissionLogs {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectProposal {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     finalDegreeWork.Proposal playsRole proposals {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectPublicationsNumber {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     teacher.PublicationsNumber playsRole publicationsNumbers {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectPunctualRoomsOccupationComment {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     PunctualRoomsOccupationComment playsRole punctualRoomsOccupationComments {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectPunctualRoomsOccupationRequest {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     PunctualRoomsOccupationRequest playsRole punctualRoomsOccupationRequests {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectPunctualRoomsOccupationStateInstant {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     PunctualRoomsOccupationStateInstant playsRole punctualRoomsOccupationStateInstants {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectQualification {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Qualification playsRole qualifications {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectQuestion {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     onlineTests.Question playsRole questions {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectReceipt {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     accounting.Receipt playsRole receipts {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectReceiptPrintVersion {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     accounting.ReceiptPrintVersion playsRole receiptVersions {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectRegistration {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     student.Registration playsRole registrations {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectRegistrationNumber {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     student.RegistrationNumber playsRole registrationNumbers {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectRegistrationState {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     student.registrationStates.RegistrationState playsRole registrationStates {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectRegistrationStateLog {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     student.registrationStates.RegistrationStateLog playsRole registrationStateLogs {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectReimbursementGuide {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     reimbursementGuide.ReimbursementGuide playsRole reimbursementGuides {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectReimbursementGuideEntry {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     reimbursementGuide.ReimbursementGuideEntry playsRole reimbursementGuideEntrys {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectReimbursementGuideSituation {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     reimbursementGuide.ReimbursementGuideSituation playsRole reimbursementGuideSituations {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectResearchInterest {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     research.ResearchInterest playsRole researchInterests {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectResearchResult {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     research.result.ResearchResult playsRole results {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectResidenceCandidacies {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     student.ResidenceCandidacies playsRole residenceCandidaciess {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectResource {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     resource.Resource playsRole resources {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectResourceAllocation {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     resource.ResourceAllocation playsRole resourceAllocations {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectResourceResponsibility {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     resource.ResourceResponsibility playsRole resourceResponsibility {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectRestriction {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     precedences.Restriction playsRole restrictions {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectResultParticipation {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     research.result.ResultParticipation playsRole resultParticipations {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectResultTeacher {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     research.result.ResultTeacher playsRole resultTeachers {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectResultUnitAssociation {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     research.result.ResultUnitAssociation playsRole resultUnitAssociations {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectRole {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Role playsRole roles {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectRoomClassification {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     space.RoomClassification playsRole roomClassification {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectScheduleing {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     finalDegreeWork.Scheduleing playsRole scheduleings {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectSchoolClass {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     SchoolClass playsRole schoolClasss {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectScientificArea {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     ScientificArea playsRole scientificAreas {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectScientificJournal {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     research.activity.ScientificJournal playsRole scientificJournals {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectSecretaryEnrolmentStudent {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     SecretaryEnrolmentStudent playsRole secretaryEnrolmentStudents {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectSeminary {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Seminaries.Seminary playsRole seminarys {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectSenior {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     student.Senior playsRole seniors {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectServiceAgreement {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     accounting.ServiceAgreement playsRole serviceAgreements {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectServiceAgreementTemplate {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     accounting.ServiceAgreementTemplate playsRole serviceAgreementTemplates {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectServiceProviderRegime {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     teacher.ServiceProviderRegime playsRole serviceProviderRegimes {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectShift {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Shift playsRole shifts {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectShiftGroupingProperties {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     ShiftGroupingProperties playsRole shiftGroupingProperties {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectShiftDistribution {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     candidacy.degree.ShiftDistribution playsRole shiftDistributions {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectShiftDistributionEntry {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     candidacy.degree.ShiftDistributionEntry playsRole shiftDistributionEntries {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectShiftEnrolment {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     ShiftEnrolment playsRole shiftEnrolments {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectShiftProfessorship {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     ShiftProfessorship playsRole shiftProfessorships {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectSibsPaymentFile {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     gratuity.masterDegree.SibsPaymentFile playsRole sibsPaymentFiles {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectSibsPaymentFileEntry {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     gratuity.masterDegree.SibsPaymentFileEntry playsRole sibsPaymentFileEntrys {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectSibsPaymentFileProcessReport {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     accounting.SibsPaymentFileProcessReport playsRole sibsPaymentFileProcessReports {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectSpaceInformation {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     space.SpaceInformation playsRole spaceInformations {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectStudent {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     student.Student playsRole students {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectStudentNumber {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     student.StudentNumber playsRole studentNumbers {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectStudentCourseReport {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     gesdis.StudentCourseReport playsRole studentCourseReports {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectStudentCurricularPlan {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     StudentCurricularPlan playsRole studentCurricularPlans {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectStudentGroup {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     StudentGroup playsRole studentGroups {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectStudentStatute {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     student.StudentStatute playsRole studentStatutes {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectStudentTestLog {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     onlineTests.StudentTestLog playsRole studentTestLogs {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectStudentTestQuestion {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     onlineTests.StudentTestQuestion playsRole studentTestQuestions {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectSummary {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Summary playsRole summarys {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectSupportLesson {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     SupportLesson playsRole supportLessons {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectTeacher {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Teacher playsRole teachers {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectTeacherDegreeFinalProjectStudent {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     degree.finalProject.TeacherDegreeFinalProjectStudent playsRole teacherDegreeFinalProjectStudents {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectTeacherInstitutionWorkTime {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     teacher.workTime.TeacherInstitutionWorkTime playsRole teacherInstitutionWorkTimes {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectTeacherPersonalExpectation {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     teacher.TeacherPersonalExpectation playsRole teacherPersonalExpectations {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectTeacherPersonalExpectationPeriod {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     TeacherPersonalExpectationPeriod playsRole teacherPersonalExpectationPeriods {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectTeacherService {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     teacher.TeacherService playsRole teacherServices {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectTeacherServiceLog {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     teacher.TeacherServiceLog playsRole teacherServiceLog {
         multiplicity *;
     }
@@ -15857,67 +15747,67 @@ relation TeacherServiceLogUser {
     teacher.TeacherServiceLog playsRole teacherServiceLog {
         multiplicity *;
     }
-    User playsRole user;
+    .org.fenixedu.bennu.core.domain.User playsRole user;
 }
 
 relation RootDomainObjectTeacherServiceItem {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     teacher.TeacherServiceItem playsRole teacherServiceItems {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectTest {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     onlineTests.Test playsRole tests {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectTestChecksum {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     onlineTests.TestChecksum playsRole testChecksums {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectTestQuestion {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     onlineTests.TestQuestion playsRole testQuestions {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectTestScope {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     onlineTests.TestScope playsRole testScopes {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectTheme {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Seminaries.Theme playsRole themes {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectThesis {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     thesis.Thesis playsRole theses {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectThesisPendingPublication {
-    RootDomainObject playsRole rootDomainObjectFromPendingPublication;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectFromPendingPublication;
     thesis.Thesis playsRole thesesPendingPublication {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectTransaction {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     transactions.Transaction playsRole transactions {
         multiplicity *;
     }
@@ -15942,35 +15832,35 @@ relation TeachersTutorshipIntentions {
 }
 
 relation RootDomainObjectTutorship {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Tutorship playsRole tutorships {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectTutorshipSummary {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     TutorshipSummary playsRole tutorshipSummaries {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectTutorshipSummaryPeriod {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     TutorshipSummaryPeriod playsRole tutorshipSummaryPeriods {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectTutorshipSummaryRelation {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     TutorshipSummaryRelation playsRole tutorshipSummaryRelations {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectTutorshipLog {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     TutorshipLog playsRole tutorshipLogs {
         multiplicity *;
     }
@@ -16029,152 +15919,140 @@ relation TutorshipTutorshipLogs {
 }
 
 relation RootDomainObjectTeacherServiceDistribution {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     teacherServiceDistribution.TeacherServiceDistribution playsRole teacherServiceDistributions {
         multiplicity *;
     }
 }
 
 relation TSDCurricularLoadRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     teacherServiceDistribution.TSDCurricularLoad playsRole TSDCurricularLoads {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectTSDCourse {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     teacherServiceDistribution.TSDCourse playsRole TSDCourses {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectTSDProfessorship {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     teacherServiceDistribution.TSDProfessorship playsRole TSDProfessorships {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectTSDProcess {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     teacherServiceDistribution.TSDProcess playsRole TSDProcesses {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectTSDProcessPhase {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     teacherServiceDistribution.TSDProcessPhase playsRole TSDProcessPhases {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectTSDTeacher {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     teacherServiceDistribution.TSDTeacher playsRole TSDTeachers {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectUnitName {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     organizationalStructure.UnitName playsRole unitName {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectUnitNamePart {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     organizationalStructure.UnitNamePart playsRole unitNamePart {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectUnitAcronym {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     organizationalStructure.UnitAcronym playsRole unitAcronyms {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectUnitSiteBanner {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     UnitSiteBanner playsRole unitSiteBanners {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectUnitSiteLink {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     UnitSiteLink playsRole unitSiteLinks {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectUniversity {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     University playsRole universitys {
         multiplicity *;
     }
 }
 
-relation RootDomainObjectUser {
-    RootDomainObject playsRole rootDomainObject;
-    User playsRole users {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectUsernameCounter {
-    RootDomainObject playsRole rootDomainObject;
-    util.UsernameCounter playsRole usernameCounter;
-    }
-
 relation RootDomainObjectVehicle {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     parking.Vehicle playsRole vehicles {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectWeeklyOcupation {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     teacher.WeeklyOcupation playsRole weeklyOcupations {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectWeeklyWorkLoad {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     student.WeeklyWorkLoad playsRole weeklyWorkLoads {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectWrittenEvaluationEnrolment {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     WrittenEvaluationEnrolment playsRole writtenEvaluationEnrolments {
         multiplicity *;
     }
 }
 
 relation RootDomainUnavailablePeriod {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     vigilancy.UnavailablePeriod playsRole unavailablePeriods {
         multiplicity *;
     }
 }
 
 relation RootDomainVigilancy {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     vigilancy.Vigilancy playsRole vigilancies {
         multiplicity *;
     }
 }
 
 relation RootDomainVigilantGroup {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     vigilancy.VigilantGroup playsRole vigilantGroups {
         multiplicity *;
     }
@@ -16212,7 +16090,7 @@ relation ScientificCommissionRootDomainObject {
     ScientificCommission playsRole scientificCommissions {
         multiplicity *;
     }
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 }
 
 relation SectionTestElement {
@@ -16517,7 +16395,7 @@ relation StudentDataByExecutionYearRootDomainObject {
     student.StudentDataByExecutionYear playsRole studentDataByExecutionYear {
         multiplicity *;
     }
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 }
 
 relation StudentDataByExecutionYearStudent {
@@ -16882,7 +16760,7 @@ relation ThesisEnrolment {
 }
 
 relation ThesisEvaluationParticipantRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     thesis.ThesisEvaluationParticipant playsRole thesisParticipations {
         multiplicity *;
     }
@@ -17103,7 +16981,7 @@ relation UnitFileTagRootDomainObject {
     UnitFileTag playsRole unitFileTags {
         multiplicity *;
     }
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 }
 
 relation UnitFileUnit {
@@ -17226,21 +17104,14 @@ relation UnitUnitSpaceOccupation {
     }
 }
 
-relation UserIdentification {
-    User playsRole user;
-    Identification playsRole identifications {
-        multiplicity *;
-    }
-}
-
-relation UserLoginRequest {
-    LoginRequest playsRole loginRequest;
-    User playsRole user;
-}
-
 relation UserPerson {
     Person playsRole person;
-    User playsRole user;
+    .org.fenixedu.bennu.core.domain.User playsRole user;
+}
+
+relation UserPrivateKeyUser {
+    UserPrivateKey playsRole privateKey;
+    .org.fenixedu.bennu.core.domain.User playsRole;
 }
 
 relation VehicleAllocationRequestor {
@@ -17346,7 +17217,7 @@ relation OccupationPeriodLesson {
 }
 
 relation LessonInstanceRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     LessonInstance playsRole lessonInstances {
         multiplicity *;
     }
@@ -17407,7 +17278,7 @@ relation CompetenceCourseInformationChangeRequestCompetenceCourseGroupUnit {
 }
 
 relation CompetenceCourseInformationChangeRequestRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     degreeStructure.CompetenceCourseInformationChangeRequest playsRole competenceCourseInformationChangeRequests {
         multiplicity *;
     }
@@ -17421,7 +17292,7 @@ relation CompetenceCourseInformationExecutionPeriod {
 }
 
 relation CourseLoadRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     CourseLoad playsRole courseLoads {
         multiplicity *;
     }
@@ -17661,7 +17532,7 @@ relation PersonGrantOwnerEquivalentCountry {
 
 
 relation LibraryCardRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     library.LibraryCard playsRole libraryCards{
         multiplicity *;
     }
@@ -17778,21 +17649,21 @@ relation PersonFunctionSharedExecutionInterval {
 }
 
 relation RootDomainObjectDelegateElection {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     elections.DelegateElection playsRole delegateElections {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectDelegateElectionVote {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     elections.DelegateElectionVote playsRole votes {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectDelegateElectionPeriod {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     elections.DelegateElectionPeriod playsRole delegateElectionsPeriods {
         multiplicity *;
     }
@@ -17800,28 +17671,28 @@ relation RootDomainObjectDelegateElectionPeriod {
 
 
 relation RootDomainObjectCardGenerationBatch {
-        RootDomainObject playsRole rootDomainObject;
+        .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
         cardGeneration.CardGenerationBatch playsRole cardGenerationBatches {
                 multiplicity *;
         }
 }
 
 relation RootDomainObjectCardGenerationEntry {
-        RootDomainObject playsRole rootDomainObject;
+        .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
         cardGeneration.CardGenerationEntry playsRole cardGenerationEntries {
                 multiplicity *;
         }
 }
 
 relation RootDomainObjectCardGenerationRegister {
-        RootDomainObject playsRole rootDomainObject;
+        .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
         cardGeneration.CardGenerationRegister playsRole cardGenerationRegister {
                 multiplicity *;
         }
 }
 
 relation RootDomainObjectCardGenerationProblem {
-        RootDomainObject playsRole rootDomainObject;
+        .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
         cardGeneration.CardGenerationProblem playsRole cardGenerationProblem {
                 multiplicity *;
         }
@@ -17863,42 +17734,42 @@ relation PersonCardGenerationRegister {
 }
 
 relation RootDomainObjectSantanderBatch {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	cardGeneration.SantanderBatch playsRole santanderBatches {
 		multiplicity *;
 	}
 }
     
 relation RootDomainObjectSantanderBatchRequester {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	cardGeneration.SantanderBatchRequester playsRole santanderBatchRequesters {
 		multiplicity *;
 	}
 }
 
 relation RootDomainObjectSantanderBatchSender {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	cardGeneration.SantanderBatchSender playsRole santanderBatchSenders {
 		multiplicity *;
 	}
 }
 
 relation RootDomainObjectSantanderSequenceNumberGenerator {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	cardGeneration.SantanderSequenceNumberGenerator playsRole santanderSequenceNumberGenerators {
 		multiplicity *;
 	}
 }	
 
 relation RootDomainObjectSantanderEntry {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	cardGeneration.SantanderEntry playsRole santanderEntries {
 		multiplicity *;
 	}
 }
 
 relation RootDomainObjectSantanderProblem {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	cardGeneration.SantanderProblem playsRole santanderProblem {
 		multiplicity *;
 	}
@@ -17973,13 +17844,6 @@ relation PersonSantanderPIN {
 	cardGeneration.SantanderPIN playsRole santanderPIN;
 }
 
-relation MetaDomainObjectRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
-    MetaDomainObject playsRole metaDomainObjects {
-        multiplicity *;
-    }
-}
-
 relation ContentHasCreator {
     Person playsRole creator;
     contents.Content playsRole createdContents {
@@ -17993,7 +17857,7 @@ relation ContentHasAvailabilityPolicy {
 }
 
 relation ContentRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     contents.Content playsRole contents {
         multiplicity *;
     }
@@ -18022,7 +17886,7 @@ relation ContentNode {
 }
 
 relation NodeRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
         contents.Node playsRole nodes {
         multiplicity *;
     }
@@ -18040,20 +17904,13 @@ relation FunctionalityHasParameters {
     }
 }
 
-relation FunctionalityParameterType {
-    MetaDomainObject playsRole type;
-    functionalities.FunctionalityParameter playsRole functionalityParameters {
-                multiplicity *;
-        }
-}
-
 relation RootModule {
-    RootDomainObject playsRole moduleRootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole moduleRootDomainObject;
     functionalities.Module playsRole rootModule;
         }
 
 relation RootPortal {
-    RootDomainObject playsRole portalRootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole portalRootDomainObject;
     contents.Portal playsRole rootPortal;
 }
 
@@ -18065,24 +17922,24 @@ relation ContainerPointsContent {
 }
 
 relation RootDomainObjectFunctionalityParameter {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     functionalities.FunctionalityParameter playsRole functionalityParameters {
                 multiplicity *;
         }
 }
 
-relation MetaDomainObjectPortalMetaDomainObject {
-    contents.MetaDomainObjectPortal playsRole portals {
-                multiplicity *;
-        }
-    MetaDomainObject playsRole metaDomainObject;
-}
-
 relation ExecutionPathRootDomainObject {
-        RootDomainObject playsRole rootDomainObject;
+        .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
         functionalities.ExecutionPath playsRole executionPaths {
                 multiplicity *;
         }
+}
+
+relation MetaDomainObjectPortalBennu {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole bennu;
+    contents.MetaDomainObjectPortal playsRole metaDomainObjectPortal {
+        multiplicity *;
+    }
 }
 
 relation PortalPool {
@@ -18100,7 +17957,7 @@ relation PersonCardGenerationProblem {
 }
 
 relation DeployNotifierRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     DeployNotifier playsRole deployNotifier; 
 }
 
@@ -18126,14 +17983,14 @@ relation RequestLogYearRequestLogDay {
 }
 
 relation RequestLogDayRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     log.requests.RequestLogDay playsRole requestLogDays {
         multiplicity *;
     }
 }
 
 relation MostRecentRequestLogDay {
-    RootDomainObject playsRole rootDomainObjectRequestLogDay;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectRequestLogDay;
     log.requests.RequestLogDay playsRole mostRecentRequestLogDay;
 }
 
@@ -18143,14 +18000,14 @@ relation RequestLogDayRequestLogDay {
 }
 
 relation RequestLogMonthRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     log.requests.RequestLogMonth playsRole requestLogMonths {
         multiplicity *;
     }
 }
 
 relation RequestLogYearRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     log.requests.RequestLogYear playsRole requestLogYears {
         multiplicity *;
     }
@@ -18179,42 +18036,42 @@ relation ErrorLogExceptionType {
 }
 
 relation RequestMappingRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     log.requests.RequestMapping playsRole requestMappings {
         multiplicity *;
     }
 }
 
 relation ErrorLogRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     log.requests.ErrorLog playsRole errorLogs {
         multiplicity *;
     }
 }
 
 relation RequestLogRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     log.requests.RequestLog playsRole requestLogs {
         multiplicity *;
     }
 }
 
 relation ExceptionTypeRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     log.requests.ExceptionType playsRole exceptionTypes {
         multiplicity *;
     }
 }
 
 relation ProcessRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     caseHandling.Process playsRole processes {
         multiplicity *;
     }
 }
 
 relation ProcessLogRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     caseHandling.ProcessLog playsRole processesLogs {
         multiplicity *;
     }
@@ -18228,7 +18085,7 @@ relation ProcessProcessLog {
 }
 
 relation CandidacyPeriodRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     period.CandidacyPeriod playsRole candidacyPeriods {
         multiplicity *;
     }
@@ -18249,7 +18106,7 @@ relation CandidacyPeriodCandidacyProcess {
 }
 
 relation IndividualCandidacyRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     candidacyProcess.IndividualCandidacy playsRole individualCandidacies {
         multiplicity *;
     }
@@ -18319,7 +18176,7 @@ relation IndividualCandidacyProcessIndividualCandidacy {
 
 
 relation Over23IndividualCandidacyDegreeEntryRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     candidacyProcess.over23.Over23IndividualCandidacyDegreeEntry playsRole over23IndividualCandidacyDegreeEntries {
         multiplicity *;
     }
@@ -18416,7 +18273,7 @@ relation MobilityIndividualApplicationCurricularCourses {
 }
 
 relation CandidacyPrecedentDegreeInformationRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     candidacyProcess.CandidacyPrecedentDegreeInformation playsRole candidacyPrecedentDegreeInformations {
         multiplicity *;
     }
@@ -18461,7 +18318,7 @@ relation IndividualCandidacyPrecedentDegreeInformation {
 }
 
 relation DegreeContextRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     DegreeContext playsRole degreeContexts {
         multiplicity *;
     }
@@ -18489,14 +18346,14 @@ relation ResidenceMonthResidenceEvent {
 }
 
 relation ResidenceYearRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     residence.ResidenceYear playsRole residenceYears {
         multiplicity *;
     }
 }
 
 relation ResidenceMonthRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     residence.ResidenceMonth playsRole residenceMonths0 {
         multiplicity *;
     }
@@ -18510,7 +18367,7 @@ relation ResidenceManagementUnitResidenceEvent {
 }
 
 relation RootDomainObjectSupportRequest {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     support.SupportRequest playsRole supportRequests {
         multiplicity *;
     }
@@ -18559,21 +18416,21 @@ relation AlumniIdentityCheckRequestPerson {
     }
 
 relation RootDomainObjectAlumni {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Alumni playsRole alumnis {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectAlumniIdentityCheckRequest {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     AlumniIdentityCheckRequest playsRole alumniIdentityRequest {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectJob {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Job playsRole jobs {
         multiplicity *;
     }
@@ -18622,7 +18479,7 @@ relation BusinessAreaBusinessArea {
 }
 
 relation RootDomainObjectBusinessArea {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     BusinessArea playsRole businessAreas {
         multiplicity *;
     }
@@ -18636,7 +18493,7 @@ relation EducationAreaEducationArea {
 }
 
 relation RootDomainObjectEducationArea {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     EducationArea playsRole educationAreas {
         multiplicity *;
     }
@@ -18671,7 +18528,7 @@ relation FormationCountryUnit {
 }
 
 relation ResidencePriceTableRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     residence.ResidencePriceTable playsRole residencePriceTables {
         multiplicity *;
     }
@@ -18718,39 +18575,39 @@ relation StudentCandidacySchoolTimeDistrictSubdivisionOfResidence {
 
 relation RootDomainObjectResidenceManagementUnitHack {
     organizationalStructure.ResidenceManagementUnit playsRole residenceManagementUnit;
-    RootDomainObject playsRole rootDomainObjectForResidenceUnit;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectForResidenceUnit;
 }
 
 relation RootDomainObjectUtilEmailMessage {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     util.email.Message playsRole utilEmailMessages {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectUtilEmailMessageId {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     util.email.MessageId playsRole utilEmailMessageIds {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectUtilEmailRecipient {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     util.email.Recipient playsRole utilEmailRecipients {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectUtilEmailSender {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     util.email.Sender playsRole utilEmailSenders {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectSystemSender {
-    RootDomainObject playsRole systemRootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole systemRootDomainObject;
     util.email.SystemSender playsRole systemSender;
 }
 
@@ -18803,7 +18660,7 @@ relation UtilEmailMessageUtilEmailRecipient {
 }
 
 relation RootDomainObjectUtilEmailReplyTo {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     util.email.ReplyTo playsRole replyTos {
         multiplicity *;
     }
@@ -18847,14 +18704,14 @@ relation PersonUtilEmailReplyTo {
 }
 
 relation RootDomainObjectPendingUtilEmailMessage {
-    RootDomainObject playsRole rootDomainObjectFromPendingRelation;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectFromPendingRelation;
     util.email.Message playsRole pendingUtilEmailMessages {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectTeachingInquiry {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     oldInquiries.teacher.TeachingInquiry playsRole teachingInquiries {
         multiplicity *;
     }
@@ -18866,7 +18723,7 @@ relation TeachingInquiryProfessorship {
 }
 
 relation RootDomainObjectStudentInquiriesTeachingResult {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     oldInquiries.StudentInquiriesTeachingResult playsRole studentInquiriesTeachingResults {
         multiplicity *;
     }
@@ -18887,7 +18744,7 @@ relation ExecutionDegreeStudentInquiriesTeachingResult {
 }
 
 relation RootDomainObjectStudentInquiriesCourseResult {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     oldInquiries.StudentInquiriesCourseResult playsRole studentInquiriesCourseResults {
         multiplicity *;
     }
@@ -18917,7 +18774,7 @@ relation PartialRegimeInstallmentExecutionSemester {
     }
 }
 relation RootDomainObjectUnitCostCenterCode {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     organizationalStructure.UnitCostCenterCode playsRole unitCostCenterCodes {
         multiplicity *;
     }
@@ -18937,14 +18794,14 @@ relation UnitUnitBasedSender {
 
 
 relation RootDomainObjectInternshipCandidacySession {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     internship.InternshipCandidacySession playsRole internshipCandidacySession {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectInternshipCandidacy {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     internship.InternshipCandidacy playsRole internshipCandidacy {
         multiplicity *;
     }
@@ -19025,14 +18882,14 @@ relation QueueJobUndoneRootDomainObject {
        QueueJob playsRole queueJobUndone {
                multiplicity *;
        }
-       RootDomainObject playsRole rootDomainObjectQueueUndone;
+       .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectQueueUndone;
 }
 
 relation QueueJobRootDomainObject {
        QueueJob playsRole queueJob {
                multiplicity *;
        }
-       RootDomainObject playsRole rootDomainObject;
+       .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 }
 
 
@@ -19063,7 +18920,7 @@ relation DelegateRegistration {
 }
 
 relation DelegateRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     student.Delegate playsRole delegates {
         multiplicity *;
     }
@@ -19084,7 +18941,7 @@ relation YearDelegateCourseInquiryExecutionCourse {
 }
 
 relation YearDelegateCourseInquiryRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     student.YearDelegateCourseInquiry playsRole yearDelegateCourseInquiries {
         multiplicity *;
     }
@@ -19096,7 +18953,7 @@ relation QueueJobWithFileResult{
 }
 
 relation AnnouncementCategoryRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     messaging.AnnouncementCategory playsRole categories {
         multiplicity *;
     }
@@ -19143,7 +19000,7 @@ relation IndividualCandidacyIndividualCandidacyDocumentFile {
 }
 
 relation PublicCandidacyHashCodeRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     PublicCandidacyHashCode playsRole candidacyHashCodes {
         multiplicity *;
     }
@@ -19174,84 +19031,84 @@ relation FormationExecutionYear {
 }
 
 relation GiafProfessionalDataRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalData {
         multiplicity *;
     }
 }
 
 relation PersonProfessionalContractRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     personnelSection.contracts.PersonProfessionalContract playsRole personProfessionalContracts {
         multiplicity *;
     }
 }
 
 relation PersonContractSituationRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     personnelSection.contracts.PersonContractSituation playsRole personContractSituations {
         multiplicity *;
     }
 }
 
 relation PersonProfessionalCategoryRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     personnelSection.contracts.PersonProfessionalCategory playsRole personProfessionalCategories {
         multiplicity *;
     }
 }
 
 relation PersonProfessionalRegimeRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     personnelSection.contracts.PersonProfessionalRegime playsRole personProfessionalRegimes {
         multiplicity *;
     }
 }
 
 relation PersonProfessionalRelationRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     personnelSection.contracts.PersonProfessionalRelation playsRole personProfessionalRelations {
         multiplicity *;
     }
 }
 
 relation ContractSituationRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     personnelSection.contracts.ContractSituation playsRole contractSituations {
         multiplicity *;
     }
 }
 
 relation ProfessionalContractTypeRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     personnelSection.contracts.ProfessionalContractType playsRole professionalContractTypes {
         multiplicity *;
     }
 }
 
 relation ProfessionalCategoryRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     personnelSection.contracts.ProfessionalCategory playsRole professionalCategories {
         multiplicity *;
     }
 }
 
 relation ProfessionalRegimeRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     personnelSection.contracts.ProfessionalRegime playsRole professionalRegimes {
         multiplicity *;
     }
 }
 
 relation ProfessionalRelationRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     personnelSection.contracts.ProfessionalRelation playsRole professionalRelations {
         multiplicity *;
     }
 }
 
 relation CoordinatorExecutionDegreeCoursesReportRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     CoordinatorExecutionDegreeCoursesReport playsRole coordinatorExecutionDegreeCoursesReports {
         multiplicity *;
     }
@@ -19279,42 +19136,42 @@ relation ExecutionIntervalCoursesReportCoordinatorExecutionDegree {
 }
 
 relation PersonFunctionsAccumulationRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     personnelSection.contracts.PersonFunctionsAccumulation playsRole personFunctionsAccumulations {
         multiplicity *;
     }
 }
 
 relation FunctionsAccumulationRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     personnelSection.contracts.FunctionsAccumulation playsRole functionsAccumulations {
         multiplicity *;
     }
 }
 
 relation PersonProfessionalExemptionRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     personnelSection.contracts.PersonProfessionalExemption playsRole personProfessionalExemptions {
         multiplicity *;
     }
 }
 
 relation ServiceExemptionRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     personnelSection.contracts.ServiceExemption playsRole serviceExemptions {
         multiplicity *;
     }
 }
 
 relation GrantOwnerEquivalentRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     personnelSection.contracts.GrantOwnerEquivalent playsRole grantOwnerEquivalences {
         multiplicity *;
     }
 }
 
 relation AbsenceRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     personnelSection.contracts.Absence playsRole absences {
         multiplicity *;
     }
@@ -19328,7 +19185,7 @@ relation CoordinatorStudentInquiriesCourseResult {
 }
 
 relation CurricularActivitiesRootDomainObject {
-    RootDomainObject playsRole rootDomainObject {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
         multiplicity 1..1;
     }
     student.curriculum.ExtraCurricularActivity playsRole extraCurricularActivity {
@@ -19354,7 +19211,7 @@ relation ExtraCurricularActivityTypeRoot {
     student.curriculum.ExtraCurricularActivityType playsRole extraCurricularActivityType {
         multiplicity *;
     }
-    RootDomainObject playsRole rootDomainObject {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
         multiplicity 1..1;
     }
 }
@@ -19369,14 +19226,14 @@ relation ExtraCurricularActivityType {
 }
 
 relation PendingRequestRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     PendingRequest playsRole pendingRequest {
         multiplicity *;
     }
 }
 
 relation PendingRequestParameterRootDomainObject {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     PendingRequestParameter playsRole pendingRequestParameter {
         multiplicity *;
     }
@@ -19408,7 +19265,7 @@ relation DegreeOfficialPublicationSpecializationAreas {
 }
 
 relation EnrolmentEvaluationLogRootDomainObject {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	log.EnrolmentEvaluationLog playsRole enrolmentEvaluationLog {
 		multiplicity *;
 	}
@@ -19416,7 +19273,7 @@ relation EnrolmentEvaluationLogRootDomainObject {
 
 
 relation MobilityStudentDataRootDomainObject {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	candidacyProcess.mobility.MobilityStudentData playsRole mobilityStudentData {
 		multiplicity *;
 	}
@@ -19424,7 +19281,7 @@ relation MobilityStudentDataRootDomainObject {
 
 
 relation CycleCourseGroupInformationRootDomainObject {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	degreeStructure.CycleCourseGroupInformation playsRole cycleCourseGroupInformation {
 		multiplicity *;
 	}
@@ -19445,7 +19302,7 @@ relation CycleCourseGroupCycleCourseGroupInformation {
 }
 
 relation DocumentPrintRequestRootDmainObject {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	administrativeOffice.curriculumValidation.DocumentPrintRequest playsRole request {
 		multiplicity *;
 	}
@@ -19465,7 +19322,7 @@ relation DocumentPrintRequestDocumentRequest {
 	}		
 }
 relation RootDomainObjectEnrolmentInstructions {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	EnrolmentInstructions playsRole enrolmentInstructions {
 		multiplicity *;
 	}
@@ -19493,13 +19350,13 @@ relation ErasmusAlertPerson {
 }
 
 relation RootDomainObjectIrsDeclarationLink {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	IrsDeclarationLink playsRole irsDeclarationLink;
 }
 
 
 relation RootDomainObjectMobilityQuota {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	candidacyProcess.mobility.MobilityQuota playsRole mobilityQuotas {
 		multiplicity *;
 	}
@@ -19536,7 +19393,7 @@ relation MobilityQuotaMobilityAgreement {
 }
 
 relation MobilityAgreementRootDomainObject {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	candidacyProcess.mobility.MobilityAgreement playsRole mobilityAgreements {
 		multiplicity *;
 	}
@@ -19572,14 +19429,14 @@ relation MobilityApplicationPeriodMobilityEmailTemplate {
 }
 
 relation MobilityEmailTemplateRootDomainObject {
-	RootDomainObject playsRole rootDomainObject; 
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject; 
 	candidacyProcess.mobility.MobilityEmailTemplate playsRole mobilityEmailTemplates {
 		multiplicity *;
 	}
 }
 
 relation ProgramRootDomainObject {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	institutionalRelations.academic.Program playsRole programs {
 		multiplicity *;
 	}
@@ -19587,21 +19444,21 @@ relation ProgramRootDomainObject {
 	
 
 relation RootDomainObjectCerimonyInquiry {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	alumni.CerimonyInquiry playsRole cerimonyInquiry {
 		multiplicity *;
 	}
 }
 
 relation RootDomainObjectCerimonyInquiryAnswer {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	alumni.CerimonyInquiryAnswer playsRole cerimonyInquiryAnswer {
 		multiplicity *;
 	}
 }
 
 relation RootDomainObjectCerimonyInquiryPerson {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	alumni.CerimonyInquiryPerson playsRole cerimonyInquiryPerson {
 		multiplicity *;
 	}
@@ -19699,32 +19556,32 @@ relation CreditPersonFunctionsSharedQueueJobExecutionSemester {
 }
 
 relation RootDomainObjectTeacherCreditsState {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	TeacherCreditsState playsRole teacherCreditsState {
 		multiplicity *;
 	}
 }
 relation RootDomainObjectTeacherCredits {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	TeacherCredits playsRole teacherCredits {
 		multiplicity *;
 	}
 }
 relation RootDomainObjectMessageTransportResult {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	util.email.MessageTransportResult playsRole messageTransportResult {
 		multiplicity *;
 	}
 }
 
 relation RootDomainObjectEmailQueue {
-	RootDomainObject playsRole rootDomainObjectFromEmailQueue;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectFromEmailQueue;
 	util.Email playsRole emailQueue {
 		multiplicity *;
 	}
 }
 
-relation EmailMessageTransportResult {
+relation FenixEmailMessageTransportResult {
 	util.Email playsRole email;
 	util.email.MessageTransportResult playsRole messageTransportResult {
 		multiplicity *;
@@ -19732,14 +19589,14 @@ relation EmailMessageTransportResult {
 }
 
 relation RootDomainObjectImportRegister {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	ImportRegister playsRole importRegister {
 		multiplicity *;
 	}
 }
 
 relation RootDomainObjectImportRegisterLog {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	ImportRegisterLog playsRole importRegisterLog {
 		multiplicity *;
 	}
@@ -19763,14 +19620,14 @@ relation AccountabilityImportRegister {
 }
 
 relation RootDomainObjectFacultyEvaluationProcess {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	teacher.evaluation.FacultyEvaluationProcess playsRole facultyEvaluationProcess {
 		multiplicity *;
 	}
 }
 
 relation RootDomainObjectFacultyEvaluationProcessYear {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	teacher.evaluation.FacultyEvaluationProcessYear playsRole facultyEvaluationProcessYear {
 		multiplicity *;
 	}
@@ -19784,7 +19641,7 @@ relation FacultyEvaluationProcessFacultyEvaluationProcessYear {
 }
 
 relation RootDomainObjectApprovedTeacherEvaluationProcessMark {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	teacher.evaluation.ApprovedTeacherEvaluationProcessMark playsRole approvedTeacherEvaluationProcessMark {
 		multiplicity *;
 	}
@@ -19805,14 +19662,14 @@ relation TeacherEvaluationProcessApprovedTeacherEvaluationProcessMark {
 }
 
 relation RootDomainObjectTeacherEvaluationProcess {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	teacher.evaluation.TeacherEvaluationProcess playsRole teacherEvaluationProcess {
 		multiplicity *;
 	}
 }
 
 relation RootDomainObjectTeacherEvaluation {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	teacher.evaluation.TeacherEvaluation playsRole teacherEvaluation {
 		multiplicity *;
 	}
@@ -19822,14 +19679,14 @@ relation TeacherEvaluationAutoEvaluationLockUser {
 	teacher.evaluation.TeacherEvaluation playsRole lockedTeacherAutoEvaluations {
 		multiplicity *;
 	}
-	User playsRole userWhoLockedAutoEvaluation;
+	.org.fenixedu.bennu.core.domain.User playsRole userWhoLockedAutoEvaluation;
 }
 
 relation TeacherEvaluationEvaluationLockUser {
 	teacher.evaluation.TeacherEvaluation playsRole lockedTeacherEvaluations {
 		multiplicity *;
 	}
-	User playsRole userWhoLockedEvaluation;
+	.org.fenixedu.bennu.core.domain.User playsRole userWhoLockedEvaluation;
 }
 
 relation FacultyEvaluationProcessTeacherEvaluationProcess {
@@ -19875,7 +19732,7 @@ relation TeacherEvaluationFilePerson {
 }
 
 relation RootDomainObjectTeacherEvaluationCoEvaluator {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	teacher.evaluation.TeacherEvaluationCoEvaluator playsRole teacherEvaluationCoEvaluator {
 		multiplicity *;
 	}
@@ -19897,7 +19754,7 @@ relation InternalCoEvaluatorPerson {
 
 
 relation MobilityCoordinatorRootDomainObject {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	candidacyProcess.mobility.MobilityCoordinator playsRole mobilityCoordinators {
 		multiplicity *;
 	}
@@ -19934,7 +19791,7 @@ relation MobilityIndividualApplicationApprovedLearningAgreementDocumentFile {
 }
 
 relation ExecutedActionRootDomainObject {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	candidacyProcess.erasmus.ExecutedAction playsRole executedActions {
 		multiplicity *;
 	}
@@ -19963,7 +19820,7 @@ relation ErasmusIndividualCandidacyProcessExecutedActionIndividualApplicationPro
 
 
 relation RootDomainObjectCoordinatorLog {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	CoordinatorLog playsRole coordinatorLog {
 		multiplicity *;
 	}
@@ -20105,7 +19962,7 @@ relation DgesStudentImportationProcessStudentCandidacy {
 }
 
 relation ExternalPhdProgramRootDomainObject {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	phd.ExternalPhdProgram playsRole externalPhdPrograms {
 		multiplicity *;
 	}
@@ -20126,7 +19983,7 @@ relation ProfessorshipPremissionsProfessorship {
 }
 
 relation PremissionsProfessorshipRootDomainObject {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	ProfessorshipPermissions playsRole professorshipPermissions {
 		multiplicity *;
 	}
@@ -20141,7 +19998,7 @@ relation MobilityApplicationProcessErasmusCandidacyProcessReport {
 }
 
 relation RootDomainObjectExternalUser {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     ExternalUser playsRole externalUser {
         multiplicity *;
     }
@@ -20162,7 +20019,7 @@ relation ProfessorshipUser {
 }
 
 relation RootDomainObjectHasLibraries {
-    RootDomainObject playsRole rootDomainObjectForLibrary;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectForLibrary;
     space.Space playsRole libraries {
         multiplicity *;
     }
@@ -20187,7 +20044,7 @@ relation SpacesHaveAttendanceHistory {
 }
 
 relation CareerWorkshopApplicationRootDomainObject {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	careerWorkshop.CareerWorkshopApplication playsRole careerWorkshopApplications {
 		multiplicity *;
 	}
@@ -20203,7 +20060,7 @@ relation CareerWorkshopApplicationStudent {
 }
 
 relation CareerWorkshopApplicationEventRootDomainObject {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	careerWorkshop.CareerWorkshopApplicationEvent playsRole careerWorkshopApplicationEvents {
 		multiplicity *;
 	}
@@ -20226,7 +20083,7 @@ relation CareerWorkshopApplicationEventFile {
 }
 
 relation CareerWorkshopConfirmationRootDomainObject {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	careerWorkshop.CareerWorkshopConfirmation playsRole careerWorkshopConfirmations {
 		multiplicity *;
 	}
@@ -20247,7 +20104,7 @@ relation CareerWorkshopApplicationCareerWorkshopConfirmation {
 }
 
 relation CareerWorkshopConfirmationEventRootDomainObject {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	careerWorkshop.CareerWorkshopConfirmationEvent playsRole careerWorkshopConfirmationEvents {
 		multiplicity *;
 	}
@@ -20276,7 +20133,7 @@ relation CareerWorkshopApplicationEventCareerWorkshopConfirmationEvent {
 
 
 relation RootDomainObjectNonRegularTeachingService {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     NonRegularTeachingService playsRole nonRegularTeachingServices {
         multiplicity *;
     }
@@ -20354,14 +20211,14 @@ relation UTLScholarshipReportSource {
 	}
 
 relation TeacherAuthorizationRootDomainObject {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	TeacherAuthorization playsRole teacherAuthorization {
         	multiplicity *;
     	}
 }
 
 relation PhdGratuityPaymentPeriodRootDomainObject {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     phd.debts.PhdGratuityPaymentPeriod playsRole phdGratuityPaymentPeriods {
         multiplicity *;
     }
@@ -20382,7 +20239,7 @@ relation PhdIndividualProgramProcessPhdIndiPhdGratuityEvent {
 }
 
 relation LibraryCardSystemRootDomainObject {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	LibraryCardSystem playsRole libraryCardSystem;
 }
 
@@ -20414,7 +20271,7 @@ relation MicroPaymentEventIntitutionAffiliation {
 }
 
 relation RootDomainObjectPhdGratuityPriceQuirk {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     phd.debts.PhdGratuityPriceQuirk playsRole phdGratuityPriceQuirks {
         multiplicity *;
     }
@@ -20443,7 +20300,7 @@ relation ExternalScholarshipProviderRootDomainObject {
 	organizationalStructure.Party playsRole externalScholarshipProvider{
 		multiplicity *;
 	}
-	RootDomainObject playsRole rootDomainObjectExternalScholarshipProvider;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectExternalScholarshipProvider;
 }
 
 relation MicroPaymentEventDestinationUnit {
@@ -20466,14 +20323,14 @@ relation PersonPersonIdentificationDocumentExtraInfo {
 }
 
 relation PersonIdentificationDocumentExtraInfoRootDomainObject {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     PersonIdentificationDocumentExtraInfo playsRole personIdentificationDocumentExtraInfo {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectInstitutionAffiliationEventTicket {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     accounting.events.InstitutionAffiliationEventTicket playsRole institutionAffiliationEventTicket {
         multiplicity *;
     }
@@ -20494,7 +20351,7 @@ relation EventInstitutionAffiliationEventTicket {
 }
 
 relation RootDomainObjectStrikeDay {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     StrikeDay playsRole strikeDay {
         multiplicity *;
     }
@@ -20503,14 +20360,14 @@ relation RootDomainObjectStrikeDay {
 /* RAIDES Domain */
 
 relation RootDomainObjectDegreeDesignation {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     raides.DegreeDesignation playsRole degreeDesignations {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectDegreeClassification {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     raides.DegreeClassification playsRole degreeClassifications {
         multiplicity *;
     }
@@ -20524,7 +20381,7 @@ relation DegreeDesignationDegreeClassification {
 }
 
 relation RootDomainObjectPersonalIngressionData {
-    RootDomainObject playsRole rootDomainObject;
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     student.PersonalIngressionData playsRole personalIngressionsData {
         multiplicity *;
     }
@@ -20604,7 +20461,7 @@ relation AdministrativeOfficeEventReportQueueJob {
 
 /* Mid-Refactor */
 relation RootDomainObjectErasmusVacancy {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	candidacyProcess.erasmus.ErasmusVacancy playsRole erasmusVacancy {
 		multiplicity *;
 	}
@@ -20673,7 +20530,7 @@ relation CandidacyProcessDegree {
 }
 
 relation RootDomainObjectIndividualCandidacySeriesGrade {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	candidacyProcess.IndividualCandidacySeriesGrade playsRole individualCandidacySeriesGrade {
 		multiplicity *;
 	}
@@ -20701,7 +20558,7 @@ relation TeacherYearCreditsTeacher {
 }
 
 relation RootDomainObjectAnnualTeachingCredits {
-	RootDomainObject playsRole rootDomainObject; 
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject; 
 	credits.AnnualTeachingCredits playsRole annualTeachingCredits {
 		multiplicity *;
 	}
@@ -20720,7 +20577,7 @@ relation AnnualCreditsStateExecutionYear {
 }
 
 relation RootDomainObjectAnnualCreditsState {
-	RootDomainObject playsRole rootDomainObject; 
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject; 
 	credits.AnnualCreditsState playsRole annualCreditsStates {
 		multiplicity *;
 	}
@@ -20748,7 +20605,7 @@ relation AnnualTeachingCreditsDocumentAnnualTeachingCredits {
 }
 
 relation RootDomainObjectGenericApplication {
-	RootDomainObject playsRole rootDomainObject; 
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject; 
 	candidacy.GenericApplication playsRole genericApplication {
 		multiplicity *;
 	}
@@ -20776,7 +20633,7 @@ relation GenericApplicationNationality {
 }
 
 relation RootDomainObjectGenericApplicationRecomentation {
-	RootDomainObject playsRole rootDomainObject; 
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject; 
 	candidacy.GenericApplicationRecomentation playsRole genericApplicationRecomentation {
 		multiplicity *;
 	}
@@ -20790,7 +20647,7 @@ relation GenericApplicationGenericApplicationRecomentation {
 }
 
 relation RootDomainObjectGenericApplicationComment {
-	RootDomainObject playsRole rootDomainObject; 
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject; 
 	candidacy.GenericApplicationComment playsRole genericApplicationComment {
 		multiplicity *;
 	}
@@ -20812,13 +20669,13 @@ relation GenericApplicationPeriodManager {
 	period.GenericApplicationPeriod playsRole managedGenericApplicationPeriod {
 		multiplicity *;
 	}
-	User playsRole manager {
+	.org.fenixedu.bennu.core.domain.User playsRole manager {
 		multiplicity *;
 	}
 }
 
 relation RootDomainObjectSantanderPhotoEntry {
-	RootDomainObject playsRole rootDomainObject; 
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject; 
 	cardGeneration.SantanderPhotoEntry playsRole santanderPhotoEntry {
 		multiplicity *;
 	}
@@ -20863,21 +20720,21 @@ relation PictureFile {
 
 
 relation RootDomainObjectApps {
-    RootDomainObject playsRole rootDomainObject;  
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;  
   	ExternalApplication playsRole apps {
   		multiplicity *;
   	}
 }
  
 relation RootDomainObjectAuthScope {
-    RootDomainObject playsRole rootDomainObject;  
+    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;  
   	AuthScope playsRole authScopes {
   		multiplicity *;
   	}
 }
   
 relation AppAuthor {
-	User playsRole author {
+	.org.fenixedu.bennu.core.domain.User playsRole author {
 		multiplicity 1;
 	}
 	ExternalApplication playsRole ownedApp {
@@ -20907,7 +20764,7 @@ relation UserAppAuthorization {
 	AppUserAuthorization playsRole appUserAuthorization {
 		multiplicity *;
 	}
-	User playsRole user {
+	.org.fenixedu.bennu.core.domain.User playsRole user {
 		multiplicity 1;
 	}
 }

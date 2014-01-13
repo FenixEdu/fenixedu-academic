@@ -2,13 +2,14 @@ package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.OidOperator;
+
+import org.fenixedu.bennu.core.domain.User;
 
 public class ExecutionCourseTeachersAndStudentsGroup extends ExecutionCourseGroup {
 
@@ -44,7 +45,7 @@ public class ExecutionCourseTeachersAndStudentsGroup extends ExecutionCourseGrou
     }
 
     @Override
-    public boolean allows(IUserView userView) {
+    public boolean allows(User userView) {
         return this.union.allows(userView);
     }
 

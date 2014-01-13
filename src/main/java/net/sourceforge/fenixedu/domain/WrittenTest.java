@@ -11,7 +11,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
@@ -19,11 +18,12 @@ import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.EventSpaceOccupation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.WrittenTestPredicates;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
@@ -79,7 +79,7 @@ public class WrittenTest extends WrittenTest_Base {
     @Override
     public void setDayDate(Date date) {
         check(this, WrittenTestPredicates.changeDatePredicate);
-        final IUserView requestor = AccessControl.getUserView();
+        final User requestor = Authenticate.getUser();
         if (hasTimeTableManagerPrivledges(requestor) || hasCoordinatorPrivledges(requestor) || isTeacher(requestor)
                 && allowedPeriod(date)) {
             super.setDayDate(date);
@@ -101,7 +101,7 @@ public class WrittenTest extends WrittenTest_Base {
         }
     }
 
-    private boolean isTeacher(IUserView requestor) {
+    private boolean isTeacher(User requestor) {
         if (requestor != null) {
             Person person = requestor.getPerson();
             Teacher teacher = person.getTeacher();
@@ -140,8 +140,8 @@ public class WrittenTest extends WrittenTest_Base {
         return true;
     }
 
-    public boolean hasCoordinatorPrivledges(final IUserView requestor) {
-        if (requestor != null && requestor.hasRoleType(RoleType.COORDINATOR)) {
+    public boolean hasCoordinatorPrivledges(final User requestor) {
+        if (requestor != null && requestor.getPerson().hasRole(RoleType.COORDINATOR)) {
             final Person person = requestor.getPerson();
             if (person != null) {
                 for (final Coordinator coordinator : person.getCoordinators()) {
@@ -162,8 +162,8 @@ public class WrittenTest extends WrittenTest_Base {
         return false;
     }
 
-    public boolean hasTimeTableManagerPrivledges(final IUserView requestor) {
-        return requestor != null && requestor.hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER);
+    public boolean hasTimeTableManagerPrivledges(final User requestor) {
+        return requestor != null && requestor.getPerson().hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER);
     }
 
     @Override
@@ -283,6 +283,7 @@ public class WrittenTest extends WrittenTest_Base {
         return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.written.test") + " "
                 + getDescription();
     }
+
     @Deprecated
     public boolean hasDescription() {
         return getDescription() != null;

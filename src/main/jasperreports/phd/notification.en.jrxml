@@ -24,9 +24,9 @@
 			<band splitType="Stretch"/>
 		</groupHeader>
 		<groupFooter>
-			<band height="43" splitType="Stretch">
+			<band height="90" splitType="Stretch">
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField-4" x="44" y="0" width="354" height="42"/>
+					<reportElement key="textField-4" x="44" y="60" width="354" height="30"/>
 					<textElement>
 						<font size="9"/>
 					</textElement>
@@ -34,6 +34,9 @@
 "\n" + $P{administrativeOfficeCoordinator} +
 "\n(Post-Graduation Unit Coordinator)"]]></textFieldExpression>
 				</textField>
+				<line>
+					<reportElement key="line-1" x="44" y="53" width="354" height="1"/>
+				</line>
 			</band>
 		</groupFooter>
 	</group>

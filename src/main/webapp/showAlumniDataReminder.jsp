@@ -17,15 +17,15 @@
 	
 		<div id="container">
 			<div id="dotist_id">
-				<img alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />"
+				<img alt="<%=net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstalationName() %>"
 						src="<bean:message key="dot.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>" />
 			</div>
 			<div id="txt">
 				<h1><bean:message key="message.alumni.data.reminder.title" bundle="APPLICATION_RESOURCES"/></h1>
-				<bean:message key="message.alumni.data.reminder.text" bundle="APPLICATION_RESOURCES" />	
-				<bean:message key="message.alumni.data.reminder.advantages" bundle="APPLICATION_RESOURCES" />   	   	
+				<bean:message key="message.alumni.data.reminder.text" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="APPLICATION_RESOURCES" />	
+				<bean:message key="message.alumni.data.reminder.advantages" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="APPLICATION_RESOURCES" />   	   	
    				<p><strong><bean:message key="message.alumni.data.reminder.fillInData" bundle="APPLICATION_RESOURCES" /></strong></p>   	
-   				<p><bean:message key="message.alumni.data.reminder.moreInformation" bundle="APPLICATION_RESOURCES" />: <a href="http://www.ist.utl.pt/pt/alumni/" target="_blank">http://www.ist.utl.pt/pt/alumni/</a></p>   		
+   				<p><bean:message key="message.alumni.data.reminder.moreInformation" bundle="APPLICATION_RESOURCES" />: <a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>pt/alumni/" target="_blank"><%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>pt/alumni/</a></p>   		
   			</div>
 			
 			<br />

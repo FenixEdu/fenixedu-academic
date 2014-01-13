@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.credits;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.Atomic;
@@ -16,7 +16,7 @@ public class AnnualCreditsState extends AnnualCreditsState_Base {
         setIsOrientationsCalculated(false);
         setIsFinalCreditsCalculated(false);
         setIsCreditsClosed(false);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     @Atomic
@@ -54,7 +54,7 @@ public class AnnualCreditsState extends AnnualCreditsState_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

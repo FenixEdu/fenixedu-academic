@@ -35,8 +35,7 @@ public class EditTeacherInformation {
 
     private void editServiceProviderRegime(InfoServiceProviderRegime infoServiceProviderRegime, Teacher teacher) {
 
-        ServiceProviderRegime serviceProviderRegime =
-                FenixFramework.getDomainObject(infoServiceProviderRegime.getExternalId());
+        ServiceProviderRegime serviceProviderRegime = FenixFramework.getDomainObject(infoServiceProviderRegime.getExternalId());
 
         if (serviceProviderRegime == null) {
             serviceProviderRegime = new ServiceProviderRegime(teacher, infoServiceProviderRegime);
@@ -77,8 +76,7 @@ public class EditTeacherInformation {
     private void editPublicationNumbers(List<InfoPublicationsNumber> infoPublicationsNumbers, Teacher teacher) {
         // Publications Number
         for (InfoPublicationsNumber infoPublicationsNumber : infoPublicationsNumbers) {
-            PublicationsNumber publicationsNumber =
-                    FenixFramework.getDomainObject(infoPublicationsNumber.getExternalId());
+            PublicationsNumber publicationsNumber = FenixFramework.getDomainObject(infoPublicationsNumber.getExternalId());
 
             if (publicationsNumber == null) {
                 publicationsNumber = new PublicationsNumber(teacher, infoPublicationsNumber);

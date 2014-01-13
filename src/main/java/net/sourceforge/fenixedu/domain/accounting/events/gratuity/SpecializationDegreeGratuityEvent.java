@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.dataTransferObject.accounting.SibsTransactionDet
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
@@ -21,6 +20,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.Money;
 
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -62,8 +62,11 @@ public class SpecializationDegreeGratuityEvent extends SpecializationDegreeGratu
         final EntryDTO entryDTO = calculateEntries(new DateTime()).iterator().next();
 
         if (!getNonProcessedPaymentCodes().isEmpty()) {
-            getNonProcessedPaymentCodes().iterator().next().update(new YearMonthDay(), calculatePaymentCodeEndDate(),
-                    entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
+            getNonProcessedPaymentCodes()
+                    .iterator()
+                    .next()
+                    .update(new YearMonthDay(), calculatePaymentCodeEndDate(), entryDTO.getAmountToPay(),
+                            entryDTO.getAmountToPay());
         }
 
         return getNonProcessedPaymentCodes();

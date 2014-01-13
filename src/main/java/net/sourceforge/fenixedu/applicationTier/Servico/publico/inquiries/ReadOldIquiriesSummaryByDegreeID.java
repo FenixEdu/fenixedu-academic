@@ -13,6 +13,8 @@ import net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesSummary;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -22,6 +24,8 @@ import pt.ist.fenixframework.FenixFramework;
  * 
  */
 public class ReadOldIquiriesSummaryByDegreeID {
+
+    private static final Logger logger = LoggerFactory.getLogger(ReadOldIquiriesSummaryByDegreeID.class);
 
     @Atomic
     public static Collection run(String degreeID) throws FenixServiceException {
@@ -42,7 +46,7 @@ public class ReadOldIquiriesSummaryByDegreeID {
                     iois.copyFromDomain((OldInquiriesSummary) oldInquiriesSummary);
 
                 } catch (Exception ex) {
-                    ex.printStackTrace();
+                    logger.error(ex.getMessage(), ex);
                 }
 
                 return iois;

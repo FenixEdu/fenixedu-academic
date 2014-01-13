@@ -180,7 +180,7 @@ public class PhdAcademicServiceRequestsManagementDA extends PhdDA {
         PhdAcademicServiceRequest academicServiceRequest = getPhdAcademicServiceRequest(request);
 
         writeFile(response, academicServiceRequest.getLastGeneratedDocument().getFilename(), academicServiceRequest
-                .getLastGeneratedDocument().getMimeType(), academicServiceRequest.getLastGeneratedDocument().getContents());
+                .getLastGeneratedDocument().getContentType(), academicServiceRequest.getLastGeneratedDocument().getContents());
 
         return null;
     }

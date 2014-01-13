@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
-import net.sourceforge.fenixedu.domain.MetaDomainObject;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.rules.ResourceRule;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.rules.Rule;
@@ -89,7 +89,7 @@ public class GenerateSiteArchive extends FenixDispatchAction {
         queueResources(request, executionCourse, options, fetcher);
 
         List<Content> contents = new ArrayList<Content>();
-        contents.add(MetaDomainObject.getMeta(ExecutionCourseSite.class).getAssociatedPortal());
+        contents.add(MetaDomainObjectPortal.getPortal(ExecutionCourseSite.class));
         contents.add(executionCourse.getSite());
         FilterFunctionalityContext context = new FilterFunctionalityContext(request, contents);
 
@@ -149,9 +149,11 @@ public class GenerateSiteArchive extends FenixDispatchAction {
                 + "/publico/executionCourse.do\\?(executionCourseID=[0-9]+|&amp;|method=groupings)+", groupingsName));
         globalRules.add(new SimpleTransformRule(contextPath
                 + "/publico/executionCourse.do\\?(executionCourseID=[0-9]+|&amp;|method=evaluations)+", evaluationName));
-        globalRules.add(new SimpleTransformRule(contextPath
-                + "/publico/searchScormContent.do\\?(executionCourseID=[0-9]+|&amp;|method=prepareSearchForExecutionCourse)+",
-                "#"));
+        globalRules
+                .add(new SimpleTransformRule(
+                        contextPath
+                                + "/publico/searchFileContent.do\\?(executionCourseID=[0-9]+|&amp;|method=prepareSearchForExecutionCourse)+",
+                        "#"));
         globalRules.add(new SimpleTransformRule(contextPath + "/publico/executionCourse.do\\?.*?sectionID=([0-9]+).*",
                 "section-$1.html"));
         globalRules.add(new SimpleTransformRule(contextPath + "/publico/executionCourse.do\\?.*?method=rss.*", "#"));

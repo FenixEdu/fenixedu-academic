@@ -14,7 +14,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.curriculum.CurriculumValidationEvaluationPhase;
@@ -45,12 +44,14 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.InternalEnrolmentWrappe
 import net.sourceforge.fenixedu.domain.studentCurriculum.OptionalDismissal;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -107,7 +108,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     public Enrolment() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         super.setIsExtraCurricular(Boolean.FALSE);
     }
 
@@ -1566,7 +1567,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     @Override
     final public Unit getAcademicUnit() {
-        return RootDomainObject.getInstance().getInstitutionUnit();
+        return Bennu.getInstance().getInstitutionUnit();
     }
 
     @Override
@@ -1662,7 +1663,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         enrolment.setEnrollmentState(optionalEnrolment.getEnrollmentState());
         enrolment.setExecutionPeriod(optionalEnrolment.getExecutionPeriod());
         enrolment.setEnrolmentEvaluationType(optionalEnrolment.getEnrolmentEvaluationType());
-        enrolment.setCreatedBy(AccessControl.getUserView().getUtilizador());
+        enrolment.setCreatedBy(Authenticate.getUser().getUsername());
         enrolment.setCreationDateDateTime(optionalEnrolment.getCreationDateDateTime());
         enrolment.setEnrolmentCondition(optionalEnrolment.getEnrolmentCondition());
         enrolment.setCurriculumGroup(curriculumGroup);

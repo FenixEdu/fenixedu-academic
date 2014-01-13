@@ -13,8 +13,10 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistribution;
 import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistributionEntry;
+
+import org.fenixedu.commons.StringNormalizer;
+
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class ShiftDistributionFileBean implements Serializable {
 

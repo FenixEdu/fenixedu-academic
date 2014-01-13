@@ -17,6 +17,7 @@ import pt.ist.fenixframework.DomainObject;
  * <code>$I(1234, '{@link net.sourceforge.fenixedu.domain.ExecutionCourse}')</code>
  * 
  * @author cfgi
+ * @deprecated Use Bennu Groups instead
  */
 @Deprecated
 public class IdOperator extends OperatorArgument {

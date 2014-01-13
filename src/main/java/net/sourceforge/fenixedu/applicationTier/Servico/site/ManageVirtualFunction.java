@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.site;
 
-
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;

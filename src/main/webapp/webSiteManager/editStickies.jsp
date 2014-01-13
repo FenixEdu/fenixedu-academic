@@ -20,7 +20,7 @@
 	
 	<bean:define id="announcementBoardId" name="announcementBoard"
 		property="externalId" />
-<p><bean:message key="messaging.sticky.info" bundle="MESSAGING_RESOURCES"/></p>		
+<p><bean:message key="messaging.sticky.info" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="MESSAGING_RESOURCES"/></p>		
 	<fr:form
 		action="<%="/announcementsManagement.do?method=changeOrderUsingAjaxTree&announcementBoardId="+announcementBoardId %>">
 		<input alt="input.tree" id="tree-structure" type="hidden" name="tree"

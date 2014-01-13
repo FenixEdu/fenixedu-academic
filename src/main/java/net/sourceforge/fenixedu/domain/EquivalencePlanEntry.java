@@ -16,6 +16,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.util.LogicOperator;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
 
     public static Comparator<EquivalencePlanEntry> COMPARATOR = new Comparator<EquivalencePlanEntry>() {
@@ -173,7 +175,7 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
     //
     protected EquivalencePlanEntry() {
         super();
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
     }
 
     public EquivalencePlanEntry(final EquivalencePlan equivalencePlan, final CourseGroup oldCourseGroup,
@@ -455,7 +457,7 @@ public class EquivalencePlanEntry extends EquivalencePlanEntry_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

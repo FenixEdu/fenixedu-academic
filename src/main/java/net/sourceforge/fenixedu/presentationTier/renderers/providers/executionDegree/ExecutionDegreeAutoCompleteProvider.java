@@ -9,8 +9,10 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
-import net.sourceforge.fenixedu.util.StringUtils;
+
+import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
+import org.fenixedu.commons.StringNormalizer;
+
 import pt.ist.fenixframework.FenixFramework;
 
 public class ExecutionDegreeAutoCompleteProvider implements AutoCompleteProvider<ExecutionDegree> {
@@ -20,7 +22,7 @@ public class ExecutionDegreeAutoCompleteProvider implements AutoCompleteProvider
         final String executionYearOid = argsMap.get("executionYearOid");
         final ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearOid);
 
-        final String searchValue = StringUtils.normalize(value);
+        final String searchValue = StringNormalizer.normalize(value);
 
         final List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
         for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
@@ -39,7 +41,7 @@ public class ExecutionDegreeAutoCompleteProvider implements AutoCompleteProvider
     }
 
     private boolean match(final String stringToMatch, final String content) {
-        final String normalizedContent = StringUtils.normalize(content);
+        final String normalizedContent = StringNormalizer.normalize(content);
         return normalizedContent.indexOf(stringToMatch) >= 0;
     }
 }

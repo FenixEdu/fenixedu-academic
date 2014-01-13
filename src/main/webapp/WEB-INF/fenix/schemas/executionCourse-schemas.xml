@@ -745,20 +745,6 @@
 	<slot name="availableForInquiries" key="label.executionCourse.availableForInquiries"/>
 </schema>
 
-<schema name="scormSearch" bundle="APPLICATION_RESOURCES" 
-	type="net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceCoursesBean">
-	<slot name="executionYear">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OpenExecutionYearsProvider"/>
-		<property name="format" value="${year}"/>
-	</slot>
-	<slot name="searchField" key="label.searchField" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="defaultText" value=""/>
-	</slot> 
-	<slot name="value" key="label.value" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="size" value="40"/>
-	</slot>
-</schema>
-
 <schema name="executionCourse.bibliographicReference.simple" type="net.sourceforge.fenixedu.domain.BibliographicReference">
     <slot name="title">
         <property name="escaped" value="false"/>

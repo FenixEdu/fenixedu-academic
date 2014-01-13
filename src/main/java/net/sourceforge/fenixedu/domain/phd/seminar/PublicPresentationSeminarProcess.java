@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
@@ -18,6 +17,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.LocalDate;
 
 public class PublicPresentationSeminarProcess extends PublicPresentationSeminarProcess_Base {
@@ -25,36 +25,36 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
     static abstract private class PhdActivity extends Activity<PublicPresentationSeminarProcess> {
 
         @Override
-        public void checkPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
+        public void checkPreConditions(PublicPresentationSeminarProcess process, User userView) {
             processPreConditions(process, userView);
             activityPreConditions(process, userView);
         }
 
-        protected void processPreConditions(final PublicPresentationSeminarProcess process, final IUserView userView) {
+        protected void processPreConditions(final PublicPresentationSeminarProcess process, final User userView) {
             if (process != null && process.isExempted()) {
                 throw new PreConditionNotValidException();
             }
         }
 
-        abstract protected void activityPreConditions(final PublicPresentationSeminarProcess process, final IUserView userView);
+        abstract protected void activityPreConditions(final PublicPresentationSeminarProcess process, final User userView);
     }
 
     @StartActivity
     static public class RequestComission extends PhdActivity {
 
         @Override
-        protected void processPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
+        protected void processPreConditions(PublicPresentationSeminarProcess process, User userView) {
             // overrided to prevent exempted test
         }
 
         @Override
-        protected void activityPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
+        protected void activityPreConditions(PublicPresentationSeminarProcess process, User userView) {
             // Activity on main process ensures access control
         }
 
         @Override
-        protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess noProcess,
-                IUserView userView, Object object) {
+        protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess noProcess, User userView,
+                Object object) {
             PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) object;
 
             final PublicPresentationSeminarProcess result =
@@ -70,7 +70,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
     static public class SubmitComission extends PhdActivity {
 
         @Override
-        protected void activityPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
+        protected void activityPreConditions(PublicPresentationSeminarProcess process, User userView) {
             if (process.getActiveState() != PublicPresentationSeminarProcessStateType.WAITING_FOR_COMMISSION_CONSTITUTION) {
                 throw new PreConditionNotValidException();
             }
@@ -82,7 +82,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
         }
 
         @Override
-        protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess process, IUserView userView,
+        protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess process, User userView,
                 Object object) {
 
             final PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) object;
@@ -107,7 +107,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
     static public class ValidateComission extends PhdActivity {
 
         @Override
-        protected void activityPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
+        protected void activityPreConditions(PublicPresentationSeminarProcess process, User userView) {
 
             if (process.getActiveState() != PublicPresentationSeminarProcessStateType.COMMISSION_WAITING_FOR_VALIDATION) {
                 throw new PreConditionNotValidException();
@@ -119,7 +119,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
         }
 
         @Override
-        protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess process, IUserView userView,
+        protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess process, User userView,
                 Object object) {
 
             final PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) object;
@@ -150,7 +150,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
     static public class RejectComission extends PhdActivity {
 
         @Override
-        protected void activityPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
+        protected void activityPreConditions(PublicPresentationSeminarProcess process, User userView) {
 
             if (process.getActiveState() != PublicPresentationSeminarProcessStateType.COMMISSION_WAITING_FOR_VALIDATION) {
                 throw new PreConditionNotValidException();
@@ -162,7 +162,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
         }
 
         @Override
-        protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess process, IUserView userView,
+        protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess process, User userView,
                 Object object) {
 
             final PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) object;
@@ -186,7 +186,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
     static public class SchedulePresentationDate extends PhdActivity {
 
         @Override
-        protected void activityPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
+        protected void activityPreConditions(PublicPresentationSeminarProcess process, User userView) {
 
             if (process.getActiveState() != PublicPresentationSeminarProcessStateType.COMMISSION_VALIDATED) {
                 throw new PreConditionNotValidException();
@@ -199,7 +199,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
         }
 
         @Override
-        protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess process, IUserView userView,
+        protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess process, User userView,
                 Object object) {
 
             final PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) object;
@@ -229,7 +229,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
     static public class UploadReport extends PhdActivity {
 
         @Override
-        protected void activityPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
+        protected void activityPreConditions(PublicPresentationSeminarProcess process, User userView) {
             if (process.getActiveState() != PublicPresentationSeminarProcessStateType.PUBLIC_PRESENTATION_DATE_SCHEDULED) {
                 throw new PreConditionNotValidException();
             }
@@ -241,7 +241,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
         }
 
         @Override
-        protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess process, IUserView userView,
+        protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess process, User userView,
                 Object object) {
 
             final PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) object;
@@ -265,7 +265,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
     static public class ValidateReport extends PhdActivity {
 
         @Override
-        protected void activityPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
+        protected void activityPreConditions(PublicPresentationSeminarProcess process, User userView) {
             if (process.getActiveState() != PublicPresentationSeminarProcessStateType.REPORT_WAITING_FOR_VALIDATION) {
                 throw new PreConditionNotValidException();
             }
@@ -276,7 +276,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
         }
 
         @Override
-        protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess process, IUserView userView,
+        protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess process, User userView,
                 Object object) {
 
             final PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) object;
@@ -310,7 +310,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
     static public class RejectReport extends PhdActivity {
 
         @Override
-        protected void activityPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
+        protected void activityPreConditions(PublicPresentationSeminarProcess process, User userView) {
             if (process.getActiveState() != PublicPresentationSeminarProcessStateType.REPORT_WAITING_FOR_VALIDATION) {
                 throw new PreConditionNotValidException();
             }
@@ -321,7 +321,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
         }
 
         @Override
-        protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess process, IUserView userView,
+        protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess process, User userView,
                 Object object) {
 
             final PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) object;
@@ -342,7 +342,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
     static public class DownloadReportDocument extends PhdActivity {
 
         @Override
-        protected void activityPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
+        protected void activityPreConditions(PublicPresentationSeminarProcess process, User userView) {
 
             if (!process.hasReportDocument()) {
                 throw new PreConditionNotValidException();
@@ -364,7 +364,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
         }
 
         @Override
-        protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess process, IUserView userView,
+        protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess process, User userView,
                 Object object) {
             // Nothing to be done
             return null;
@@ -375,7 +375,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
     static public class DownloadComissionDocument extends PhdActivity {
 
         @Override
-        protected void activityPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
+        protected void activityPreConditions(PublicPresentationSeminarProcess process, User userView) {
             if (!process.hasComissionDocument()) {
                 throw new PreConditionNotValidException();
             }
@@ -396,7 +396,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
         }
 
         @Override
-        protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess process, IUserView userView,
+        protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess process, User userView,
                 Object object) {
             // Nothing to be done
 
@@ -408,7 +408,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
     static public class RevertToWaitingForComissionConstitution extends PhdActivity {
 
         @Override
-        public void activityPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
+        public void activityPreConditions(PublicPresentationSeminarProcess process, User userView) {
             if (!process.getActiveState().equals(PublicPresentationSeminarProcessStateType.COMMISSION_WAITING_FOR_VALIDATION)) {
                 throw new PreConditionNotValidException();
             }
@@ -419,7 +419,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
         }
 
         @Override
-        protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess process, IUserView userView,
+        protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess process, User userView,
                 Object object) {
             if (!process.getActiveState().equals(PublicPresentationSeminarProcessStateType.COMMISSION_WAITING_FOR_VALIDATION)) {
                 throw new DomainException("error.PublicPresentationSeminarProcess.is.not.in.comission.waiting.for.validation");
@@ -438,7 +438,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
     static public class RevertToWaitingComissionForValidation extends PhdActivity {
 
         @Override
-        protected void activityPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
+        protected void activityPreConditions(PublicPresentationSeminarProcess process, User userView) {
             if (!process.getActiveState().equals(PublicPresentationSeminarProcessStateType.COMMISSION_VALIDATED)) {
                 throw new PreConditionNotValidException();
             }
@@ -449,7 +449,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
         }
 
         @Override
-        protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess process, IUserView userView,
+        protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess process, User userView,
                 Object object) {
             if (!process.getActiveState().equals(PublicPresentationSeminarProcessStateType.COMMISSION_VALIDATED)) {
                 throw new DomainException("error.PublicPresentationSeminarProcess.is.not.in.comission.validated.state");
@@ -467,14 +467,14 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
     static public class AddState extends PhdActivity {
 
         @Override
-        protected void activityPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
+        protected void activityPreConditions(PublicPresentationSeminarProcess process, User userView) {
             if (!process.isAllowedToManageProcess(userView)) {
                 throw new PreConditionNotValidException();
             }
         }
 
         @Override
-        protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess process, IUserView userView,
+        protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess process, User userView,
                 Object object) {
             PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) object;
             process.createState(bean.getProcessState(), AccessControl.getPerson(), bean.getRemarks());
@@ -486,19 +486,19 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
     static public class RemoveLastState extends PhdActivity {
 
         @Override
-        protected void processPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
+        protected void processPreConditions(PublicPresentationSeminarProcess process, User userView) {
             // no pre-conditions
         }
 
         @Override
-        protected void activityPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
+        protected void activityPreConditions(PublicPresentationSeminarProcess process, User userView) {
             if (!process.isAllowedToManageProcess(userView)) {
                 throw new PreConditionNotValidException();
             }
         }
 
         @Override
-        protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess process, IUserView userView,
+        protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess process, User userView,
                 Object object) {
             process.removeLastState();
 
@@ -509,18 +509,18 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
     static public class EditProcessAttributes extends PhdActivity {
 
         @Override
-        protected void processPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
+        protected void processPreConditions(PublicPresentationSeminarProcess process, User userView) {
         }
 
         @Override
-        protected void activityPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
+        protected void activityPreConditions(PublicPresentationSeminarProcess process, User userView) {
             if (!process.isAllowedToManageProcess(userView)) {
                 throw new PreConditionNotValidException();
             }
         }
 
         @Override
-        protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess process, IUserView userView,
+        protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess process, User userView,
                 Object object) {
             PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) object;
 
@@ -551,7 +551,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
     }
 
     @Override
-    public boolean isAllowedToManageProcess(IUserView userView) {
+    public boolean isAllowedToManageProcess(User userView) {
         return this.getIndividualProgramProcess().isAllowedToManageProcess(userView);
     }
 
@@ -596,7 +596,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
     }
 
     @Override
-    public boolean canExecuteActivity(IUserView userView) {
+    public boolean canExecuteActivity(User userView) {
         return false;
     }
 
@@ -687,11 +687,14 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 
         return getIndividualProgramProcess().getWhenStartedStudies();
     }
+
+    @Override
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarState> getStates() {
         return getStatesSet();
     }
 
+    @Override
     @Deprecated
     public boolean hasAnyStates() {
         return !getStatesSet().isEmpty();

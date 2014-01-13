@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.domain.log.requests;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class RequestLogMonth extends RequestLogMonth_Base {
 
     public RequestLogMonth() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void delete() {
@@ -35,7 +35,7 @@ public class RequestLogMonth extends RequestLogMonth_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

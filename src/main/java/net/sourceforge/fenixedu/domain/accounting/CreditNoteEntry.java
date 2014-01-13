@@ -2,11 +2,12 @@ package net.sourceforge.fenixedu.domain.accounting;
 
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.util.Money;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
 
 public class CreditNoteEntry extends CreditNoteEntry_Base {
 
@@ -22,7 +23,7 @@ public class CreditNoteEntry extends CreditNoteEntry_Base {
 
     CreditNoteEntry(final CreditNote creditNote, final Entry accountingEntry, final Money amount) {
         super();
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
         init(creditNote, accountingEntry, amount);
     }
 
@@ -108,7 +109,7 @@ public class CreditNoteEntry extends CreditNoteEntry_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

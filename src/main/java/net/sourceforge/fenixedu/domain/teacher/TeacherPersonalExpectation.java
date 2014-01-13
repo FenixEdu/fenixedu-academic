@@ -3,18 +3,19 @@ package net.sourceforge.fenixedu.domain.teacher;
 import net.sourceforge.fenixedu.dataTransferObject.department.TeacherPersonalExpectationBean;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherAutoEvaluationDefinitionPeriod;
 import net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod;
 import net.sourceforge.fenixedu.domain.TeacherPersonalExpectationsEvaluationPeriod;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 public class TeacherPersonalExpectation extends TeacherPersonalExpectation_Base {
 
     private TeacherPersonalExpectation() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public TeacherPersonalExpectation(TeacherPersonalExpectationBean infoTeacherPersonalExpectation) {
@@ -152,6 +153,7 @@ public class TeacherPersonalExpectation extends TeacherPersonalExpectation_Base 
         setCompanySocialOrgans(infoTeacherPersonalExpectation.getCompanySocialOrgans());
         setCompanyPositions(infoTeacherPersonalExpectation.getCompanyPositions());
     }
+
     @Deprecated
     public boolean hasGraduationsDescription() {
         return getGraduationsDescription() != null;
@@ -168,7 +170,7 @@ public class TeacherPersonalExpectation extends TeacherPersonalExpectation_Base 
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

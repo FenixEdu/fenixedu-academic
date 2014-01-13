@@ -5,7 +5,7 @@
 
 <html:xhtml/>
 
-<logic:present role="STUDENT">
+<logic:present role="role(STUDENT)">
 
 
 <%-- ### Title #### --%>
@@ -56,13 +56,13 @@ Não é possível a inscrição em qualquer unidade curricular se não estiver g
 
 <p class="mtop05">
 <strong>5. Inscrição em Melhoria de Nota</strong><br/>
-Estas inscrições são realizadas <strong>exclusivamente junto dos Serviços Académicos</strong> de acordo com os prazos constantes no <a href="http://www.ist.utl.pt/files/alunos/reg_3ciclo.pdf">Regulamento de 3º Ciclo</a> 
+Estas inscrições são realizadas <strong>exclusivamente junto dos Serviços Académicos</strong> de acordo com os prazos constantes no <a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>files/alunos/reg_3ciclo.pdf">Regulamento de 3º Ciclo</a> 
 
 </p>
 
 <p class="mtop05">
 <strong>6. Estudantes em regime de tempo parcial</strong><br/>
-Um aluno em tempo parcial não poderá inscrever-se em unidades curriculares cujo somatório de ECTS ultrapasse 50% do número máximo de ECTS a que é permitida a inscrição a um aluno do IST em regime de tempo integral.
+Um aluno em tempo parcial não poderá inscrever-se em unidades curriculares cujo somatório de ECTS ultrapasse 50% do número máximo de ECTS a que é permitida a inscrição a um aluno do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> em regime de tempo integral.
 </p>
 
 <p class="mtop05">
@@ -70,7 +70,7 @@ Um aluno em tempo parcial não poderá inscrever-se em unidades curriculares cuj
 </p>
 
 <p class="mtop05">
-<strong>8.</strong> Para qualquer esclarecimento adicional deverá consultar o <a href="http://www.ist.utl.pt/files/alunos/reg_3ciclo.pdf">Regulamento de 3º Ciclo</a>.
+<strong>8.</strong> Para qualquer esclarecimento adicional deverá consultar o <a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>files/alunos/reg_3ciclo.pdf">Regulamento de 3º Ciclo</a>.
 </p>
 
 <p class="mtop05">

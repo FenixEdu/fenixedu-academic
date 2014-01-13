@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.documents.GeneratedDocumentType;
@@ -28,9 +27,7 @@ public class QueueJobResultFile extends QueueJobResultFile_Base {
 
     @Atomic
     public static void store(QueueJobWithFile job, Person person, String filename, byte[] content) {
-        if (PropertiesManager.getBooleanProperty(CONFIG_DSPACE_DOCUMENT_STORE)) {
-            new QueueJobResultFile(job, person, filename, content);
-        }
+        new QueueJobResultFile(job, person, filename, content);
     }
 
     @Deprecated

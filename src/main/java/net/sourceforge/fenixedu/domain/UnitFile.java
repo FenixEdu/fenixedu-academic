@@ -13,8 +13,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
-import pt.utl.ist.fenix.tools.file.FileSetMetaData;
-import pt.utl.ist.fenix.tools.file.VirtualPath;
 
 public class UnitFile extends UnitFile_Base {
 
@@ -32,8 +30,8 @@ public class UnitFile extends UnitFile_Base {
         });
     }
 
-    public UnitFile(Unit unit, Person person, String description, String tags, VirtualPath path, String filename,
-            String displayName, Collection<FileSetMetaData> metadata, byte[] content, Group group) {
+    public UnitFile(Unit unit, Person person, String description, String tags, String filename, String displayName,
+            byte[] content, Group group) {
         super();
         setUnit(unit);
         setUploader(person);
@@ -41,7 +39,7 @@ public class UnitFile extends UnitFile_Base {
         if (tags != null && tags.length() > 0) {
             setUnitFileTags(tags);
         }
-        init(path, filename, displayName, metadata, content, group);
+        init(filename, displayName, content, group);
     }
 
     public void setUnitFileTags(String tag) {

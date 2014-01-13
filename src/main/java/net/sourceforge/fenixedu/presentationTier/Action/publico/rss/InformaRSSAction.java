@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico.rss;
 
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 
 import org.apache.commons.httpclient.HttpStatus;
@@ -26,7 +26,7 @@ public abstract class InformaRSSAction extends FenixAction {
     @Override
     public ActionForward execute(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
             final HttpServletResponse response) throws Exception {
-        final String encoding = System.getProperty("file.encoding", PropertiesManager.DEFAULT_CHARSET);
+        final String encoding = System.getProperty("file.encoding", Charset.defaultCharset().name());
         final ChannelIF channel = getRSSChannel(request);
         if (channel != null) {
             response.setContentType("text/xml; charset=" + encoding);
@@ -37,7 +37,7 @@ public abstract class InformaRSSAction extends FenixAction {
         } else {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             response.getWriter().write(HttpStatus.getStatusText(HttpStatus.SC_NOT_FOUND));
-            response.getWriter().close();            
+            response.getWriter().close();
         }
         return null;
     }

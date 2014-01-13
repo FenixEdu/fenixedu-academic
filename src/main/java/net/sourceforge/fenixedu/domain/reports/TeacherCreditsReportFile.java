@@ -11,11 +11,11 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherAuthorization;
 import net.sourceforge.fenixedu.domain.credits.util.AnnualTeachingCreditsBean;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 
 import org.apache.commons.lang.CharSetUtils;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.Interval;
 import org.joda.time.PeriodType;
 import org.joda.time.YearMonthDay;
@@ -45,18 +46,19 @@ public class TeacherCreditsReportFile extends TeacherCreditsReportFile_Base {
 
     @Override
     public String getJobName() {
-        return "Listagem de serviço de docência do IST";
+        return "Listagem de serviço de docência do " + Unit.getInstitutionAcronym();
     }
 
     @Override
     protected String getPrefix() {
-        return "Listagem de serviço de docência do IST";
+        return "Listagem de serviço de docência do " + Unit.getInstitutionAcronym();
     }
 
     @Override
     public void renderReport(Spreadsheet spreadsheet) throws Exception {
         ExecutionYear executionYear = getExecutionYear();
-        spreadsheet.setName("Docentes do IST " + executionYear.getQualifiedName().replace("/", ""));
+        spreadsheet.setName("Docentes do " + Unit.getInstitutionAcronym() + " "
+                + executionYear.getQualifiedName().replace("/", ""));
         spreadsheet.setHeader("IstId");
         spreadsheet.setHeader("Nº Mec");
         spreadsheet.setHeader("Nome");
@@ -87,7 +89,7 @@ public class TeacherCreditsReportFile extends TeacherCreditsReportFile_Base {
         spreadsheet.setHeader("SNE - Descrição");
         spreadsheet.setHeader("O - Descrição");
 
-        Collection<Teacher> teachers = RootDomainObject.getInstance().getTeachers();
+        Collection<Teacher> teachers = Bennu.getInstance().getTeachersSet();
         for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
             Interval semesterInterval =
                     new Interval(executionSemester.getBeginDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay(),

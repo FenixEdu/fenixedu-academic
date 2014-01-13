@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 /**
  * 
  * @author T�nia Pous�o
@@ -8,7 +10,7 @@ public class EmployeeHistoric extends EmployeeHistoric_Base {
 
     public EmployeeHistoric() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     @Deprecated
@@ -67,7 +69,7 @@ public class EmployeeHistoric extends EmployeeHistoric_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

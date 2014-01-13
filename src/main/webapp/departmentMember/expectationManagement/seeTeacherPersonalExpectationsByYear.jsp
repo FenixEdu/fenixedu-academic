@@ -5,7 +5,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <html:xhtml/>
 
-<logic:present role="DEPARTMENT_MEMBER,DEPARTMENT_ADMINISTRATIVE_OFFICE">
+<logic:present role="(role(DEPARTMENT_MEMBER) | role(DEPARTMENT_ADMINISTRATIVE_OFFICE))">
 
 	<logic:notEmpty name="teacherPersonalExpectation">
 			

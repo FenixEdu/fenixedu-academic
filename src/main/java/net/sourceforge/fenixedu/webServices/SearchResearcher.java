@@ -6,17 +6,17 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.ResearcherDTO;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.research.Researcher;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.webServices.exceptions.NotAuthorizedException;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.codehaus.xfire.MessageContext;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class SearchResearcher implements ISearchResearcher {
 
@@ -24,8 +24,8 @@ public class SearchResearcher implements ISearchResearcher {
     private static final String storedUsername;
 
     static {
-        storedUsername = PropertiesManager.getProperty("webServices.PersonManagement.getPersonInformation.username");
-        storedPassword = PropertiesManager.getProperty("webServices.PersonManagement.getPersonInformation.password");
+        storedUsername = FenixConfigurationManager.getConfiguration().getWebServicesPaymentManagementUsername();
+        storedPassword = FenixConfigurationManager.getConfiguration().getWebServicesPaymentManagementPassword();
     }
 
     @Override
@@ -53,7 +53,7 @@ public class SearchResearcher implements ISearchResearcher {
             String[] keywordsArray = filterKeywords(keywords.split(" "));
 
             List<Researcher> results = new ArrayList<Researcher>();
-            for (Researcher researcher : RootDomainObject.getInstance().getResearchers()) {
+            for (Researcher researcher : Bennu.getInstance().getResearchersSet()) {
                 if (researcher.getAllowsToBeSearched() && researcher.hasAtLeastOneKeyword(keywordsArray)) {
                     results.add(researcher);
                 }
@@ -71,7 +71,7 @@ public class SearchResearcher implements ISearchResearcher {
         checkPermissions(username, password, context);
 
         List<Researcher> results = new ArrayList<Researcher>();
-        for (Researcher researcher : RootDomainObject.getInstance().getResearchers()) {
+        for (Researcher researcher : Bennu.getInstance().getResearchersSet()) {
             if (researcher.getPerson() != null && researcher.getAllowsToBeSearched()) {
                 results.add(researcher);
             }
@@ -114,7 +114,7 @@ public class SearchResearcher implements ISearchResearcher {
 
         // check hosts accessing this service
         // FIXME Anil: Its urgent to access this webservice for tests
-        // if (!HostAccessControl.isAllowed(this, (ServletRequest)
+        // if (!FenixConfigurationManager.getHostAccessControl().isAllowed(this, (ServletRequest)
         // context.getProperty("XFireServletController.httpServletRequest"))) {
         // throw new NotAuthorizedException();
         // }

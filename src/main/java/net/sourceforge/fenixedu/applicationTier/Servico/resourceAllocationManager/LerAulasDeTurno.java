@@ -22,8 +22,7 @@ public class LerAulasDeTurno {
     @Atomic
     public static List run(ShiftKey shiftKey) {
 
-        final ExecutionCourse executionCourse =
-                FenixFramework.getDomainObject(shiftKey.getInfoExecutionCourse().getExternalId());
+        final ExecutionCourse executionCourse = FenixFramework.getDomainObject(shiftKey.getInfoExecutionCourse().getExternalId());
         final Shift shift = executionCourse.findShiftByName(shiftKey.getShiftName());
 
         final List<InfoLesson> infoAulas = new ArrayList<InfoLesson>();

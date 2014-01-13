@@ -45,7 +45,7 @@ public abstract class InfoShowOccupation extends InfoObject implements ISiteComp
 
     public HourMinuteSecond getEndHourMinuteSecond() {
         final Calendar end = getFim();
-        return new HourMinuteSecond(end.get(Calendar.HOUR_OF_DAY), end.get(Calendar.MINUTE), end.get(Calendar.SECOND));        
+        return new HourMinuteSecond(end.get(Calendar.HOUR_OF_DAY), end.get(Calendar.MINUTE), end.get(Calendar.SECOND));
     }
 
     public AllocatableSpace getAllocatableSpace() {

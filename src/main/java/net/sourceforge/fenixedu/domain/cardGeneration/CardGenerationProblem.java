@@ -2,9 +2,11 @@ package net.sourceforge.fenixedu.domain.cardGeneration;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.ist.fenixframework.Atomic;
 
 public class CardGenerationProblem extends CardGenerationProblem_Base {
@@ -29,7 +31,7 @@ public class CardGenerationProblem extends CardGenerationProblem_Base {
     public CardGenerationProblem(final CardGenerationBatch cardGenerationBatch, final String descriptionKey, final String arg,
             final Person person) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setCardGenerationBatch(cardGenerationBatch);
         setDescriptionKey(descriptionKey);
         setArg(arg);
@@ -116,7 +118,7 @@ public class CardGenerationProblem extends CardGenerationProblem_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

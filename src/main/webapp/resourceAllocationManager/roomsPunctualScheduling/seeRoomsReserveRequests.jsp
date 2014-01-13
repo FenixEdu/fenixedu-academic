@@ -9,7 +9,7 @@
 <em><bean:message key="link.rooms.reserve.management" bundle="SOP_RESOURCES"/></em>
 <h2><bean:message key="rooms.reserve.title" bundle="SOP_RESOURCES"/></h2>
 
-<logic:present role="RESOURCE_ALLOCATION_MANAGER">
+<logic:present role="role(RESOURCE_ALLOCATION_MANAGER)">
 
 	<logic:messagesPresent message="true">
 		<p>
@@ -20,7 +20,7 @@
 			</span>
 		<p>
 	</logic:messagesPresent>	
-	<bean:define id="person" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
+	<bean:define id="person" name="LOGGED_USER_ATTRIBUTE" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
 	<html:form action="roomsReserveManagement.do?method=seeSpecificRequest" >
 		<table>
 			<tr>

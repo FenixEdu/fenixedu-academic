@@ -5,11 +5,13 @@ import net.sourceforge.fenixedu.domain.exceptions.InvalidMarkDomainException;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 public class Mark extends Mark_Base {
 
     public Mark() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public Mark(final Attends attends, final Evaluation evaluation, final String mark) {
@@ -69,7 +71,7 @@ public class Mark extends Mark_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

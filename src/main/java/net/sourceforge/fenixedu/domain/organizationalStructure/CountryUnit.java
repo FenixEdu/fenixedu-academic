@@ -9,19 +9,23 @@ import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.YearMonthDay;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CountryUnit extends CountryUnit_Base {
+
+    private static final Logger logger = LoggerFactory.getLogger(CountryUnit.class);
 
     private CountryUnit() {
         super();
@@ -117,7 +121,7 @@ public class CountryUnit extends CountryUnit_Base {
     transient static private CountryUnit defaultCountry;
 
     public static CountryUnit getDefault() {
-        if (defaultCountry != null && defaultCountry.getRootDomainObject() == RootDomainObject.getInstance()) {
+        if (defaultCountry != null && defaultCountry.getRootDomainObject() == Bennu.getInstance()) {
             return defaultCountry;
         }
         defaultCountry =
@@ -152,7 +156,7 @@ public class CountryUnit extends CountryUnit_Base {
         for (Unit unit : units) {
 
             if (!(unit instanceof CountryUnit)) {
-                System.out.println(String.format("Unit is not country %s", unit.getName()));
+                logger.info(String.format("Unit is not country %s", unit.getName()));
                 continue;
             }
 
@@ -163,6 +167,7 @@ public class CountryUnit extends CountryUnit_Base {
 
         return null;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Formation> getAssociatedCountryUnitFormations() {
         return getAssociatedCountryUnitFormationsSet();

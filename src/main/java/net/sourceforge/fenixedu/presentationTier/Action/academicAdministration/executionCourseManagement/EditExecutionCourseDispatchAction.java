@@ -31,6 +31,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -50,6 +52,7 @@ import pt.ist.fenixframework.FenixFramework;
         @Forward(name = "listExecutionCourseActions",
                 path = "/academicAdministration/executionCourseManagement/listExecutionCourseActions.jsp") })
 public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
+    private static final Logger logger = LoggerFactory.getLogger(EditExecutionCourseDispatchAction.class);
 
     public ActionForward editExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
@@ -90,7 +93,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
             infoExecutionCourse = EditExecutionCourseInfo.run(infoExecutionCourseEditor);
 
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new FenixActionException(e.getMessage());
         } catch (DomainException ex) {
             addActionMessage("error", request, ex.getMessage(), ex.getArgs());
@@ -180,7 +183,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
         String executionPeriodId = (String) request.getAttribute("executionPeriodId");
 
         ExecutionCourse executionCourse = null;
-        if (!net.sourceforge.fenixedu.util.StringUtils.isEmpty(executionCourseId)) {
+        if (!org.apache.commons.lang.StringUtils.isEmpty(executionCourseId)) {
             executionCourse = FenixFramework.getDomainObject(executionCourseId);
         }
         ExecutionSemester executionPeriod = FenixFramework.getDomainObject(executionPeriodId);
@@ -221,7 +224,7 @@ public class EditExecutionCourseDispatchAction extends FenixDispatchAction {
             infoExecutionCourse.setEntryPhase(EntryPhase.valueOf(editExecutionCourseForm.getString("entryPhase")));
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
 
         return infoExecutionCourse;

@@ -1,29 +1,42 @@
 package net.sourceforge.fenixedu.util.phd;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import org.fenixedu.commons.configuration.ConfigurationInvocationHandler;
+import org.fenixedu.commons.configuration.ConfigurationManager;
+import org.fenixedu.commons.configuration.ConfigurationProperty;
 
 public class PhdProperties {
+    @ConfigurationManager(description = "Phd Candidacy Properties")
+    public interface ConfigurationProperties {
+        @ConfigurationProperty(key = "phd.public.candidacy.access.link")
+        public String getPublicCandidacyAccessLink();
 
-    static private final long serialVersionUID = 1L;
+        @ConfigurationProperty(key = "phd.public.candidacy.submission.link")
+        public String getPublicCandidacySubmissionLink();
 
-    static private String getProperty(final String key) {
-        return PropertiesManager.getProperty(key);
+        @ConfigurationProperty(key = "phd.public.candidacy.referee.form.link")
+        public String getPublicCandidacyRefereeFormLink();
+
+        @ConfigurationProperty(key = "phd.public.external.access.link")
+        public String getPhdExternalAccessLink();
     }
 
     static public String getPublicCandidacyAccessLink() {
-        return getProperty("phd.public.candidacy.access.link");
+        return getConfiguration().getPublicCandidacyAccessLink();
     }
 
     static public String getPublicCandidacySubmissionLink() {
-        return getProperty("phd.public.candidacy.submission.link");
+        return getConfiguration().getPublicCandidacySubmissionLink();
     }
 
     static public String getPublicCandidacyRefereeFormLink() {
-        return getProperty("phd.public.candidacy.referee.form.link");
+        return getConfiguration().getPublicCandidacyRefereeFormLink();
     }
 
     static public String getPhdExternalAccessLink() {
-        return getProperty("phd.public.external.access.link");
+        return getConfiguration().getPhdExternalAccessLink();
     }
 
+    public static ConfigurationProperties getConfiguration() {
+        return ConfigurationInvocationHandler.getConfiguration(ConfigurationProperties.class);
+    }
 }

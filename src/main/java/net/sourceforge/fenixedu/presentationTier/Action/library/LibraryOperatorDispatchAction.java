@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.LibraryCardSystem;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.space.RoomSubdivision;
@@ -24,6 +23,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
@@ -36,6 +36,8 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.CategoryItemRenderer;
 import org.jfree.data.DefaultCategoryDataset;
 import org.joda.time.YearMonthDay;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -54,6 +56,9 @@ import pt.ist.fenixframework.FenixFramework;
         @Forward(name = "libraryAddOrRemoveOperators", path = "/library/operator/libraryAddOrRemoveOperators.jsp",
                 tileProperties = @Tile(title = "private.library.addorremoveoperators")) })
 public class LibraryOperatorDispatchAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(LibraryOperatorDispatchAction.class);
+
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         request.setAttribute("attendance", new LibraryAttendance());
@@ -163,7 +168,7 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
             response.getOutputStream().write(out.toByteArray());
             response.getOutputStream().close();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
 
         return null;
@@ -278,13 +283,13 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
     }
 
     private Group getHigherClearenceGroup() {
-        LibraryCardSystem libraryCardSystem = RootDomainObject.getInstance().getLibraryCardSystem();
+        LibraryCardSystem libraryCardSystem = Bennu.getInstance().getLibraryCardSystem();
         return libraryCardSystem.getHigherClearenceGroup();
     }
 
     private Person getPersonFromRequest(HttpServletRequest request) {
         String istUsername = request.getParameter("istUsername");
-        return Person.readPersonByIstUsername(istUsername);
+        return Person.readPersonByUsername(istUsername);
     }
 
     private Set<Person> getSetFromFixedSetGroupWithout(Group g, Person toRemove) {
@@ -303,7 +308,7 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
     @Atomic
     public ActionForward addOperator(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
-        LibraryCardSystem libraryCardSystem = RootDomainObject.getInstance().getLibraryCardSystem();
+        LibraryCardSystem libraryCardSystem = Bennu.getInstance().getLibraryCardSystem();
         Person operator = getPersonFromRequest(request);
 
         Set<Person> newGroup = getSetFromFixedSetGroupWithout(getHigherClearenceGroup(), operator);
@@ -322,7 +327,7 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
     @Atomic
     public ActionForward removeOperator(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
-        LibraryCardSystem libraryCardSystem = RootDomainObject.getInstance().getLibraryCardSystem();
+        LibraryCardSystem libraryCardSystem = Bennu.getInstance().getLibraryCardSystem();
         Person operator = getPersonFromRequest(request);
 
         Set<Person> newGroup = getSetFromFixedSetGroupWithout(getHigherClearenceGroup(), operator);

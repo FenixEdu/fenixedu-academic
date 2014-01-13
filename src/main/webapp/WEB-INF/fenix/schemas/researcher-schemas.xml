@@ -2643,17 +2643,6 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 	<slot name="note"/>
 </schema>
 
-<schema name="publicationSearch" bundle="RESEARCHER_RESOURCES" 
-	type="net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceBean">
-	<slot name="searchField" key="label.searchField" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="defaultText" value=""/>
-		<property name="excludedValues" value="KEYWORD, COURSE"/>
-	</slot> 
-	<slot name="value" key="label.value" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="size" value="40"/>
-	</slot>
-</schema>
-
 <!-- This one has a single field title with all information (from old publications)
 -->
 <schema name="result.publication.presentation.Unstructured" extends="publication.TitleAndAuthors" bundle="RESEARCHER_RESOURCES"

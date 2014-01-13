@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro.coordinator;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.framework.DomainObjectAuthorizationFilter;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -12,6 +11,9 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+
+import org.fenixedu.bennu.core.domain.User;
+
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -29,7 +31,7 @@ public class AccessFinalDegreeWorkProposalAuthorizationFilter extends DomainObje
     }
 
     @Override
-    protected boolean verifyCondition(IUserView id, String objectId) {
+    protected boolean verifyCondition(User id, String objectId) {
         if (objectId == null) {
             return false;
         }

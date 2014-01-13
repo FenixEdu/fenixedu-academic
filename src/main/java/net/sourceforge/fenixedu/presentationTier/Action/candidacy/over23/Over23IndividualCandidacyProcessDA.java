@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23CandidacyPr
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyResultBean;
+import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.IndividualCandidacyProcessDA;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
@@ -50,7 +51,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
 
     @Override
-    protected Class getParentProcessType() {
+    protected Class<? extends Process> getParentProcessType() {
         return Over23CandidacyProcess.class;
     }
 

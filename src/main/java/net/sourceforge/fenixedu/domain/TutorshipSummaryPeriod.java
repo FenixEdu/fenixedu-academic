@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorshipSummaryPeriodBean;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 
@@ -11,7 +12,7 @@ public class TutorshipSummaryPeriod extends TutorshipSummaryPeriod_Base {
 
     public TutorshipSummaryPeriod(ExecutionSemester executionSemester, LocalDate beginDate, LocalDate endDate) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setExecutionSemester(executionSemester);
         setBeginDate(beginDate);
         setEndDate(endDate);
@@ -36,8 +37,9 @@ public class TutorshipSummaryPeriod extends TutorshipSummaryPeriod_Base {
                 new Interval(getBeginDate().toDateTimeAtStartOfDay(), getEndDate().plusDays(1).toDateTimeAtStartOfDay());
         return interval.containsNow();
     }
+
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

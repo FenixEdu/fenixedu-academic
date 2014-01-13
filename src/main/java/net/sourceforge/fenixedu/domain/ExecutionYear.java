@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.DfaGratuityEvent;
@@ -21,11 +20,13 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
@@ -64,7 +65,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 
     private ExecutionYear() {
         super();
-        setRootDomainObjectForExecutionYear(RootDomainObject.getInstance());
+        setRootDomainObjectForExecutionYear(Bennu.getInstance());
     }
 
     public ExecutionYear(AcademicInterval academicInterval, String year) {
@@ -375,7 +376,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     public static ExecutionYear getExecutionYear(AcademicYearCE entry) {
         if (entry != null) {
             entry = (AcademicYearCE) entry.getOriginalTemplateEntry();
-            for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
+            for (final ExecutionYear executionYear : Bennu.getInstance().getExecutionYearsSet()) {
                 if (executionYear.getAcademicInterval().getAcademicCalendarEntry().equals(entry)) {
                     return executionYear;
                 }
@@ -385,19 +386,22 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     static public ExecutionYear readCurrentExecutionYear() {
-        return ExecutionSemester.readActualExecutionSemester().getExecutionYear();
+        ExecutionSemester semester = ExecutionSemester.readActualExecutionSemester();
+        if (semester != null) {
+            return semester.getExecutionYear();
+        } else {
+            return null;
+        }
     }
 
     static transient private ExecutionYear startExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments = null;
 
-    static private ExecutionYear readFromProperties(ExecutionYear executionYear, String yearKey) {
-        if (executionYear == null || executionYear.getRootDomainObject() != RootDomainObject.getInstance()) {
-
-            final String yearString = PropertiesManager.getProperty(yearKey);
+    static private ExecutionYear readFromProperties(ExecutionYear executionYear, String yearString) {
+        if (executionYear == null || executionYear.getRootDomainObject() != Bennu.getInstance()) {
             if (yearString == null || yearString.length() == 0) {
                 executionYear = null;
             } else {
-                executionYear = readExecutionYearByName(yearKey);
+                executionYear = readExecutionYearByName(yearString);
             }
         }
 
@@ -406,14 +410,14 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 
     public static ExecutionYear readStartExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments() {
         startExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments =
-                readFromProperties(startExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments,
-                        "startExecutionYearForAllOptionalCurricularCoursesWithLessTenEnrolments");
+                readFromProperties(startExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments, FenixConfigurationManager
+                        .getConfiguration().getStartExecutionYearForAllOptionalCurricularCoursesWithLessTenEnrolments());
         return startExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments;
     }
 
     static public List<ExecutionYear> readOpenExecutionYears() {
         final List<ExecutionYear> result = new ArrayList<ExecutionYear>();
-        for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
+        for (final ExecutionYear executionYear : Bennu.getInstance().getExecutionYearsSet()) {
             if (executionYear.isOpen()) {
                 result.add(executionYear);
             }
@@ -423,7 +427,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 
     static public List<ExecutionYear> readNotClosedExecutionYears() {
         final List<ExecutionYear> result = new ArrayList<ExecutionYear>();
-        for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
+        for (final ExecutionYear executionYear : Bennu.getInstance().getExecutionYearsSet()) {
             if (!executionYear.isClosed()) {
                 result.add(executionYear);
             }
@@ -433,7 +437,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 
     public static List<ExecutionYear> readNotOpenExecutionYears() {
         final List<ExecutionYear> result = new ArrayList<ExecutionYear>();
-        for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
+        for (final ExecutionYear executionYear : Bennu.getInstance().getExecutionYearsSet()) {
             if (executionYear.isNotOpen()) {
                 result.add(executionYear);
             }
@@ -454,7 +458,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     static public ExecutionYear readExecutionYearByName(final String year) {
-        for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
+        for (final ExecutionYear executionYear : Bennu.getInstance().getExecutionYearsSet()) {
             if (executionYear.isFor(year)) {
                 return executionYear;
             }
@@ -474,7 +478,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 
             // for a given civil year, a maximum of two ExecutionYear can be indexed => must update cache if only one ExecutionYear is cached 
             if (result == null || result.size() < 2) {
-                for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
+                for (final ExecutionYear executionYear : Bennu.getInstance().getExecutionYearsSet()) {
                     add(executionYear);
                 }
                 result = map.get(year);
@@ -541,7 +545,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     public static ExecutionYear readBy(final YearMonthDay begin, YearMonthDay end) {
-        for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
+        for (final ExecutionYear executionYear : Bennu.getInstance().getExecutionYearsSet()) {
             if (executionYear.getBeginDateYearMonthDay().isEqual(begin) && executionYear.getEndDateYearMonthDay().isEqual(end)) {
                 return executionYear;
             }
@@ -567,7 +571,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     static public ExecutionYear readFirstExecutionYear() {
-        for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYears()) {
+        for (final ExecutionYear executionYear : Bennu.getInstance().getExecutionYearsSet()) {
             if (!executionYear.hasPreviousExecutionYear()) {
                 return executionYear;
             }
@@ -576,7 +580,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     static public ExecutionYear readLastExecutionYear() {
-        for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYears()) {
+        for (final ExecutionYear executionYear : Bennu.getInstance().getExecutionYearsSet()) {
             if (!executionYear.hasNextExecutionYear()) {
                 return executionYear;
             }
@@ -585,7 +589,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     public static ExecutionYear readByAcademicInterval(AcademicInterval academicInterval) {
-        for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYears()) {
+        for (final ExecutionYear executionYear : Bennu.getInstance().getExecutionYearsSet()) {
             if (executionYear.getAcademicInterval().equals(academicInterval)) {
                 return executionYear;
             }
@@ -1008,7 +1012,7 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     @Deprecated
-    public boolean hasRootDomainObjectForExecutionYear() {
+    public boolean hasBennuForExecutionYear() {
         return getRootDomainObjectForExecutionYear() != null;
     }
 

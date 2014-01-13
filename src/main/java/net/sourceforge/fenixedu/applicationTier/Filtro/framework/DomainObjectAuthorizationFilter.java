@@ -4,11 +4,14 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro.framework;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Leonor Almeida
@@ -17,12 +20,14 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
  */
 public abstract class DomainObjectAuthorizationFilter extends AuthorizationByRoleFilter {
 
+    private static final Logger logger = LoggerFactory.getLogger(DomainObjectAuthorizationFilter.class);
+
     @Override
     abstract protected RoleType getRoleType();
 
     public void execute(String externalId) throws NotAuthorizedException {
         try {
-            IUserView id = AccessControl.getUserView();
+            User id = Authenticate.getUser();
 
             /*
              * note: if it is neither an Integer nor an InfoObject representing
@@ -33,15 +38,16 @@ public abstract class DomainObjectAuthorizationFilter extends AuthorizationByRol
 
             boolean isNew = externalId == null;
 
-            if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType()))) || (id == null)
-                    || (id.getRoleTypes() == null) || ((!isNew) && (!verifyCondition(id, externalId)))) {
+            if (((id != null && id.getPerson().getPersonRolesSet() != null && !id.getPerson().hasRole(getRoleType())))
+                    || (id == null) || (id.getPerson().getPersonRolesSet() == null)
+                    || ((!isNew) && (!verifyCondition(id, externalId)))) {
                 throw new NotAuthorizedException();
             }
         } catch (RuntimeException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new NotAuthorizedException(e.getMessage());
         }
     }
 
-    abstract protected boolean verifyCondition(IUserView id, String objectId);
+    abstract protected boolean verifyCondition(User id, String objectId);
 }

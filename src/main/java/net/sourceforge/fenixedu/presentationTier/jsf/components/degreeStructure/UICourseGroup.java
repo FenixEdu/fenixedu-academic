@@ -5,13 +5,13 @@ import java.util.List;
 
 import javax.faces.context.FacesContext;
 
-import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 
 public class UICourseGroup extends UIDegreeModule {
+
     public static final String COMPONENT_TYPE =
             "net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UICourseGroup";
 
@@ -55,20 +55,7 @@ public class UICourseGroup extends UIDegreeModule {
             return;
         }
 
-        log(false);
         encodeCourseGroup(facesContext);
-    }
-
-    private void log(boolean on) {
-        if (LogLevel.INFO) {
-            if (on) {
-                StringBuilder buffer = new StringBuilder();
-                buffer.append(tabs);
-                buffer.append("[LEVEL ").append(Integer.valueOf(this.depth)).append("]");
-                buffer.append("[CG ").append(this.courseGroup.getExternalId()).append("] ").append(this.courseGroup.getName());
-                System.out.println(buffer);
-            }
-        }
     }
 
     private void encodeCourseGroup(FacesContext facesContext) throws IOException {

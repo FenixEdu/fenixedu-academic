@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.Create
 import net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateStandaloneEnrolmentGratuityPRBean;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.Installment;
 import net.sourceforge.fenixedu.domain.accounting.PaymentPlan;
@@ -49,6 +48,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -130,7 +130,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
         request.setAttribute("degreeCurricularPlans",
                 DegreeCurricularPlan.readByDegreeTypesAndState(degreeTypes, DegreeCurricularPlanState.ACTIVE));
 
-        request.setAttribute("phdPrograms", RootDomainObject.getInstance().getPhdPrograms());
+        request.setAttribute("phdPrograms", Bennu.getInstance().getPhdProgramsSet());
 
         return mapping.findForward("choosePostGraduationDegreeCurricularPlans");
     }
@@ -282,7 +282,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     }
 
     private Set<PostingRule> getInsurancePostingRules() {
-        return RootDomainObject.getInstance().getInstitutionUnit().getUnitServiceAgreementTemplate()
+        return Bennu.getInstance().getInstitutionUnit().getUnitServiceAgreementTemplate()
                 .getAllPostingRulesFor(EventType.INSURANCE);
     }
 
@@ -341,7 +341,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
 
         final ExecutionYear executionYear = FenixFramework.getDomainObject(form.getExecutionYearId());
 
-        request.setAttribute("executionYears", new ArrayList<ExecutionYear>(rootDomainObject.getExecutionYears()));
+        request.setAttribute("executionYears", new ArrayList<ExecutionYear>(rootDomainObject.getExecutionYearsSet()));
         request.setAttribute("paymentPlans", getDegreeCurricularPlan(request).getServiceAgreementTemplate()
                 .getGratuityPaymentPlansFor(executionYear));
         request.setAttribute("degreeCurricularPlan", getDegreeCurricularPlan(request));
@@ -790,7 +790,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     public ActionForward showFCTScolarshipPostingRules(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         List<PostingRule> list = new ArrayList<PostingRule>();
-        for (PostingRule postingRule : RootDomainObject.getInstance().getPostingRules()) {
+        for (PostingRule postingRule : Bennu.getInstance().getPostingRulesSet()) {
             if (postingRule instanceof ExternalScholarshipPhdGratuityContribuitionPR) {
                 list.add(postingRule);
             }
@@ -841,7 +841,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
         ExternalScholarshipPhdGratuityContribuitionPR postingRule =
                 new ExternalScholarshipPhdGratuityContribuitionPR(bean.getStartDate(), bean.getEndDate(), AdministrativeOffice
                         .readMasterDegreeAdministrativeOffice().getServiceAgreementTemplate());
-        postingRule.setRootDomainObject(RootDomainObject.getInstance());
+        postingRule.setRootDomainObject(Bennu.getInstance());
     }
 
     public ActionForward addFCTScolarshipPostingRule(ActionMapping mapping, ActionForm form, HttpServletRequest request,

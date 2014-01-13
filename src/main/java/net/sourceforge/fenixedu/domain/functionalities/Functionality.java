@@ -14,13 +14,15 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.WeakHashMap;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode;
 import net.sourceforge.fenixedu.domain.contents.FunctionalityCall;
 import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.functionalities.exceptions.IllegalOrderInModuleException;
 import net.sourceforge.fenixedu.domain.functionalities.exceptions.MatchPathConflictException;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -697,7 +699,7 @@ public class Functionality extends Functionality_Base implements IFunctionality 
             String firstLookupPath =
                     executionPathValue.substring(firstIndex > 0 ? firstIndex : 0,
                             endIndex > 0 ? endIndex : executionPathValue.length());
-            for (final ExecutionPath executionPath : RootDomainObject.getInstance().getExecutionPathsSet()) {
+            for (final ExecutionPath executionPath : Bennu.getInstance().getExecutionPathsSet()) {
                 if (executionPath.getExecutionPath().contains(firstLookupPath)) {
                     if (executionPathValue.startsWith(executionPath.getFunctionality().getPath())) {
                         return executionPath.getFunctionality();

@@ -8,11 +8,11 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.ThesisSubjectOrder;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.YearMonthDay;
 
 public class EPFLCandidatesReport extends PhdReport {
@@ -40,7 +40,7 @@ public class EPFLCandidatesReport extends PhdReport {
 
         int i = 2;
         for (PhdIndividualProgramProcess process : processes) {
-            if (isProcessFromEPFL(process) && process.isAllowedToManageProcess(AccessControl.getUserView())) {
+            if (isProcessFromEPFL(process) && process.isAllowedToManageProcess(Authenticate.getUser())) {
                 HSSFRow row = sheet.createRow(i);
 
                 fillRow(process, row);

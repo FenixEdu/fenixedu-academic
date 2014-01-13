@@ -1,19 +1,20 @@
 package net.sourceforge.fenixedu.domain.phd.individualProcess.activities;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 
+import org.fenixedu.bennu.core.domain.User;
+
 public class EditPersonalInformation extends PhdIndividualProgramProcessActivity {
 
     @Override
-    protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
+    protected void activityPreConditions(PhdIndividualProgramProcess arg0, User arg1) {
         // no precondition to check
     }
 
     @Override
-    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
+    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, User userView, Object object) {
 
         final Person person = process.getPerson();
         if (process.isAllowedToManageProcess(userView)) {

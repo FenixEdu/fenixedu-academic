@@ -43,10 +43,10 @@ public class InfoFileContent extends InfoObject {
         if (fileItem != null) {
             setName(fileItem.getFilename());
             setDisplayName(fileItem.getDisplayName());
-            setMimeType(fileItem.getMimeType());
+            setMimeType(fileItem.getContentType());
             setChecksum(fileItem.getChecksum());
             setChecksumAlgorithm(fileItem.getChecksumAlgorithm());
-            setSize(fileItem.getSize());
+            setSize(fileItem.getSize().intValue());
             setExternalStorageIdentification(fileItem.getExternalStorageIdentification());
 
         }

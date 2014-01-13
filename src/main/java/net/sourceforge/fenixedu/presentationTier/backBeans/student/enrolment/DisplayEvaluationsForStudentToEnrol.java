@@ -220,14 +220,15 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
     }
 
     protected ExecutionSemester getExecutionPeriod() {
-        return executionSemester == null && getExecutionPeriodID() != null ? FenixFramework.<ExecutionSemester> getDomainObject(getExecutionPeriodID()) : executionSemester;
+        return executionSemester == null && getExecutionPeriodID() != null ? FenixFramework
+                .<ExecutionSemester> getDomainObject(getExecutionPeriodID()) : executionSemester;
     }
 
     protected Registration getStudent() {
         if (this.student == null) {
             try {
 
-                this.student = ReadStudentByUsername.run(getUserView().getUtilizador());
+                this.student = ReadStudentByUsername.run(getUserView().getUsername());
             } catch (IllegalDataAccessException e) {
             } catch (FenixServiceException e) {
             }

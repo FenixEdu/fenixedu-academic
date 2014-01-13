@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -29,12 +28,17 @@ import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.Atomic;
 
 public class CardGenerationBatch extends CardGenerationBatch_Base {
+
+    private static final Logger logger = LoggerFactory.getLogger(CardGenerationBatch.class);
 
     public static final Comparator<CardGenerationBatch> COMPARATOR_BY_CREATION_DATE = new Comparator<CardGenerationBatch>() {
 
@@ -82,7 +86,7 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
 
     public CardGenerationBatch(String description, final ExecutionYear executionYear, boolean createEmptyBatch) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setExecutionYear(executionYear);
         setDescription(description);
         final DateTime dateTime = new DateTime();
@@ -126,11 +130,9 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
                     final DegreeType degreeType = studentCurricularPlan.getDegreeType();
                     if (!degreeType.isEmpty()) {
                         if (degreeType.compareTo(maxDegreeType) >= 0) {
-                            // System.out.println("Using: " + degreeType +
-                            // " same as " + maxDegreeType);
                             createCardGenerationEntry(person, studentCurricularPlan);
                         } else {
-                            System.out.println("Not using: " + degreeType + " because of " + maxDegreeType);
+                            logger.info("Not using: " + degreeType + " because of " + maxDegreeType);
                         }
                     }
                 }
@@ -216,9 +218,8 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
 
     protected void createCardGenerationEntry(final Person person, final StudentCurricularPlan studentCurricularPlan) {
         if (studentCurricularPlan.getDegreeType() == DegreeType.MASTER_DEGREE) {
-            System.out.println("Master degree student curricular plan: "
-                    + studentCurricularPlan.getDegreeCurricularPlan().getName() + " - " + studentCurricularPlan.getDegreeType()
-                    + " " + person.getUsername());
+            logger.info("Master degree student curricular plan: " + studentCurricularPlan.getDegreeCurricularPlan().getName()
+                    + " - " + studentCurricularPlan.getDegreeType() + " " + person.getUsername());
         }
         final CardGenerationEntry cardGenerationEntry = new CardGenerationEntry();
         cardGenerationEntry.setCreated(getCreated());
@@ -311,7 +312,7 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
 
     public static SortedSet<CardGenerationBatch> getAvailableBatchesFor() {
         final SortedSet<CardGenerationBatch> cardGenerationBatchs = new TreeSet<CardGenerationBatch>(COMPARATOR_BY_CREATION_DATE);
-        for (final CardGenerationBatch cardGenerationBatch : RootDomainObject.getInstance().getCardGenerationBatchesSet()) {
+        for (final CardGenerationBatch cardGenerationBatch : Bennu.getInstance().getCardGenerationBatchesSet()) {
             final ExecutionYear executionYear = cardGenerationBatch.getExecutionYear();
             if (executionYear.isCurrent()) {
                 cardGenerationBatchs.add(cardGenerationBatch);
@@ -959,7 +960,7 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

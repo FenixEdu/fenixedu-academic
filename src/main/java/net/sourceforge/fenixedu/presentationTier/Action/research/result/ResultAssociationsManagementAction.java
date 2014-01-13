@@ -7,18 +7,20 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.research.result.CreateResultUnitAssociation;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.result.DeleteResultUnitAssociation;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultUnitAssociationCreationBean;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.utl.ist.fenix.tools.file.FileManagerException;
 
 @Mapping(module = "researcher", path = "/result/resultAssociationsManagement", scope = "session", parameter = "method")
 @Forwards(value = {
@@ -37,6 +39,8 @@ import pt.utl.ist.fenix.tools.file.FileManagerException;
         @Forward(name = "listPatents", path = "/resultPatents/management.do", tileProperties = @Tile(
                 title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.patents")) })
 public class ResultAssociationsManagementAction extends ResultsManagementAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(ResultAssociationsManagementAction.class);
 
     /**
      * Actions for Result Unit Associations
@@ -62,8 +66,8 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
         try {
 
             CreateResultUnitAssociation.run(bean);
-        } catch (FileManagerException e) {
-            e.printStackTrace();
+        } catch (DomainException e) {
+            logger.error(e.getMessage(), e);
             addActionMessage(request, "label.communicationError");
         } catch (Exception e) {
             addActionMessage(request, e.getMessage());
@@ -103,8 +107,8 @@ public class ResultAssociationsManagementAction extends ResultsManagementAction 
         try {
 
             CreateResultUnitAssociation.run(bean);
-        } catch (FileManagerException e) {
-            e.printStackTrace();
+        } catch (DomainException e) {
+            logger.error(e.getMessage(), e);
             addActionMessage(request, "label.communicationError");
         } catch (Exception e) {
             addActionMessage(request, e.getMessage());

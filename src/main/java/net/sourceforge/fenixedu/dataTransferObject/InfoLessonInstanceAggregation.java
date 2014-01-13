@@ -129,7 +129,8 @@ public class InfoLessonInstanceAggregation extends InfoShowOccupation {
         final ExecutionCourse executionCourse = shift.getExecutionCourse();
         final YearMonthDay firstPossibleLessonDay = executionCourse.getMaxLessonsPeriod().getLeft();
         final YearMonthDay lastPossibleLessonDay = executionCourse.getMaxLessonsPeriod().getRight();
-        return getWeeks(new Interval(firstPossibleLessonDay.toDateTimeAtMidnight(), lastPossibleLessonDay.toDateTimeAtMidnight().plusDays(1)));
+        return getWeeks(new Interval(firstPossibleLessonDay.toDateTimeAtMidnight(), lastPossibleLessonDay.toDateTimeAtMidnight()
+                .plusDays(1)));
     }
 
     public SortedSet<Integer> getWeeks(final Interval lessonInterval) {
@@ -214,14 +215,13 @@ public class InfoLessonInstanceAggregation extends InfoShowOccupation {
         for (int i = 0; i < weeksA.length; i++) {
             if (i == 0) {
                 builder.append(weeksA[i]);
-            } else if (i == weeksA.length - 1 || ((int) weeksA[i]) + 1 != ((int) weeksA[i + 1])) {
-                final String seperator = ((int) weeksA[i - 1]) + 1 == ((int) weeksA[i])
-                        ? " - " : ", ";
+            } else if (i == weeksA.length - 1 || (weeksA[i]) + 1 != (weeksA[i + 1])) {
+                final String seperator = (weeksA[i - 1]) + 1 == (weeksA[i]) ? " - " : ", ";
                 builder.append(seperator);
-                builder.append(weeksA[i]);                    
-            } else if (((int) weeksA[i - 1]) + 1 !=  (int) weeksA[i]) {
+                builder.append(weeksA[i]);
+            } else if ((weeksA[i - 1]) + 1 != weeksA[i]) {
                 builder.append(", ");
-                builder.append(weeksA[i]);                
+                builder.append(weeksA[i]);
             }
         }
         return builder.toString();

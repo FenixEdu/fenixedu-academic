@@ -25,7 +25,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class GeneratedDocumentsDA extends FenixDispatchAction {
 
     public ActionForward showAnnualIRSDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         request.setAttribute("person", AccessControl.getPerson());
 

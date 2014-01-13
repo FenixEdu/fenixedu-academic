@@ -5,13 +5,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.EnrollStudentInShifts;
 import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.EnrollStudentInShifts.StudentNotFoundServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.shift.ShiftEnrollmentErrorReport;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 
@@ -19,6 +17,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -31,6 +31,8 @@ import pt.ist.fenixframework.FenixFramework;
 @Forwards(value = { @Forward(name = "enrollmentConfirmation",
         path = "/studentShiftEnrollmentManagerLoockup.do?method=Escolher Turnos") })
 public class EnrollStudentInShiftsAction extends FenixAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(EnrollStudentInShiftsAction.class);
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -58,12 +60,12 @@ public class EnrollStudentInShiftsAction extends FenixAction {
                 addActionMessage(request, "error.shift.enrollment.nonExistingShift");
             }
         } catch (StudentNotFoundServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             addActionMessage(request, "error.shift.enrollment.nonExistingStudent");
             return mapping.getInputForward();
 
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             addActionMessage(request, e.getMessage());
             return mapping.getInputForward();
         }
@@ -76,11 +78,4 @@ public class EnrollStudentInShiftsAction extends FenixAction {
         return FenixFramework.getDomainObject(request.getParameter("registrationOID"));
     }
 
-    private Registration getStudent(final IUserView userView) {
-        Registration registration = userView.getPerson().getStudentByUsername();
-        if (registration == null) {
-            registration = userView.getPerson().getStudentByType(DegreeType.DEGREE);
-        }
-        return registration;
-    }
 }

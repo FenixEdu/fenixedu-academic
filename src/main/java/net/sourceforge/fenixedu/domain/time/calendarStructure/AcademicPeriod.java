@@ -59,7 +59,7 @@ public abstract class AcademicPeriod extends BaseSingleFieldPeriod {
     public abstract float getWeight();
 
     @Override
-    public int compareTo(Object other) {
+    public int compareTo(BaseSingleFieldPeriod other) {
         if (!(other instanceof AcademicPeriod)) {
             throw new ClassCastException(getClass() + " cannot be compared to " + other.getClass());
         }

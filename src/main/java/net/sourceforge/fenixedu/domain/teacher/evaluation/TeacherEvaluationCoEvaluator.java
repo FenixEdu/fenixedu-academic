@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.domain.teacher.evaluation;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public abstract class TeacherEvaluationCoEvaluator extends TeacherEvaluationCoEvaluator_Base {
 
     public TeacherEvaluationCoEvaluator() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void delete() {
@@ -18,7 +18,7 @@ public abstract class TeacherEvaluationCoEvaluator extends TeacherEvaluationCoEv
     public abstract String getDescription();
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

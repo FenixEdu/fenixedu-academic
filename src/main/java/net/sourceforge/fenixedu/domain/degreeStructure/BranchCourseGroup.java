@@ -45,6 +45,7 @@ public class BranchCourseGroup extends BranchCourseGroup_Base {
     public boolean isMinor() {
         return getBranchType() == BranchType.MINOR;
     }
+
     @Deprecated
     public boolean hasBranchType() {
         return getBranchType() != null;

@@ -2,9 +2,11 @@ package net.sourceforge.fenixedu.domain.personnelSection.contracts;
 
 import java.math.BigDecimal;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -21,7 +23,7 @@ public class ProfessionalRegime extends ProfessionalRegime_Base {
         if (name == null) {
             throw new DomainException("", args);
         }
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setGiafId(giafId);
         setName(name);
         setWeighting(weighting);

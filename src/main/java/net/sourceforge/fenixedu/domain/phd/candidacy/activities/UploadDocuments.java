@@ -2,16 +2,17 @@ package net.sourceforge.fenixedu.domain.phd.candidacy.activities;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 
+import org.fenixedu.bennu.core.domain.User;
+
 public class UploadDocuments extends PhdProgramCandidacyProcessActivity {
 
     @Override
-    protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
+    protected void activityPreConditions(PhdProgramCandidacyProcess process, User userView) {
         if (process.getActiveState() != PhdProgramCandidacyProcessState.PRE_CANDIDATE) {
             if (!process.isAllowedToManageProcess(userView)) {
                 throw new PreConditionNotValidException();
@@ -22,7 +23,7 @@ public class UploadDocuments extends PhdProgramCandidacyProcessActivity {
 
     @SuppressWarnings("unchecked")
     @Override
-    protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
+    protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, User userView, Object object) {
         final List<PhdProgramDocumentUploadBean> documents = (List<PhdProgramDocumentUploadBean>) object;
 
         for (final PhdProgramDocumentUploadBean each : documents) {

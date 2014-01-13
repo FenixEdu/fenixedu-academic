@@ -9,9 +9,11 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.EditCandidacyInformationDA.ChooseRegistrationOrPhd;
 import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.EditCandidacyInformationDA.PhdRegistrationWrapper;
+
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
@@ -30,7 +32,7 @@ public class ActiveAndRecentRegistrationsAndPhds implements DataProvider {
         ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
         for (final PhdIndividualProgramProcess phdProcess : student.getPerson().getPhdIndividualProgramProcesses()) {
-            if (!phdProcess.isAllowedToManageProcess(AccessControl.getUserView())) {
+            if (!phdProcess.isAllowedToManageProcess(Authenticate.getUser())) {
                 continue;
             }
             if ((phdProcess.isProcessActive() && student.hasValidInsuranceEvent())) {

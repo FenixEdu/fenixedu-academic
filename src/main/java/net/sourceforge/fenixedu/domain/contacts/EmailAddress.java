@@ -3,15 +3,15 @@ package net.sourceforge.fenixedu.domain.contacts;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.validator.routines.EmailValidator;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.smtp.EmailSender;
 
 public class EmailAddress extends EmailAddress_Base {
 
@@ -77,7 +77,7 @@ public class EmailAddress extends EmailAddress_Base {
     }
 
     private void checkParameters(final String value) {
-        if (!EmailSender.emailAddressFormatIsValid(value)) {
+        if (!EmailValidator.getInstance().isValid(value)) {
             throw new DomainException("error.domain.contacts.EmailAddress.invalid.format", value);
         }
     }
@@ -128,7 +128,7 @@ public class EmailAddress extends EmailAddress_Base {
     }
 
     static public EmailAddress find(final String emailAddressString) {
-        for (final PartyContact contact : RootDomainObject.getInstance().getPartyContactsSet()) {
+        for (final PartyContact contact : Bennu.getInstance().getPartyContactsSet()) {
             if (contact.isEmailAddress()) {
                 final EmailAddress emailAddress = (EmailAddress) contact;
                 if (emailAddress.hasValue(emailAddressString)) {

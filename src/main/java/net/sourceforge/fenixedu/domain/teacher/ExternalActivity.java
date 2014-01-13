@@ -5,9 +5,10 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoExternalActivity;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author Leonor Almeida
@@ -18,7 +19,7 @@ public class ExternalActivity extends ExternalActivity_Base {
 
     public ExternalActivity() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public ExternalActivity(Teacher teacher, InfoExternalActivity infoExternalActivity) {
@@ -69,7 +70,7 @@ public class ExternalActivity extends ExternalActivity_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

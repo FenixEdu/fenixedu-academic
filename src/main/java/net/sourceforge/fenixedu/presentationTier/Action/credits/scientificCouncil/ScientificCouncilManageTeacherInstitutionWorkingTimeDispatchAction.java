@@ -25,7 +25,7 @@ public class ScientificCouncilManageTeacherInstitutionWorkingTimeDispatchAction 
         ManageTeacherInstitutionWorkingTimeDispatchAction {
 
     public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws NumberFormatException,  FenixServiceException {
+            throws NumberFormatException, FenixServiceException {
         return delete(mapping, form, request, response, RoleType.SCIENTIFIC_COUNCIL);
     }
 }

@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.GuiderAlreadyChosenServiceException;
@@ -20,6 +19,7 @@ import net.sourceforge.fenixedu.predicates.RolePredicates;
 import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -33,9 +33,9 @@ import pt.ist.fenixframework.FenixFramework;
 public class ChangeMasterDegreeThesisData {
 
     @Atomic
-    public static void run(IUserView userView, String studentCurricularPlanID, String dissertationTitle,
-            List<String> guidersNumbers, List<String> assistentGuidersNumbers, List<String> externalGuidersIDs,
-            List<String> externalAssistentGuidersIDs) throws FenixServiceException {
+    public static void run(User userView, String studentCurricularPlanID, String dissertationTitle, List<String> guidersNumbers,
+            List<String> assistentGuidersNumbers, List<String> externalGuidersIDs, List<String> externalAssistentGuidersIDs)
+            throws FenixServiceException {
         check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
 
         // check duplicate guiders and assistent guiders

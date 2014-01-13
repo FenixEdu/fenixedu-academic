@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.student;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
@@ -25,6 +24,7 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -45,7 +45,7 @@ public class GroupStudentEnrolmentDispatchAction extends FenixDispatchAction {
     public ActionForward prepareEnrolment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String studentGroupCodeString = request.getParameter("studentGroupCode");
 
@@ -53,7 +53,7 @@ public class GroupStudentEnrolmentDispatchAction extends FenixDispatchAction {
         request.setAttribute("shiftCode", shiftCodeString);
 
         try {
-            VerifyStudentGroupAtributes.run(null, null, studentGroupCodeString, userView.getUtilizador(), new Integer(1));
+            VerifyStudentGroupAtributes.run(null, null, studentGroupCodeString, userView.getUsername(), new Integer(1));
 
         } catch (NotAuthorizedException e) {
             ActionErrors actionErrors = new ActionErrors();
@@ -119,13 +119,13 @@ public class GroupStudentEnrolmentDispatchAction extends FenixDispatchAction {
     public ActionForward enrolment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String studentGroupCodeString = request.getParameter("studentGroupCode");
 
         try {
 
-            GroupStudentEnrolment.run(studentGroupCodeString, userView.getUtilizador());
+            GroupStudentEnrolment.run(studentGroupCodeString, userView.getUsername());
 
         } catch (NotAuthorizedException e) {
             ActionErrors actionErrors = new ActionErrors();

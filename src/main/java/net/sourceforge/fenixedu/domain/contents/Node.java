@@ -2,9 +2,11 @@ package net.sourceforge.fenixedu.domain.contents;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -22,7 +24,7 @@ public abstract class Node extends Node_Base implements MenuEntry, Comparable<No
 
     protected Node() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     protected void init(Container parent, Content child, Boolean isAscending) {
@@ -104,13 +106,14 @@ public abstract class Node extends Node_Base implements MenuEntry, Comparable<No
     public Content getReferingContent() {
         return getChild();
     }
+
     @Deprecated
     public boolean hasParent() {
         return getParent() != null;
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

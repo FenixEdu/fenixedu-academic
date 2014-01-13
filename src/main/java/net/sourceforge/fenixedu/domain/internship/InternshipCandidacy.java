@@ -4,11 +4,11 @@ import java.util.Collections;
 import java.util.Random;
 
 import net.sourceforge.fenixedu.dataTransferObject.internship.InternshipCandidacyBean;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -23,7 +23,7 @@ public class InternshipCandidacy extends InternshipCandidacy_Base {
         setCandidacyCode(code);
         setCandidacyDate(new DateTime(System.currentTimeMillis()));
         setInternshipCandidacySession(session);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     @Atomic
@@ -41,7 +41,7 @@ public class InternshipCandidacy extends InternshipCandidacy_Base {
         InternshipCandidacy candidacy = new InternshipCandidacy(code, bean.getSession());
         beanToModel(bean, candidacy);
 
-        SystemSender sender = RootDomainObject.getInstance().getSystemSender();
+        SystemSender sender = Bennu.getInstance().getSystemSender();
         new Message(sender, sender.getConcreteReplyTos(), Collections.EMPTY_LIST, BundleUtil.getStringFromResourceBundle(
                 "resources.GlobalResources", "iaeste.email.subject"), BundleUtil.getStringFromResourceBundle(
                 "resources.GlobalResources", "iaeste.email.body", new String[] { candidacy.getName(),
@@ -107,6 +107,7 @@ public class InternshipCandidacy extends InternshipCandidacy_Base {
         setRootDomainObject(null);
         super.deleteDomainObject();
     }
+
     @Deprecated
     public boolean hasStreet() {
         return getStreet() != null;
@@ -123,7 +124,7 @@ public class InternshipCandidacy extends InternshipCandidacy_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

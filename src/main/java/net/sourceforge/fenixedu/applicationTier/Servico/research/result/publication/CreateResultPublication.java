@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.research.result.publication.Proceedings;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
-import net.sourceforge.fenixedu.util.researcher.ResearchResultMetaDataManager;
 import pt.ist.fenixframework.Atomic;
 
 public class CreateResultPublication extends ResultPublicationService {
@@ -31,69 +30,63 @@ public class CreateResultPublication extends ResultPublicationService {
         if (bean == null) {
             throw new NullPointerException();
         }
-        return (Book) associateUnitIfNeeded(bean, ResearchResultMetaDataManager.addDefaultDocument(createBookFromBean(bean)));
+        return (Book) associateUnitIfNeeded(bean, createBookFromBean(bean));
     }
 
     protected BookPart run(BookPartBean bean) {
         if (bean == null) {
             throw new NullPointerException();
         }
-        return (BookPart) associateUnitIfNeeded(bean,
-                ResearchResultMetaDataManager.addDefaultDocument(createBookPartFromBean(bean)));
+        return (BookPart) associateUnitIfNeeded(bean, createBookPartFromBean(bean));
     }
 
     protected Article run(ArticleBean bean) {
         if (bean == null) {
             throw new NullPointerException();
         }
-        return (Article) associateUnitIfNeeded(bean,
-                ResearchResultMetaDataManager.addDefaultDocument(createArticleFromBean(bean)));
+        return (Article) associateUnitIfNeeded(bean, createArticleFromBean(bean));
     }
 
     protected Inproceedings run(InproceedingsBean bean) {
         if (bean == null) {
             throw new NullPointerException();
         }
-        return (Inproceedings) associateUnitIfNeeded(bean,
-                ResearchResultMetaDataManager.addDefaultDocument(createInproceedingsFromBean(bean)));
+        return (Inproceedings) associateUnitIfNeeded(bean, createInproceedingsFromBean(bean));
     }
 
     protected Proceedings run(ProceedingsBean bean) {
         if (bean == null) {
             throw new NullPointerException();
         }
-        return (Proceedings) associateUnitIfNeeded(bean,
-                ResearchResultMetaDataManager.addDefaultDocument(createProceedingsFromBean(bean)));
+        return (Proceedings) associateUnitIfNeeded(bean, createProceedingsFromBean(bean));
     }
 
     protected Thesis run(ThesisBean bean) {
         if (bean == null) {
             throw new NullPointerException();
         }
-        return (Thesis) associateUnitIfNeeded(bean, ResearchResultMetaDataManager.addDefaultDocument(createThesisFromBean(bean)));
+        return (Thesis) associateUnitIfNeeded(bean, createThesisFromBean(bean));
     }
 
     protected Manual run(ManualBean bean) {
         if (bean == null) {
             throw new NullPointerException();
         }
-        return (Manual) associateUnitIfNeeded(bean, ResearchResultMetaDataManager.addDefaultDocument(createManualFromBean(bean)));
+        return (Manual) associateUnitIfNeeded(bean, createManualFromBean(bean));
     }
 
     protected TechnicalReport run(TechnicalReportBean bean) {
         if (bean == null) {
             throw new NullPointerException();
         }
-        return (TechnicalReport) associateUnitIfNeeded(bean,
-                ResearchResultMetaDataManager.addDefaultDocument(createTechnicalReportFromBean(bean)));
+        return (TechnicalReport) associateUnitIfNeeded(bean, createTechnicalReportFromBean(bean));
     }
 
     protected OtherPublication run(OtherPublicationBean bean) {
         if (bean == null) {
             throw new NullPointerException();
         }
-        return (OtherPublication) associateUnitIfNeeded(bean,
-                ResearchResultMetaDataManager.addDefaultDocument(createOtherPublicationFromBean(bean)));
+        return (OtherPublication) associateUnitIfNeeded(bean, createOtherPublicationFromBean(bean));
     }
 
     private ResearchResult associateUnitIfNeeded(ResultPublicationBean bean, ResearchResult publication) {

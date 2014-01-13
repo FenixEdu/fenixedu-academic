@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.SelectExportExecutionCourse;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.TeacherAdministrationSiteComponentService;
@@ -27,11 +26,16 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author joaosa & rmalo
  */
 public class PrepareSelectExecutionCourseAction extends FenixContextAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(PrepareSelectExecutionCourseAction.class);
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -39,7 +43,7 @@ public class PrepareSelectExecutionCourseAction extends FenixContextAction {
         try {
             super.execute(mapping, form, request, response);
         } catch (Exception e1) {
-            e1.printStackTrace();
+            logger.error(e1.getMessage(), e1);
         }
 
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
@@ -64,7 +68,7 @@ public class PrepareSelectExecutionCourseAction extends FenixContextAction {
     private SiteView readSiteView(HttpServletRequest request, ISiteComponent firstPageComponent, String infoExecutionCourseCode,
             String obj1, String obj2) throws FenixActionException {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         if (infoExecutionCourseCode == null) {
             infoExecutionCourseCode = getObjectCode(request);

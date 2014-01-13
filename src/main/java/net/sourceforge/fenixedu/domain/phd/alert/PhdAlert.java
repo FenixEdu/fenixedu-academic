@@ -80,6 +80,7 @@ abstract public class PhdAlert extends PhdAlert_Base {
         return getActive().booleanValue();
     }
 
+    @Override
     public boolean hasFireDate() {
         return getFireDate() != null;
     }
@@ -96,6 +97,7 @@ abstract public class PhdAlert extends PhdAlert_Base {
         AdministrativeOffice administrativeOffice = this.getProcess().getAdministrativeOffice();
         return administrativeOffice.getUnit().getUnitBasedSenderSet().iterator().next();
     }
+
     @Deprecated
     public boolean hasProcess() {
         return getProcess() != null;

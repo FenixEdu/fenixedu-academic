@@ -58,11 +58,11 @@ import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalitie
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.Season;
-import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.util.MessageResources;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;

@@ -3,12 +3,12 @@ package net.sourceforge.fenixedu.presentationTier.Action.phd.program.manager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.program.PhdProgramInformationDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -23,7 +23,7 @@ public class PhdProgramInformationDAForManager extends PhdProgramInformationDA {
     public ActionForward listPhdPrograms(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
-        request.setAttribute("phdPrograms", RootDomainObject.getInstance().getPhdPrograms());
+        request.setAttribute("phdPrograms", Bennu.getInstance().getPhdProgramsSet());
         return mapping.findForward("listPhdPrograms");
     }
 

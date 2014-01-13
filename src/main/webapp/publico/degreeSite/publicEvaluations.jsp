@@ -5,7 +5,7 @@
 
 
 <ft:tilesView locale="<%=request.getAttribute(org.apache.struts.Globals.LOCALE_KEY).toString()%>" definition="definition.public.mainPageIST" attributeName="body-inline">
-	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
+	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/PublicDegreeInformation" var="bundle"/>
 	<f:loadBundle basename="resources/ApplicationResources" var="bundleApplication"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="bundleEnum"/>

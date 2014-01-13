@@ -65,7 +65,8 @@ public class EditContributorDispatchAction extends FenixDispatchAction {
             id = (String) form.get("contributorId");
         }
 
-        return infoContributor != null ? infoContributor : InfoContributor.newInfoFromDomain((Party) FenixFramework.getDomainObject(id));
+        return infoContributor != null ? infoContributor : InfoContributor.newInfoFromDomain((Party) FenixFramework
+                .getDomainObject(id));
     }
 
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

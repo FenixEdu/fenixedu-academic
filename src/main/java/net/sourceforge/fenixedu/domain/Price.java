@@ -3,11 +3,13 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 public class Price extends Price_Base {
 
     public Price() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public Price(GraduationType graduationType, DocumentType documentType, String description, Double price) {
@@ -24,7 +26,7 @@ public class Price extends Price_Base {
 
     public static Price readByGraduationTypeAndDocumentTypeAndDescription(GraduationType graduationType,
             DocumentType documentType, String description) {
-        for (final Price price : RootDomainObject.getInstance().getPricesSet()) {
+        for (final Price price : Bennu.getInstance().getPricesSet()) {
             if (price.getGraduationType() == graduationType && price.getDocumentType() == documentType
                     && price.getDescription().equals(description)) {
                 return price;
@@ -35,20 +37,21 @@ public class Price extends Price_Base {
 
     public static List<Price> readByGraduationTypeAndDocumentTypes(GraduationType graduationType, List<DocumentType> documentTypes) {
         final List<Price> result = new ArrayList<Price>();
-        for (final Price price : RootDomainObject.getInstance().getPricesSet()) {
+        for (final Price price : Bennu.getInstance().getPricesSet()) {
             if (price.getGraduationType() == graduationType && documentTypes.contains(price.getDocumentType())) {
                 result.add(price);
             }
         }
         return result;
     }
+
     @Deprecated
     public boolean hasDescription() {
         return getDescription() != null;
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

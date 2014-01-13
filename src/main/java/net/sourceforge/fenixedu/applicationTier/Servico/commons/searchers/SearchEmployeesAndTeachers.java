@@ -7,11 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
 
 import org.apache.commons.beanutils.BeanComparator;
-
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
+import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
+import org.fenixedu.commons.StringNormalizer;
 
 public class SearchEmployeesAndTeachers implements AutoCompleteProvider<Person> {
 
@@ -24,7 +23,7 @@ public class SearchEmployeesAndTeachers implements AutoCompleteProvider<Person> 
         if (value == null) {
             result = new ArrayList<Person>(Person.findInternalPerson(""));
         } else {
-            for (Person person : Person.findInternalPerson(StringNormalizer.normalize(value).toLowerCase())) {
+            for (Person person : Person.findInternalPerson(StringNormalizer.normalize(value))) {
                 if ((person.hasTeacher() && person.getTeacher().isActive())
                         || (person.hasEmployee() && person.getEmployee().isActive())) {
                     result.add(person);

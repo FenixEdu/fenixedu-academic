@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -24,18 +23,18 @@ import net.sourceforge.fenixedu.domain.research.result.publication.Proceedings;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.ResultPredicates;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.file.FileSetMetaData;
-import pt.utl.ist.fenix.tools.file.VirtualPath;
 
 public abstract class ResearchResult extends ResearchResult_Base {
 
     public ResearchResult() {
 
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setOnCreateAtributes();
     }
 
@@ -70,7 +69,7 @@ public abstract class ResearchResult extends ResearchResult_Base {
 
     private void setOnCreateAtributes() {
         check(this, ResultPredicates.createPredicate);
-        if (AccessControl.getUserView() != null) {
+        if (Authenticate.getUser() != null) {
             super.setModifiedBy(AccessControl.getPerson().getName());
             setCreator(AccessControl.getPerson());
         }
@@ -125,20 +124,17 @@ public abstract class ResearchResult extends ResearchResult_Base {
         updateModifiedByAndDate();
     }
 
-    public ResearchResultDocumentFile addDocumentFile(final VirtualPath path, Collection<FileSetMetaData> metadata,
-            byte[] content, String filename, String displayName, FileResultPermittedGroupType permittedGroupType,
-            Group permittedGroup) {
+    public ResearchResultDocumentFile addDocumentFile(byte[] content, String filename, String displayName,
+            FileResultPermittedGroupType permittedGroupType, Group permittedGroup) {
         check(this, ResultPredicates.writePredicate);
-        return addDocumentFile(path, metadata, content, filename, displayName, permittedGroupType, permittedGroup, Boolean.TRUE);
+        return addDocumentFile(content, filename, displayName, permittedGroupType, permittedGroup, Boolean.TRUE);
     }
 
-    public ResearchResultDocumentFile addDocumentFile(final VirtualPath path, Collection<FileSetMetaData> metadata,
-            byte[] content, String filename, String displayName, FileResultPermittedGroupType permittedGroupType,
-            Group permittedGroup, Boolean isVisible) {
+    public ResearchResultDocumentFile addDocumentFile(byte[] content, String filename, String displayName,
+            FileResultPermittedGroupType permittedGroupType, Group permittedGroup, Boolean isVisible) {
         check(this, ResultPredicates.writePredicate);
         final ResearchResultDocumentFile documentFile =
-                new ResearchResultDocumentFile(path, metadata, content, this, filename, displayName, permittedGroupType,
-                        permittedGroup);
+                new ResearchResultDocumentFile(content, this, filename, displayName, permittedGroupType, permittedGroup);
         documentFile.setVisible(isVisible);
         updateModifiedByAndDate();
         return documentFile;
@@ -278,7 +274,7 @@ public abstract class ResearchResult extends ResearchResult_Base {
     }
 
     private void updateModifiedByAndDate() {
-        if (AccessControl.getUserView() != null) {
+        if (Authenticate.getUser() != null) {
             super.setModifiedBy(AccessControl.getPerson().getName());
         }
         super.setLastModificationDate(new DateTime());
@@ -495,7 +491,7 @@ public abstract class ResearchResult extends ResearchResult_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

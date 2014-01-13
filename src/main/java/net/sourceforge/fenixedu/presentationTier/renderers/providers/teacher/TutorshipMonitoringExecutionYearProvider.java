@@ -6,9 +6,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsPerformanceInfoBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
@@ -24,7 +24,7 @@ public class TutorshipMonitoringExecutionYearProvider implements DataProvider {
 
     public static List<ExecutionYear> getExecutionYears(StudentsPerformanceInfoBean bean) {
         List<ExecutionYear> executionYears = new ArrayList<ExecutionYear>();
-        for (ExecutionYear year : RootDomainObject.getInstance().getExecutionYears()) {
+        for (ExecutionYear year : Bennu.getInstance().getExecutionYearsSet()) {
             if (year.isAfterOrEquals(bean.getStudentsEntryYear())) {
                 executionYears.add(year);
             }

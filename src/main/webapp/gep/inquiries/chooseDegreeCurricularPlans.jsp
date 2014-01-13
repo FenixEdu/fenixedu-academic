@@ -5,7 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
 <%@ page import="net.sourceforge.fenixedu.util.InquiriesUtil" %>
 
-<p><em><bean:message key="title.inquiries.GEP" bundle="INQUIRIES_RESOURCES"/></em></p>
+<p><em><bean:message key="title.inquiries.GEP" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="INQUIRIES_RESOURCES"/></em></p>
 <h2><bean:message key="title.inquiries.course.evaluation" bundle="INQUIRIES_RESOURCES"/></h2>
 <h3 class="mbottom1"><bean:message key="title.inquiries.student.inquiry" bundle="INQUIRIES_RESOURCES"/></h3>
 

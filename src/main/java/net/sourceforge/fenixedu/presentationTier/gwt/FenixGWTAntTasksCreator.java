@@ -5,12 +5,16 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FenixGWTAntTasksCreator {
+
+    private static final Logger logger = LoggerFactory.getLogger(FenixGWTAntTasksCreator.class);
 
     public String gwtModulesPath;
     public String buildFilePath;
@@ -60,7 +64,7 @@ public class FenixGWTAntTasksCreator {
             writeTail();
 
         } catch (IOException ioe) {
-            System.err.println("Unable to write to file");
+            logger.error("Unable to write to file: " + ioe.getMessage(), ioe);
             System.exit(-1);
         }
 
@@ -68,7 +72,7 @@ public class FenixGWTAntTasksCreator {
 
     private void writeHeader() {
 
-        out.println("<?xml version=\"1.0\" encoding=\"" + PropertiesManager.DEFAULT_CHARSET + "\"?>");
+        out.println("<?xml version=\"1.0\" encoding=\"" + Charset.defaultCharset().name() + "\"?>");
         out.println("<project basedir=\".\">");
         out.println("");
 

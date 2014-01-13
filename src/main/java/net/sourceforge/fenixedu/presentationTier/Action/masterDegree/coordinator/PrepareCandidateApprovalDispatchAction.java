@@ -12,6 +12,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -22,6 +24,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 @Forwards(value = { @Forward(name = "ExecutionDegreeChosen",
         path = "/displayListToSelectCandidates.do?method=prepareSelectCandidates", tileProperties = @Tile(title = "teste81")) })
 public class PrepareCandidateApprovalDispatchAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(PrepareCandidateApprovalDispatchAction.class);
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -45,7 +49,7 @@ public class PrepareCandidateApprovalDispatchAction extends FenixDispatchAction 
                     ReadExecutionDegreeByDegreeCurricularPlanID.runReadExecutionDegreeByDegreeCurricularPlanID(
                             degreeCurricularPlanID, new Integer(1));
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new FenixActionException();
         }
 

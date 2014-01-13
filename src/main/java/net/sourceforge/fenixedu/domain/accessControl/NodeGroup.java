@@ -9,6 +9,10 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 
+/**
+ * @deprecated Use Bennu Groups instead
+ */
+@Deprecated
 public abstract class NodeGroup extends Group {
 
     private static final long serialVersionUID = 1L;

@@ -385,6 +385,7 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
     public void setSeriesCandidacyGrade(BigDecimal value) {
         getDegreeTransferIndividualCandidacySeriesGrade().setSeriesCandidacyGrade(value);
     }
+
     @Deprecated
     public boolean hasApprovedEctsRate() {
         return getApprovedEctsRate() != null;

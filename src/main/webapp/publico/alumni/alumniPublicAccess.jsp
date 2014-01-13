@@ -22,10 +22,10 @@
 	<logic:present name="showReportError">
 		<bean:define id="documentIdNumber" name="alumniBean" property="documentIdNumber"/>
 		<bean:define id="email" name="alumniBean" property="email"/>
+		<bean:define id="errorMessage" name="errorMessage"/>
 		<bean:define id="studentNumber" name="alumniBean" property="studentNumber"/>
-		<html:link  action="<%= "alumni.do?method=prepareSendEmailReportingError&amp;documentIdNumber=" + documentIdNumber + 
-								"&amp;email=" + email + "&amp;studentNumber=" + studentNumber %>"
-					paramId="errorMessage" paramName="errorMessageKey">
+		<html:link action="<%= "alumni.do?method=prepareSendEmailReportingError&amp;documentIdNumber=" + documentIdNumber + 
+								"&amp;email=" + email + "&amp;studentNumber=" + studentNumber + "&amp;errorMessage=" + errorMessage %>">
 			<bean:message key="label.public.report.error" bundle="ALUMNI_RESOURCES"/>
 		</html:link>
 	</logic:present>
@@ -38,7 +38,7 @@
 		<fieldset style="display: block;">
 			<h3>Identificação <%-- <bean:message key="label.alumni.form" bundle="ALUMNI_RESOURCES" /> --%></h3>
 			<p>
-				<bean:message key="label.alumni.registration.process" bundle="ALUMNI_RESOURCES" />				
+				<bean:message key="label.alumni.registration.process" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="ALUMNI_RESOURCES" />				
 			</p>
 		
 			<fr:edit id="alumniBean" name="alumniBean" visible="false" />
@@ -110,7 +110,7 @@
 			</label>
 
 			<div id="policyPrivacy" class="switchInline mtop1">
-				<bean:message key="label.privacy.policy.text" bundle="ALUMNI_RESOURCES" />
+				<bean:message key="label.privacy.policy.text" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="ALUMNI_RESOURCES" />
 			</div>
 						
 			<logic:present name="privacyPolicyPublicAccessMessage">
@@ -140,7 +140,7 @@
 			</li>
 			<li>
 				<h4>Como alterar a IST-ID?</h4>
-				<p>Não é possível alterar a IST-ID, uma vez que é um número de identificação gerado uma única vez, utilizado para o acesso aos serviços informáticos do IST, correspondendo na maior parte dos casos ao número de Aluno/Docente (ex: Nºde Aluno 55000 corresponde ao IST-ID ist155000).</p>
+				<p>Não é possível alterar a IST-ID, uma vez que é um número de identificação gerado uma única vez, utilizado para o acesso aos serviços informáticos do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>, correspondendo na maior parte dos casos ao número de Aluno/Docente (ex: Nºde Aluno 55000 corresponde ao IST-ID ist155000).</p>
 			</li>
 			<li>
 				<h4>Tive mais do que um número de aluno. Qual o número que deverei facultar?</h4>

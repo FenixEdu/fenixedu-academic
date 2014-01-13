@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -30,6 +29,7 @@ import org.apache.commons.lang.CharEncoding;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -182,18 +182,18 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
 
         final DomainObject object = FenixFramework.getDomainObject(regId);
         if (object instanceof Registration) {
-            User user = User.readUserByUserUId(userId);
+            User user = User.findByUsername(userId);
             Registration registration = (Registration) object;
 
-            if (user.getPrivateKeyValidity() != null) {
+            if (user.getPrivateKey() != null && user.getPrivateKey().getPrivateKeyValidity() != null) {
                 if (payload.equals(ICalStudentTimeTable.calculatePayload(method, registration, user))) {
-                    if (user.getPrivateKeyValidity().isBeforeNow()) {
+                    if (user.getPrivateKey().getPrivateKeyValidity().isBeforeNow()) {
                         returnError(httpServletResponse, "private.key.validity.expired");
                     } else {
                         if (user.getPerson().hasRole(RoleType.STUDENT)) {
 
                             encodeAndTransmitResponse(httpServletResponse,
-                                    getCalendar(method, user, user.getPrivateKeyValidity(), request));
+                                    getCalendar(method, user, user.getPrivateKey().getPrivateKeyValidity(), request));
 
                         } else {
                             returnError(httpServletResponse, "user.is.not.student");

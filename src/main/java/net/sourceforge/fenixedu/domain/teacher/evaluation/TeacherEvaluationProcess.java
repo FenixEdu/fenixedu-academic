@@ -8,10 +8,11 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.BundleUtil;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
 
@@ -33,7 +34,7 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
 
     public TeacherEvaluationProcess() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public TeacherEvaluationProcess(final FacultyEvaluationProcess facultyEvaluationProcess, final Person evaluee,
@@ -103,8 +104,11 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
     }
 
     public boolean isInEvaluation() {
-        return isInEvaluationInterval() && isAutoEvaluationLocked() && !isEvaluationLocked()
-                && (getEvaluator().equals(AccessControl.getPerson()) || AccessControl.getPerson().isTeacherEvaluationCoordinatorCouncilMember());
+        return isInEvaluationInterval()
+                && isAutoEvaluationLocked()
+                && !isEvaluationLocked()
+                && (getEvaluator().equals(AccessControl.getPerson()) || AccessControl.getPerson()
+                        .isTeacherEvaluationCoordinatorCouncilMember());
     }
 
     public boolean isPossibleToInsertApprovedMark() {
@@ -118,11 +122,15 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
     }
 
     public boolean isPossibleToLockEvaluation() {
-        return getEvaluationMark() != null && hasAllNeededFiles() && (getEvaluator().equals(AccessControl.getPerson()) || AccessControl.getPerson().isTeacherEvaluationCoordinatorCouncilMember());
+        return getEvaluationMark() != null
+                && hasAllNeededFiles()
+                && (getEvaluator().equals(AccessControl.getPerson()) || AccessControl.getPerson()
+                        .isTeacherEvaluationCoordinatorCouncilMember());
     }
 
     public boolean isPossibleToViewEvaluation() {
-        return isPossibleToInsertApprovedMark() || getEvaluator().equals(AccessControl.getPerson()) || AccessControl.getPerson().isTeacherEvaluationCoordinatorCouncilMember();
+        return isPossibleToInsertApprovedMark() || getEvaluator().equals(AccessControl.getPerson())
+                || AccessControl.getPerson().isTeacherEvaluationCoordinatorCouncilMember();
     }
 
     public boolean isPossibleToUnlockAutoEvaluation() {
@@ -324,7 +332,7 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

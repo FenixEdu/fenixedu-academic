@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.teacher.evaluation;
 
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class ApprovedTeacherEvaluationProcessMark extends ApprovedTeacherEvaluationProcessMark_Base {
 
@@ -19,7 +19,7 @@ public class ApprovedTeacherEvaluationProcessMark extends ApprovedTeacherEvaluat
     public ApprovedTeacherEvaluationProcessMark(final FacultyEvaluationProcessYear facultyEvaluationProcessYear,
             final TeacherEvaluationProcess teacherEvaluationProcess) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setFacultyEvaluationProcessYear(facultyEvaluationProcessYear);
         setTeacherEvaluationProces(teacherEvaluationProcess);
     }
@@ -30,13 +30,14 @@ public class ApprovedTeacherEvaluationProcessMark extends ApprovedTeacherEvaluat
         setRootDomainObject(null);
         deleteDomainObject();
     }
+
     @Deprecated
     public boolean hasTeacherEvaluationProces() {
         return getTeacherEvaluationProces() != null;
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

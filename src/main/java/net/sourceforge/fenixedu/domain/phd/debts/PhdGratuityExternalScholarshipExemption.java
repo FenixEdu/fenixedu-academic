@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.domain.phd.debts;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.util.Money;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -23,7 +23,7 @@ public class PhdGratuityExternalScholarshipExemption extends PhdGratuityExternal
         setParty(party);
         createExternalDebt();
         setValue(value);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         event.recalculateState(new DateTime());
     }
 
@@ -68,6 +68,7 @@ public class PhdGratuityExternalScholarshipExemption extends PhdGratuityExternal
     public Money getAmoutStillMissing() {
         return getExternalScholarshipPhdGratuityContribuitionEvent().calculateAmountToPay();
     }
+
     @Deprecated
     public boolean hasParty() {
         return getParty() != null;

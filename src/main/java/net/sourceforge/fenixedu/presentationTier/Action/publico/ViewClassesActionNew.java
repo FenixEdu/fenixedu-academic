@@ -27,6 +27,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -41,6 +43,8 @@ import pt.ist.fenixframework.FenixFramework;
 @Forwards(value = { @Forward(name = "Sucess", path = "viewClasses") })
 public class ViewClassesActionNew extends FenixContextAction {
 
+    private static final Logger logger = LoggerFactory.getLogger(ViewClassesActionNew.class);
+
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException {
@@ -49,7 +53,7 @@ public class ViewClassesActionNew extends FenixContextAction {
         try {
             super.execute(mapping, form, request, response);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
 
         Boolean inEnglish = (Boolean) request.getAttribute("inEnglish");

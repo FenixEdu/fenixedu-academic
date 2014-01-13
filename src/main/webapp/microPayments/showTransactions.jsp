@@ -1,4 +1,4 @@
-<%@page import="net.sourceforge.fenixedu.domain.User"%>
+<%@page import="org.fenixedu.bennu.core.domain.User"%>
 <%@page import="net.sourceforge.fenixedu.domain.accounting.events.InstitutionAffiliationEvent"%>
 <%@page import="net.sourceforge.fenixedu.util.Money"%>
 <%@page import="java.util.ArrayList"%>
@@ -116,7 +116,7 @@
 				</td>
 				<td>
 					<%
-						final User user = User.readUserByUserUId(microPaymentEvent.getCreatedBy());
+						final User user = User.findByUsername(microPaymentEvent.getCreatedBy());
 						if (user != null) {
 					%>
 							<%= user.getPerson().getNickname() %>

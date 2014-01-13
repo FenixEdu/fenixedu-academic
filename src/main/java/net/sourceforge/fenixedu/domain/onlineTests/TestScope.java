@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * 
@@ -18,7 +19,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 public class TestScope extends TestScope_Base {
 
     public TestScope() {
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public TestScope(ExecutionCourse executionCourse) {
@@ -61,7 +62,7 @@ public class TestScope extends TestScope_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

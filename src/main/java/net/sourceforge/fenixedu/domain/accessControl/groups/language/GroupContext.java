@@ -10,12 +10,14 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
  * {@link ExpressionGroup}. Each context can define it's variables
  * 
  * @author cfgi
+ * @deprecated Use Bennu Groups instead
  */
+@Deprecated
 public interface GroupContext {
 
     /**
      * The standard name of the context variable that contains the currently
-     * logged {@link net.sourceforge.fenixedu.domain.User}.
+     * logged {@link org.fenixedu.bennu.core.domain.User}.
      */
     public static final String VAR_USER = "user";
 

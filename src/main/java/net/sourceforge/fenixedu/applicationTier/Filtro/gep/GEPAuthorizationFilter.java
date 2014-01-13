@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 public class GEPAuthorizationFilter extends AuthorizationByRoleFilter {
 
     public static final GEPAuthorizationFilter instance = new GEPAuthorizationFilter();
+
     /*
      * (non-Javadoc)
      * 

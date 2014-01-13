@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.httpclient.Credentials;
 import org.apache.commons.httpclient.HttpClient;
@@ -14,6 +14,7 @@ import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.commons.httpclient.auth.AuthScope;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +24,7 @@ import com.twilio.sdk.resource.factory.CallFactory;
 import com.twilio.sdk.resource.instance.Account;
 
 public class PhoneValidationUtils {
-    private static final Logger LOG = LoggerFactory.getLogger(PhoneValidationUtils.class);
+    private static final Logger logger = LoggerFactory.getLogger(PhoneValidationUtils.class);
 
     private String TWILIO_FROM_NUMBER;
     private TwilioRestClient TWILIO_CLIENT;
@@ -41,14 +42,13 @@ public class PhoneValidationUtils {
     }
 
     public boolean canRun() {
-        final boolean devMode = PropertiesManager.getBooleanProperty("development.mode");
-        return TWILIO_CLIENT != null && CIIST_CLIENT != null && !devMode;
+        return TWILIO_CLIENT != null && CIIST_CLIENT != null && !CoreConfiguration.getConfiguration().developmentMode();
     }
 
     private void initCIISTSMSGateway() {
-        final String CIIST_SMS_USERNAME = PropertiesManager.getProperty("ciist.sms.username");
-        final String CIIST_SMS_PASSWORD = PropertiesManager.getProperty("ciist.sms.password");
-        CIIST_SMS_GATEWAY_URL = PropertiesManager.getProperty("ciist.sms.gateway.url");
+        final String CIIST_SMS_USERNAME = FenixConfigurationManager.getConfiguration().getCIISTSMSUsername();
+        final String CIIST_SMS_PASSWORD = FenixConfigurationManager.getConfiguration().getCIISTSMSPassword();
+        CIIST_SMS_GATEWAY_URL = FenixConfigurationManager.getConfiguration().getCIISTSMSGatewayUrl();
         if (!StringUtils.isEmpty(CIIST_SMS_USERNAME) && !StringUtils.isEmpty(CIIST_SMS_PASSWORD)) {
             CIIST_CLIENT = new HttpClient();
             Credentials credentials = new UsernamePasswordCredentials(CIIST_SMS_USERNAME, CIIST_SMS_PASSWORD);
@@ -57,10 +57,10 @@ public class PhoneValidationUtils {
     }
 
     private void initHostname() {
-        final String appName = PropertiesManager.getProperty("http.host");
-        final String appContext = PropertiesManager.getProperty("app.context");
-        final String httpPort = PropertiesManager.getProperty("http.port");
-        final String httpProtocol = PropertiesManager.getProperty("http.protocol");
+        final String appName = FenixConfigurationManager.getConfiguration().getHTTPHost();
+        final String appContext = FenixConfigurationManager.getConfiguration().appContext();
+        final String httpPort = FenixConfigurationManager.getConfiguration().getHTTPPort();
+        final String httpProtocol = FenixConfigurationManager.getConfiguration().getHTTPProtocol();
 
         if (StringUtils.isEmpty(httpPort)) {
             HOST = String.format("%s://%s/", httpProtocol, appName);
@@ -74,9 +74,9 @@ public class PhoneValidationUtils {
     }
 
     private void initTwilio() {
-        final String TWILIO_SID = PropertiesManager.getProperty("twilio.sid");
-        final String TWILIO_STOKEN = PropertiesManager.getProperty("twilio.stoken");
-        TWILIO_FROM_NUMBER = PropertiesManager.getProperty("twilio.from.number");
+        final String TWILIO_SID = FenixConfigurationManager.getConfiguration().getTwilioSid();
+        final String TWILIO_STOKEN = FenixConfigurationManager.getConfiguration().getTwilioStoken();
+        TWILIO_FROM_NUMBER = FenixConfigurationManager.getConfiguration().getTwilioFromNumber();
         if (!StringUtils.isEmpty(TWILIO_SID) && !StringUtils.isEmpty(TWILIO_STOKEN) && !StringUtils.isEmpty(TWILIO_FROM_NUMBER)) {
             TWILIO_CLIENT = new TwilioRestClient(TWILIO_SID, TWILIO_STOKEN);
         }
@@ -87,10 +87,10 @@ public class PhoneValidationUtils {
         initHostname();
         initCIISTSMSGateway();
         if (canRun()) {
-            LOG.info("Twilio Initialized:\n\tfrom number {} \n\thost: {} \n", TWILIO_FROM_NUMBER, HOST);
-            LOG.info("DSI SMS Gateway Initialized: {}\n", CIIST_SMS_GATEWAY_URL);
+            logger.info("Twilio Initialized:\n\tfrom number {} \n\thost: {} \n", TWILIO_FROM_NUMBER, HOST);
+            logger.info("DSI SMS Gateway Initialized: {}\n", CIIST_SMS_GATEWAY_URL);
         } else {
-            LOG.info("Twilio/DSI SMS Gateway not initialized");
+            logger.info("Twilio/DSI SMS Gateway not initialized");
         }
     }
 
@@ -107,12 +107,11 @@ public class PhoneValidationUtils {
                 callFactory.create(callParams);
                 return true;
             } catch (TwilioRestException e) {
-                System.err.println("Error makeCall: " + e);
+                logger.error("Error makeCall: " + e.getMessage(), e);
                 return false;
             }
         } else {
-            System.out.println("Call to >" + phoneNumber + "<: Bem-vindo ao sistema Fénix. Introduza o código " + code
-                    + " . Obrigado!");
+            logger.info("Call to >" + phoneNumber + "<: Bem-vindo ao sistema Fénix. Introduza o código " + code + " . Obrigado!");
             return true;
         }
     }
@@ -131,15 +130,15 @@ public class PhoneValidationUtils {
                 }
             } catch (HttpException e) {
                 // TODO Auto-generated catch block
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
                 return false;
             } catch (IOException e) {
                 // TODO Auto-generated catch block
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
                 return false;
             }
         } else {
-            System.out.println("SMS to >" + number + "<: " + message);
+            logger.info("SMS to >" + number + "<: " + message);
         }
         return true;
     }

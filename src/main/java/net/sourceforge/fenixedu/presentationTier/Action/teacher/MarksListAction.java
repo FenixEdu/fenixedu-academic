@@ -5,7 +5,6 @@ import java.util.Collections;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.PublishMarks;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadStudentsAndMarksByEvaluation;
@@ -24,13 +23,18 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.MessageResources;
 import org.apache.struts.validator.DynaValidatorForm;
+import org.fenixedu.bennu.core.domain.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MarksListAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(MarksListAction.class);
 
     public ActionForward loadFile(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String executionCourseCode = getFromRequest("objectCode", request);
 
@@ -59,7 +63,7 @@ public class MarksListAction extends FenixDispatchAction {
     public ActionForward loadMarksOnline(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         String executionCourseCode = getFromRequest("objectCode", request);
 
@@ -72,7 +76,7 @@ public class MarksListAction extends FenixDispatchAction {
                     (TeacherAdministrationSiteView) ReadStudentsAndMarksByEvaluation.runReadStudentsAndMarksByEvaluation(
                             executionCourseCode, evaluationCode);
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new FenixActionException(e.getMessage());
         }
 
@@ -94,7 +98,7 @@ public class MarksListAction extends FenixDispatchAction {
         String infoExecutionCourseCode = getFromRequest("objectCode", request);
 
         ISiteComponent commonComponent = new InfoSiteCommon();
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         TeacherAdministrationSiteView siteView = null;
         try {
             siteView =
@@ -129,11 +133,11 @@ public class MarksListAction extends FenixDispatchAction {
             announcementTitle = messages.getMessage("message.publishment");
         }
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         try {
             PublishMarks.runPublishMarks(objectCode, evaluationCode, publishmentMessage, sendSMS, announcementTitle);
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new FenixActionException(e.getMessage());
         }
 

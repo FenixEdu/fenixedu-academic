@@ -7,25 +7,24 @@ import java.util.Map;
 
 import javax.faces.context.FacesContext;
 
-import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.util.CurricularPeriodLabelFormatter;
 
 public class UICurricularCourse extends UIDegreeModule {
+
     public static final String COMPONENT_TYPE =
             "net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UICurricularCourse";
 
     public static final String COMPONENT_FAMILY =
             "net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UICurricularCourse";
 
-    private CurricularCourse curricularCourse;
-    private boolean byYears;
+    private final CurricularCourse curricularCourse;
+    private final boolean byYears;
 
     public UICurricularCourse() {
         super();
@@ -58,8 +57,6 @@ public class UICurricularCourse extends UIDegreeModule {
             return;
         }
 
-        log(false);
-
         this.facesContext = facesContext;
         this.writer = facesContext.getResponseWriter();
 
@@ -71,21 +68,6 @@ public class UICurricularCourse extends UIDegreeModule {
 
         if (!byYears && this.curricularCourse.isBolonhaDegree() && this.curricularCourse.isAnual(this.executionYear)) {
             encodeInNextPeriod(facesContext);
-        }
-    }
-
-    private void log(boolean on) {
-        if (LogLevel.INFO) {
-            if (on) {
-                StringBuilder buffer = new StringBuilder();
-                buffer.append(tabs);
-                buffer.append("[LEVEL ").append(new Integer(this.depth)).append("]");
-                buffer.append("[CC ").append(this.curricularCourse.getExternalId()).append("][");
-                buffer.append(previousContext.getCurricularPeriod().getOrderByType(AcademicPeriod.YEAR)).append("Y,");
-                buffer.append(previousContext.getCurricularPeriod().getOrderByType(AcademicPeriod.SEMESTER)).append("S] ");
-                buffer.append(this.curricularCourse.getName(lastExecutionPeriod));
-                System.out.println(buffer.toString());
-            }
         }
     }
 

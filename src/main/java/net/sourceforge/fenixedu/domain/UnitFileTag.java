@@ -6,10 +6,12 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 public class UnitFileTag extends UnitFileTag_Base {
 
     public UnitFileTag(Unit unit, String name) {
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setUnit(unit);
         setName(name);
     }
@@ -62,7 +64,7 @@ public class UnitFileTag extends UnitFileTag_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

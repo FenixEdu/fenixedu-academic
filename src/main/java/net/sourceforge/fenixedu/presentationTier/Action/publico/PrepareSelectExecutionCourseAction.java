@@ -18,11 +18,15 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author João Mota
  */
 public class PrepareSelectExecutionCourseAction extends FenixContextAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(PrepareSelectExecutionCourseAction.class);
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -30,7 +34,7 @@ public class PrepareSelectExecutionCourseAction extends FenixContextAction {
         try {
             super.execute(mapping, form, request, response);
         } catch (Exception e1) {
-            e1.printStackTrace();
+            logger.error(e1.getMessage(), e1);
         }
 
         InfoExecutionPeriod infoExecutionPeriod =

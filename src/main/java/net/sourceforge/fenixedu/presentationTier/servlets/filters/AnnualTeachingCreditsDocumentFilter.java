@@ -25,18 +25,20 @@ import net.sourceforge.fenixedu.domain.credits.AnnualCreditsState;
 import net.sourceforge.fenixedu.domain.credits.AnnualTeachingCredits;
 import net.sourceforge.fenixedu.domain.credits.AnnualTeachingCreditsDocument;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.util.StringUtils;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
+import org.apache.commons.lang.StringUtils;
 import org.htmlcleaner.HtmlCleaner;
 import org.htmlcleaner.SimpleHtmlSerializer;
 import org.htmlcleaner.TagNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 import org.xml.sax.SAXException;
 
-import pt.ist.fenixWebFramework.FenixWebFramework;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.ResponseWrapper;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -44,6 +46,9 @@ import pt.ist.fenixframework.FenixFramework;
 import com.lowagie.text.DocumentException;
 
 public class AnnualTeachingCreditsDocumentFilter implements Filter {
+
+    private static final Logger logger = LoggerFactory.getLogger(AnnualTeachingCreditsDocumentFilter.class);
+
     private ServletContext servletContext;
 
     @Override
@@ -183,14 +188,14 @@ public class AnnualTeachingCreditsDocumentFilter implements Filter {
 
             return new SimpleHtmlSerializer(cleaner.getProperties()).getAsString(root);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
         return StringUtils.EMPTY;
     }
 
     private void patchLinks(Document doc, HttpServletRequest request) {
         // build basePath
-        String appContext = FenixWebFramework.getConfig().getAppContext();
+        String appContext = FenixConfigurationManager.getConfiguration().appContext();
 
         // patch css link nodes
         NodeList linkNodes = doc.getElementsByTagName("link");
@@ -206,7 +211,7 @@ public class AnnualTeachingCreditsDocumentFilter implements Filter {
                 String realPath = servletContext.getResource(href).toString();
                 link.setAttribute("href", realPath);
             } catch (MalformedURLException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
 
         }
@@ -225,7 +230,7 @@ public class AnnualTeachingCreditsDocumentFilter implements Filter {
                 String realPath = servletContext.getResource(src).toString();
                 img.setAttribute("src", realPath);
             } catch (MalformedURLException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
         }
     }

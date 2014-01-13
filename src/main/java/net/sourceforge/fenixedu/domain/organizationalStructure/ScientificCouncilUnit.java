@@ -12,14 +12,19 @@ import net.sourceforge.fenixedu.domain.accessControl.ScientificCouncilMembersGro
 import net.sourceforge.fenixedu.domain.accessControl.WebSiteManagersGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
+
+import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ScientificCouncilUnit extends ScientificCouncilUnit_Base {
 
     private static final String COORDINATION_COMMITTEE_NAME = "Comissão Executiva";
     private static final String COORDINATION_COMMITTEE_MEMBER_NAME = "Membro";
 
-    protected ScientificCouncilUnit() {
+    public ScientificCouncilUnit() {
         super();
         super.setType(PartyTypeEnum.SCIENTIFIC_COUNCIL);
     }
@@ -87,6 +92,17 @@ public class ScientificCouncilUnit extends ScientificCouncilUnit_Base {
     public static ScientificCouncilUnit getScientificCouncilUnit() {
         final Set<Party> parties = PartyType.getPartiesSet(PartyTypeEnum.SCIENTIFIC_COUNCIL);
         return parties.isEmpty() ? null : (ScientificCouncilUnit) parties.iterator().next();
+    }
+
+    public static ScientificCouncilUnit createScientificCouncilUnit(MultiLanguageString name, String unitNameCard,
+            Integer costCenterCode, String acronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
+            AccountabilityType accountabilityType, String webAddress, UnitClassification classification,
+            Boolean canBeResponsibleOfSpaces, Campus campus) {
+        ScientificCouncilUnit scu = new ScientificCouncilUnit();
+        scu.init(name, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress, classification, null,
+                canBeResponsibleOfSpaces, campus);
+        scu.addParentUnit(parentUnit, accountabilityType);
+        return scu;
     }
 
 }

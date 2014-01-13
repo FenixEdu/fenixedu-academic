@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.QueueJobResult;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -25,7 +24,10 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
@@ -33,10 +35,12 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 public class StudentsPerformanceReport extends StudentsPerformanceReport_Base {
 
+    private static final Logger logger = LoggerFactory.getLogger(StudentsPerformanceReport.class);
+
     private StudentsPerformanceReport() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
-        setRootDomainObjectQueueUndone(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
+        setRootDomainObjectQueueUndone(Bennu.getInstance());
     }
 
     private StudentsPerformanceReport(final ExecutionSemester executionSemester, List<Student> studentList) {
@@ -70,7 +74,7 @@ public class StudentsPerformanceReport extends StudentsPerformanceReport_Base {
         queueJobResult.setContentType("application/txt");
         queueJobResult.setContent(byteArrayOS.toByteArray());
 
-        System.out.println("Job " + getFilename() + " completed");
+        logger.info("Job " + getFilename() + " completed");
 
         return queueJobResult;
 
@@ -281,6 +285,7 @@ public class StudentsPerformanceReport extends StudentsPerformanceReport_Base {
         row.setCell(getA(student).add(getB(student)).multiply(BigDecimal.valueOf(100)).intValue());
 
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.Student> getStudents() {
         return getStudentsSet();

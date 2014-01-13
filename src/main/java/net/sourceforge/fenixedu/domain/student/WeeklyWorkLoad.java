@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.domain.student;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.DurationFieldType;
@@ -15,7 +15,7 @@ public class WeeklyWorkLoad extends WeeklyWorkLoad_Base implements Comparable<We
     public WeeklyWorkLoad(final Attends attends, final Integer weekOffset, final Integer contact, final Integer autonomousStudy,
             final Integer other) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
 
         if (attends == null || weekOffset == null) {
             throw new NullPointerException();
@@ -70,7 +70,7 @@ public class WeeklyWorkLoad extends WeeklyWorkLoad_Base implements Comparable<We
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

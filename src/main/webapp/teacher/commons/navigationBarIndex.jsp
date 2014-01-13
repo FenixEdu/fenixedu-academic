@@ -63,7 +63,7 @@
   		<bean:message key="link.manage.publications"/>
   	</html:link>  
   </li>--%>
-	<logic:present role="TEACHER">
+	<logic:present role="role(TEACHER)">
 	<li><html:link
 		href="<%= request.getContextPath() + "/teacher/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare" %>">
 		<bean:message key="link.curriculumHistoric.consult"
@@ -72,7 +72,7 @@
 	</logic:present>
 	<%-- 
   <li>
-  	<bean:define id="url"><%= request.getContextPath() %>/teacher/credits.do?method=showTeacherCredits&amp;teacherId=<bean:write name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.teacher.externalId"/>&amp;executionPeriodId=<%= ExecutionPeriod.readActualExecutionPeriod().getExternalId() %></bean:define>
+  	<bean:define id="url"><%= request.getContextPath() %>/teacher/credits.do?method=showTeacherCredits&amp;teacherId=<bean:write name="LOGGED_USER_ATTRIBUTE" property="person.teacher.externalId"/>&amp;executionPeriodId=<%= ExecutionPeriod.readActualExecutionPeriod().getExternalId() %></bean:define>
   	<html:link href="<%= url %>">
   		<bean:message key="link.credits"/>
   	</html:link>  
@@ -106,11 +106,11 @@
 	</html:link></li>
 
 <%-- 
-	<logic:notPresent name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee">
+	<logic:notPresent name="LOGGED_USER_ATTRIBUTE" property="person.employee">
 		<li><html:link page="/manageNonRegularTeachingService.do?method=showNonRegularTeachingService"><bean:message key="link.teacherService" bundle="APPLICATION_RESOURCES" /></html:link></li>
 	</logic:notPresent>
-	<logic:present name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee">
-		<logic:empty name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee.currentDepartmentWorkingPlace">
+	<logic:present name="LOGGED_USER_ATTRIBUTE" property="person.employee">
+		<logic:empty name="LOGGED_USER_ATTRIBUTE" property="person.employee.currentDepartmentWorkingPlace">
 			<li><html:link page="/manageNonRegularTeachingService.do?method=showNonRegularTeachingService"><bean:message key="link.teacherService" bundle="APPLICATION_RESOURCES" /></html:link></li>
 		</logic:empty>
 	</logic:present>
@@ -138,8 +138,8 @@
 	<li><html:link page="/phdIndividualProgramProcess.do?method=manageProcesses"><bean:message key="label.phd.manageProcesses" bundle="PHD_RESOURCES"/></html:link></li>
 	<li><html:link page="/phdIndividualProgramProcess.do?method=viewAlertMessages"><bean:message key="label.phd.alertMessages" bundle="PHD_RESOURCES"/></html:link></li>
 	
-	<logic:present name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.teacher">
-		<logic:equal name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.teacher.erasmusCoordinator" value="true"> 
+	<logic:present name="LOGGED_USER_ATTRIBUTE" property="person.teacher">
+		<logic:equal name="LOGGED_USER_ATTRIBUTE" property="person.teacher.erasmusCoordinator" value="true"> 
 			<li class="navheader"><bean:message key="title.candidacies" bundle="CANDIDATE_RESOURCES" /></li>
 			<li><html:link page="/caseHandlingMobilityApplicationProcess.do?method=intro"><bean:message key="link.coordinator.erasmus.application" bundle="APPLICATION_RESOURCES" /></html:link></li>
 		</logic:equal>

@@ -2,9 +2,8 @@ package net.sourceforge.fenixedu.domain.caseHandling;
 
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 
 public class ProcessLog extends ProcessLog_Base {
@@ -17,12 +16,12 @@ public class ProcessLog extends ProcessLog_Base {
         }
     };
 
-    public ProcessLog(Process process, IUserView userView, Activity<?> activity) {
+    public ProcessLog(Process process, User userView, Activity<?> activity) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setProcess(process);
 
-        setUserName(userView != null ? userView.getUtilizador() : "PUBLICO");
+        setUserName(userView != null ? userView.getUsername() : "PUBLICO");
         setActivity(activity.getClass().getName());
         setWhenDateTime(new DateTime());
     }
@@ -52,7 +51,7 @@ public class ProcessLog extends ProcessLog_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

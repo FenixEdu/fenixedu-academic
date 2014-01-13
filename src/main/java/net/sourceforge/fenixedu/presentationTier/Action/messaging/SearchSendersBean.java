@@ -4,9 +4,10 @@ import java.io.Serializable;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.StringNormalizer;
 
 public class SearchSendersBean implements Serializable {
 
@@ -34,7 +35,7 @@ public class SearchSendersBean implements Serializable {
     public Set<Sender> getResult() {
         final Set<Sender> result = new TreeSet<Sender>(Sender.COMPARATOR_BY_FROM_NAME);
         if (searchString != null && !searchString.trim().isEmpty()) {
-            for (final Sender sender : RootDomainObject.getInstance().getUtilEmailSendersSet()) {
+            for (final Sender sender : Bennu.getInstance().getUtilEmailSendersSet()) {
                 if (match(sender.getFromName())) {
                     result.add(sender);
                 }

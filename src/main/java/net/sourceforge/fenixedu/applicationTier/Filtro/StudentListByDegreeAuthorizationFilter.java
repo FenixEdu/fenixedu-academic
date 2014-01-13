@@ -5,14 +5,16 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -27,10 +29,10 @@ public class StudentListByDegreeAuthorizationFilter extends Filtro {
     }
 
     public void execute(String degreeCurricularPlanID, DegreeType degreeType) throws NotAuthorizedException {
-        IUserView id = AccessControl.getUserView();
-        if ((id != null && id.getRoleTypes() != null && !containsRoleType(id.getRoleTypes()))
-                || (id != null && id.getRoleTypes() != null && !hasPrivilege(id, degreeCurricularPlanID, degreeType))
-                || (id == null) || (id.getRoleTypes() == null)) {
+        User id = Authenticate.getUser();
+        if ((id != null && id.getPerson().getPersonRolesSet() != null && !containsRoleType(id.getPerson().getPersonRolesSet()))
+                || (id != null && id.getPerson().getPersonRolesSet() != null && !hasPrivilege(id, degreeCurricularPlanID,
+                        degreeType)) || (id == null) || (id.getPerson().getPersonRolesSet() == null)) {
             throw new NotAuthorizedException();
         }
     }
@@ -51,7 +53,7 @@ public class StudentListByDegreeAuthorizationFilter extends Filtro {
      * @param argumentos
      * @return
      */
-    private boolean hasPrivilege(IUserView id, String degreeCurricularPlanID, DegreeType degreeType) {
+    private boolean hasPrivilege(User id, String degreeCurricularPlanID, DegreeType degreeType) {
 
         DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
@@ -59,7 +61,7 @@ public class StudentListByDegreeAuthorizationFilter extends Filtro {
             return false;
         }
 
-        if (id.hasRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
+        if (id.getPerson().hasRole(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
             if (degreeCurricularPlan.getDegree().getDegreeType().equals(DegreeType.MASTER_DEGREE)
                     || degreeCurricularPlan.getDegree().getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
                 return true;
@@ -68,7 +70,7 @@ public class StudentListByDegreeAuthorizationFilter extends Filtro {
 
         }
 
-        if (id.hasRoleType(RoleType.COORDINATOR)) {
+        if (id.getPerson().hasRole(RoleType.COORDINATOR)) {
             Collection executionDegrees = degreeCurricularPlan.getExecutionDegrees();
             if (executionDegrees == null || executionDegrees.isEmpty()) {
                 return false;

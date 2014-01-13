@@ -1,12 +1,13 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 public class ExecutionCourseLecturingDepartmentAdmOfficeAuthorizationFilter extends AuthorizationByRoleFilter {
 
@@ -19,10 +20,10 @@ public class ExecutionCourseLecturingDepartmentAdmOfficeAuthorizationFilter exte
     }
 
     public void execute(SummariesManagementBean bean) throws NotAuthorizedException {
-        IUserView id = AccessControl.getUserView();
+        User id = Authenticate.getUser();
 
         try {
-            if ((id == null) || (id.getRoleTypes() == null) || !id.hasRoleType(getRoleType())
+            if ((id == null) || (id.getPerson().getPersonRolesSet() == null) || !id.getPerson().hasRole(getRoleType())
                     || !lecturesExecutionCourse(id, bean)) {
                 throw new NotAuthorizedException();
             }
@@ -31,7 +32,7 @@ public class ExecutionCourseLecturingDepartmentAdmOfficeAuthorizationFilter exte
         }
     }
 
-    private boolean lecturesExecutionCourse(IUserView id, SummariesManagementBean bean) {
+    private boolean lecturesExecutionCourse(User id, SummariesManagementBean bean) {
         final ExecutionCourse executionCourse = bean.getExecutionCourse();
         final Person person = bean.getProfessorshipLogged().getPerson();
         return person.getProfessorshipByExecutionCourse(executionCourse) != null;

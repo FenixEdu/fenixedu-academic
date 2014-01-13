@@ -27,6 +27,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -54,8 +55,8 @@ public class ExecutionCoursePublicAnnouncementManagement extends PublicAnnouncem
     }
 
     protected ExecutionCourse getRequestedExecutionCourse(HttpServletRequest request) {
-        String id = this.getRequestedExecutionCourseId(request);
-        return FenixFramework.getDomainObject(id);
+        DomainObject obj = FenixFramework.getDomainObject(this.getRequestedExecutionCourseId(request));
+        return obj instanceof ExecutionCourse ? (ExecutionCourse) obj : null;
     }
 
     @Override
@@ -96,6 +97,11 @@ public class ExecutionCoursePublicAnnouncementManagement extends PublicAnnouncem
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         ExecutionCourse course = getRequestedExecutionCourse(request);
+        if (course == null) {
+            response.setStatus(404);
+            response.getWriter().print("Bad request");
+            return null;
+        }
         request.setAttribute("executionCourse", course);
         return super.execute(mapping, actionForm, request, response);
     }

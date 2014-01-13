@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation.ResultUnitAssociationRole;
-import net.sourceforge.fenixedu.util.researcher.ResearchResultMetaDataManager;
 import pt.ist.fenixframework.Atomic;
 
 public class CreateResultUnitAssociation {
@@ -20,7 +19,6 @@ public class CreateResultUnitAssociation {
         } else {
             run(bean.getResult(), bean.getUnit());
         }
-        ResearchResultMetaDataManager.updateMetaDataInStorageFor(bean.getResult());
     }
 
     private static void run(ResearchResult result, Unit unit) {

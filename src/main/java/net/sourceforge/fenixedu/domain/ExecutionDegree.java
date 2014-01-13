@@ -41,6 +41,7 @@ import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -116,7 +117,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
     private ExecutionDegree() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     protected ExecutionDegree(DegreeCurricularPlan degreeCurricularPlan, ExecutionYear executionYear, Campus campus,
@@ -387,7 +388,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
         }
 
         final List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
-        for (ExecutionDegree executionDegree : RootDomainObject.getInstance().getExecutionDegrees()) {
+        for (ExecutionDegree executionDegree : Bennu.getInstance().getExecutionDegreesSet()) {
             if (year.equals(executionDegree.getExecutionYear().getYear())) {
                 result.add(executionDegree);
             }
@@ -405,7 +406,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
         final List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
 
-        for (final ExecutionDegree executionDegree : RootDomainObject.getInstance().getExecutionDegrees()) {
+        for (final ExecutionDegree executionDegree : Bennu.getInstance().getExecutionDegreesSet()) {
             if (executionDegree.getExecutionYear() == executionYear) {
                 result.add(executionDegree);
             }
@@ -418,7 +419,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     public static List<ExecutionDegree> getAllByExecutionCourseAndTeacher(ExecutionCourse executionCourse, Person person) {
         List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
 
-        for (ExecutionDegree executionDegree : RootDomainObject.getInstance().getExecutionDegrees()) {
+        for (ExecutionDegree executionDegree : Bennu.getInstance().getExecutionDegreesSet()) {
             boolean matchExecutionCourse = false;
             for (CurricularCourse curricularCourse : executionDegree.getDegreeCurricularPlan().getCurricularCourses()) {
                 if (curricularCourse.getAssociatedExecutionCourses().contains(executionCourse)) {
@@ -546,7 +547,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     public static List<ExecutionDegree> getAllByDegree(final Degree degree) {
         List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
 
-        for (ExecutionDegree executionDegree : RootDomainObject.getInstance().getExecutionDegrees()) {
+        for (ExecutionDegree executionDegree : Bennu.getInstance().getExecutionDegreesSet()) {
             if (executionDegree.getDegree() == degree) {
                 result.add(executionDegree);
             }
@@ -566,7 +567,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
             return result;
         }
 
-        for (ExecutionDegree executionDegree : RootDomainObject.getInstance().getExecutionDegrees()) {
+        for (ExecutionDegree executionDegree : Bennu.getInstance().getExecutionDegreesSet()) {
             if (!degree.equals(executionDegree.getDegreeCurricularPlan().getDegree())) {
                 continue;
             }
@@ -1491,7 +1492,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

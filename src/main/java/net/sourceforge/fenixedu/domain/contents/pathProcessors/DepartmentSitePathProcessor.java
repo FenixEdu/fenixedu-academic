@@ -1,11 +1,12 @@
 package net.sourceforge.fenixedu.domain.contents.pathProcessors;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitAcronym;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class DepartmentSitePathProcessor extends AbstractPathProcessor {
 
@@ -19,7 +20,7 @@ public class DepartmentSitePathProcessor extends AbstractPathProcessor {
         String unitAcronym = getDepartmentName(path);
         Unit departmentUnit = null;
 
-        for (UnitAcronym acronym : RootDomainObject.getInstance().getUnitAcronyms()) {
+        for (UnitAcronym acronym : Bennu.getInstance().getUnitAcronymsSet()) {
             if (acronym.getAcronym().equalsIgnoreCase(unitAcronym)) {
                 departmentUnit = getDepartmentFromAcronym(acronym);
                 break;

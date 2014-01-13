@@ -277,7 +277,7 @@ public class ManagerCurricularCourseManagementBackingBean extends CurricularCour
     }
 
     private void readPreBolonhaExecutionYears(final List<SelectItem> result) {
-        for (final ExecutionYear executionYear : rootDomainObject.getExecutionYears()) {
+        for (final ExecutionYear executionYear : rootDomainObject.getExecutionYearsSet()) {
             result.add(new SelectItem(executionYear.getExternalId(), executionYear.getYear()));
         }
         if (getExecutionYearID() == null) {
@@ -291,7 +291,7 @@ public class ManagerCurricularCourseManagementBackingBean extends CurricularCour
     }
 
     private List<SelectItem> readPreBolonhaExecutionPeriodItems() {
-        final List<ExecutionSemester> semesters = new ArrayList<ExecutionSemester>(rootDomainObject.getExecutionPeriods());
+        final List<ExecutionSemester> semesters = new ArrayList<ExecutionSemester>(rootDomainObject.getExecutionPeriodsSet());
         Collections.sort(semesters, new ReverseComparator(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
 
         final List<SelectItem> result = new ArrayList<SelectItem>();

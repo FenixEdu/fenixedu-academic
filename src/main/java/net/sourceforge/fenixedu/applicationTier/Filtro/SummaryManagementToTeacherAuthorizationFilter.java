@@ -3,12 +3,13 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 /**
  * @author João Mota
@@ -29,11 +30,11 @@ public class SummaryManagementToTeacherAuthorizationFilter extends Authorization
     public void execute(Summary summary, Professorship professorshipLogged) throws NotAuthorizedException {
 
         try {
-            IUserView userViewLogged = AccessControl.getUserView();
+            User userViewLogged = Authenticate.getUser();
 
             boolean executionCourseResponsibleLogged = professorshipLogged.isResponsibleFor();
 
-            if (userViewLogged == null || userViewLogged.getRoleTypes() == null || professorshipLogged == null) {
+            if (userViewLogged == null || userViewLogged.getPerson().getPersonRolesSet() == null || professorshipLogged == null) {
                 throw new NotAuthorizedException("error.summary.not.authorized");
             }
             if (executionCourseResponsibleLogged

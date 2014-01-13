@@ -140,6 +140,7 @@ public class SpecializationDegreeRegistrationEvent extends SpecializationDegreeR
     public boolean isSpecializationDegreeRegistrationEvent() {
         return true;
     }
+
     @Deprecated
     public boolean hasRegistration() {
         return getRegistration() != null;

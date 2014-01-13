@@ -43,8 +43,7 @@ public class ScientificCouncilManagePersonFunctionsDA extends ManagePersonFuncti
 
     public ActionForward prepareToEditPersonFunction(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception {
-        PersonFunction personFunction =
-                FenixFramework.getDomainObject((String) getFromRequest(request, "personFunctionOid"));
+        PersonFunction personFunction = FenixFramework.getDomainObject((String) getFromRequest(request, "personFunctionOid"));
         ExecutionSemester executionSemester =
                 FenixFramework.getDomainObject((String) getFromRequest(request, "executionPeriodOid"));
         request.setAttribute("personFunctionBean", new PersonFunctionBean(personFunction, executionSemester));
@@ -67,7 +66,7 @@ public class ScientificCouncilManagePersonFunctionsDA extends ManagePersonFuncti
     }
 
     public ActionForward showDepartmentPersonFunctions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
         DepartmentCreditsBean departmentCreditsBean = getRenderedObject();
         if (departmentCreditsBean == null) {
             departmentCreditsBean = new DepartmentCreditsBean();

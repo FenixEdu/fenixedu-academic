@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.externalServices.SetEmai
 import net.sourceforge.fenixedu.applicationTier.Servico.externalServices.SetEmail.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.externalServices.SetEmail.UserAlreadyHasEmailException;
 import net.sourceforge.fenixedu.applicationTier.Servico.externalServices.SetEmail.UserDoesNotExistException;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.IMDCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
@@ -28,11 +27,16 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.codehaus.xfire.transport.http.EasySSLProtocolSocketFactory;
+import org.fenixedu.bennu.core.domain.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "external", path = "/setEmail", scope = "request", parameter = "method")
 public class SetEmailDA extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(SetEmailDA.class);
 
     public ActionForward setEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -47,14 +51,13 @@ public class SetEmailDA extends FenixDispatchAction {
         try {
 
             SetEmail.run(host, ip, password, userUId, email);
-            final User user = User.readUserByUserUId(userUId);
-            if (user.hasPerson() && user.getPerson().hasStudent()) {
+            final User user = User.findByUsername(userUId);
+            if (user.getPerson() != null && user.getPerson().hasStudent()) {
                 final Student student = user.getPerson().getStudent();
                 for (final Registration registration : student.getRegistrationsSet()) {
                     final StudentCandidacy candidacy = registration.getStudentCandidacy();
                     if (candidacy != null && (candidacy instanceof DegreeCandidacy || candidacy instanceof IMDCandidacy)
-                            && candidacy.getExecutionYear().isCurrent()
-                            && candidacy.hasAnyCandidacySituations()) {
+                            && candidacy.getExecutionYear().isCurrent() && candidacy.hasAnyCandidacySituations()) {
                         new PDFGeneratorThread(candidacy.getExternalId(), request.getServerName(), request.getServerPort(),
                                 request.getContextPath(), request.getServletPath()).start();
                     }
@@ -69,7 +72,7 @@ public class SetEmailDA extends FenixDispatchAction {
             message = "User does not exist.";
         } catch (Throwable ex) {
             message = ex.getMessage();
-            ex.printStackTrace();
+            logger.error(ex.getMessage(), ex);
         } finally {
             final ServletOutputStream servletOutputStream = response.getOutputStream();
             response.setContentType("text/html");

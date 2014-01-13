@@ -12,19 +12,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.CreditNoteEntryDTO;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -32,13 +32,14 @@ public class Receipt extends Receipt_Base {
 
     public static final String GENERIC_CONTRIBUTOR_PARTY_NUMBER = " ";
 
-    private static final Integer MIN_YEAR_TO_CREATE_RECEIPTS = PropertiesManager.getIntegerProperty("receipt.min.year.to.create");
+    private static final Integer MIN_YEAR_TO_CREATE_RECEIPTS = FenixConfigurationManager.getConfiguration()
+            .getReceiptMinYearToCreate();
 
     private static final Map<Integer, String> NUMBER_SERIES_BY_YEAR = new HashMap<Integer, String>();
 
     static {
 
-        final String[] parts = PropertiesManager.getProperty("receipt.numberSeries.for.years").split(",");
+        final String[] parts = FenixConfigurationManager.getConfiguration().getReceiptNumberSeriesForYears().split(",");
 
         for (final String part : parts) {
             if (!StringUtils.isEmpty(part)) {
@@ -94,7 +95,7 @@ public class Receipt extends Receipt_Base {
         checkRulesToCreate(person, year, entries);
 
         super.setNumber(generateReceiptNumber(year));
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
         super.setYear(year);
         super.setNumberSeries(numberSeries);
         super.setPerson(person);
@@ -256,7 +257,7 @@ public class Receipt extends Receipt_Base {
 
     public static List<Receipt> getReceiptsFor(int year) {
         final List<Receipt> result = new ArrayList<Receipt>();
-        for (final Receipt receipt : RootDomainObject.getInstance().getReceipts()) {
+        for (final Receipt receipt : Bennu.getInstance().getReceiptsSet()) {
             if (receipt.getYear().intValue() == year) {
                 result.add(receipt);
             }
@@ -504,7 +505,7 @@ public class Receipt extends Receipt_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

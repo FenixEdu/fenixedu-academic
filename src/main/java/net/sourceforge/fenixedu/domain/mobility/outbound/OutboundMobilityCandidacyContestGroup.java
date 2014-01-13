@@ -7,12 +7,10 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.commons.Transformer;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityAgreement;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -21,9 +19,11 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.util.BundleUtil;
-import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
@@ -31,6 +31,8 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandidacyContestGroup_Base implements
         Comparable<OutboundMobilityCandidacyContestGroup> {
+
+    private static final Logger logger = LoggerFactory.getLogger(OutboundMobilityCandidacyContestGroup.class);
 
     public OutboundMobilityCandidacyContestGroup(final OutboundMobilityCandidacyContest contest,
             final Set<ExecutionDegree> executionDegrees) {
@@ -40,7 +42,7 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
         if (executionDegrees.isEmpty()) {
             throw new NullPointerException("error.OutboundMobilityCandidacyContestGroup.must.have.execution.degree");
         }
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         addOutboundMobilityCandidacyContest(contest);
         getExecutionDegreeSet().addAll(executionDegrees);
 
@@ -56,7 +58,7 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
         if (executionDegrees.isEmpty()) {
             throw new NullPointerException("error.OutboundMobilityCandidacyContestGroup.must.have.execution.degree");
         }
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         getExecutionDegreeSet().addAll(executionDegrees);
 
         // TODO : This is a hack due to a bug in the consistency predicate or fenix-framework code.
@@ -74,12 +76,14 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
     }
 
     public String getDescription() {
-        return StringUtils.join(getSortedExecutionDegrees(), ", ", new Transformer<ExecutionDegree, String>() {
-            @Override
-            public String transform(final ExecutionDegree executionDegree) {
-                return executionDegree.getDegree().getSigla();
+        final StringBuilder builder = new StringBuilder();
+        for (final ExecutionDegree executionDegree : getSortedExecutionDegrees()) {
+            if (builder.length() > 0) {
+                builder.append(", ");
             }
-        });
+            builder.append(executionDegree.getDegree().getSigla());
+        }
+        return builder.toString();
     }
 
     public SortedSet<ExecutionDegree> getSortedExecutionDegrees() {
@@ -374,7 +378,7 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
         }
 
         for (final OutboundMobilityCandidacySubmissionGrade submissionGrade : grades) {
-            System.out.println("Selecting for: "
+            logger.info("Selecting for: "
                     + submissionGrade.getOutboundMobilityCandidacySubmission().getRegistration().getPerson().getUsername());
             final BigDecimal grade = submissionGrade.getGrade();
             if (grade.signum() == 1) {
@@ -491,7 +495,7 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

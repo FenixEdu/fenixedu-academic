@@ -13,7 +13,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -45,8 +44,11 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -62,6 +64,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "chooseGuide", path = "/manager/guideManagement/chooseGuide.jsp") })
 public class GuideManagementDispatchAction extends FenixDispatchAction {
 
+    private static final Logger logger = LoggerFactory.getLogger(GuideManagementDispatchAction.class);
+
     public ActionForward firstPage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         return mapping.findForward("firstPage");
@@ -76,7 +80,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
     public ActionForward chooseGuide(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         DynaActionForm guideForm = (DynaActionForm) actionForm;
         Integer number = (Integer) guideForm.get("number");
@@ -96,10 +100,10 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 
         } catch (NonExistingServiceException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } catch (FenixServiceException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
 
         // read transactions
@@ -112,7 +116,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
                 paymentTransaction = ReadPaymentTransactionByGuideEntryID.run(guideEntry.getExternalId());
             } catch (FenixServiceException e1) {
                 // TODO Auto-generated catch block
-                e1.printStackTrace();
+                logger.error(e1.getMessage(), e1);
             }
 
             paymentTransactions.add(paymentTransaction);
@@ -123,7 +127,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
             executionYears = ReadExecutionYears.run();
         } catch (FenixServiceException e1) {
             // TODO Auto-generated catch block
-            e1.printStackTrace();
+            logger.error(e1.getMessage(), e1);
         }
 
         List degreeCurricularPlans = null;
@@ -161,7 +165,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
     public ActionForward addGuideEntry(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         DynaActionForm guideForm = (DynaActionForm) actionForm;
         String guideID = (String) guideForm.get("guideID");
@@ -184,7 +188,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
     public ActionForward addGuideSituation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         DynaActionForm guideForm = (DynaActionForm) actionForm;
 
@@ -215,7 +219,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
     public ActionForward createPaymentTransaction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         DynaActionForm guideForm = (DynaActionForm) actionForm;
 
@@ -232,7 +236,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 
         } catch (FenixServiceException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
 
         return chooseGuide(mapping, actionForm, request, response);
@@ -242,7 +246,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
     public ActionForward editExecutionDegree(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         DynaActionForm guideForm = (DynaActionForm) actionForm;
 
@@ -260,7 +264,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
     public ActionForward deleteGuideSituation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         DynaActionForm guideForm = (DynaActionForm) actionForm;
         String guideSituationID = (String) guideForm.get("guideSituationID");
@@ -274,7 +278,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
     public ActionForward deleteGuideEntry(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         DynaActionForm guideForm = (DynaActionForm) actionForm;
         String selectedGuideEntryID = (String) guideForm.get("selectedGuideEntryID");
@@ -283,7 +287,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
             DeleteGuideEntryAndPaymentTransactionInManager.run(selectedGuideEntryID);
         } catch (FenixServiceException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
 
         return chooseGuide(mapping, actionForm, request, response);
@@ -293,7 +297,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
     public ActionForward deleteGuide(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         DynaActionForm guideForm = (DynaActionForm) actionForm;
         String guideID = (String) guideForm.get("guideID");
@@ -302,7 +306,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
             DeleteGuideVersionInManager.run(guideID);
         } catch (FenixServiceException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return chooseGuide(mapping, actionForm, request, response);
         }
 

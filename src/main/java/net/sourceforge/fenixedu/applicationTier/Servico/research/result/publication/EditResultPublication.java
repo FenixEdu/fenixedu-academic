@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.research.result.publication.Proceedings;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
-import net.sourceforge.fenixedu.util.researcher.ResearchResultMetaDataManager;
 import pt.ist.fenixframework.Atomic;
 
 public class EditResultPublication extends ResultPublicationService {
@@ -43,7 +42,6 @@ public class EditResultPublication extends ResultPublicationService {
             getDeleteService().run(publication.getExternalId());
             finalPublication = book;
         }
-        ResearchResultMetaDataManager.updateMetaDataInStorageFor(finalPublication);
         return finalPublication;
     }
 
@@ -64,7 +62,6 @@ public class EditResultPublication extends ResultPublicationService {
             getDeleteService().run(publication.getExternalId());
             finalPublication = bookPart;
         }
-        ResearchResultMetaDataManager.updateMetaDataInStorageFor(finalPublication);
         return finalPublication;
     }
 
@@ -82,7 +79,6 @@ public class EditResultPublication extends ResultPublicationService {
             getDeleteService().run(publication.getExternalId());
             finalPublication = article;
         }
-        ResearchResultMetaDataManager.updateMetaDataInStorageFor(finalPublication);
         return finalPublication;
     }
 
@@ -103,7 +99,6 @@ public class EditResultPublication extends ResultPublicationService {
             getDeleteService().run(publication.getExternalId());
             finalPublication = inproceedings;
         }
-        ResearchResultMetaDataManager.updateMetaDataInStorageFor(finalPublication);
         return finalPublication;
     }
 
@@ -123,7 +118,6 @@ public class EditResultPublication extends ResultPublicationService {
             getDeleteService().run(publication.getExternalId());
             finalPublication = proceedings;
         }
-        ResearchResultMetaDataManager.updateMetaDataInStorageFor(finalPublication);
         return finalPublication;
     }
 
@@ -143,7 +137,6 @@ public class EditResultPublication extends ResultPublicationService {
             getDeleteService().run(publication.getExternalId());
             finalPublication = thesis;
         }
-        ResearchResultMetaDataManager.updateMetaDataInStorageFor(finalPublication);
         return finalPublication;
     }
 
@@ -162,7 +155,6 @@ public class EditResultPublication extends ResultPublicationService {
             getDeleteService().run(publication.getExternalId());
             finalPublication = manual;
         }
-        ResearchResultMetaDataManager.updateMetaDataInStorageFor(finalPublication);
         return finalPublication;
     }
 
@@ -181,7 +173,6 @@ public class EditResultPublication extends ResultPublicationService {
             getDeleteService().run(publication.getExternalId());
             finalPublication = techReport;
         }
-        ResearchResultMetaDataManager.updateMetaDataInStorageFor(finalPublication);
         return finalPublication;
     }
 
@@ -200,7 +191,6 @@ public class EditResultPublication extends ResultPublicationService {
             getDeleteService().run(publication.getExternalId());
             finalPublication = other;
         }
-        ResearchResultMetaDataManager.updateMetaDataInStorageFor(finalPublication);
         return finalPublication;
     }
 

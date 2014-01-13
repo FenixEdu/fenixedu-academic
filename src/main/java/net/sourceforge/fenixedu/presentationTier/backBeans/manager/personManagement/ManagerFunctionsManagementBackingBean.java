@@ -31,7 +31,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
     }
 
     @Override
-    public String associateNewFunction() throws  FenixServiceException, ParseException {
+    public String associateNewFunction() throws FenixServiceException, ParseException {
 
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         Double credits = Double.valueOf(this.getCredits());
@@ -68,7 +68,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
     }
 
     @Override
-    public String getUnits() throws  FenixServiceException {
+    public String getUnits() throws FenixServiceException {
         StringBuilder buffer = new StringBuilder();
         YearMonthDay currentDate = new YearMonthDay();
         getUnitTree(buffer, UnitUtils.readInstitutionUnit(), currentDate);
@@ -111,7 +111,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
     }
 
     @Override
-    public List<PersonFunction> getActiveFunctions() throws  FenixServiceException {
+    public List<PersonFunction> getActiveFunctions() throws FenixServiceException {
 
         if (this.activeFunctions == null) {
             Person person = this.getPerson();
@@ -123,7 +123,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
     }
 
     @Override
-    public List<PersonFunction> getInactiveFunctions() throws  FenixServiceException {
+    public List<PersonFunction> getInactiveFunctions() throws FenixServiceException {
 
         if (this.inactiveFunctions == null) {
             Person person = this.getPerson();
@@ -135,7 +135,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
     }
 
     @Override
-    public List<Function> getInherentFunctions() throws  FenixServiceException {
+    public List<Function> getInherentFunctions() throws FenixServiceException {
         if (this.inherentFunctions == null) {
             this.inherentFunctions = this.getPerson().getActiveInherentPersonFunctions();
         }

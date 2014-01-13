@@ -12,6 +12,8 @@ import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
 import net.sourceforge.fenixedu.domain.transactions.Transaction;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
@@ -20,7 +22,7 @@ public class PersonAccount extends PersonAccount_Base {
 
     public PersonAccount() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public PersonAccount(Person person) {
@@ -75,7 +77,7 @@ public class PersonAccount extends PersonAccount_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

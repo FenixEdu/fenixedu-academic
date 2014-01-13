@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Collection;
 import java.util.HashSet;
@@ -18,13 +17,10 @@ import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.streams.FetcherRequestWrapper;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.streams.FetcherServletResponseWrapper;
+import net.sourceforge.fenixedu.presentationTier.servlets.FileDownloadServlet;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 
-import org.apache.commons.lang.StringUtils;
-
-import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.file.FileManagerFactory;
-import pt.utl.ist.fenix.tools.file.IFileManager;
+import com.google.common.io.ByteStreams;
 
 /**
  * The <tt>Fetcher</tt> manages a queue of {@link net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.Resource}
@@ -146,18 +142,21 @@ public class Fetcher {
         markAsFetched(resource);
 
         String url = prepareUrl(resource);
-        final int ls = File.ACTION_PATH.lastIndexOf('/');
-        if (url.indexOf("dspace") >= 0) {
-            getDspaceFile(stream, url);
-            return;
-        } else if (url.lastIndexOf(File.ACTION_PATH.substring(ls)) >= 0) {
-            final int lastIndex = url.lastIndexOf(File.ACTION_PATH.substring(ls));
-            final String oid = url.substring(lastIndex + 1);
-            if (StringUtils.isNumeric(oid)) {
-                getLocalFile(stream, oid);
-                return;
-            }
-        }
+//        final int ls = File.ACTION_PATH.lastIndexOf('/');
+//        if (url.indexOf("dspace") >= 0) {
+//            getDspaceFile(stream, url);
+//            return;
+//        } else if (url.lastIndexOf(File.ACTION_PATH.substring(ls)) >= 0) {
+//            final int lastIndex = url.lastIndexOf(File.ACTION_PATH.substring(ls));
+//            final String oid = url.substring(lastIndex + 1);
+//            if (StringUtils.isNumeric(oid)) {
+//                getLocalFile(stream, oid);
+//                return;
+//            }
+//        }
+
+        writeFileToStream(url, stream);
+
         RequestDispatcher dispatcher = this.request.getRequestDispatcher(url);
         ServletRequest request = this.requestContext == null ? createForwardRequest() : createForwardRequest(requestContext);
         FetcherServletResponseWrapper response = createForwardResponse(resource, stream);
@@ -165,38 +164,13 @@ public class Fetcher {
         dispatcher.forward(request, response);
     }
 
-    private void getLocalFile(final OutputStream stream, final String oid) throws IOException {
-        final File file = getFileFromUrl(oid);
-        final byte[] contents = file.getContents();
-        stream.write(contents);
-        stream.close();
-    }
-
-    private void getDspaceFile(OutputStream stream, String url) throws IOException {
-        IFileManager fileManager = FileManagerFactory.getFactoryInstance().getFileManager();
-        InputStream fileStream = fileManager.retrieveFile(getDspaceFileId(url));
-
-        byte[] buffer = new byte[2048];
-        int length;
-
-        while ((length = fileStream.read(buffer)) != -1) {
-            stream.write(buffer, 0, length);
+    private void writeFileToStream(String url, OutputStream stream) throws IOException {
+        if (url.startsWith(File.getFileDownloadPrefix())) {
+            File fileFromURL = FileDownloadServlet.getFileFromURL(url);
+            if (fileFromURL != null) {
+                ByteStreams.copy(fileFromURL.getStream(), stream);
+            }
         }
-
-        fileStream.close();
-        stream.close();
-    }
-
-    private File getFileFromUrl(final String oid) {
-        return FenixFramework.getDomainObject(oid);
-    }
-
-    private String getDspaceFileId(String url) {
-        return url.replaceAll(".*?/bitstream/([0-9]+/[0-9]+/[0-9]+)/.*", "$1");
-    }
-
-    private boolean isDspaceFile(String url) {
-        return url.matches(".*?/bitstream/[0-9]+/[0-9]+/[0-9]+/.*");
     }
 
     private String prepareUrl(Resource resource) {

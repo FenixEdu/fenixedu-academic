@@ -1,12 +1,13 @@
 package net.sourceforge.fenixedu.domain;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 public class FakeEnrollment extends FakeEnrollment_Base {
 
     public FakeEnrollment() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public FakeEnrollment(Person person, String stuff) {
@@ -23,7 +24,7 @@ public class FakeEnrollment extends FakeEnrollment_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

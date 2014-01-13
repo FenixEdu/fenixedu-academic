@@ -8,11 +8,11 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.FileContent;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * A <code>Container</code> is a composed content, that is, a grouping of other
@@ -301,7 +301,7 @@ public abstract class Container extends Container_Base {
             prefix = (prefix.startsWith("/") ? "" : "/") + prefix;
             prefix = prefix + (prefix.endsWith("/") ? "" : "/");
 
-            for (final Content content : RootDomainObject.getInstance().getRootPortal().getChildrenAsContent()) {
+            for (final Content content : Bennu.getInstance().getRootPortal().getChildrenAsContent()) {
                 if (content.isContainer()) {
                     final Container container = (Container) content;
                     final Content initialContent = container.getInitialContent();

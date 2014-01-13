@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 
-
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;

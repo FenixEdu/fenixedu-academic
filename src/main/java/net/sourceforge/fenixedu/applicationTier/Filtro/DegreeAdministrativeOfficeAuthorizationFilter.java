@@ -1,9 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 /**
  * @author David Santos
@@ -32,8 +33,8 @@ public class DegreeAdministrativeOfficeAuthorizationFilter extends Authorization
 
     @Override
     public void execute() throws NotAuthorizedException {
-        IUserView userView = AccessControl.getUserView();
-        if (!userView.hasRoleType(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
+        User userView = Authenticate.getUser();
+        if (!userView.getPerson().hasRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
             super.execute();
         }
     }

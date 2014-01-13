@@ -12,7 +12,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -29,6 +28,9 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
+
+import org.fenixedu.bennu.core.domain.User;
+
 import pt.ist.fenixframework.Atomic;
 
 /**
@@ -37,7 +39,7 @@ import pt.ist.fenixframework.Atomic;
 public class CheckCandidacyConditionsForFinalDegreeWork {
 
     @Atomic
-    public static Boolean run(IUserView userView, final ExecutionDegree executionDegree) throws FenixServiceException {
+    public static Boolean run(User userView, final ExecutionDegree executionDegree) throws FenixServiceException {
         check(RolePredicates.STUDENT_PREDICATE);
         Scheduleing scheduleing = executionDegree.getScheduling();
 
@@ -189,7 +191,7 @@ public class CheckCandidacyConditionsForFinalDegreeWork {
         return true;
     }
 
-    private static boolean isStudentOfScheduling(final IUserView userView, final Scheduleing scheduleing) {
+    private static boolean isStudentOfScheduling(final User userView, final Scheduleing scheduleing) {
         for (final ExecutionDegree otherExecutionDegree : scheduleing.getExecutionDegreesSet()) {
             final DegreeCurricularPlan degreeCurricularPlan = otherExecutionDegree.getDegreeCurricularPlan();
             final Degree degree = degreeCurricularPlan.getDegree();

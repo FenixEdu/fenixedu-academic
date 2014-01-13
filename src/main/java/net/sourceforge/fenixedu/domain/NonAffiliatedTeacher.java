@@ -11,6 +11,9 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.ist.fenixframework.Atomic;
 
 /**
@@ -22,7 +25,7 @@ public class NonAffiliatedTeacher extends NonAffiliatedTeacher_Base {
 
     public NonAffiliatedTeacher() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public NonAffiliatedTeacher(final String name, final Unit institution) {
@@ -34,7 +37,7 @@ public class NonAffiliatedTeacher extends NonAffiliatedTeacher_Base {
     public static Set<NonAffiliatedTeacher> findNonAffiliatedTeacherByName(final String name) {
         Pattern pattern = Pattern.compile(name.toLowerCase());
         final Set<NonAffiliatedTeacher> nonAffiliatedTeachers = new HashSet<NonAffiliatedTeacher>();
-        for (final NonAffiliatedTeacher nonAffiliatedTeacher : RootDomainObject.getInstance().getNonAffiliatedTeachersSet()) {
+        for (final NonAffiliatedTeacher nonAffiliatedTeacher : Bennu.getInstance().getNonAffiliatedTeachersSet()) {
             Matcher matcher = pattern.matcher(nonAffiliatedTeacher.getName().toLowerCase());
             if (matcher.find()) {
                 nonAffiliatedTeachers.add(nonAffiliatedTeacher);
@@ -68,7 +71,8 @@ public class NonAffiliatedTeacher extends NonAffiliatedTeacher_Base {
     public void delete() {
 
         if (hasAnyAssociatedInquiriesTeachers()) {
-            throw new DomainException("error.NonAffiliatedTeacher.hasAnyAssociatedInquiriesTeachers");
+            throw new DomainException("error.NonAffiliatedTeacher.hasAnyAssociatedInquiriesTeachers",
+                    Unit.getInstitutionAcronym());
         }
 
         setRootDomainObject(null);
@@ -77,6 +81,7 @@ public class NonAffiliatedTeacher extends NonAffiliatedTeacher_Base {
 
         super.deleteDomainObject();
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ExecutionCourse> getExecutionCourses() {
         return getExecutionCoursesSet();
@@ -108,7 +113,7 @@ public class NonAffiliatedTeacher extends NonAffiliatedTeacher_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

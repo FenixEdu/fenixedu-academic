@@ -1,10 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.util.Collection;
-
 import net.sourceforge.fenixedu.domain.accessControl.Group;
-import pt.utl.ist.fenix.tools.file.FileSetMetaData;
-import pt.utl.ist.fenix.tools.file.VirtualPath;
 
 public class UnitSiteBannerFile extends UnitSiteBannerFile_Base {
 
@@ -12,10 +8,9 @@ public class UnitSiteBannerFile extends UnitSiteBannerFile_Base {
         super();
     }
 
-    public UnitSiteBannerFile(VirtualPath path, String filename, String displayName, Collection<FileSetMetaData> metadata,
-            byte[] content, Group group) {
+    public UnitSiteBannerFile(String filename, String displayName, byte[] content, Group group) {
         this();
-        init(path, filename, displayName, metadata, content, group);
+        init(filename, displayName, content, group);
     }
 
     @Override

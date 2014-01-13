@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.enrolment;
 
-
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.DegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
@@ -23,8 +22,7 @@ public class FinalResult {
 
         boolean result = false;
 
-        StudentCurricularPlan studentCurricularPlan =
-                FenixFramework.getDomainObject(infoStudentCurricularPlan.getExternalId());
+        StudentCurricularPlan studentCurricularPlan = FenixFramework.getDomainObject(infoStudentCurricularPlan.getExternalId());
 
         IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory =
                 DegreeCurricularPlanStrategyFactory.getInstance();

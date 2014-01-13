@@ -52,7 +52,6 @@ import pt.ist.fenixWebFramework.renderers.model.MetaObject;
 import pt.ist.fenixWebFramework.renderers.model.MetaObjectFactory;
 import pt.ist.fenixWebFramework.renderers.schemas.Schema;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.utl.ist.fenix.tools.util.StringAppender;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class BolonhaStudentEnrolmentLayout extends Layout {
@@ -542,12 +541,12 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
                 Context context = courseGroupsToEnrol.iterator().next().getContext();
                 CurriculumGroup curriculumGroup = curriculumGroups.iterator().next().getCurriculumModule();
                 if (curriculumGroup.getChildOrder(executionSemester) <= context.getChildOrder()) {
-                    generateGroup(blockContainer, studentCurricularPlan, curriculumGroups.iterator().next(), executionSemester, depth
-                            + getRenderer().getWidthDecreasePerLevel());
+                    generateGroup(blockContainer, studentCurricularPlan, curriculumGroups.iterator().next(), executionSemester,
+                            depth + getRenderer().getWidthDecreasePerLevel());
                     curriculumGroups.remove(0);
                 } else {
-                    generateCourseGroupToEnroll(blockContainer, courseGroupsToEnrol.iterator().next(), studentCurricularPlan, depth
-                            + getRenderer().getWidthDecreasePerLevel());
+                    generateCourseGroupToEnroll(blockContainer, courseGroupsToEnrol.iterator().next(), studentCurricularPlan,
+                            depth + getRenderer().getWidthDecreasePerLevel());
                     courseGroupsToEnrol.remove(0);
                 }
             }
@@ -577,8 +576,8 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
 
         HtmlCheckBox checkBox = new HtmlCheckBox(false);
         final String name =
-                StringAppender.append("degreeModuleToEnrolCheckBox", degreeModuleToEnrol.getContext().getExternalId().toString(),
-                        ":", degreeModuleToEnrol.getCurriculumGroup().getExternalId().toString());
+                "degreeModuleToEnrolCheckBox" + degreeModuleToEnrol.getContext().getExternalId().toString() + ":"
+                        + degreeModuleToEnrol.getCurriculumGroup().getExternalId().toString();
         checkBox.setName(name);
         checkBox.setUserValue(degreeModuleToEnrol.getKey());
         getDegreeModulesToEvaluateController().addCheckBox(checkBox);

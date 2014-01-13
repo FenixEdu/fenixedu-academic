@@ -1,14 +1,15 @@
 package net.sourceforge.fenixedu.domain.oldInquiries;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Student;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class InquiriesStudentExecutionPeriod extends InquiriesStudentExecutionPeriod_Base {
 
     public InquiriesStudentExecutionPeriod() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public InquiriesStudentExecutionPeriod(final Student student) {
@@ -34,7 +35,7 @@ public class InquiriesStudentExecutionPeriod extends InquiriesStudentExecutionPe
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

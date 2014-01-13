@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import java.util.TreeSet;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -28,8 +27,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import net.fortuna.ical4j.model.Calendar;
-import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Factory.RoomSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.EnrolStudentInWrittenEvaluation;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.UnEnrollStudentInWrittenEvaluation;
@@ -47,7 +44,6 @@ import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInform
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.domain.AdHocEvaluation;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -65,7 +61,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Event;
@@ -91,6 +86,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.externalServices.OAuthUt
 import net.sourceforge.fenixedu.presentationTier.backBeans.student.enrolment.DisplayEvaluationsForStudentToEnrol;
 import net.sourceforge.fenixedu.util.ContentType;
 import net.sourceforge.fenixedu.util.EvaluationType;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.webServices.jersey.beans.FenixCalendar;
 import net.sourceforge.fenixedu.webServices.jersey.beans.FenixCalendar.FenixCalendarEvent;
 import net.sourceforge.fenixedu.webServices.jersey.beans.FenixCurriculum;
@@ -121,12 +117,15 @@ import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixSpace.Room
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixframework.DomainObject;
 import pt.utl.ist.fenix.tools.resources.DefaultResourceBundleProvider;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -138,6 +137,8 @@ import com.qmino.miredot.annotations.ReturnType;
 @SuppressWarnings("unchecked")
 @Path("/v1")
 public class FenixAPIv1 {
+
+    private static final Logger logger = LoggerFactory.getLogger(FenixAPIv1.class);
 
     public final static String PERSONAL_SCOPE = "info";
     public final static String SCHEDULE_SCOPE = "schedule";
@@ -178,7 +179,7 @@ public class FenixAPIv1 {
     }
 
     private Person getPerson() {
-        IUserView user = UserView.getUser();
+        User user = Authenticate.getUser();
         if (user != null) {
             return user.getPerson();
         }
@@ -827,9 +828,7 @@ public class FenixAPIv1 {
                     new FenixDegreeInfo(description, objectives, designFor, requisites, profissionalExits, history,
                             operationRegime, gratuity, links);
         }
-        
-      
-       
+
         final List<FenixTeacher> teachers = new ArrayList<>();
         final Collection<Teacher> responsibleCoordinatorsTeachers = degree.getResponsibleCoordinatorsTeachers(executionYear);
 
@@ -930,10 +929,10 @@ public class FenixAPIv1 {
 
     private String getServerLink() {
         String serverLink;
-        final String appName = PropertiesManager.getProperty("http.host");
-        final String appContext = PropertiesManager.getProperty("app.context");
-        final String httpPort = PropertiesManager.getProperty("http.port");
-        final String httpProtocol = PropertiesManager.getProperty("http.protocol");
+        final String appName = FenixConfigurationManager.getConfiguration().getHTTPHost();
+        final String appContext = FenixConfigurationManager.getConfiguration().appContext();
+        final String httpPort = FenixConfigurationManager.getConfiguration().getHTTPPort();
+        final String httpProtocol = FenixConfigurationManager.getConfiguration().getHTTPProtocol();
 
         if (StringUtils.isEmpty(httpPort)) {
             serverLink = String.format("%s://%s/", httpProtocol, appName);
@@ -1357,7 +1356,7 @@ public class FenixAPIv1 {
                     roomEvents);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw newApplicationError(Status.INTERNAL_SERVER_ERROR, "berserk!", "something went wrong");
         }
     }

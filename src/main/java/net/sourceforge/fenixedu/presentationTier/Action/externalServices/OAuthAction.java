@@ -6,11 +6,6 @@ import static net.sourceforge.fenixedu.presentationTier.Action.externalServices.
 import static org.apache.amber.oauth2.common.error.OAuthError.TokenResponse.INVALID_GRANT;
 import static org.apache.commons.httpclient.HttpStatus.SC_BAD_REQUEST;
 import static org.apache.commons.httpclient.HttpStatus.SC_UNAUTHORIZED;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-
-import pt.ist.fenixframework.Atomic;
 
 import java.io.IOException;
 
@@ -22,7 +17,6 @@ import net.sourceforge.fenixedu.domain.AppUserAuthorization;
 import net.sourceforge.fenixedu.domain.AppUserSession;
 import net.sourceforge.fenixedu.domain.ExternalApplication;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.FenixOAuthToken;
@@ -39,16 +33,26 @@ import org.apache.amber.oauth2.common.error.OAuthError;
 import org.apache.amber.oauth2.common.exception.OAuthProblemException;
 import org.apache.amber.oauth2.common.exception.OAuthSystemException;
 import org.apache.amber.oauth2.common.message.OAuthResponse;
+import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpHeaders;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.codehaus.plexus.util.StringUtils;
+import org.fenixedu.bennu.core.domain.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.Atomic;
 
 @Mapping(module = "external", path = "/oauth", scope = "request", parameter = "method")
 @Forwards({ @Forward(name = "showAuthorizationPage", path = "showAuthorizationPage"),
         @Forward(name = "oauthErrorPage", path = "oauthErrorPage") })
 public class OAuthAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(OAuthAction.class);
 
     private final static OAuthIssuer OAUTH_ISSUER = new OAuthIssuerImpl(new MD5Generator());
 
@@ -133,9 +137,9 @@ public class OAuthAction extends FenixDispatchAction {
                             .location(clientApplication.getRedirectUrl()).setCode(code).buildQueryMessage();
             response.sendRedirect(resp.getLocationUri());
         } catch (OAuthSystemException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
         return null;
     }
@@ -197,9 +201,9 @@ public class OAuthAction extends FenixDispatchAction {
         try {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Something went wrong. Please contact support team.");
         } catch (IOException e1) {
-            e1.printStackTrace();
+            logger.error(e1.getMessage(), e1);
         }
-        e.printStackTrace();
+        logger.error(e.getMessage(), e);
         return null;
     }
 
@@ -243,7 +247,8 @@ public class OAuthAction extends FenixDispatchAction {
 
             OAuthResponse r =
                     OAuthASResponse.tokenResponse(HttpServletResponse.SC_OK).location(redirectUrl).setAccessToken(accessToken)
-                            .setExpiresIn(OAuthProperties.getAccessTokenExpirationSeconds().toString()).buildJSONMessage();
+                            .setExpiresIn(OAuthProperties.getConfiguration().getAccessTokenExpirationSeconds().toString())
+                            .buildJSONMessage();
 
             return sendOAuthResponse(response, r);
         } catch (FenixOAuthTokenException fote) {
@@ -296,7 +301,7 @@ public class OAuthAction extends FenixDispatchAction {
 
             r =
                     OAuthASResponse.tokenResponse(HttpServletResponse.SC_OK).location(redirectUrl).setAccessToken(accessToken)
-                            .setExpiresIn(OAuthProperties.getAccessTokenExpirationSeconds().toString())
+                            .setExpiresIn(OAuthProperties.getConfiguration().getAccessTokenExpirationSeconds().toString())
                             .setRefreshToken(refreshToken).buildJSONMessage();
         } else {
             r = getOAuthProblemResponse(SC_BAD_REQUEST, OAuthError.TokenResponse.INVALID_GRANT, "Code expired");

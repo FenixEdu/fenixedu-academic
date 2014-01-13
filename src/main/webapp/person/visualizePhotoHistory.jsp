@@ -7,8 +7,8 @@
 
 <html:xhtml/>
 
-<logic:present role="PERSON">
-<bean:define id="person" name="<%=pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE%>" property="person"/>
+<logic:present role="role(PERSON)">
+<bean:define id="person" name="LOGGED_USER_ATTRIBUTE" property="person"/>
 
 <em><bean:message key="label.person.main.title" /></em>
 <h2><bean:message key="label.person.title.photoHistory"/></h2>

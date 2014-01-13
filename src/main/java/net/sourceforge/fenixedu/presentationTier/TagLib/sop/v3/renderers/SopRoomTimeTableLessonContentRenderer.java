@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGenericEvent;
@@ -10,10 +9,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlot;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContentRenderer;
+
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 /**
  * @author Nuno Nunes
@@ -94,9 +95,9 @@ public class SopRoomTimeTableLessonContentRenderer extends LessonSlotContentRend
 
             InfoGenericEvent infoGenericEvent = (InfoGenericEvent) showOccupation;
             strBuffer.append("<span title=\"").append(infoGenericEvent.getDescription()).append("\">");
-            final IUserView userView = AccessControl.getUserView();
+            final User userView = Authenticate.getUser();
             if (infoGenericEvent.getGenericEvent().isActive() && userView != null
-                    && userView.hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
+                    && userView.getPerson().hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
                 strBuffer.append("<a href=\"");
                 strBuffer.append(context).append("/resourceAllocationManager/");
                 strBuffer.append("roomsPunctualScheduling.do?method=prepareView&genericEventID=")

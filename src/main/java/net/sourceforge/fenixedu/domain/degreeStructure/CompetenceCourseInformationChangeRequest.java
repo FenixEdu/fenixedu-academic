@@ -5,7 +5,6 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
@@ -14,12 +13,15 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.ist.fenixframework.Atomic;
 
 public class CompetenceCourseInformationChangeRequest extends CompetenceCourseInformationChangeRequest_Base {
 
     public CompetenceCourseInformationChangeRequest() {
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public CompetenceCourseInformationChangeRequest(CompetenceCourseInformation information, String justification,
@@ -187,7 +189,8 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
 
             information.setBibliographicReferences(getBibliographicReferences());
 
-            for (; !information.getCompetenceCourseLoads().isEmpty(); information.getCompetenceCourseLoads().iterator().next().delete()) {
+            for (; !information.getCompetenceCourseLoads().isEmpty(); information.getCompetenceCourseLoads().iterator().next()
+                    .delete()) {
                 ;
             }
             createLoads(information);
@@ -237,6 +240,7 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
         return getCompetenceCourse().getDepartmentUnit(getExecutionPeriod()).getDepartment()
                 .isUserMemberOfCompetenceCourseMembersGroup(person);
     }
+
     @Deprecated
     public boolean hasSecondTheoreticalHours() {
         return getSecondTheoreticalHours() != null;
@@ -248,7 +252,7 @@ public class CompetenceCourseInformationChangeRequest extends CompetenceCourseIn
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

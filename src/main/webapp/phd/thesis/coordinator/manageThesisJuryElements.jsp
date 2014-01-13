@@ -7,7 +7,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
 
-<logic:present role="COORDINATOR">
+<logic:present role="role(COORDINATOR)">
 <bean:define id="individualProcessId" name="process" property="individualProgramProcess.externalId" />
 
 <%-- ### Title #### --%>
@@ -57,7 +57,7 @@
 <br/>
 <br/>
 
-<strong>Presidente:</strong> Presidente do Conselho Científico do IST
+<strong>Presidente:</strong> Presidente do Conselho Científico do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>
 
 <br/>
 <strong><bean:message  key="label.phd.thesis.elements" bundle="PHD_RESOURCES"/>:</strong>

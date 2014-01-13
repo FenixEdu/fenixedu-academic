@@ -5,8 +5,9 @@ package net.sourceforge.fenixedu.injectionCode;
 
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
+
+import org.fenixedu.bennu.core.domain.User;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/>
@@ -14,14 +15,17 @@ import net.sourceforge.fenixedu.domain.Person;
  * <br/>
  *         Created on 14:40:00,17/Fev/2006
  * @version $Id$
+ * 
+ * @deprecated Use Bennu Groups instead
  */
+@Deprecated
 public interface IGroup {
 
     public int getElementsCount();
 
     public boolean isMember(Person person);
 
-    public boolean allows(IUserView userView);
+    public boolean allows(User userView);
 
     public Set<Person> getElements();
 

@@ -101,7 +101,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
             HttpServletResponse response) {
 
         final SortedSet<Space> spaces = new TreeSet<Space>(SpaceComparator.SPACE_COMPARATOR_BY_CLASS);
-        for (final Resource resource : rootDomainObject.getResources()) {
+        for (final Resource resource : rootDomainObject.getResourcesSet()) {
             if (resource.isSpace() && !((Space) resource).hasSuroundingSpace()) {
                 spaces.add((Space) resource);
             }
@@ -587,7 +587,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
             }
 
             final BlueprintFile blueprintFile = mostRecentBlueprint.getBlueprintFile();
-            final byte[] blueprintBytes = blueprintFile.getContent().getBytes();
+            final byte[] blueprintBytes = blueprintFile.getContentFile().getBytes();
             final InputStream inputStream = new ByteArrayInputStream(blueprintBytes);
             try {
                 BlueprintTextRectangles blueprintTextRectangles =

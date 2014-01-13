@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.domain.gratuity.masterDegree;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class SibsPaymentFile extends SibsPaymentFile_Base {
 
     public SibsPaymentFile() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public SibsPaymentFile(String filename) {
@@ -15,7 +15,7 @@ public class SibsPaymentFile extends SibsPaymentFile_Base {
     }
 
     public static SibsPaymentFile readByFilename(String filename) {
-        for (SibsPaymentFile sibsPaymentFile : RootDomainObject.getInstance().getSibsPaymentFiles()) {
+        for (SibsPaymentFile sibsPaymentFile : Bennu.getInstance().getSibsPaymentFilesSet()) {
             if (sibsPaymentFile.getFilename().equals(filename)) {
                 return sibsPaymentFile;
             }
@@ -34,7 +34,7 @@ public class SibsPaymentFile extends SibsPaymentFile_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -68,7 +68,7 @@
         private org.joda.time.LocalDate whenSentLetter;
         private java.lang.String ojbConcreteClass;
         private net.sourceforge.fenixedu.domain.Person person;
-        private net.sourceforge.fenixedu.domain.RootDomainObject rootDomainObject;
+        private org.fenixedu.bennu.core.domain.Bennu rootDomainObject;
         private net.sourceforge.fenixedu.domain.Employee employeeResponsibleForCancel;
  --%>
 	<logic:present name="event">

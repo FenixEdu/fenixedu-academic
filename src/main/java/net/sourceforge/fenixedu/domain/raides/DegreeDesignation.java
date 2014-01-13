@@ -3,15 +3,16 @@ package net.sourceforge.fenixedu.domain.raides;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.SchoolLevelType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class DegreeDesignation extends DegreeDesignation_Base {
 
     public DegreeDesignation(String code, String description, DegreeClassification degreeClassification) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setCode(code);
         setDescription(description);
         setDegreeClassification(degreeClassification);
@@ -50,6 +51,7 @@ public class DegreeDesignation extends DegreeDesignation_Base {
         setRootDomainObject(null);
         deleteDomainObject();
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Unit> getInstitutionUnit() {
         return getInstitutionUnitSet();
@@ -66,7 +68,7 @@ public class DegreeDesignation extends DegreeDesignation_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

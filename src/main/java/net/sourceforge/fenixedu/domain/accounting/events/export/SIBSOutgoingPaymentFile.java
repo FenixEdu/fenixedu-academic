@@ -12,7 +12,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
@@ -32,6 +31,7 @@ import net.sourceforge.fenixedu.util.sibs.SibsOutgoingPaymentFile;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
@@ -39,14 +39,8 @@ import org.joda.time.YearMonthDay;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.file.VirtualPath;
-import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
-
-    private static final String ROOT_DIR_DESCRIPTION = "SIBS Payment Codes File";
-    private static final String ROOT_DIR = "SIBSOutgoingPaymentFile";
-
     private static final Comparator<SIBSOutgoingPaymentFile> SUCCESSFUL_SENT_DATE_TIME_COMPARATOR =
             new Comparator<SIBSOutgoingPaymentFile>() {
 
@@ -81,7 +75,7 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
             StringBuilder errorsBuilder = new StringBuilder();
             byte[] paymentFileContents = createPaymentFile(lastSuccessfulSentDateTime, errorsBuilder).getBytes("ASCII");
             setErrors(errorsBuilder.toString());
-            init(getVirtualPath(), outgoingFilename(), outgoingFilename(), null, paymentFileContents, null);
+            init(outgoingFilename(), outgoingFilename(), paymentFileContents, null);
         } catch (UnsupportedEncodingException e) {
             throw new DomainException(e.getMessage(), e);
         }
@@ -160,7 +154,7 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
     }
 
     protected void exportIndividualCandidacyPaymentCodes(SibsOutgoingPaymentFile sibsFile, StringBuilder errorsBuilder) {
-        Set<? extends PaymentCode> individualCandidacyPaymentCodeList = RootDomainObject.getInstance().getPaymentCodesSet();
+        Set<? extends PaymentCode> individualCandidacyPaymentCodeList = Bennu.getInstance().getPaymentCodesSet();
 
         LocalDate date = new LocalDate();
 
@@ -209,16 +203,6 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
             appendToErrors(errorsBuilder, event.getExternalId(), e);
         }
 
-    }
-
-    protected VirtualPath getVirtualPath() {
-        final VirtualPath filePath = new VirtualPath();
-        filePath.addNode(new VirtualPathNode(ROOT_DIR, ROOT_DIR_DESCRIPTION));
-
-        filePath.addNode(new VirtualPathNode(subjectExecutionYear().getName(), subjectExecutionYear().getName()));
-        filePath.addNode(new VirtualPathNode(outgoingFilename(), outgoingFilename()));
-
-        return filePath;
     }
 
     private static ExecutionYear subjectExecutionYear() {

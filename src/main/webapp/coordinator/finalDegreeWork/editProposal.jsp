@@ -47,7 +47,7 @@
 		%>
 	</logic:empty>
 	<%
-		final net.sourceforge.fenixedu.domain.ExecutionDegree executionDegree = net.sourceforge.fenixedu.domain.FenixFramework.getDomainObject((String) request.getAttribute("executionDegreeOID"));
+		final net.sourceforge.fenixedu.domain.ExecutionDegree executionDegree = pt.ist.fenixframework.FenixFramework.getDomainObject((String) request.getAttribute("executionDegreeOID"));
 		final net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing scheduleing = executionDegree.getScheduling();
 		if (scheduleing.getAllowSimultaneousCoorientationAndCompanion().booleanValue()) {
 			showCoordinator = true;
@@ -64,7 +64,7 @@
 	<b><bean:message key="label.teacher.finalWork.responsable"/>:</b>
 	<table width="100%">
 		<tr>
-			<th width="16%"><bean:message key="label.teacher.finalWork.number"/>:</th>
+			<th width="16%"><bean:message key="label.teacher.finalWork.number" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/>:</th>
 			<td width="10%">
 				<logic:present name="orientator">
 					<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherId" property="responsableTeacherId" maxlength="6" size="6"
@@ -99,7 +99,7 @@
 	<b><bean:message key="label.teacher.finalWork.coResponsable"/>:</b>
 	<table width="100%">
 		<tr>
-			<th width="16%"><bean:message key="label.teacher.finalWork.number"/>:</th>
+			<th width="16%"><bean:message key="label.teacher.finalWork.number" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/>:</th>
 			<td width="10%">
 				<logic:present name="coorientator">
 					<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherId" property="coResponsableTeacherId" maxlength="6" size="6"

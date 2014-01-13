@@ -1,16 +1,16 @@
 package net.sourceforge.fenixedu.domain.person;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class IdDocumentTypeObject extends IdDocumentTypeObject_Base {
 
     public IdDocumentTypeObject() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public static IdDocumentTypeObject readByIDDocumentType(final IDDocumentType documentType) {
-        for (final IdDocumentTypeObject idDocumentType : RootDomainObject.getInstance().getIdDocumentTypesSet()) {
+        for (final IdDocumentTypeObject idDocumentType : Bennu.getInstance().getIdDocumentTypesSet()) {
             if (idDocumentType.getValue() == documentType) {
                 return idDocumentType;
             }
@@ -34,7 +34,7 @@ public class IdDocumentTypeObject extends IdDocumentTypeObject_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

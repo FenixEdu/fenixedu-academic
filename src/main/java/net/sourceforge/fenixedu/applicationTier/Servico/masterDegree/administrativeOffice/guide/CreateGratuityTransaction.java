@@ -9,7 +9,6 @@ import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import java.sql.Timestamp;
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideEntry;
@@ -20,6 +19,9 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
+
+import org.fenixedu.bennu.core.domain.User;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -30,7 +32,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class CreateGratuityTransaction {
 
     @Atomic
-    public static void run(String guideEntryID, IUserView userView) {
+    public static void run(String guideEntryID, User userView) {
         check(RolePredicates.MANAGER_PREDICATE);
 
         GuideEntry guideEntry = FenixFramework.getDomainObject(guideEntryID);
@@ -44,7 +46,7 @@ public class CreateGratuityTransaction {
             personAccount = new PersonAccount(guide.getPerson());
         }
 
-        Person responsible = Person.readPersonByUsername(userView.getUtilizador());
+        Person responsible = Person.readPersonByUsername(userView.getUsername());
 
         Double value = new Double(guideEntry.getPrice().doubleValue() * guideEntry.getQuantity().intValue());
 

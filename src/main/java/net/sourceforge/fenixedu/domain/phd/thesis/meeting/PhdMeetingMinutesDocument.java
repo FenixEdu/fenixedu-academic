@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.phd.thesis.meeting;
 
-import java.util.Collections;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
@@ -50,7 +49,7 @@ public class PhdMeetingMinutesDocument extends PhdMeetingMinutesDocument_Base {
         final Group coordinatorGroup = new CurrentDegreeCoordinatorsGroup(phdProgram.getDegree());
 
         final Group group = new GroupUnion(roleGroup, coordinatorGroup);
-        super.init(getVirtualPath(), filename, filename, Collections.EMPTY_SET, content, group);
+        super.init(filename, filename, content, group);
     }
 
     protected void setDocumentVersion(PhdMeeting meeting, PhdIndividualProgramDocumentType documentType) {
@@ -76,6 +75,7 @@ public class PhdMeetingMinutesDocument extends PhdMeetingMinutesDocument_Base {
     public PhdProgramProcessDocument getLastVersion() {
         return getPhdMeeting().getLatestDocumentVersion();
     }
+
     @Deprecated
     public boolean hasPhdMeeting() {
         return getPhdMeeting() != null;

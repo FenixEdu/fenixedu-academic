@@ -4,8 +4,9 @@ import java.util.Comparator;
 
 import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniJobBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.StringUtils;
 
+import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -24,7 +25,7 @@ public class Job extends Job_Base {
 
     private Job() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setLastModifiedDate(new DateTime());
     }
 
@@ -166,8 +167,9 @@ public class Job extends Job_Base {
         setRootDomainObject(null);
         deleteDomainObject();
     }
+
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

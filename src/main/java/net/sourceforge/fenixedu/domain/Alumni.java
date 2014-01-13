@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -51,7 +52,7 @@ public class Alumni extends Alumni_Base {
 
         setRegisteredWhen(new DateTime());
         setRegistered(registered);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public Alumni readByStudentNumber(Integer studentNumber) {
@@ -67,7 +68,7 @@ public class Alumni extends Alumni_Base {
     }
 
     public static Alumni readAlumniByStudentNumber(Integer studentNumber) {
-        for (Alumni alumni : RootDomainObject.getInstance().getAlumnis()) {
+        for (Alumni alumni : Bennu.getInstance().getAlumnisSet()) {
             if (alumni.getStudent().getNumber().equals(studentNumber)) {
                 return alumni;
             }
@@ -412,7 +413,11 @@ public class Alumni extends Alumni_Base {
     }
 
     public boolean hasPastLogin() {
-        return getStudent().getPerson().getUser().getLastLoginDateTimeDateTime() != null;
+        return false;
+        /*
+         * This slow used to exist in the old user class, however it was always null...
+         */
+        // return getStudent().getPerson().getUser().getLastLoginDateTimeDateTime() != null;
     }
 
     public boolean hasAnyPendingIdentityRequests() {
@@ -434,12 +439,7 @@ public class Alumni extends Alumni_Base {
     }
 
     public String getLoginUsername() {
-        Person person = getStudent().getPerson();
-        if (person.getIstUsername() == null) {
-            return person.getLoginAlias().iterator().next().getAlias();
-        }
-
-        return person.getIstUsername();
+        return getStudent().getPerson().getUsername();
     }
 
     public boolean hasStartedPublicRegistry() {
@@ -504,7 +504,7 @@ public class Alumni extends Alumni_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

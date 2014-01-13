@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.result;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.InsertExternalPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean;
@@ -10,7 +9,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
-import net.sourceforge.fenixedu.util.researcher.ResearchResultMetaDataManager;
 import pt.ist.fenixframework.Atomic;
 
 public class CreateResultParticipation {
@@ -47,6 +45,5 @@ public class CreateResultParticipation {
             enroledParticipator = participator.getPerson();
         }
         result.addParticipation(enroledParticipator, role);
-        ResearchResultMetaDataManager.updateMetaDataInStorageFor(result);
     }
 }

@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
@@ -31,12 +30,12 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 import pt.utl.ist.fenix.tools.predicates.ResultCollection;
-import pt.utl.ist.fenix.tools.util.StringAppender;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -68,7 +67,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 
     public CurriculumModule() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setCreationDateDateTime(new DateTime());
     }
 
@@ -420,7 +419,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
 
         public String getLocalizedName() {
             return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(
-                    StringAppender.append(ConclusionValue.class.getSimpleName(), ".", name()));
+                    ConclusionValue.class.getSimpleName() + "." + name());
         }
     }
 
@@ -540,7 +539,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

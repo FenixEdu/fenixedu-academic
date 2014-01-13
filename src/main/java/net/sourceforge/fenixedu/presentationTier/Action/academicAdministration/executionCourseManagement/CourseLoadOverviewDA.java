@@ -24,8 +24,8 @@ import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 @Forwards({ @Forward(name = "viewInconsistencies", path = "/academicAdministration/courseLoadOverview/viewInconsistencies.jsp") })
 public class CourseLoadOverviewDA extends FenixDispatchAction {
 
-    public ActionForward viewInconsistencies(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
-            final HttpServletResponse response) {
+    public ActionForward viewInconsistencies(final ActionMapping mapping, final ActionForm form,
+            final HttpServletRequest request, final HttpServletResponse response) {
         CourseLoadOverviewBean bean = getRenderedObject("courseLoadOverviewBean");
         if (bean == null) {
             bean = new CourseLoadOverviewBean();
@@ -37,14 +37,18 @@ public class CourseLoadOverviewDA extends FenixDispatchAction {
         return mapping.findForward("viewInconsistencies");
     }
 
-    public ActionForward downloadInconsistencies(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
-            final HttpServletResponse response) {
+    public ActionForward downloadInconsistencies(final ActionMapping mapping, final ActionForm form,
+            final HttpServletRequest request, final HttpServletResponse response) {
         final ExecutionSemester executionSemester = getDomainObject(request, "executionSemesterOid");
         final CourseLoadOverviewBean bean = new CourseLoadOverviewBean(executionSemester);
         final StyledExcelSpreadsheet spreadsheet = bean.getInconsistencySpreadsheet();
 
         response.setContentType("application/vnd.ms-excel");
-        response.setHeader("Content-disposition", "attachment; filename=" + BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice", "label.course.load.inconsistency.filename") + ".xls");
+        response.setHeader(
+                "Content-disposition",
+                "attachment; filename="
+                        + BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice",
+                                "label.course.load.inconsistency.filename") + ".xls");
 
         try {
             final ServletOutputStream writer = response.getOutputStream();

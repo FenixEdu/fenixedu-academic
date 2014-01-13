@@ -8,8 +8,8 @@
 <html:html xhtml="true">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<meta name="keywords" content="<bean:message key="meta.keywords" bundle="GLOBAL_RESOURCES"/>" />
-		<meta name="description" content="<bean:message key="meta.description" bundle="GLOBAL_RESOURCES"/>" />
+		<meta name="keywords" content="<bean:message key="meta.keywords" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="GLOBAL_RESOURCES"/>" />
+		<meta name="description" content="<bean:message key="meta.description" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="GLOBAL_RESOURCES"/>" />
 
 		<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/logdotist.css" />
 		<link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/iststyle.css" />
@@ -105,12 +105,5 @@
 			</bean:define>
 			<jsp:include page="degreesTable.jsp"/>
 		</div>
-
-		<br/>
-		request charset: <%= request.getCharacterEncoding() %>
-		<br/>
-		default charst: <%= Charset.defaultCharset() %>
-		<br/>
-
 	</body>
 </html:html>

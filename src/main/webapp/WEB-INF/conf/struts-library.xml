@@ -22,7 +22,7 @@
       <!-- ========== Action Mapping Definitions =============================== -->
       <action-mappings type="org.apache.struts.action.ActionMapping"></action-mappings>
       <!-- ========== Controller Configuration ================================ -->
-      <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"></controller>
+      <controller processorClass="pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessor"></controller>
       <!-- ========== Message Resources Definitions ============================ -->
       <message-resources null="false" parameter="resources.LibraryResources"></message-resources>
       <message-resources null="false" key="LIBRARY_RESOURCES" parameter="resources.LibraryResources"></message-resources>
@@ -32,7 +32,7 @@
       <message-resources null="false" key="MANAGER_RESOURCES" parameter="resources.ManagerResources"></message-resources>
       <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
       <message-resources null="false" key="IMAGE_RESOURCES" parameter="resources.ImageResources"></message-resources>
-      <message-resources null="false" key="HTMLALT_RESOURCES" parameter="resources.HtmlAltResources"></message-resources>
+      <message-resources null="false" key="HTMLALT_RESOURCES" parameter="resources.HtmlaltResources"></message-resources>
       <message-resources null="false" key="PORTAL_RESOURCES" parameter="resources.PortalResources"></message-resources>
       <message-resources null="false" key="ENUMERATION_RESOURCES" parameter="resources.EnumerationResources"></message-resources>
       <message-resources null="false" key="DOMAIN_EXCEPTION_RESOURCES" parameter="resources.DomainExceptionResources"></message-resources>

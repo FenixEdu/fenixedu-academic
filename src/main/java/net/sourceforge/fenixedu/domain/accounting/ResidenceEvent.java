@@ -9,7 +9,6 @@ import java.util.Set;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.SibsTransactionDetailDTO;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResidenceManagementUnit;
@@ -18,6 +17,7 @@ import net.sourceforge.fenixedu.domain.residence.ResidenceMonth;
 import net.sourceforge.fenixedu.predicates.EventsPredicates;
 import net.sourceforge.fenixedu.util.Money;
 
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -94,13 +94,13 @@ public class ResidenceEvent extends ResidenceEvent_Base {
     }
 
     public DateTime getPaymentDate() {
-        return getNonAdjustingTransactions().isEmpty() ? null : getNonAdjustingTransactions().iterator().next().getTransactionDetail()
-                .getWhenRegistered();
+        return getNonAdjustingTransactions().isEmpty() ? null : getNonAdjustingTransactions().iterator().next()
+                .getTransactionDetail().getWhenRegistered();
     }
 
     public PaymentMode getPaymentMode() {
-        return getNonAdjustingTransactions().isEmpty() ? null : getNonAdjustingTransactions().iterator().next().getTransactionDetail()
-                .getPaymentMode();
+        return getNonAdjustingTransactions().isEmpty() ? null : getNonAdjustingTransactions().iterator().next()
+                .getTransactionDetail().getPaymentMode();
     }
 
     @Override
@@ -119,8 +119,11 @@ public class ResidenceEvent extends ResidenceEvent_Base {
     @Override
     protected List<AccountingEventPaymentCode> updatePaymentCodes() {
         final EntryDTO entryDTO = calculateEntries(new DateTime()).iterator().next();
-        getNonProcessedPaymentCodes().iterator().next().update(new YearMonthDay(), getPaymentLimitDate().toYearMonthDay(),
-                entryDTO.getAmountToPay(), entryDTO.getAmountToPay());
+        getNonProcessedPaymentCodes()
+                .iterator()
+                .next()
+                .update(new YearMonthDay(), getPaymentLimitDate().toYearMonthDay(), entryDTO.getAmountToPay(),
+                        entryDTO.getAmountToPay());
 
         return getNonProcessedPaymentCodes();
     }

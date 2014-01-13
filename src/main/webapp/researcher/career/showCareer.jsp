@@ -8,8 +8,6 @@
 <em><bean:message bundle="RESEARCHER_RESOURCES" key="label.researchPortal"/></em>
 <h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.career.title.label"/></h2>
 
-<bean:define id="userView" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>"/>
-
 <div class="infoop2">
     <p></p><bean:message bundle="RESEARCHER_RESOURCES" key="label.career.purpose.help"/><p>
 </div>
@@ -37,7 +35,7 @@
 <logic:present name="creating">
     <fr:form action="/career/careerManagement.do?method=showCareer">
 	    <fr:create id="createCareer" schema="researcher.career" type="net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer">
-	        <fr:hidden slot="person" name="userView" property="person"/>
+	        <fr:hidden slot="person" name="LOGGED_USER_ATTRIBUTE" property="person"/>
 	        <fr:layout name="tabular">
 		        <fr:property name="classes" value="tstyle5 thlight thright"/>
 		        <fr:property name="columnClasses" value=",,tderror1 tdclear"/>

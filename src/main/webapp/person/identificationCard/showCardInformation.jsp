@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"%>
 <%@page import="java.net.URLEncoder"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
@@ -19,6 +20,8 @@
 	} else {
 	    instructionKey = "label.identification.card.instructions.student";
 	}
+	final String institutionAcronym = Unit.getInstitutionAcronym();
+	final String institutionName = Unit.getInstitutionName().getContent();
 	final String username = person.getIstUsername() == null ? "" : person.getIstUsername();
 	final String name = URLEncoder.encode(person.getNickname(), "UTF-8");
 	final String mobile = person.getMobile();
@@ -34,7 +37,7 @@
 %>
 
 <pre style="font-family: Trebuchet MS, Arial, Helvetica, sans-serif; text-align: justify; width: 80%; white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word;"
-><bean:message bundle="APPLICATION_RESOURCES" key="<%= instructionKey %>" arg0="<%= sibUrl %>"/></pre>
+><bean:message bundle="APPLICATION_RESOURCES" key="<%= instructionKey %>" arg0="<%= sibUrl %>" arg1="<%= institutionAcronym %>" arg2="<%= institutionName %>"/></pre>
 
 <%--
 <bean:define id="url" type="java.lang.String"><%= request.getContextPath() %>/identificationCard.do?method=prepare&amp;personOID=<bean:write name="person" property="externalId"/></bean:define>

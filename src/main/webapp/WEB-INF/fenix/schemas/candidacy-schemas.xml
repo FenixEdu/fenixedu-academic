@@ -437,22 +437,6 @@
 </schema>
 
 <!-- First Time Student Schemas -->
-<schema name="PasswordForm" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.PasswordForm" bundle="CANDIDATE_RESOURCES">
-    <slot name="username" read-only="true" />
-    <slot name="oldPassword" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="password">
-	    <property name="size" value="40"/>
-		<property name="maxLength" value="40"/>
-    </slot>
-    <slot name="newPassword" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="password">
-   	    <property name="size" value="40"/>
-		<property name="maxLength" value="40"/>
-    </slot>
-    <slot name="confirmationPassword" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="password" key="label.net.sourceforge.fenixedu.domain.candidacy.workflow.form.PasswordForm.confirmationPassword">
-   	    <property name="size" value="40"/>
-		<property name="maxLength" value="40"/>
-    </slot>
-</schema>
-
 <schema name="PersonalInformationForm" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.PersonalInformationForm" bundle="CANDIDATE_RESOURCES">
     <slot name="name" read-only="true" />
     <slot name="username" read-only="true"/>
@@ -887,22 +871,6 @@
 
 
 <!-- Employee Candidacy Schemas -->
-<schema name="PasswordForm.forEmployee" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.PasswordForm" bundle="CANDIDATE_RESOURCES">
-    <slot name="username" read-only="true" />
-    <slot name="oldPassword" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="password">
-	    <property name="size" value="40"/>
-		<property name="maxLength" value="40"/>
-    </slot>
-    <slot name="newPassword" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="password">
-   	    <property name="size" value="40"/>
-		<property name="maxLength" value="40"/>
-    </slot>
-    <slot name="confirmationPassword" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="password" key="label.net.sourceforge.fenixedu.domain.candidacy.workflow.form.PasswordForm.confirmationPassword">
-   	    <property name="size" value="40"/>
-		<property name="maxLength" value="40"/>
-    </slot>
-</schema>
-
 <schema name="PersonalInformationForm.forEmployee" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.PersonalInformationForm" bundle="CANDIDATE_RESOURCES" extends="PersonalInformationForm">
     <slot name="name" read-only="true" />
     <slot name="username" read-only="true"/>

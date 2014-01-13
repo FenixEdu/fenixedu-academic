@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.util.renderer.GanttDiagram;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.jcs.access.exception.InvalidArgumentException;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -47,8 +46,7 @@ import pt.ist.fenixframework.FenixFramework;
         @Forward(name = "prepareRoomsPunctualScheduling", path = "prepare-rooms-punctual-scheduling") })
 public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws InvalidArgumentException {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         Set<GenericEvent> genericEvents = GenericEvent.getActiveGenericEventsForRoomOccupations();
         if (!genericEvents.isEmpty()) {
 
@@ -70,7 +68,7 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareViewDailyView(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException {
+            HttpServletResponse response) {
         Set<GenericEvent> genericEvents = GenericEvent.getActiveGenericEventsForRoomOccupations();
         if (!genericEvents.isEmpty()) {
             YearMonthDay firstDay = getFirstDay(request);
@@ -84,7 +82,7 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareViewMonthlyView(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException {
+            HttpServletResponse response) {
         Set<GenericEvent> genericEvents = GenericEvent.getActiveGenericEventsForRoomOccupations();
         if (!genericEvents.isEmpty()) {
             YearMonthDay firstDay = getFirstDay(request);
@@ -98,7 +96,7 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareView(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException {
+            HttpServletResponse response) {
         GenericEvent genericEvent = getGenericEventFromParameter(request);
         request.setAttribute("genericEvent", genericEvent);
         request.setAttribute("roomsPunctualSchedulingBean", new RoomsPunctualSchedulingBean(genericEvent));
@@ -106,7 +104,7 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
     }
 
     public ActionForward deleteRoomsPunctualScheduling(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException, FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         GenericEvent genericEventFromParameter = getGenericEventFromParameter(request);
         try {
@@ -119,7 +117,7 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
     }
 
     public ActionForward prepareCreate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, InvalidArgumentException {
+            HttpServletResponse response) throws FenixServiceException {
 
         RoomsPunctualSchedulingBean bean = null;
         IViewState viewState = RenderUtils.getViewState("roomsPunctualSchedulingWithPeriodType");
@@ -229,7 +227,7 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
     }
 
     public ActionForward createRoomsPunctualScheduling(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, InvalidArgumentException {
+            HttpServletResponse response) throws FenixServiceException {
 
         IViewState viewState = RenderUtils.getViewState("roomsPunctualSchedulingWithDescriptions");
         RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) viewState.getMetaObject().getObject();
@@ -247,7 +245,7 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
     }
 
     public ActionForward editRoomsPunctualScheduling(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, InvalidArgumentException {
+            HttpServletResponse response) throws FenixServiceException {
 
         IViewState viewState = RenderUtils.getViewState("roomsPunctualSchedulingWithDescriptions");
         RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) viewState.getMetaObject().getObject();
@@ -265,7 +263,7 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
     }
 
     public ActionForward seeRoomsPunctualSchedulingHistory(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, InvalidArgumentException {
+            HttpServletResponse response) throws FenixServiceException {
 
         RoomsPunctualSchedulingHistoryBean bean = null;
         IViewState viewState = RenderUtils.getViewState("roomsPunctualSchedulingHistoryWithYearAndMonth");

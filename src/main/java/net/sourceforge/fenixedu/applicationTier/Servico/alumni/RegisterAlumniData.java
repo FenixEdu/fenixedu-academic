@@ -187,7 +187,7 @@ public class RegisterAlumniData extends AlumniNotificationService {
     private static final RegisterAlumniData serviceInstance = new RegisterAlumniData();
 
     @Atomic
-    public static Alumni runRegisterAlumniData(Alumni alumni, UUID urlRequestToken) throws FenixServiceException  {
+    public static Alumni runRegisterAlumniData(Alumni alumni, UUID urlRequestToken) throws FenixServiceException {
         return serviceInstance.run(alumni, urlRequestToken);
     }
 

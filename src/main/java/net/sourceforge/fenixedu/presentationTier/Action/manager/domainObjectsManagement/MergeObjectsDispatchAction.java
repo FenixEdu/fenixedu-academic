@@ -14,7 +14,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteObjectByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.TransferDomainObjectProperty;
@@ -28,8 +27,11 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -48,6 +50,8 @@ import pt.ist.fenixframework.dml.Slot;
 @Forwards(value = { @Forward(name = "displayObjects", path = "/manager/personManagement/mergeObjects.jsp"),
         @Forward(name = "chooseObjects", path = "/manager/personManagement/chooseObjectsToMerge.jsp") })
 public class MergeObjectsDispatchAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(MergeObjectsDispatchAction.class);
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
@@ -197,7 +201,7 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws FenixServiceException, IllegalAccessException, InvocationTargetException,
             NoSuchMethodException, ClassNotFoundException {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         String object1ExternalId = request.getParameter("object1ExternalId");
         String object2ExternalId = request.getParameter("object2ExternalId");
@@ -219,7 +223,7 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
             throws FenixServiceException, IllegalAccessException, InvocationTargetException, NoSuchMethodException,
             ClassNotFoundException {
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         String objectExternalId = request.getParameter("objectExternalId");
 
         final String classToMerge = request.getParameter("classToMerge");
@@ -227,7 +231,7 @@ public class MergeObjectsDispatchAction extends FenixDispatchAction {
         try {
             DeleteObjectByOID.run(objectExternalId);
         } catch (DomainException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return chooseObjects(mapping, form, request, response);
         }
         request.setAttribute("domainClasses", getClasses());

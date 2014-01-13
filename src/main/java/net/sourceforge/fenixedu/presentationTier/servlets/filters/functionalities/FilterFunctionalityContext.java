@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.contents.Container;
@@ -20,6 +19,8 @@ import net.sourceforge.fenixedu.domain.contents.Redirect;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * This functionality context is created from the {@link CheckAvailabilityFilter filter} to provide a context that allows
@@ -243,7 +244,7 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
             if (content instanceof Redirect) {
                 continue;
             }
-            if (content != RootDomainObject.getInstance().getRootPortal()) {
+            if (content != Bennu.getInstance().getRootPortal()) {
                 final String name = content.getNormalizedName().getContent();
                 if (name.length() > 0 && (stringBuilder.length() > 0 || (stringBuilder.length() == 0 && name.charAt(0) != '/'))) {
                     stringBuilder.append('/');

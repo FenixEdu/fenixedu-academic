@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
-import org.apache.jcs.access.exception.InvalidArgumentException;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -29,8 +28,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards(value = { @Forward(name = "prepareAccessGroupsManagement", path = "prepare-access-groups-management") })
 public class AccessGroupsManagementDA extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws InvalidArgumentException {
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
         Role role = Role.getRoleByRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER);
         request.setAttribute("resourceAllocationRole", role);
@@ -38,7 +36,7 @@ public class AccessGroupsManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward addPersonToAccessGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException,  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         AccessGroupBean bean = getRenderedObject("PersonToAccessGroupBeanID");
         ResourceAllocationAccessGroupType accessGroupType = bean != null ? bean.getAccessGroupType() : null;
@@ -67,7 +65,7 @@ public class AccessGroupsManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward removePersonFromAccessGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException,  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
 
         Role role = Role.getRoleByRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER);
         String groupExpression = getGroupExpressionFromRequest(request);

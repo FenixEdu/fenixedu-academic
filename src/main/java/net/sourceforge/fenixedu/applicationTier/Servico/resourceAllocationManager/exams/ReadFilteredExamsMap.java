@@ -23,7 +23,9 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -51,7 +53,7 @@ public class ReadFilteredExamsMap {
                 obtainInfoExecutionCourses(curricularYears, infoExecutionPeriod, executionDegree);
         result.setExecutionCourses(infoExecutionCourses);
 
-        if (!AccessControl.getUserView().hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
+        if (!Authenticate.getUser().getPerson().hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
             PublishedExamsMapAuthorizationFilter.execute(result);
         }
 

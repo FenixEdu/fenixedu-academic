@@ -7,9 +7,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -25,7 +25,7 @@ public class CareerWorkshopConfirmationEvent extends CareerWorkshopConfirmationE
         setBeginDate(beginDate);
         setEndDate(endDate);
         setCareerWorkshopApplicationEvent(applicationEvent);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     private void evaluateConsistency(CareerWorkshopApplicationEvent applicationEvent, DateTime beginDate, DateTime endDate) {
@@ -77,7 +77,7 @@ public class CareerWorkshopConfirmationEvent extends CareerWorkshopConfirmationE
 
     @Override
     public CareerWorkshopConfirmationSpreadsheet getConfirmations() {
-        if (hasRootDomainObject()) {
+        if (hasBennu()) {
             if (getLastUpdate() == null || super.getConfirmations() == null) {
                 generateSpreadsheet();
             }
@@ -191,7 +191,7 @@ public class CareerWorkshopConfirmationEvent extends CareerWorkshopConfirmationE
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

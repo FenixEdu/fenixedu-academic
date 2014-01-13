@@ -9,7 +9,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.contributor.ReadContributor;
@@ -34,8 +33,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -74,7 +74,7 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
             HttpServletResponse response) throws Exception {
 
         DynaActionForm createGuideFromTransactionsForm = (DynaActionForm) form;
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         Integer contributorNumber = (Integer) createGuideFromTransactionsForm.get("contributorNumber");
         String gratuitySituationId = (String) createGuideFromTransactionsForm.get("gratuitySituationId");
@@ -121,7 +121,7 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
             throws Exception {
 
         DynaActionForm createGuideFromTransactionsForm = (DynaActionForm) form;
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         Integer contributorNumber = (Integer) createGuideFromTransactionsForm.get("contributorNumber");
         String gratuitySituationId = (String) createGuideFromTransactionsForm.get("gratuitySituationId");
@@ -167,7 +167,7 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
      * @throws NonExistingActionException
      * @throws FenixActionException
      */
-    private InfoContributor readContributor(ActionMapping errorMapping, IUserView userView, Integer contributorNumber)
+    private InfoContributor readContributor(ActionMapping errorMapping, User userView, Integer contributorNumber)
             throws NonExistingActionException, FenixActionException {
 
         InfoContributor infoContributor = null;
@@ -190,8 +190,7 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
      * @return
      * @throws FenixActionException
      */
-    private InfoGratuitySituation readGratuitySituation(IUserView userView, String gratuitySituationId)
-            throws FenixActionException {
+    private InfoGratuitySituation readGratuitySituation(User userView, String gratuitySituationId) throws FenixActionException {
         InfoGratuitySituation infoGratuitySituation = null;
 
         try {
@@ -213,7 +212,7 @@ public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchActi
      * @throws FenixActionException
      * @throws NonExistingActionException
      */
-    private InfoStudent readStudent(ActionMapping mapping, IUserView userView, String studentId) throws FenixActionException,
+    private InfoStudent readStudent(ActionMapping mapping, User userView, String studentId) throws FenixActionException,
             NonExistingActionException {
         InfoStudent infoStudent = null;
 

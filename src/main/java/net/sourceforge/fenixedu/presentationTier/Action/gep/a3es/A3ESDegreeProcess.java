@@ -549,7 +549,7 @@ public class A3ESDegreeProcess implements Serializable {
 
             toplevel.put("q-cf-name", info.getTeacher().getPerson().getName());
             // toplevel.put("q-cf-ies",
-            // RootDomainObject.getInstance().getInstitutionUnit().getName());
+            // Bennu.getInstance().getInstitutionUnit().getName());
             // toplevel.put("q-cf-uo", info.getUnitName());
             toplevel.put("q-cf-cat", info.getProfessionalCategoryName());
             toplevel.put("q-cf-time", info.getProfessionalRegimeTime());
@@ -557,7 +557,7 @@ public class A3ESDegreeProcess implements Serializable {
             {
                 file.put("name", cut("nome", info.getTeacher().getPerson().getName(), output, 200));
                 // file.put("ies", cut("ies",
-                // RootDomainObject.getInstance().getInstitutionUnit().getName(),
+                // Bennu.getInstance().getInstitutionUnit().getName(),
                 // output, 200));
                 // file.put("uo", cut("uo", info.getUnitName(), output, 200));
                 file.put("cat", info.getProfessionalCategoryName());
@@ -620,11 +620,11 @@ public class A3ESDegreeProcess implements Serializable {
                     }
                     for (int j = i; j < 3; j++) {
                         JSONObject academic = new JSONObject();
-                            academic.put("year", StringUtils.EMPTY);
-                            academic.put("degree", StringUtils.EMPTY);
-                            academic.put("area", StringUtils.EMPTY);
-                            academic.put("ies", StringUtils.EMPTY);
-                            academic.put("rank", StringUtils.EMPTY);
+                        academic.put("year", StringUtils.EMPTY);
+                        academic.put("degree", StringUtils.EMPTY);
+                        academic.put("area", StringUtils.EMPTY);
+                        academic.put("ies", StringUtils.EMPTY);
+                        academic.put("rank", StringUtils.EMPTY);
                         academicArray.add(academic);
                     }
                     file.put("form-academic", academicArray);

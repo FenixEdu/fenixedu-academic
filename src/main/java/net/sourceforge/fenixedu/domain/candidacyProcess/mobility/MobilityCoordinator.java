@@ -1,17 +1,18 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.mobility;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCoordinatorBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class MobilityCoordinator extends MobilityCoordinator_Base {
 
     private MobilityCoordinator() {
         super();
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public MobilityCoordinator(final MobilityApplicationProcess applicationProcess, final ErasmusCoordinatorBean bean) {
@@ -61,7 +62,7 @@ public class MobilityCoordinator extends MobilityCoordinator_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

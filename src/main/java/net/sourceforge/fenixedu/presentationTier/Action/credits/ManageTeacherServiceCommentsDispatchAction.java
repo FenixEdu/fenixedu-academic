@@ -20,7 +20,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class ManageTeacherServiceCommentsDispatchAction extends FenixDispatchAction {
 
     public ActionForward editTeacherServiceComment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
 
         TeacherServiceComment teacherServiceComment =
                 FenixFramework.getDomainObject((String) getFromRequest(request, "teacherServiceCommentOid"));
@@ -28,8 +28,7 @@ public class ManageTeacherServiceCommentsDispatchAction extends FenixDispatchAct
             request.setAttribute("teacherServiceComment", teacherServiceComment);
         } else {
             Teacher teacher = FenixFramework.getDomainObject((String) getFromRequest(request, "teacherOid"));
-            ExecutionYear executionYear =
-                    FenixFramework.getDomainObject((String) getFromRequest(request, "executionYearOid"));
+            ExecutionYear executionYear = FenixFramework.getDomainObject((String) getFromRequest(request, "executionYearOid"));
 
             ExecutionSemester firstExecutionPeriod = executionYear.getFirstExecutionPeriod();
             TeacherService teacherService = TeacherService.getTeacherService(teacher, firstExecutionPeriod);
@@ -40,7 +39,7 @@ public class ManageTeacherServiceCommentsDispatchAction extends FenixDispatchAct
     }
 
     public ActionForward deleteTeacherServiceComment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
 
         TeacherServiceComment teacherServiceComment =
                 FenixFramework.getDomainObject((String) getFromRequest(request, "teacherServiceCommentOid"));

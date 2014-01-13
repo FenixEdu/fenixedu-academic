@@ -5,7 +5,6 @@ import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.Branch;
@@ -15,14 +14,17 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
+
+import org.fenixedu.bennu.core.domain.User;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class EditPosGradStudentCurricularPlanStateAndCredits {
 
     @Atomic
-    public static void run(IUserView userView, String studentCurricularPlanId, String currentState, Double credits,
-            String startDate, List<String> extraCurricularOIDs, String observations, String branchId, String specialization)
+    public static void run(User userView, String studentCurricularPlanId, String currentState, Double credits, String startDate,
+            List<String> extraCurricularOIDs, String observations, String branchId, String specialization)
             throws FenixServiceException {
         check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
         final StudentCurricularPlan scp = FenixFramework.getDomainObject(studentCurricularPlanId);
@@ -30,7 +32,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits {
             throw new InvalidArgumentsServiceException();
         }
 
-        final Person person = Person.readPersonByUsername(userView.getUtilizador());
+        final Person person = Person.readPersonByUsername(userView.getUsername());
         if (person == null) {
             throw new InvalidArgumentsServiceException();
         }

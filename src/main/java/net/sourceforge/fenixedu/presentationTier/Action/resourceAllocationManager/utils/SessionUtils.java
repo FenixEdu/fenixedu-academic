@@ -17,7 +17,6 @@ import java.util.Vector;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -27,8 +26,8 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.validator.DynaValidatorForm;
-
-import pt.ist.fenixWebFramework.security.UserView;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 /**
  * @author jpvl
@@ -42,7 +41,7 @@ public final class SessionUtils {
         // Nao verifica se ja existem em sessao porque podem
         // ser de um periodo execucao diferente
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         // Ler Disciplinas em Execucao
         InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(PresentationConstants.CURRICULAR_YEAR);
         InfoExecutionDegree infoExecutionDegree =
@@ -68,7 +67,7 @@ public final class SessionUtils {
         // Nao verifica se ja existem em sessao porque podem
         // ser de um periodo execucao diferente
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         // Ler Disciplinas em Execucao
         InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(PresentationConstants.CURRICULAR_YEAR);
         InfoExecutionDegree infoExecutionDegree =

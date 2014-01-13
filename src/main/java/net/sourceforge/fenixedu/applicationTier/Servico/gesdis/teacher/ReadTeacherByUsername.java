@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.gesdis.teacher;
 
-
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.Teacher;
 import pt.ist.fenixframework.Atomic;

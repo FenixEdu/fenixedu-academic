@@ -16,11 +16,17 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Tânia Pousão
  * 
  */
 public class GratuityFileSIBS extends GratuityFile {
+
+    private static final Logger logger = LoggerFactory.getLogger(GratuityFileSIBS.class);
+
     public static final int WHITE_SPACES_HEADER = 3;
 
     public static final int WHITE_SPACES_LINE = 2;
@@ -71,7 +77,7 @@ public class GratuityFileSIBS extends GratuityFile {
 
             return file;
         } catch (Exception exception) {
-            exception.printStackTrace();
+            logger.error(exception.getMessage(), exception);
             throw new Exception();
         }
     }

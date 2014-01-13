@@ -11,7 +11,6 @@ import java.util.TreeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.EnrollStudentInShifts;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateBibliographicReference;
@@ -57,6 +56,9 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.core.domain.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -66,6 +68,8 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ManageExecutionCourseDA extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(ManageExecutionCourseDA.class);
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -255,7 +259,8 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
                 final CompetenceCourse competenceCourse = competenceCourses.iterator().next();
                 final String pt = competenceCourse.getEvaluationMethod();
                 final String en = competenceCourse.getEvaluationMethodEn();
-                evaluationMethodMls = evaluationMethodMls.with(Language.pt, pt == null ? "" : pt).with(Language.en, en == null ? "" : en);
+                evaluationMethodMls =
+                        evaluationMethodMls.with(Language.pt, pt == null ? "" : pt).with(Language.en, en == null ? "" : en);
             }
             EditEvaluation.runEditEvaluation(executionCourse, evaluationMethodMls);
             evaluationMethod = executionCourse.getEvaluationMethod();
@@ -336,7 +341,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         final String optional = dynaActionForm.getString("optional");
 
         final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
 
         CreateBibliographicReference.runCreateBibliographicReference(executionCourse.getExternalId(), title, authors, reference,
                 year, Boolean.valueOf(optional));
@@ -377,7 +382,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
         final BibliographicReference bibliographicReference =
                 findBibliographicReference(executionCourse, bibliographicReferenceIDString);
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
 
         EditBibliographicReference.runEditBibliographicReference(bibliographicReference.getExternalId(), title, authors,
                 reference, year, Boolean.valueOf(optional));
@@ -389,7 +394,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         final String bibliographicReferenceIDString = request.getParameter("bibliographicReferenceID");
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
         DeleteBibliographicReference.runDeleteBibliographicReference(bibliographicReferenceIDString);
 
         return mapping.findForward("bibliographicReference");
@@ -631,7 +636,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
     }
 
     private static ExecutionCourse findExecutionCourse(final HttpServletRequest request, final String executionCourseID) {
-        final IUserView userView = getUserView(request);
+        final User userView = getUserView(request);
 
         if (userView != null) {
             final Person person = userView.getPerson();
@@ -803,7 +808,7 @@ public class ManageExecutionCourseDA extends FenixDispatchAction {
         try {
             return new Integer(id);
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return null;
         }
     }

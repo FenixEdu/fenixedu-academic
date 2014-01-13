@@ -38,6 +38,7 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.lang.StringUtils;
 import org.htmlcleaner.HtmlCleaner;
@@ -49,13 +50,14 @@ import org.joda.time.LocalDate;
 import org.joda.time.Period;
 import org.joda.time.YearMonthDay;
 import org.joda.time.format.DateTimeFormat;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 import org.xml.sax.SAXException;
 
-import pt.ist.fenixWebFramework.FenixWebFramework;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.ResponseWrapper;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -69,6 +71,9 @@ import com.lowagie.text.pdf.PdfReader;
 import com.lowagie.text.pdf.PdfStamper;
 
 public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
+
+    private static final Logger logger = LoggerFactory.getLogger(ProcessCandidacyPrintAllDocumentsFilter.class);
+
     private static final String SANTANDER_APPLICATION_PDF_PATH = "/SANTANDER_APPLICATION_FORM.pdf";
     private static final String SANTANDER_APPLICATION_CARD_PDF_PATH = "/SANTANDER_APPLICATION_CARD_FORM.pdf";
     private static final String BPI_AEIST_CARD_PDF_PATH = "/BPI_AEIST_CARD_FORM.pdf";
@@ -166,6 +171,10 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
     }
 
     private class SantanderCardPdfFiller {
+
+        private final Logger logger = LoggerFactory
+                .getLogger(ProcessCandidacyPrintAllDocumentsFilter.SantanderCardPdfFiller.class);
+
         AcroFields form;
 
         public ByteArrayOutputStream getFilledPdf(Person person, StudentCandidacy candidacy) throws IOException,
@@ -197,9 +206,9 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
                     sequenceBarcodeImg.scalePercent(45);
                     stamper.getOverContent(1).addImage(sequenceBarcodeImg);
                 } catch (OutputException e) {
-                    e.printStackTrace();
+                    logger.error(e.getMessage(), e);
                 } catch (BarcodeException be) {
-                    be.printStackTrace();
+                    logger.error(be.getMessage(), be);
                 }
 
                 Jpeg photo = new Jpeg(photoEntryForPerson.getPhotoAsByteArray());
@@ -218,9 +227,9 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
                 studentIdBarcodeImg.scalePercent(45);
                 stamper.getOverContent(1).addImage(studentIdBarcodeImg);
             } catch (OutputException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             } catch (BarcodeException be) {
-                be.printStackTrace();
+                logger.error(be.getMessage(), be);
             }
 
             stamper.setFormFlattening(true);
@@ -449,11 +458,11 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 
                 response.flushBuffer();
             } catch (ParserConfigurationException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             } catch (SAXException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             } catch (DocumentException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
         }
     }
@@ -471,14 +480,14 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 
             return new SimpleHtmlSerializer(cleaner.getProperties()).getAsString(root);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
         return StringUtils.EMPTY;
     }
 
     private void patchLinks(Document doc, HttpServletRequest request) {
         // build basePath
-        String appContext = FenixWebFramework.getConfig().getAppContext();
+        String appContext = FenixConfigurationManager.getConfiguration().appContext();
 
         // patch css link nodes
         NodeList linkNodes = doc.getElementsByTagName("link");
@@ -494,7 +503,7 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
                 String realPath = servletContext.getResource(href).toString();
                 link.setAttribute("href", realPath);
             } catch (MalformedURLException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
 
         }
@@ -513,7 +522,7 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
                 String realPath = servletContext.getResource(src).toString();
                 img.setAttribute("src", realPath);
             } catch (MalformedURLException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
         }
     }
@@ -526,7 +535,7 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
         try {
             copy.addDocument(new PdfReader(createAcademicAdminProcessSheet(person).toByteArray()));
         } catch (JRException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
         copy.addDocument(new PdfReader(originalDoc));
         copy.addDocument(new PdfReader(new SantanderPdfFiller().getFilledPdf(person).toByteArray()));

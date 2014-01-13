@@ -10,7 +10,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYearIntervalBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Item;
@@ -25,6 +24,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixframework.FenixFramework;
 
@@ -56,7 +56,7 @@ public abstract class SiteVisualizationDA extends FenixDispatchAction {
             return getSiteDefaultView(mapping, form, request, response);
         }
 
-        IUserView userView = prepareUserView(request);
+        User userView = prepareUserView(request);
         FunctionalityContext context = prepareSectionContext(request);
 
         if (item.isAvailable(context)) {
@@ -78,7 +78,7 @@ public abstract class SiteVisualizationDA extends FenixDispatchAction {
             return getSiteDefaultView(mapping, form, request, response);
         }
 
-        IUserView userView = prepareUserView(request);
+        User userView = prepareUserView(request);
         FunctionalityContext context = prepareSectionContext(request);
 
         if (section.isAvailable(context)) {
@@ -95,7 +95,7 @@ public abstract class SiteVisualizationDA extends FenixDispatchAction {
 
     public ActionForward itemWithLogin(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws IOException {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         if (!isAuthenticated(userView)) {
             RequestUtils.sendLoginRedirect(request, response);
@@ -107,7 +107,7 @@ public abstract class SiteVisualizationDA extends FenixDispatchAction {
 
     public ActionForward sectionWithLogin(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws IOException {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         if (!isAuthenticated(userView)) {
             RequestUtils.sendLoginRedirect(request, response);
@@ -117,7 +117,7 @@ public abstract class SiteVisualizationDA extends FenixDispatchAction {
         }
     }
 
-    private void prepareProtectedItems(HttpServletRequest request, IUserView userView, Collection<Item> items,
+    private void prepareProtectedItems(HttpServletRequest request, User userView, Collection<Item> items,
             FunctionalityContext context) {
         List<ProtectedItem> protectedItems = setupItems(request, context, items);
 
@@ -148,8 +148,8 @@ public abstract class SiteVisualizationDA extends FenixDispatchAction {
         return protectedItems;
     }
 
-    private IUserView prepareUserView(HttpServletRequest request) {
-        IUserView userView = getUserView(request);
+    private User prepareUserView(HttpServletRequest request) {
+        User userView = getUserView(request);
         request.setAttribute("logged", isAuthenticated(userView));
 
         return userView;
@@ -161,7 +161,7 @@ public abstract class SiteVisualizationDA extends FenixDispatchAction {
         return context;
     }
 
-    private boolean isAuthenticated(IUserView userView) {
+    private boolean isAuthenticated(User userView) {
         return userView != null;
     }
 

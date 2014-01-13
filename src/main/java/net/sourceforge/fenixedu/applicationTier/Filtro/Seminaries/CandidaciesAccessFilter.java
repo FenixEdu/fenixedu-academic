@@ -5,10 +5,11 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro.Seminaries;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -25,9 +26,9 @@ public class CandidaciesAccessFilter {
     }
 
     public void execute() throws NotAuthorizedException {
-        IUserView id = AccessControl.getUserView();
-        if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType()))) || (id == null)
-                || (id.getRoleTypes() == null)) {
+        User id = Authenticate.getUser();
+        if (((id != null && id.getPerson().getPersonRolesSet() != null && !id.getPerson().hasRole(getRoleType())))
+                || (id == null) || (id.getPerson().getPersonRolesSet() == null)) {
             throw new NotAuthorizedException();
         }
 

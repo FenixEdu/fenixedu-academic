@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student.elections;
 
-
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;

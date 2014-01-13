@@ -14,7 +14,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.AddPresidentJuryElement"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.AddJuryElement"%><html:xhtml/>
 
-<logic:present role="MANAGER">
+<logic:present role="role(MANAGER)">
 <bean:define id="individualProcessId" name="process" property="individualProgramProcess.externalId" />
 
 <%-- ### Title #### --%>
@@ -92,7 +92,7 @@
 	<br/><br/>
 </logic:notEmpty>
 
-<strong>Presidente:</strong> Presidente do Conselho Científico do IST
+<strong>Presidente:</strong> Presidente do Conselho Científico do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>
 <logic:notEmpty name="process" property="presidentJuryElement">
 	<br/>
 	<strong>Presidente nomeado:</strong> <bean:write name="process" property="presidentJuryElement.nameWithTitle" />

@@ -5,6 +5,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 /**
  * @author dcs-rjao
  * 
@@ -19,7 +21,7 @@ public class EnrolmentInOptionalCurricularCourse extends EnrolmentInOptionalCurr
 
     protected EnrolmentInOptionalCurricularCourse() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public EnrolmentInOptionalCurricularCourse(StudentCurricularPlan studentCurricularPlan, CurricularCourse curricularCourse,

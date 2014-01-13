@@ -10,12 +10,12 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -42,7 +42,7 @@ public class InquiryResult extends InquiryResult_Base {
 
     public InquiryResult() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setLastModifiedDate(new DateTime());
     }
 
@@ -318,7 +318,8 @@ public class InquiryResult extends InquiryResult_Base {
             //se vier com valor + classificação dá erro
             String executionDegreeOID = row[0];
             ExecutionDegree executionDegree =
-                    !StringUtils.isEmpty(executionDegreeOID) ? (ExecutionDegree) FenixFramework.getDomainObject(executionDegreeOID) : null;
+                    !StringUtils.isEmpty(executionDegreeOID) ? (ExecutionDegree) FenixFramework
+                            .getDomainObject(executionDegreeOID) : null;
             setExecutionDegree(executionDegree);
 
             String resultTypeString = row[1];
@@ -332,7 +333,8 @@ public class InquiryResult extends InquiryResult_Base {
 
             String executionCourseOID = row[2];
             ExecutionCourse executionCourse =
-                    !StringUtils.isEmpty(executionCourseOID) ? (ExecutionCourse) FenixFramework.getDomainObject(executionCourseOID) : null;
+                    !StringUtils.isEmpty(executionCourseOID) ? (ExecutionCourse) FenixFramework
+                            .getDomainObject(executionCourseOID) : null;
             setExecutionCourse(executionCourse);
 
             String executionPeriodOID = row[3];
@@ -479,6 +481,7 @@ public class InquiryResult extends InquiryResult_Base {
         }
 
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment> getInquiryResultComments() {
         return getInquiryResultCommentsSet();
@@ -500,7 +503,7 @@ public class InquiryResult extends InquiryResult_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

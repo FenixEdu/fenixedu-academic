@@ -3,8 +3,9 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.over23;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class Over23IndividualCandidacyDegreeEntry extends Over23IndividualCandidacyDegreeEntry_Base {
 
@@ -18,7 +19,7 @@ public class Over23IndividualCandidacyDegreeEntry extends Over23IndividualCandid
 
     private Over23IndividualCandidacyDegreeEntry() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     Over23IndividualCandidacyDegreeEntry(final Over23IndividualCandidacy candidacy, final Degree degree, final int order) {

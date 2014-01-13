@@ -22,7 +22,7 @@
 
 <table class="tstyle5 thlight">
 	<tr>
-		<td><bean:message key="label.istId" bundle="COORDINATOR_RESOURCES"/></td>
+		<td><bean:message key="label.istId" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="COORDINATOR_RESOURCES"/></td>
 		<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherId" property="newCoordinatorIstUsername" /></td>
 	</tr>
 </table>

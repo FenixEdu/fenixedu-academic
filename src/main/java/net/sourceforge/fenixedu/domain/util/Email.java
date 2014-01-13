@@ -21,16 +21,14 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.util.email.MessageId;
 import net.sourceforge.fenixedu.domain.util.email.MessageTransportResult;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import pt.utl.ist.fenix.tools.util.StringAppender;
 
 public class Email extends Email_Base {
 
@@ -40,26 +38,25 @@ public class Email extends Email_Base {
     private static int MAX_MAIL_RECIPIENTS;
 
     private static synchronized Session init() {
-        final Properties allProperties = PropertiesManager.getProperties();
         final Properties properties = new Properties();
-        properties.put("mail.smtp.host", allProperties.get("mail.smtp.host"));
-        properties.put("mail.smtp.name", allProperties.get("mail.smtp.name"));
-        properties.put("mailSender.max.recipients", allProperties.get("mailSender.max.recipients"));
-        properties.put("mailingList.host.name", allProperties.get("mailingList.host.name"));
+        properties.put("mail.smtp.host", FenixConfigurationManager.getConfiguration().getMailSmtpHost());
+        properties.put("mail.smtp.name", FenixConfigurationManager.getConfiguration().getMailSmtpName());
+        properties.put("mailSender.max.recipients", FenixConfigurationManager.getConfiguration().getMailSenderMaxRecipients());
+        properties.put("mailingList.host.name", FenixConfigurationManager.getConfiguration().getMailingListHostName());
         properties.put("mail.debug", "false");
         final Session tempSession = Session.getDefaultInstance(properties, null);
         MAX_MAIL_RECIPIENTS = Integer.parseInt(properties.getProperty("mailSender.max.recipients"));
         SESSION = tempSession;
-        LOG.info("Initialize mail properties");
+        LOG.debug("Initialize mail properties");
         for (Entry<Object, Object> entry : properties.entrySet()) {
-            LOG.info("\t{}={}", entry.getKey(), entry.getValue());
+            LOG.debug("\t{}={}", entry.getKey(), entry.getValue());
         }
         return SESSION;
     }
 
     public Email() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setRootDomainObjectFromEmailQueue(getRootDomainObject());
     }
 
@@ -165,14 +162,13 @@ public class Email extends Email_Base {
         try {
             return string == null ? "" : MimeUtility.encodeText(string);
         } catch (final UnsupportedEncodingException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage(), e);
             return string;
         }
     }
 
     protected static String constructFromString(final String fromName, String fromAddress) {
-        return (fromName == null || fromName.length() == 0) ? fromAddress : StringAppender.append(fromName.replace(',', ' '),
-                " <", fromAddress, ">");
+        return (fromName == null || fromName.length() == 0) ? fromAddress : fromName.replace(',', ' ') + " <" + fromAddress + ">";
     }
 
     private class EmailMimeMessage extends MimeMessage {
@@ -447,7 +443,7 @@ public class Email extends Email_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 
@@ -497,7 +493,7 @@ public class Email extends Email_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObjectFromEmailQueue() {
+    public boolean hasBennuFromEmailQueue() {
         return getRootDomainObjectFromEmailQueue() != null;
     }
 

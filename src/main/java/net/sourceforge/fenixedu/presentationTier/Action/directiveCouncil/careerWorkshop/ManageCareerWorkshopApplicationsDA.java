@@ -76,7 +76,7 @@ public class ManageCareerWorkshopApplicationsDA extends FenixDispatchAction {
         if (spreadsheet != null) {
             final ServletOutputStream writer = response.getOutputStream();
             try {
-                response.setContentLength(spreadsheet.getSize());
+                response.setContentLength(spreadsheet.getSize().intValue());
                 response.setContentType("application/csv");
                 response.addHeader("Content-Disposition", "attachment; filename=" + spreadsheet.getFilename());
                 writer.write(spreadsheet.getContents());
@@ -121,7 +121,7 @@ public class ManageCareerWorkshopApplicationsDA extends FenixDispatchAction {
         if (spreadsheet != null) {
             final ServletOutputStream writer = response.getOutputStream();
             try {
-                response.setContentLength(spreadsheet.getSize());
+                response.setContentLength(spreadsheet.getSize().intValue());
                 response.setContentType("application/csv");
                 response.addHeader("Content-Disposition", "attachment; filename=" + spreadsheet.getFilename());
                 writer.write(spreadsheet.getContents());

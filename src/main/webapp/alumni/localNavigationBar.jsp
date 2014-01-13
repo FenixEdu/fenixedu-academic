@@ -6,7 +6,7 @@
 
 <!-- localNavigationBar.jsp -->
 
-<logic:present role="ALUMNI">
+<logic:present role="role(ALUMNI)">
 	<ul>
 		<li class="navheader">
 			<bean:message key="academic.path" bundle="ALUMNI_RESOURCES" />

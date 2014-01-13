@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.person;
 
-
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import pt.ist.fenixframework.Atomic;

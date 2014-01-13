@@ -20,6 +20,7 @@ public class DegreeCandidacyForGraduatedPersonSeriesGade extends DegreeCandidacy
         setRootDomainObject(null);
         deleteDomainObject();
     }
+
     @Deprecated
     public boolean hasCandidacyGrade() {
         return getCandidacyGrade() != null;

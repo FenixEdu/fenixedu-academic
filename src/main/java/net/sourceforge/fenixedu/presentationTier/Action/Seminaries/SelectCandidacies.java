@@ -9,7 +9,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.ChangeCandidacyApprovanceStatus;
 import net.sourceforge.fenixedu.applicationTier.Servico.Seminaries.SelectCandidaciesService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -21,8 +20,11 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -41,9 +43,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
         @Forward(name = "showSelectCandidacies", path = "/teacher/showSelectCandidacies.jsp", tileProperties = @Tile(
                 navLocal = "/teacher/showSeminariesIndex_bd.jsp", title = "private.seminars.selectcandidate")) })
 public class SelectCandidacies extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(SelectCandidacies.class);
+
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         ActionForward destiny = null;
         String seminaryIDString = request.getParameter("seminaryID");
         String seminaryID = null;
@@ -98,7 +103,7 @@ public class SelectCandidacies extends FenixDispatchAction {
 
     public ActionForward changeSelection(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         DynaActionForm selectCases = (DynaActionForm) form;
         Integer[] selectedStudents = null;
         Integer[] previousSelected = null;
@@ -108,7 +113,7 @@ public class SelectCandidacies extends FenixDispatchAction {
             previousSelected = (Integer[]) selectCases.get("previousSelected");
             previousUnselected = (Integer[]) selectCases.get("previousUnselected");
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error(ex.getMessage(), ex);
             throw new FenixActionException();
         }
         if (selectedStudents == null || previousSelected == null || previousUnselected == null) {

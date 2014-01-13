@@ -50,7 +50,7 @@
 
 <logic:iterate name="individualCandidacyProcessBean" property="individualCandidacyProcess.alert" id="alert" type="ErasmusAlert">
 	<logic:equal name="alert" property="toFire" value="true">
-		<logic:present role="INTERNATIONAL_RELATION_OFFICE" >
+		<logic:present role="role(INTERNATIONAL_RELATION_OFFICE)" >
 			<html:link action='<%= f("/caseHandlingMobilityIndividualApplicationProcess.do?method=markAlertAsViewed&amp;erasmusAlertId=%s&amp;processId=%s", alert.getExternalId(), processId.toString()) %>'>
 				<bean:message key="label.eramus.alert.mark.as.viewed" bundle="ACADEMIC_OFFICE_RESOURCES" />
 			</html:link>

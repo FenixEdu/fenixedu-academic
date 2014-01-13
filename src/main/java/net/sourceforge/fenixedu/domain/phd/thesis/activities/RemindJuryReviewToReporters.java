@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.phd.thesis.activities;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
@@ -12,13 +11,14 @@ import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType;
 import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
 
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
 public class RemindJuryReviewToReporters extends PhdThesisActivity {
 
     @Override
-    protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
+    protected void activityPreConditions(PhdThesisProcess process, User userView) {
         if (process.getActiveState() != PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK) {
             throw new PreConditionNotValidException();
         }
@@ -29,7 +29,7 @@ public class RemindJuryReviewToReporters extends PhdThesisActivity {
     }
 
     @Override
-    protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
+    protected PhdThesisProcess executeActivity(PhdThesisProcess process, User userView, Object object) {
         final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
 
         if (bean.isToNotify()) {

@@ -6,11 +6,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.presentationTier.renderers.providers.AutoCompleteProvider;
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
+import org.fenixedu.commons.StringNormalizer;
 
 public class ExternalUnitSearchService implements AutoCompleteProvider<Unit> {
 
@@ -18,9 +19,9 @@ public class ExternalUnitSearchService implements AutoCompleteProvider<Unit> {
     public Collection<Unit> getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
         final List<Unit> result = new ArrayList<Unit>();
         if (value != null && value.length() > 0) {
-            final String[] nameValues = StringNormalizer.normalize(value).toLowerCase().split("\\p{Space}+");
+            final String[] nameValues = StringNormalizer.normalize(value).split("\\p{Space}+");
 
-            for (final Party party : RootDomainObject.getInstance().getExternalInstitutionUnit().getSubUnits()) {
+            for (final Party party : Bennu.getInstance().getExternalInstitutionUnit().getSubUnits()) {
                 if (result.size() >= maxCount) {
                     break;
                 }
@@ -37,7 +38,7 @@ public class ExternalUnitSearchService implements AutoCompleteProvider<Unit> {
     }
 
     private boolean areNamesPresent(String name, String[] searchNameParts) {
-        String nameNormalized = StringNormalizer.normalize(name).toLowerCase();
+        String nameNormalized = StringNormalizer.normalize(name);
         for (String searchNamePart : searchNameParts) {
             String namePart = searchNamePart;
             if (!nameNormalized.contains(namePart)) {

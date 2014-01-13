@@ -17,11 +17,11 @@ import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -45,7 +45,7 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
 
     public StudentInquiriesCourseResult() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     private Double getValueForPresentation(Double value) {
@@ -795,7 +795,7 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
     public static Boolean resetCourseAndTeachingResults(UploadStudentInquiriesCourseResultsBean coursesBean) {
         boolean resetedItems = false;
         Set<Professorship> professorships = new HashSet<Professorship>();
-        for (StudentInquiriesCourseResult courseResult : RootDomainObject.getInstance().getStudentInquiriesCourseResults()) {
+        for (StudentInquiriesCourseResult courseResult : Bennu.getInstance().getStudentInquiriesCourseResultsSet()) {
             if (StringUtils.isEmpty(coursesBean.getKeyExecutionCourseHeader())) {
                 if (coursesBean.getResultsDate().equals(courseResult.getResultsDate())) {
                     professorships.addAll(courseResult.getExecutionCourse().getProfessorships());
@@ -1851,7 +1851,7 @@ public class StudentInquiriesCourseResult extends StudentInquiriesCourseResult_B
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

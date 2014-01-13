@@ -20,6 +20,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.joda.time.YearMonthDay;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
@@ -29,13 +31,15 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ViewRoomFormAction extends FenixSelectedRoomsAndSelectedRoomIndexContextAction {
 
+    private static final Logger logger = LoggerFactory.getLogger(ViewRoomFormAction.class);
+
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixServiceException {
         try {
             super.execute(mapping, form, request, response);
         } catch (Exception e2) {
-            e2.printStackTrace();
+            logger.error(e2.getMessage(), e2);
         }
 
         RoomOccupationWeekBean roomOccupationWeekBean = getRoomOccupationWeekBean();

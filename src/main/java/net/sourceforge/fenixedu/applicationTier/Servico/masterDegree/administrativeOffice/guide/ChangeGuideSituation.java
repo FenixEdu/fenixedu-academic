@@ -12,7 +12,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -37,6 +36,7 @@ import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -44,8 +44,7 @@ public class ChangeGuideSituation {
 
     @Atomic
     public static void run(Integer guideNumber, Integer guideYear, Integer guideVersion, Date paymentDate, String remarks,
-            String situationOfGuideString, String paymentType, IUserView userView) throws ExcepcaoInexistente,
-            FenixServiceException {
+            String situationOfGuideString, String paymentType, User userView) throws ExcepcaoInexistente, FenixServiceException {
         check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
 
         Guide guide = Guide.readByNumberAndYearAndVersion(guideNumber, guideYear, guideVersion);
@@ -101,7 +100,7 @@ public class ChangeGuideSituation {
                     personAccount = new PersonAccount(guide.getPerson());
                 }
 
-                Person employeePerson = Person.readPersonByUsername(userView.getUtilizador());
+                Person employeePerson = Person.readPersonByUsername(userView.getUsername());
                 Person studentPerson = guide.getPerson();
                 ExecutionDegree executionDegree = guide.getExecutionDegree();
                 Registration registration =

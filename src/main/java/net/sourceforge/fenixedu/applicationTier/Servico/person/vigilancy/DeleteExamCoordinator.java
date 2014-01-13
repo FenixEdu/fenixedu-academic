@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy;
 
-
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;

@@ -1,18 +1,22 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.mobility;
 
+import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
-import net.sourceforge.fenixedu.util.StringUtils;
+
+import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -107,9 +111,10 @@ public enum MobilityEmailTemplateType {
             }
 
             String subject =
-                    StringUtils.isEmpty(mobilityEmailTemplate.getSubject()) ? ResourceBundle.getBundle(
-                            "resources.CandidateResources", Language.getLocale()).getString(
-                            "message.erasmus.missing.required.documents.email.subject") : mobilityEmailTemplate.getSubject();
+                    StringUtils.isEmpty(mobilityEmailTemplate.getSubject()) ? MessageFormat.format(
+                            ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale()).getString(
+                                    "message.erasmus.missing.required.documents.email.subject"), Unit.getInstitutionAcronym()) : mobilityEmailTemplate
+                            .getSubject();
             String body =
                     StringUtils.isEmpty(mobilityEmailTemplate.getBody()) ? ResourceBundle.getBundle(
                             "resources.CandidateResources", Language.getLocale()).getString(
@@ -210,7 +215,7 @@ public enum MobilityEmailTemplateType {
     }
 
     protected void sendEmail(final String fromSubject, final String body, final String email) {
-        SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
+        SystemSender systemSender = Bennu.getInstance().getSystemSender();
         new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST, fromSubject, body, email);
     }
 

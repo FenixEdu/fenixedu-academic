@@ -115,7 +115,7 @@ color: #000;
 	<p class="mtop2 mbottom05"><b><bean:message key="label.teacher.finalWork.responsable"/></b></p>
 	<table width="100%">
 		<tr>
-			<td style="width: 120px;"><bean:message key="label.teacher.finalWork.number"/>:</th>
+			<td style="width: 120px;"><bean:message key="label.teacher.finalWork.number" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/>:</th>
 			<td style="width: 120px;">
 				<logic:present name="orientator">
 					<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherId" property="responsableTeacherId" maxlength="9" size="7"
@@ -147,7 +147,7 @@ color: #000;
 	<b><bean:message key="label.teacher.finalWork.coResponsable"/>:</b>
 	<table width="100%">
 		<tr>
-			<td style="width: 120px;"><bean:message key="label.teacher.finalWork.number"/>:</td>
+			<td style="width: 120px;"><bean:message key="label.teacher.finalWork.number" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/>:</td>
 			<td style="width: 120px;">
 				<logic:present name="coorientator">
 					<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherId" property="coResponsableTeacherId" maxlength="9" size="7"

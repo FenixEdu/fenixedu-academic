@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.phd.individualProcess.activities;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -9,10 +8,12 @@ import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean;
 
+import org.fenixedu.bennu.core.domain.User;
+
 public class RequestPublicPresentationSeminarComission extends PhdIndividualProgramProcessActivity {
 
     @Override
-    protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+    protected void activityPreConditions(PhdIndividualProgramProcess process, User userView) {
         if (process.hasSeminarProcess() || process.getActiveState() != PhdIndividualProgramProcessState.WORK_DEVELOPMENT) {
             throw new PreConditionNotValidException();
         }
@@ -23,7 +24,7 @@ public class RequestPublicPresentationSeminarComission extends PhdIndividualProg
     }
 
     @Override
-    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess individualProcess, IUserView userView,
+    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess individualProcess, User userView,
             Object object) {
 
         PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) object;

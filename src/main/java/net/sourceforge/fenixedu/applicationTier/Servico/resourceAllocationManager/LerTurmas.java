@@ -20,8 +20,7 @@ public class LerTurmas {
             Integer curricularYear) {
 
         final ExecutionDegree executionDegree = FenixFramework.getDomainObject(infoExecutionDegree.getExternalId());
-        final ExecutionSemester executionSemester =
-                FenixFramework.getDomainObject(infoExecutionPeriod.getExternalId());
+        final ExecutionSemester executionSemester = FenixFramework.getDomainObject(infoExecutionPeriod.getExternalId());
 
         final Set<SchoolClass> classes;
         if (curricularYear != null) {

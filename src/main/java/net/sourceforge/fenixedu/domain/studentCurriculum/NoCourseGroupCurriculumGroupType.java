@@ -4,7 +4,6 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
-import pt.utl.ist.fenix.tools.util.StringAppender;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum NoCourseGroupCurriculumGroupType {
@@ -40,7 +39,7 @@ public enum NoCourseGroupCurriculumGroupType {
     }
 
     public String getQualifiedName() {
-        return StringAppender.append(getClass().getSimpleName(), ".", name());
+        return getClass().getSimpleName() + "." + name();
     }
 
 }

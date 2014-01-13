@@ -1,12 +1,13 @@
 package net.sourceforge.fenixedu.domain.alumni;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class CerimonyInquiryPerson extends CerimonyInquiryPerson_Base {
 
     public CerimonyInquiryPerson(final CerimonyInquiry cerimonyInquiry, final Person person) {
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setCerimonyInquiry(cerimonyInquiry);
         setPerson(person);
     }
@@ -25,7 +26,7 @@ public class CerimonyInquiryPerson extends CerimonyInquiryPerson_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

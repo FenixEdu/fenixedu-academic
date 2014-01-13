@@ -24,8 +24,6 @@
 
 <%
 	final Thesis thesis = (Thesis) request.getAttribute("thesis");
-	final ThesisEvaluationParticipant orientator = thesis.getOrientator();
-	final ThesisEvaluationParticipant coorientator = thesis.getCoorientator();
 	final ThesisEvaluationParticipant president = thesis.getPresident();
 %>
 
@@ -71,22 +69,6 @@
 		<th>
 		</th>
 	</tr>
-	<%
-		if (orientator != null) {
-		    request.setAttribute("thesisEvaluationParticipant", orientator);
-	%>
-			<jsp:include page="thesisEvaluationParticipantLine.jsp"/>
-	<%
-		}
-	%>
-	<%
-		if (coorientator != null) {
-		    request.setAttribute("thesisEvaluationParticipant", coorientator);
-	%>
-			<jsp:include page="thesisEvaluationParticipantLine.jsp"/>
-	<%
-		}
-	%>
 	<%
 		if (president != null) {
 		    request.setAttribute("thesisEvaluationParticipant", president);

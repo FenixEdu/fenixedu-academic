@@ -10,7 +10,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.UnitBoardPermittedGroupType;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
@@ -21,6 +20,9 @@ import net.sourceforge.fenixedu.presentationTier.Action.messaging.AnnouncementMa
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -45,6 +47,8 @@ import pt.ist.fenixframework.FenixFramework;
         @Forward(name = "editFile", path = "websiteManager-editFile"),
         @Forward(name = "listAnnouncementBoards", path = "websiteManager-list-announcement-boards") })
 public class WebSiteAnnouncementManagement extends AnnouncementManagement {
+
+    private static final Logger logger = LoggerFactory.getLogger(WebSiteAnnouncementManagement.class);
 
     private static final int UP = -1;
 
@@ -212,7 +216,7 @@ public class WebSiteAnnouncementManagement extends AnnouncementManagement {
     private void changeOrder(AnnouncementBoard board, HttpServletRequest request, int direction) throws FenixServiceException {
         String oid = request.getParameter("oid");
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         Announcement announcement = FenixFramework.getDomainObject(oid);
         List<Announcement> orderedAnnouncements = getOrderedStickies(board, request);
@@ -274,7 +278,7 @@ public class WebSiteAnnouncementManagement extends AnnouncementManagement {
         try {
             return new Integer(id);
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return null;
         }
     }

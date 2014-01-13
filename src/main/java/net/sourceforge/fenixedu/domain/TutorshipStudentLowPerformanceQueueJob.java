@@ -115,8 +115,8 @@ public class TutorshipStudentLowPerformanceQueueJob extends TutorshipStudentLowP
             studentState += parcialStudent(registration);
             studentState += flunkedStudent(fullRegistrationPath);
             return new StudentLowPerformanceBean(student, sumEcts, registration.getDegree(), numberOfEntriesStudentInSecretary,
-                    student.getPerson().getDefaultEmailAddressValue(), studentState, fullRegistrationPath.iterator().next().getStartDate()
-                            .toString("yyyy-MM-dd"));
+                    student.getPerson().getDefaultEmailAddressValue(), studentState, fullRegistrationPath.iterator().next()
+                            .getStartDate().toString("yyyy-MM-dd"));
         }
         return null;
     }
@@ -241,6 +241,7 @@ public class TutorshipStudentLowPerformanceQueueJob extends TutorshipStudentLowP
                 new TutorshipStudentLowPerformanceQueueJob(prescriptionEnum, executionYear);
         return tutorshipStudentLowPerformanceQueueJob;
     }
+
     @Deprecated
     public boolean hasPrescriptionEnum() {
         return getPrescriptionEnum() != null;

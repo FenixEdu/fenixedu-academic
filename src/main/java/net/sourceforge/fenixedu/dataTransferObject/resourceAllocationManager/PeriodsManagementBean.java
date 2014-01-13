@@ -10,7 +10,8 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.OccupationPeriodReference;
 import net.sourceforge.fenixedu.domain.OccupationPeriodType;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.HashMultimap;
@@ -49,7 +50,7 @@ public class PeriodsManagementBean implements Serializable {
     }
 
     public Collection<ExecutionYear> getYears() {
-        List<ExecutionYear> years = new ArrayList<ExecutionYear>(RootDomainObject.getInstance().getExecutionYears());
+        List<ExecutionYear> years = new ArrayList<ExecutionYear>(Bennu.getInstance().getExecutionYearsSet());
         Collections.sort(years);
         return years;
     }

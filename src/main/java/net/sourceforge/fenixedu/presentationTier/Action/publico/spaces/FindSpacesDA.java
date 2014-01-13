@@ -33,7 +33,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.FenixFramework;
+import pt.ist.fenixframework.DomainObject;
 
 @Mapping(module = "publico", path = "/findSpaces", attribute = "findSpacesForm", formBean = "findSpacesForm", scope = "request",
         parameter = "method")
@@ -140,8 +140,8 @@ public class FindSpacesDA extends FenixDispatchAction {
     // Private Methods
 
     private Space getSpaceFromParameter(final HttpServletRequest request) {
-        final String spaceIDString = request.getParameter("spaceID");
-        return (Space) FenixFramework.getDomainObject(spaceIDString);
+        final DomainObject obj = getDomainObject(request, "spaceID");
+        return obj instanceof Space ? (Space) obj : null;
     }
 
     private void setBlueprintTextRectangles(HttpServletRequest request, Space space) throws IOException {
@@ -153,7 +153,7 @@ public class FindSpacesDA extends FenixDispatchAction {
         if (mostRecentBlueprint != null) {
 
             final BlueprintFile blueprintFile = mostRecentBlueprint.getBlueprintFile();
-            final byte[] blueprintBytes = blueprintFile.getContent().getBytes();
+            final byte[] blueprintBytes = blueprintFile.getContentFile().getBytes();
             final InputStream inputStream = new ByteArrayInputStream(blueprintBytes);
             BlueprintTextRectangles blueprintTextRectangles =
                     SpaceBlueprintsDWGProcessor.getBlueprintTextRectangles(inputStream, mostRecentBlueprint.getSpace(), false,

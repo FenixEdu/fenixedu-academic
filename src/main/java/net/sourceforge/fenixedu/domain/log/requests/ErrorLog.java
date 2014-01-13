@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.log.requests;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * 
@@ -11,7 +11,7 @@ public class ErrorLog extends ErrorLog_Base {
 
     public ErrorLog() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public ErrorLog(String stackTrace, String exceptionType) {
@@ -58,7 +58,7 @@ public class ErrorLog extends ErrorLog_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -9,7 +9,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.interest.ChangeResearchInterestOrder;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.interest.DeleteResearchInterest;
@@ -20,6 +19,9 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -38,6 +40,8 @@ import pt.ist.fenixframework.FenixFramework;
                 head = "/commons/renderers/treeRendererHeader.jsp",
                 title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.researchinterests")) })
 public class InterestsManagementDispatchAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(InterestsManagementDispatchAction.class);
 
     private static final int UP = -1;
 
@@ -109,7 +113,7 @@ public class InterestsManagementDispatchAction extends FenixDispatchAction {
     }
 
     private void changeOrder(HttpServletRequest request, int direction) throws FenixServiceException {
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         Person person = userView.getPerson();
 
         ResearchInterest interest = FenixFramework.getDomainObject(request.getParameter("oid"));
@@ -160,7 +164,7 @@ public class InterestsManagementDispatchAction extends FenixDispatchAction {
         try {
             return new Integer(id);
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return null;
         }
     }

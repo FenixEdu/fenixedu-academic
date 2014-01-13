@@ -1,13 +1,14 @@
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class PartySocialSecurityNumber extends PartySocialSecurityNumber_Base {
 
     private PartySocialSecurityNumber() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public PartySocialSecurityNumber(final Party party, final String socialSecurityNumber) {
@@ -25,7 +26,7 @@ public class PartySocialSecurityNumber extends PartySocialSecurityNumber_Base {
             throw new DomainException("error.PartySocialSecurityNumber.invalid.socialSecurityNumber");
         }
 
-        for (final PartySocialSecurityNumber securityNumber : RootDomainObject.getInstance().getPartySocialSecurityNumbers()) {
+        for (final PartySocialSecurityNumber securityNumber : Bennu.getInstance().getPartySocialSecurityNumbersSet()) {
             if (securityNumber != this && securityNumber.hasSocialSecurityNumber(socialSecurityNumber)) {
                 throw new DomainException("error.PartySocialSecurityNumber.number.already.exists");
             }
@@ -46,15 +47,16 @@ public class PartySocialSecurityNumber extends PartySocialSecurityNumber_Base {
         if (socialSecurityNumber == null || socialSecurityNumber.length() == 0) {
             return null;
         }
-        for (final PartySocialSecurityNumber securityNumber : RootDomainObject.getInstance().getPartySocialSecurityNumbers()) {
+        for (final PartySocialSecurityNumber securityNumber : Bennu.getInstance().getPartySocialSecurityNumbersSet()) {
             if (securityNumber.hasSocialSecurityNumber(socialSecurityNumber)) {
                 return securityNumber.getParty();
             }
         }
         return null;
     }
+
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

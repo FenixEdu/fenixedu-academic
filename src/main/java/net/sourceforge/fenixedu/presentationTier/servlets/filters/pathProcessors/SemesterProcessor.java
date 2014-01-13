@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
-import net.sourceforge.fenixedu.domain.MetaDomainObject;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
@@ -65,8 +64,7 @@ public class SemesterProcessor extends PathProcessor {
                  */
                 HttpServletRequest request = context.getRequest();
                 ExecutionCourseSite portalInstance = executionCourse.getSite();
-                MetaDomainObjectPortal portal =
-                        (MetaDomainObjectPortal) MetaDomainObject.getMeta(portalInstance.getClass()).getAssociatedPortal();
+                MetaDomainObjectPortal portal = MetaDomainObjectPortal.getPortal(portalInstance.getClass());
 
                 List<Content> contents = new ArrayList<Content>();
                 contents.add(portal);

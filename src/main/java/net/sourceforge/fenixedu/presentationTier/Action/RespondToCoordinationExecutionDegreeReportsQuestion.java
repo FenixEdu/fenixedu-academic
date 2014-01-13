@@ -12,6 +12,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+@Mapping(path = "/respondToCoordinationExecutionDegreeReportsQuestion")
 public class RespondToCoordinationExecutionDegreeReportsQuestion extends FenixDispatchAction {
 
     public final ActionForward showQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -19,7 +22,7 @@ public class RespondToCoordinationExecutionDegreeReportsQuestion extends FenixDi
         final InquiryResponsePeriod lastPeriod = InquiryResponsePeriod.readOpenPeriod(InquiryResponsePeriodType.COORDINATOR);
         request.setAttribute("executionPeriod", lastPeriod == null ? null : lastPeriod.getExecutionPeriod());
         request.setAttribute("executionDegrees", AccessControl.getPerson().getCoordinationExecutionDegreeReportsToAnswer());
-        return mapping.findForward("respondToInquiriesQuestion");
+        return new ActionForward("/respondToCoordinationExecutionDegreeReportsQuestion.jsp");
     }
 
     private ActionForward forward(final String path) {

@@ -28,9 +28,9 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.commons.StringNormalizer;
 import org.joda.time.YearMonthDay;
 
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
@@ -87,7 +87,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
 
     @Override
     public ActionForward execute(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
-            final HttpServletResponse response) throws FenixActionException,  FenixServiceException {
+            final HttpServletResponse response) throws FenixActionException, FenixServiceException {
 
         final SearchExecutionCourseAttendsBean executionCourseAttendsBean = getRenderedObject("downloadViewState");
         executionCourseAttendsBean.getExecutionCourse().searchAttends(executionCourseAttendsBean);

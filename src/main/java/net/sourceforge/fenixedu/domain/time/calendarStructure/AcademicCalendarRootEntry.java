@@ -5,10 +5,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.chronologies.AcademicChronology;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -20,7 +20,7 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
     public AcademicCalendarRootEntry(MultiLanguageString title, MultiLanguageString description,
             AcademicCalendarEntry templateCalendar) {
         super();
-        setRootDomainObjectForRootEntries(RootDomainObject.getInstance());
+        setRootDomainObjectForRootEntries(Bennu.getInstance());
         setTitle(title);
         setDescription(description);
         setTemplateEntry(templateCalendar);
@@ -64,7 +64,7 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
     }
 
     @Override
-    public void setRootDomainObjectForRootEntries(RootDomainObject rootDomainObjectForRootEntries) {
+    public void setRootDomainObjectForRootEntries(Bennu rootDomainObjectForRootEntries) {
         if (rootDomainObjectForRootEntries == null) {
             throw new DomainException("error.RootEntry.empty.rootDomainObject.to.academic.calendars");
         }
@@ -120,7 +120,7 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
     }
 
     public static AcademicCalendarRootEntry getAcademicCalendarByTitle(String title) {
-        for (AcademicCalendarRootEntry rootEntry : RootDomainObject.getInstance().getAcademicCalendarsSet()) {
+        for (AcademicCalendarRootEntry rootEntry : Bennu.getInstance().getAcademicCalendarsSet()) {
             if (rootEntry.getTitle().getContent().equals(title)) {
                 return rootEntry;
             }
@@ -210,13 +210,14 @@ public class AcademicCalendarRootEntry extends AcademicCalendarRootEntry_Base {
     protected boolean associatedWithDomainEntities() {
         return false;
     }
+
     @Deprecated
-    public boolean hasRootDomainObjectForRootEntries() {
+    public boolean hasBennuForRootEntries() {
         return getRootDomainObjectForRootEntries() != null;
     }
 
     @Deprecated
-    public boolean hasRootDomainObjectForDefaultRootEntry() {
+    public boolean hasBennuForDefaultRootEntry() {
         return getRootDomainObjectForDefaultRootEntry() != null;
     }
 

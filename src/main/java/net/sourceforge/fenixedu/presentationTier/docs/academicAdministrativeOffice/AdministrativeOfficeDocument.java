@@ -4,16 +4,17 @@ import java.math.BigDecimal;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.OptionalEnrolment;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
@@ -40,11 +41,14 @@ import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
+import net.sourceforge.fenixedu.util.FenixStringTools;
 import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.StringFormatter;
-import net.sourceforge.fenixedu.util.StringUtils;
 
+import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -111,7 +115,10 @@ public class AdministrativeOfficeDocument extends FenixReport {
                 }
             case DIPLOMA_SUPPLEMENT_REQUEST:
                 List<T> result = new ArrayList<T>();
-                for (Locale locale : DiplomaSupplement.suportedLocales) {
+                Set<Locale> definedLocales = new HashSet<Locale>(CoreConfiguration.supportedLocales());
+                definedLocales.remove(Locale.getDefault());
+                result.add((T) new DiplomaSupplement(documentRequest, Locale.getDefault()));
+                for (Locale locale : definedLocales) {
                     result.add((T) new DiplomaSupplement(documentRequest, locale));
                 }
                 return result;
@@ -177,7 +184,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
     }
 
     protected String getInstitutionName() {
-        return RootDomainObject.getInstance().getInstitutionUnit().getPartyName().getContent(getLanguage());
+        return Bennu.getInstance().getInstitutionUnit().getPartyName().getContent(getLanguage());
     }
 
     @Override
@@ -303,9 +310,9 @@ public class AdministrativeOfficeDocument extends FenixReport {
             addParameter("documentIdNumber", builder1.toString());
             addParameter("birthLocale", builder2.toString());
         } else {
-            addParameter("name", StringUtils.multipleLineRightPad(person.getName().toUpperCase(), LINE_LENGTH, END_CHAR));
-            addParameter("documentIdNumber", StringUtils.multipleLineRightPad(builder1.toString(), LINE_LENGTH, END_CHAR));
-            addParameter("birthLocale", StringUtils.multipleLineRightPad(builder2.toString(), LINE_LENGTH, END_CHAR));
+            addParameter("name", FenixStringTools.multipleLineRightPad(person.getName().toUpperCase(), LINE_LENGTH, END_CHAR));
+            addParameter("documentIdNumber", FenixStringTools.multipleLineRightPad(builder1.toString(), LINE_LENGTH, END_CHAR));
+            addParameter("birthLocale", FenixStringTools.multipleLineRightPad(builder2.toString(), LINE_LENGTH, END_CHAR));
         }
 
         setNationality(person);
@@ -324,7 +331,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
         if (getDocumentRequest().getDocumentRequestType().equals(DocumentRequestType.APPROVEMENT_MOBILITY_CERTIFICATE)) {
             addParameter("nationality", nationalityMessage);
         } else {
-            addParameter("nationality", StringUtils.multipleLineRightPad(nationalityMessage, LINE_LENGTH, END_CHAR));
+            addParameter("nationality", FenixStringTools.multipleLineRightPad(nationalityMessage, LINE_LENGTH, END_CHAR));
         }
     }
 
@@ -442,7 +449,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
             result.append(LINE_BREAK);
 
             final String remainingCreditsInfo = getResourceBundle().getString("documents.remainingCreditsInfo");
-            result.append(StringUtils.multipleLineRightPadWithSuffix(remainingCreditsInfo + ":", LINE_LENGTH, END_CHAR,
+            result.append(FenixStringTools.multipleLineRightPadWithSuffix(remainingCreditsInfo + ":", LINE_LENGTH, END_CHAR,
                     remainingCredits + getCreditsDescription()));
 
             result.append(LINE_BREAK);
@@ -465,7 +472,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
                 unit.append(SINGLE_SPACE).append(mobilityProgram.getDescription(getLocale()).toUpperCase());
             }
 
-            result.append(StringUtils.multipleLineRightPad(unit.toString(), LINE_LENGTH, END_CHAR));
+            result.append(FenixStringTools.multipleLineRightPad(unit.toString(), LINE_LENGTH, END_CHAR));
             result.append(LINE_BREAK);
         }
 

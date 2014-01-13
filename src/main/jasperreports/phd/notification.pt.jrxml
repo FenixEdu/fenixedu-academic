@@ -24,15 +24,18 @@
 			<band splitType="Stretch"/>
 		</groupHeader>
 		<groupFooter>
-			<band height="32" splitType="Stretch">
+			<band height="90" splitType="Stretch">
 				<textField isBlankWhenNull="false">
-					<reportElement key="textField-4" x="44" y="0" width="354" height="30"/>
+					<reportElement key="textField-4" x="44" y="60" width="354" height="30"/>
 					<textElement>
 						<font size="9"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$P{administrativeOfficeCoordinator} +
 "\n(Coordenadora do Núcleo de Pós-Graduação e Formação Contínua)"]]></textFieldExpression>
 				</textField>
+				<line>
+					<reportElement key="line-1" x="44" y="53" width="354" height="1"/>
+				</line>
 			</band>
 		</groupFooter>
 	</group>

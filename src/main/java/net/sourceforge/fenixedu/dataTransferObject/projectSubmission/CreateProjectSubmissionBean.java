@@ -7,7 +7,8 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
+
+import org.fenixedu.commons.StringNormalizer;
 
 public class CreateProjectSubmissionBean implements Serializable {
 

@@ -1,10 +1,8 @@
 package net.sourceforge.fenixedu.domain.phd;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.DeleteFileRequest;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeCoordinatorsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -13,12 +11,8 @@ import net.sourceforge.fenixedu.domain.accessControl.PhdProcessGuidingsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.lang.StringUtils;
-
-import pt.utl.ist.fenix.tools.file.VirtualPath;
-import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
 
@@ -72,7 +66,7 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
         final Group guidingsGroup = new PhdProcessGuidingsGroup(individualProgramProcess);
 
         final Group group = new GroupUnion(roleGroup, coordinatorGroup, guidingsGroup);
-        super.init(getVirtualPath(), filename, filename, Collections.EMPTY_SET, content, group);
+        super.init(filename, filename, content, group);
     }
 
     protected void setDocumentVersion(PhdProgramProcess process, PhdIndividualProgramDocumentType documentType) {
@@ -102,21 +96,6 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
         }
     }
 
-    /**
-     * <pre>
-     * Format /PhdIndividualProgram/{processId}
-     * </pre>
-     * 
-     * @return
-     */
-    protected VirtualPath getVirtualPath() {
-        final VirtualPath filePath = new VirtualPath();
-        filePath.addNode(new VirtualPathNode("PhdIndividualProgram", "PhdIndividualProgram"));
-        filePath.addNode(new VirtualPathNode(getPhdProgramProcess().getIndividualProgramProcess().getExternalId().toString(),
-                getPhdProgramProcess().getIndividualProgramProcess().getExternalId().toString()));
-        return filePath;
-    }
-
     @Override
     protected void disconnect() {
         setUploader(null);
@@ -124,18 +103,18 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
         super.disconnect();
     }
 
-    /*
-     * This method works properly because disconnect is re-implemented and
-     * super.disconnect is called first
-     */
-    @Override
-    protected void createDeleteFileRequest() {
-        Person person = AccessControl.getPerson();
-        if (person == null) {
-            person = getPhdProgramProcess().getPerson();
-        }
-        new DeleteFileRequest(person, getExternalStorageIdentification());
-    }
+//    /*
+//     * This method works properly because disconnect is re-implemented and
+//     * super.disconnect is called first
+//     */
+//    @Override
+//    protected void createDeleteFileRequest() {
+//        Person person = AccessControl.getPerson();
+//        if (person == null) {
+//            person = getPhdProgramProcess().getPerson();
+//        }
+//        new DeleteFileRequest(person, getExternalStorageIdentification());
+//    }
 
     public boolean hasType(final PhdIndividualProgramDocumentType type) {
         return getDocumentType().equals(type);

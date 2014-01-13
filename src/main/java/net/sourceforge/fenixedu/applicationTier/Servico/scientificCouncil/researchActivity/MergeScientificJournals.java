@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.researchActivity;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;

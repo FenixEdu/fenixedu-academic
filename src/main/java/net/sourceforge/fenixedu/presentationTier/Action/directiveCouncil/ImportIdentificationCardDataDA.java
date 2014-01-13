@@ -19,6 +19,8 @@ import org.apache.commons.collections.Predicate;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
@@ -34,6 +36,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
                 path = "/identificationCardManager/cardGeneration/importIdentificationCard.jsp"),
         @Forward(name = "showImportResults", path = "/identificationCardManager/cardGeneration/showImportResults.jsp") })
 public class ImportIdentificationCardDataDA extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(ImportIdentificationCardDataDA.class);
 
     public ActionForward prepareIdentificationCardDataImportation(final ActionMapping mapping, final ActionForm actionForm,
             final HttpServletRequest request, final HttpServletResponse response) {
@@ -56,7 +60,7 @@ public class ImportIdentificationCardDataDA extends FenixDispatchAction {
 
         CardGenerationBatch cardGenerationBatch = importBean.getSelectedCardGenerationBatch();
 
-        System.out.println("Current Encoding: " + Charset.defaultCharset().name());
+        logger.info("Current Encoding: " + Charset.defaultCharset().name());
 
         if (cardGenerationBatch == null) {
             addActionMessage(request, "error.card.generation.batch.required");

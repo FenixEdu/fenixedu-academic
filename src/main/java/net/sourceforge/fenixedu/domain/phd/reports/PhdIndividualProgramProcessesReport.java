@@ -5,11 +5,11 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
@@ -34,7 +34,7 @@ public class PhdIndividualProgramProcessesReport extends PhdReport {
 
         int i = 1;
         for (PhdIndividualProgramProcess process : processes) {
-            if (!process.isAllowedToManageProcess(AccessControl.getUserView())) {
+            if (!process.isAllowedToManageProcess(Authenticate.getUser())) {
                 continue;
             }
 

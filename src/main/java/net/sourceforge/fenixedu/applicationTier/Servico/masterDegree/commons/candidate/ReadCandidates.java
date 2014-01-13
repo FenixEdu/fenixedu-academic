@@ -24,7 +24,8 @@ public class ReadCandidates {
         int i = 0;
         for (i = 0; i < size; i++) {
 
-            result.add(InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(FenixFramework.<MasterDegreeCandidate> getDomainObject(candidateList[i])));
+            result.add(InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(FenixFramework
+                    .<MasterDegreeCandidate> getDomainObject(candidateList[i])));
         }
 
         return result;

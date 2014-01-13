@@ -3,11 +3,11 @@ package net.sourceforge.fenixedu.presentationTier.renderers.validators;
 import java.util.Collection;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.commons.StringNormalizer;
 
 import pt.ist.fenixWebFramework.rendererExtensions.MultiLanguageStringInputRenderer.LanguageBean;
 import pt.ist.fenixWebFramework.renderers.components.HtmlSimpleValueComponent;
 import pt.ist.fenixWebFramework.renderers.validators.HtmlChainValidator;
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class RequiredMultiLanguageStringValidator extends MultiLanguageStringValidator {
 

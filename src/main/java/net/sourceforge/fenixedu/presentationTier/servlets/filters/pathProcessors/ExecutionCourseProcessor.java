@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.MetaDomainObject;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
@@ -80,7 +79,7 @@ public class ExecutionCourseProcessor extends PathProcessor {
 
     private void setFunctionalityContext(ProcessingContext context, ExecutionCourse executionCourse) {
         ExecutionCourseSite site = executionCourse.getSite();
-        MetaDomainObjectPortal portal = (MetaDomainObjectPortal) MetaDomainObject.getMeta(site.getClass()).getAssociatedPortal();
+        MetaDomainObjectPortal portal = MetaDomainObjectPortal.getPortal(site.getClass());
 
         List<Content> contents = new ArrayList<Content>();
         contents.add(portal);

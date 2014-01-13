@@ -2,8 +2,9 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
+
+import org.fenixedu.bennu.core.security.Authenticate;
 
 public class SiteManagerAuthorizationFilter {
 
@@ -16,7 +17,7 @@ public class SiteManagerAuthorizationFilter {
             throw new NotAuthorizedException();
         }
 
-        if (!owner.allows(AccessControl.getUserView())) {
+        if (!owner.allows(Authenticate.getUser())) {
             throw new NotAuthorizedException();
         }
     }

@@ -1,8 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.servlets.filters;
 
-import pt.ist.fenixframework.plugins.remote.domain.RemoteHost;
-import pt.ist.fenixframework.plugins.remote.domain.RemoteSystem;
-
 import java.io.IOException;
 
 import javax.servlet.Filter;
@@ -15,13 +12,21 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
-@WebFilter(urlPatterns = "/jersey/services/*")
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import pt.ist.fenixframework.plugins.remote.domain.RemoteHost;
+import pt.ist.fenixframework.plugins.remote.domain.RemoteSystem;
+
+@WebFilter(urlPatterns = "/api/fenix/jersey/services/*")
 public class JerseyAuthFilter implements Filter {
 
-    final static String systemUsername = PropertiesManager.getProperty("jersey.username");
-    final static String systemPassword = PropertiesManager.getProperty("jersey.password");
+    private static final Logger logger = LoggerFactory.getLogger(JerseyAuthFilter.class);
+
+    final static String systemUsername = FenixConfigurationManager.getConfiguration().getJerseyUsername();
+    final static String systemPassword = FenixConfigurationManager.getConfiguration().getJerseyPassword();
     final static String USERNAME_KEY = "__username__";
     final static String PASSWORD_KEY = "__password__";
 
@@ -57,11 +62,11 @@ public class JerseyAuthFilter implements Filter {
         Boolean found = Boolean.FALSE;
         for (final RemoteHost remoteHost : RemoteSystem.getInstance().getRemoteHostsSet()) {
             if (remoteHost.matches(url, username, password)) {
-                System.out.println("[Jersey Server Invoke by client " + url);
+                logger.info("[Jersey Server Invoke by client " + url);
                 found = Boolean.TRUE;
             }
         }
-        System.out.println("[Jersey Server] Invoke by client " + url);
+        logger.info("[Jersey Server] Invoke by client " + url);
         return found;
     }
 

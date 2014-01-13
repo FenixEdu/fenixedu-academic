@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author David Santos in Jun 29, 2004
@@ -42,7 +43,7 @@ public class CurricularCourseEquivalence extends CurricularCourseEquivalence_Bas
 
     public CurricularCourseEquivalence() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public CurricularCourseEquivalence(final DegreeCurricularPlan degreeCurricularPlan,
@@ -109,7 +110,7 @@ public class CurricularCourseEquivalence extends CurricularCourseEquivalence_Bas
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

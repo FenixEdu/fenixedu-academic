@@ -37,11 +37,10 @@ public class ClassTimeTableLessonContentRenderer extends LessonSlotContentRender
             final AllocatableSpace allocatableSpace = lesson.getAllocatableSpace();
             if (allocatableSpace != null) {
                 strBuffer.append(" <a href='").append(context).append("/publico/");
-                strBuffer.append("siteViewer.do?method=roomViewer&amp;roomName=")
-                        .append(allocatableSpace.getNome()).append("&amp;objectCode=")
-                        .append(infoExecutionCourse.getInfoExecutionPeriod().getExternalId()).append("&amp;executionPeriodOID=")
-                        .append(infoExecutionCourse.getInfoExecutionPeriod().getExternalId()).append("&amp;shift=true")
-                        .append("'>").append(allocatableSpace.getNome()).append("</a>");
+                strBuffer.append("siteViewer.do?method=roomViewer&amp;roomName=").append(allocatableSpace.getNome())
+                        .append("&amp;objectCode=").append(infoExecutionCourse.getInfoExecutionPeriod().getExternalId())
+                        .append("&amp;executionPeriodOID=").append(infoExecutionCourse.getInfoExecutionPeriod().getExternalId())
+                        .append("&amp;shift=true").append("'>").append(allocatableSpace.getNome()).append("</a>");
             }
 
 //            if (allocatableSpace != null && lesson.getInfoRoomOccupation().getFrequency() != null

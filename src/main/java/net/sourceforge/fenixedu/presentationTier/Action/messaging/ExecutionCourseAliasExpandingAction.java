@@ -7,15 +7,16 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.messaging.ExpandExecutionCourseMailAlias;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.util.HostAccessControl;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
@@ -30,6 +31,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(module = "external", path = "/expandAlias", scope = "request", validate = false, parameter = "method")
 public class ExecutionCourseAliasExpandingAction extends FenixAction {
 
+    private static final Logger logger = LoggerFactory.getLogger(ExecutionCourseAliasExpandingAction.class);
+
     public static String emailAddressPrefix = "course-";
 
     private static Properties properties;
@@ -39,7 +42,7 @@ public class ExecutionCourseAliasExpandingAction extends FenixAction {
             HttpServletResponse response) throws FenixActionException {
         String result = "400 Error: Email alias expanding service did not run";
 
-        if (HostAccessControl.isAllowed(this, request)) {
+        if (FenixConfigurationManager.getHostAccessControl().isAllowed(this, request)) {
 
             String address = request.getParameter("address");
 
@@ -85,7 +88,7 @@ public class ExecutionCourseAliasExpandingAction extends FenixAction {
                 }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
                 result = "400 Got an exception when trying to send email: " + e.getClass().getName() + "\n";
             }
         } else {
@@ -102,7 +105,7 @@ public class ExecutionCourseAliasExpandingAction extends FenixAction {
     }
 
     public static String mailingListDomainConfiguration() {
-        return PropertiesManager.getProperty("mailingList.host.name");
+        return FenixConfigurationManager.getConfiguration().getMailingListHostName();
     }
 
     private void sendAnswer(HttpServletResponse response, String result) throws IOException {

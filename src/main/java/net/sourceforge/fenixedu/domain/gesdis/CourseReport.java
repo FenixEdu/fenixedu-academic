@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.domain.gesdis;
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author Leonor Almeida
@@ -19,7 +19,7 @@ public class CourseReport extends CourseReport_Base {
 
     public CourseReport() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void edit(String newReport) {
@@ -63,7 +63,7 @@ public class CourseReport extends CourseReport_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

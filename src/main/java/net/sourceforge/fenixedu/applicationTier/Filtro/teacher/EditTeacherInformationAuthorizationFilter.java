@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.teacher;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoOrientation;
@@ -16,7 +15,9 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoWeeklyOcupation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 /**
  * @author Leonor Almeida
@@ -35,10 +36,10 @@ public class EditTeacherInformationAuthorizationFilter extends AuthorizationByRo
     public void execute(InfoServiceProviderRegime infoServiceProviderRegime, InfoWeeklyOcupation infoWeeklyOcupation,
             List<InfoOrientation> infoOrientations, List<InfoPublicationsNumber> infoPublicationsNumbers)
             throws NotAuthorizedException {
-        IUserView id = AccessControl.getUserView();
+        User id = Authenticate.getUser();
         try {
-            if (((id != null && id.getRoleTypes() != null && !id.hasRoleType(getRoleType()))) || (id == null)
-                    || (id.getRoleTypes() == null)
+            if (((id != null && id.getPerson().getPersonRolesSet() != null && !id.getPerson().hasRole(getRoleType())))
+                    || (id == null) || (id.getPerson().getPersonRolesSet() == null)
                     || (!argumentsBelongToTeacher(id, infoServiceProviderRegime, infoWeeklyOcupation))) {
                 throw new NotAuthorizedException();
             }
@@ -47,7 +48,7 @@ public class EditTeacherInformationAuthorizationFilter extends AuthorizationByRo
         }
     }
 
-    private boolean argumentsBelongToTeacher(IUserView id, InfoServiceProviderRegime infoServiceProviderRegime,
+    private boolean argumentsBelongToTeacher(User id, InfoServiceProviderRegime infoServiceProviderRegime,
             InfoWeeklyOcupation infoWeeklyOcupation) {
         final Person person = id.getPerson();
         final Teacher teacher = person != null ? person.getTeacher() : null;

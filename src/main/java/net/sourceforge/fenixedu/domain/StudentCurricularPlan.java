@@ -17,7 +17,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreTheSameServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedBranchChangeException;
@@ -93,6 +92,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
@@ -181,7 +182,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     private StudentCurricularPlan() {
         super();
         setCurrentState(StudentCurricularPlanState.ACTIVE);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setWhenDateTime(new DateTime());
         setGivenCredits(Double.valueOf(0));
     }
@@ -1896,10 +1897,6 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
                 final CurricularYear curricularYear = curricularSemester.getCurricularYear();
                 if (curricularYearInteger == null || curricularYear.getYear().intValue() <= curricularYearInteger.intValue()) {
                     if (!isCurricularCourseApproved(curricularCourse)) {
-                        if (LogLevel.INFO) {
-                            System.out.println("curricular course failed: " + curricularCourse.getName() + " "
-                                    + curricularCourse.getCode());
-                        }
                         return false;
                     }
                 }
@@ -2126,8 +2123,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
                     executionSemester.getQualifiedName() });
         }
 
-        new OptionalEnrolment(this, curriculumGroup, curricularCourse, executionSemester, enrollmentCondition, AccessControl
-                .getUserView().getUtilizador(), optionalCurricularCourse);
+        new OptionalEnrolment(this, curriculumGroup, curricularCourse, executionSemester, enrollmentCondition, Authenticate
+                .getUser().getUsername(), optionalCurricularCourse);
     }
 
     final public RuleResult createNoCourseGroupCurriculumGroupEnrolment(final NoCourseGroupEnrolmentBean bean) {
@@ -3182,7 +3179,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

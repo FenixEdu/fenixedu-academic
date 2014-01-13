@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -26,6 +25,8 @@ import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidExceptio
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
+
+import org.fenixedu.bennu.core.domain.User;
 
 public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCandidacyForGraduatedPersonIndividualProcess_Base {
 
@@ -95,7 +96,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
     }
 
     @Override
-    public boolean canExecuteActivity(final IUserView userView) {
+    public boolean canExecuteActivity(final User userView) {
         return isAllowedToManageProcess(this, userView);
     }
 
@@ -139,7 +140,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
     // static information
 
-    static private boolean isAllowedToManageProcess(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
+    static private boolean isAllowedToManageProcess(DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView) {
         Set<AcademicProgram> programs =
                 AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
                         AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
@@ -155,7 +156,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
     static public class IndividualCandidacyInformation extends Activity<DegreeCandidacyForGraduatedPersonIndividualProcess> {
 
         @Override
-        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
+        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView) {
             /*
              * 06/04/2009 The candidacy may be submited by someone who's not
              * authenticated in the system
@@ -167,7 +168,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
         @Override
         protected DegreeCandidacyForGraduatedPersonIndividualProcess executeActivity(
-                DegreeCandidacyForGraduatedPersonIndividualProcess dummy, IUserView userView, Object object) {
+                DegreeCandidacyForGraduatedPersonIndividualProcess dummy, User userView, Object object) {
             return new DegreeCandidacyForGraduatedPersonIndividualProcess(
                     (DegreeCandidacyForGraduatedPersonIndividualProcessBean) object);
         }
@@ -176,7 +177,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
     static private class CandidacyPayment extends Activity<DegreeCandidacyForGraduatedPersonIndividualProcess> {
 
         @Override
-        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
+        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -188,7 +189,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
         @Override
         protected DegreeCandidacyForGraduatedPersonIndividualProcess executeActivity(
-                DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView, Object object) {
+                DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView, Object object) {
             return process; // nothing to be done, for now payment is being
             // done by existing interface
         }
@@ -197,7 +198,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
     static private class EditCandidacyPersonalInformation extends Activity<DegreeCandidacyForGraduatedPersonIndividualProcess> {
 
         @Override
-        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
+        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView) {
 
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
@@ -210,7 +211,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
         @Override
         protected DegreeCandidacyForGraduatedPersonIndividualProcess executeActivity(
-                DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView, Object object) {
+                DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView, Object object) {
             process.editPersonalCandidacyInformation(((DegreeCandidacyForGraduatedPersonIndividualProcessBean) object)
                     .getPersonBean());
             return process;
@@ -220,7 +221,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
     static private class EditCandidacyInformation extends Activity<DegreeCandidacyForGraduatedPersonIndividualProcess> {
 
         @Override
-        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
+        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView) {
 
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
@@ -229,7 +230,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
         @Override
         protected DegreeCandidacyForGraduatedPersonIndividualProcess executeActivity(
-                DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView, Object object) {
+                DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView, Object object) {
             DegreeCandidacyForGraduatedPersonIndividualProcessBean bean =
                     (DegreeCandidacyForGraduatedPersonIndividualProcessBean) object;
 
@@ -245,7 +246,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
     static private class IntroduceCandidacyResult extends Activity<DegreeCandidacyForGraduatedPersonIndividualProcess> {
 
         @Override
-        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
+        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -261,7 +262,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
         @Override
         protected DegreeCandidacyForGraduatedPersonIndividualProcess executeActivity(
-                DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView, Object object) {
+                DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView, Object object) {
             DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean bean =
                     (DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean) object;
             DegreeCandidacyForGraduatedPersonSeriesGade degreeCandidacyForGraduatedPersonSeriesGade =
@@ -278,7 +279,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
     static private class ChangeIndividualCandidacyState extends Activity<DegreeCandidacyForGraduatedPersonIndividualProcess> {
 
         @Override
-        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
+        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -298,7 +299,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
         @Override
         protected DegreeCandidacyForGraduatedPersonIndividualProcess executeActivity(
-                DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView, Object object) {
+                DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView, Object object) {
             DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean bean =
                     (DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean) object;
             process.getCandidacy().setState(bean.getState());
@@ -310,7 +311,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
     static private class CancelCandidacy extends Activity<DegreeCandidacyForGraduatedPersonIndividualProcess> {
 
         @Override
-        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
+        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -322,7 +323,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
         @Override
         protected DegreeCandidacyForGraduatedPersonIndividualProcess executeActivity(
-                DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView, Object object) {
+                DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView, Object object) {
             process.cancelCandidacy(userView.getPerson());
             return process;
         }
@@ -331,7 +332,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
     static private class CreateRegistration extends Activity<DegreeCandidacyForGraduatedPersonIndividualProcess> {
 
         @Override
-        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
+        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -347,7 +348,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
         @Override
         protected DegreeCandidacyForGraduatedPersonIndividualProcess executeActivity(
-                DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView, Object object) {
+                DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView, Object object) {
             process.getCandidacy().createRegistration(getDegreeCurricularPlan(process), CycleType.FIRST_CYCLE, Ingression.CEA02);
             return process;
         }
@@ -362,7 +363,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
             Activity<DegreeCandidacyForGraduatedPersonIndividualProcess> {
 
         @Override
-        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
+        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView) {
             if (!process.isCandidacyInStandBy()) {
                 throw new PreConditionNotValidException();
             }
@@ -370,7 +371,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
         @Override
         protected DegreeCandidacyForGraduatedPersonIndividualProcess executeActivity(
-                DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView, Object object) {
+                DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView, Object object) {
             process.editPersonalCandidacyInformation(((DegreeCandidacyForGraduatedPersonIndividualProcessBean) object)
                     .getPersonBean());
             return process;
@@ -386,7 +387,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
     static private class EditPublicCandidacyDocumentFile extends Activity<DegreeCandidacyForGraduatedPersonIndividualProcess> {
 
         @Override
-        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
+        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView) {
 
             if (!process.isCandidacyInStandBy()) {
                 throw new PreConditionNotValidException();
@@ -396,7 +397,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
         @Override
         protected DegreeCandidacyForGraduatedPersonIndividualProcess executeActivity(
-                DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView, Object object) {
+                DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView, Object object) {
             CandidacyProcessDocumentUploadBean bean = (CandidacyProcessDocumentUploadBean) object;
             process.bindIndividualCandidacyDocumentFile(bean);
             return process;
@@ -412,7 +413,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
     static private class EditPublicCandidacyHabilitations extends Activity<DegreeCandidacyForGraduatedPersonIndividualProcess> {
 
         @Override
-        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
+        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView) {
             if (!process.isCandidacyInStandBy()) {
                 throw new PreConditionNotValidException();
             }
@@ -420,7 +421,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
         @Override
         protected DegreeCandidacyForGraduatedPersonIndividualProcess executeActivity(
-                DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView, Object object) {
+                DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView, Object object) {
 
             DegreeCandidacyForGraduatedPersonIndividualProcessBean bean =
                     (DegreeCandidacyForGraduatedPersonIndividualProcessBean) object;
@@ -442,7 +443,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
     static private class EditDocuments extends Activity<DegreeCandidacyForGraduatedPersonIndividualProcess> {
 
         @Override
-        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
+        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -454,7 +455,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
         @Override
         protected DegreeCandidacyForGraduatedPersonIndividualProcess executeActivity(
-                DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView, Object object) {
+                DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView, Object object) {
             CandidacyProcessDocumentUploadBean bean = (CandidacyProcessDocumentUploadBean) object;
             process.bindIndividualCandidacyDocumentFile(bean);
             return process;
@@ -464,7 +465,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
     static private class ChangeProcessCheckedState extends Activity<DegreeCandidacyForGraduatedPersonIndividualProcess> {
 
         @Override
-        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
+        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -477,7 +478,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
         @Override
         protected DegreeCandidacyForGraduatedPersonIndividualProcess executeActivity(
-                DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView, Object object) {
+                DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView, Object object) {
             process.setProcessChecked(((IndividualCandidacyProcessBean) object).getProcessChecked());
             return process;
         }
@@ -486,7 +487,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
     static private class ChangePaymentCheckedState extends Activity<DegreeCandidacyForGraduatedPersonIndividualProcess> {
 
         @Override
-        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
+        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -499,7 +500,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
         @Override
         protected DegreeCandidacyForGraduatedPersonIndividualProcess executeActivity(
-                DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView, Object object) {
+                DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView, Object object) {
             process.setPaymentChecked(((IndividualCandidacyProcessBean) object).getPaymentChecked());
             return process;
         }
@@ -507,12 +508,12 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
     static private class SendEmailForApplicationSubmission extends Activity<DegreeCandidacyForGraduatedPersonIndividualProcess> {
         @Override
-        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
+        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView) {
         }
 
         @Override
         protected DegreeCandidacyForGraduatedPersonIndividualProcess executeActivity(
-                DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView, Object object) {
+                DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView, Object object) {
             DegreeOfficePublicCandidacyHashCode hashCode = (DegreeOfficePublicCandidacyHashCode) object;
             hashCode.sendEmailForApplicationSuccessfullySubmited();
             return process;
@@ -569,7 +570,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
     static protected class RevokeDocumentFile extends Activity<DegreeCandidacyForGraduatedPersonIndividualProcess> {
 
         @Override
-        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
+        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -577,7 +578,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
         @Override
         protected DegreeCandidacyForGraduatedPersonIndividualProcess executeActivity(
-                DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView, Object object) {
+                DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView, Object object) {
             ((CandidacyProcessDocumentUploadBean) object).getDocumentFile().setCandidacyFileActive(Boolean.FALSE);
             return process;
         }
@@ -592,7 +593,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
     static private class RejectCandidacy extends Activity<DegreeCandidacyForGraduatedPersonIndividualProcess> {
 
         @Override
-        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
+        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -604,7 +605,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
         @Override
         protected DegreeCandidacyForGraduatedPersonIndividualProcess executeActivity(
-                DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView, Object object) {
+                DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView, Object object) {
             process.rejectCandidacy(userView.getPerson());
             return process;
         }
@@ -613,7 +614,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
     static private class RevertApplicationToStandBy extends Activity<DegreeCandidacyForGraduatedPersonIndividualProcess> {
 
         @Override
-        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
+        public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -625,7 +626,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
         @Override
         protected DegreeCandidacyForGraduatedPersonIndividualProcess executeActivity(
-                DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView, Object object) {
+                DegreeCandidacyForGraduatedPersonIndividualProcess process, User userView, Object object) {
             process.getCandidacy().setState(IndividualCandidacyState.STAND_BY);
 
             return process;

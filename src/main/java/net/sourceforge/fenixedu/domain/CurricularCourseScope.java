@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.YearMonthDay;
 
 public class CurricularCourseScope extends CurricularCourseScope_Base {
@@ -27,7 +28,7 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
 
     public CurricularCourseScope() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public CurricularCourseScope(Branch branch, CurricularCourse curricularCourse, CurricularSemester curricularSemester,
@@ -313,7 +314,7 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

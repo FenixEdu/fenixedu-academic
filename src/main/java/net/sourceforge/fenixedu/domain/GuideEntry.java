@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
@@ -13,7 +15,7 @@ public class GuideEntry extends GuideEntry_Base {
 
     public GuideEntry() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public GuideEntry(GraduationType graduationType, DocumentType documentType, String description, Integer quantity,
@@ -99,7 +101,7 @@ public class GuideEntry extends GuideEntry_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

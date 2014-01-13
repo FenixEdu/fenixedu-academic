@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.space.FloorInformation;
 import net.sourceforge.fenixedu.domain.space.RoomInformation;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.SpaceInformation;
-import pt.utl.ist.fenix.tools.image.DWGProcessor;
+import net.sourceforge.fenixedu.util.DWGProcessor;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 import com.iver.cit.jdwglib.dwg.DwgFile;

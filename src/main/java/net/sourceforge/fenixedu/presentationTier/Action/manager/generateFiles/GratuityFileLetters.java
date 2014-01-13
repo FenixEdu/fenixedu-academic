@@ -14,11 +14,17 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Tânia Pousão
  * 
  */
 public class GratuityFileLetters extends GratuityFile {
+
+    private static final Logger logger = LoggerFactory.getLogger(GratuityFileLetters.class);
+
     public static final String SEPARATOR = ";";
 
     public static final String NOTHING = "-";
@@ -62,7 +68,7 @@ public class GratuityFileLetters extends GratuityFile {
 
             return file;
         } catch (Exception exception) {
-            exception.printStackTrace();
+            logger.error(exception.getMessage(), exception);
             throw new Exception();
         }
     }

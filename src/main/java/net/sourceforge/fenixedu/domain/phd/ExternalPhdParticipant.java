@@ -59,6 +59,7 @@ public class ExternalPhdParticipant extends ExternalPhdParticipant_Base {
     public boolean isTeacher() {
         return false;
     }
+
     @Deprecated
     public boolean hasName() {
         return getName() != null;

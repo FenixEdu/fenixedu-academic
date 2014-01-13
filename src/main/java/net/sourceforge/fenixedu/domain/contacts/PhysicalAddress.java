@@ -176,6 +176,7 @@ public class PhysicalAddress extends PhysicalAddress_Base {
     public void logRefuse(Person person) {
         logRefuseAux(person, "label.partyContacts.PhysicalAddress");
     }
+
     @Deprecated
     public boolean hasParishOfResidence() {
         return getParishOfResidence() != null;

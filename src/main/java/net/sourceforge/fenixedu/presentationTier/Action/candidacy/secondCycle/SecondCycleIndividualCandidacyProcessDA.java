@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleC
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyResultBean;
+import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.IndividualCandidacyProcessDA;
@@ -26,6 +27,8 @@ import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDom
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -58,8 +61,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "set-not-accepted-state", path = "/candidacy/secondCycle/setNotAcceptedState.jsp") })
 public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
 
+    private static final Logger logger = LoggerFactory.getLogger(SecondCycleIndividualCandidacyProcessDA.class);
+
     @Override
-    protected Class getParentProcessType() {
+    protected Class<? extends Process> getParentProcessType() {
         return SecondCycleCandidacyProcess.class;
     }
 
@@ -148,7 +153,7 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
     }
 
     public ActionForward executeChangeIndividualCandidacyState(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
 
         try {
             executeActivity(getProcess(request), "ChangeIndividualCandidacyState", getCandidacyResultBean());
@@ -167,7 +172,7 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
     }
 
     public ActionForward executeEditCandidacyPersonalInformation(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
 
         try {
             executeActivity(getProcess(request), "EditCandidacyPersonalInformation", getIndividualCandidacyProcessBean());
@@ -195,7 +200,7 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
     }
 
     public ActionForward executeEditCandidacyInformation(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
 
         try {
             executeActivity(getProcess(request), "EditCandidacyInformation", getIndividualCandidacyProcessBean());
@@ -228,7 +233,7 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
     }
 
     public ActionForward executeIntroduceCandidacyResult(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
 
         try {
             executeActivity(getProcess(request), "IntroduceCandidacyResult", getCandidacyResultBean());
@@ -261,14 +266,14 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
     }
 
     public ActionForward continueExecuteCreateRegistration(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws  FenixServiceException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
         request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 
         return mapping.findForward("create-registration");
     }
 
     public ActionForward executeCreateRegistration(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         try {
             executeActivity(getProcess(request), "CreateRegistration", getIndividualCandidacyProcessBean());
         } catch (final DomainException e) {
@@ -297,7 +302,7 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 
     @Override
     public ActionForward createNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         SecondCycleIndividualCandidacyProcessBean bean = getIndividualCandidacyProcessBean();
 
         boolean isValid = hasInvalidViewState();
@@ -376,8 +381,7 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
     }
 
     public ActionForward executeCopyIndividualCandidacyToNextCandidacyProcess(final ActionMapping mapping, final ActionForm form,
-            final HttpServletRequest request, final HttpServletResponse response) throws 
-            FenixServiceException {
+            final HttpServletRequest request, final HttpServletResponse response) throws FenixServiceException {
         SecondCycleIndividualCandidacyProcessBean individualCandidacyProcessBean = getIndividualCandidacyProcessBean();
 
         try {
@@ -390,7 +394,7 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
         } catch (final DomainException e) {
             addActionMessage(request, e.getKey(), e.getArgs());
             request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return mapping.findForward("select-destination-period-to-copy");
         }
 
@@ -423,8 +427,7 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
     }
 
     public ActionForward executeSetNotAcceptedState(final ActionMapping mapping, final ActionForm form,
-            final HttpServletRequest request, final HttpServletResponse response) throws 
-            FenixServiceException {
+            final HttpServletRequest request, final HttpServletResponse response) throws FenixServiceException {
         SecondCycleIndividualCandidacyProcessBean individualCandidacyProcessBean = getIndividualCandidacyProcessBean();
 
         try {
@@ -437,7 +440,7 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
         } catch (final DomainException e) {
             addActionMessage(request, e.getKey(), e.getArgs());
             request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return mapping.findForward("set-not-accepted-state");
         }
     }

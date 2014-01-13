@@ -3,12 +3,12 @@ package net.sourceforge.fenixedu.domain.phd;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -19,7 +19,7 @@ public class ExternalPhdProgram extends ExternalPhdProgram_Base {
     public ExternalPhdProgram() {
         super();
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setWhenCreated(new DateTime());
     }
 
@@ -76,7 +76,7 @@ public class ExternalPhdProgram extends ExternalPhdProgram_Base {
             final PhdIndividualProgramCollaborationType type) {
         List<ExternalPhdProgram> phdProgramList = new ArrayList<ExternalPhdProgram>();
 
-        CollectionUtils.select(RootDomainObject.getInstance().getExternalPhdPrograms(), new Predicate() {
+        CollectionUtils.select(Bennu.getInstance().getExternalPhdProgramsSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {
@@ -89,27 +89,25 @@ public class ExternalPhdProgram extends ExternalPhdProgram_Base {
     }
 
     public static ExternalPhdProgram readExternalPhdProgramByName(final String name) {
-        return (ExternalPhdProgram) CollectionUtils.find(RootDomainObject.getInstance().getExternalPhdPrograms(),
-                new Predicate() {
+        return (ExternalPhdProgram) CollectionUtils.find(Bennu.getInstance().getExternalPhdProgramsSet(), new Predicate() {
 
-                    @Override
-                    public boolean evaluate(Object object) {
-                        return name.equals(((ExternalPhdProgram) object).getName().getContent());
-                    }
+            @Override
+            public boolean evaluate(Object object) {
+                return name.equals(((ExternalPhdProgram) object).getName().getContent());
+            }
 
-                });
+        });
     }
 
     public static ExternalPhdProgram readExternalPhdProgramByAcronym(final String acronym) {
-        return (ExternalPhdProgram) CollectionUtils.find(RootDomainObject.getInstance().getExternalPhdPrograms(),
-                new Predicate() {
+        return (ExternalPhdProgram) CollectionUtils.find(Bennu.getInstance().getExternalPhdProgramsSet(), new Predicate() {
 
-                    @Override
-                    public boolean evaluate(Object object) {
-                        return acronym.equals(((ExternalPhdProgram) object).getAcronym());
-                    }
+            @Override
+            public boolean evaluate(Object object) {
+                return acronym.equals(((ExternalPhdProgram) object).getAcronym());
+            }
 
-                });
+        });
     }
 
     @Deprecated
@@ -138,7 +136,7 @@ public class ExternalPhdProgram extends ExternalPhdProgram_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

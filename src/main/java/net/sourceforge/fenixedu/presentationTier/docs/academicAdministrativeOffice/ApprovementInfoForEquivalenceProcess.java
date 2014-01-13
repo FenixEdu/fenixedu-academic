@@ -27,7 +27,9 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalCurriculumGroup
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
-import net.sourceforge.fenixedu.util.StringUtils;
+
+import org.apache.commons.lang.StringUtils;
+
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -43,7 +45,7 @@ public class ApprovementInfoForEquivalenceProcess {
 
     static final protected String LINE_BREAK = "\n";
 
-    static final protected String SINGLE_SPACE = StringUtils.SINGLE_SPACE;
+    static final protected String SINGLE_SPACE = " ";
 
     public static String getApprovementsInfo(final Registration registration) {
 

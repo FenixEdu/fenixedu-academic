@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.person;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.Person;

@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.predicates;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.contacts.PartyContactBean;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
@@ -13,12 +12,15 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
 
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+
 public class RolePredicates {
 
     public static class PartyContactPredicate implements AccessControlPredicate<PartyContact> {
 
         private static boolean isSelfPerson(Party person) {
-            final IUserView userView = AccessControl.getUserView();
+            final User userView = Authenticate.getUser();
             return userView.getPerson() != null && userView.getPerson().equals(person);
         }
 

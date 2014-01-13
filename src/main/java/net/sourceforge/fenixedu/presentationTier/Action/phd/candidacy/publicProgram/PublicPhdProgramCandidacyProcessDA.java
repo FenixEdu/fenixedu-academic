@@ -1,14 +1,10 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram;
 
 import java.util.Collection;
-import java.util.Collections;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.utils.MockUserView;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -18,14 +14,16 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.academicAdminOffice.PhdProgramCandidacyProcessDA;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.User;
 
 public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
-    private static final String SIBS_ENTITY_CODE = PropertiesManager.getProperty("sibs.entityCode");
+    private static final String SIBS_ENTITY_CODE = FenixConfigurationManager.getConfiguration().getSibsEntityCode();
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -79,8 +77,8 @@ public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandi
         addActionMessage("validation", request, key, args);
     }
 
-    protected IUserView createMockUserView(final Person person) {
-        return new MockUserView(null, Collections.EMPTY_LIST, person);
+    protected User createMockUserView(final Person person) {
+        return person.getUser();
     }
 
     public abstract ActionForward fillPersonalDataInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -120,7 +118,7 @@ public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandi
         }
 
         if (bean.hasInstitutionId()) {
-            Person personByIstId = Person.readPersonByIstUsername(bean.getInstitutionId());
+            Person personByIstId = Person.readPersonByUsername(bean.getInstitutionId());
 
             if (personByIstId == null) {
                 addErrorMessage(request, "error.phd.public.candidacy.fill.personal.information.and.institution.id.noIstIdPerson");
@@ -141,9 +139,9 @@ public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandi
             // ist Id if it has
 
             if (person.getDateOfBirthYearMonthDay().equals(personBean.getDateOfBirth())) {
-                if (person.hasIstUsername() && person.getIstUsername().equals(bean.getInstitutionId())) {
+                if (person.getUsername() != null && person.getUsername().equals(bean.getInstitutionId())) {
                     personBean.setPerson(person);
-                } else if (!person.hasIstUsername() && !bean.hasInstitutionId()) {
+                } else if (person.getUsername() == null && !bean.hasInstitutionId()) {
                     personBean.setPerson(person);
                 } else {
                     addErrorMessage(request,

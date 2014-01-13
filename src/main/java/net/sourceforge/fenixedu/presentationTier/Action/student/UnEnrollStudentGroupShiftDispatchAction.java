@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.student;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -24,6 +23,7 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -44,12 +44,12 @@ public class UnEnrollStudentGroupShiftDispatchAction extends FenixDispatchAction
     public ActionForward unEnrollStudentGroupShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         String studentGroupCodeString = request.getParameter("studentGroupCode");
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
 
         try {
-            UnEnrollGroupShift.run(studentGroupCodeString, studentGroupCodeString, userView.getUtilizador());
+            UnEnrollGroupShift.run(studentGroupCodeString, studentGroupCodeString, userView.getUsername());
         } catch (NotAuthorizedException e) {
             ActionErrors actionErrors2 = new ActionErrors();
             ActionError error2 = null;

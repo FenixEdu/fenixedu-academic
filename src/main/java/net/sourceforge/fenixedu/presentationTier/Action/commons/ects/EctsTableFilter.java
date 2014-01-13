@@ -10,11 +10,13 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.AcademicIntervalConverter;
+
+import org.fenixedu.commons.StringNormalizer;
+
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 import pt.utl.ist.fenix.tools.util.FileUtils;
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class EctsTableFilter implements Serializable {
     private static final long serialVersionUID = 4127180744673004205L;

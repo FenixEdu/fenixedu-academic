@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.result.publication;
 
-
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ArticleBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.BookBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.BookPartBean;

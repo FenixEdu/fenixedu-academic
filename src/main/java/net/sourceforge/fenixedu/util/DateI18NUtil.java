@@ -3,7 +3,13 @@ package net.sourceforge.fenixedu.util;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class DateI18NUtil {
+
+    private static final Logger logger = LoggerFactory.getLogger(DateI18NUtil.class);
+
     public static String verboseNumber(int number, ResourceBundle bundle) {
         String verbose = verboseNumber(number, 1, bundle);
         if (verbose.startsWith(" e ")) {
@@ -44,7 +50,7 @@ public class DateI18NUtil {
 
     public static void main(String[] args) {
         for (int i = 0; i <= 2050; i++) {
-            System.out.println(verboseNumber(i, ResourceBundle.getBundle("EnumerationResources", new Locale("pt"))));
+            logger.info(verboseNumber(i, ResourceBundle.getBundle("EnumerationResources", new Locale("pt"))));
         }
     }
 }

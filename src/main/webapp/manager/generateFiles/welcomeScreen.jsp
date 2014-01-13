@@ -5,7 +5,7 @@
 <table>
 	<tr>
 		<td class="infoop">
-			<bean:message bundle="MANAGER_RESOURCES" key="label.manager.generateFiles.welcome"/>		
+			<bean:message bundle="MANAGER_RESOURCES" key="label.manager.generateFiles.welcome" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/>		
 		</td>
 	</tr>
 </table>

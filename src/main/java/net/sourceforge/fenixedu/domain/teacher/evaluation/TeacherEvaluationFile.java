@@ -9,8 +9,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import org.apache.commons.lang.StringUtils;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.file.VirtualPath;
-import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 public class TeacherEvaluationFile extends TeacherEvaluationFile_Base {
 
@@ -21,7 +19,7 @@ public class TeacherEvaluationFile extends TeacherEvaluationFile_Base {
         setTeacherEvaluationFileType(teacherEvaluationFileType);
         setCreatedBy(createdBy);
         filename = processFilename(teacherEvaluation, teacherEvaluationFileType, getExtension(filename));
-        init(getfilePath(teacherEvaluationFileType), filename, filename, null, content, null);
+        init(filename, filename, content, null);
     }
 
     private String getExtension(String filename) {
@@ -45,13 +43,6 @@ public class TeacherEvaluationFile extends TeacherEvaluationFile_Base {
         }
         parts.add(teacherEvaluation.getTeacherEvaluationProcess().getFacultyEvaluationProcess().getSuffix());
         return StringUtils.join(parts, "_") + "." + extension;
-    }
-
-    private VirtualPath getfilePath(TeacherEvaluationFileType teacherEvaluationFileType) {
-        final VirtualPath filePath = new VirtualPath();
-        filePath.addNode(new VirtualPathNode("TeacherEvaluationFiles", "TeacherEvaluation Files"));
-        filePath.addNode(new VirtualPathNode("TeacherEvaluation" + getExternalId(), teacherEvaluationFileType.name()));
-        return filePath;
     }
 
     @Override

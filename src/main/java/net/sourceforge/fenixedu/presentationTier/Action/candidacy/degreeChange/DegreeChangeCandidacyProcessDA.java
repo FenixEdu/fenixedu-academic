@@ -24,13 +24,13 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChang
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.DegreeChangeCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
 
 import org.apache.poi.hssf.util.Region;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -235,7 +235,7 @@ public class DegreeChangeCandidacyProcessDA extends CandidacyProcessDA {
     private void createBody(final StyledExcelSpreadsheet excelSpreadsheet,
             final SortedSet<DegreeChangeIndividualCandidacyProcess> candidacies) {
         for (final DegreeChangeIndividualCandidacyProcess process : candidacies) {
-            if (!process.canExecuteActivity(AccessControl.getUserView())) {
+            if (!process.canExecuteActivity(Authenticate.getUser())) {
                 continue;
             }
             excelSpreadsheet.newRow();

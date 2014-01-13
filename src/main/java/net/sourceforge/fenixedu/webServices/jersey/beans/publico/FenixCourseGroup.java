@@ -62,7 +62,7 @@ public class FenixCourseGroup {
     public FenixCourseGroup(final Grouping grouping) {
         this.name = grouping.getName();
         this.description = grouping.getProjectDescription();
-        
+
         final DateTime start = grouping.getEnrolmentBeginDayDateDateTime();
         final DateTime end = grouping.getEnrolmentEndDayDateDateTime();
         this.enrolmentPeriod = new FenixInterval(start, end);

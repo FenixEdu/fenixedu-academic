@@ -2,9 +2,11 @@ package net.sourceforge.fenixedu.domain.candidacy;
 
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class MeasurementTestRoom extends MeasurementTestRoom_Base {
@@ -36,7 +38,7 @@ public class MeasurementTestRoom extends MeasurementTestRoom_Base {
 
     protected MeasurementTestRoom() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public MeasurementTestRoom(String name, Integer capacity, MeasurementTestShift shift) {
@@ -90,7 +92,7 @@ public class MeasurementTestRoom extends MeasurementTestRoom_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

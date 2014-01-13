@@ -18,9 +18,9 @@ import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Instalation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCodeOperations;
@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityQuota;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentDataBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.util.email.EmailBean;
@@ -46,22 +47,25 @@ import net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.Refa
 import net.sourceforge.fenixedu.presentationTier.docs.candidacy.erasmus.LearningAgreementDocument;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 import net.sourceforge.fenixedu.util.BundleUtil;
-import net.sourceforge.fenixedu.util.StringUtils;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 import net.sourceforge.fenixedu.util.stork.AttributesManagement;
 import net.sourceforge.fenixedu.util.stork.SPUtil;
 import net.sourceforge.fenixedu.util.stork.StorkToPersonBeanTranslation;
 import net.spy.memcached.MemcachedClient;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.servlets.filters.I18NFilter;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -102,21 +106,25 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "open-candidacy-process-closed", path = "mobility.candidacy.process.closed") })
 public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndividualCandidacyProcessPublicDA {
 
+    private static final Logger logger = LoggerFactory.getLogger(ErasmusIndividualCandidacyProcessPublicDA.class);
+
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        I18NFilter.setLocale(request, request.getSession(true), Locale.ENGLISH);
+        setLocale(request, Locale.ENGLISH);
+        I18N.setLocale(request.getSession(), Locale.ENGLISH);
+
         return super.execute(mapping, actionForm, request, response);
     }
 
     @Override
     protected String getCandidacyInformationLinkDefaultLanguage() {
-        return "link.candidacy.information.default.erasmus";
+        return getStringFromDefaultBundle("link.candidacy.information.default.erasmus");
     }
 
     @Override
     protected String getCandidacyInformationLinkEnglish() {
-        return "link.candidacy.information.english.erasmus";
+        return getStringFromDefaultBundle("link.candidacy.information.english.erasmus");
     }
 
     @Override
@@ -453,7 +461,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
             return mapping.findForward("inform-submited-candidacy");
         } catch (DomainException e) {
             addActionMessage("error", request, e.getMessage(), e.getArgs());
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
             sendSubmissionErrorReportMail(getIndividualCandidacyProcessBean(), e);
             return mapping.findForward("error-on-application-submission");
@@ -536,13 +544,15 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
                 String errorCode = attrManagement.getStorkErrorCode();
                 String errorMessage = attrManagement.getStorkErrorMessage();
 
-                new Exception(String.format("Error on stork authentication method, Error: %s, Description: %s", errorCode,
-                        errorMessage)).printStackTrace();
+                Exception e =
+                        new Exception(String.format("Error on stork authentication method, Error: %s, Description: %s",
+                                errorCode, errorMessage));
+                logger.error(e.getMessage(), e);
                 return mapping.findForward("stork-error-authentication-failed");
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return mapping.findForward("stork-error-authentication-failed");
         }
 
@@ -600,13 +610,15 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
             attrManagement = new AttributesManagement(attrList);
 
             if (!AttributesManagement.STORK_RETURN_CODE_OK.equals(attrManagement.getStorkReturnCode())) {
-                new Exception(String.format("Error on stork authentication method, Error: %s, Description: %s",
-                        attrManagement.getStorkErrorCode(), attrManagement.getStorkErrorMessage())).printStackTrace();
+                Exception e =
+                        new Exception(String.format("Error on stork authentication method, Error: %s, Description: %s",
+                                attrManagement.getStorkErrorCode(), attrManagement.getStorkErrorMessage()));
+                logger.error(e.getMessage(), e);
                 return mapping.findForward("stork-error-authentication-failed");
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return mapping.findForward("stork-error-authentication-failed");
         }
 
@@ -873,7 +885,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
             if (person.hasStudent() && !person.getStudent().getNumber().toString().equals(bean.getPersonNumber())) {
                 addActionMessage("individualCandidacyMessages", request,
-                        "mobility.error.person.with.same.identifier.exists.different.student");
+                        "mobility.error.person.with.same.identifier.exists.different.student", Unit.getInstitutionAcronym());
                 return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
             }
 
@@ -947,13 +959,15 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
             attrManagement = new AttributesManagement(attrList);
 
             if (!AttributesManagement.STORK_RETURN_CODE_OK.equals(attrManagement.getStorkReturnCode())) {
-                new Exception(String.format("Error on stork authentication method, Error: %s, Description: %s",
-                        attrManagement.getStorkErrorCode(), attrManagement.getStorkErrorMessage())).printStackTrace();
+                Exception e =
+                        new Exception(String.format("Error on stork authentication method, Error: %s, Description: %s",
+                                attrManagement.getStorkErrorCode(), attrManagement.getStorkErrorMessage()));
+                logger.error(e.getMessage(), e);
                 return mapping.findForward("stork-error-authentication-failed");
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return mapping.findForward("stork-error-authentication-failed");
         }
 
@@ -1151,7 +1165,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
         sb.append(reportAppenderAuxString("Phone", personBean.getPhone()));
         sb.append(reportAppenderAuxString("Email", personBean.getEmail()));
         sb.append(reportAppenderAuxString("Email Confirmation", personBean.getEmailConfirmation()));
-        sb.append(reportAppenderAuxString("IST Number", mobilityBean.getPersonNumber()));
+        sb.append(reportAppenderAuxString("Student Number", mobilityBean.getPersonNumber()));
 
         MobilityStudentDataBean mobilityStudentDataBean = mobilityBean.getMobilityStudentDataBean();
         sb.append("\nMobility Data Entered:\n");
@@ -1203,13 +1217,13 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
         sb.append("\n");
 
         // Email construction and sending
-        String errorReportAddress =
-                BundleUtil.getStringFromResourceBundle("resources.CandidateResources", "error.mobility.report.mail.address");
+        String errorReportAddress = Instalation.getInstance().getInstituitionalEmailAddress("nmci");
         String errorReportSubject =
-                BundleUtil.getStringFromResourceBundle("resources.CandidateResources", "error.mobility.report.mail.subject");
+                BundleUtil.getStringFromResourceBundle("resources.CandidateResources", "error.mobility.report.mail.subject",
+                        Unit.getInstitutionAcronym());
         String errorReportBody = sb.toString();
 
-        SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
+        SystemSender systemSender = Bennu.getInstance().getSystemSender();
         EmailBean emailBean = new EmailBean();
         emailBean.setSender(systemSender);
         emailBean.setReplyTos(systemSender.getConcreteReplyTos());

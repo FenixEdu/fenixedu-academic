@@ -38,10 +38,10 @@ public class DepartmentForumDA extends ForunsManagement {
     }
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException,  FenixServiceException {
+            throws FenixActionException, FenixServiceException {
         List<DepartmentForum> foruns = new ArrayList<DepartmentForum>();
         Person loggedPerson = getLoggedPerson(request);
-        for (Department department : rootDomainObject.getDepartments()) {
+        for (Department department : rootDomainObject.getDepartmentsSet()) {
             if (belongsPersonWithDepartment(loggedPerson, department)) {
                 foruns.add(department.getDepartmentForum());
             }

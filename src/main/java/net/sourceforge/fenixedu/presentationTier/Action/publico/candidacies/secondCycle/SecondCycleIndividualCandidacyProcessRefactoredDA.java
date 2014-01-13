@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.secondCycle;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.Instalation;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
@@ -25,6 +27,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -50,6 +54,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "show-recovery-email-sent", path = "second.cycle.recovery.email.sent"),
         @Forward(name = "upload-photo", path = "second.cycle.upload.photo") })
 public class SecondCycleIndividualCandidacyProcessRefactoredDA extends RefactoredIndividualCandidacyProcessPublicDA {
+
+    private static final Logger logger = LoggerFactory.getLogger(SecondCycleIndividualCandidacyProcessRefactoredDA.class);
 
     @Override
     protected Class<? extends CandidacyProcess> getParentProcessType() {
@@ -216,7 +222,7 @@ public class SecondCycleIndividualCandidacyProcessRefactoredDA extends Refactore
             return mapping.findForward("inform-submited-candidacy");
         } catch (DomainException e) {
             addActionMessage("error", request, e.getMessage(), e.getArgs());
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
             return mapping.findForward("candidacy-continue-creation");
         }
@@ -326,12 +332,14 @@ public class SecondCycleIndividualCandidacyProcessRefactoredDA extends Refactore
 
     @Override
     protected String getCandidacyInformationLinkDefaultLanguage() {
-        return "link.candidacy.information.default.secondCycle";
+        String message = getStringFromDefaultBundle("link.candidacy.information.default.secondCycle");
+        return MessageFormat.format(message, Instalation.getInstance().getInstituitionURL());
     }
 
     @Override
     protected String getCandidacyInformationLinkEnglish() {
-        return "link.candidacy.information.english.secondCycle";
+        String message = getStringFromDefaultBundle("link.candidacy.information.english.secondCycle");
+        return MessageFormat.format(message, Instalation.getInstance().getInstituitionURL());
     }
 
 }

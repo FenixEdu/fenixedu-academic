@@ -11,7 +11,6 @@ import java.util.ListIterator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.AddCoordinator;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.RemoveCoordinators;
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ResponsibleCoordinators;
@@ -30,14 +29,18 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-
-import pt.ist.fenixWebFramework.security.UserView;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Tânia Pousão
  * 
  */
 public class ManageCoordinatorsAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(ManageCoordinatorsAction.class);
 
     public ActionForward view(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
@@ -46,13 +49,13 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
         String executionDegreeId = getFromRequest("executionDegreeId", request);
         request.setAttribute("executionDegreeId", executionDegreeId);
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         InfoExecutionDegree infoExecutionDegree = null;
         try {
             infoExecutionDegree = ReadExecutionDegree.runReadExecutionDegree(executionDegreeId);
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             errors.add("impossibleExecutionDegree", new ActionError("error.invalidExecutionDegree"));
         }
         if (infoExecutionDegree == null || infoExecutionDegree.getInfoDegreeCurricularPlan() == null
@@ -107,13 +110,13 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
         String executionDegreeId = getFromRequest("executionDegreeId", request);
         request.setAttribute("executionDegreeId", executionDegreeId);
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         InfoExecutionDegree infoExecutionDegree = null;
         try {
             infoExecutionDegree = ReadExecutionDegree.runReadExecutionDegree(executionDegreeId);
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             errors.add("impossibleExecutionDegree", new ActionError("error.invalidExecutionDegree"));
         }
         if (infoExecutionDegree == null || infoExecutionDegree.getInfoDegreeCurricularPlan() == null
@@ -134,7 +137,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
     public ActionForward insert(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         ActionErrors errors = new ActionErrors();
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         String executionDegreeId = getFromRequest("executionDegreeId", request);
         request.setAttribute("executionDegreeId", executionDegreeId);
@@ -153,7 +156,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
         try {
             AddCoordinator.run(executionDegreeId, istUsername);
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             errors.add("impossibleInsertCoordinator", new ActionError("error.impossibleInsertCoordinator"));
         }
         if (!errors.isEmpty()) {
@@ -168,7 +171,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
 
         ActionErrors errors = new ActionErrors();
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         String executionDegreeId = getFromRequest("executionDegreeId", request);
         request.setAttribute("executionDegreeId", executionDegreeId);
@@ -189,7 +192,7 @@ public class ManageCoordinatorsAction extends FenixDispatchAction {
             try {
                 ResponsibleCoordinators.run(executionDegreeId, responsibleCoordinatorsIdsList);
             } catch (FenixServiceException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
                 errors.add("impossibleInsertCoordinator", new ActionError("error.impossibleInsertCoordinator"));
             }
             if (!errors.isEmpty()) {

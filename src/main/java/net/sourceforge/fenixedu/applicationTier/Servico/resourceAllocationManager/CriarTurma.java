@@ -6,7 +6,6 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -35,8 +34,7 @@ public class CriarTurma {
             final InfoExecutionPeriod infoExecutionPeriod) throws ExistingServiceException {
 
         final ExecutionDegree executionDegree = FenixFramework.getDomainObject(infoExecutionDegree.getExternalId());
-        final ExecutionSemester executionSemester =
-                FenixFramework.getDomainObject(infoExecutionPeriod.getExternalId());
+        final ExecutionSemester executionSemester = FenixFramework.getDomainObject(infoExecutionPeriod.getExternalId());
 
         final SchoolClass schoolClass = new SchoolClass(executionDegree, executionSemester, className, curricularYear);
         return InfoClass.newInfoFromDomain(schoolClass);

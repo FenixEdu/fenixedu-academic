@@ -1,16 +1,10 @@
 package net.sourceforge.fenixedu.domain.documents;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
-import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import pt.utl.ist.fenix.tools.file.FileSetMetaData;
-import pt.utl.ist.fenix.tools.file.VirtualPath;
-import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
 /**
  * {@link GeneratedDocument}s are output files resulting of some process of the
@@ -28,15 +22,6 @@ import pt.utl.ist.fenix.tools.file.VirtualPathNode;
  * @author Pedro Santos (pmrsa)
  */
 public abstract class GeneratedDocument extends GeneratedDocument_Base {
-    protected static final String CONFIG_DSPACE_DOCUMENT_STORE = "dspace.generated.document.store";
-
-    private static final String ROOT_DIR_DESCRIPTION = "Generated Documents";
-
-    private static final String ROOT_DIR = "GeneratedDocuments";
-
-    private static final String NO_ADDRESSEE_NODE = "NoAddressee";
-
-    private static final String NO_ADDRESSEE_NODE_DESCRIPTION = "No Addressee";
 
     public GeneratedDocument() {
         super();
@@ -46,7 +31,7 @@ public abstract class GeneratedDocument extends GeneratedDocument_Base {
         setType(type);
         setAddressee(addressee);
         setOperator(operator);
-        init(getVirtualPath(), filename, filename, createMetaData(operator, filename), content, computePermittedGroup());
+        init(filename, filename, content, computePermittedGroup());
     }
 
     @Override
@@ -70,26 +55,7 @@ public abstract class GeneratedDocument extends GeneratedDocument_Base {
         return super.isPersonAllowedToAccess(person);
     }
 
-    protected VirtualPath getVirtualPath() {
-        final VirtualPath filePath = new VirtualPath();
-        filePath.addNode(new VirtualPathNode(ROOT_DIR, ROOT_DIR_DESCRIPTION));
-        if (getAddressee() != null) {
-            filePath.addNode(new VirtualPathNode(getAddressee().getExternalId().toString(), getAddressee().getName()));
-        } else {
-            filePath.addNode(new VirtualPathNode(NO_ADDRESSEE_NODE, NO_ADDRESSEE_NODE_DESCRIPTION));
-        }
-        filePath.addNode(new VirtualPathNode(getType().name(), getType().name()));
-        return filePath;
-    }
-
     protected abstract Group computePermittedGroup();
-
-    private Collection<FileSetMetaData> createMetaData(Person operator, String filename) {
-        List<FileSetMetaData> metaData = new ArrayList<FileSetMetaData>();
-        metaData.add(FileSetMetaData.createAuthorMeta(operator == null ? "script" : operator.getName()));
-        metaData.add(FileSetMetaData.createTitleMeta(filename));
-        return metaData;
-    }
 
     public static final Comparator<GeneratedDocument> COMPARATOR_BY_UPLOAD_TIME = new Comparator<GeneratedDocument>() {
 
@@ -99,6 +65,7 @@ public abstract class GeneratedDocument extends GeneratedDocument_Base {
         }
 
     };
+
     @Deprecated
     public boolean hasType() {
         return getType() != null;

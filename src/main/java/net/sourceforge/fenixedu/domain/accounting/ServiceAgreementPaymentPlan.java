@@ -36,6 +36,7 @@ public abstract class ServiceAgreementPaymentPlan extends ServiceAgreementPaymen
     public ServiceAgreementTemplate getServiceAgreementTemplate() {
         return getServiceAgreement().getServiceAgreementTemplate();
     }
+
     @Deprecated
     public boolean hasServiceAgreement() {
         return getServiceAgreement() != null;

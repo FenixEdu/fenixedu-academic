@@ -76,7 +76,8 @@ public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
             if (executionDegrees != null && executionDegrees.size() > 0) {
                 // put execution year in the form
                 if (StringUtils.isEmpty(executionYearId)) {
-                    executionYearId = ((InfoExecutionDegree) executionDegrees.iterator().next()).getInfoExecutionYear().getExternalId();
+                    executionYearId =
+                            ((InfoExecutionDegree) executionDegrees.iterator().next()).getInfoExecutionYear().getExternalId();
 
                     executionYearForm.set("executionYearId", executionYearId);
                 }

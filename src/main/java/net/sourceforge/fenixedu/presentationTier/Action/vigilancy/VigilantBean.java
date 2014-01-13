@@ -6,12 +6,12 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
-import pt.ist.fenixWebFramework.security.UserView;
+
+import org.fenixedu.bennu.core.security.Authenticate;
 
 public class VigilantBean implements Serializable {
 
@@ -188,7 +188,7 @@ public class VigilantBean implements Serializable {
     }
 
     public List<VigilantGroup> getUserViewVigilantGroups() {
-        Person person = ((IUserView) UserView.getUser()).getPerson();
+        Person person = Authenticate.getUser().getPerson();
         return person.getVigilantGroupsForExecutionYear(executionYear);
     }
 

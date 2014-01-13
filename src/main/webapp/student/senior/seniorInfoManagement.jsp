@@ -6,13 +6,13 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <html:xhtml/>
 
-<logic:present role="STUDENT">
+<logic:present role="role(STUDENT)">
 
 	<em><bean:message key="title.student.portalTitle" bundle="STUDENT_RESOURCES" /></em>
 	<h2><bean:message key="label.title.seniorInfo"/></h2>
 	
 	<logic:empty name="senior">
-		<bean:message key="error.senior.studentNotASenior"/>
+		<bean:message key="error.senior.studentNotASenior" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/>
 	</logic:empty>
 
 	<logic:notEmpty name="senior">

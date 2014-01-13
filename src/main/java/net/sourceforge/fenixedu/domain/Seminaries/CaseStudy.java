@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.domain.Seminaries;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -21,7 +21,7 @@ public class CaseStudy extends CaseStudy_Base {
     public CaseStudy() {
         super();
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public CaseStudy(String name, String description, String code) {
@@ -32,7 +32,7 @@ public class CaseStudy extends CaseStudy_Base {
     }
 
     public static Collection<CaseStudy> getAllCaseStudies() {
-        return RootDomainObject.getInstance().getCaseStudys();
+        return Bennu.getInstance().getCaseStudysSet();
     }
 
     @Deprecated
@@ -56,7 +56,7 @@ public class CaseStudy extends CaseStudy_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

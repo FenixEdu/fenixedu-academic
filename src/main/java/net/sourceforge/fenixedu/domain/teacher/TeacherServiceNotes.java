@@ -40,6 +40,7 @@ public class TeacherServiceNotes extends TeacherServiceNotes_Base {
             setThesisNote(thesisNote);
         }
     }
+
     @Deprecated
     public boolean hasServiceExemptionNotes() {
         return getServiceExemptionNotes() != null;

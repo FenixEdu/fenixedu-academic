@@ -1,14 +1,15 @@
 package net.sourceforge.fenixedu.domain.tests;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public abstract class NewPresentationMaterial extends NewPresentationMaterial_Base implements Positionable {
 
     public NewPresentationMaterial() {
         super();
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public NewPresentationMaterial(NewTestElement testElement, Boolean inline) {
@@ -82,7 +83,7 @@ public abstract class NewPresentationMaterial extends NewPresentationMaterial_Ba
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

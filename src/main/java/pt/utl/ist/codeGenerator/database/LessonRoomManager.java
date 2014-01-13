@@ -17,23 +17,23 @@ public class LessonRoomManager extends Stack<Room> {
     private HourMinuteSecond limitHourMinuteSecond = new HourMinuteSecond(20, 0, 0);
 
     public HourMinuteSecond getNextHourMinuteSecond(final int durationInMinutes) {
-	final HourMinuteSecond nextHourMinuteSecond = this.nextHourMinuteSecond;
-	if (nextHourMinuteSecond.isAfter(limitHourMinuteSecond)) {
-	    this.nextHourMinuteSecond = new HourMinuteSecond(8, 0, 0);
-	    if (nextWeekDay == 7) {
-		this.nextWeekDay = 2;
-		pop();
-	    } else {
-		this.nextWeekDay = nextWeekDay + 1;
-	    }
-	} else {
-	    this.nextHourMinuteSecond = nextHourMinuteSecond.plusMinutes(durationInMinutes);
-	}
+        final HourMinuteSecond nextHourMinuteSecond = this.nextHourMinuteSecond;
+        if (nextHourMinuteSecond.isAfter(limitHourMinuteSecond)) {
+            this.nextHourMinuteSecond = new HourMinuteSecond(8, 0, 0);
+            if (nextWeekDay == 7) {
+                this.nextWeekDay = 2;
+                pop();
+            } else {
+                this.nextWeekDay = nextWeekDay + 1;
+            }
+        } else {
+            this.nextHourMinuteSecond = nextHourMinuteSecond.plusMinutes(durationInMinutes);
+        }
         return nextHourMinuteSecond;
     }
 
     public Room getNextOldRoom() {
-	return peek();
+        return peek();
     }
 
 }

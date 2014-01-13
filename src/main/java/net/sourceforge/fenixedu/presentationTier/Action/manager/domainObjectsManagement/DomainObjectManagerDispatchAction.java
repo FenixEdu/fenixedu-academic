@@ -12,7 +12,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteObjectByOID;
 import net.sourceforge.fenixedu.domain.Person;
@@ -21,12 +20,15 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -44,6 +46,8 @@ import pt.ist.fenixframework.dml.DomainClass;
 @Forwards(value = { @Forward(name = "prepareEditObject", path = "/manager/domainObjectsManagement/editObject.jsp"),
         @Forward(name = "chooseClassToManage", path = "/manager/domainObjectsManagement/chooseClassToManage.jsp") })
 public class DomainObjectManagerDispatchAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(DomainObjectManagerDispatchAction.class);
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
@@ -85,7 +89,7 @@ public class DomainObjectManagerDispatchAction extends FenixDispatchAction {
                         + " Deleted. God have mercy of your soul...");
 
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
                 request.setAttribute("message", "Error deleting Object " + classToDelete + " with ID:" + classToDeleteId);
             }
 
@@ -129,8 +133,7 @@ public class DomainObjectManagerDispatchAction extends FenixDispatchAction {
 
     private Person checkUser() {
         Person person = AccessControl.getPerson();
-        String ciistCostCenterCode = PropertiesManager.getProperty("ciistCostCenterCode");
-        Unit ciistUnit = Unit.readByCostCenterCode(Integer.valueOf(ciistCostCenterCode));
+        Unit ciistUnit = Unit.readByCostCenterCode(FenixConfigurationManager.getConfiguration().getCIISTCostCenterCode());
         Unit currentWorkingPlace = person.getEmployee().getCurrentWorkingPlace();
         if ((currentWorkingPlace != null && ciistUnit != null && !currentWorkingPlace.equals(ciistUnit))
                 || person.getPersonRole(RoleType.MANAGER) == null) {

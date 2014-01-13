@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -26,8 +25,8 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-
-import pt.ist.fenixWebFramework.security.UserView;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 /*
  * 
@@ -40,7 +39,7 @@ public class MarksManagementDispatchAction extends FenixDispatchAction {
         ActionErrors errors = new ActionErrors();
 
         List masterDegrees = null;
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         DegreeType degreeType = DegreeType.MASTER_DEGREE;
 
         try {
@@ -63,7 +62,7 @@ public class MarksManagementDispatchAction extends FenixDispatchAction {
         String masterDegreeId = getFromRequest("degreeId", request);
 
         List degreeCurricularPlans = null;
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         try {
 
@@ -88,7 +87,7 @@ public class MarksManagementDispatchAction extends FenixDispatchAction {
         String degreeCurricularPlanId = getFromRequest("objectCode", request);
         getFromRequest("degreeId", request);
 
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         List curricularCourseList = null;
         try {
             curricularCourseList = ReadCurricularCoursesByDegreeCurricularPlan.run(degreeCurricularPlanId);
@@ -109,7 +108,7 @@ public class MarksManagementDispatchAction extends FenixDispatchAction {
         getFromRequest("degreeId", request);
 
         List listEnrolmentEvaluation = null;
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         try {
             listEnrolmentEvaluation =
                     ReadStudentMarksListByCurricularCourse.runReadStudentMarksListByCurricularCourse(userView,

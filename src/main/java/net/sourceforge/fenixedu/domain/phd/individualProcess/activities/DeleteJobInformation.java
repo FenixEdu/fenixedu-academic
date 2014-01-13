@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.phd.individualProcess.activities;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Job;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
@@ -9,17 +8,19 @@ import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidExceptio
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 
+import org.fenixedu.bennu.core.domain.User;
+
 public class DeleteJobInformation extends PhdIndividualProgramProcessActivity {
 
     @Override
-    protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+    protected void activityPreConditions(PhdIndividualProgramProcess process, User userView) {
         if (!process.isAllowedToManageProcess(userView)) {
             throw new PreConditionNotValidException();
         }
     }
 
     @Override
-    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
+    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, User userView, Object object) {
         final Job job = (Job) object;
         if (process.getPerson().getJobsSet().contains(job)) {
             if (!canDelete(job, userView.getPerson())) {

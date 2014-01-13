@@ -6,7 +6,7 @@
 <%@page import="net.sourceforge.fenixedu.presentationTier.renderers.student.curriculum.StudentCurricularPlanRenderer.OrganizationType"%>
 <html:xhtml />
 
-<logic:present role="STUDENT">
+<logic:present role="role(STUDENT)">
 	<em><bean:message key="title.student.portalTitle" bundle="STUDENT_RESOURCES"/></em>
 	<h2><bean:message key="label.transition.bolonha" bundle="STUDENT_RESOURCES"/></h2>
 	<h3><bean:message key="label.curricularPlan" bundle="APPLICATION_RESOURCES" />: <bean:write name="registration" property="lastStudentCurricularPlan.degreeCurricularPlan.presentationName"/></h3>	

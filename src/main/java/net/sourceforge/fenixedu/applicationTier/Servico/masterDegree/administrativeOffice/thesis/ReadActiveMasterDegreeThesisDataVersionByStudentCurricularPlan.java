@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis;
 
-
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -27,8 +26,7 @@ public class ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan {
         check(RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE);
         InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = null;
 
-        StudentCurricularPlan studentCurricularPlan =
-                FenixFramework.getDomainObject(infoStudentCurricularPlan.getExternalId());
+        StudentCurricularPlan studentCurricularPlan = FenixFramework.getDomainObject(infoStudentCurricularPlan.getExternalId());
 
         MasterDegreeThesisDataVersion masterDegreeThesisDataVersion =
                 studentCurricularPlan.readActiveMasterDegreeThesisDataVersion();

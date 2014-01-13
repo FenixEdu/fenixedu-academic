@@ -9,9 +9,7 @@ import java.util.Vector;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Section;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.Portal;
@@ -21,15 +19,18 @@ import net.sourceforge.fenixedu.domain.functionalities.IFunctionality;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+
 public class TestFilterContext implements FunctionalityContext {
 
-    private HttpServletRequest request;
-    private IUserView userView;
-    private Functionality functionality;
+    private final HttpServletRequest request;
+    private final User userView;
+    private final Functionality functionality;
 
     public TestFilterContext(HttpServletRequest request, TestFilterBean bean, Functionality functionality) {
         this.request = new TestFilterRequestWrapper(request, bean.getParametersMap());
-        this.userView = AccessControl.getUserView();
+        this.userView = Authenticate.getUser();
         this.functionality = functionality;
     }
 
@@ -39,7 +40,7 @@ public class TestFilterContext implements FunctionalityContext {
     }
 
     @Override
-    public IUserView getUserView() {
+    public User getUserView() {
         return this.userView;
     }
 
@@ -58,7 +59,7 @@ public class TestFilterContext implements FunctionalityContext {
 
     private static class TestFilterRequestWrapper extends HttpServletRequestWrapper {
 
-        private Map<String, String[]> parameters;
+        private final Map<String, String[]> parameters;
 
         public TestFilterRequestWrapper(HttpServletRequest request, Map<String, String[]> parameters) {
             super(request);

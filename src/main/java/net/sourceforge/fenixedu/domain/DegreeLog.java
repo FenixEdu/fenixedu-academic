@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Collections;
 
 import net.sourceforge.fenixedu.util.BundleUtil;
-import pt.utl.ist.fenix.tools.util.StringAppender;
 
 public class DegreeLog extends DegreeLog_Base {
 
@@ -13,7 +12,7 @@ public class DegreeLog extends DegreeLog_Base {
 
         CANDIDACIES, COORDINATION_TEAM, PROGRAM_TUTORED_PARTICIPATION, QUC_RESULTS, SCIENTIFIC_COMISSION;
         public String getQualifiedName() {
-            return StringAppender.append(DegreeLogTypes.class.getSimpleName(), ".", name());
+            return DegreeLogTypes.class.getSimpleName() + "." + name();
         }
 
         private static final Collection<DegreeLogTypes> typesAsList = Collections.unmodifiableList(Arrays.asList(values()));

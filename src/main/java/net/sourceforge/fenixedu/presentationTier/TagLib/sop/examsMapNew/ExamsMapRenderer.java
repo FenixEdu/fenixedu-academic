@@ -767,8 +767,8 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
         strBuffer.append("</strong>");
         if (!examsMap.getExecutionCourses().isEmpty()) {
             strBuffer.append(" - <strong>"
-                    + ((InfoExecutionCourse) examsMap.getExecutionCourses().iterator().next()).getInfoExecutionPeriod().getSemester()
-                    + "&ordm; ");
+                    + ((InfoExecutionCourse) examsMap.getExecutionCourses().iterator().next()).getInfoExecutionPeriod()
+                            .getSemester() + "&ordm; ");
             strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.semester"));
             strBuffer.append("</strong>");
         }

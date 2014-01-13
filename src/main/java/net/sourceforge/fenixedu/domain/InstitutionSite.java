@@ -7,6 +7,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 public class InstitutionSite extends InstitutionSite_Base {
 
     protected InstitutionSite() {
@@ -31,7 +33,7 @@ public class InstitutionSite extends InstitutionSite_Base {
      * @return the site associated with the institution unit
      */
     public static UnitSite initialize() {
-        Unit unit = RootDomainObject.getInstance().getInstitutionUnit();
+        Unit unit = Bennu.getInstance().getInstitutionUnit();
 
         if (unit.hasSite()) {
             return unit.getSite();

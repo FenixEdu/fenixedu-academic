@@ -92,6 +92,10 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         return getAndHoldStringParameter("action");
     }
 
+    public String getSchoolAcronym() {
+        return Unit.getInstitutionAcronym();
+    }
+
     public String getType() {
         return getAndHoldStringParameter("type");
     }

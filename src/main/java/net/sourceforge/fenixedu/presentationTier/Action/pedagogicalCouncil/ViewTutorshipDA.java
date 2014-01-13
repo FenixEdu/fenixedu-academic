@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
@@ -35,10 +34,13 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.Partial;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -50,6 +52,8 @@ import pt.ist.fenixframework.FenixFramework;
 @Forwards({ @Forward(name = "viewTutorship", path = "/pedagogicalCouncil/tutorship/viewTutorship.jsp"),
         @Forward(name = "prepareCreateNewTutorship", path = "/pedagogicalCouncil/tutorship/createNewTutorship.jsp") })
 public class ViewTutorshipDA extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(ViewTutorshipDA.class);
 
     /**
      * TODO: Refactor 'success'
@@ -193,7 +197,7 @@ public class ViewTutorshipDA extends FenixDispatchAction {
             } catch (NotAuthorizedException fenixFilterExceptione) {
                 // TODO Auto-generated catch block
                 addActionMessage(request, fenixFilterExceptione.getMessage());
-                fenixFilterExceptione.printStackTrace();
+                logger.error(fenixFilterExceptione.getMessage(), fenixFilterExceptione);
             } catch (FenixServiceException e) {
                 addActionMessage(request, e.getMessage(), e.getArgs());
             }
@@ -278,7 +282,7 @@ public class ViewTutorshipDA extends FenixDispatchAction {
      */
     private List<ExecutionSemester> provideSemesters(Tutorship tutorship) {
         final List<ExecutionSemester> executionSemestersFinal =
-                new ArrayList<ExecutionSemester>(RootDomainObject.getInstance().getExecutionPeriods());
+                new ArrayList<ExecutionSemester>(Bennu.getInstance().getExecutionPeriodsSet());
         Collections.sort(executionSemestersFinal, new ReverseComparator());
         List<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>();
 

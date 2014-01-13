@@ -6,6 +6,8 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.NoOneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 public class ManagementGroups extends ManagementGroups_Base {
 
     public ManagementGroups() {
@@ -13,21 +15,21 @@ public class ManagementGroups extends ManagementGroups_Base {
     }
 
     public static boolean isAssiduousnessSectionStaffMember(Person person) {
-        Collection<ManagementGroups> managementGroups = RootDomainObject.getInstance().getManagementGroups();
+        Collection<ManagementGroups> managementGroups = Bennu.getInstance().getManagementGroupsSet();
         return managementGroups == null || managementGroups.isEmpty() ? false : ((managementGroups.iterator().next()
                 .getAssiduousnessSectionStaff() != null && managementGroups.iterator().next().getAssiduousnessSectionStaff()
                 .isMember(person)) || isAssiduousnessManagerMember(person));
     }
 
     public static boolean isAssiduousnessManagerMember(Person person) {
-        Collection<ManagementGroups> managementGroups = RootDomainObject.getInstance().getManagementGroups();
+        Collection<ManagementGroups> managementGroups = Bennu.getInstance().getManagementGroupsSet();
         return managementGroups == null || managementGroups.isEmpty() ? false : managementGroups.iterator().next()
                 .getAssiduousnessManagers() != null
                 && managementGroups.iterator().next().getAssiduousnessManagers().isMember(person);
     }
 
     public static boolean isPayrollSectionStaff(Person person) {
-        Collection<ManagementGroups> managementGroups = RootDomainObject.getInstance().getManagementGroups();
+        Collection<ManagementGroups> managementGroups = Bennu.getInstance().getManagementGroupsSet();
         return managementGroups == null || managementGroups.isEmpty() ? false : managementGroups.iterator().next()
                 .getPayrollSectionStaff() != null
                 && managementGroups.iterator().next().getPayrollSectionStaff().isMember(person);
@@ -36,7 +38,7 @@ public class ManagementGroups extends ManagementGroups_Base {
     public static class AssiduousnessManagerGroupBuilder implements GroupBuilder {
         @Override
         public Group build(Object[] arguments) {
-            Collection<ManagementGroups> managementGroups = RootDomainObject.getInstance().getManagementGroups();
+            Collection<ManagementGroups> managementGroups = Bennu.getInstance().getManagementGroupsSet();
             return managementGroups == null || managementGroups.isEmpty() ? new NoOneGroup() : (managementGroups.iterator()
                     .next().getAssiduousnessManagers() == null ? new NoOneGroup() : managementGroups.iterator().next()
                     .getAssiduousnessManagers());
@@ -56,7 +58,7 @@ public class ManagementGroups extends ManagementGroups_Base {
     public static class AssiduousnessSectionStaffGroupBuilder implements GroupBuilder {
         @Override
         public Group build(Object[] arguments) {
-            Collection<ManagementGroups> managementGroups = RootDomainObject.getInstance().getManagementGroups();
+            Collection<ManagementGroups> managementGroups = Bennu.getInstance().getManagementGroupsSet();
             return managementGroups == null || managementGroups.isEmpty() ? new NoOneGroup() : (managementGroups.iterator()
                     .next().getAssiduousnessSectionStaff() == null ? new NoOneGroup() : managementGroups.iterator().next()
                     .getAssiduousnessSectionStaff());
@@ -76,7 +78,7 @@ public class ManagementGroups extends ManagementGroups_Base {
     public static class PayrollSectionStaffGroupBuilder implements GroupBuilder {
         @Override
         public Group build(Object[] arguments) {
-            Collection<ManagementGroups> managementGroups = RootDomainObject.getInstance().getManagementGroups();
+            Collection<ManagementGroups> managementGroups = Bennu.getInstance().getManagementGroupsSet();
             return managementGroups == null || managementGroups.isEmpty() ? new NoOneGroup() : (managementGroups.iterator()
                     .next().getPayrollSectionStaff() == null ? new NoOneGroup() : managementGroups.iterator().next()
                     .getPayrollSectionStaff());
@@ -92,13 +94,14 @@ public class ManagementGroups extends ManagementGroups_Base {
             return 0;
         }
     }
+
     @Deprecated
     public boolean hasAssiduousnessManagers() {
         return getAssiduousnessManagers() != null;
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

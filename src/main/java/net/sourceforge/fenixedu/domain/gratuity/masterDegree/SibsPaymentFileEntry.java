@@ -7,9 +7,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
@@ -19,7 +20,7 @@ public class SibsPaymentFileEntry extends SibsPaymentFileEntry_Base {
 
     public SibsPaymentFileEntry() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public SibsPaymentFileEntry(Integer year, Integer studentNumber, SibsPaymentType paymentType, Date transactionDate,
@@ -36,7 +37,7 @@ public class SibsPaymentFileEntry extends SibsPaymentFileEntry_Base {
 
     public static List<SibsPaymentFileEntry> readNonProcessed() {
         final List<SibsPaymentFileEntry> result = new ArrayList<SibsPaymentFileEntry>();
-        for (final SibsPaymentFileEntry sibsPaymentFileEntry : RootDomainObject.getInstance().getSibsPaymentFileEntrysSet()) {
+        for (final SibsPaymentFileEntry sibsPaymentFileEntry : Bennu.getInstance().getSibsPaymentFileEntrysSet()) {
             if (sibsPaymentFileEntry.getPaymentStatus() != SibsPaymentStatus.PROCESSED_PAYMENT) {
                 result.add(sibsPaymentFileEntry);
             }
@@ -47,7 +48,7 @@ public class SibsPaymentFileEntry extends SibsPaymentFileEntry_Base {
     public static List<SibsPaymentFileEntry> readByYearAndStudentNumberAndPaymentType(final Integer year,
             final Integer studentNumber, final SibsPaymentType sibsPaymentType) {
         final List<SibsPaymentFileEntry> result = new ArrayList<SibsPaymentFileEntry>();
-        for (final SibsPaymentFileEntry sibsPaymentFileEntry : RootDomainObject.getInstance().getSibsPaymentFileEntrysSet()) {
+        for (final SibsPaymentFileEntry sibsPaymentFileEntry : Bennu.getInstance().getSibsPaymentFileEntrysSet()) {
             if (sibsPaymentFileEntry.getYear().equals(year) && sibsPaymentFileEntry.getStudentNumber().equals(studentNumber)
                     && sibsPaymentFileEntry.getPaymentType() == sibsPaymentType) {
                 result.add(sibsPaymentFileEntry);
@@ -59,7 +60,7 @@ public class SibsPaymentFileEntry extends SibsPaymentFileEntry_Base {
     public static List<SibsPaymentFileEntry> readByYearAndStudentNumberAndPaymentTypeExceptFileEntry(
             SibsPaymentFileEntry paymentFileEntry) {
         final List<SibsPaymentFileEntry> result = new ArrayList<SibsPaymentFileEntry>();
-        for (final SibsPaymentFileEntry sibsPaymentFileEntry : RootDomainObject.getInstance().getSibsPaymentFileEntrysSet()) {
+        for (final SibsPaymentFileEntry sibsPaymentFileEntry : Bennu.getInstance().getSibsPaymentFileEntrysSet()) {
             if (sibsPaymentFileEntry != paymentFileEntry && sibsPaymentFileEntry.getYear().equals(paymentFileEntry.getYear())
                     && sibsPaymentFileEntry.getStudentNumber().equals(paymentFileEntry.getStudentNumber())
                     && sibsPaymentFileEntry.getPaymentType().equals(paymentFileEntry.getPaymentType())) {
@@ -95,7 +96,7 @@ public class SibsPaymentFileEntry extends SibsPaymentFileEntry_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

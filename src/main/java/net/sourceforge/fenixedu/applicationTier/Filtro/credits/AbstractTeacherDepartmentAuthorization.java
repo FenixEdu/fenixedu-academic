@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.credits;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -14,7 +13,10 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -26,8 +28,8 @@ import pt.ist.fenixframework.FenixFramework;
 public abstract class AbstractTeacherDepartmentAuthorization<T> extends Filtro {
 
     public void execute(T object) throws FenixServiceException {
-        IUserView requester = AccessControl.getUserView();
-        if ((requester == null) || !requester.hasRoleType(RoleType.DEPARTMENT_CREDITS_MANAGER)) {
+        User requester = Authenticate.getUser();
+        if ((requester == null) || !requester.getPerson().hasRole(RoleType.DEPARTMENT_CREDITS_MANAGER)) {
             throw new NotAuthorizedException();
         }
 

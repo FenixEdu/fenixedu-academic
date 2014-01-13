@@ -1,10 +1,12 @@
 package net.sourceforge.fenixedu.domain;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 public class ProfessorshipPermissions extends ProfessorshipPermissions_Base {
 
     public ProfessorshipPermissions(final Professorship professorship) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         if (professorship == null) {
             throw new NullPointerException();
         }

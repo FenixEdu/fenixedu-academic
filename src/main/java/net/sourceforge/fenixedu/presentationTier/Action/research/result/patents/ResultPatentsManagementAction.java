@@ -4,21 +4,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.research.result.patent.AddDefaultDocumentToResearchResult;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.result.patent.DeleteResultPatent;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.result.patent.UpdateMetaInformation;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
 import net.sourceforge.fenixedu.presentationTier.Action.research.result.ResultsManagementAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.utl.ist.fenix.tools.file.FileManagerException;
 
 @Mapping(module = "researcher", path = "/patents/management", scope = "session", parameter = "method")
 @Forwards(value = {
@@ -35,6 +36,8 @@ import pt.utl.ist.fenix.tools.file.FileManagerException;
         @Forward(name = "listPatents", path = "/researcher/result/patents/managePatents.jsp", tileProperties = @Tile(
                 title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.patents")) })
 public class ResultPatentsManagementAction extends ResultsManagementAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(ResultPatentsManagementAction.class);
 
     public ActionForward management(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
@@ -63,13 +66,6 @@ public class ResultPatentsManagementAction extends ResultsManagementAction {
             HttpServletResponse response) throws FenixServiceException {
 
         final ResearchResultPatent patent = (ResearchResultPatent) getResultFromRequest(request);
-
-        try {
-            AddDefaultDocumentToResearchResult.run(patent);
-        } catch (FileManagerException e) {
-            e.printStackTrace();
-            addActionMessage(request, "label.communicationError");
-        }
         return showPatent(mapping, form, request, response);
     }
 
@@ -112,8 +108,8 @@ public class ResultPatentsManagementAction extends ResultsManagementAction {
 
         try {
             UpdateMetaInformation.run(patent);
-        } catch (FileManagerException e) {
-            e.printStackTrace();
+        } catch (DomainException e) {
+            logger.error(e.getMessage(), e);
             addActionMessage(request, "label.communicationError");
         }
 

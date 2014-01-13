@@ -8,7 +8,6 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.enrolment.GetEnrolmentList;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
@@ -25,6 +24,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
@@ -76,7 +76,7 @@ public class ChooseDeclarationInfoAction extends FenixDispatchAction {
     public ActionForward chooseFinal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         DynaActionForm chooseDeclaration = (DynaActionForm) form;
 
@@ -106,7 +106,8 @@ public class ChooseDeclarationInfoAction extends FenixDispatchAction {
         if (enrolmentList.size() == 0) {
             anoLectivo = infoExecutionYear.getYear();
         } else {
-            anoLectivo = ((InfoEnrolment) enrolmentList.iterator().next()).getInfoExecutionPeriod().getInfoExecutionYear().getYear();
+            anoLectivo =
+                    ((InfoEnrolment) enrolmentList.iterator().next()).getInfoExecutionPeriod().getInfoExecutionYear().getYear();
         }
 
         Locale locale = new Locale("pt", "PT");

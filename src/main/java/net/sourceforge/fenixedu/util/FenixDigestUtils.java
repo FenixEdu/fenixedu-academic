@@ -3,8 +3,12 @@ package net.sourceforge.fenixedu.util;
 import java.math.BigDecimal;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FenixDigestUtils {
+
+    private static final Logger logger = LoggerFactory.getLogger(FenixDigestUtils.class);
 
     public static String createDigest(String data) {
         return DigestUtils.shaHex(data);
@@ -15,7 +19,7 @@ public class FenixDigestUtils {
                 FenixDigestUtils
                         .createDigest("2qq asdsad1a zxfgsdf df 2s2ds2ah hdfg 18sgdyh12 12t rwdfg2sfg 5ty fdgh 13ert11yertyhsg  asdsadsa sdr sw1rt t s");
         String string = getPrettyCheckSum(res);
-        System.out.println(string);
+        logger.info(string);
 
     }
 

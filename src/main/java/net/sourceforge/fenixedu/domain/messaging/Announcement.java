@@ -9,11 +9,11 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ContentManagementLog;
 import net.sourceforge.fenixedu.domain.File;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.predicates.AnnouncementPredicates;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -72,7 +72,7 @@ public class Announcement extends Announcement_Base {
 
     public Announcement() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         super.setCreationDate(new DateTime());
         super.setLastModification(new DateTime());
         super.setApproved(false);
@@ -305,20 +305,6 @@ public class Announcement extends Announcement_Base {
         for (AnnouncementCategory category : categories) {
             this.addCategories(category);
         }
-    }
-
-    private static final String CAMPUS_ALAMEDA = "ALAMEDA";
-    private static final String CAMPUS_TAGUSPARK = "TAGUSPARK";
-    private static final String CAMPUS_EXTERNAL = "EXTERNAL";
-
-    public String getCampusCode() {
-        if (this.getCampus() != null && this.getCampus().isCampusAlameda()) {
-            return CAMPUS_ALAMEDA;
-        } else if (this.getCampus() != null && this.getCampus().isCampusTaguspark()) {
-            return CAMPUS_TAGUSPARK;
-        }
-
-        return CAMPUS_EXTERNAL;
     }
 
     @Atomic

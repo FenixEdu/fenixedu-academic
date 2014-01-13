@@ -1,7 +1,7 @@
-<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %><%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %><html:xhtml/><%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %><%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %><%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %><%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %><bean:define id="institutionUrl" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/></bean:define>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %><%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %><html:xhtml/><%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %><%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %><%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %><%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %><bean:define id="institutionUrl" type="java.lang.String"><%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %></bean:define>
 <div class="breadcumbs mvert0">
 	<a href="<%= institutionUrl %>"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a>
-	<bean:define id="institutionUrlTeaching" type="java.lang.String"><bean:message key="institution.url" bundle="GLOBAL_RESOURCES"/><bean:message key="link.institution" bundle="GLOBAL_RESOURCES"/></bean:define>
+	<bean:define id="institutionUrlTeaching" type="java.lang.String"><%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %><bean:message key="link.institution" bundle="GLOBAL_RESOURCES"/></bean:define>
 	&nbsp;&gt;&nbsp;
 	<a href="<%=institutionUrlTeaching%>"><bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.education"/></a>
 	<logic:present name="degree">
@@ -20,7 +20,7 @@
 <h1>	<logic:notEmpty name="degree" property="phdProgram">		<bean:write name="degree" property="phdProgram.presentationName"/>	</logic:notEmpty>	<logic:empty name="degree" property="phdProgram">		<bean:write name="degree" property="presentationName"/>	</logic:empty></h1>
 
 <logic:notPresent name="infoDegreeCurricularPlan" >
-	<p><em><bean:message bundle="DEFAULT" key="error.impossibleExecutionDegreeList"/></em></p>
+	<p><em><bean:message bundle="DEFAULT" key="error.impossibleExecutionDegreeList" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/></em></p>
 </logic:notPresent>
 
 <logic:present name="infoDegreeCurricularPlan" >
@@ -51,7 +51,7 @@
 	</h2>
 
 	<logic:notPresent name="lista" scope="request">
-		<p><em><bean:message bundle="DEFAULT" key="error.curricularPlanHasNoExecutionDegreesInNotClosedYears"/></em></p>
+		<p><em><bean:message bundle="DEFAULT" key="error.curricularPlanHasNoExecutionDegreesInNotClosedYears" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/></em></p>
 	</logic:notPresent>
 	<logic:present name="lista" scope="request">
 		<bean:define id="listaNew" name="lista" />
@@ -81,7 +81,7 @@
 		</html:form>
 
 		<logic:notPresent name="<%=PresentationConstants.INFO_EXAMS_MAP%>">
-			<p><em><bean:message bundle="DEFAULT" key="error.curricularPlanHasNoExecutionDegreesInGivenPeriod"/></em></p>
+			<p><em><bean:message bundle="DEFAULT" key="error.curricularPlanHasNoExecutionDegreesInGivenPeriod" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>"/></em></p>
 		</logic:notPresent>
 		<logic:present name="<%=PresentationConstants.INFO_EXAMS_MAP%>">
 			<div>

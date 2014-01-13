@@ -13,7 +13,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.QueueJobResult;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
@@ -34,13 +33,16 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyEvent;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdEvent;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.ConnectionManager;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import pt.ist.bennu.backend.util.ConnectionManager;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 import pt.ist.fenixframework.FenixFramework;
@@ -51,6 +53,8 @@ import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
 import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
 
 public class EventReportQueueJob extends EventReportQueueJob_Base {
+
+    private static final Logger logger = LoggerFactory.getLogger(EventReportQueueJob.class);
 
     private static final List<Class<? extends Event>> CANDIDACY_EVENT_TYPES = new ArrayList<Class<? extends Event>>();
     private static final List<Class<? extends AnnualEvent>> ADMIN_OFFICE_AND_INSURANCE_TYPES =
@@ -154,7 +158,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
         this.setExemptions(fileForExemptions);
         this.setTransactions(fileForTransactions);
 
-        System.out.println("Job " + getFilename() + " completed");
+        logger.info("Job " + getFilename() + " completed");
 
         return queueJobResult;
     }
@@ -205,7 +209,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
     private SheetData<EventBean> allEvents() {
 
         List<String> allEventsExternalIds = getAllEventsExternalIds();
-        System.out.println(String.format("%s events to process", allEventsExternalIds.size()));
+        logger.info(String.format("%s events to process", allEventsExternalIds.size()));
 
         Integer blockRead = 0;
 
@@ -238,6 +242,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
                             result.add(writeEvent(event));
                         } catch (Throwable e) {
                             e.printStackTrace(System.err);
+                            logger.error(e.getMessage(), e);
                             if (event != null) {
                                 System.err.println("Error on event -> " + event.getExternalId());
                             }
@@ -254,10 +259,10 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
             } catch (InterruptedException e) {
             }
 
-            System.out.println(String.format("Read %s events", blockRead));
+            logger.info(String.format("Read %s events", blockRead));
         }
 
-        System.out.println(String.format("Catch %s events ", result.size()));
+        logger.info(String.format("Catch %s events ", result.size()));
 
         return new SheetData<EventBean>(result) {
 
@@ -449,7 +454,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
     /* ALL EXEMPTIONS */
     private SheetData<ExemptionBean> allExemptions() {
         List<String> allEventsExternalIds = getAllEventsExternalIds();
-        System.out.println(String.format("%s events to process", allEventsExternalIds.size()));
+        logger.info(String.format("%s events to process", allEventsExternalIds.size()));
 
         Integer blockRead = 0;
 
@@ -481,6 +486,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
                             result.addAll(writeExemptionInformation(event));
                         } catch (Throwable e) {
                             e.printStackTrace(System.err);
+                            logger.error(e.getMessage(), e);
                             if (event != null) {
                                 System.err.println("Error on event -> " + event.getExternalId());
                             }
@@ -497,7 +503,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
             } catch (InterruptedException e) {
             }
 
-            System.out.println(String.format("Read %s events", blockRead));
+            logger.info(String.format("Read %s events", blockRead));
         }
 
         return new SheetData<ExemptionBean>(result) {
@@ -558,7 +564,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
     private SheetData<AccountingTransactionBean> allTransactions() {
 
         List<String> allEventsExternalIds = getAllEventsExternalIds();
-        System.out.println(String.format("%s events to process", allEventsExternalIds.size()));
+        logger.info(String.format("%s events to process", allEventsExternalIds.size()));
 
         Integer blockRead = 0;
 
@@ -590,6 +596,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
                             result.addAll(writeTransactionInformation(event));
                         } catch (Throwable e) {
                             e.printStackTrace(System.err);
+                            logger.error(e.getMessage(), e);
                             if (event != null) {
                                 System.err.println("Error on event -> " + event.getExternalId());
                             }
@@ -606,7 +613,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
             } catch (InterruptedException e) {
             }
 
-            System.out.println(String.format("Read %s events", blockRead));
+            logger.info(String.format("Read %s events", blockRead));
         }
 
         return new SheetData<AccountingTransactionBean>(result) {
@@ -752,7 +759,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
     public static List<EventReportQueueJob> retrieveAllGeneratedReports() {
         List<EventReportQueueJob> reports = new ArrayList<EventReportQueueJob>();
 
-        CollectionUtils.select(RootDomainObject.getInstance().getQueueJobSet(), new Predicate() {
+        CollectionUtils.select(Bennu.getInstance().getQueueJobSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {
@@ -767,7 +774,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
     public static List<EventReportQueueJob> retrieveDoneGeneratedReports() {
         List<EventReportQueueJob> reports = new ArrayList<EventReportQueueJob>();
 
-        CollectionUtils.select(RootDomainObject.getInstance().getQueueJobSet(), new Predicate() {
+        CollectionUtils.select(Bennu.getInstance().getQueueJobSet(), new Predicate() {
 
             @Override
             public boolean evaluate(Object arg0) {

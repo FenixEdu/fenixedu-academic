@@ -61,9 +61,7 @@ public class AutoEvaluationTeacherExpectationAction extends FenixDispatchAction 
             year = (ExecutionYear) viewState.getMetaObject().getObject();
         } else {
             String id = request.getParameter("executionYearId");
-            year =
-                    id != null ? (ExecutionYear) FenixFramework.getDomainObject(id) : ExecutionYear
-                            .readCurrentExecutionYear();
+            year = id != null ? (ExecutionYear) FenixFramework.getDomainObject(id) : ExecutionYear.readCurrentExecutionYear();
         }
         return year;
     }

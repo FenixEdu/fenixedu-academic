@@ -2,12 +2,12 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.mobility;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.MobilityApplicationPeriod;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -16,7 +16,7 @@ public class MobilityEmailTemplate extends MobilityEmailTemplate_Base {
     protected MobilityEmailTemplate(final MobilityApplicationPeriod period, final MobilityProgram program,
             final MobilityEmailTemplateType type, final String subject, final String body) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
 
         checkParameters(period, program, type, subject, body);
         setPeriod(period);

@@ -13,10 +13,14 @@ import net.sourceforge.fenixedu.domain.DegreeOfficialPublication;
 import net.sourceforge.fenixedu.domain.DegreeSpecializationArea;
 
 import org.joda.time.LocalDate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.Atomic;
 
 public class OfficialPublicationBean implements Serializable {
+
+    private static final Logger logger = LoggerFactory.getLogger(OfficialPublicationBean.class);
 
     /**
      * 
@@ -166,7 +170,7 @@ public class OfficialPublicationBean implements Serializable {
             DeleteDegreeSpecializationArea.run(area.getOfficialPublication(), area);
         } catch (FenixServiceException e) {
             // TODO ADICIONAR A MENSAGENS
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
     }
 
@@ -176,7 +180,7 @@ public class OfficialPublicationBean implements Serializable {
             CreateDegreeSpecializationArea.run(degreeOfficialPublication, nameEn, namePt);
         } catch (FenixServiceException e) {
             // TODO ADICIONAR A MENSAGENS
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
 
     }
@@ -225,7 +229,7 @@ public class OfficialPublicationBean implements Serializable {
             ChangeDegreeOfficialPublicationReference.run(getDegreeOfficialPublication(), getNewReference());
         } catch (FenixServiceException e) {
 
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
     }
 

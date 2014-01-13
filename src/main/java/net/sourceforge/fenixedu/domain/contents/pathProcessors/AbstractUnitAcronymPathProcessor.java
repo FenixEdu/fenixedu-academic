@@ -3,10 +3,11 @@ package net.sourceforge.fenixedu.domain.contents.pathProcessors;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public abstract class AbstractUnitAcronymPathProcessor extends AbstractPathProcessor {
 
@@ -90,7 +91,7 @@ public abstract class AbstractUnitAcronymPathProcessor extends AbstractPathProce
     }
 
     protected Unit getBaseUnit() {
-        return RootDomainObject.getInstance().getInstitutionUnit();
+        return Bennu.getInstance().getInstitutionUnit();
     }
 
     protected abstract Class[] getAcceptableTypes();

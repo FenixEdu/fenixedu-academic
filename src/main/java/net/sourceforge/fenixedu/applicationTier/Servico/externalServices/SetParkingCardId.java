@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.externalServices;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.parking.CreateParkingParty;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry;
 import net.sourceforge.fenixedu.domain.cardGeneration.SantanderEntry;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import pt.ist.fenixframework.Atomic;
 
 public class SetParkingCardId {
@@ -18,7 +18,7 @@ public class SetParkingCardId {
 
     private static final String password;
     static {
-        password = PropertiesManager.getProperty("parkingCardId.admin.password");
+        password = FenixConfigurationManager.getConfiguration().getParkingCardIdAdminPassword();
     }
 
     public static boolean isAllowed(final String password) {
@@ -47,8 +47,9 @@ public class SetParkingCardId {
             throw new NotAuthorizedException();
         }
     }
-    
-    private static String setSantander(final String categoryCode, final String identificationCardCode, final Long parkingCardID) throws FenixServiceException {
+
+    private static String setSantander(final String categoryCode, final String identificationCardCode, final Long parkingCardID)
+            throws FenixServiceException {
         SantanderEntry entry = SantanderEntry.readByUsernameAndCategory(identificationCardCode, categoryCode);
         if (entry == null) {
             throw new UserDoesNotExistException();
@@ -61,8 +62,8 @@ public class SetParkingCardId {
     }
 
     @Atomic
-    public static String runSantander(final String password, final String categoryCode, final String identificationCardCode, final Long parkingCardID)
-            throws FenixServiceException {
+    public static String runSantander(final String password, final String categoryCode, final String identificationCardCode,
+            final Long parkingCardID) throws FenixServiceException {
         if (isAllowed(password)) {
             return setSantander(categoryCode, identificationCardCode, parkingCardID);
         } else {

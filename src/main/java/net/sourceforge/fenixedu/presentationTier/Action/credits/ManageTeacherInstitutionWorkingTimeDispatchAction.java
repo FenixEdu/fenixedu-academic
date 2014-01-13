@@ -32,17 +32,16 @@ import pt.ist.fenixframework.FenixFramework;
 public class ManageTeacherInstitutionWorkingTimeDispatchAction extends FenixDispatchAction {
 
     public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws NumberFormatException,  FenixServiceException {
+            throws NumberFormatException, FenixServiceException {
         Teacher teacher = FenixFramework.getDomainObject((String) getFromRequest(request, "teacherId"));
-        ExecutionSemester executionPeriod =
-                FenixFramework.getDomainObject((String) getFromRequest(request, "executionPeriodId"));
+        ExecutionSemester executionPeriod = FenixFramework.getDomainObject((String) getFromRequest(request, "executionPeriodId"));
         TeacherService teacherService = TeacherService.getTeacherService(teacher, executionPeriod);
         request.setAttribute("teacherService", teacherService);
         return mapping.findForward("edit-institution-work-time");
     }
 
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws NumberFormatException,  FenixServiceException {
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException {
         InstitutionWorkTime institutionWorkTime =
                 FenixFramework.getDomainObject((String) getFromRequest(request, "institutionWorkTimeOid"));
         request.setAttribute("institutionWorkTime", institutionWorkTime);
@@ -50,8 +49,7 @@ public class ManageTeacherInstitutionWorkingTimeDispatchAction extends FenixDisp
     }
 
     protected ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response, RoleType roleType) throws NumberFormatException, 
-            FenixServiceException {
+            HttpServletResponse response, RoleType roleType) throws NumberFormatException, FenixServiceException {
         InstitutionWorkTime institutionWorkTime =
                 FenixFramework.getDomainObject((String) getFromRequest(request, "institutionWorkTimeOid"));
         request.setAttribute("teacherOid", institutionWorkTime.getTeacherService().getTeacher().getExternalId());

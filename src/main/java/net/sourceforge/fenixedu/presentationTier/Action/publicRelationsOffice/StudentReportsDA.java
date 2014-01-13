@@ -124,7 +124,7 @@ public class StudentReportsDA extends FenixDispatchAction {
                         studentReportPredicate.getConcluded());
         List<FindSelectedPublicRelationsStudentList> selectedJobs =
                 (List<FindSelectedPublicRelationsStudentList>) org.apache.commons.collections.CollectionUtils.select(
-                        rootDomainObject.getQueueJob(), predicate);
+                        rootDomainObject.getQueueJobSet(), predicate);
 
         request.setAttribute("studentReportPredicate", studentReportPredicate);
         request.setAttribute("queueJobList", selectedJobs);

@@ -23,7 +23,6 @@ import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYearsService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -35,13 +34,14 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.commons.StringNormalizer;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class OrganizationalStructureBackingBean extends FenixBackingBean {
@@ -342,7 +342,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     private String getHomePageUrl(Person person) {
         StringBuilder buffer = new StringBuilder();
-        String appContext = PropertiesManager.getProperty("app.context");
+        String appContext = FenixConfigurationManager.getConfiguration().appContext();
 
         if (person.getHomepage() != null && person.getHomepage().getActivated()) {
             buffer.append(getRequest().getScheme()).append("://").append(getRequest().getServerName()).append(":")

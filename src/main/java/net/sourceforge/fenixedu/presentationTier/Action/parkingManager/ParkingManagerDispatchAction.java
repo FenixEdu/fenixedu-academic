@@ -421,7 +421,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
     }
 
     private boolean isValidGroup(String groupId) {
-        for (ParkingGroup group : rootDomainObject.getParkingGroups()) {
+        for (ParkingGroup group : rootDomainObject.getParkingGroupsSet()) {
             if (group.getExternalId().equals(groupId)) {
                 return true;
             }
@@ -430,7 +430,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
     }
 
     private boolean isRepeatedCardNumber(Long cardNumber, ParkingParty parkingParty) {
-        for (ParkingParty tempParkingParty : rootDomainObject.getParkingParties()) {
+        for (ParkingParty tempParkingParty : rootDomainObject.getParkingPartiesSet()) {
             if (tempParkingParty.getCardNumber() != null && tempParkingParty.getCardNumber() != 0
                     && tempParkingParty.getCardNumber().equals(cardNumber) && tempParkingParty != parkingParty) {
                 return false;
@@ -474,7 +474,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             final String carPlateNumber = request.getParameter("plateNumber");
             final String parkingCardNumberString = request.getParameter("parkingCardNumber");
             Long parkingCardNumber = null;
-            if (!net.sourceforge.fenixedu.util.StringUtils.isEmpty(parkingCardNumberString)) {
+            if (!org.apache.commons.lang.StringUtils.isEmpty(parkingCardNumberString)) {
                 parkingCardNumber = new Long(parkingCardNumberString);
             }
             Party party = FenixFramework.getDomainObject(externalId);

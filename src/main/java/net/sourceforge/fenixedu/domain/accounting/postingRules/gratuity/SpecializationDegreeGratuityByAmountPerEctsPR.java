@@ -117,6 +117,7 @@ public class SpecializationDegreeGratuityByAmountPerEctsPR extends Specializatio
         return new SpecializationDegreeGratuityByAmountPerEctsPR(startDate, null, getServiceAgreementTemplate(),
                 specializationDegreeTotalAmount, partialAcceptedPercentage, specializationDegreeAmountPerEctsCredit);
     }
+
     @Deprecated
     public boolean hasSpecializationDegreeAmountPerEctsCredit() {
         return getSpecializationDegreeAmountPerEctsCredit() != null;

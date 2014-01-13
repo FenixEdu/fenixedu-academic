@@ -36,6 +36,7 @@ public class OptionalEnrolmentLog extends OptionalEnrolmentLog_Base {
     public String getDescription() {
         return getOptionalCurricularCourse().getName(getExecutionPeriod()) + " (" + super.getDescription() + ")";
     }
+
     @Deprecated
     public boolean hasOptionalCurricularCourse() {
         return getOptionalCurricularCourse() != null;

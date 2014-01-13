@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -20,7 +21,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -38,6 +38,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -54,6 +56,8 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
         @Forward(name = "showStudentCurriculum", path = "/resourceAllocationManager/firstTimeStudents/showStudentCurriculum.jsp"),
         @Forward(name = "chooseRegistration", path = "/resourceAllocationManager/firstTimeStudents/chooseRegistration.jsp") })
 public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(ShiftDistributionFirstYearDA.class);
 
     private final Integer FIRST_CURRICULAR_YEAR = Integer.valueOf(1);
     private final int MAX_NUMBER_OF_STUDENTS = 210;
@@ -79,7 +83,7 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
 
         ShiftDistributionFileBean fileBean = getRenderedObject();
         String fileContents =
-                FileUtils.readFile(new InputStreamReader(fileBean.getInputStream(), PropertiesManager.DEFAULT_CHARSET));
+                FileUtils.readFile(new InputStreamReader(fileBean.getInputStream(), Charset.defaultCharset().name()));
         final String[] data = fileContents.split("\n");
 
         List<ShiftDistributionDTO> shiftDistributionFromFile = new ArrayList<ShiftDistributionDTO>(data.length);
@@ -573,7 +577,7 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
             String[] line = dataLine.split(COLUMN_SEPARATOR);
 
             if (line.length < 4) {
-                System.out.println("Invalid line, ignoring it.");
+                logger.debug("Invalid line, ignoring it.");
                 return false;
             }
 
@@ -587,7 +591,7 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
                 if (line[i].trim().length() != 0) {
                     shiftNames.add(line[i].trim());
                 } else {
-                    System.out.println("found empty shift name");
+                    logger.debug("found empty shift name");
                 }
             }
             return true;

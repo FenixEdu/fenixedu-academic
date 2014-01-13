@@ -21,10 +21,10 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Project;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
@@ -285,7 +285,7 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
 
     public List<SelectItem> getDepartments() {
         List<SelectItem> departments = new ArrayList<SelectItem>();
-        for (Department department : RootDomainObject.getInstance().getDepartmentsSet()) {
+        for (Department department : Bennu.getInstance().getDepartmentsSet()) {
             final SelectItem e = new SelectItem(department.getExternalId(), department.getName());
             departments.add(e);
         }

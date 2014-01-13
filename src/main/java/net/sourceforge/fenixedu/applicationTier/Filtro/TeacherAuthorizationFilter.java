@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 public class TeacherAuthorizationFilter extends AuthorizationByRoleFilter {
 
     public static final TeacherAuthorizationFilter instance = new TeacherAuthorizationFilter();
+
     /*
      * (non-Javadoc)
      * 

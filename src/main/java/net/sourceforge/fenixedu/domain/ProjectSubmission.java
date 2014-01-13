@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
@@ -64,7 +65,7 @@ public class ProjectSubmission extends ProjectSubmission_Base {
             ProjectSubmissionFile projectSubmissionFile) {
         super();
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setSubmissionDateTime(new DateTime());
         setStudentGroup(studentGroup);
         setAttends(attends);
@@ -113,7 +114,7 @@ public class ProjectSubmission extends ProjectSubmission_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

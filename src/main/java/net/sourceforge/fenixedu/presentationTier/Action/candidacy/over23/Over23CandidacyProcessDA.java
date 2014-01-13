@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23CandidacyPr
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.Over23CandidacyPeriod;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -28,6 +27,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -132,7 +132,7 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
                 bundle.getString("label.degrees") });
 
         for (final Over23IndividualCandidacyProcess candidacy : over23IndividualCandidacies) {
-            if (!candidacy.canExecuteActivity(AccessControl.getUserView())) {
+            if (!candidacy.canExecuteActivity(Authenticate.getUser())) {
                 continue;
             }
             final Row row = result.addRow();
@@ -211,7 +211,7 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
         final Over23CandidacyProcess process = getProcess(request);
         final List<CandidacyDegreeBean> candidacyDegreeBeans = new ArrayList<CandidacyDegreeBean>();
         for (final Over23IndividualCandidacyProcess child : process.getAcceptedOver23IndividualCandidacies()) {
-            if (child.canExecuteActivity(AccessControl.getUserView())) {
+            if (child.canExecuteActivity(Authenticate.getUser())) {
                 candidacyDegreeBeans.add(new Over23CandidacyDegreeBean(child));
             }
         }

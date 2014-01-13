@@ -5,6 +5,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 public class BusinessArea extends BusinessArea_Base {
 
     public BusinessArea(Integer level, String code, String description) {
@@ -22,7 +24,7 @@ public class BusinessArea extends BusinessArea_Base {
             throw new DomainException("businessArea.creation.description.null");
         }
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setLevel(level);
         setCode(code);
         setDescription(description);
@@ -35,7 +37,7 @@ public class BusinessArea extends BusinessArea_Base {
 
     public static List<BusinessArea> getParentBusinessAreas() {
         List<BusinessArea> parentAreas = new ArrayList<BusinessArea>();
-        for (BusinessArea area : RootDomainObject.getInstance().getBusinessAreas()) {
+        for (BusinessArea area : Bennu.getInstance().getBusinessAreasSet()) {
             if (!area.hasParentArea()) {
                 parentAreas.add(area);
             }
@@ -45,13 +47,14 @@ public class BusinessArea extends BusinessArea_Base {
 
     public static Object getChildBusinessAreas(BusinessArea parentArea) {
         List<BusinessArea> childAreas = new ArrayList<BusinessArea>();
-        for (BusinessArea area : RootDomainObject.getInstance().getBusinessAreas()) {
+        for (BusinessArea area : Bennu.getInstance().getBusinessAreasSet()) {
             if (area.hasParentArea() && area.getParentArea().equals(parentArea)) {
                 childAreas.add(area);
             }
         }
         return childAreas;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Job> getParentJobs() {
         return getParentJobsSet();
@@ -88,7 +91,7 @@ public class BusinessArea extends BusinessArea_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

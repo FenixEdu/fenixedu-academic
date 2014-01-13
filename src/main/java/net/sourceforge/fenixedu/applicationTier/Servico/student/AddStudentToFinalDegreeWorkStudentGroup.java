@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularSemester;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -30,6 +29,7 @@ import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -159,9 +159,9 @@ public class AddStudentToFinalDegreeWorkStudentGroup {
     }
 
     private static Registration findSomeRegistration(final String username) {
-        final Login login = Login.readLoginByUsername(username);
-        if (login != null) {
-            final Person person = login.getUser().getPerson();
+        User user = User.findByUsername(username);
+        if (user != null) {
+            final Person person = user.getPerson();
             if (person != null) {
                 final Student student = person.getStudent();
                 final TreeSet<Registration> registrations = new TreeSet<Registration>(new Comparator<Registration>() {

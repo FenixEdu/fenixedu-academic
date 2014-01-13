@@ -13,9 +13,10 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
@@ -30,7 +31,7 @@ public class MasterDegreeCoordinatorsGroup extends Group {
     @Override
     public Set<Person> getElements() {
         final Set<Person> elements = super.buildSet();
-        final Collection<ExecutionYear> executionYears = RootDomainObject.getInstance().getExecutionYears();
+        final Collection<ExecutionYear> executionYears = Bennu.getInstance().getExecutionYearsSet();
         for (final ExecutionYear executionYear : executionYears) {
             if (executionYear.isCurrent()) {
                 for (final ExecutionDegree executionDegree : executionYear.getExecutionDegrees()) {

@@ -11,6 +11,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.DomainObject;
@@ -26,7 +27,7 @@ public class DomainObjectActionLog extends DomainObjectActionLog_Base {
     public DomainObjectActionLog(Person person, DomainObject domainObject, String action, Map<String, Object> parameters) {
 
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setPerson(person);
         setPersonUsername(person.getUsername());
         setDomainObjectClassName(domainObject.getClass().getName());
@@ -108,7 +109,7 @@ public class DomainObjectActionLog extends DomainObjectActionLog_Base {
             Set<Class<? extends DomainObject>> domainObjectClasss) {
 
         Set<DomainObjectActionLog> resultList = new TreeSet<DomainObjectActionLog>(DomainObjectActionLog.COMPARATOR_BY_INSTANT);
-        for (DomainObjectActionLog log : RootDomainObject.getInstance().getDomainObjectActionLogsSet()) {
+        for (DomainObjectActionLog log : Bennu.getInstance().getDomainObjectActionLogsSet()) {
             try {
                 Class<?> domainObjectClass = Class.forName(log.getDomainObjectClassName());
                 if (domainObjectClasss.contains(domainObjectClass)) {
@@ -120,6 +121,7 @@ public class DomainObjectActionLog extends DomainObjectActionLog_Base {
         }
         return resultList;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.DomainObjectActionLogEntry> getDomainObjectActionLogEntries() {
         return getDomainObjectActionLogEntriesSet();
@@ -131,7 +133,7 @@ public class DomainObjectActionLog extends DomainObjectActionLog_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

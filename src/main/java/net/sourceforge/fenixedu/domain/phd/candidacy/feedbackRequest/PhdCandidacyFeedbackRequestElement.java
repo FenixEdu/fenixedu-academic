@@ -3,18 +3,20 @@ package net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest;
 import java.util.Collections;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.ist.fenixframework.Atomic;
 
 public class PhdCandidacyFeedbackRequestElement extends PhdCandidacyFeedbackRequestElement_Base {
 
     protected PhdCandidacyFeedbackRequestElement() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     protected PhdCandidacyFeedbackRequestElement init(final PhdCandidacyFeedbackRequestProcess process,
@@ -131,7 +133,7 @@ public class PhdCandidacyFeedbackRequestElement extends PhdCandidacyFeedbackRequ
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

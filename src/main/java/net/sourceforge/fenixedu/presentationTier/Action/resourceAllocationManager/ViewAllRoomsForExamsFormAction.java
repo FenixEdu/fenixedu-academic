@@ -5,7 +5,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadAllRoomsExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
@@ -14,6 +13,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.User;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -26,7 +26,7 @@ public class ViewAllRoomsForExamsFormAction extends FenixContextAction {
 
         super.execute(mapping, form, request, response);
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         InfoExecutionPeriod infoExecutionPeriod =
                 (InfoExecutionPeriod) this.servlet.getServletContext().getAttribute(

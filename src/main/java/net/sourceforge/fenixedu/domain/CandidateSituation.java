@@ -5,11 +5,13 @@ import java.util.Date;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 public class CandidateSituation extends CandidateSituation_Base {
 
     public CandidateSituation() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public CandidateSituation(Date date, String remarks, State validation, MasterDegreeCandidate masterDegreeCandidate,
@@ -45,7 +47,7 @@ public class CandidateSituation extends CandidateSituation_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

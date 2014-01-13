@@ -3,7 +3,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 
 <center>
-	<img src="<%= request.getContextPath() %>/images/logo-fenix.gif" alt="<bean:message key="logo-fenix" bundle="IMAGE_RESOURCES" />" width="100" height="100" />
+	<img src="<%= request.getContextPath() %>/images/ID_FenixEdu.png" alt="<bean:message key="logo-fenix" bundle="IMAGE_RESOURCES" />"  />
 </center>
 <br/>
 

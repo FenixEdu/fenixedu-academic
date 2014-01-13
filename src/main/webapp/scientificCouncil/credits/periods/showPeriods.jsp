@@ -5,7 +5,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<logic:present role="SCIENTIFIC_COUNCIL">
+<logic:present role="role(SCIENTIFIC_COUNCIL)">
 
 	<em><bean:message key="title.teaching"/></em>
 	<h2><bean:message key="link.define.periods"/></h2>
@@ -29,7 +29,7 @@
 					<fr:property name="columnClasses" value=",,tdclear"/>			
 				</fr:layout>			
 			</fr:edit>
-			<logic:present role="MANAGER">
+			<logic:present role="role(MANAGER)">
 				<bean:define id="executionYearOid" name="teacherCreditsBean" property="executionPeriod.executionYear.externalId"/>
 				<logic:equal name="teacherCreditsBean" property="executionPeriod.executionYear.annualCreditsState.isCreditsClosed" value="false">
 					<logic:equal name="teacherCreditsBean" property="executionPeriod.executionYear.annualCreditsState.isFinalCreditsCalculated" value="true">

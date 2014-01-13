@@ -6,6 +6,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.CreateSummaryBean;
 import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorshipSummaryRelationBean;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.Atomic;
@@ -14,7 +15,7 @@ public class TutorshipSummary extends TutorshipSummary_Base {
 
     public TutorshipSummary() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public boolean isActive() {
@@ -94,13 +95,14 @@ public class TutorshipSummary extends TutorshipSummary_Base {
 
     public static Set<ExecutionSemester> getActivePeriods() {
         Set<ExecutionSemester> semesters = new HashSet<ExecutionSemester>();
-        for (TutorshipSummaryPeriod tutorshipPeriod : RootDomainObject.getInstance().getTutorshipSummaryPeriodsSet()) {
+        for (TutorshipSummaryPeriod tutorshipPeriod : Bennu.getInstance().getTutorshipSummaryPeriodsSet()) {
             if (tutorshipPeriod.isOpenNow()) {
                 semesters.add(tutorshipPeriod.getExecutionSemester());
             }
         }
         return semesters;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.TutorshipSummaryRelation> getTutorshipSummaryRelations() {
         return getTutorshipSummaryRelationsSet();
@@ -117,7 +119,7 @@ public class TutorshipSummary extends TutorshipSummary_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

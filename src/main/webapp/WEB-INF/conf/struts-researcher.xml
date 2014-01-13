@@ -93,7 +93,6 @@
                   <forward path="publications.editPublicationData" name="PreparedToEdit"></forward>
                   <forward path="publications.viewEditPublication" name="PreparedToDelete"></forward>
                   <forward path="/resultPublications/listPublications.do" name="PublicationDeleted"></forward>
-                  <forward path="publications.search" name="SearchPublication"></forward>
                   <forward path="show-result-loggedin" name="ShowResult"></forward>
                   <forward path="edit-journal" name="editJournal"></forward>
                   <forward path="edit-event" name="editEvent"></forward>
@@ -134,7 +133,7 @@
             </action>
       </action-mappings>
       <!-- ========== Controller Configuration ================================ -->
-      <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"></controller>
+      <controller processorClass="pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessor"></controller>
       <!-- ========== Message Resources Definitions ============================ -->
       <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
       <message-resources null="false" parameter="resources.ResearcherResources"></message-resources>

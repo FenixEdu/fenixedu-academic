@@ -135,7 +135,7 @@ public class ReadShiftsToEnroll {
     private static final ReadShiftsToEnroll serviceInstance = new ReadShiftsToEnroll();
 
     @Atomic
-    public static List runReadShiftsToEnroll(Registration registration) throws FenixServiceException  , NotAuthorizedException {
+    public static List runReadShiftsToEnroll(Registration registration) throws FenixServiceException, NotAuthorizedException {
         ClassEnrollmentAuthorizationFilter.instance.execute(registration);
         return serviceInstance.run(registration);
     }

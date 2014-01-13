@@ -148,7 +148,7 @@
 		</logic:notPresent>
 		<br />
 		<p class="infoop"><span class="emphasis-box">5</span>
-			<bean:message key="message.teacherInformation.externalActivities" bundle="GEP_RESOURCES"/></p>
+			<bean:message key="message.teacherInformation.externalActivities" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="GEP_RESOURCES"/></p>
 		<logic:notEmpty name="infoSiteTeacherInformation" property="infoExternalActivities">
 			<br/>
 			<table width="100%">	

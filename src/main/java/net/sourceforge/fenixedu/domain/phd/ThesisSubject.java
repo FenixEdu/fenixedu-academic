@@ -1,9 +1,11 @@
 package net.sourceforge.fenixedu.domain.phd;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -12,7 +14,7 @@ public class ThesisSubject extends ThesisSubject_Base {
 
     protected ThesisSubject() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     protected ThesisSubject(PhdProgramFocusArea focusArea, MultiLanguageString name, MultiLanguageString description,
@@ -95,6 +97,7 @@ public class ThesisSubject extends ThesisSubject_Base {
         return process.getCandidacyProcess().getPublicPhdCandidacyPeriod() != null
                 && process.getCandidacyProcess().getPublicPhdCandidacyPeriod().isOpen();
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.phd.ThesisSubjectOrder> getThesisSubjectOrders() {
         return getThesisSubjectOrdersSet();
@@ -131,7 +134,7 @@ public class ThesisSubject extends ThesisSubject_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

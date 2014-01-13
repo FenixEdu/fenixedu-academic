@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.util.renderer.GanttDiagram;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.jcs.access.exception.InvalidArgumentException;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -45,7 +44,7 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
 public class RoomsReserveManagementDA extends FenixDispatchAction {
 
     public ActionForward viewReserves(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException {
+            HttpServletResponse response) {
 
         List<PunctualRoomsOccupationRequest> requests = readAndSetPunctualRequests(request);
         Set<InfoGenericEvent> result = getInfoGenericEvents(requests);
@@ -60,7 +59,7 @@ public class RoomsReserveManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward viewReservesDailyView(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException {
+            HttpServletResponse response) {
 
         List<PunctualRoomsOccupationRequest> requests = readAndSetPunctualRequests(request);
         Set<InfoGenericEvent> result = getInfoGenericEvents(requests);
@@ -75,7 +74,7 @@ public class RoomsReserveManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward viewReservesMonthlyView(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws InvalidArgumentException {
+            HttpServletResponse response) {
 
         List<PunctualRoomsOccupationRequest> requests = readAndSetPunctualRequests(request);
         Set<InfoGenericEvent> result = getInfoGenericEvents(requests);
@@ -121,7 +120,7 @@ public class RoomsReserveManagementDA extends FenixDispatchAction {
     }
 
     public ActionForward seeSpecifiedRoomsReserve(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException, InvalidArgumentException {
+            HttpServletResponse response) throws FenixServiceException {
 
         Person loggedPerson = getLoggedPerson(request);
         PunctualRoomsOccupationRequest punctualRoomsReserve = getPunctualRoomsReserve(request);

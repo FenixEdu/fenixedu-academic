@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public abstract class AcademicalInstitutionUnit extends AcademicalInstitutionUnit_Base {
 
@@ -47,7 +47,7 @@ public abstract class AcademicalInstitutionUnit extends AcademicalInstitutionUni
     protected static List<AcademicalInstitutionUnit> readOfficialUnits() {
         final List<AcademicalInstitutionUnit> officialUnits = new ArrayList<AcademicalInstitutionUnit>();
 
-        for (final UnitName unitName : RootDomainObject.getInstance().getUnitName()) {
+        for (final UnitName unitName : Bennu.getInstance().getUnitNameSet()) {
             if (unitName.getUnit().isOfficial()) {
                 officialUnits.add((AcademicalInstitutionUnit) unitName.getUnit());
             }
@@ -79,7 +79,7 @@ public abstract class AcademicalInstitutionUnit extends AcademicalInstitutionUni
 
     public static List<AcademicalInstitutionUnit> readOtherAcademicUnits() {
         final List<AcademicalInstitutionUnit> otherUnits = new ArrayList<AcademicalInstitutionUnit>();
-        for (final UnitName unitName : RootDomainObject.getInstance().getUnitName()) {
+        for (final UnitName unitName : Bennu.getInstance().getUnitNameSet()) {
             if (unitName.getUnit().isAcademicalUnit() && !unitName.getUnit().isOfficial()) {
                 otherUnits.add((AcademicalInstitutionUnit) unitName.getUnit());
             }
@@ -97,6 +97,7 @@ public abstract class AcademicalInstitutionUnit extends AcademicalInstitutionUni
     }
 
     public abstract String getFullPresentationName();
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.internship.InternshipCandidacySession> getInternshipCandidacySession() {
         return getInternshipCandidacySessionSet();

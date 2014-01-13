@@ -3,11 +3,11 @@ package net.sourceforge.fenixedu.presentationTier.Action.externalServices;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.StudentDataShareAuthorization;
 import net.sourceforge.fenixedu.domain.student.StudentDataShareStudentsAssociationAuthorization;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -20,8 +20,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(module = "external", path = "/userForAEIST", scope = "request", parameter = "method")
 public class AEISTUserInformationDA extends ExternalInterfaceDispatchAction {
 
-    private static final String USERNAME_KEY = "externalServices.AEIST.username";
-    private static final String PASSWORD_KEY = "externalServices.AEIST.password";
     private static final String USER_NOT_FOUND_CODE = "USER_NOT_FOUND";
     private static final String USER_DOES_NOT_ALLOW = "USER_DOES_NOT_ALLOW";
     private static final String NOT_ACTIVE_STUDENT = "NOT_ACTIVE_STUDENT";
@@ -29,8 +27,8 @@ public class AEISTUserInformationDA extends ExternalInterfaceDispatchAction {
     private boolean doLogin(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
         final String username = (String) getFromRequest(request, "username");
         final String password = (String) getFromRequest(request, "password");
-        final String usernameProp = PropertiesManager.getProperty(USERNAME_KEY);
-        final String passwordProp = PropertiesManager.getProperty(PASSWORD_KEY);
+        final String usernameProp = FenixConfigurationManager.getConfiguration().getExternalServicesAEISTUsername();
+        final String passwordProp = FenixConfigurationManager.getConfiguration().getExternalServicesAEISTPassword();
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password) || StringUtils.isEmpty(usernameProp)
                 || StringUtils.isEmpty(passwordProp)) {
             return false;
@@ -43,7 +41,7 @@ public class AEISTUserInformationDA extends ExternalInterfaceDispatchAction {
         final JSONObject payload = new JSONObject();
         if (doLogin(mapping, actionForm, request, response)) {
             final String istID = (String) getFromRequest(request, "istID");
-            final Person person = Person.readPersonByIstUsername(istID);
+            final Person person = Person.readPersonByUsername(istID);
 
             if (person != null) {
                 Registration registration = person.getStudent().getLastActiveRegistration();

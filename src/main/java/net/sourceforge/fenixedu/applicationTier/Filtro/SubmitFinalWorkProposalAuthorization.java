@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposalEditor;
 import net.sourceforge.fenixedu.domain.Coordinator;
@@ -13,7 +12,10 @@ import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import pt.ist.fenixframework.FenixFramework;
 
 public class SubmitFinalWorkProposalAuthorization {
@@ -21,7 +23,7 @@ public class SubmitFinalWorkProposalAuthorization {
     public static final SubmitFinalWorkProposalAuthorization instance = new SubmitFinalWorkProposalAuthorization();
 
     public void execute(InfoProposalEditor infoProposal) throws NotAuthorizedException {
-        final IUserView userView = AccessControl.getUserView();
+        final User userView = Authenticate.getUser();
         final InfoProposalEditor infoProposalEditor = infoProposal;
         if (infoProposalEditor.getExternalId() != null) {
             final Proposal proposal = FenixFramework.getDomainObject(infoProposalEditor.getExternalId());

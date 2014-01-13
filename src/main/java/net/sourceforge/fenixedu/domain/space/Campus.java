@@ -4,27 +4,33 @@ import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
 import net.sourceforge.fenixedu.predicates.SpacePredicates;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.YearMonthDay;
+
+import com.google.common.collect.Ordering;
 
 public class Campus extends Campus_Base {
 
-    private static final String ALAMEDA_NAME = "Alameda";
-    private static final String TAGUSPARK_NAME = "Taguspark";
-
-    private static final String ALAMEDA_UNIVERSITY_CODE = "0807";
-    private static final String TAGUSPARK_UNIVERSITY_CODE = "0808";
+    private static final String ALAMEDA_UNIVERSITY_CODE = "1518";
+    private static final String TAGUSPARK_UNIVERSITY_CODE = "1519";
     public static final String DEFAULT_UNIVERSITY_CODE = ALAMEDA_UNIVERSITY_CODE;
 
     public Campus(String name, YearMonthDay begin, YearMonthDay end, String blueprintNumber) {
         super();
         new CampusInformation(this, name, begin, end, blueprintNumber);
+    }
+
+    public static Campus getDefaultCampus() {
+        if (Bennu.getInstance().getDefaultCampus() == null) {
+            return Ordering.from(Space.COMPARATOR_BY_PRESENTATION_NAME).min(Space.getAllActiveCampus());
+        }
+        return Bennu.getInstance().getDefaultCampus();
     }
 
     @Override
@@ -58,7 +64,7 @@ public class Campus extends Campus_Base {
     }
 
     public static Campus readActiveCampusByName(String campusName) {
-        for (Resource space : RootDomainObject.getInstance().getResources()) {
+        for (Resource space : Bennu.getInstance().getResourcesSet()) {
             if (space.isCampus() && ((Campus) space).isActive()
                     && ((Campus) space).getSpaceInformation().getName().equals(campusName)) {
                 return (Campus) space;
@@ -91,28 +97,6 @@ public class Campus extends Campus_Base {
     public Integer getNormalCapacity() {
         // Necessary for Renderers
         return null;
-    }
-
-    static public String getUniversityCode(final Campus campus) {
-        if (campus == null) {
-            return DEFAULT_UNIVERSITY_CODE;
-        }
-
-        if (campus.getName().equalsIgnoreCase(ALAMEDA_NAME)) {
-            return ALAMEDA_UNIVERSITY_CODE;
-        } else if (campus.getName().equalsIgnoreCase(TAGUSPARK_NAME)) {
-            return TAGUSPARK_UNIVERSITY_CODE;
-        } else {
-            return DEFAULT_UNIVERSITY_CODE;
-        }
-    }
-
-    public Boolean isCampusAlameda() {
-        return this.getName().equals(ALAMEDA_NAME);
-    }
-
-    public Boolean isCampusTaguspark() {
-        return this.getName().equals(TAGUSPARK_NAME);
     }
 
     public static abstract class CampusFactory implements Serializable, FactoryExecutor {

@@ -1,8 +1,10 @@
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class UnitAcronym extends UnitAcronym_Base {
@@ -24,7 +26,7 @@ public class UnitAcronym extends UnitAcronym_Base {
 
     public UnitAcronym(final String acronym) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setAcronym(acronym);
     }
 
@@ -55,7 +57,7 @@ public class UnitAcronym extends UnitAcronym_Base {
         }
         final String acronymLowerCase = shouldNormalize ? Content.normalize(acronym.toLowerCase()) : acronym.toLowerCase();
 
-        for (UnitAcronym unitAcronym : RootDomainObject.getInstance().getUnitAcronymsSet()) {
+        for (UnitAcronym unitAcronym : Bennu.getInstance().getUnitAcronymsSet()) {
 
             if ((shouldNormalize && Content.normalize(unitAcronym.getAcronym()).equals(acronymLowerCase))
                     || unitAcronym.getAcronym().equals(acronymLowerCase)) {
@@ -76,7 +78,7 @@ public class UnitAcronym extends UnitAcronym_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

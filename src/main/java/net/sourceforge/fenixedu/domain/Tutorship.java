@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.LocalDate;
@@ -55,7 +56,7 @@ public class Tutorship extends Tutorship_Base {
 
     private Tutorship(Teacher teacher, Partial tutorshipStartDate, Partial tutorshipEndDate, StudentCurricularPlan scp) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setTeacher(teacher);
         setStudentCurricularPlan(scp);
         setStartDate(tutorshipStartDate);
@@ -186,7 +187,7 @@ public class Tutorship extends Tutorship_Base {
 
     public static List<Tutorship> getStudentActiveTutorships(Integer studentNumber) {
         List<Tutorship> tutorships = new ArrayList<Tutorship>();
-        for (Tutorship t : RootDomainObject.getInstance().getTutorships()) {
+        for (Tutorship t : Bennu.getInstance().getTutorshipsSet()) {
             if (t.getStudent().getNumber().equals(studentNumber) && t.isActive()) {
                 tutorships.add(t);
             }
@@ -235,7 +236,7 @@ public class Tutorship extends Tutorship_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.enrollment;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.ServiceMonitoring;
 import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.EnrollmentWithoutRulesAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.MasterDegreeEnrollmentWithoutRulesAuthorizationFilter;
@@ -18,13 +17,16 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+
+import org.fenixedu.bennu.core.domain.User;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class WriteEnrollmentsList {
 
     protected void run(final StudentCurricularPlan studentCurricularPlan, DegreeType degreeType,
-            ExecutionSemester executionSemester, List<String> curricularCourses, Map optionalEnrollments, IUserView userView)
+            ExecutionSemester executionSemester, List<String> curricularCourses, Map optionalEnrollments, User userView)
             throws FenixServiceException {
 
         ServiceMonitoring.logService(this.getClass(), studentCurricularPlan, degreeType, executionSemester, curricularCourses,
@@ -51,7 +53,7 @@ public class WriteEnrollmentsList {
 
     protected void createEnrollment(final StudentCurricularPlan studentCurricularPlan, final CurricularCourse curricularCourse,
             final ExecutionSemester executionSemester, final CurricularCourseEnrollmentType enrollmentType,
-            final Integer enrollmentClass, final IUserView userView) {
+            final Integer enrollmentClass, final User userView) {
 
         final Enrolment enrollment =
                 studentCurricularPlan.getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse, executionSemester);
@@ -61,16 +63,16 @@ public class WriteEnrollmentsList {
             if (enrollmentClass == null || enrollmentClass.intValue() == 0 || enrollmentClass.intValue() == 1) {
 
                 new Enrolment(studentCurricularPlan, curricularCourse, executionSemester, getEnrollmentCondition(enrollmentType),
-                        userView.getUtilizador());
+                        userView.getUsername());
 
             } else if (enrollmentClass.intValue() == 2) {
 
                 new EnrolmentInOptionalCurricularCourse(studentCurricularPlan, curricularCourse, executionSemester,
-                        getEnrollmentCondition(enrollmentType), userView.getUtilizador());
+                        getEnrollmentCondition(enrollmentType), userView.getUsername());
 
             } else {
                 new Enrolment(studentCurricularPlan, curricularCourse, executionSemester, getEnrollmentCondition(enrollmentType),
-                        userView.getUtilizador()).markAsExtraCurricular();
+                        userView.getUsername()).markAsExtraCurricular();
             }
 
         } else {
@@ -104,7 +106,7 @@ public class WriteEnrollmentsList {
 
     @Atomic
     public static void runWriteEnrollmentsList(StudentCurricularPlan studentCurricularPlan, DegreeType degreeType,
-            ExecutionSemester executionSemester, List<String> curricularCourses, Map optionalEnrollments, IUserView userView)
+            ExecutionSemester executionSemester, List<String> curricularCourses, Map optionalEnrollments, User userView)
             throws FenixServiceException, NotAuthorizedException {
         try {
             EnrollmentWithoutRulesAuthorizationFilter.instance.execute(studentCurricularPlan, degreeType);

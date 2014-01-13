@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.mobility.outbound;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.ist.fenixframework.Atomic;
 
 public class OutboundMobilityCandidacyPeriodConfirmationOption extends OutboundMobilityCandidacyPeriodConfirmationOption_Base
@@ -8,7 +9,7 @@ public class OutboundMobilityCandidacyPeriodConfirmationOption extends OutboundM
 
     public OutboundMobilityCandidacyPeriodConfirmationOption(final OutboundMobilityCandidacyPeriod period,
             final String optionValue, final Boolean availableForCandidates) {
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setOptionValue(optionValue);
         setAvailableForCandidates(availableForCandidates);
         setOutboundMobilityCandidacyPeriod(period);
@@ -37,7 +38,7 @@ public class OutboundMobilityCandidacyPeriodConfirmationOption extends OutboundM
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

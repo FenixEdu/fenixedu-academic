@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDegreeByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYearsService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -19,13 +18,15 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
+import org.fenixedu.bennu.core.domain.User;
+
 /**
  * @author Luis Cruz
  * 
  */
 public class CommonServiceRequests {
 
-    public static List getBranchesByDegreeCurricularPlan(IUserView userView, String degreeCurricularPlanOID)
+    public static List getBranchesByDegreeCurricularPlan(User userView, String degreeCurricularPlanOID)
             throws FenixActionException {
 
         List branches = null;
@@ -53,7 +54,7 @@ public class CommonServiceRequests {
      * @param degreeOID
      * @return
      */
-    public static InfoExecutionDegree getInfoExecutionDegree(IUserView userView, String degreeOID) {
+    public static InfoExecutionDegree getInfoExecutionDegree(User userView, String degreeOID) {
         InfoExecutionDegree infoExecutionDegree = null;
 
         infoExecutionDegree = ReadExecutionDegreeByOID.run(degreeOID);

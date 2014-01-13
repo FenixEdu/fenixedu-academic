@@ -21,8 +21,7 @@ public class ThesisLibraryArchiveOperation extends ThesisLibraryArchiveOperation
     }
 
     public ThesisLibraryArchiveOperation(String thesisId, String performerId, String comment) {
-        this(FenixFramework.<Thesis> getDomainObject(thesisId), FenixFramework.<Person> getDomainObject(performerId),
-                comment);
+        this(FenixFramework.<Thesis> getDomainObject(thesisId), FenixFramework.<Person> getDomainObject(performerId), comment);
     }
 
     @Override
@@ -34,6 +33,7 @@ public class ThesisLibraryArchiveOperation extends ThesisLibraryArchiveOperation
     public String getPendingComment() {
         return null;
     }
+
     @Deprecated
     public boolean hasLibraryReference() {
         return getLibraryReference() != null;

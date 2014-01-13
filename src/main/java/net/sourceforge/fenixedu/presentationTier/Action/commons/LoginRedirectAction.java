@@ -13,11 +13,17 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
+@Mapping(path = "/redirect")
 public class LoginRedirectAction extends Action {
+
+    private static final Logger logger = LoggerFactory.getLogger(LoginRedirectAction.class);
 
     public static String addToUrl(String url, String param, String value) {
         if (url.contains("?")) {
@@ -36,7 +42,7 @@ public class LoginRedirectAction extends Action {
     @Atomic
     public Boolean reconstructURL(HttpServletRequest request) {
         final PendingRequest pendingRequest = FenixFramework.getDomainObject(request.getParameter("pendingRequest"));
-        if (pendingRequest.getBuildVersion().equals(PendingRequest.buildVersion)) {
+        if (pendingRequest.getBuildVersion().equals(FenixFramework.getProject().getVersion())) {
             String url = pendingRequest.getUrl();
 
             final List<PendingRequestParameter> attributes = new ArrayList<PendingRequestParameter>();
@@ -84,10 +90,10 @@ public class LoginRedirectAction extends Action {
                     response.sendRedirect(addParametersFromAttributes(url, request));
                     return null;
                 }
-                return mapping.findForward("show-redirect-page");
+                return new ActionForward("/redirect.jsp");
             }
         } catch (Exception e) {
-            System.out.println("Login: Catched " + e.getClass().getName() + " OID with pendingRequest  "
+            logger.info("Login: Catched " + e.getClass().getName() + " OID with pendingRequest  "
                     + request.getParameter("pendingRequest"));
             response.sendRedirect("/home.do");
             return null;

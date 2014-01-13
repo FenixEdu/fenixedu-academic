@@ -15,7 +15,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseInquiriesRegistryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.StudentStatuteBean;
@@ -28,7 +27,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.accounting.Event;
@@ -77,7 +75,9 @@ import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
@@ -113,7 +113,7 @@ public class Student extends Student_Base {
             number = Student.generateStudentNumber();
         }
         setNumber(number);
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public static Student createStudentWithCustomNumber(Person person, Integer number) {
@@ -140,7 +140,7 @@ public class Student extends Student_Base {
     }
 
     public static Student readStudentByNumber(final Integer number) {
-        for (final StudentNumber studentNumber : RootDomainObject.getInstance().getStudentNumbers()) {
+        for (final StudentNumber studentNumber : Bennu.getInstance().getStudentNumbersSet()) {
             if (studentNumber.getNumber().equals(number)) {
                 return studentNumber.getStudent();
             }
@@ -316,7 +316,7 @@ public class Student extends Student_Base {
 
     public static Integer generateStudentNumber() {
         int nextNumber = 0;
-        for (final StudentNumber studentNumber : RootDomainObject.getInstance().getStudentNumbers()) {
+        for (final StudentNumber studentNumber : Bennu.getInstance().getStudentNumbersSet()) {
             if (studentNumber.getNumber().intValue() < 100000 && studentNumber.getNumber().intValue() > nextNumber) {
                 nextNumber = studentNumber.getNumber().intValue();
             }
@@ -2293,7 +2293,7 @@ public class Student extends Student_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

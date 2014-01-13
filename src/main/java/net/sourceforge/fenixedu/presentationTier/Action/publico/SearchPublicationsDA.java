@@ -3,10 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceBean;
-import net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceBean.SearchElement;
-import net.sourceforge.fenixedu.dataTransferObject.SearchDSpacePublicationBean;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
@@ -16,24 +12,21 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.file.FileSearchCriteria.SearchField;
 
+@Mapping(module = "publico", path = "/publications/search")
+@Forwards(value = { @Forward(name = "SearchPublication", path = "/commons/sites/unitSite/searchPublications.jsp",
+        tileProperties = @Tile(extend = "definition.public.homepage")) })
 public class SearchPublicationsDA extends SearchPublicationsAction {
 
     @Override
     public ActionForward prepareSearchPublication(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException {
-
-        SearchDSpaceBean bean = createNewBean();
-        bean.addSearchElement();
-
-        SearchElement searchElement = bean.getSearchElements().iterator().next();
-        searchElement.setSearchField(SearchField.ANY);
-
-        request.setAttribute("bean", bean);
-
-        return mapping.findForward("SearchPublication");
+            HttpServletResponse response) {
+        return super.prepareSearchPublication(mapping, form, request, response);
     }
 
     @Override
@@ -57,12 +50,4 @@ public class SearchPublicationsDA extends SearchPublicationsAction {
         }
         request.setAttribute("site", site);
     }
-
-    @Override
-    protected SearchDSpaceBean createNewBean() {
-        SearchDSpacePublicationBean searchDSpacePublicationBean = new SearchDSpacePublicationBean();
-        searchDSpacePublicationBean.setSearchPatents(false);
-        return searchDSpacePublicationBean;
-    }
-
 }

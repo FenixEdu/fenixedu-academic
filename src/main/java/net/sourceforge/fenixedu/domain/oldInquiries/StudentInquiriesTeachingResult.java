@@ -12,11 +12,11 @@ import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.UploadStudentInq
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -28,7 +28,7 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
 
     public StudentInquiriesTeachingResult() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     private Double getValueForPresentation(Double value) {
@@ -679,8 +679,7 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
     public static Boolean deleteTeachingResults(UploadStudentInquiriesTeachingResultsBean teachingBean) {
         boolean deletedItems = false;
         List<StudentInquiriesTeachingResult> toDelete = new ArrayList<StudentInquiriesTeachingResult>();
-        for (StudentInquiriesTeachingResult teachingResult : RootDomainObject.getInstance()
-                .getStudentInquiriesTeachingResultsSet()) {
+        for (StudentInquiriesTeachingResult teachingResult : Bennu.getInstance().getStudentInquiriesTeachingResultsSet()) {
             if (StringUtils.isEmpty(teachingBean.getKeyExecutionCourseHeader())) {
                 if (teachingBean.getResultsDate().equals(teachingResult.getResultsDate())) {
                     toDelete.add(teachingResult);
@@ -1418,7 +1417,7 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

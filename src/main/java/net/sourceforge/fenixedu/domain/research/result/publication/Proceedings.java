@@ -215,6 +215,7 @@ public class Proceedings extends Proceedings_Base {
     public Boolean getIsPossibleSelectPersonRole() {
         return true;
     }
+
     @Deprecated
     public boolean hasAddress() {
         return getAddress() != null;

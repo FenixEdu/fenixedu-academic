@@ -17,8 +17,6 @@ import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.SibsTransactionDetailDTO;
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.events.PenaltyExemption;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -30,6 +28,8 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import net.sourceforge.fenixedu.util.Money;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
@@ -49,7 +49,7 @@ public abstract class Event extends Event_Base {
     protected Event() {
         super();
 
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
         super.setWhenOccured(new DateTime());
         super.setCreatedBy(AccessControl.getPerson() != null ? AccessControl.getPerson().getIstUsername() : null);
 
@@ -678,7 +678,7 @@ public abstract class Event extends Event_Base {
     public static List<Event> readNotCancelled() {
         final List<Event> result = new ArrayList<Event>();
 
-        for (final Event event : RootDomainObject.getInstance().getAccountingEvents()) {
+        for (final Event event : Bennu.getInstance().getAccountingEventsSet()) {
             if (!event.isCancelled()) {
                 result.add(event);
             }
@@ -872,7 +872,7 @@ public abstract class Event extends Event_Base {
     public static List<Event> readBy(final EventType eventType) {
 
         final List<Event> result = new ArrayList<Event>();
-        for (final Event event : RootDomainObject.getInstance().getAccountingEvents()) {
+        for (final Event event : Bennu.getInstance().getAccountingEventsSet()) {
             if (event.getEventType() == eventType) {
                 result.add(event);
             }
@@ -1136,7 +1136,7 @@ public abstract class Event extends Event_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

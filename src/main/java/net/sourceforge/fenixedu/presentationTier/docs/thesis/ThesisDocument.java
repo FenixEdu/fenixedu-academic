@@ -7,11 +7,12 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * Base document for Thesis related reports. This document tries to setup the
@@ -51,7 +52,7 @@ public abstract class ThesisDocument extends FenixReport {
     }
 
     protected void fillInstitution() {
-        addParameter("institutionName", neverNull(RootDomainObject.getInstance().getInstitutionUnit().getName()).toUpperCase());
+        addParameter("institutionName", neverNull(Bennu.getInstance().getInstitutionUnit().getName()).toUpperCase());
     }
 
     protected void fillDegree() {
@@ -100,7 +101,7 @@ public abstract class ThesisDocument extends FenixReport {
         vowels.addAll(thesis.getVowels());
 
         Iterator<ThesisEvaluationParticipant> iterator = vowels.iterator();
-        for (int i = 1; i < 4; i++) {
+        for (int i = 1; i <= 4; i++) {
             final String vowelPrefix = "vowel" + i;
 
             if (iterator.hasNext()) {

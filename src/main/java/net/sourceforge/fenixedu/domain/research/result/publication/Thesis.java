@@ -294,6 +294,7 @@ public class Thesis extends Thesis_Base {
     public YearMonthDay getYearMonth() {
         return new YearMonthDay(getYear(), getMonth().getNumberOfMonth(), 1);
     }
+
     @Deprecated
     public boolean hasThesis() {
         return getThesis() != null;

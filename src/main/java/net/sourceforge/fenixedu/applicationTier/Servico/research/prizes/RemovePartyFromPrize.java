@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research.prizes;
 
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.EditPrizeFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;

@@ -17,7 +17,6 @@ import java.util.zip.ZipOutputStream;
 
 import javax.ws.rs.core.MediaType;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -35,20 +34,21 @@ import net.sourceforge.fenixedu.domain.serviceRequests.EquivalencePlanRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.ApprovementInfoForEquivalenceProcess;
-import net.sourceforge.fenixedu.util.StringUtils;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.CharEncoding;
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.YearMonthDay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -125,14 +125,15 @@ public class SendAcademicServiceRequestToExternalEntity {
 
             final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(resultStream.toByteArray());
 
-            final String restEndpoint = PropertiesManager.getProperty("external.application.workflow.equivalences.uri");
-            System.out.println("SendAcademicServiceRequestToExternalEntity : " + restEndpoint);
+            final String restEndpoint =
+                    FenixConfigurationManager.getConfiguration().getExternalApplicationWorkflowEquivalencesUri();
+            logger.info("SendAcademicServiceRequestToExternalEntity : " + restEndpoint);
 
-            final String restUser = PropertiesManager.getProperty("jersey.username");
-            final String restPass = PropertiesManager.getProperty("jersey.password");
+            final String restUser = FenixConfigurationManager.getConfiguration().getJerseyUsername();
+            final String restPass = FenixConfigurationManager.getConfiguration().getJerseyPassword();
 
             Client client = new Client();
-            final String username = UserView.getUser().getUsername();
+            final String username = Authenticate.getUser().getUsername();
             final FormDataMultiPart formDataMultiPart = new FormDataMultiPart();
             StreamDataBodyPart streamPart = new StreamDataBodyPart("stream", byteArrayInputStream);
             formDataMultiPart.bodyPart(streamPart);
@@ -325,7 +326,7 @@ public class SendAcademicServiceRequestToExternalEntity {
             out.close();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
 
         return resultStream;
@@ -402,8 +403,8 @@ public class SendAcademicServiceRequestToExternalEntity {
                     spreadsheet.addCell(((CurricularCourse) courseModule).getEctsCredits(), cellStyleToUse);
                     // let's fill the next two cells so that they get shaded as
                     // well
-                    spreadsheet.addCell(StringUtils.SINGLE_SPACE, unlockedCellStyleToUse);
-                    spreadsheet.addCell(StringUtils.SINGLE_SPACE, unlockedCellStyleToUse);
+                    spreadsheet.addCell(" ", unlockedCellStyleToUse);
+                    spreadsheet.addCell(" ", unlockedCellStyleToUse);
                 }
             }
             List<Context> sortedGroupContexts =

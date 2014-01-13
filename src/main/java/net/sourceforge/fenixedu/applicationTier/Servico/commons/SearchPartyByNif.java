@@ -5,17 +5,17 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchParties;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartySocialSecurityNumber;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class SearchPartyByNif extends SearchParties<Party> {
 
     @Override
     protected Collection<Party> search(String value, int size) {
         List<Party> result = new ArrayList<Party>();
-        Collection<PartySocialSecurityNumber> partySocialSecurityNumbers =
-                RootDomainObject.getInstance().getPartySocialSecurityNumbers();
+        Collection<PartySocialSecurityNumber> partySocialSecurityNumbers = Bennu.getInstance().getPartySocialSecurityNumbersSet();
         for (PartySocialSecurityNumber partySocialSecurityNumber : partySocialSecurityNumbers) {
             if (partySocialSecurityNumber.getSocialSecurityNumber().startsWith(value)) {
                 result.add(partySocialSecurityNumber.getParty());

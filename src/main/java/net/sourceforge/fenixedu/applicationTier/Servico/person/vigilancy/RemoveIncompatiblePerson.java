@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy;
 
-
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 import pt.ist.fenixframework.Atomic;
 

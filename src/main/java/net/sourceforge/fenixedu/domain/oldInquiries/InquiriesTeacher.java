@@ -14,9 +14,10 @@ import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.TeacherInquiryDT
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author Jo�o Fialho & Rita Ferreira
@@ -26,7 +27,7 @@ public class InquiriesTeacher extends InquiriesTeacher_Base {
 
     public InquiriesTeacher() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     protected InquiriesTeacher(InquiriesCourse inquiriesCourse, Professorship professorship, ShiftType shiftType,
@@ -114,13 +115,14 @@ public class InquiriesTeacher extends InquiriesTeacher_Base {
         inquiriesTeacher.setTeacherOpenToClearDoubts(answersMap.get("teacherOpenToClearDoubts").getValueAsInteger());
         inquiriesTeacher.setTeacherGlobalClassification(answersMap.get("teacherGlobalClassification").getValueAsInteger());
     }
+
     @Deprecated
     public boolean hasTeacherInterestStimulation() {
         return getTeacherInterestStimulation() != null;
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

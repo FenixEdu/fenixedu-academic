@@ -140,7 +140,7 @@ public class DegreeCandidacyForGraduatedPersonProcessDA extends CandidacyProcess
     }
 
     public ActionForward executeSendToCoordinator(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         try {
             executeActivity(getProcess(request), "SendToCoordinator");
         } catch (DomainException e) {
@@ -156,7 +156,7 @@ public class DegreeCandidacyForGraduatedPersonProcessDA extends CandidacyProcess
     }
 
     public ActionForward executeSendToScientificCouncil(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws  FenixServiceException {
+            HttpServletResponse response) throws FenixServiceException {
         try {
             executeActivity(getProcess(request), "SendToScientificCouncil");
         } catch (final DomainException e) {

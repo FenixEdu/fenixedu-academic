@@ -85,17 +85,17 @@ public class DepartmentFunctionalities extends UnitFunctionalities {
     }
 
     public ActionForward downloadProjectsInZipFormat(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException,  IOException, ServletException {
+            HttpServletResponse response) throws FenixActionException, IOException, ServletException {
         return action.downloadProjectsInZipFormat(mapping, form, request, response);
     }
 
     public ActionForward prepareSelectiveDownload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException,  IOException, ServletException {
+            HttpServletResponse response) throws FenixActionException, IOException, ServletException {
         return action.prepareSelectiveDownload(mapping, form, request, response);
     }
 
     public ActionForward selectiveDownload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException,  IOException, ServletException {
+            HttpServletResponse response) throws FenixActionException, IOException, ServletException {
         return action.selectiveDownload(mapping, form, request, response);
     }
 

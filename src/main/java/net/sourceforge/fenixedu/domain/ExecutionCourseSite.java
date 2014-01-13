@@ -111,11 +111,6 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
         return true;
     }
 
-    @Override
-    public boolean isScormContentAccepted() {
-        return true;
-    }
-
     @Deprecated
     public ExecutionCourse getExecutionCourse() {
         return super.getSiteExecutionCourse();
@@ -333,6 +328,7 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
             super.setLessonPlanningAvailable(lessonPlanningAvailable);
         }
     }
+
     @Deprecated
     public boolean hasIntroduction() {
         return getIntroduction() != null;

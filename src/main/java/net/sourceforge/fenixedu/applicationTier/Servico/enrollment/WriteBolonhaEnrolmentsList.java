@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.enrollment;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.EnrollmentWithoutRulesAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.MasterDegreeEnrollmentWithoutRulesAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -17,6 +16,9 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+
+import org.fenixedu.bennu.core.domain.User;
+
 import pt.ist.fenixframework.Atomic;
 
 public class WriteBolonhaEnrolmentsList extends WriteEnrollmentsList {
@@ -24,7 +26,7 @@ public class WriteBolonhaEnrolmentsList extends WriteEnrollmentsList {
     @Override
     protected void createEnrollment(StudentCurricularPlan studentCurricularPlan, CurricularCourse curricularCourse,
             ExecutionSemester executionSemester, CurricularCourseEnrollmentType enrollmentType, Integer enrollmentClass,
-            IUserView userView) {
+            User userView) {
         final Enrolment enrollment =
                 studentCurricularPlan.getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse, executionSemester);
 
@@ -33,16 +35,16 @@ public class WriteBolonhaEnrolmentsList extends WriteEnrollmentsList {
             if (enrollmentClass == null || enrollmentClass.intValue() == 0 || enrollmentClass.intValue() == 1) {
 
                 new Enrolment(studentCurricularPlan, studentCurricularPlan.getRoot(), curricularCourse, executionSemester,
-                        getEnrollmentCondition(enrollmentType), userView.getUtilizador());
+                        getEnrollmentCondition(enrollmentType), userView.getUsername());
 
             } else if (enrollmentClass.intValue() == 2) {
 
                 new EnrolmentInOptionalCurricularCourse(studentCurricularPlan, studentCurricularPlan.getRoot(), curricularCourse,
-                        executionSemester, getEnrollmentCondition(enrollmentType), userView.getUtilizador());
+                        executionSemester, getEnrollmentCondition(enrollmentType), userView.getUsername());
 
             } else {
                 new Enrolment(studentCurricularPlan, studentCurricularPlan.getRoot(), curricularCourse, executionSemester,
-                        getEnrollmentCondition(enrollmentType), userView.getUtilizador()).markAsExtraCurricular();
+                        getEnrollmentCondition(enrollmentType), userView.getUsername()).markAsExtraCurricular();
             }
 
         } else {
@@ -62,7 +64,7 @@ public class WriteBolonhaEnrolmentsList extends WriteEnrollmentsList {
 
     @Atomic
     public static void runWriteBolonhaEnrolmentsList(final StudentCurricularPlan studentCurricularPlan, DegreeType degreeType,
-            ExecutionSemester executionSemester, List<String> curricularCourses, Map optionalEnrollments, IUserView userView)
+            ExecutionSemester executionSemester, List<String> curricularCourses, Map optionalEnrollments, User userView)
             throws FenixServiceException {
         try {
             EnrollmentWithoutRulesAuthorizationFilter.instance.execute(studentCurricularPlan, degreeType);

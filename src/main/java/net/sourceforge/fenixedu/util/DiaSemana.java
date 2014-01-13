@@ -6,10 +6,10 @@
 
 package net.sourceforge.fenixedu.util;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
-
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * 

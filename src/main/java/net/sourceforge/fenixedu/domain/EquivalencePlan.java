@@ -1,10 +1,12 @@
 package net.sourceforge.fenixedu.domain;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 public abstract class EquivalencePlan extends EquivalencePlan_Base {
 
     protected EquivalencePlan() {
         super();
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
     }
 
     public void delete() {
@@ -26,7 +28,7 @@ public abstract class EquivalencePlan extends EquivalencePlan_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

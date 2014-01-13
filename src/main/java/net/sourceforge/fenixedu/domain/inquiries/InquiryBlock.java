@@ -1,13 +1,14 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class InquiryBlock extends InquiryBlock_Base {
 
     public InquiryBlock() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public boolean isResultBlock(ExecutionSemester executionSemester) {
@@ -37,6 +38,7 @@ public class InquiryBlock extends InquiryBlock_Base {
         }
         super.deleteDomainObject();
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.inquiries.InquiryTemplate> getInquiries() {
         return getInquiriesSet();
@@ -63,7 +65,7 @@ public class InquiryBlock extends InquiryBlock_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

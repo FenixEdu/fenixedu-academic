@@ -36,7 +36,6 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableRow;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
-import pt.utl.ist.fenix.tools.util.StringAppender;
 
 public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmentLayout {
 
@@ -212,7 +211,7 @@ public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmen
         cell.setClasses("aright");
 
         HtmlCheckBox checkBox = new HtmlCheckBox(false);
-        final String name = StringAppender.append("degreeModuleToEnrolCheckBox", "");
+        final String name = "degreeModuleToEnrolCheckBox";
         checkBox.setName(name);
         checkBox.setUserValue("true");
         checkBox.setChecked(true);

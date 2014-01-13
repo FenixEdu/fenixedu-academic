@@ -20,8 +20,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class DeleteTeacherAdviseServiceByOID {
 
     protected void run(String teacherAdviseServiceID, RoleType roleType) {
-        TeacherAdviseService teacherAdviseService =
-                (TeacherAdviseService) FenixFramework.getDomainObject(teacherAdviseServiceID);
+        TeacherAdviseService teacherAdviseService = (TeacherAdviseService) FenixFramework.getDomainObject(teacherAdviseServiceID);
         teacherAdviseService.delete(roleType);
     }
 

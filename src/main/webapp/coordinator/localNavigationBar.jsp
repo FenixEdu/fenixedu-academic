@@ -3,13 +3,13 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@page import="org.joda.time.LocalDate"%>
-<%@page import="pt.ist.fenixWebFramework.security.UserView"%><html:xhtml/>
+<html:xhtml/>
 
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl" %>
 
 <ul>
 	<li class="navheader"><bean:message  key="label.coordinator.management"/></li>
-	<logic:present role="COORDINATOR">
+	<logic:present role="role(COORDINATOR)">
 		<li>
 			<html:link page="/index.do"><bean:message  key="label.coordinator.degrees"/></html:link>
 		</li>
@@ -19,7 +19,7 @@
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound"/>
 		</html:link>
 	</li>
-	<logic:present role="COORDINATOR">
+	<logic:present role="role(COORDINATOR)">
 		<li class="navheader"><bean:message key="label.phds" bundle="PHD_RESOURCES"/></li>
 		<li>
 			<html:link page="/phdIndividualProgramProcess.do?method=manageProcesses">
@@ -33,8 +33,8 @@
 		</li>
 		
 		<%-- BIG HACK :) - temporary --%>
-		<logic:equal name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" 
-				property="person.istUsername" value="ist12760">
+		<logic:equal name="LOGGED_USER_ATTRIBUTE" 
+				property="username" value="ist12760">
 
 			<li class="navheader">
 				<bean:message key="label.phd.ist.epfl.collaboration.type" bundle="PHD_RESOURCES" />

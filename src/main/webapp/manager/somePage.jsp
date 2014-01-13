@@ -4,7 +4,7 @@
 
 
 <ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
-	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
+	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<h:outputText value="Hello World :o)"/>
 	<br />
 	<h:outputText value="#{infoExecutionPeriod.name}"/>

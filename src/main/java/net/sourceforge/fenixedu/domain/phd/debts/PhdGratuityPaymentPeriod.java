@@ -99,13 +99,14 @@ public class PhdGratuityPaymentPeriod extends PhdGratuityPaymentPeriod_Base {
         setPostingRule(null);
         super.deleteDomainObject();
     }
+
     @Deprecated
     public boolean hasEnd() {
         return getEnd() != null;
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

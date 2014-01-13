@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits;
 
-
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import pt.ist.fenixframework.Atomic;

@@ -18,11 +18,15 @@ import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.Thesi
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
 
 public abstract class AbstractManageThesisDA extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(AbstractManageThesisDA.class);
 
     public ActionForward viewOperationsThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
@@ -38,7 +42,7 @@ public abstract class AbstractManageThesisDA extends FenixDispatchAction {
         try {
             return new Integer(id);
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return null;
         }
     }

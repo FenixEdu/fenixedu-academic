@@ -41,7 +41,7 @@
 	</columnHeader>
 	<detail>
 		<band height="780" splitType="Stretch">
-			<textField>
+			<textField isBlankWhenNull="false">
 				<reportElement key="staticText-10" x="59" y="303" width="468" height="15"/>
 				<textElement textAlignment="Center" lineSpacing="Single" markup="none">
 					<font fontName="Quadraat-Italic" size="9" isBold="false" isItalic="false" pdfFontName="QUADI___.ttf" isPdfEmbedded="true"/>
@@ -87,7 +87,7 @@
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{birthLocale}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="false">
 				<reportElement key="staticText-14" x="59" y="405" width="468" height="16"/>
 				<textElement textAlignment="Center" lineSpacing="Single" markup="none">
 					<font fontName="Quadraat-Italic" size="9" isBold="false" isItalic="false" pdfFontName="QUADI___.ttf" isPdfEmbedded="true"/>
@@ -159,14 +159,14 @@
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{day}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="false">
 				<reportElement key="staticText-19" positionType="Float" x="59" y="472" width="468" height="15"/>
 				<textElement textAlignment="Center" lineSpacing="Single" markup="none">
 					<font fontName="Quadraat-Italic" size="9" isBold="false" isItalic="false" pdfFontName="QUADI___.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{message3}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="false">
 				<reportElement key="staticText-20" x="59" y="363" width="468" height="16"/>
 				<textElement textAlignment="Center" lineSpacing="Single" markup="none">
 					<font fontName="Quadraat-Italic" size="9" isBold="false" isItalic="false" pdfFontName="QUADI___.ttf" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
@@ -198,7 +198,7 @@
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</graphicElement>
 			</line>
-			<textField>
+			<textField isBlankWhenNull="false">
 				<reportElement key="staticText-23" positionType="Float" x="102" y="678" width="177" height="16"/>
 				<textElement textAlignment="Center" verticalAlignment="Top" lineSpacing="Single" markup="none">
 					<font fontName="Quadraat-Regular" size="8" isBold="false" isItalic="false" pdfFontName="QUAD____.ttf" isPdfEmbedded="true"/>
@@ -217,14 +217,14 @@
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{theRector}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="false">
 				<reportElement key="staticText-19" positionType="Float" x="60" y="521" width="468" height="15"/>
 				<textElement textAlignment="Center" lineSpacing="Single" markup="none">
 					<font fontName="Quadraat-Italic" size="9" isBold="false" isItalic="false" pdfFontName="QUADI___.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{UTLDescription}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="false">
 				<reportElement key="staticText-19" positionType="Float" x="59" y="539" width="468" height="15"/>
 				<textElement textAlignment="Center" lineSpacing="Single" markup="none">
 					<font fontName="Quadraat-Italic" size="9" isBold="false" isItalic="false" pdfFontName="QUADI___.ttf" isPdfEmbedded="true"/>

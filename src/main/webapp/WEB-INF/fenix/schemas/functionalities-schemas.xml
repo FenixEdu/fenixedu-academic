@@ -20,29 +20,12 @@
         type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityParameter"
         bundle="FUNCTIONALITY_RESOURCES">
         <slot name="name"/>
-        <slot name="type" layout="null-as-label">
-        	<property name="label" value="--"/>
-        	<property name="subLayout" value="values"/>
-        	<property name="subSchema" value="meta.type"/>
-        </slot>
 </schema>
-
-
-<schema name="meta.type"
-        type="net.sourceforge.fenixedu.domain.MetaDomainObject">
-        <slot name="concreteType.simpleName"/>
-</schema>        
-        
         
 <schema name="functionalities.functionality.parameter.create"
         type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityParameter"
         bundle="FUNCTIONALITY_RESOURCES" constructor="functionality, name">
         <slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-        <slot name="type" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-        	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.MetaDomainObjectProvider"/>
-        	<property name="eachLayout" value="values"/>
-        	<property name="eachSchema" value="meta.type"/>
-        </slot>
         <slot name="functionality" hidden="true"/>
 </schema>
 

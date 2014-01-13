@@ -5,7 +5,7 @@
 
 <html:xhtml/>
 
-<logic:present role="MANAGER">
+<logic:present role="role(MANAGER)">
 
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="label.registeredDegreeCandidacies.first.time.list" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>

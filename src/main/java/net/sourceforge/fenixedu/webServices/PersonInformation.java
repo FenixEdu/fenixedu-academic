@@ -3,12 +3,12 @@
  */
 package net.sourceforge.fenixedu.webServices;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationBean;
-import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.webServices.exceptions.NotAuthorizedException;
 
 import org.codehaus.xfire.MessageContext;
+import org.fenixedu.bennu.core.domain.User;
 
 public class PersonInformation implements IPersonInformation {
 
@@ -17,15 +17,17 @@ public class PersonInformation implements IPersonInformation {
     private static final String storedUsername;
 
     static {
-        storedUsername = PropertiesManager.getProperty("webServices.PersonInformation.getPersonInformation.username");
-        storedPassword = PropertiesManager.getProperty("webServices.PersonInformation.getPersonInformation.password");
+        storedUsername =
+                FenixConfigurationManager.getConfiguration().getWebServicesPersonInformationGetPersonInformationUsername();
+        storedPassword =
+                FenixConfigurationManager.getConfiguration().getWebServicesPersonInformationGetPersonInformationPassword();
     }
 
     @Override
     public PersonInformationBean getPersonInformation(String username, String password, String istUserName, MessageContext context)
             throws NotAuthorizedException {
         checkPermissions(username, password, context);
-        User foundUser = User.readUserByUserUId(istUserName);
+        User foundUser = User.findByUsername(istUserName);
         return foundUser == null ? null : new PersonInformationBean(foundUser.getPerson());
     }
 
@@ -36,7 +38,7 @@ public class PersonInformation implements IPersonInformation {
         }
 
         // check hosts accessing this service
-        //	if (!HostAccessControl.isAllowed(this, (ServletRequest) context.getProperty("XFireServletController.httpServletRequest"))) {
+        //	if (!FenixConfigurationManager.getHostAccessControl().isAllowed(this, (ServletRequest) context.getProperty("XFireServletController.httpServletRequest"))) {
         //	    throw new NotAuthorizedException();
         //	}
     }

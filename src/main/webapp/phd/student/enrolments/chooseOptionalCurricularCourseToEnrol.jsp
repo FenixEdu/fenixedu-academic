@@ -6,7 +6,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.CompetenceCourse"%>
 <html:xhtml />
 
-<logic:present role="STUDENT">
+<logic:present role="role(STUDENT)">
 
 <em><bean:message  key="label.phd.student.breadcrumb" bundle="PHD_RESOURCES"/></em>
 <h2><bean:message key="label.phd.student.enrolments" bundle="PHD_RESOURCES" /></h2>

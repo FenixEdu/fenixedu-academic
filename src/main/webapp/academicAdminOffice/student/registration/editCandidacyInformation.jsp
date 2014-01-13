@@ -6,7 +6,6 @@
 
 <h2><bean:message  key="student.editCandidacyInformation" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
-<bean:define id="userView" name="<%=pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE%>" ></bean:define>
 	<br/>
 	
 	<logic:equal name="personalInformationBean" property="valid" value="true">

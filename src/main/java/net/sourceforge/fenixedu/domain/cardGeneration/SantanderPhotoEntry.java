@@ -5,11 +5,11 @@ import java.awt.image.BufferedImage;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Photograph;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.photograph.Picture;
 import net.sourceforge.fenixedu.domain.photograph.PictureOriginal;
 import net.sourceforge.fenixedu.util.ContentType;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.imgscalr.Scalr;
 import org.imgscalr.Scalr.Method;
 import org.imgscalr.Scalr.Mode;
@@ -21,7 +21,7 @@ public class SantanderPhotoEntry extends SantanderPhotoEntry_Base {
 
     public SantanderPhotoEntry(final Person person, final Photograph photograph) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setWhenGenerated(new DateTime());
         if (person.getSantanderPhotoEntry() != null) {
             setNext(person.getSantanderPhotoEntry());
@@ -45,8 +45,8 @@ public class SantanderPhotoEntry extends SantanderPhotoEntry_Base {
     public byte[] getPhotoAsByteArray() {
         final Photograph photograph = getPhotograph();
         final PictureOriginal original = photograph.getOriginal();
-        final BufferedImage image = original.getPictureFileFormat() == ContentType.JPG ?
-                Picture.readImage(original.getPictureData().getBytes()) : read(original);
+        final BufferedImage image =
+                original.getPictureFileFormat() == ContentType.JPG ? Picture.readImage(original.getPictureData().getBytes()) : read(original);
         return transform(image);
     }
 
@@ -57,7 +57,7 @@ public class SantanderPhotoEntry extends SantanderPhotoEntry_Base {
         return result;
     }
 
-    private byte[] transform(final BufferedImage image ) {
+    private byte[] transform(final BufferedImage image) {
         final BufferedImage adjustedImage = transformZoom(image, 9, 10);
         final BufferedImage avatar = Scalr.resize(adjustedImage, Method.QUALITY, Mode.FIT_EXACT, 180, 200);
         return Picture.writeImageAsBytes(avatar, ContentType.JPG);

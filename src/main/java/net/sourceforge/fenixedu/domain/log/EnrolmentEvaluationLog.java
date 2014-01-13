@@ -1,16 +1,16 @@
 package net.sourceforge.fenixedu.domain.log;
 
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 
 public class EnrolmentEvaluationLog extends EnrolmentEvaluationLog_Base {
 
     EnrolmentEvaluationLog() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     EnrolmentEvaluationLog(final EnrolmentEvaluation enrolmentEvaluation) {
@@ -50,7 +50,7 @@ public class EnrolmentEvaluationLog extends EnrolmentEvaluationLog_Base {
     }
 
     protected String getCurrentUser() {
-        return AccessControl.getUserView() != null ? AccessControl.getUserView().getUtilizador() : null;
+        return Authenticate.getUser() != null ? Authenticate.getUser().getUsername() : null;
     }
 
     @Deprecated
@@ -59,7 +59,7 @@ public class EnrolmentEvaluationLog extends EnrolmentEvaluationLog_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

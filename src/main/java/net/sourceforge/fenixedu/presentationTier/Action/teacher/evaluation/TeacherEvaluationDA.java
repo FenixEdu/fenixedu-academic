@@ -39,6 +39,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -59,6 +61,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
                 tileProperties = @Tile(bundle = "TITLES_RESOURCES",
                         title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation")) })
 public class TeacherEvaluationDA extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(TeacherEvaluationDA.class);
 
     public ActionForward viewAutoEvaluation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
@@ -103,7 +107,8 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
     public ActionForward insertEvaluationMark(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         TeacherEvaluationProcess process = getDomainObject(request, "process");
-        if (process.getEvaluator() != AccessControl.getPerson() && AccessControl.getPerson().isTeacherEvaluationCoordinatorCouncilMember()) {
+        if (process.getEvaluator() != AccessControl.getPerson()
+                && AccessControl.getPerson().isTeacherEvaluationCoordinatorCouncilMember()) {
             request.setAttribute("action", "viewEvaluationByCCAD&processId=" + process.getExternalId());
         } else {
             request.setAttribute("action", "viewEvaluation&evalueeOID=" + process.getEvaluee().getExternalId());
@@ -167,9 +172,9 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
     }
 
     public class EvalueesMap implements Serializable {
-        private Person evaluee;
+        private final Person evaluee;
 
-        private SortedMap<FacultyEvaluationProcess, TeacherEvaluationProcess> processes =
+        private final SortedMap<FacultyEvaluationProcess, TeacherEvaluationProcess> processes =
                 new TreeMap<FacultyEvaluationProcess, TeacherEvaluationProcess>();
 
         public EvalueesMap(Person evaluee) {
@@ -414,7 +419,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
         final String fileNameSeparator = "_";
         final String withoutDepartment = "Sem departamento";
         try {
-            for (FacultyEvaluationProcess facultyEvaluationProcess : rootDomainObject.getFacultyEvaluationProcess()) {
+            for (FacultyEvaluationProcess facultyEvaluationProcess : rootDomainObject.getFacultyEvaluationProcessSet()) {
                 String evaluationName =
                         (facultyEvaluationProcess.getSuffix() == null ? facultyEvaluationProcess.getTitle().getContent() : facultyEvaluationProcess
                                 .getSuffix());
@@ -450,7 +455,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
             writer.close();
             response.flushBuffer();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
         return null;
     }
@@ -463,7 +468,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
         final String fileNameSeparator = "_";
         final String withoutDepartment = "Sem departamento";
         try {
-            for (FacultyEvaluationProcess facultyEvaluationProcess : rootDomainObject.getFacultyEvaluationProcess()) {
+            for (FacultyEvaluationProcess facultyEvaluationProcess : rootDomainObject.getFacultyEvaluationProcessSet()) {
                 String evaluationName =
                         (facultyEvaluationProcess.getSuffix() == null ? facultyEvaluationProcess.getTitle().getContent() : facultyEvaluationProcess
                                 .getSuffix());
@@ -499,7 +504,7 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
             writer.close();
             response.flushBuffer();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
         return null;
     }

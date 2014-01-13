@@ -10,7 +10,6 @@ import java.util.Set;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
@@ -24,6 +23,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormat
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.Money;
 
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
@@ -226,6 +226,7 @@ public abstract class SpecializationDegreeGratuityPR extends SpecializationDegre
     public Money getDefaultGratuityAmount(ExecutionYear executionYear) {
         return getSpecializationDegreeTotalAmount();
     }
+
     @Deprecated
     public boolean hasSpecializationDegreeTotalAmount() {
         return getSpecializationDegreeTotalAmount() != null;

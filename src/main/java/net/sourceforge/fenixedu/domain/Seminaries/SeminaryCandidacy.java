@@ -9,8 +9,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Registration;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -23,7 +24,7 @@ public class SeminaryCandidacy extends SeminaryCandidacy_Base {
 
     public SeminaryCandidacy() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void delete() {
@@ -44,7 +45,7 @@ public class SeminaryCandidacy extends SeminaryCandidacy_Base {
     public static List<SeminaryCandidacy> getByStudentAndSeminary(Registration registration, Seminary seminary) {
         List<SeminaryCandidacy> candidacies = new ArrayList<SeminaryCandidacy>();
 
-        for (SeminaryCandidacy candidacy : RootDomainObject.getInstance().getCandidacys()) {
+        for (SeminaryCandidacy candidacy : Bennu.getInstance().getCandidacysSet()) {
             if (!candidacy.getStudent().equals(registration)) {
                 continue;
             }
@@ -60,7 +61,7 @@ public class SeminaryCandidacy extends SeminaryCandidacy_Base {
     }
 
     public static Collection<SeminaryCandidacy> getAllCandidacies() {
-        return RootDomainObject.getInstance().getCandidacys();
+        return Bennu.getInstance().getCandidacysSet();
     }
 
     @Deprecated
@@ -84,7 +85,7 @@ public class SeminaryCandidacy extends SeminaryCandidacy_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

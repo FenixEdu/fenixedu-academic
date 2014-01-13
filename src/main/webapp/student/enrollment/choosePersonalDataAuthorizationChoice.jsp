@@ -4,7 +4,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<logic:present role="STUDENT">
+<logic:present role="role(STUDENT)">
     <em><bean:message key="title.student.portalTitle" bundle="STUDENT_RESOURCES" /></em>
     <h2><bean:message key="label.enrollment.personalData.inquiry" /></h2>
 
@@ -12,7 +12,7 @@
     <p><bean:message key="label.info.dislocatedStudent.inquiry" /></p>
     </div>
 
-    <p class="mtop2 mbottom05"><bean:message key="label.enrollment.personalData.authorization" /></p>
+    <p class="mtop2 mbottom05"><bean:message key="label.enrollment.personalData.authorization" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" /></p>
 
     <fr:form action="/studentEnrollmentManagement.do?method=choosePersonalDataAuthorizationChoice">
 

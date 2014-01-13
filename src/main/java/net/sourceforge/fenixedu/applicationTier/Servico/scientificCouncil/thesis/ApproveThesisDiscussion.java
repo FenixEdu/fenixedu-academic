@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.thesi
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -13,7 +12,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ScientificCouncilAuthoriz
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
@@ -30,12 +28,10 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.Month;
 
 import org.apache.commons.io.IOUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
-import pt.utl.ist.fenix.tools.file.FileSetMetaData;
-import pt.utl.ist.fenix.tools.file.VirtualPath;
-import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -57,7 +53,7 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
 
         @Atomic
         private void callService() {
-            for (final Thesis thesis : RootDomainObject.getInstance().getThesesPendingPublicationSet()) {
+            for (final Thesis thesis : Bennu.getInstance().getThesesPendingPublicationSet()) {
                 if (thesis.getExternalId().equals(thesisOid)) {
                     createResult(thesis);
                     thesis.setRootDomainObjectFromPendingPublication(null);
@@ -111,9 +107,9 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
                         ThesisType.Graduation_Thesis,
                         titleForFile,
                         thesis.getKeywords(),
-                        RootDomainObject.getInstance().getInstitutionUnit().getName(),
+                        Bennu.getInstance().getInstitutionUnit().getName(),
                         thesis.getDiscussed().getYear(), // publication year
-                        getAddress(RootDomainObject.getInstance().getInstitutionUnit()), // address
+                        getAddress(Bennu.getInstance().getInstitutionUnit()), // address
                         thesis.getThesisAbstract(),
                         null, // number of pages
                         BundleUtil.getStringFromResourceBundle("resources.EnumerationResources",
@@ -137,8 +133,8 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
         }
 
         Group group = ResearchResultDocumentFile.getPermittedGroup(groupType);
-        publication.addDocumentFile(getVirtualPath(thesis), getMetadata(thesis), dissertation.getContents(),
-                dissertation.getFilename(), dissertation.getDisplayName(), groupType, group);
+        publication.addDocumentFile(dissertation.getContents(), dissertation.getFilename(), dissertation.getDisplayName(),
+                groupType, group);
 
         publication.setThesis(thesis);
         author.addPersonRoleByRoleType(RoleType.RESEARCHER);
@@ -164,28 +160,6 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
 
     private static Month getMonth(Thesis thesis) {
         return Month.fromDateTime(thesis.getDiscussed());
-    }
-
-    private static Collection<FileSetMetaData> getMetadata(Thesis thesis) {
-        List<FileSetMetaData> metaData = new ArrayList<FileSetMetaData>();
-
-        metaData.add(FileSetMetaData.createAuthorMeta(thesis.getStudent().getPerson().getName()));
-        metaData.add(FileSetMetaData.createTitleMeta(thesis.getFinalTitle().getContent(thesis.getDissertation().getLanguage())));
-
-        return metaData;
-    }
-
-    private static VirtualPath getVirtualPath(Thesis thesis) {
-        VirtualPathNode[] nodes =
-                { new VirtualPathNode("Research", "Research"), new VirtualPathNode("Results", "Results"),
-                        new VirtualPathNode("Publications", "Publications") };
-
-        VirtualPath path = new VirtualPath();
-        for (VirtualPathNode node : nodes) {
-            path.addNode(node);
-        }
-
-        return path;
     }
 
     @Override
@@ -218,8 +192,9 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
 
         String date = String.format(new Locale("pt"), "%1$td de %1$tB de %1$tY", new Date());
         String currentPersonName = currentPerson.getNickname();
+        String institutionAcronym = Unit.getInstitutionAcronym();
 
-        return getMessage(BODY_KEY, year, degreeName, studentName, studentNumber, date, currentPersonName);
+        return getMessage(BODY_KEY, year, degreeName, studentName, studentNumber, date, currentPersonName, institutionAcronym);
     }
 
     @Override

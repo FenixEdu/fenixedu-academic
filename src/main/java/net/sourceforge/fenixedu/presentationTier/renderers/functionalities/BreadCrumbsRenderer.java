@@ -5,8 +5,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contents.Content;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlContainer;
@@ -68,7 +70,7 @@ public class BreadCrumbsRenderer extends OutputRenderer {
 
                 Content content = (Content) object;
 
-                List<Content> contents = RootDomainObject.getInstance().getRootPortal().getPathTo(content);
+                List<Content> contents = Bennu.getInstance().getRootPortal().getPathTo(content);
                 Iterator<Content> contentIterator = contents.iterator();
 
                 while (contentIterator.hasNext()) {

@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -40,11 +38,13 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.MobilityApplicationPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.util.StringUtils;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.restlet.Client;
@@ -56,11 +56,15 @@ import org.restlet.data.ChallengeScheme;
 import org.restlet.data.Method;
 import org.restlet.data.Protocol;
 import org.restlet.data.Status;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class MobilityIndividualApplicationProcess extends MobilityIndividualApplicationProcess_Base {
+
+    private static final Logger logger = LoggerFactory.getLogger(MobilityIndividualApplicationProcess.class);
 
     static private List<Activity> activities = new ArrayList<Activity>();
     static {
@@ -173,9 +177,9 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     }
 
     @Override
-    public boolean canExecuteActivity(IUserView userView) {
-        return isAllowedToManageProcess(this, userView) || userView.hasRoleType(RoleType.SCIENTIFIC_COUNCIL)
-                || userView.hasRoleType(RoleType.COORDINATOR) || isCoordinatorOfProcess(userView);
+    public boolean canExecuteActivity(User userView) {
+        return isAllowedToManageProcess(this, userView) || userView.getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)
+                || userView.getPerson().hasRole(RoleType.COORDINATOR) || isCoordinatorOfProcess(userView);
     }
 
     @Override
@@ -183,7 +187,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
         return activities;
     }
 
-    static private boolean isAllowedToManageProcess(MobilityIndividualApplicationProcess process, IUserView userView) {
+    static private boolean isAllowedToManageProcess(MobilityIndividualApplicationProcess process, User userView) {
         Set<AcademicProgram> programs =
                 AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
                         AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
@@ -195,15 +199,15 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
         return programs.contains(process.getCandidacy().getSelectedDegree());
     }
 
-    static private boolean isGriOfficeEmployee(IUserView userView) {
-        return userView.hasRoleType(RoleType.INTERNATIONAL_RELATION_OFFICE);
+    static private boolean isGriOfficeEmployee(User userView) {
+        return userView.getPerson().hasRole(RoleType.INTERNATIONAL_RELATION_OFFICE);
     }
 
-    static private boolean isManager(IUserView userView) {
-        return userView.hasRoleType(RoleType.MANAGER);
+    static private boolean isManager(User userView) {
+        return userView.getPerson().hasRole(RoleType.MANAGER);
     }
 
-    private boolean isCoordinatorOfProcess(IUserView userView) {
+    private boolean isCoordinatorOfProcess(User userView) {
         if (!userView.getPerson().hasTeacher()) {
             return false;
         }
@@ -408,7 +412,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     static public class IndividualCandidacyInformation extends Activity<MobilityIndividualApplicationProcess> {
 
         @Override
-        public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
+        public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
             /*
              * 06/04/2009 The candidacy may be submited by someone who's not
              * authenticated in the system
@@ -419,8 +423,8 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
         }
 
         @Override
-        protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess dummy,
-                IUserView userView, Object object) {
+        protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess dummy, User userView,
+                Object object) {
             return new MobilityIndividualApplicationProcess((MobilityIndividualApplicationProcessBean) object);
         }
     }
@@ -428,7 +432,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     static private class CancelCandidacy extends Activity<MobilityIndividualApplicationProcess> {
 
         @Override
-        public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
+        public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView) && !isGriOfficeEmployee(userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -439,7 +443,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             process.cancelCandidacy(userView.getPerson());
             return process;
         }
@@ -448,7 +452,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     static private class EditCandidacyPersonalInformation extends Activity<MobilityIndividualApplicationProcess> {
 
         @Override
-        public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
+        public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView) && !isGriOfficeEmployee(userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -459,7 +463,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             final MobilityIndividualApplicationProcessBean bean = (MobilityIndividualApplicationProcessBean) object;
             process.editPersonalCandidacyInformation(bean.getPersonBean());
             return process;
@@ -469,7 +473,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     static private class EditCandidacyInformation extends Activity<MobilityIndividualApplicationProcess> {
 
         @Override
-        public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
+        public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView) && !isGriOfficeEmployee(userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -480,7 +484,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             return process.editCandidacyInformation((MobilityIndividualApplicationProcessBean) object);
         }
     }
@@ -488,7 +492,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     static private class EditDegreeAndCoursesInformation extends Activity<MobilityIndividualApplicationProcess> {
 
         @Override
-        public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
+        public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView) && !isGriOfficeEmployee(userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -499,7 +503,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             return process.editDegreeAndCoursesInformation((MobilityIndividualApplicationProcessBean) object);
         }
 
@@ -508,12 +512,12 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     static private class SendEmailForApplicationSubmission extends Activity<MobilityIndividualApplicationProcess> {
 
         @Override
-        public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
+        public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
         }
 
         @Override
         protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             DegreeOfficePublicCandidacyHashCode hashCode = (DegreeOfficePublicCandidacyHashCode) object;
             hashCode.sendEmailForApplicationSuccessfullySubmited();
             return process;
@@ -533,7 +537,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     static private class EditPublicCandidacyPersonalInformation extends Activity<MobilityIndividualApplicationProcess> {
 
         @Override
-        public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
+        public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
             if (!process.isCandidacyInStandBy()) {
                 throw new PreConditionNotValidException();
             }
@@ -541,7 +545,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             process.editPersonalCandidacyInformation(((MobilityIndividualApplicationProcessBean) object).getPersonBean());
             return process;
         }
@@ -560,7 +564,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     static private class EditPublicCandidacyInformation extends Activity<MobilityIndividualApplicationProcess> {
 
         @Override
-        public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
+        public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
             if (!process.isCandidacyInStandBy()) {
                 throw new PreConditionNotValidException();
             }
@@ -568,7 +572,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             return process.editCandidacyInformation((MobilityIndividualApplicationProcessBean) object);
         }
 
@@ -586,7 +590,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
     static private class EditPublicDegreeAndCoursesInformation extends Activity<MobilityIndividualApplicationProcess> {
         @Override
-        public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
+        public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
             if (process.isCandidacyCancelled() || process.isCandidacyAccepted() || process.hasRegistrationForCandidacy()) {
                 throw new PreConditionNotValidException();
             }
@@ -594,7 +598,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             return process.editDegreeAndCoursesInformation((MobilityIndividualApplicationProcessBean) object);
         }
 
@@ -613,7 +617,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     static private class SetGriValidation extends Activity<MobilityIndividualApplicationProcess> {
 
         @Override
-        public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
+        public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
             if (!isGriOfficeEmployee(userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -621,7 +625,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             MobilityIndividualApplicationProcessBean bean = (MobilityIndividualApplicationProcessBean) object;
             process.setValidatedByGri(bean.getValidatedByGri());
 
@@ -645,13 +649,13 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     static private class SetCoordinatorValidation extends Activity<MobilityIndividualApplicationProcess> {
 
         @Override
-        public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
+        public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
             // TODO Check Permissions
         }
 
         @Override
         protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             MobilityIndividualApplicationProcessBean bean = (MobilityIndividualApplicationProcessBean) object;
 
             process.setValidatedByMobilityCoordinator(bean.getValidatedByErasmusCoordinator());
@@ -683,13 +687,13 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     static private class VisualizeAlerts extends Activity<MobilityIndividualApplicationProcess> {
 
         @Override
-        public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
+        public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
 
         }
 
         @Override
         protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             return process;
         }
 
@@ -703,7 +707,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     static private class EditDocuments extends Activity<MobilityIndividualApplicationProcess> {
 
         @Override
-        public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
+        public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
             if (process.isCandidacyCancelled()) {
                 throw new PreConditionNotValidException();
             }
@@ -711,7 +715,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             CandidacyProcessDocumentUploadBean bean = (CandidacyProcessDocumentUploadBean) object;
             process.bindIndividualCandidacyDocumentFile(bean);
             return process;
@@ -727,7 +731,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     static private class EditPublicCandidacyDocumentFile extends Activity<MobilityIndividualApplicationProcess> {
 
         @Override
-        public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
+        public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
             if (!process.isCandidacyInStandBy()) {
                 throw new PreConditionNotValidException();
             }
@@ -735,7 +739,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             CandidacyProcessDocumentUploadBean bean = (CandidacyProcessDocumentUploadBean) object;
             process.bindIndividualCandidacyDocumentFile(bean);
             return process;
@@ -760,7 +764,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     static private class CreateStudentData extends Activity<MobilityIndividualApplicationProcess> {
 
         @Override
-        public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
+        public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
             if (!isManager(userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -768,12 +772,11 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             if (!process.getPersonalDetails().getPerson().hasStudent()) {
                 new Student(process.getPersonalDetails().getPerson(), null);
                 process.getPersonalDetails().getPerson().addPersonRoleByRoleType(RoleType.PERSON);
                 process.getPersonalDetails().getPerson().addPersonRoleByRoleType(RoleType.CANDIDATE);
-                process.getPersonalDetails().getPerson().setIstUsername();
 
                 if (StringUtils.isEmpty(process.getPersonalDetails().getPerson().getIstUsername())) {
                     throw new DomainException("error.erasmus.create.user", new String[] { null, "User not created" });
@@ -803,7 +806,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
     private static class SetEIdentifierForTesting extends Activity<MobilityIndividualApplicationProcess> {
         @Override
-        public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
+        public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
             if (!isManager(userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -811,7 +814,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             MobilityIndividualApplicationProcessBean bean = (MobilityIndividualApplicationProcessBean) object;
 
             String eidentifier = bean.getPersonBean().getEidentifier();
@@ -839,7 +842,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
     private static class ImportToLDAP extends Activity<MobilityIndividualApplicationProcess> {
         @Override
-        public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
+        public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
             if (!isManager(userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -847,7 +850,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             boolean result = importToLDAP(process);
 
             if (!result) {
@@ -876,7 +879,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     private static class BindLinkSubmitedIndividualCandidacyWithEidentifier extends
             Activity<MobilityIndividualApplicationProcess> {
         @Override
-        public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
+        public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
             if (!StringUtils.isEmpty(process.getPersonalDetails().getEidentifier())) {
                 throw new PreConditionNotValidException();
             }
@@ -885,7 +888,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             String eidentifier = (String) object;
 
             if (StringUtils.isEmpty(eidentifier)) {
@@ -922,7 +925,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     private static class UploadApprovedLearningAgreement extends Activity<MobilityIndividualApplicationProcess> {
 
         @Override
-        public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
+        public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
             if (isManager(userView)) {
                 return;
             }
@@ -940,7 +943,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             process.getCandidacy().addApprovedLearningAgreements((ApprovedLearningAgreementDocumentFile) object);
 
             return process;
@@ -966,7 +969,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     private static class ViewApprovedLearningAgreements extends Activity<MobilityIndividualApplicationProcess> {
 
         @Override
-        public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
+        public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
             if (isManager(userView)) {
                 return;
             }
@@ -978,7 +981,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             return process;
         }
 
@@ -1001,7 +1004,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     private static class MarkAlertAsViewed extends Activity<MobilityIndividualApplicationProcess> {
 
         @Override
-        public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
+        public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
             if (isGriOfficeEmployee(userView)) {
                 return;
             }
@@ -1011,7 +1014,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             ErasmusAlert alert = (ErasmusAlert) object;
             alert.setFireDate(new DateTime());
 
@@ -1037,7 +1040,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     private static class SendEmailToAcceptedStudent extends Activity<MobilityIndividualApplicationProcess> {
 
         @Override
-        public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
+        public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
             if (!isGriOfficeEmployee(userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -1050,7 +1053,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             MobilityApplicationPeriod candidacyPeriod =
                     (MobilityApplicationPeriod) process.getCandidacyProcess().getCandidacyPeriod();
 
@@ -1084,7 +1087,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     private static class SendEmailToCandidateForMissingDocuments extends Activity<MobilityIndividualApplicationProcess> {
 
         @Override
-        public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
+        public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
             if (!isGriOfficeEmployee(userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -1097,7 +1100,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
 
             MobilityApplicationPeriod candidacyPeriod =
                     (MobilityApplicationPeriod) process.getCandidacyProcess().getCandidacyPeriod();
@@ -1133,7 +1136,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     static protected class RevokeDocumentFile extends Activity<MobilityIndividualApplicationProcess> {
 
         @Override
-        public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
+        public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView) && !isGriOfficeEmployee(userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -1141,7 +1144,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             ((CandidacyProcessDocumentUploadBean) object).getDocumentFile().setCandidacyFileActive(Boolean.FALSE);
             return process;
         }
@@ -1165,7 +1168,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     static private class RejectCandidacy extends Activity<MobilityIndividualApplicationProcess> {
 
         @Override
-        public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
+        public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
             if (!process.isCandidacyInStandBy()) {
                 throw new PreConditionNotValidException();
             }
@@ -1183,7 +1186,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             process.rejectCandidacy(userView.getPerson());
             return process;
         }
@@ -1192,7 +1195,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     static private class CreateRegistration extends Activity<MobilityIndividualApplicationProcess> {
 
         @Override
-        public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
+        public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -1208,7 +1211,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             process.createRegistration();
 
             return process;
@@ -1219,7 +1222,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     static private class EnrolOnFirstSemester extends Activity<MobilityIndividualApplicationProcess> {
 
         @Override
-        public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
+        public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
             if (!isAllowedToManageProcess(process, userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -1240,7 +1243,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             process.enrol();
             return process;
         }
@@ -1250,7 +1253,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     static private class RevertCandidacyToStandBy extends Activity<MobilityIndividualApplicationProcess> {
 
         @Override
-        public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
+        public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
             if (!isGriOfficeEmployee(userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -1268,7 +1271,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             process.revertToStandBy(userView.getPerson());
 
             return process;
@@ -1293,7 +1296,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     static private class EnrolStudent extends Activity<MobilityIndividualApplicationProcess> {
 
         @Override
-        public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
+        public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
             if (!isGriOfficeEmployee(userView)) {
                 throw new PreConditionNotValidException();
             }
@@ -1305,7 +1308,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             return process;
         }
 
@@ -1329,7 +1332,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     static private class AnswerNationalIdCardAvoidanceOnSubmissionQuestion extends Activity<MobilityIndividualApplicationProcess> {
 
         @Override
-        public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
+        public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
 
             if (!NationalIdCardAvoidanceQuestion.UNANSWERED.equals(process.getCandidacy().getNationalIdCardAvoidanceQuestion())) {
                 throw new PreConditionNotValidException();
@@ -1338,7 +1341,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
         @Override
         protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess process,
-                IUserView userView, Object object) {
+                User userView, Object object) {
             MobilityIndividualApplicationProcessBean bean = (MobilityIndividualApplicationProcessBean) object;
             MobilityIndividualApplication candidacy = process.getCandidacy();
 
@@ -1380,14 +1383,14 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     }
 
     private static boolean importToLDAP(MobilityIndividualApplicationProcess process) {
-        String ldapServiceImportationURL = PropertiesManager.getProperty("ldap.user.importation.service.url");
+        String ldapServiceImportationURL = FenixConfigurationManager.getConfiguration().getLdapUserImportationServiceUrl();
 
         Request request =
                 new Request(Method.POST, ldapServiceImportationURL + process.getPersonalDetails().getPerson().getIstUsername());
         ChallengeScheme scheme = ChallengeScheme.HTTP_BASIC;
 
-        String ldapServiceUsername = PropertiesManager.getProperty("ldap.user.importation.service.username");
-        String ldapServicePassword = PropertiesManager.getProperty("ldap.user.importation.service.password");
+        String ldapServiceUsername = FenixConfigurationManager.getConfiguration().getLdapUserImportationServiceUsername();
+        String ldapServicePassword = FenixConfigurationManager.getConfiguration().getLdapUserImportationServicePassword();
 
         ChallengeResponse authentication = new ChallengeResponse(scheme, ldapServiceUsername, ldapServicePassword);
         request.setChallengeResponse(authentication);
@@ -1399,12 +1402,11 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
             Response response = client.handle(request);
 
             if (response.getStatus().equals(Status.SUCCESS_OK)) {
-                System.out.println(String.format("Imported username %s", process.getPersonalDetails().getPerson()
-                        .getIstUsername()));
+                logger.info("Imported username {}", process.getPersonalDetails().getPerson().getIstUsername());
                 return true;
             } else {
-                System.out.println("error.erasmus.create.user: " + process.getPersonalDetails().getPerson().getIstUsername()
-                        + " " + response.getStatus().getName() + " " + new Integer(response.getStatus().getCode()).toString());
+                logger.info("error.erasmus.create.user: " + process.getPersonalDetails().getPerson().getIstUsername() + " "
+                        + response.getStatus().getName() + " " + new Integer(response.getStatus().getCode()).toString());
                 throw new DomainException("error.erasmus.create.user", new String[] {
                         process.getPersonalDetails().getPerson().getIstUsername(), response.getStatus().getName(),
                         new Integer(response.getStatus().getCode()).toString() });
@@ -1418,7 +1420,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
                 }
             } catch (Exception e) {
                 // Cannot stop the client, this WILL cause a memory leak!
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
 
         }

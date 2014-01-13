@@ -8,7 +8,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadExecutionDegreesByDegreeCurricularPlan;
@@ -45,8 +44,11 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -73,6 +75,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
         key = "resources.Action.exceptions.NonExistingActionException",
         handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class PayGratuityDispatchAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(PayGratuityDispatchAction.class);
 
     public ActionForward chooseContributor(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
@@ -102,7 +106,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         DynaActionForm payGratuityForm = (DynaActionForm) form;
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         Integer contributorNumber = (Integer) payGratuityForm.get("contributorNumber");
         String studentId = (String) payGratuityForm.get("studentId");
@@ -159,7 +163,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
                     mapping.findForward("chooseContributor"));
         } catch (FenixActionException e) {
 
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
         request.setAttribute(PresentationConstants.CONTRIBUTOR, infoContributor);
 
@@ -171,7 +175,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
             throws Exception {
 
         DynaActionForm payGratuityForm = (DynaActionForm) form;
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
 
         Integer contributorNumber = (Integer) payGratuityForm.get("contributorNumber");
         String gratuitySituationId = (String) payGratuityForm.get("gratuitySituationId");
@@ -312,7 +316,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
      * @throws NonExistingActionException
      * @throws FenixActionException
      */
-    private InfoContributor readContributor(ActionMapping errorMapping, IUserView userView, Integer contributorNumber)
+    private InfoContributor readContributor(ActionMapping errorMapping, User userView, Integer contributorNumber)
             throws NonExistingActionException, FenixActionException {
 
         InfoContributor infoContributor = null;
@@ -335,8 +339,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
      * @return
      * @throws FenixActionException
      */
-    private InfoGratuitySituation readGratuitySituation(IUserView userView, String gratuitySituationId)
-            throws FenixActionException {
+    private InfoGratuitySituation readGratuitySituation(User userView, String gratuitySituationId) throws FenixActionException {
         InfoGratuitySituation infoGratuitySituation = null;
 
         try {
@@ -358,7 +361,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
      * @throws FenixActionException
      * @throws NonExistingActionException
      */
-    private InfoStudent readStudent(ActionMapping mapping, IUserView userView, String studentId) throws FenixActionException,
+    private InfoStudent readStudent(ActionMapping mapping, User userView, String studentId) throws FenixActionException,
             NonExistingActionException {
         InfoStudent infoStudent = null;
 
@@ -382,8 +385,7 @@ public class PayGratuityDispatchAction extends FenixDispatchAction {
      * @return
      * @throws FenixActionException
      */
-    private InfoInsuranceValue readInsuranceValue(IUserView userView, String insuranceExecutionYearId)
-            throws FenixActionException {
+    private InfoInsuranceValue readInsuranceValue(User userView, String insuranceExecutionYearId) throws FenixActionException {
         InfoInsuranceValue infoInsuranceValue = null;
 
         try {

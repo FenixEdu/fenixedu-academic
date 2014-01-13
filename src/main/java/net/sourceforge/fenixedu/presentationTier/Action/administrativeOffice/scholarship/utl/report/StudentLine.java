@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.sc
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -27,6 +28,7 @@ import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventW
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationRegimeType;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -41,6 +43,8 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.loaders.IFileLine;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -48,6 +52,8 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 public class StudentLine implements IFileLine, java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    private static final Logger logger = LoggerFactory.getLogger(StudentLine.class);
 
     protected static final List<Integer> STUDENTS_WITH_CET = Arrays.asList(new Integer[] { 70855, 70696, 70757, 70786, 55647,
             59218, 70749, 70856, 70678, 70681, 70712, 70737, 70837, 70793, 10425, 38565, 70783, 70664, 70859, 70766, 70844,
@@ -885,7 +891,7 @@ public class StudentLine implements IFileLine, java.io.Serializable {
     }
 
     public String getInstitutionName() {
-        return "Universidade Técnica de Lisboa - Instituto Superior Técnico";
+        return "Universidade Técnica de Lisboa - " + Unit.getInstitutionName().getContent();
     }
 
     public String getCandidacyNumber() {
@@ -1011,7 +1017,7 @@ public class StudentLine implements IFileLine, java.io.Serializable {
             getObservations();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return false;
         }
 
@@ -1048,7 +1054,7 @@ public class StudentLine implements IFileLine, java.io.Serializable {
             this.student = student;
             enrolledInAnualCoursesLastYear = false;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return false;
         }
 
@@ -1056,10 +1062,12 @@ public class StudentLine implements IFileLine, java.io.Serializable {
     }
 
     private String getDefaultInstitutionName() {
-        return ResourceBundle
-                .getBundle("resources.AcademicAdminOffice", Locale.getDefault())
-                .getString(
-                        "label.net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.scholarship.utl.report.ReportStudentsUTLCandidates.defaultInstitutionName");
+        return MessageFormat
+                .format(ResourceBundle
+                        .getBundle("resources.AcademicAdminOffice", Locale.getDefault())
+                        .getString(
+                                "label.net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.scholarship.utl.report.ReportStudentsUTLCandidates.defaultInstitutionName"),
+                        Unit.getInstitutionName().getContent());
     }
 
     private String getDefaultInstitutionCode() {

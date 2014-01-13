@@ -1,8 +1,7 @@
 package net.sourceforge.fenixedu.domain.contacts;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
-
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -92,7 +91,7 @@ public abstract class PartyContactValidation extends PartyContactValidation_Base
         if (!isInvalid()) {
             return;
         }
-        if (hasRootDomainObject()) {
+        if (hasBennu()) {
             setRootDomainObject(null);
         }
 
@@ -111,8 +110,8 @@ public abstract class PartyContactValidation extends PartyContactValidation_Base
     }
 
     private void setNotValidState(PartyContactValidationState state) {
-        if (!hasRootDomainObject()) {
-            setRootDomainObject(RootDomainObject.getInstance());
+        if (!hasBennu()) {
+            setRootDomainObject(Bennu.getInstance());
         }
         super.setState(state);
         setLastChangeDate(new DateTime());
@@ -175,8 +174,9 @@ public abstract class PartyContactValidation extends PartyContactValidation_Base
             triggerValidationProcess();
         }
     }
+
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

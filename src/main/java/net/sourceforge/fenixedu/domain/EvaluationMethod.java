@@ -5,6 +5,8 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -16,7 +18,7 @@ public class EvaluationMethod extends EvaluationMethod_Base {
 
     public EvaluationMethod() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public void edit(MultiLanguageString evaluationElements) {
@@ -40,13 +42,14 @@ public class EvaluationMethod extends EvaluationMethod_Base {
                         .getExecutionCourse().getDegreePresentationString());
         super.setEvaluationElements(evaluationElements);
     }
+
     @Deprecated
     public boolean hasExecutionCourse() {
         return getExecutionCourse() != null;
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

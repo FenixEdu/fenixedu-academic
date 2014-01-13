@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
@@ -10,6 +9,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.External
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.LocalDate;
 
 import pt.ist.utl.fenix.utils.NumberToWordsConverter;
@@ -43,7 +43,7 @@ public class ExternalProgramCertificateRequestDocument extends AdministrativeOff
 
         addParameter("administrativeOfficeCoordinatorName", activeUnitCoordinator.getName());
         addParameter("administrativeOfficeName", getMLSTextContent(adminOfficeUnit.getPartyName()));
-        addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
+        addParameter("institutionName", Bennu.getInstance().getInstitutionUnit().getName());
         addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getName());
 
         addParameter("day", new LocalDate().toString(DD_MMMM_YYYY, getLocale()));

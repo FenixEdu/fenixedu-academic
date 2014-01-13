@@ -5,7 +5,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 
 <ft:tilesView definition="scientificCouncil.masterPage" attributeName="body-inline">
-	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
+	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 
@@ -115,7 +115,7 @@
 												<f:param name="competenceCourseID" value="#{competenceCourse.externalId}"/>
 												<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
 											</h:outputLink>
-											<logic:present role="SCIENTIFIC_COUNCIL,BOLONHA_MANAGER">
+											<logic:present role="(role(SCIENTIFIC_COUNCIL) | role(BOLONHA_MANAGER))">
 												<h:outputText value=" , "/>
 												<h:outputLink value="transferCompetenceCourse.faces">
 													<h:outputText value="#{scouncilBundle['transfer']}"/>

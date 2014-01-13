@@ -33,7 +33,6 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEn
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.student.ViewStudentTimeTable;
@@ -42,6 +41,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixframework.Atomic;
@@ -250,7 +250,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
         }
 
         if (modified.size() > 0) {
-            new FirstYearShiftsCapacityToggleLog(executionYear.getFirstExecutionPeriod(), AccessControl.getUserView().getPerson()
+            new FirstYearShiftsCapacityToggleLog(executionYear.getFirstExecutionPeriod(), Authenticate.getUser().getPerson()
                     .getUser());
         }
 

@@ -5,7 +5,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>	
 
-<logic:present role="BOLONHA_MANAGER">	
+<logic:present role="role(BOLONHA_MANAGER)">	
 	<ul>
 
 		<li class="navheader"><bean:message key="navigation.competenceCoursesManagement"/></li>

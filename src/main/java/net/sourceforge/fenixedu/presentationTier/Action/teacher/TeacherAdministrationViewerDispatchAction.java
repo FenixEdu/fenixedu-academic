@@ -12,8 +12,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionCourseByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -110,6 +108,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping;
 import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
@@ -122,6 +121,9 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
+import org.fenixedu.bennu.core.domain.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -133,6 +135,8 @@ import pt.ist.fenixframework.FenixFramework;
  */
 @Deprecated
 public class TeacherAdministrationViewerDispatchAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(TeacherAdministrationViewerDispatchAction.class);
 
     public ActionForward instructions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
@@ -159,7 +163,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     public static String mailingListDomainConfiguration() {
-        return PropertiesManager.getProperty("mailingList.host.name");
+        return FenixConfigurationManager.getConfiguration().getMailingListHostName();
     }
 
     public ActionForward submitDataToImportCustomizationOptions(ActionMapping mapping, ActionForm actionForm,
@@ -269,17 +273,17 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             throw e1;
         }
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         // Filter if the cteacher is responsibles for the execution course
 
         Boolean isResponsible = null;
         try {
             isResponsible =
-                    TeacherResponsibleByExecutionCourse.run(userView.getUtilizador(), objectCode, curricularCourseCodeString);
+                    TeacherResponsibleByExecutionCourse.run(userView.getUsername(), objectCode, curricularCourseCodeString);
 
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new FenixActionException(e);
         }
         if (isResponsible.booleanValue() == false) {
@@ -321,7 +325,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         infoCurriculumNew.setOperacionalObjectives((String) objectivesForm.get("operacionalObjectives"));
         infoCurriculumNew.setOperacionalObjectivesEn((String) objectivesForm.get("operacionalObjectivesEn"));
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
 //        try {
         throw new UnsupportedOperationException("Service no longer exists!");
@@ -357,17 +361,17 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             throw e1;
         }
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
 
         // Filter if the cteacher is responsibles for the execution course
 
         Boolean isResponsible = null;
         try {
             isResponsible =
-                    TeacherResponsibleByExecutionCourse.run(userView.getUtilizador(), objectCode, curricularCourseCodeString);
+                    TeacherResponsibleByExecutionCourse.run(userView.getUsername(), objectCode, curricularCourseCodeString);
 
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new FenixActionException(e);
         }
         if (isResponsible.booleanValue() == false) {
@@ -402,9 +406,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         infoCurriculumNew.setProgram((String) programForm.get("program"));
         infoCurriculumNew.setProgramEn((String) programForm.get("programEn"));
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         try {
-            EditProgram.runEditProgram(objectCode, curricularCourseCodeString, infoCurriculumNew, userView.getUtilizador());
+            EditProgram.runEditProgram(objectCode, curricularCourseCodeString, infoCurriculumNew, userView.getUsername());
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
@@ -431,8 +435,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     }
 
     private String getUsername(HttpServletRequest request) {
-        IUserView userView = getUserView(request);
-        String username = userView.getUtilizador();
+        User userView = getUserView(request);
+        String username = userView.getUsername();
         return username;
     }
 
@@ -456,7 +460,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         String id = (String) teacherForm.get("teacherId");
         Person person = null;
 
-        person = Person.readPersonByIstUsername(id);
+        person = Person.readPersonByUsername(id);
 
         if (person != null) {
             try {
@@ -681,19 +685,19 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             c.setAccessible(true);
             siteComponent = (ISiteComponent) c.newInstance(new Object[] {});
         } catch (SecurityException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } catch (IllegalArgumentException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } catch (NoSuchMethodException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } catch (InstantiationException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } catch (InvocationTargetException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
         return siteComponent;
     }
@@ -810,11 +814,11 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward rejectNewProjectProposal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         String objectCode = getObjectCode(request);
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
         try {
-            RejectNewProjectProposal.runRejectNewProjectProposal(objectCode, groupPropertiesCodeString, userView.getUtilizador());
+            RejectNewProjectProposal.runRejectNewProjectProposal(objectCode, groupPropertiesCodeString, userView.getUsername());
         } catch (ExistingServiceException e) {
             ActionErrors actionErrors = new ActionErrors();
             ActionError error = null;
@@ -830,7 +834,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             saveErrors(request, actionErrors);
             return prepareViewExecutionCourseProjects(mapping, form, request, response);
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new FenixActionException(e.getMessage());
         }
 
@@ -840,11 +844,11 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward acceptNewProjectProposal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         String objectCode = getObjectCode(request);
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
         try {
-            AcceptNewProjectProposal.runAcceptNewProjectProposal(objectCode, groupPropertiesCodeString, userView.getUtilizador());
+            AcceptNewProjectProposal.runAcceptNewProjectProposal(objectCode, groupPropertiesCodeString, userView.getUsername());
         } catch (ExistingServiceException e) {
             ActionErrors actionErrors = new ActionErrors();
             ActionError error = null;
@@ -866,7 +870,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             return prepareViewExecutionCourseProjects(mapping, form, request, response);
 
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new FenixActionException(e.getMessage());
         }
 
@@ -1659,8 +1663,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
             groupPropertiesCode = groupPropertiesCodeString;
         } catch (Exception e) {
-            e.printStackTrace();
-
+            logger.error(e.getMessage(), e);
             actionErrors.add("errors.delete.groupPropertie", new ActionError(e.getMessage()));
             saveErrors(request, actionErrors);
 
@@ -1685,7 +1688,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             saveErrors(request, actionErrors2);
             return viewShiftsAndGroups(mapping, form, request, response);
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new FenixActionException(e.getMessage());
         }
         if (result.equals(Boolean.FALSE)) {
@@ -1774,7 +1777,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
             saveErrors(request, actionErrors);
             return viewStudentGroupInformation(mapping, form, request, response);
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new FenixActionException(e.getMessage());
         }
 
@@ -2674,14 +2677,14 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward deleteProjectProposal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         String objectCode = getObjectCode(request);
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
         String executionCourseCodeString = request.getParameter("executionCourseCode");
 
         try {
             DeleteProjectProposal.runDeleteProjectProposal(objectCode, groupPropertiesCodeString, executionCourseCodeString,
-                    userView.getUtilizador());
+                    userView.getUsername());
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("sucessfull", new ActionError("error.DeleteProjectProposal"));
             saveErrors(request, actionErrors);
@@ -2693,7 +2696,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
             return prepareViewExecutionCourseProjects(mapping, form, request, response);
         } catch (FenixServiceException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new FenixActionException(e.getMessage());
         }
 
@@ -2703,7 +2706,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
     public ActionForward firstPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException {
         String objectCode = getObjectCode(request);
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
         String goalExecutionCourseIdString = request.getParameter("goalExecutionCourseId");
 
@@ -2711,7 +2714,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         try {
             type =
                     NewProjectProposal.runNewProjectProposal(objectCode, goalExecutionCourseIdString, groupPropertiesCodeString,
-                            userView.getUtilizador());
+                            userView.getUsername());
         } catch (InvalidArgumentsServiceException e) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add(e.getMessage(), new ActionError(e.getMessage()));

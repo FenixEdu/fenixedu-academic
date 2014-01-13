@@ -4,11 +4,11 @@ import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 public class RegistrationRegime extends RegistrationRegime_Base {
@@ -22,7 +22,7 @@ public class RegistrationRegime extends RegistrationRegime_Base {
 
     private RegistrationRegime() {
         super();
-        super.setRootDomainObject(RootDomainObject.getInstance());
+        super.setRootDomainObject(Bennu.getInstance());
         super.setWhenCreated(new DateTime());
     }
 
@@ -93,13 +93,14 @@ public class RegistrationRegime extends RegistrationRegime_Base {
     public boolean hasRegime(final RegistrationRegimeType type) {
         return getRegimeType() == type;
     }
+
     @Deprecated
     public boolean hasRegistration() {
         return getRegistration() != null;
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

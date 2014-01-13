@@ -15,7 +15,7 @@
 	<li><html:link page="/parking.do?method=prepareParking"><bean:message key="label.parking"  bundle="PARKING_RESOURCES"/></html:link></li>
 	<li><html:link page="/validateEmail.do?method=prepare"><bean:message key="label.validate.email"/></html:link></li>
 	<li><html:link page="/irsDeclaration.do?method=viewIrsDocumentInformation"><bean:message key="label.irs.information" bundle="APPLICATION_RESOURCES"/></html:link></li>
-	<logic:present name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.openAffiliationEvent">
+	<logic:present name="LOGGED_USER_ATTRIBUTE" property="person.openAffiliationEvent">
 	<li><html:link page="/payments.do?method=viewAccount"><bean:message key="label.accounting.person.payments.title" bundle="ACCOUNTING_RESOURCES"/></html:link></li>
 	</logic:present>
 	
@@ -26,26 +26,26 @@
 
 	<li class="navheader"><bean:message key="oauthapps.label"  /></li>
  	<li><html:link page="/externalApps.do?method=manageAuthorizations"><bean:message key="oauthapps.label.manage.authorizations"  bundle="APPLICATION_RESOURCES"/></html:link></li>
- 	<logic:present role="DEVELOPER">
+ 	<logic:present role="role(DEVELOPER)">
  		<li><html:link page="/externalApps.do?method=manageApplications"><bean:message key="oauthapps.label.manage.applications"  bundle="APPLICATION_RESOURCES"/></html:link></li>
  	</logic:present>
-	<logic:present role="MANAGER">
+	<logic:present role="role(MANAGER)">
 		<li><html:link page="/externalApps.do?method=viewAllApplications"><bean:message key="oauthapps.label.manage.all.applications"  bundle="APPLICATION_RESOURCES"/></html:link></li>
 	</logic:present>
 		
 	<!-- Vigilancy link for people who do not have ROLE TEACHER -->
 
-	<logic:notEmpty name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.vigilantWrappers">
-		<logic:notPresent role="TEACHER">
+	<logic:notEmpty name="LOGGED_USER_ATTRIBUTE" property="person.vigilantWrappers">
+		<logic:notPresent role="role(TEACHER)">
 	 		<li class="navheader"><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.vigilant"/></li>
 			<li><html:link  page="/vigilancy/vigilantManagement.do?method=prepareMap"><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.vigilant"/></html:link></li>
 		</logic:notPresent>
 	</logic:notEmpty>
 
-	<logic:present role="MANAGER">
+	<logic:present role="role(MANAGER)">
 		<li class="navheader"><bean:message key="label.person.system.configuration"/></li>
-		<logic:notEqual name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.user.userUId" value="ist24518"> 
-			<logic:notEqual name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.user.userUId" value="ist24421">
+		<logic:notEqual name="LOGGED_USER_ATTRIBUTE" property="username" value="ist24518"> 
+			<logic:notEqual name="LOGGED_USER_ATTRIBUTE" property="username" value="ist24421">
 				<li>
 					<html:link page="/contentManagement.do?method=viewContainer">
 						<bean:message key="label.person.system.configuration.root.portal"/>

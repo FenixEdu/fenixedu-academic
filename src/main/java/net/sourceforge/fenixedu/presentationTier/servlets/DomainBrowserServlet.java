@@ -49,7 +49,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.DomainObjectUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.core.exception.MissingObjectException;
@@ -63,6 +65,8 @@ import pt.ist.fenixframework.dml.Slot;
 public class DomainBrowserServlet extends HttpServlet {
 
     private static final long serialVersionUID = -3780027224510147325L;
+
+    private static final Logger logger = LoggerFactory.getLogger(DomainBrowserServlet.class);
 
     private static DomainModel domainModel;
     private static HashMap<DomainClass, String> domainClassesDescAttr = new HashMap<DomainClass, String>();
@@ -93,15 +97,13 @@ public class DomainBrowserServlet extends HttpServlet {
                 renderDomainObject(out, RequestParams.parse(req, "OID"));
             } else if ("/listRole".equals(path)) {
                 renderDomainObjectRole(out, RequestParams.parse(req, "OID", "role"));
-            } else if ("/checkDomain".equals(path)) {
-                checkDomain(out);
             } else {
                 renderMainIndex(out);
             }
         } catch (MissingObjectException moe) {
             out.println("<P>No such object</P>");
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new Error("Error: " + e.getMessage());
         }
 
@@ -219,7 +221,7 @@ public class DomainBrowserServlet extends HttpServlet {
         out.println(params.classFullName);
         out.println(" Entities</H1>\n");
 
-        Collection insts = DomainObjectUtil.readAllDomainObjects(params.javaClass);
+        Collection insts = Collections.singleton(FenixFramework.getDomainRoot());
         renderCollection(out, insts, params);
     }
 
@@ -352,95 +354,11 @@ public class DomainBrowserServlet extends HttpServlet {
     }
 
     protected void checkDomain(PrintWriter out) throws Exception {
-        out.println("<H1>Domain Check</H1>\n");
-
-        if (domainModel != null) {
-            for (DomainClass domClass : getAllDomainClasses()) {
-                System.out.println("CHECK DOMAIN: checking " + domClass.getFullName());
-
-                List<Role> roles = getAllRoles(domClass);
-                if (!roles.isEmpty()) {
-                    Collection insts = DomainObjectUtil.readAllDomainObjects(Class.forName(domClass.getFullName()));
-                    if (insts.size() == 0) {
-                        out.print("<P>Can't check ");
-                        out.print(domClass.getFullName());
-                        out.println(": there are no instances!</P>");
-                    } else {
-                        for (Role role : roles) {
-                            String header =
-                                    "<P>Checking role " + role.getName() + " for class " + domClass.getFullName() + "<UL>";
-
-                            int objsWithRoleNonEmpty = 0;
-                            int objsWithInverseOK = 0;
-                            int count = 0;
-
-                            for (Object instObj : insts) {
-                                if (count > 10) {
-                                    break;
-                                } else {
-                                    count++;
-                                }
-
-                                DomainObject domObj = getDomainObject(instObj);
-                                Object roleValue = getAttributeValue(domObj, role.getName());
-                                if (roleValue != null) {
-                                    if (role.getMultiplicityUpper() == 1) {
-                                        objsWithRoleNonEmpty++;
-                                        if (checkInverseRelation(domObj, getDomainObject(roleValue), role)) {
-                                            objsWithInverseOK++;
-                                        } else {
-                                            if (header != null) {
-                                                out.println(header);
-                                                header = null;
-                                                renderWrongRelation(out, domObj, role);
-                                            }
-                                        }
-                                    } else {
-                                        for (Object targetObj : (Collection) roleValue) {
-                                            objsWithRoleNonEmpty++;
-                                            if (checkInverseRelation(domObj, getDomainObject(targetObj), role)) {
-                                                objsWithInverseOK++;
-                                            } else {
-                                                if (header != null) {
-                                                    out.println(header);
-                                                    header = null;
-                                                    renderWrongRelation(out, domObj, role);
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-
-                            if (objsWithRoleNonEmpty != objsWithInverseOK) {
-                                if (header != null) {
-                                    out.println(header);
-                                    header = null;
-                                }
-                                out.print("<LI>Summary: ");
-                                out.print(insts.size());
-                                out.print("total objects, ");
-                                out.print(objsWithRoleNonEmpty);
-                                out.print(" relations checked, ");
-                                out.print(objsWithInverseOK);
-                                out.println(" relations with inverse OK</LI>");
-                            }
-
-                            if (header == null) {
-                                out.println("</UL>");
-                            }
-
-                        }
-                    }
-                }
-            }
-        } else {
-            out.println("<P>There are none...</P>\n");
-        }
+        out.println("<img src=\"http://i3.kym-cdn.com/photos/images/original/000/232/114/e39.png\" />");
     }
 
     protected void renderWrongRelation(PrintWriter out, DomainObject obj, Role role) throws Exception {
-        System.out.println("wrong relation");
+        logger.info("wrong relation");
         out.println("<LI>");
         renderObjectId(out, obj);
         out.println("</LI>\n");

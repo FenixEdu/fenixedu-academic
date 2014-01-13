@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
@@ -15,6 +14,10 @@ import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.contacts.Phone;
 import net.sourceforge.fenixedu.domain.contacts.WebAddress;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlImage;
@@ -25,7 +28,6 @@ import pt.ist.fenixWebFramework.renderers.model.MetaObject;
 import pt.ist.fenixWebFramework.renderers.model.MetaObjectFactory;
 import pt.ist.fenixWebFramework.renderers.utils.RenderKit;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.security.UserView;
 
 public abstract class AbstractContactRenderer extends OutputRenderer {
     private boolean publicSpace = false;
@@ -88,11 +90,11 @@ public abstract class AbstractContactRenderer extends OutputRenderer {
     }
 
     private boolean isVisible(PartyContact contact, boolean publicSpace) {
-        if (!UserView.hasUser() && publicSpace && contact.getVisibleToPublic().booleanValue()) {
+        if (!Authenticate.isLogged() && publicSpace && contact.getVisibleToPublic().booleanValue()) {
             return true;
         }
-        if (UserView.hasUser()) {
-            IUserView user = UserView.getUser();
+        if (Authenticate.isLogged()) {
+            User user = Authenticate.getUser();
             Person reader = user.getPerson();
             if (reader.hasRole(RoleType.CONTACT_ADMIN).booleanValue() || reader.hasRole(RoleType.MANAGER).booleanValue()
                     || reader.hasRole(RoleType.DIRECTIVE_COUNCIL).booleanValue()) {

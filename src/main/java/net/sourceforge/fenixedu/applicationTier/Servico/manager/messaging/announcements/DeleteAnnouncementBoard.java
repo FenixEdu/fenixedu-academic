@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.announcements;
 
-
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import pt.ist.fenixframework.Atomic;
 

@@ -12,7 +12,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.EditTeacherInformation;
@@ -39,8 +38,11 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -55,6 +57,9 @@ import pt.ist.fenixframework.FenixFramework;
 @Forwards(value = { @Forward(name = "successfull-read", path = "view-teacher-information"),
         @Forward(name = "show-form", path = "teacher-information-management") })
 public class TeacherInformationAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(TeacherInformationAction.class);
+
     /**
      * @param mapping
      * @param form
@@ -350,7 +355,7 @@ public class TeacherInformationAction extends FenixDispatchAction {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
     }
 
@@ -437,8 +442,8 @@ public class TeacherInformationAction extends FenixDispatchAction {
      */
     private InfoSiteTeacherInformation readInfoSiteTeacherInformation(ActionMapping mapping, ActionForm form,
             HttpServletRequest request) throws FenixServiceException {
-        IUserView userView = UserView.getUser();
-        SiteView siteView = ReadTeacherInformation.runReadTeacherInformation(userView.getUtilizador(), new String());
+        User userView = Authenticate.getUser();
+        SiteView siteView = ReadTeacherInformation.runReadTeacherInformation(userView.getUsername(), new String());
         return (InfoSiteTeacherInformation) siteView.getComponent();
     }
 

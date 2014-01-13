@@ -10,7 +10,8 @@ import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.security.Authenticate;
 
 public class AcademicGroupTagLib extends TagSupport {
 
@@ -30,7 +31,7 @@ public class AcademicGroupTagLib extends TagSupport {
                 office != null ? Collections.singleton(office) : Collections.<AdministrativeOffice> emptySet();
         AcademicAuthorizationGroup group =
                 new AcademicAuthorizationGroup(AcademicOperationType.valueOf(operation), programs, offices);
-        if (group.allows(AccessControl.getUserView())) {
+        if (group.allows(Authenticate.getUser())) {
             return EVAL_BODY_INCLUDE;
         }
         return SKIP_BODY;

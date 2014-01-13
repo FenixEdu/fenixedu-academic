@@ -20,14 +20,18 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import pt.ist.fenixWebFramework.security.UserView;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Luis Cruz
  * 
  */
 public class CaptureFilter implements Filter {
+
+    private static final Logger logger = LoggerFactory.getLogger(CaptureFilter.class);
 
     ServletContext servletContext;
 
@@ -85,9 +89,9 @@ public class CaptureFilter implements Filter {
     }
 
     private String getUsername(HttpServletRequest request) {
-        IUserView userView = UserView.getUser();
+        User userView = Authenticate.getUser();
         if (userView != null) {
-            return userView.getUtilizador();
+            return userView.getUsername();
         }
 
         return null;
@@ -138,7 +142,7 @@ public class CaptureFilter implements Filter {
                 fileWriter.close();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
     }
 

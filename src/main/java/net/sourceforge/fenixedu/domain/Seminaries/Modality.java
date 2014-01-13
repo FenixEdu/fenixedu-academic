@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.domain.Seminaries;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -21,11 +21,11 @@ public class Modality extends Modality_Base {
     public Modality() {
         super();
 
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public static Collection<Modality> getAllModalities() {
-        return RootDomainObject.getInstance().getModalitys();
+        return Bennu.getInstance().getModalitysSet();
     }
 
     @Deprecated
@@ -59,7 +59,7 @@ public class Modality extends Modality_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

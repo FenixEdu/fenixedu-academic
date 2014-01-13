@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.domain.student;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class RegistrationNumber extends RegistrationNumber_Base {
 
     public RegistrationNumber(final Registration registration) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setRegistration(registration);
         setNumber(registration.getNumber());
     }
@@ -23,7 +23,7 @@ public class RegistrationNumber extends RegistrationNumber_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

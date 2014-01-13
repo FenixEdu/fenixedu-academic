@@ -95,7 +95,7 @@ public class PhdProgramInformation extends PhdProgramInformation_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

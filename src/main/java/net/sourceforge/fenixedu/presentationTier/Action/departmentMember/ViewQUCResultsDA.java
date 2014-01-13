@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
@@ -43,6 +42,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
@@ -281,7 +281,7 @@ public abstract class ViewQUCResultsDA extends FenixDispatchAction {
         public Object provide(Object source, Object currentValue) {
             List<ExecutionSemester> executionSemesters = new ArrayList<ExecutionSemester>();
             ExecutionSemester oldQucExecutionSemester = ExecutionSemester.readBySemesterAndExecutionYear(2, "2009/2010");
-            for (ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriods()) {
+            for (ExecutionSemester executionSemester : Bennu.getInstance().getExecutionPeriodsSet()) {
                 if (executionSemester.isAfter(oldQucExecutionSemester)) {
                     executionSemesters.add(executionSemester);
                 }

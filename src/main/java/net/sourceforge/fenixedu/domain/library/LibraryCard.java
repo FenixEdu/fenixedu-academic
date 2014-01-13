@@ -1,15 +1,16 @@
 package net.sourceforge.fenixedu.domain.library;
 
 import net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardDTO;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.documents.LibraryMissingCardsDocument;
 import net.sourceforge.fenixedu.domain.documents.LibraryMissingLettersDocument;
+
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class LibraryCard extends LibraryCard_Base {
 
     public LibraryCard(LibraryCardDTO libraryCardDTO) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setUserName(libraryCardDTO.getUserName());
         setUnitName(libraryCardDTO.getChosenUnitName());
         setPin(libraryCardDTO.getPin());
@@ -45,13 +46,14 @@ public class LibraryCard extends LibraryCard_Base {
     }
 
     public static final LibraryCard readByCode(String code) {
-        for (LibraryCard card : RootDomainObject.getInstance().getLibraryCardsSet()) {
+        for (LibraryCard card : Bennu.getInstance().getLibraryCardsSet()) {
             if (card.getCardNumber() != null && card.getCardNumber().equals(code)) {
                 return card;
             }
         }
         return null;
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.documents.LibraryMissingCardsDocument> getDocument() {
         return getDocumentSet();
@@ -88,7 +90,7 @@ public class LibraryCard extends LibraryCard_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

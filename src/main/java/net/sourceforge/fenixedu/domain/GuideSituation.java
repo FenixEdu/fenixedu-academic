@@ -4,6 +4,8 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.util.State;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
@@ -12,7 +14,7 @@ public class GuideSituation extends GuideSituation_Base {
 
     public GuideSituation() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     public GuideSituation(GuideState situation, String remarks, Date date, Guide guide, State state) {
@@ -46,7 +48,7 @@ public class GuideSituation extends GuideSituation_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

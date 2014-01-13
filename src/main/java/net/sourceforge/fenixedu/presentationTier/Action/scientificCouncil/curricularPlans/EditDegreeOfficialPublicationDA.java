@@ -104,8 +104,7 @@ public class EditDegreeOfficialPublicationDA extends FenixDispatchAction {
     public ActionForward removeSpecializationArea(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
-        DegreeSpecializationArea specializationArea =
-                FenixFramework.getDomainObject(request.getParameter("specializationId"));
+        DegreeSpecializationArea specializationArea = FenixFramework.getDomainObject(request.getParameter("specializationId"));
 
         DegreeOfficialPublication degreeOfficialPublication = specializationArea.getOfficialPublication();
         OfficialPublicationBean bean = new OfficialPublicationBean(degreeOfficialPublication);

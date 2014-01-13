@@ -14,14 +14,13 @@
 hideButtons();
 </script>
 
-<bean:define id="userView" name="<%=pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE%>" ></bean:define>
-<logic:present name="userView" property="person.student">
+<logic:present name="LOGGED_USER_ATTRIBUTE" property="person.student">
 
 <h2><bean:message  key="label.fill.information" bundle="STUDENT_RESOURCES"/></h2>
 
 <div class="infoop2 mtop2">
 	<strong>
-		<bean:message  key="label.fill.missing.candidacy.information.message" bundle="STUDENT_RESOURCES"/>
+		<bean:message  key="label.fill.missing.candidacy.information.message" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" arg1="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>" bundle="STUDENT_RESOURCES"/>
 	</strong>	
 </div>
 

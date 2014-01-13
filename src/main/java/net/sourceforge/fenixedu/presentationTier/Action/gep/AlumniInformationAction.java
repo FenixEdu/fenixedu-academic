@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.QueueJob;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accessControl.ConclusionYearDegreesStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -40,10 +39,10 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
-import org.json.JSONArray;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -53,6 +52,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonPrimitive;
 
 @Mapping(path = "/alumni", module = "publicRelations")
 @Forwards({ @Forward(name = "alumni.showAlumniStatistics", path = "/gep/alumni/alumniStatistics.jsp"),
@@ -67,11 +69,11 @@ public class AlumniInformationAction extends FenixDispatchAction {
 
         Map<Long, Integer> registrationsByDay = new TreeMap<Long, Integer>();
 
-        int totalAlumniCount = RootDomainObject.getInstance().getAlumnisSet().size();
+        int totalAlumniCount = Bennu.getInstance().getAlumnisSet().size();
 
         int newAlumniCount = 0;
         int registeredAlumniCount = 0;
-        for (Alumni alumni : RootDomainObject.getInstance().getAlumnis()) {
+        for (Alumni alumni : Bennu.getInstance().getAlumnisSet()) {
             if (alumni.hasStartedPublicRegistry()) {
                 newAlumniCount++;
             }
@@ -88,10 +90,10 @@ public class AlumniInformationAction extends FenixDispatchAction {
             }
         }
 
-        int jobCount = RootDomainObject.getInstance().getJobsSet().size();
+        int jobCount = Bennu.getInstance().getJobsSet().size();
 
         int formationCount = 0;
-        for (Qualification q : RootDomainObject.getInstance().getQualifications()) {
+        for (Qualification q : Bennu.getInstance().getQualificationsSet()) {
             if (q.getClass().equals(Formation.class)) {
                 formationCount++;
             }
@@ -113,12 +115,12 @@ public class AlumniInformationAction extends FenixDispatchAction {
     }
 
     private String createJsonArray(Map<Long, Integer> registrationsByDay) {
-        JSONArray data = new JSONArray();
+        JsonArray data = new JsonArray();
         for (Entry<Long, Integer> entry : registrationsByDay.entrySet()) {
-            JSONArray dataEntry = new JSONArray();
-            dataEntry.put(entry.getKey());
-            dataEntry.put(entry.getValue());
-            data.put(dataEntry);
+            JsonArray dataEntry = new JsonArray();
+            dataEntry.add(new JsonPrimitive(entry.getKey()));
+            dataEntry.add(new JsonPrimitive(entry.getValue()));
+            data.add(dataEntry);
         }
         return data.toString();
     }

@@ -15,7 +15,6 @@ import java.util.ResourceBundle;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.general.ReadAllCountries;
@@ -56,6 +55,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.bennu.core.domain.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -66,6 +68,8 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
  * 
  */
 public class ListCandidatesDispatchAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(ListCandidatesDispatchAction.class);
 
     /** request params * */
     public static final String REQUEST_DOCUMENT_TYPE = "documentType";
@@ -224,7 +228,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
     public ActionForward visualize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        IUserView userView = getUserView(request);
+        User userView = getUserView(request);
         String candidateID = (String) request.getAttribute("candidateID");
 
         if (candidateID == null) {
@@ -615,12 +619,12 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
         return false;
     }
 
-    private List getCandidateStudyPlanByCandidateID(String candidateID, IUserView userView) {
+    private List getCandidateStudyPlanByCandidateID(String candidateID, User userView) {
 
         try {
             return ReadCandidateEnrolmentsByCandidateID.runReadCandidateEnrolmentsByCandidateID(candidateID);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return null;
         }
     }

@@ -17,12 +17,17 @@ import javax.servlet.http.HttpServletRequest;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
 @WebServlet(urlPatterns = "*.faces")
 public class FenixFacesServlet implements Servlet {
+
+    private static final Logger logger = LoggerFactory.getLogger(FenixFacesServlet.class);
 
     public static ServletConfig servletConfig = null;
 
@@ -49,11 +54,11 @@ public class FenixFacesServlet implements Servlet {
         try {
             facesServlet.service(request, response);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             handleException(request, response, e);
             throw e;
         } catch (ServletException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             int index = e.getMessage().indexOf("IllegalDataAccessException");
             if (index > -1) {
                 String message = e.getMessage().substring(index);

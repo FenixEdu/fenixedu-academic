@@ -34,7 +34,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class PrepareConsultRoomsDispatchAction extends FenixContextDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws FenixActionException,  FenixServiceException {
+            throws FenixActionException, FenixServiceException {
         // super.execute(mapping, form, request, response);
 
         List executionPeriods = ReadNotClosedPublicExecutionPeriods.run();

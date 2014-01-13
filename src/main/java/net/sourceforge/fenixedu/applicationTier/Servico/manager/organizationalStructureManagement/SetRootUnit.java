@@ -1,10 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement;
 
-
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.ist.fenixframework.Atomic;
 
 public class SetRootUnit {
@@ -14,13 +15,13 @@ public class SetRootUnit {
         check(RolePredicates.MANAGER_PREDICATE);
 
         if (unit.isPlanetUnit()) {
-            RootDomainObject.getInstance().setEarthUnit(unit);
+            Bennu.getInstance().setEarthUnit(unit);
 
         } else if (institutionUnit) {
-            RootDomainObject.getInstance().setInstitutionUnit(unit);
+            Bennu.getInstance().setInstitutionUnit(unit);
 
         } else if (!institutionUnit) {
-            RootDomainObject.getInstance().setExternalInstitutionUnit(unit);
+            Bennu.getInstance().setExternalInstitutionUnit(unit);
         }
     }
 }

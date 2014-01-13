@@ -5,7 +5,7 @@
 
 <html:xhtml/>
 
-<logic:present role="MANAGER">
+<logic:present role="role(MANAGER)">
 
 <em><bean:message key="title.personal.ingression.data.viewer.unit.name" bundle="GEP_RESOURCES" /></em>
 
@@ -21,7 +21,7 @@
 			<fr:slot name="number" key="label.personal.ingression.data.viewer.search.student.number" >
 				<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.NumberValidator" />
 			</fr:slot>
-			<fr:slot name="username" key="label.personal.ingression.data.viewer.search.student.username" />
+			<fr:slot name="username" key="label.personal.ingression.data.viewer.search.student.username" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" />
 			<fr:slot name="documentId" key="label.personal.ingression.data.viewer.search.document.id" />
 		</fr:schema>
 		

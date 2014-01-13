@@ -2,12 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.externalServices;
 
 import static org.apache.commons.lang.StringUtils.capitalize;
 
-import pt.ist.fenixframework.DomainObject;
-import pt.ist.fenixframework.FenixFramework;
-import pt.ist.fenixframework.dml.DomainClass;
-import pt.ist.fenixframework.dml.Role;
-import pt.ist.fenixframework.dml.Slot;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Method;
@@ -20,6 +14,12 @@ import org.apache.amber.oauth2.common.exception.OAuthProblemException;
 import org.apache.amber.oauth2.common.exception.OAuthSystemException;
 import org.apache.amber.oauth2.common.message.OAuthResponse;
 import org.apache.struts.action.ActionForward;
+
+import pt.ist.fenixframework.DomainObject;
+import pt.ist.fenixframework.FenixFramework;
+import pt.ist.fenixframework.dml.DomainClass;
+import pt.ist.fenixframework.dml.Role;
+import pt.ist.fenixframework.dml.Slot;
 
 public class OAuthUtils {
 

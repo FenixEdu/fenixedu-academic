@@ -4,14 +4,11 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ page import="net.sourceforge.fenixedu.domain.person.RoleType" %>
 
-<bean:define id="userView" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>"/>
 <% boolean masterDegreeUser = false; %>
-<logic:iterate id="roleType" name="userView" property="roleTypes">
-	<logic:equal name="roleType" value="<%= RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE.toString() %>" >
-		<% masterDegreeUser = true; %>
-	</logic:equal>	
-</logic:iterate>	
-	
+<logic:present role="role(MASTER_DEGREE_ADMINISTRATIVE_OFFICE)">
+   <% masterDegreeUser = true; %>
+</logic:present>
+
 <h2><bean:message key="link.masterDegree.administrativeOffice.gratuity.listStudents"/></h2>
 
 <p><span class="error"><!-- Error messages go here --><html:errors /></span></p>

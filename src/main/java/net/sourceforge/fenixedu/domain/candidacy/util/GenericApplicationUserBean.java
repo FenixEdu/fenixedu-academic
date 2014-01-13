@@ -2,8 +2,10 @@ package net.sourceforge.fenixedu.domain.candidacy.util;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.period.GenericApplicationPeriod;
+
+import org.fenixedu.bennu.core.domain.User;
+
 import pt.ist.fenixframework.Atomic;
 
 public class GenericApplicationUserBean implements Serializable {
@@ -28,7 +30,7 @@ public class GenericApplicationUserBean implements Serializable {
     @Atomic
     public void addManagerUser() {
         if (genericApplicationPeriod.isCurrentUserAllowedToMange()) {
-            final User user = User.readUserByUserUId(username);
+            final User user = User.findByUsername(username);
             if (user != null) {
                 genericApplicationPeriod.addManager(user);
             }

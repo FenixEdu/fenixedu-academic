@@ -166,11 +166,7 @@
     	<put name="bundle" value="TITLES_RESOURCES"/>
         <put name="title" value="private.operator.personnelmanagement.managementfaculty.teacherevaluation.publications"/>
         <put name="body" value="/researcher/result/publications/bibtex/importBibtex.jsp"></put>
-    </definition> 
-    <definition name="publications.search" extends="researcher.masterPage">
-       
-        <put name="body" value="/researcher/result/publications/searchPublication.jsp"></put>
-    </definition>     
+    </definition>
 	<definition name="publications.associate.prize" extends="researcher.masterPage">
 	   
        <put name="body" value="/researcher/prizes/associatePrizeToResult.jsp"/>  

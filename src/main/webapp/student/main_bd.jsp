@@ -5,6 +5,10 @@
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
 <html:xhtml/>
 
+<head>
+	<link rel="stylesheet"  href="<%= request.getContextPath() %>/CSS/main_bd.css">
+</head>
+
 <p>
 	<img src="<%= request.getContextPath() %>/images/portalEst-id.gif" alt="<bean:message key="portalEst-id" bundle="IMAGE_RESOURCES" />" />
 </p>
@@ -35,42 +39,6 @@
 		</logic:iterate>
 	</div>
 </logic:notEmpty>
-
-
-<style type="text/css">
-table.asd tr {
-border-left: 1px solid #ccc;
-border-right: 1px solid #ccc;
-}
-table.asd tr.clear {
-border-left: 1px solid #fff;
-border-right: 1px solid #fff;
-}
-table.asd tr h4 {
-font-weight: normal;
-}
-table.asd tr.disabled {
-color: #888;
-}
-table.asd tr td {
-border: 0px solid #000;
-vertical-align: top;
-}
-table.asd tr th, table.asd tr td {
-padding: 0.5em 1em;
-}
-table.asd tr.heading th {
-text-align: left;
-}
-table tr.disabled td {
-color: #bbb;
-}
-
-table tr.disabled td span.success0 {
-color: #555;
-background: #e5e5e5;
-}
-</style>
 
 
 <logic:notEmpty name="studentPortalBeans">

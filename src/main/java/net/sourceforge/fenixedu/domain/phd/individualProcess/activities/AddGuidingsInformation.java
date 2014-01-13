@@ -2,23 +2,24 @@ package net.sourceforge.fenixedu.domain.phd.individualProcess.activities;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdGuiderAcceptanceLetter;
 
+import org.fenixedu.bennu.core.domain.User;
+
 public class AddGuidingsInformation extends PhdIndividualProgramProcessActivity {
 
     @Override
-    protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
+    protected void activityPreConditions(PhdIndividualProgramProcess arg0, User arg1) {
         // no precondition to check
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
+    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, User userView, Object object) {
         for (final PhdParticipantBean bean : (List<PhdParticipantBean>) object) {
             PhdParticipant guiding = process.addGuiding(bean);
             if (bean.getGuidingAcceptanceLetter() != null && bean.getGuidingAcceptanceLetter().getFileContent() != null) {

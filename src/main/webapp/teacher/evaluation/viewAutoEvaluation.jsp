@@ -66,7 +66,7 @@
 
 	<div id="<%="warning" + processId%>" class="dnone">
 		<div class="warning1">
-			<p class="mvert05"><bean:message key="label.teacher.evaluation.autoevaluation.lock.confirm"
+			<p class="mvert05"><bean:message key="label.teacher.evaluation.autoevaluation.lock.confirm" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent()%>"
 				bundle="RESEARCHER_RESOURCES" /></p>
 			<div class="mtop1 mbottom05">
 				<form method="post" id="lockMark"

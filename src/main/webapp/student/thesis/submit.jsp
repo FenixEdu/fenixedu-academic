@@ -232,13 +232,8 @@
 --%>
 
 
-
-
-<%-- Jury --%>
-<h3 class="separator2 mtop2"><bean:message key="title.scientificCouncil.thesis.review.section.jury" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h3>
-
 <%-- Orientation --%>
-<h4 class="mtop25 mbottom05"><bean:message key="title.scientificCouncil.thesis.review.section.orientation" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h4>
+<h3 class="separator2 mtop2"><bean:message key="title.scientificCouncil.thesis.review.section.orientation" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h3>
 
 <logic:empty name="thesis" property="orientator">
     <logic:empty name="thesis" property="coorientator">
@@ -249,6 +244,7 @@
 </logic:empty>
 
 <logic:notEmpty name="thesis" property="orientator">
+	<h4 class="mtop2 mbottom05"><bean:message key="title.student.thesis.submit.section.orientation.orientator" bundle="APPLICATION_RESOURCES"/></h4>
     <fr:view name="thesis" property="orientator" layout="tabular" schema="thesis.jury.proposal.person.loginInfo">
         <fr:layout name="tabular">
             <fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom0"/>
@@ -271,6 +267,7 @@
 </logic:notEmpty>
   
 <logic:notEmpty name="thesis" property="coorientator">
+	<h4 class="mtop2 mbottom05"><bean:message key="title.student.thesis.submit.section.orientation.coorientator"  bundle="APPLICATION_RESOURCES"/></h4>
     <fr:view name="thesis" property="coorientator" layout="tabular" schema="thesis.jury.proposal.person.loginInfo">
         <fr:layout name="tabular">
             <fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom0"/>
@@ -291,6 +288,10 @@
         </table>
     </logic:equal>
 </logic:notEmpty>
+
+
+<%-- Jury --%>
+<h3 class="separator2 mtop2"><bean:message key="title.scientificCouncil.thesis.review.section.jury" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h3>
 
 <%-- Jury/President --%>
 <h4 class="mtop2 mbottom05"><bean:message key="title.scientificCouncil.thesis.review.section.jury.president" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h4>

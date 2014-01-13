@@ -4,11 +4,13 @@ import java.util.UUID;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
-import net.sourceforge.fenixedu.util.StringUtils;
 import net.sourceforge.fenixedu.util.phd.PhdProperties;
+
+import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.ist.fenixframework.Atomic;
 
 public class PhdProgramPublicCandidacyHashCode extends PhdProgramPublicCandidacyHashCode_Base {
@@ -51,7 +53,7 @@ public class PhdProgramPublicCandidacyHashCode extends PhdProgramPublicCandidacy
             throw new IllegalArgumentException();
         }
 
-        for (final PublicCandidacyHashCode hashCode : RootDomainObject.getInstance().getCandidacyHashCodesSet()) {
+        for (final PublicCandidacyHashCode hashCode : Bennu.getInstance().getCandidacyHashCodesSet()) {
             if (hashCode.isFromPhdProgram() && hashCode.getEmail().equals(email)) {
                 return (PhdProgramPublicCandidacyHashCode) hashCode;
             }
@@ -65,7 +67,7 @@ public class PhdProgramPublicCandidacyHashCode extends PhdProgramPublicCandidacy
         }
 
         if (program != null) {
-            for (final PublicCandidacyHashCode hashCode : RootDomainObject.getInstance().getCandidacyHashCodesSet()) {
+            for (final PublicCandidacyHashCode hashCode : Bennu.getInstance().getCandidacyHashCodesSet()) {
                 if (hashCode.getEmail().equals(email)
                         && hashCode.isFromPhdProgram()
                         && ((PhdProgramPublicCandidacyHashCode) hashCode).getPhdProgramCandidacyProcess() != null

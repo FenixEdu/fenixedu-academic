@@ -10,7 +10,6 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.LeafGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType.Scope;
@@ -28,6 +27,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestYear;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.Interval;
 
 import com.google.common.base.Function;
@@ -143,7 +143,7 @@ public class AcademicAuthorizationGroup extends LeafGroup {
         if (year != null) {
             possible = AcademicServiceRequestYear.getAcademicServiceRequests(year);
         } else {
-            possible = RootDomainObject.getInstance().getAcademicServiceRequests();
+            possible = Bennu.getInstance().getAcademicServiceRequestsSet();
         }
         for (AcademicServiceRequest request : possible) {
             if (!programs.contains(request.getAcademicProgram())) {

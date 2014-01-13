@@ -160,7 +160,8 @@ public class EditCurricularCourseScopeDA extends FenixDispatchAction {
         String curricularSemesterId = curricularSemesterIdString;
 
         InfoCurricularSemester infoCurricularSemester =
-                InfoCurricularSemester.newInfoFromDomain(FenixFramework.<CurricularSemester> getDomainObject(curricularSemesterId));
+                InfoCurricularSemester.newInfoFromDomain(FenixFramework
+                        .<CurricularSemester> getDomainObject(curricularSemesterId));
         newInfoCurricularCourseScope.setInfoCurricularSemester(infoCurricularSemester);
 
         InfoBranch infoBranch = new InfoBranch(FenixFramework.<Branch> getDomainObject(branchIdString));

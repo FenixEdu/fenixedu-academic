@@ -19,13 +19,16 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.components.state.ViewDestination;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.file.FileManagerException;
 
 public class ResultsManagementAction extends FenixDispatchAction {
+
+    private static final Logger logger = LoggerFactory.getLogger(ResultsManagementAction.class);
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -174,15 +177,9 @@ public class ResultsManagementAction extends FenixDispatchAction {
                     return destination.getActionForward();
                 }
             }
-
-        } else if (e instanceof FileManagerException) {
-            addActionMessage(request, "label.communicationError");
-            e.printStackTrace();
         } else {
-
             addMessage(request, e.getMessage());
-            e.printStackTrace();
-
+            logger.error(e.getMessage(), e);
         }
 
         return input;

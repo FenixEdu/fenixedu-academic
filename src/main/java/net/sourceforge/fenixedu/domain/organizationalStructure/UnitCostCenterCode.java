@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public class UnitCostCenterCode extends UnitCostCenterCode_Base {
 
     public UnitCostCenterCode(final Unit unit, final Integer costCenterCode) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setUnit(unit);
         setCostCenterCode(costCenterCode);
     }
@@ -19,7 +19,7 @@ public class UnitCostCenterCode extends UnitCostCenterCode_Base {
 
     public static UnitCostCenterCode find(final Integer costCenterCode) {
         if (costCenterCode != null) {
-            for (final UnitCostCenterCode unitCostCenterCode : RootDomainObject.getInstance().getUnitCostCenterCodesSet()) {
+            for (final UnitCostCenterCode unitCostCenterCode : Bennu.getInstance().getUnitCostCenterCodesSet()) {
                 if (unitCostCenterCode.getCostCenterCode().equals(costCenterCode)) {
                     return unitCostCenterCode;
                 }
@@ -34,7 +34,7 @@ public class UnitCostCenterCode extends UnitCostCenterCode_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

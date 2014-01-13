@@ -5,7 +5,7 @@
 
 <ft:tilesView definition="departmentMember.masterPage"
 	attributeName="body-inline">
-	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
+	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/DepartmentMemberResources"
 		var="bundle" />
 	<f:loadBundle basename="resources/EnumerationResources"

@@ -32,7 +32,7 @@ To compile Fenix, simply run:
 
 To initialize an instalation of Fenix in an empty Database, see: 
 
-https://fenix-ashes.ist.utl.pt/fenixWiki/FenixSetup
+http://fenixedu.org/dev/tutorials/install-fenixedu/
 
 ##Generate Fenix API Documentation
 
@@ -43,7 +43,7 @@ creates `target/miredot/index.html`
 
 ##Generate Fenix DML Zip
 
-    mvn test -PGenerateDMLZip
+    mvn ff:package-dmls
 
 creates `target/fenix_dmls.zip`
 

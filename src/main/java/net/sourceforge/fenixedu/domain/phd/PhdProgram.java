@@ -16,13 +16,13 @@ import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -42,9 +42,9 @@ public class PhdProgram extends PhdProgram_Base {
 
     private PhdProgram() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setWhenCreated(new DateTime());
-        setCreator(AccessControl.getUserView().getUtilizador());
+        setCreator(Authenticate.getUser().getUsername());
         new PhdProgramServiceAgreementTemplate(this);
     }
 
@@ -183,7 +183,7 @@ public class PhdProgram extends PhdProgram_Base {
     }
 
     static public PhdProgram readByAcronym(final String acronym) {
-        for (final PhdProgram program : RootDomainObject.getInstance().getPhdProgramsSet()) {
+        for (final PhdProgram program : Bennu.getInstance().getPhdProgramsSet()) {
             if (program.hasAcronym(acronym)) {
                 return program;
             }
@@ -331,7 +331,7 @@ public class PhdProgram extends PhdProgram_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

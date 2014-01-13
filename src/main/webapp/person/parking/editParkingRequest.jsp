@@ -126,7 +126,7 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 	
 	<p class="mvert025"><bean:message key="title.documentDelivery" bundle="PARKING_RESOURCES"/>:</p>
 	<ul>
-		<li><bean:message key="title.documentDeliveryOnline" bundle="PARKING_RESOURCES"/></li>
+		<li><bean:message key="title.documentDeliveryOnline" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="PARKING_RESOURCES"/></li>
 		<li><bean:message key="title.documentDeliveryPaper" bundle="PARKING_RESOURCES"/></li>
 	</ul>
 	<p class="mvert025"><bean:message key="message.toSubmitDocuments" bundle="PARKING_RESOURCES"/></p>
@@ -135,7 +135,7 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 		<li><bean:message key="message.fileFormat" bundle="PARKING_RESOURCES"/></li>
 		<li><bean:message key="message.howToSubmit" bundle="PARKING_RESOURCES"/></li>
 	</ul>
-	<bean:message key="message.personalDataUse" bundle="PARKING_RESOURCES"/>
+	<bean:message key="message.personalDataUse" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="PARKING_RESOURCES"/>
 </div>	
 
 

@@ -5,11 +5,11 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Grade;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -17,7 +17,7 @@ import pt.ist.fenixframework.Atomic;
 public class EctsTableIndex extends EctsTableIndex_Base {
     public EctsTableIndex(AcademicInterval year) {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
         setYear(year);
     }
 
@@ -26,7 +26,7 @@ public class EctsTableIndex extends EctsTableIndex_Base {
     }
 
     public static EctsTableIndex readByYear(AcademicInterval year) {
-        for (EctsTableIndex index : RootDomainObject.getInstance().getEctsTableIndexSet()) {
+        for (EctsTableIndex index : Bennu.getInstance().getEctsTableIndexSet()) {
             if (index.getYear().equals(year)) {
                 return index;
             }
@@ -147,7 +147,7 @@ public class EctsTableIndex extends EctsTableIndex_Base {
 
     protected Grade convertGradeToEcts(Degree degree, CurriculumLine curriculumLine, Grade grade) {
         if (curriculumLine.getParentCycleCurriculumGroup() == null) {
-            return convertGradeToEcts(RootDomainObject.getInstance().getInstitutionUnit(), curriculumLine, grade);
+            return convertGradeToEcts(Bennu.getInstance().getInstitutionUnit(), curriculumLine, grade);
         }
         CurricularYear curricularYear =
                 CurricularYear.readByYear(curriculumLine.getParentCycleCurriculumGroup()
@@ -156,7 +156,7 @@ public class EctsTableIndex extends EctsTableIndex_Base {
         if (table != null) {
             return table.convert(grade);
         }
-        return convertGradeToEcts(RootDomainObject.getInstance().getInstitutionUnit(), curriculumLine, curricularYear, grade);
+        return convertGradeToEcts(Bennu.getInstance().getInstitutionUnit(), curriculumLine, curricularYear, grade);
     }
 
     protected Grade convertGradeToEcts(Unit unit, CurriculumLine curriculumLine, CurricularYear curricularYear, Grade grade) {
@@ -188,7 +188,7 @@ public class EctsTableIndex extends EctsTableIndex_Base {
         if (table != null) {
             return table;
         }
-        return getGraduationGradeConversionTable(RootDomainObject.getInstance().getInstitutionUnit(), cycleType, year);
+        return getGraduationGradeConversionTable(Bennu.getInstance().getInstitutionUnit(), cycleType, year);
     }
 
     protected EctsGraduationGradeConversionTable getGraduationGradeConversionTable(Unit institutionUnit, CycleType cycleType,
@@ -199,6 +199,7 @@ public class EctsTableIndex extends EctsTableIndex_Base {
         }
         throw new NoEctsComparabilityTableFound(year, cycleType);
     }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.EctsConversionTable> getTable() {
         return getTableSet();
@@ -215,7 +216,7 @@ public class EctsTableIndex extends EctsTableIndex_Base {
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 

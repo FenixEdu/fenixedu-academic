@@ -8,7 +8,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.MenuEntry;
@@ -17,19 +16,24 @@ import net.sourceforge.fenixedu.domain.contents.Portal;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
-import net.sourceforge.fenixedu.presentationTier.util.HostRedirector;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.Bennu;
 
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+@Mapping(path = "/home")
 public class CreateContentsContextAction extends FenixAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        final FunctionalityContext functionalityContext = new FilterFunctionalityContext(request, Collections.EMPTY_LIST);
+        final FunctionalityContext functionalityContext =
+                new FilterFunctionalityContext(request, Collections.<Content> emptyList());
         request.setAttribute(FunctionalityContext.CONTEXT_KEY, functionalityContext);
 
         final MenuEntry initialMenuEntry = getInitialMenuEntry(functionalityContext);
@@ -50,13 +54,13 @@ public class CreateContentsContextAction extends FenixAction {
     }
 
     private void sendLoginRedirect(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.sendRedirect(HostRedirector.getRedirectPageLogin(request.getRequestURL().toString()));
+        response.sendRedirect(FenixConfigurationManager.getConfiguration().getLoginPage());
     }
 
     protected ActionForward menuActionForward(Content content, HttpServletRequest request) {
         ActionForward actionForward = new ActionForward();
         actionForward.setRedirect(true);
-        Portal rootPortal = RootDomainObject.getInstance().getRootPortal();
+        Portal rootPortal = Bennu.getInstance().getRootPortal();
         List<Content> contents = rootPortal.getPathTo(content);
 
         List<String> paths = new ArrayList<String>();
@@ -71,13 +75,7 @@ public class CreateContentsContextAction extends FenixAction {
         }
 
         String realPath = buffer.toString();
-        final String seperator = realPath.indexOf('?') >= 0 ? "&" : "?";
-        actionForward.setPath(realPath
-                + seperator
-                + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.CHECKSUM_ATTRIBUTE_NAME
-                + "="
-                + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.calculateChecksum(request
-                        .getContextPath() + realPath));
+        actionForward.setPath(realPath);
         return actionForward;
     }
 

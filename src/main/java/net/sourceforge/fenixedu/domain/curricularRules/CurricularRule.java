@@ -5,7 +5,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleExecutorFactory;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.verifyExecutors.VerifyRuleLevel;
@@ -17,13 +16,14 @@ import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.LogicOperator;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.YearMonthDay;
 
 public abstract class CurricularRule extends CurricularRule_Base implements ICurricularRule {
 
     protected CurricularRule() {
         super();
-        setRootDomainObject(RootDomainObject.getInstance());
+        setRootDomainObject(Bennu.getInstance());
     }
 
     protected void init(final DegreeModule degreeModuleToApplyRule, final CourseGroup contextCourseGroup,
@@ -206,7 +206,7 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
     }
 
     @Deprecated
-    public boolean hasRootDomainObject() {
+    public boolean hasBennu() {
         return getRootDomainObject() != null;
     }
 
@@ -230,6 +230,7 @@ public abstract class CurricularRule extends CurricularRule_Base implements ICur
         return getBegin() != null;
     }
 
+    @Override
     @Deprecated
     public boolean hasContextCourseGroup() {
         return getContextCourseGroup() != null;

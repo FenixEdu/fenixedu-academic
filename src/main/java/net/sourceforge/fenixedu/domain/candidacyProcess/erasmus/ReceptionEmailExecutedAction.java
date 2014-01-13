@@ -61,6 +61,7 @@ public class ReceptionEmailExecutedAction extends ReceptionEmailExecutedAction_B
                         MobilityEmailTemplateType.IST_RECEPTION);
         return createAction(bean.getMobilityApplicationProcess(), bean.getSubjectProcesses(), receptionTemplate);
     }
+
     @Deprecated
     public boolean hasBody() {
         return getBody() != null;
