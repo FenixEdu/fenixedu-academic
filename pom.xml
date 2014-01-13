@@ -20,6 +20,13 @@
 		<skipTests>true</skipTests>
 	</properties>
 
+    <scm>
+        <connection>scm:git:git@github.com:fenixedu/fenix.git</connection>
+        <developerConnection>scm:git:git@github.com:fenixedu/fenix.git</developerConnection>
+        <url>http://fenixedu.org</url>
+        <tag>HEAD</tag>
+    </scm>
+
 	<build>
 		<resources>
 			<resource>
