@@ -152,7 +152,7 @@ This metadata is used in resource search by execution course site interfaces.
     UPDATE GENERIC_FILE SET OID_FILE_SUPPORT = (SELECT OID FROM FILE_SUPPORT);
     ```
     
-    If you want to migrate categories from DSpace 
+    If you want to migrate categories from DSpace (described in [import-metadata-from-dspace](#import-metadata-from-dspace))
     
       1. Create column in fenix db for resourcetype in file content
     
