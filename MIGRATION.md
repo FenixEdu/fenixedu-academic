@@ -69,15 +69,7 @@ This metadata is used in resource search by execution course site interfaces.
 	dump_categories_sql()
 	```
 
-  5. Create column in fenix db for resourcetype in file content
-    
-    ```
-    ALTER TABLE `GENERIC_FILE` ADD `RESOURCE_TYPE` text;
-    ```
-
-  6. Import resource type data to file contents in fenix (takes 2.5 minutes)
-
-    `mysql fenix_production_db -A < migrate-categories.sql`
+  5. keep file `migrate-categories.sql` to run before migration step 7 described below.
     
 2. Username generation is now handled by the [bennu-user-management](https://github.com/FenixEdu/bennu-user-management) module. Ensure that your installation registers a custom `UsernameGenerator`.
 3. Ensure that your installation contains an implementation of `net.sourceforge.fenixedu.util.ConnectionManager`, otherwise SQL-based lookups will not work.
@@ -159,6 +151,18 @@ This metadata is used in resource search by execution course site interfaces.
     -- And to the FileSupport root
     UPDATE GENERIC_FILE SET OID_FILE_SUPPORT = (SELECT OID FROM FILE_SUPPORT);
     ```
+    
+    If you want to migrate categories from DSpace 
+    
+      1. Create column in fenix db for resourcetype in file content
+    
+      ```
+      ALTER TABLE `GENERIC_FILE` ADD `RESOURCE_TYPE` text;
+      ```
+
+      2. Import resource type data to file contents in fenix (takes 2.5 minutes)
+
+        `mysql fenix_production_db -A < migrate-categories.sql`
 
 7. You can now safely start you application. It is now time to import some data and perform initial configurations.
 
