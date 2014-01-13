@@ -437,7 +437,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return AcademicPredicates.MANAGE_DEGREE_CURRICULAR_PLANS.evaluate(this);
     }
 
-    public List<ExecutionDegree> getExecutionDegrees() {
+    private List<ExecutionDegree> getInternalExecutionDegrees() {
         List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
         for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
             result.addAll(degreeCurricularPlan.getExecutionDegrees());
@@ -445,8 +445,15 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return result;
     }
 
+    public List<ExecutionDegree> getExecutionDegrees() {
+        return getExecutionDegrees(null);
+    }
+
     public List<ExecutionDegree> getExecutionDegrees(final AcademicInterval academicInterval) {
-        return FluentIterable.from(getExecutionDegrees()).filter(new Predicate<ExecutionDegree>() {
+        if (academicInterval == null) {
+            return getInternalExecutionDegrees();
+        }
+        return FluentIterable.from(getInternalExecutionDegrees()).filter(new Predicate<ExecutionDegree>() {
 
             @Override
             public boolean apply(ExecutionDegree input) {

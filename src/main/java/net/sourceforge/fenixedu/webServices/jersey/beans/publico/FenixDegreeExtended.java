@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.webServices.jersey.beans.publico;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.Degree;
+
 public class FenixDegreeExtended extends FenixDegree {
 
     public static class FenixDegreeInfo {
@@ -152,7 +154,6 @@ public class FenixDegreeExtended extends FenixDegree {
     }
 
     private String currentAcademicTerm;
-    private List<String> academicTerms;
     private String type;
     private String typeName;
     private String url;
@@ -160,19 +161,16 @@ public class FenixDegreeExtended extends FenixDegree {
     private FenixDegreeInfo info;
     private List<FenixTeacher> teachers;
 
-    public FenixDegreeExtended(String currentAcademicTerm, List<String> academicTerms, String id, String name, String type,
-            String acronym, String typeName, String url, List<FenixSpace> campus, FenixDegreeInfo info,
-            List<FenixTeacher> teachers) {
-        super(id, name, acronym);
+    public FenixDegreeExtended(String currentAcademicTerm, Degree degree, String type, String typeName, String url,
+            List<FenixSpace> campus, FenixDegreeInfo info, List<FenixTeacher> teachers) {
+        super(degree, true);
         this.type = type;
-        this.acronym = acronym;
         this.typeName = typeName;
         this.url = url;
         this.campus = campus;
         this.info = info;
         this.teachers = teachers;
         this.currentAcademicTerm = currentAcademicTerm;
-        this.academicTerms = academicTerms;
     }
 
     public String getCurrentAcademicTerm() {
@@ -181,14 +179,6 @@ public class FenixDegreeExtended extends FenixDegree {
 
     public void setCurrentAcademicTerm(String currentAcademicTerm) {
         this.currentAcademicTerm = currentAcademicTerm;
-    }
-
-    public List<String> getAcademicTerms() {
-        return academicTerms;
-    }
-
-    public void setAcademicTerms(List<String> academicTerms) {
-        this.academicTerms = academicTerms;
     }
 
     @Override

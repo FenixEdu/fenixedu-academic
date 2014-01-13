@@ -5,7 +5,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -142,9 +141,10 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
-import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Ordering;
 import com.google.common.net.HttpHeaders;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
@@ -171,8 +171,14 @@ public class FenixAPIv1 {
     public static final SimpleDateFormat dataFormatDay = new SimpleDateFormat("dd/MM/yyyy");
     public static final SimpleDateFormat dataFormatHour = new SimpleDateFormat("HH:mm");
 
+    private static Gson gson;
+
     private static final String ENROL = "yes";
     private static final String UNENROL = "no";
+
+    static {
+        gson = new GsonBuilder().setPrettyPrinting().create();
+    }
 
     private String mls(MultiLanguageString mls) {
         if (mls == null) {
@@ -274,15 +280,7 @@ public class FenixAPIv1 {
         final Person person = getPerson();
 
         // PersonInformationBean pib = new PersonInformationBean(person);
-        ExecutionInterval executionInterval = ExecutionInterval.getExecutionInterval(getAcademicInterval(academicTerm));
-
-        Set<ExecutionSemester> semesters = new HashSet<ExecutionSemester>();
-
-        if (executionInterval instanceof ExecutionYear) {
-            semesters.addAll(((ExecutionYear) executionInterval).getExecutionPeriods());
-        } else if (executionInterval instanceof ExecutionSemester) {
-            semesters.add((ExecutionSemester) executionInterval);
-        }
+        Set<ExecutionSemester> semesters = getExecutionSemesters(academicTerm);
 
         List<FenixEnrolment> enrolments = new ArrayList<FenixEnrolment>();
         List<FenixCourse> teachingCourses = new ArrayList<FenixCourse>();
@@ -293,6 +291,19 @@ public class FenixAPIv1 {
         }
 
         return new FenixPersonCourses(enrolments, teachingCourses);
+    }
+
+    public Set<ExecutionSemester> getExecutionSemesters(String academicTerm) {
+        ExecutionInterval executionInterval = ExecutionInterval.getExecutionInterval(getAcademicInterval(academicTerm));
+
+        Set<ExecutionSemester> semesters = new HashSet<ExecutionSemester>();
+
+        if (executionInterval instanceof ExecutionYear) {
+            semesters.addAll(((ExecutionYear) executionInterval).getExecutionPeriods());
+        } else if (executionInterval instanceof ExecutionSemester) {
+            semesters.add((ExecutionSemester) executionInterval);
+        }
+        return semesters;
     }
 
     public void fillTeachingCourses(final Person person, List<FenixCourse> teachingCourses, ExecutionSemester executionSemester) {
@@ -764,8 +775,6 @@ public class FenixAPIv1 {
         return new WebApplicationException(Response.status(status).entity(errorObject.toJSONString()).build());
     }
 
-    Gson gson = new Gson();
-
     /**
      * generic information about the institution
      * 
@@ -780,6 +789,12 @@ public class FenixAPIv1 {
         return FenixAbout.getInstance();
     }
 
+    /**
+     * Academic Terms
+     * 
+     * @summary Lists all academic terms
+     * @return news and events rss
+     */
     @GET
     @Produces(JSON_UTF8)
     @Path("academicterms")
@@ -825,11 +840,12 @@ public class FenixAPIv1 {
     }
 
     /**
-     * All public degrees
+     * All information about degrees available
      * 
      * @summary All degrees
-     * @param year
-     *            ("yyyy/yyyy")
+     * @param academicTerm
+     * @see academicTerms
+     * 
      */
     @GET
     @Produces(JSON_UTF8)
@@ -847,15 +863,26 @@ public class FenixAPIv1 {
         return fenixDegrees;
     }
 
+    @GET
+    @Produces(JSON_UTF8)
+    @Path("degrees/all")
+    @FenixAPIPublic
+    public Set<FenixDegree> degreesAll() {
+
+        Set<FenixDegree> degrees = new HashSet<FenixDegree>();
+
+        for (final Degree degree : Degree.readNotEmptyDegrees()) {
+            degrees.add(new FenixDegree(degree, true));
+        }
+        return degrees;
+    }
+
     private FenixDegreeExtended getFenixDegree(ExecutionDegree executionDegree) {
         final Degree degree = executionDegree.getDegree();
         List<FenixSpace> degreeCampus = new ArrayList<>();
         ExecutionYear executionYear = executionDegree.getExecutionYear();
 
-        String id = degree.getExternalId();
-        String name = degree.getPresentationName(executionYear);
         String type = degree.getDegreeTypeName();
-        String sigla = degree.getSigla();
         String typeName = degree.getDegreeType().getFilteredName();
         String degreeUrl = FenixConfigurationManager.getFenixUrl() + degree.getSite().getReversePath();
 
@@ -897,27 +924,9 @@ public class FenixAPIv1 {
             teachers.add(new FenixTeacher(teacherName, istId, mails, urls));
         }
 
-        ImmutableList<String> academicTerms =
-                FluentIterable
-                        .from(FluentIterable.from(degree.getExecutionDegrees())
-                                .transform(new Function<ExecutionDegree, ExecutionYear>() {
-
-                                    @Override
-                                    public ExecutionYear apply(ExecutionDegree input) {
-                                        return input.getExecutionYear();
-                                    }
-                                }).toSortedSet(ExecutionYear.REVERSE_COMPARATOR_BY_YEAR))
-                        .transform(new Function<ExecutionYear, String>() {
-
-                            @Override
-                            public String apply(ExecutionYear input) {
-                                return input.getQualifiedName();
-                            }
-                        }).toList();
-
         FenixDegreeExtended fenixDegree =
-                new FenixDegreeExtended(executionYear.getQualifiedName(), academicTerms, id, name, type, sigla, typeName,
-                        degreeUrl, degreeCampus, fenixDegreeInfo, teachers);
+                new FenixDegreeExtended(executionYear.getQualifiedName(), degree, type, typeName, degreeUrl, degreeCampus,
+                        fenixDegreeInfo, teachers);
         return fenixDegree;
     }
 
@@ -937,15 +946,18 @@ public class FenixAPIv1 {
     @FenixAPIPublic
     public FenixDegree degreesByOid(@PathParam("id") String oid, @QueryParam("academicTerm") String academicTerm) {
         Degree degree = getDomainObject(oid, Degree.class);
-        final AcademicInterval academicInterval = getAcademicInterval(academicTerm);
+        final AcademicInterval academicInterval = getAcademicInterval(academicTerm, true);
 
-        if (degree.isBolonhaMasterOrDegree()) {
-            for (final ExecutionDegree executionDegree : degree.getExecutionDegrees(academicInterval)) {
-                return getFenixDegree(executionDegree);
-            }
+        final ExecutionDegree max =
+                Ordering.from(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR).max(
+                        degree.getExecutionDegrees(academicInterval));
+
+        if (max != null) {
+            return getFenixDegree(max);
         }
 
-        return new FenixDegree();
+        throw newApplicationError(Status.NOT_FOUND, "resource_not_found", "No degree information found for " + degree.getName()
+                + " on " + academicInterval.getPresentationName());
     }
 
     /**
@@ -966,10 +978,7 @@ public class FenixAPIv1 {
 
         Degree degree = getDomainObject(oid, Degree.class);
 
-        final AcademicInterval academicInterval = getAcademicInterval(academicTerm);
-
-        ExecutionSemester[] executionSemesters =
-                Collections.singleton(ExecutionSemester.getExecutionInterval(academicInterval)).toArray(new ExecutionSemester[0]);
+        ExecutionSemester[] executionSemesters = getExecutionSemesters(academicTerm).toArray(new ExecutionSemester[0]);
 
         final Set<ExecutionCourseView> executionCoursesViews = new HashSet<ExecutionCourseView>();
         for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
@@ -1452,9 +1461,13 @@ public class FenixAPIv1 {
     }
 
     private AcademicInterval getAcademicInterval(String academicTerm) {
+        return getAcademicInterval(academicTerm, false);
+    }
+
+    private AcademicInterval getAcademicInterval(String academicTerm, Boolean nullDefault) {
 
         if (StringUtils.isEmpty(academicTerm)) {
-            return getDefaultAcademicTerm();
+            return nullDefault ? null : getDefaultAcademicTerm();
         }
 
         ExecutionInterval interval = ExecutionInterval.getExecutionInterval(academicTerm);

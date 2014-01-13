@@ -1,11 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.externalServices;
 
-import static org.apache.commons.lang.StringUtils.capitalize;
-
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.Method;
-import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,51 +13,16 @@ import org.apache.struts.action.ActionForward;
 
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
-import pt.ist.fenixframework.dml.DomainClass;
-import pt.ist.fenixframework.dml.Role;
-import pt.ist.fenixframework.dml.Slot;
 
 public class OAuthUtils {
 
     public static final <T extends DomainObject> T getDomainObject(final String externalId, final Class<T> clazz) {
         try {
-            Long.parseLong(externalId);
             final T domainObject = FenixFramework.getDomainObject(externalId);
-            // Dirty check to see if domain object still exists due fenix-framework limitations.
-            // When using fromExternalId fenix-framework creates a shallow objects with that id.
-            // On following requests to object's methods it will throw a VersionNotAvailableException if the object was deleted.
-            if (domainObject == null) {
-                return null;
+            if (FenixFramework.isDomainObjectValid(domainObject)) {
+                return domainObject;
             }
-
-            String getterName = null;
-            final DomainClass domainClass = FenixFramework.getDomainModel().findClass(clazz.getName());
-            if (domainClass != null) {
-                final List<Slot> slotsList = domainClass.getSlotsList();
-                if (slotsList.isEmpty()) {
-                    final List<Role> roleSlots = domainClass.getRoleSlotsList();
-                    if (roleSlots.isEmpty()) {
-                        return null;
-                    }
-                    Role role = roleSlots.get(0);
-                    if (role.getMultiplicityUpper() != 1) {
-                        getterName = String.format("get%sSet", capitalize(role.getName()));
-                    } else {
-                        getterName = String.format("get%s", capitalize(role.getName()));
-                    }
-                } else {
-                    getterName = String.format("get%s", capitalize(slotsList.get(0).getName()));
-                }
-            }
-            final Method method = clazz.getMethod(getterName, (Class[]) null);
-
-            if (method == null) {
-                return null;
-            }
-
-            method.invoke(domainObject, (Object[]) null);
-
-            return domainObject;
+            return null;
         } catch (Exception nfe) {
             return null;
         }
