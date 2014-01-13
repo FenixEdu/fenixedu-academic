@@ -16,6 +16,13 @@
     <url>http://www.fenixedu.org</url>
     <description>IST Specific Features for FenixEdu</description>
 
+    <scm>
+        <connection>scm:git:git@github.com:ist-dsi/fenix-ist.git</connection>
+        <developerConnection>scm:git:git@github.com:ist-/fenix-ist.git</developerConnection>
+        <url>http://fenixedu.org</url>
+        <tag>HEAD</tag>
+    </scm>
+
     <build>
         <plugins>
             <plugin>
