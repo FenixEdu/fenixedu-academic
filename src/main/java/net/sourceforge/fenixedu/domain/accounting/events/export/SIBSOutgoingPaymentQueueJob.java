@@ -25,9 +25,7 @@ public class SIBSOutgoingPaymentQueueJob extends SIBSOutgoingPaymentQueueJob_Bas
     @Override
     public QueueJobResult execute() throws Exception {
         new SIBSOutgoingPaymentFile(getLastSuccessfulSentPaymentFileDate());
-        QueueJobResult queueJobResult = new QueueJobResult();
-        queueJobResult.setDone(true);
-        return queueJobResult;
+        return new QueueJobResult();
     }
 
     @Atomic
