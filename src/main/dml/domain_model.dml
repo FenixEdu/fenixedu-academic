@@ -9040,7 +9040,7 @@ relation MeasurementTestCampus {
 
 relation RootDomainObjectDefaultCampus {
 	space.Campus playsRole defaultCampus;
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole defaultCampusRootDomainObject;
 }
 
 /* Phd Module */

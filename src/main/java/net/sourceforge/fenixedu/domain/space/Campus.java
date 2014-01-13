@@ -27,10 +27,10 @@ public class Campus extends Campus_Base {
     }
 
     public static Campus getDefaultCampus() {
-        if (RootDomainObject.getInstance().getDefaultCampus() == null) {
+        if (Bennu.getInstance().getDefaultCampus() == null) {
             return Ordering.from(Space.COMPARATOR_BY_PRESENTATION_NAME).min(Space.getAllActiveCampus());
         }
-        return RootDomainObject.getInstance().getDefaultCampus();
+        return Bennu.getInstance().getDefaultCampus();
     }
 
     @Override
