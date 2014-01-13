@@ -205,9 +205,6 @@ public class FenixConfigurationManager {
                 description = "comma separated emails of persons who want to receive emails about merge of units.")
         public String getMergeUnitsEmails();
 
-        @ConfigurationProperty(key = "monthlySmsLimit")
-        public Integer getMonthlySmsLimit();
-
         @ConfigurationProperty(key = "nameresolution.name", defaultValue = "fenixRemoteRequests")
         public String getNameResolutionName();
 
@@ -251,42 +248,6 @@ public class FenixConfigurationManager {
                 description = "used in header payments file, and represents institution identification accordding to transfer service (i.e. sibs). Must be given by the entity that is peforming this service. Format: '9XXXXXXX'",
                 defaultValue = "11111111")
         public String getSibsSourceInstitutionId();
-
-        @ConfigurationProperty(key = "sms.delivery.host")
-        public String getSMSDeliveryHost();
-
-        @ConfigurationProperty(key = "sms.delivery.password")
-        public String getSMSDeliveryPassword();
-
-        @ConfigurationProperty(key = "sms.delivery.port")
-        public Integer getSMSDeliveryPort();
-
-        @ConfigurationProperty(key = "sms.delivery.protocol")
-        public String getSMSDeliveryProtocol();
-
-        @ConfigurationProperty(key = "sms.delivery.uri")
-        public String getSMSDeliveryUri();
-
-        @ConfigurationProperty(key = "sms.delivery.username")
-        public String getSMSDeliveryUsername();
-
-        @ConfigurationProperty(key = "sms.gateway.host")
-        public String getSMSGatewayHost();
-
-        @ConfigurationProperty(key = "sms.gateway.password")
-        public String getSMSGatewayPassword();
-
-        @ConfigurationProperty(key = "sms.gateway.port")
-        public Integer getSMSGatewayPort();
-
-        @ConfigurationProperty(key = "sms.gateway.protocol")
-        public String getSMSGatewayProtocol();
-
-        @ConfigurationProperty(key = "sms.gateway.uri")
-        public String getSMSGatewayUri();
-
-        @ConfigurationProperty(key = "sms.gateway.username")
-        public String getSMSGatewayUsername();
 
         @ConfigurationProperty(key = "startExecutionYearForAllOptionalCurricularCoursesWithLessTenEnrolments",
                 defaultValue = "2006/2007")
