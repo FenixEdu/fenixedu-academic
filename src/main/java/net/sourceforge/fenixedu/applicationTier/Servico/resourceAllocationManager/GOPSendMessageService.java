@@ -140,11 +140,11 @@ public class GOPSendMessageService {
     private static Set<String> getGOPEmail(Collection<ExecutionDegree> degrees) {
         Set<String> emails = new HashSet<String>();
         for (ExecutionDegree executionDegree : degrees) {
-            if (executionDegree.getCampus().isCampusAlameda()) {
-                emails.add(Instalation.getInstance().getInstituitionalEmailAddress("gop"));
-            }
-            if (executionDegree.getCampus().isCampusTaguspark()) {
-                emails.add(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "email.gop.taguspark"));
+            final String emailFromApplicationResources =
+                    BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "email.gop."
+                            + executionDegree.getCampus().getName());
+            if (!StringUtils.isEmpty(emailFromApplicationResources)) {
+                emails.add(emailFromApplicationResources);
             }
         }
         return emails;

@@ -73,9 +73,6 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
         request.setAttribute("operations", operations);
 
         request.setAttribute("person", getUserView(request).getPerson());
-        if (candidacy.getExecutionDegree().getCampus().isCampusTaguspark()) {
-            request.setAttribute("isInTaguspark", "true");
-        }
         return mapping.findForward("showCandidacyDetails");
     }
 

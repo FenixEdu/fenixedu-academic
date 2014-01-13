@@ -35,6 +35,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class CardGenerationEntry extends CardGenerationEntry_Base {
+    private static final String ALAMEDA_NAME = "Alameda";
+    private static final String TAGUSPARK_NAME = "Taguspark";
+
+    private static final String ALAMEDA_UNIVERSITY_CODE = "0807";
+    private static final String TAGUSPARK_UNIVERSITY_CODE = "0808";
+    public static final String DEFAULT_UNIVERSITY_CODE = ALAMEDA_UNIVERSITY_CODE;
 
     private static final Logger logger = LoggerFactory.getLogger(CardGenerationEntry.class);
 
@@ -128,7 +134,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
         final Student student = registration.getStudent();
         final Person person = student.getPerson();
 
-        stringBuilder.append(Campus.getUniversityCode(degreeCurricularPlan.getCurrentCampus()));
+        stringBuilder.append(getUniversityCode(degreeCurricularPlan.getCurrentCampus()));
         stringBuilder.append(degree.getMinistryCode());
         stringBuilder.append("002");
         stringBuilder.append(translateDegreeType(degreeType));
@@ -173,7 +179,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
         final Student student = phdIndividualProgramProcess.getStudent();
         final Person person = student.getPerson();
 
-        stringBuilder.append(Campus.getUniversityCode(degreeCurricularPlan.getCurrentCampus()));
+        stringBuilder.append(getUniversityCode(degreeCurricularPlan.getCurrentCampus()));
         stringBuilder.append(degree.getMinistryCode());
         stringBuilder.append("002");
         stringBuilder.append(translateDegreeType(degreeType));
@@ -595,7 +601,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
         final Unit currentWorkingPlace = employee.getCurrentWorkingPlace();
         final String workingPlaceName = guessWorkingPlaceName(currentWorkingPlace);
 
-        stringBuilder.append(Campus.getUniversityCode(campus));
+        stringBuilder.append(getUniversityCode(campus));
         stringBuilder.append("9999");
         stringBuilder.append("002");
         stringBuilder.append("81");
@@ -659,7 +665,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
             return null;
         }
 
-        stringBuilder.append(Campus.getUniversityCode(campus));
+        stringBuilder.append(getUniversityCode(campus));
         stringBuilder.append("9999");
         stringBuilder.append("002");
         stringBuilder.append("71");
@@ -720,7 +726,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
         final Unit currentWorkingPlace = employee.getCurrentWorkingPlace();
         final String workingPlaceName = guessWorkingPlaceName(currentWorkingPlace);
 
-        stringBuilder.append(Campus.getUniversityCode(campus));
+        stringBuilder.append(getUniversityCode(campus));
         stringBuilder.append("9999");
         stringBuilder.append("002");
         stringBuilder.append("83");
@@ -758,6 +764,20 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
         return stringBuilder.toString();
     }
 
+    static public String getUniversityCode(final Campus campus) {
+        if (campus == null) {
+            return DEFAULT_UNIVERSITY_CODE;
+        }
+
+        if (campus.getName().equalsIgnoreCase(ALAMEDA_NAME)) {
+            return ALAMEDA_UNIVERSITY_CODE;
+        } else if (campus.getName().equalsIgnoreCase(TAGUSPARK_NAME)) {
+            return TAGUSPARK_UNIVERSITY_CODE;
+        } else {
+            return DEFAULT_UNIVERSITY_CODE;
+        }
+    }
+
     public static String createGrantOwnerLine(final Employee employee) {
         final StringBuilder stringBuilder = new StringBuilder();
 
@@ -784,7 +804,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
             return null;
         }
 
-        stringBuilder.append(Campus.getUniversityCode(campus));
+        stringBuilder.append(getUniversityCode(campus));
         stringBuilder.append("9999");
         stringBuilder.append("002");
         stringBuilder.append("96");

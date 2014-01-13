@@ -9037,6 +9037,12 @@ relation MeasurementTestCampus {
     }
 }
 
+
+relation RootDomainObjectDefaultCampus {
+	space.Campus playsRole defaultCampus;
+	RootDomainObject playsRole rootDomainObject;
+}
+
 /* Phd Module */
 
 
