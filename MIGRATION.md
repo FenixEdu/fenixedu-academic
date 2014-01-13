@@ -264,7 +264,7 @@ This metadata is used in resource search by execution course site interfaces.
 			instalation.setInstalationName(DEFAULT_INSTALATION_NAME);
 			instalation.setInstituitionEmailDomain(DEFAULT_INSTALATION_EMAIL_DOMAIN);
 			instalation.setInstituitionURL(DEFAULT_INSTALATION_URL);
-			taskLog("The Instalation has been initialized with specific IST values");
+			taskLog("The Instalation has been initialized with your institution values");
 		}
 	}
 	```
