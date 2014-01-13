@@ -77,6 +77,15 @@ public class ExternalApplication extends ExternalApplication_Base {
         return null;
     }
 
+    public String getAuthorAppName() {
+        String name = getAuthorName();
+        if (!StringUtils.isBlank(name)) {
+            return name;
+        } else {
+            return getAuthor().getPerson().getName();
+        }
+    }
+
     public void setLogoStream(InputStream stream) {
         try {
             if (stream != null) {

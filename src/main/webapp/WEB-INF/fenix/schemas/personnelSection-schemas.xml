@@ -229,6 +229,8 @@
 			<property name="imageFormat" value="/externalApps.do?method=appLogo&amp;appOid=${externalId}"/>
 	</slot>
 	<slot name="name" key="oauthapps.label.app.name" />
+
+	<slot name="authorAppName" key="oauthapps.label.app.author.name" />
 	
 	<slot name="author" key="oauthapps.label.app.author" layout="format">
 		<property name="format" value="${person.name} (${person.username})"/>
@@ -317,6 +319,9 @@
 	<slot name="name" key="oauthapps.label.app.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 	</slot>
+	
+	<slot name="authorName" key="oauthapps.label.app.author.name" />
+	
 	<slot name="description" key="oauthapps.label.app.description" layout="longText">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		</validator>

@@ -8242,6 +8242,7 @@ class ExternalApplication  {
         String siteUrl;
         bytearray logo;
         ExternalApplicationState state;
+        String authorName;
 }
 
 class AuthScope  {
