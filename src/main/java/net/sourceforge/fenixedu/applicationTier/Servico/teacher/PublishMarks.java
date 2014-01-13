@@ -4,9 +4,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingT
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.sms.SmsNotSentServiceException;
-import net.sourceforge.fenixedu.applicationTier.utils.SmsUtil;
-import net.sourceforge.fenixedu.applicationTier.utils.exceptions.FenixUtilException;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
@@ -61,14 +58,14 @@ public class PublishMarks {
                                 || StringDestinationNumber.startsWith(VODAFONE_NETWORK_PREFIX)
                                 || StringDestinationNumber.startsWith(OPTIMUS_NETWORK_PREFIX)) {
 
-                            try {
-                                SmsUtil.getInstance().sendSmsWithoutDeliveryReports(
-                                        Integer.valueOf(StringDestinationNumber),
-                                        evaluation.getPublishmentMessage() + " "
-                                                + mark.getAttend().getExecutionCourse().getSigla() + " - " + mark.getMark());
-                            } catch (FenixUtilException e1) {
-                                throw new SmsNotSentServiceException("error.person.sendSms");
-                            }
+//                            try {
+//                                SmsUtil.getInstance().sendSmsWithoutDeliveryReports(
+//                                        Integer.valueOf(StringDestinationNumber),
+//                                        evaluation.getPublishmentMessage() + " "
+//                                                + mark.getAttend().getExecutionCourse().getSigla() + " - " + mark.getMark());
+//                            } catch (FenixUtilException e1) {
+//                                throw new SmsNotSentServiceException("error.person.sendSms");
+//                            }
                         }
                     }
                 }

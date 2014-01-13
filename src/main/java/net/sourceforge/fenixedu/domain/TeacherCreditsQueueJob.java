@@ -12,9 +12,7 @@ public class TeacherCreditsQueueJob extends TeacherCreditsQueueJob_Base {
     @Override
     public QueueJobResult execute() throws Exception {
         TeacherCredits.closeAllTeacherCredits(getExecutionSemester());
-        QueueJobResult queueJobResult = new QueueJobResult();
-        queueJobResult.setDone(true);
-        return queueJobResult;
+        return new QueueJobResult();
     }
 
     @Atomic

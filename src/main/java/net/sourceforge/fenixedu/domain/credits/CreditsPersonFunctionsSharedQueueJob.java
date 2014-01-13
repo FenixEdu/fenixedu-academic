@@ -31,9 +31,7 @@ public class CreditsPersonFunctionsSharedQueueJob extends CreditsPersonFunctions
                 }
             }
         }
-        QueueJobResult queueJobResult = new QueueJobResult();
-        queueJobResult.setDone(true);
-        return queueJobResult;
+        return new QueueJobResult();
     }
 
     @Deprecated

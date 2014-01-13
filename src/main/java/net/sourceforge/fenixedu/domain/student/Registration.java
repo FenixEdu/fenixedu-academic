@@ -3813,10 +3813,6 @@ public class Registration extends Registration_Base {
         return getRegimeType(executionYear) == RegistrationRegimeType.FULL_TIME;
     }
 
-    public String getUniversityCode(final ExecutionYear executionYear) {
-        return Campus.getUniversityCode(getCampus(executionYear)) + getDegree().getMinistryCode();
-    }
-
     public void changeShifts(final Attends attend, final Registration newRegistration) {
         for (final Shift shift : getShiftsSet()) {
             if (attend.isFor(shift)) {

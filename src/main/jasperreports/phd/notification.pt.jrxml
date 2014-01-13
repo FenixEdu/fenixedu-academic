@@ -1,95 +1,55 @@
-<?xml version="1.0" encoding="UTF-8"  ?>
-<!-- Created with iReport - A designer for JasperReports -->
-<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
-<jasperReport
-		 name="notification.pt"
-		 columnCount="1"
-		 printOrder="Vertical"
-		 orientation="Portrait"
-		 pageWidth="595"
-		 pageHeight="842"
-		 columnWidth="595"
-		 columnSpacing="0"
-		 leftMargin="0"
-		 rightMargin="0"
-		 topMargin="0"
-		 bottomMargin="0"
-		 whenNoDataType="NoPages"
-		 isTitleNewPage="false"
-		 isSummaryNewPage="false">
-	<property name="ireport.scriptlethandling" value="0" />
-	<property name="ireport.encoding" value="UTF-8" />
-	<import value="java.util.*" />
-	<import value="net.sf.jasperreports.engine.*" />
-	<import value="net.sf.jasperreports.engine.data.*" />
-
-	<parameter name="administrativeOfficeCoordinator" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="name" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="processNumber" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="address" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="areaCode" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="areaOfAreaCode" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="programName" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="ratificationDate" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="insuranceFee" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="registrationFee" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="date" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="notificationNumber" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="guidingsInformation" isForPrompting="false" class="java.lang.String"/>
-
-
-		<group  name="endLine" >
-			<groupExpression><![CDATA[]]></groupExpression>
-			<groupHeader>
-			<band height="0"  isSplitAllowed="true" >
-			</band>
-			</groupHeader>
-			<groupFooter>
-			<band height="90"  isSplitAllowed="true" >
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="44"
-						y="60"
-						width="354"
-						height="30"
-						key="textField-4"/>
-					<box></box>
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="notification.pt" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="administrativeOfficeCoordinator" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="name" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="processNumber" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="address" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="areaCode" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="areaOfAreaCode" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="programName" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="ratificationDate" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="insuranceFee" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="registrationFee" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="date" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="notificationNumber" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="guidingsInformation" class="java.lang.String" isForPrompting="false"/>
+	<group name="endLine">
+		<groupExpression><![CDATA[]]></groupExpression>
+		<groupHeader>
+			<band splitType="Stretch"/>
+		</groupHeader>
+		<groupFooter>
+			<band height="90" splitType="Stretch">
+				<textField isBlankWhenNull="false">
+					<reportElement key="textField-4" x="44" y="60" width="354" height="30"/>
 					<textElement>
 						<font size="9"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{administrativeOfficeCoordinator} +
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{administrativeOfficeCoordinator} +
 "\n(Coordenadora do Núcleo de Pós-Graduação e Formação Contínua)"]]></textFieldExpression>
 				</textField>
-				<line direction="TopDown">
-					<reportElement
-						x="44"
-						y="53"
-						width="354"
-						height="1"
-						key="line-1"/>
-					<graphicElement stretchType="NoStretch"/>
+				<line>
+					<reportElement key="line-1" x="44" y="53" width="354" height="1"/>
 				</line>
 			</band>
-			</groupFooter>
-		</group>
-		<background>
-			<band height="0"  isSplitAllowed="true" >
-			</band>
-		</background>
-		<title>
-			<band height="217"  isSplitAllowed="true" >
-				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="320"
-						y="25"
-						width="251"
-						height="116"
-						key="textField-3"/>
-					<box></box>
-					<textElement textAlignment="Left">
-						<font size="9"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Ofício nº " + $P{notificationNumber} +
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="217" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement key="textField-3" x="320" y="25" width="251" height="116"/>
+				<textElement textAlignment="Left">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Ofício nº " + $P{notificationNumber} +
 "\n\nData: "+ $P{date} + 
 "\n\nCandidatura nº " +  $P{processNumber}+
 
@@ -97,35 +57,29 @@
 "\n" + $P{name} +
 "\n" + $P{address}  +
 "\n" + $P{areaCode} + " " + $P{areaOfAreaCode}]]></textFieldExpression>
-				</textField>
-			</band>
-		</title>
-		<pageHeader>
-			<band height="0"  isSplitAllowed="true" >
-			</band>
-		</pageHeader>
-		<columnHeader>
-			<band height="0"  isSplitAllowed="true" >
-			</band>
-		</columnHeader>
-		<detail>
-			<band height="146"  isSplitAllowed="true" >
-				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="44"
-						y="11"
-						width="528"
-						height="132"
-						key="textField-1"/>
-					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="146" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement key="textField-1" x="44" y="11" width="528" height="132"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-</box>
-					<textElement textAlignment="Justified" markup="styled" lineSpacing="1_1_2">
-						<font size="9" isPdfEmbedded ="false"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">ASSUNTO</style>: <style isUnderline=\"true\"> Curso de Doutoramento em " + $P{programName} + " - Candidatura</style>\n\n"
+				</box>
+				<textElement textAlignment="Justified" lineSpacing="1_1_2" markup="styled">
+					<font size="9" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">ASSUNTO</style>: <style isUnderline=\"true\"> Curso de Doutoramento em " + $P{programName} + " - Candidatura</style>\n\n"
 +
 "No âmbito do assunto acima mencionado, e em conformidade com o estabelecido no Regulamento Geral dos Doutoramentos do IST - 3º Ciclo de estudos Superiores, vimos por este meio informar que a candidatura apresentada por V. Exª ao Curso de Doutoramento em " + $P{programName} + ", " + $P{guidingsInformation} + "foi aceite pelo Conselho Científico do IST em " + $P{ratificationDate} + ", nos termos do parecer emitido pelo respectivo Coordenador do Doutoramento, do qual enviamos cópia em anexo, <style isUnderline=\"true\">considerando-se, apenas, aluno de doutoramento a partir da data da matrícula.</style>"
 
@@ -136,34 +90,26 @@
 +"\n\nFinalmente, salientamos que o Requerimento da Prova de Doutoramento deverá ser submetida, nos nossos serviços, no prazo mínimo de 2 anos e máximo de 5 anos a contar da data de matrícula no ciclo de estudos, conforme estabelecido no artº 10 do Regulamento Geral dos Doutoramentos do IST - 3º Ciclo de estudos Superiores."
 
 +"\n\nAproveitando esta oportunidade para lhe desejar as maiores felicidades no percurso académico que agora inicia no IST, apresentamos os nossos melhores cumprimentos."]]></textFieldExpression>
-				</textField>
-			</band>
-		</detail>
-		<columnFooter>
-			<band height="0"  isSplitAllowed="true" >
-			</band>
-		</columnFooter>
-		<pageFooter>
-			<band height="78"  isSplitAllowed="true" >
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="290"
-						y="6"
-						width="297"
-						height="55"
-						key="textField-2"/>
-					<box></box>
-					<textElement markup="styled">
-						<font size="9"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">NOTA:</style>"+
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="78" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-2" x="290" y="6" width="297" height="55"/>
+				<textElement markup="styled">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["<style pdfFontName=\"Times-Bold\">NOTA:</style>"+
 "\nDocumentos a entregar no momento da matrícula:" +
 "\n- Boletim Vacinas e 2 fotografias"]]></textFieldExpression>
-				</textField>
-			</band>
-		</pageFooter>
-		<summary>
-			<band height="0"  isSplitAllowed="true" >
-			</band>
-		</summary>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
 </jasperReport>

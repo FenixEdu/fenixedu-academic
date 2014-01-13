@@ -395,7 +395,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
     }
 
     String getUniversityAcronym() {
-        return getDgesStudentImportationForCampus().isCampusAlameda() ? ALAMEDA_UNIVERSITY : TAGUS_UNIVERSITY;
+        return "ALAMEDA".equals(getDgesStudentImportationForCampus().getName()) ? ALAMEDA_UNIVERSITY : TAGUS_UNIVERSITY;
     }
 
     public static boolean canRequestJob() {

@@ -230,6 +230,10 @@
         <filter-name>RequestChecksumFilter</filter-name>
         <url-pattern>*.faces</url-pattern>
     </filter-mapping>
+    <filter-mapping>
+        <filter-name>RequestChecksumFilter</filter-name>
+        <url-pattern>*.jsp</url-pattern>
+    </filter-mapping>
 
 	<!-- Servlet -->
     <servlet>

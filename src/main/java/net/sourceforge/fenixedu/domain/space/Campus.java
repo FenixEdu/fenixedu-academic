@@ -13,10 +13,9 @@ import net.sourceforge.fenixedu.predicates.SpacePredicates;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.YearMonthDay;
 
-public class Campus extends Campus_Base {
+import com.google.common.collect.Ordering;
 
-    private static final String ALAMEDA_NAME = "Alameda";
-    private static final String TAGUSPARK_NAME = "Taguspark";
+public class Campus extends Campus_Base {
 
     private static final String ALAMEDA_UNIVERSITY_CODE = "1518";
     private static final String TAGUSPARK_UNIVERSITY_CODE = "1519";
@@ -25,6 +24,13 @@ public class Campus extends Campus_Base {
     public Campus(String name, YearMonthDay begin, YearMonthDay end, String blueprintNumber) {
         super();
         new CampusInformation(this, name, begin, end, blueprintNumber);
+    }
+
+    public static Campus getDefaultCampus() {
+        if (Bennu.getInstance().getDefaultCampus() == null) {
+            return Ordering.from(Space.COMPARATOR_BY_PRESENTATION_NAME).min(Space.getAllActiveCampus());
+        }
+        return Bennu.getInstance().getDefaultCampus();
     }
 
     @Override
@@ -91,28 +97,6 @@ public class Campus extends Campus_Base {
     public Integer getNormalCapacity() {
         // Necessary for Renderers
         return null;
-    }
-
-    static public String getUniversityCode(final Campus campus) {
-        if (campus == null) {
-            return DEFAULT_UNIVERSITY_CODE;
-        }
-
-        if (campus.getName().equalsIgnoreCase(ALAMEDA_NAME)) {
-            return ALAMEDA_UNIVERSITY_CODE;
-        } else if (campus.getName().equalsIgnoreCase(TAGUSPARK_NAME)) {
-            return TAGUSPARK_UNIVERSITY_CODE;
-        } else {
-            return DEFAULT_UNIVERSITY_CODE;
-        }
-    }
-
-    public Boolean isCampusAlameda() {
-        return this.getName().equals(ALAMEDA_NAME);
-    }
-
-    public Boolean isCampusTaguspark() {
-        return this.getName().equals(TAGUSPARK_NAME);
     }
 
     public static abstract class CampusFactory implements Serializable, FactoryExecutor {
