@@ -53,8 +53,8 @@ public class JobQueueDispatcher extends CronTask {
         if (queueJob != null) {
             try {
                 taskLog("Started: %s (%s) requested by %s on %s\n", queueJob.getClass().getName(), queueJob.getExternalId(),
-                        queueJob.getPerson() != null ? queueJob.getPerson().getName() + "(" + +")" : "system",
-                        queueJob.getRequestDate());
+                        queueJob.getPerson() != null ? queueJob.getPerson().getName() + "(" + queueJob.getPerson().getUsername()
+                                + ")" : "system", queueJob.getRequestDate());
                 runJob(queueJob);
                 taskLog("Finished Successfully\n");
             } catch (Throwable e) {
