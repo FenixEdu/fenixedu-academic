@@ -351,7 +351,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
         private static final String SPACER_IMAGE_PATH = "/images/scp_spacer.gif";
 
-        private static final int MAX_LINE_SIZE = 25;
+        private static final int MAX_LINE_SIZE = 26;
 
         private static final int MAX_COL_SPAN_FOR_TEXT_ON_GROUPS_WITH_CHILDS = 17;
 
@@ -368,7 +368,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
         private static final int COLUMNS_BETWEEN_TEXT_AND_ENROLMENT_EVALUATION_DATE = COLUMNS_BETWEEN_TEXT_AND_ECTS
                 + COLUMNS_FROM_ECTS_AND_ENROLMENT_EVALUATION_DATE;
 
-        private static final int LATEST_ENROLMENT_EVALUATION_COLUMNS = 2;
+        private static final int LATEST_ENROLMENT_EVALUATION_COLUMNS = 3;
 
         private static final String DATE_FORMAT = "yyyy/MM/dd";
 
@@ -1009,16 +1009,11 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
         }
 
         private void generateStatisticsLinkCell(final HtmlTableRow row, final Enrolment enrolment) {
-            if (enrolment.getStudent() != AccessControl.getPerson().getStudent()
-                    && !enrolment.getStudent().hasAnyActiveRegistration()) {
-                generateCellWithText(row, EMPTY_INFO, getStatisticsLinkCellClass());
-            } else {
+            if (enrolment.getStudent() == AccessControl.getPerson().getStudent()
+                    && enrolment.getStudent().hasAnyActiveRegistration()) {
                 ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(enrolment.getExecutionPeriod());
-                if (executionCourse == null) {
-                    generateCellWithText(row, EMPTY_INFO, getStatisticsLinkCellClass());
-                } else {
+                if (executionCourse != null) {
                     final HtmlInlineContainer inlineContainer = new HtmlInlineContainer();
-
                     inlineContainer.addChild(createExecutionCourseStatisticsLink(
                             applicationResources.getString("label.statistics"), executionCourse));
                     final HtmlTableCell cell = row.createCell();
