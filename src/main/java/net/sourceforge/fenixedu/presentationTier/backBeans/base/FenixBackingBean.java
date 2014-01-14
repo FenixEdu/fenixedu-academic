@@ -9,6 +9,8 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.Instalation;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.UIViewState;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 
@@ -233,5 +235,17 @@ public class FenixBackingBean {
 
     public String getHasContextAndChecksumString() {
         return pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX;
+    }
+
+    public String getInstalationUrl() {
+        return Instalation.getInstance() == null ? "" : Instalation.getInstance().getInstalationDomain();
+    }
+
+    public String getInstitutionUrl() {
+        return Instalation.getInstance() == null ? "" : Instalation.getInstance().getInstituitionURL();
+    }
+
+    public String getInstitutionAcronym() {
+        return Unit.getInstitutionAcronym();
     }
 }
