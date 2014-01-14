@@ -267,7 +267,7 @@
 		<dependency>
 			<groupId>com.iver.cit</groupId>
 			<artifactId>jdwglib</artifactId>
-			<version>1.0</version>
+			<version>1.0.1</version>
 		</dependency>
 		<!-- This dependency is needed by jdwglib -->
 		<dependency>
