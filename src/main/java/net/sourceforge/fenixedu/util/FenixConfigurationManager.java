@@ -75,9 +75,6 @@ public class FenixConfigurationManager {
         @ConfigurationProperty(key = "exportParkingData.password")
         public String getExportParkingDataPassword();
 
-        @ConfigurationProperty(key = "export.parking.data.report.input.file")
-        public String getExportParkingDataReportInputFile();
-
         @ConfigurationProperty(key = "exportParkingData.username")
         public String getExportParkingDataUsername();
 

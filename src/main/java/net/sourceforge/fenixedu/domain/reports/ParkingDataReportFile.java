@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.reports;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -12,7 +11,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.QueueJobResult;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
 import net.sourceforge.fenixedu.domain.parking.Vehicle;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
@@ -50,17 +48,14 @@ public class ParkingDataReportFile extends ParkingDataReportFile_Base {
     public QueueJobResult execute() throws Exception {
         QueueJobResult queueJobResult = null;
 
-        final String inputFilename = FenixConfigurationManager.getConfiguration().getExportParkingDataReportInputFile();
-        if (inputFilename != null) {
-            File parkingDataFile = FileUtils.copyToTemporaryFile(new FileInputStream(inputFilename));
-            renderReport(parkingDataFile);
+        File parkingDataFile = FileUtils.copyToTemporaryFile(getClass().getResourceAsStream("/templates/Cartoes_XML.mdb"));
+        renderReport(parkingDataFile);
 
-            queueJobResult = new QueueJobResult();
-            queueJobResult.setContentType("application/vnd.ms-access");
-            queueJobResult.setContent(Files.toByteArray(parkingDataFile));
+        queueJobResult = new QueueJobResult();
+        queueJobResult.setContentType("application/vnd.ms-access");
+        queueJobResult.setContent(Files.toByteArray(parkingDataFile));
 
-            logger.info("Job " + getFilename() + " completed");
-        }
+        logger.info("Job " + getFilename() + " completed");
         return queueJobResult;
     }
 
