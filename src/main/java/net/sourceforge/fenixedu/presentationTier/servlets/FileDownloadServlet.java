@@ -68,8 +68,7 @@ public class FileDownloadServlet extends HttpServlet {
     private String sendLoginRedirect(final HttpServletRequest request, final File file) {
         final boolean isCasEnabled = CoreConfiguration.casConfig().isCasEnabled();
         if (isCasEnabled) {
-            return CoreConfiguration.casConfig().getCasLoginUrl(
-                    FenixConfigurationManager.getConfiguration().getFileDownloadUrlLocalContent() + file.getExternalId());
+            return CoreConfiguration.casConfig().getCasLoginUrl(file.getDownloadUrl());
         }
         return FenixConfigurationManager.getConfiguration().getLoginPage() + "?service=" + request.getRequestURI();
     }
