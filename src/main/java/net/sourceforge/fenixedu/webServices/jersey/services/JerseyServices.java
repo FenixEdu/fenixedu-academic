@@ -474,4 +474,31 @@ public class JerseyServices {
         user.getPerson().addPersonRoleByRoleType(RoleType.DEVELOPER);
     }
 
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    @Path("userAliasses")
+    public String userAliasses(@QueryParam("username") final String username)
+            throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
+            InvocationTargetException {
+        final Person person = Person.readPersonByUsername(username);
+        if (person != null) {
+            final StringBuilder builder = new StringBuilder(username);
+            if (person.getEmployee() != null) {
+                addAliass(builder, person.getEmployee().getEmployeeNumber());
+            }
+            if (person.getStudent() != null) {
+                addAliass(builder, person.getStudent().getNumber());
+            }
+            return builder.toString();
+        }
+        return StringUtils.EMPTY;
+    }
+
+    private void addAliass(final StringBuilder builder, final Integer aliass) {
+        if (aliass != null) {
+            builder.append(", ");
+            builder.append(aliass);
+        }
+    }
+
 }
