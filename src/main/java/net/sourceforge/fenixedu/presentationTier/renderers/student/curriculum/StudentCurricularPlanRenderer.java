@@ -1009,7 +1009,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
         }
 
         private void generateStatisticsLinkCell(final HtmlTableRow row, final Enrolment enrolment) {
-            if (!enrolment.getStudent().hasAnyActiveRegistration()) {
+            if (enrolment.getStudent() != AccessControl.getPerson().getStudent()
+                    && !enrolment.getStudent().hasAnyActiveRegistration()) {
                 generateCellWithText(row, EMPTY_INFO, getStatisticsLinkCellClass());
             } else {
                 ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(enrolment.getExecutionPeriod());
