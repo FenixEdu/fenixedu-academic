@@ -167,7 +167,6 @@ public class FenixAPIv1 {
     DateTimeFormatter formatDayHour = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm");
 
     public static final DateTimeFormatter formatDay = DateTimeFormat.forPattern("dd/MM/yyyy");
-    public static final DateTimeFormatter formatHour = DateTimeFormat.forPattern("HH:mm");
     public static final SimpleDateFormat dataFormatDay = new SimpleDateFormat("dd/MM/yyyy");
     public static final SimpleDateFormat dataFormatHour = new SimpleDateFormat("HH:mm");
 
@@ -989,17 +988,15 @@ public class FenixAPIv1 {
 
         List<FenixExecutionCourse> fenixExecutionCourses = new ArrayList<>();
 
-        if (degree.isBolonhaMasterOrDegree()) {
-            for (ExecutionCourseView executionCourseView : executionCoursesViews) {
-                ExecutionCourse executionCourse = executionCourseView.getExecutionCourse();
-                String sigla = executionCourse.getSigla();
-                String credits = getCredits(executionCourse, degree);
-                String name = executionCourse.getName();
-                String id = executionCourse.getExternalId();
-                String academicTermValue = executionCourse.getExecutionPeriod().getQualifiedName();
+        for (ExecutionCourseView executionCourseView : executionCoursesViews) {
+            ExecutionCourse executionCourse = executionCourseView.getExecutionCourse();
+            String sigla = executionCourse.getSigla();
+            String credits = getCredits(executionCourse, degree);
+            String name = executionCourse.getName();
+            String id = executionCourse.getExternalId();
+            String academicTermValue = executionCourse.getExecutionPeriod().getQualifiedName();
 
-                fenixExecutionCourses.add(new FenixExecutionCourse(sigla, credits, name, id, academicTermValue));
-            }
+            fenixExecutionCourses.add(new FenixExecutionCourse(sigla, credits, name, id, academicTermValue));
         }
         return fenixExecutionCourses;
     }
