@@ -91,7 +91,7 @@ public class JobQueueDispatcher extends CronTask {
     protected void fail(final QueueJob job, Throwable t) {
         job.setFailedCounter(job.getFailedCounter() + 1);
         job.setJobEndTime(new DateTime());
-        if (job.getFailedCounter() == 3) {
+        if (job.getFailedCounter() == 3 && job.getPerson() != null) {
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
             t.printStackTrace(pw);
