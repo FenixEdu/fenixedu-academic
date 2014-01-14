@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.servlets;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URLEncoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,6 +21,8 @@ import org.fenixedu.bennu.core.util.CoreConfiguration;
 
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
+
+import com.google.common.base.Charsets;
 
 @WebServlet(urlPatterns = FileDownloadServlet.SERVLET_PATH + "*")
 public class FileDownloadServlet extends HttpServlet {
@@ -65,10 +68,10 @@ public class FileDownloadServlet extends HttpServlet {
         }
     }
 
-    private String sendLoginRedirect(final HttpServletRequest request, final File file) {
+    private String sendLoginRedirect(final HttpServletRequest request, final File file) throws IOException {
         final boolean isCasEnabled = CoreConfiguration.casConfig().isCasEnabled();
         if (isCasEnabled) {
-            return CoreConfiguration.casConfig().getCasLoginUrl(file.getDownloadUrl());
+            return CoreConfiguration.casConfig().getCasLoginUrl(URLEncoder.encode(file.getDownloadUrl(), Charsets.UTF_8.name()));
         }
         return FenixConfigurationManager.getConfiguration().getLoginPage() + "?service=" + request.getRequestURI();
     }
