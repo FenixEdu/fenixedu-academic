@@ -1014,14 +1014,17 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
                 generateCellWithText(row, EMPTY_INFO, getStatisticsLinkCellClass());
             } else {
                 ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(enrolment.getExecutionPeriod());
+                if (executionCourse == null) {
+                    generateCellWithText(row, EMPTY_INFO, getStatisticsLinkCellClass());
+                } else {
+                    final HtmlInlineContainer inlineContainer = new HtmlInlineContainer();
 
-                final HtmlInlineContainer inlineContainer = new HtmlInlineContainer();
-
-                inlineContainer.addChild(createExecutionCourseStatisticsLink(applicationResources.getString("label.statistics"),
-                        executionCourse));
-                final HtmlTableCell cell = row.createCell();
-                cell.setClasses(getStatisticsLinkCellClass());
-                cell.setBody(inlineContainer);
+                    inlineContainer.addChild(createExecutionCourseStatisticsLink(
+                            applicationResources.getString("label.statistics"), executionCourse));
+                    final HtmlTableCell cell = row.createCell();
+                    cell.setClasses(getStatisticsLinkCellClass());
+                    cell.setBody(inlineContainer);
+                }
             }
         }
 
