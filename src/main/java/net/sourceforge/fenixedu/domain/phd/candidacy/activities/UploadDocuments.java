@@ -28,7 +28,7 @@ public class UploadDocuments extends PhdProgramCandidacyProcessActivity {
 
         for (final PhdProgramDocumentUploadBean each : documents) {
             if (each.hasAnyInformation()) {
-                process.addDocument(each, userView != null ? userView.getPerson() : null);
+                process.addDocument(each, userView != null ? userView.getPerson() : process.getPerson());
             }
         }
 

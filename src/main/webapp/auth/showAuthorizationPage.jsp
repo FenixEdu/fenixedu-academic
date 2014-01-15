@@ -7,6 +7,7 @@
 
 <bean:define id="siteURL" name="application" property="siteUrl"/>
 <bean:define id="appOid" name="application" property="externalId"/>
+<bean:define id="redirectUrl" name="application" property="redirectUrl"/>
 <bean:define id="appName" name="application" property="name" type="java.lang.String"/>
 <html>
 	<head>
@@ -29,12 +30,12 @@
 				</ul>
 				<div class="button-group">
 					<fr:form action="/oauth.do?method=userConfirmation">
-						<input name="client_id" value="<%= request.getParameter("client_id") %>" type="hidden">
-						<input name="redirect_uri" value="<%= request.getParameter("redirect_uri") %>" type="hidden">
+						<input name="client_id" value="<%= appOid %>" type="hidden">
+						<input name="redirect_uri" value="<%= redirectUrl %>" type="hidden">
 						<button class="btn btn-authorize"><bean:message bundle="APPLICATION_RESOURCES" key="oauthapps.label.authorization.yes"/></button>
 					</fr:form>
 					<fr:form action="/oauth.do?method=userCancelation">
-						<input name="redirect_uri" value="<%= request.getParameter("redirect_uri") %>" type="hidden">
+						<input name="redirect_uri" value="<%= redirectUrl %>" type="hidden">
 						<button class="btn btn-default"><bean:message bundle="APPLICATION_RESOURCES" key="oauthapps.label.authorization.no"/></button>
 					</fr:form>
 				</div>

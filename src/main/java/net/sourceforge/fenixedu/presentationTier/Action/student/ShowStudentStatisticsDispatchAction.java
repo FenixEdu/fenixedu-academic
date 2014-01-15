@@ -90,7 +90,7 @@ public class ShowStudentStatisticsDispatchAction extends FenixDispatchAction {
         for (Enrolment enrolment : approvedEnrolments) {
             CurricularCourse curricularCourse = enrolment.getCurricularCourse();
             JsonObject curricularCourseJsonObject = new JsonObject();
-            curricularCourseJsonObject.addProperty("name", curricularCourse.getName());
+            curricularCourseJsonObject.addProperty("name", curricularCourse.getNameI18N().getContent());
             JsonArray entriesArray = new JsonArray();
             Map<Integer, CurricularCourseYearStatistics> entries = new HashMap<Integer, CurricularCourseYearStatistics>();
             for (ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCoursesSet()) {

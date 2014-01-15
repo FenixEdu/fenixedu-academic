@@ -68,6 +68,8 @@ public class FenixInitializer implements ServletContextListener {
 
         logger.info("Initializing Fenix");
 
+        //Hack: to set the proper language at startup - the Language from tools should be properly implemented
+        CoreConfiguration.getConfiguration();
         Language.setDefaultLocale(Locale.getDefault());
 
         RemoteSystem.init();

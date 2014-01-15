@@ -943,9 +943,7 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
         }
         try {
             PhdIndividualProgramProcess individualProgramProcess = uploadBean.getIndividualProgramProcess();
-            final Person person = individualProgramProcess.getPerson();
-            ExecuteProcessActivity.run(createMockUserView(person), individualProgramProcess, UploadDocuments.class,
-                    Collections.singletonList(uploadBean));
+            ExecuteProcessActivity.run(individualProgramProcess, UploadDocuments.class, Collections.singletonList(uploadBean));
             addSuccessMessage(request, "message.documents.uploaded.with.success");
 
         } catch (final DomainException e) {

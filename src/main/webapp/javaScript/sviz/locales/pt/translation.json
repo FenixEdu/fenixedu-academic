@@ -23,6 +23,7 @@
     "positive-grades": "Aprovados"
   },
   "sunburst": {
+    "no-eval": "Sem Nota",
     "not-evaluated": "Não Avaliados",
     "flunked": "Reprovados",
     "approved": "Aprovados",
