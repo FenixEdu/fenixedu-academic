@@ -23,7 +23,7 @@ public class ExecuteProcessActivity {
     }
 
     @Atomic
-    static public Process run(final User userView, final Process process, final Class<?> clazz, final Object object) {
+    static private Process run(final User userView, final Process process, final Class<?> clazz, final Object object) {
         return process.executeActivity(userView, clazz.getSimpleName(), object);
     }
 
