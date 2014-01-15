@@ -12,10 +12,8 @@ import net.sourceforge.fenixedu.domain.QueueJob;
 import net.sourceforge.fenixedu.domain.QueueJobResult;
 import net.sourceforge.fenixedu.domain.QueueJobResultFile;
 import net.sourceforge.fenixedu.domain.QueueJobWithFile;
-import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.util.email.Message;
-import net.sourceforge.fenixedu.domain.util.email.Recipient;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.scheduler.CronTask;
@@ -53,8 +51,7 @@ public class JobQueueDispatcher extends CronTask {
         if (queueJob != null) {
             try {
                 taskLog("Started: %s (%s) requested by %s on %s\n", queueJob.getClass().getName(), queueJob.getExternalId(),
-                        queueJob.getPerson() != null ? queueJob.getPerson().getName() + "(" + queueJob.getPerson().getUsername()
-                                + ")" : "system", queueJob.getRequestDate());
+                        getQueueJobResponsibleName(queueJob), queueJob.getRequestDate());
                 runJob(queueJob);
                 taskLog("Finished Successfully\n");
             } catch (Throwable e) {
@@ -63,6 +60,10 @@ public class JobQueueDispatcher extends CronTask {
                 throw new Error(e);
             }
         }
+    }
+
+    public String getQueueJobResponsibleName(final QueueJob queueJob) {
+        return queueJob.getPerson() != null ? queueJob.getPerson().getName() + "(" + queueJob.getPerson().getUsername() + ")" : "system";
     }
 
     @Atomic(mode = TxMode.WRITE)
@@ -91,7 +92,7 @@ public class JobQueueDispatcher extends CronTask {
     protected void fail(final QueueJob job, Throwable t) {
         job.setFailedCounter(job.getFailedCounter() + 1);
         job.setJobEndTime(new DateTime());
-        if (job.getFailedCounter() == 3 && job.getPerson() != null) {
+        if (job.getFailedCounter() == 3) {
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
             t.printStackTrace(pw);
@@ -99,10 +100,9 @@ public class JobQueueDispatcher extends CronTask {
             String body =
                     "Viva\n\n" + "O trabalho com o externalId de " + job.getExternalId() + " falhou mais de 3 vezes.\n\n"
                             + "Request Time : " + job.getRequestDate() + "\n" + "Start Time : " + job.getJobStartTime() + "\n"
-                            + "User : " + job.getPerson().getName() + "(" + job.getPerson().getUsername() + ")\n"
-                            + "\n\n Error Stack Trace:\n" + sw.toString();
-            new Message(Bennu.getInstance().getSystemSender(), Recipient.newInstance(new RoleGroup(RoleType.MANAGER)), subject,
-                    body);
+                            + "User : " + getQueueJobResponsibleName(job) + "\n" + "\n\n Error Stack Trace:\n" + sw.toString();
+            new Message(Bennu.getInstance().getSystemSender(), Bennu.getInstance().getSystemSender()
+                    .getRoleRecipient(RoleType.MANAGER), subject, body);
         }
     }
 }
