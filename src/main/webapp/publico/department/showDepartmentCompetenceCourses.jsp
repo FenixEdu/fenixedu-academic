@@ -10,22 +10,22 @@
 	<f:loadBundle basename="resources/GlobalResources" var="globalBundle"/>
 
 	<h:outputText value="<div class='breadcumbs mvert0'>" escape="false"/>
-	
-		<h:outputLink value="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>" >
-			<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>
-		</h:outputLink>
 		
+		
+		<h:outputLink value="#{CompetenceCourseManagement.instalationUrl}" >
+			<h:outputText value="#{CompetenceCourseManagement.institutionAcronym}"/>
+		</h:outputLink>
 		&nbsp;&gt;&nbsp;
-		<h:outputLink target="_blank" value="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>#{globalBundle['link.institution.structure']}">
-			<h:outputText value="#{publicDepartmentBundle['structure']}"/>
-		</h:outputLink>
 		
+		<h:outputLink target="_blank" value="#{CompetenceCourseManagement.institutionUrl}#{globalBundle['link.institution.structure']}" >
+			<h:outputText value="#{publicDegreeInfoBundle['structure']}"/>
+		</h:outputLink>
 		&nbsp;&gt;&nbsp;
 		<h:outputLink value="#{CompetenceCourseManagement.contextPath}/publico/department/showDepartments.faces">
 			<h:outputText value="#{publicDepartmentBundle['academic.units']}"/>
 		</h:outputLink>
-		
-		&nbsp;&gt;&nbsp;		
+		&nbsp;&gt;&nbsp;
+				
 		<fc:contentLink label="#{CompetenceCourseManagement.selectedDepartmentUnit.department.nameI18n.content}" content="#{CompetenceCourseManagement.selectedDepartmentUnit.site}" />
 		
 		&nbsp;&gt;&nbsp;

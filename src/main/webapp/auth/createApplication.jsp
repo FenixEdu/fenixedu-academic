@@ -22,6 +22,6 @@
 	<fr:destination name="cancel" path="/externalApps.do?method=createApplication" />
 </fr:create>
 </logic:present>
-<logic:notPresent  role="DEVELOPER">
+<logic:notPresent  role="role(DEVELOPER)">
 	<p>Nesta interface pode registar aplicações criadas por si que utilizem as API's disponibilizadas pelo sistema FenixEdu. No site de desenvolvimento do FenixEdu pode encontrar informação sobre como utilizar a API em:</p>
 </logic:notPresent>

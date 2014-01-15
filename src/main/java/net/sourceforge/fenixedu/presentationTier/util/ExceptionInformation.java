@@ -453,8 +453,8 @@ public class ExceptionInformation {
                 exceptionInfo.append("Element:").append(sessionElement).append("\n");
                 exceptionInfo.append("Element Value:").append(session.getAttribute(sessionElement)).append("\n");
             }
-            this.sessionContextEntries = sessionContext;
         }
+        this.sessionContextEntries = sessionContext;
     }
 
     private static void stackTrace2StringAppend(StackTraceElement[] stackTrace, StringBuilder exceptionInfo) {

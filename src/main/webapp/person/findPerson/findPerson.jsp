@@ -171,8 +171,7 @@ function check(e,v){
 			<table class="ppid" cellpadding="0" cellspacing="0">
 				<tr>
 					<td width="70%"><strong> <bean:write
-								name="personalInfo" property="name" /> </strong> (<bean:write
-							name="personalInfo" property="username" />) <bean:size
+								name="personalInfo" property="name" /> </strong> (<bean:write name="personalInfo" property="user.username"/><logic:present name="personalInfo" property="employee">, <bean:write name="personalInfo" property="employee.employeeNumber"/></logic:present><logic:present name="personalInfo" property="student">, <bean:write name="personalInfo" property="student.number"/></logic:present>) <bean:size
 							id="mainRolesSize" name="personalInfo" property="mainRoles"></bean:size>
 						<logic:greaterThan name="mainRolesSize" value="0">
 							<logic:iterate id="role" name="personalInfo" property="mainRoles"
