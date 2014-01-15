@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.util;
 
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.commons.configuration.ConfigurationInvocationHandler;
 import org.fenixedu.commons.configuration.ConfigurationManager;
 import org.fenixedu.commons.configuration.ConfigurationProperty;
@@ -373,4 +374,23 @@ public class FenixConfigurationManager {
     public static void setBarraAsAuthenticationBroker(Boolean state) {
         barraAsAuthenticationBroker = state;
     }
+
+    public static String getFenixUrl() {
+        final String appName = FenixConfigurationManager.getConfiguration().getHTTPHost();
+        final String appContext = FenixConfigurationManager.getConfiguration().appContext();
+        final String httpPort = FenixConfigurationManager.getConfiguration().getHTTPPort();
+        final String httpProtocol = FenixConfigurationManager.getConfiguration().getHTTPProtocol();
+        String HOST = null;
+        if (StringUtils.isEmpty(httpPort)) {
+            HOST = String.format("%s://%s/", httpProtocol, appName);
+        } else {
+            HOST = String.format("%s://%s:%s/", httpProtocol, appName, httpPort);
+        }
+        if (!StringUtils.isEmpty(appContext)) {
+            HOST += appContext;
+        }
+        HOST = StringUtils.removeEnd(HOST, "/");
+        return HOST;
+    }
+
 }

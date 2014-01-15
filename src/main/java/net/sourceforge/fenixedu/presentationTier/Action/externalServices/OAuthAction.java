@@ -9,6 +9,7 @@ import static org.apache.commons.httpclient.HttpStatus.SC_UNAUTHORIZED;
 
 import java.io.IOException;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,10 +19,10 @@ import net.sourceforge.fenixedu.domain.AppUserSession;
 import net.sourceforge.fenixedu.domain.ExternalApplication;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.FenixOAuthToken;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.FenixOAuthToken.FenixOAuthTokenException;
 import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import nl.bitwalker.useragentutils.UserAgent;
 
 import org.apache.amber.oauth2.as.issuer.MD5Generator;
@@ -33,12 +34,15 @@ import org.apache.amber.oauth2.common.error.OAuthError;
 import org.apache.amber.oauth2.common.exception.OAuthProblemException;
 import org.apache.amber.oauth2.common.exception.OAuthSystemException;
 import org.apache.amber.oauth2.common.message.OAuthResponse;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpHeaders;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.util.CookieReaderUtils;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,6 +50,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "external", path = "/oauth", scope = "request", parameter = "method")
 @Forwards({ @Forward(name = "showAuthorizationPage", path = "showAuthorizationPage"),
@@ -55,6 +60,8 @@ public class OAuthAction extends FenixDispatchAction {
     private static final Logger logger = LoggerFactory.getLogger(OAuthAction.class);
 
     private final static OAuthIssuer OAUTH_ISSUER = new OAuthIssuerImpl(new MD5Generator());
+
+    public final static String OAUTH_SESSION_KEY = "OAUTH_CLIENT_ID";
 
     private static String getDeviceId(HttpServletRequest request) {
         String deviceId = request.getParameter("device_id");
@@ -79,32 +86,72 @@ public class OAuthAction extends FenixDispatchAction {
     public ActionForward getUserPermission(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
+        String clientId = request.getParameter("client_id");
+        String redirectUrl = request.getParameter("redirect_uri");
         Person person = getLoggedPerson(request);
-        if (person == null) {
-            RequestUtils.sendLoginRedirect(request, response);
-            return null;
-        } else {
-            String clientId = request.getParameter("client_id");
-            String redirectUrl = request.getParameter("redirect_uri");
 
-            ExternalApplication clientApplication = getExternalApplication(clientId);
-            if (clientApplication == null) {
-                return mapping.findForward("oauthErrorPage");
-            }
+        if (!StringUtils.isEmpty(clientId) && !StringUtils.isEmpty(redirectUrl)) {
+            if (person == null) {
+                //redirect person to this action with client id in session
 
-            if (clientApplication.matchesUrl(redirectUrl)) {
-
-                if (!clientApplication.hasAppUserAuthorization(person.getUser())) {
-                    request.setAttribute("application", clientApplication);
-                    return mapping.findForward("showAuthorizationPage");
+                final String cookieValue = clientId + "|" + redirectUrl;
+                response.addCookie(new Cookie(OAUTH_SESSION_KEY, Base64.encodeBase64String(cookieValue.getBytes())));
+                if (CoreConfiguration.casConfig().isCasEnabled()) {
+                    response.sendRedirect(CoreConfiguration.casConfig().getCasLoginUrl(
+                            FenixConfigurationManager.getFenixUrl() + "/oauth/userdialog"));
                 } else {
-                    return redirectWithCode(request, response, clientApplication);
+                    response.sendRedirect(request.getContextPath() + "/oauth/userdialog");
                 }
+                return null;
+            } else {
+                return redirectToRedirectUrl(mapping, request, response, person, clientId, redirectUrl);
             }
+        } else {
+            if (person != null) {
+                // this is the request that will recover client id from session
+                final Cookie cookie = CookieReaderUtils.getCookieForName(OAUTH_SESSION_KEY, request);
+                if (cookie == null) {
+                    logger.debug("Cookie can't be null because this a direct from this action with client id in session");
+                    return mapping.findForward("oauthErrorPage");
+                }
+                final String sessionClientId = (String) cookie.getValue();
+                if (!StringUtils.isEmpty(sessionClientId)) {
+                    return redirectToRedirectUrl(mapping, request, response, person, cookie);
+                }
+            } else {
+                logger.debug("Person should not be null since this a redirect from this action putting client id in session");
+            }
+        }
 
+        return mapping.findForward("oauthErrorPage");
+
+    }
+
+    public ActionForward redirectToRedirectUrl(ActionMapping mapping, HttpServletRequest request, HttpServletResponse response,
+            Person person, final Cookie cookie) {
+        String cookieValue = new String(Base64.decodeBase64(cookie.getValue()));
+        final int indexOf = cookieValue.indexOf("|");
+        String clientApplicationId = cookieValue.substring(0, indexOf);
+        String redirectUrl = cookieValue.substring(indexOf + 1, cookieValue.length());
+
+        return redirectToRedirectUrl(mapping, request, response, person, clientApplicationId, redirectUrl);
+    }
+
+    public ActionForward redirectToRedirectUrl(ActionMapping mapping, HttpServletRequest request, HttpServletResponse response,
+            Person person, String clientApplicationId, String redirectUrl) {
+
+        final ExternalApplication clientApplication = FenixFramework.getDomainObject(clientApplicationId);
+
+        if (!FenixFramework.isDomainObjectValid(clientApplication) || !clientApplication.matchesUrl(redirectUrl)) {
             return mapping.findForward("oauthErrorPage");
         }
 
+        if (!clientApplication.hasAppUserAuthorization(person.getUser())) {
+            request.setAttribute("application", clientApplication);
+            return mapping.findForward("showAuthorizationPage");
+        } else {
+            return redirectWithCode(request, response, clientApplication);
+        }
     }
 
     // http://localhost:8080/ciapl/external/oauth.do?method=userConfirmation&...
