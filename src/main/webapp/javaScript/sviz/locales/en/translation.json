@@ -23,6 +23,7 @@
     "positive-grades": "Positive Grades"
   },
   "sunburst": {
+    "no-eval": "No Grade",
     "not-evaluated": "Not Evaluated",
     "flunked": "Flunked",
     "approved": "Approved",
