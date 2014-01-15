@@ -198,11 +198,15 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
      */
     @Override
     public boolean isAllowedToManageProcess(User userView) {
-        Set<AcademicProgram> programs =
-                AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
-                        AcademicOperationType.MANAGE_PHD_PROCESSES);
+        if (userView != null) {
+            Set<AcademicProgram> programs =
+                    AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
+                            AcademicOperationType.MANAGE_PHD_PROCESSES);
 
-        return programs.contains(this.getPhdProgram());
+            return programs.contains(this.getPhdProgram());
+        } else {
+            return false;
+        }
     }
 
     public boolean isCurrentUserAllowedToManageProcess() {
