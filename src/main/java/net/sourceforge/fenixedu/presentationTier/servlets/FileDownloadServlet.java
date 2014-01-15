@@ -48,6 +48,11 @@ public class FileDownloadServlet extends HttpServlet {
         if (file == null) {
             sendBadRequest(response);
         } else {
+            // Translate old paths (/downloadFile/<oid>) to the new ones (/downloadFile/<oid>/<filename>)
+            if (request.getPathInfo().equals("/" + file.getExternalId())) {
+                response.sendRedirect(file.getDownloadUrl());
+                return;
+            }
             final Person person = AccessControl.getPerson();
             if (!file.isPrivate() || file.isPersonAllowedToAccess(person)) {
                 byte[] content = file.getContent();
@@ -89,7 +94,7 @@ public class FileDownloadServlet extends HttpServlet {
             return null;
         }
         DomainObject object = FenixFramework.getDomainObject(parts[0]);
-        if (object instanceof File) {
+        if (object instanceof File && FenixFramework.isDomainObjectValid(object)) {
             return (File) object;
         } else {
             return null;
