@@ -10,8 +10,7 @@ public class RemoveCandidacyDocument extends PhdProgramCandidacyProcessActivity 
 
     @Override
     protected void activityPreConditions(PhdProgramCandidacyProcess process, User userView) {
-        User user = userView != null ? userView : process.getPerson().getUser();
-        if (!process.isAllowedToManageProcess(user)) {
+        if (!process.isAllowedToManageProcess(userView)) {
             return;
         }
 
