@@ -364,10 +364,8 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 
     private void appendUserInfo(StringBuilder builder, Person loggedPerson, SupportRequestBean requestBean) {
         generateLabel(builder, "Nome");
-        builder.append("[");
         if (loggedPerson != null) {
-
-            builder.append(loggedPerson.getName()).append("]");
+            builder.append("[").append(loggedPerson.getName()).append("]");
             appendNewLine(builder);
             generateLabel(builder, "Username");
             builder.append("[").append(loggedPerson.getUsername()).append("]");
@@ -375,7 +373,6 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
             final ResourceBundle aBundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
             builder.append(aBundle.getString("support.mail.session.error"));
         }
-        builder.append("]");
     }
 
     private void appendNewLine(StringBuilder builder) {

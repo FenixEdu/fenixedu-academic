@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.servlets;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URLEncoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,6 +21,8 @@ import org.fenixedu.bennu.core.util.CoreConfiguration;
 
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
+
+import com.google.common.base.Charsets;
 
 @WebServlet(urlPatterns = FileDownloadServlet.SERVLET_PATH + "*")
 public class FileDownloadServlet extends HttpServlet {
@@ -45,6 +48,11 @@ public class FileDownloadServlet extends HttpServlet {
         if (file == null) {
             sendBadRequest(response);
         } else {
+            // Translate old paths (/downloadFile/<oid>) to the new ones (/downloadFile/<oid>/<filename>)
+            if (request.getPathInfo().equals("/" + file.getExternalId())) {
+                response.sendRedirect(file.getDownloadUrl());
+                return;
+            }
             final Person person = AccessControl.getPerson();
             if (!file.isPrivate() || file.isPersonAllowedToAccess(person)) {
                 byte[] content = file.getContent();
@@ -65,11 +73,10 @@ public class FileDownloadServlet extends HttpServlet {
         }
     }
 
-    private String sendLoginRedirect(final HttpServletRequest request, final File file) {
+    private String sendLoginRedirect(final HttpServletRequest request, final File file) throws IOException {
         final boolean isCasEnabled = CoreConfiguration.casConfig().isCasEnabled();
         if (isCasEnabled) {
-            return CoreConfiguration.casConfig().getCasLoginUrl(
-                    FenixConfigurationManager.getConfiguration().getFileDownloadUrlLocalContent() + file.getExternalId());
+            return CoreConfiguration.casConfig().getCasLoginUrl(URLEncoder.encode(file.getDownloadUrl(), Charsets.UTF_8.name()));
         }
         return FenixConfigurationManager.getConfiguration().getLoginPage() + "?service=" + request.getRequestURI();
     }
@@ -87,7 +94,7 @@ public class FileDownloadServlet extends HttpServlet {
             return null;
         }
         DomainObject object = FenixFramework.getDomainObject(parts[0]);
-        if (object instanceof File) {
+        if (object instanceof File && FenixFramework.isDomainObjectValid(object)) {
             return (File) object;
         } else {
             return null;

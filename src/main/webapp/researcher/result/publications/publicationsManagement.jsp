@@ -61,7 +61,7 @@
 <!-- 
 	<div class="error3">
 		<p>
-			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.moved.to.sotis" arg0="<a href='https://id.ist.utl.pt/cas/login?service=https%3A%2F%2Fbarra.ist.utl.pt%2Flogin%2F%3Fnext%3Dhttps%253A%252F%252Fsotis.ist.utl.pt%252Fsotis-ui%252F%2523researcher'>sotis</a>"/>
+			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.moved.to.sotis" arg0="<a href='https://id.ist.utl.pt/cas/login?service=https%3A%2F%2Fbarra.tecnico.ulisboa.pt%2Flogin%2F%3Fnext%3Dhttps%253A%252F%252Fsotis.ist.utl.pt%252Fsotis-ui%252F%2523researcher'>sotis</a>"/>
 		</p>
 	</div>
  -->

@@ -1,3 +1,9 @@
+<%@page import="org.apache.commons.lang.StringUtils"%>
+<%@page import="com.google.common.base.Strings"%>
+<%@page import="com.google.common.base.Joiner"%>
+<%@page import="org.fenixedu.bennu.core.domain.User"%>
+<%@page import="net.sourceforge.fenixedu.domain.Employee"%>
+<%@page import="net.sourceforge.fenixedu.domain.student.Student"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -164,16 +170,20 @@ function check(e,v){
 	</p>
 
 	<logic:iterate id="personalInfo" name="personListFinded"
-		indexId="personIndex">
+		indexId="personIndex" type="net.sourceforge.fenixedu.domain.Person">
 		<bean:define id="personID" name="personalInfo" property="externalId" />
-
+		<% 
+			String username = personalInfo.getUser() !=null ? personalInfo.getUser().getUsername() : null;
+			Integer studentNumber = personalInfo.getStudent() != null ? personalInfo.getStudent().getNumber() : null;
+			Integer employeeNumber = personalInfo.getEmployee() != null ? personalInfo.getEmployee().getEmployeeNumber() : null;
+			String personalIds = Joiner.on(", ").skipNulls().join(username, studentNumber, employeeNumber);
+			personalIds = StringUtils.isNotBlank(personalIds) ? "(" + personalIds + ")" : "";
+		%>
 		<div class="pp">
 			<table class="ppid" cellpadding="0" cellspacing="0">
 				<tr>
-					<td width="70%"><strong> <bean:write
-								name="personalInfo" property="name" /> </strong> (<bean:write
-							name="personalInfo" property="username" />) <bean:size
-							id="mainRolesSize" name="personalInfo" property="mainRoles"></bean:size>
+					<td width="70%"><strong> <bean:write name="personalInfo" property="name" /> </strong> <%= personalIds %>
+					<bean:size	id="mainRolesSize" name="personalInfo" property="mainRoles"></bean:size>
 						<logic:greaterThan name="mainRolesSize" value="0">
 							<logic:iterate id="role" name="personalInfo" property="mainRoles"
 								indexId="i">

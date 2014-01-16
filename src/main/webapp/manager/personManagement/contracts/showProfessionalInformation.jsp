@@ -7,11 +7,25 @@
 
 <html:xhtml/>
 <logic:present name="person">
+
 	<em><bean:message key="label.person.main.title" bundle="APPLICATION_RESOURCES"/></em>
 	<h2><bean:message key="link.title.professionalInformation" bundle="CONTRACTS_RESOURCES"/></h2>
 	<div class="infoselected">
 		<fr:view name="person" schema="FindPersonFactoryResult" layout="tabular"/>
-		<fr:view name="person" schema="net.sourceforge.fenixedu.domain.Person.user.info" layout="tabular"/>
+		<table>
+			<tr>
+				<th scope="row"><bean:message key="label.person.username" bundle="APPLICATION_RESOURCES"/></th>
+				<logic:notEmpty name="person" property="user">
+					<td><bean:write name="person" property="user.username"/></td>
+				</logic:notEmpty>
+				<logic:notEmpty name="person" property="student">
+					<td><bean:write name="person" property="student.number"/></td>
+				</logic:notEmpty>
+				<logic:notEmpty name="person" property="employee">
+					<td><bean:write name="person" property="employee.employeeNumber"/></td>
+				</logic:notEmpty>
+			</tr>
+		</table>
 	</div>
 	<logic:notEmpty name="person" property="employee">
 		<bean:define id="personExternalId" name="person" property="externalId"/>

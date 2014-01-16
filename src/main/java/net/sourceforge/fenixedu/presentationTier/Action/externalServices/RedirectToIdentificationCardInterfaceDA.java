@@ -22,7 +22,7 @@ public class RedirectToIdentificationCardInterfaceDA extends FenixDispatchAction
         final User user = Authenticate.getUser();
         if (user == null) {
             return new ActionForward(
-                    "https://id.ist.utl.pt/cas/login?service=https%3A%2F%2Fbarra.ist.utl.pt%2Flogin%2F%3Fnext%3Dhttps%253A%252F%252Fid.ist.utl.pt%252Fcas%252Flogin%253Fservice%253Dhttps%253A%252F%252Ffenix.ist.utl.pt%252Fexternal%252FloginForIdentificationCard.do%253Fmethod%253Dredirect",
+                    "https://id.ist.utl.pt/cas/login?service=https%3A%2F%2Fbarra.tecnico.ulisboa.pt%2Flogin%2F%3Fnext%3Dhttps%253A%252F%252Fid.ist.utl.pt%252Fcas%252Flogin%253Fservice%253Dhttps%253A%252F%252Ffenix.ist.utl.pt%252Fexternal%252FloginForIdentificationCard.do%253Fmethod%253Dredirect",
                     true);
         } else if (user.getPerson().hasRole(RoleType.PERSON)) {
             final ActionForward actionForward = new ActionForward();
