@@ -44,7 +44,16 @@
 				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID3' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 			</h:panelGrid>
 		</h:panelGrid>
+		
+		
+		
 	</h:form>	
+	
+	<h:form>
+		<h:commandLink action="#{viewTeacherService.exportTeacherServiceByCourseToXLS}" value="#{bundle['label.teacherService.exportToExcel'] }" >
+		</h:commandLink>
+	</h:form>
+	
 	
 	<h:outputText value="<br/>" escape="false" />
 	
