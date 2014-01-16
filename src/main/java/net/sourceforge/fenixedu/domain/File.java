@@ -15,7 +15,7 @@ import pt.utl.ist.fenix.tools.util.FileUtils;
 @Deprecated
 public abstract class File extends File_Base {
     protected void init(String filename, String displayName, byte[] content, Group group) {
-        init(FileUtils.getFilenameOnly(filename), FileUtils.getFilenameOnly(displayName), content);
+        init(FileUtils.getFilenameOnly(displayName), FileUtils.getFilenameOnly(filename), content);
         setPermittedGroup(group);
         setChecksum(DigestUtils.shaHex(content));
         setChecksumAlgorithm("SHA");
