@@ -30,6 +30,9 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.Atomic.TxMode;
+
 public class Email extends Email_Base {
 
     private static final Logger LOG = LoggerFactory.getLogger(Email.class);
@@ -377,6 +380,7 @@ public class Email extends Email_Base {
         // setBccAddresses(new EmailAddressList(addresses));
     }
 
+    @Atomic(mode = TxMode.WRITE)
     public void deliver() {
         if (!hasAnyRecipients() || (hasMessage() && getMessage().getCreated().plusDays(5).isBeforeNow())) {
             setRootDomainObjectFromEmailQueue(null);

@@ -15,6 +15,7 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.Atomic.TxMode;
 
 public class Message extends Message_Base {
 
@@ -215,26 +216,6 @@ public class Message extends Message_Base {
         return builder.toString();
     }
 
-    private static class Worker extends Thread {
-
-        private final Set<Recipient> recipients;
-
-        private final Set<String> emailAddresses = new HashSet<String>();
-
-        private Worker(final Set<Recipient> recipients) {
-            this.recipients = recipients;
-        }
-
-        @Atomic
-        @Override
-        public void run() {
-            for (final Recipient recipient : recipients) {
-                recipient.addDestinationEmailAddresses(emailAddresses);
-            }
-        }
-
-    }
-
     protected static Set<String> getRecipientAddresses(Set<Recipient> recipients) {
         final Set<String> emailAddresses = new HashSet<String>();
         for (final Recipient recipient : recipients) {
@@ -253,14 +234,9 @@ public class Message extends Message_Base {
                 }
             }
         }
-        final Worker worker = new Worker(getRecipientsSet());
-        worker.start();
-        try {
-            worker.join();
-        } catch (final InterruptedException e) {
-            throw new Error(e);
+        for (final Recipient recipient : getRecipientsSet()) {
+            recipient.addDestinationEmailAddresses(emailAddresses);
         }
-        emailAddresses.addAll(worker.emailAddresses);
         return emailAddresses;
     }
 
@@ -273,11 +249,20 @@ public class Message extends Message_Base {
         return replyToAddresses;
     }
 
-    public void dispatch() {
+    public int dispatch() {
         final Sender sender = getSender();
         final Person person = getPerson();
         final Set<String> destinationBccs = getDestinationBccs();
-        for (final Set<String> bccs : split(destinationBccs)) {
+        final Set<String> tos = getRecipientAddresses(getTosSet());
+        final Set<String> ccs = getRecipientAddresses(getCcsSet());
+        createEmailBatch(sender, person, tos, ccs, split(destinationBccs));
+        return destinationBccs.size() + tos.size() + ccs.size();
+    }
+
+    @Atomic(mode = TxMode.WRITE)
+    private void createEmailBatch(final Sender sender, final Person person, final Set<String> tos, final Set<String> ccs,
+            Set<Set<String>> destinationBccs) {
+        for (final Set<String> bccs : destinationBccs) {
             if (!bccs.isEmpty()) {
                 final Email email =
                         new Email(sender.getFromName(person), sender.getFromAddress(), getReplyToAddresses(person),
@@ -285,8 +270,6 @@ public class Message extends Message_Base {
                 email.setMessage(this);
             }
         }
-        final Set<String> tos = getRecipientAddresses(getTosSet());
-        final Set<String> ccs = getRecipientAddresses(getCcsSet());
         if (!tos.isEmpty() || !ccs.isEmpty()) {
             final Email email =
                     new Email(sender.getFromName(person), sender.getFromAddress(), getReplyToAddresses(person), tos, ccs,

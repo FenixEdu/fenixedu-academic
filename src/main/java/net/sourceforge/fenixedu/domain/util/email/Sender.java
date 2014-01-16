@@ -123,7 +123,8 @@ public class Sender extends Sender_Base {
         return getFromName();
     }
 
-    public void deleteOldMessages() {
+    public int deleteOldMessages() {
+        int deletedCounter = 0;
         final SortedSet<Message> messages = new TreeSet<Message>(Message.COMPARATOR_BY_CREATED_DATE_OLDER_LAST);
         messages.addAll(getMessagesSet());
         int sentCounter = 0;
@@ -131,10 +132,12 @@ public class Sender extends Sender_Base {
             if (message.getSent() != null) {
                 ++sentCounter;
                 if (sentCounter > Message.NUMBER_OF_SENT_EMAILS_TO_STAY) {
+                    deletedCounter++;
                     message.delete();
                 }
             }
         }
+        return deletedCounter;
     }
 
     @Deprecated
