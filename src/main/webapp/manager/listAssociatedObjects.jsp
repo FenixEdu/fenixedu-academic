@@ -35,3 +35,5 @@
 <logic:notPresent name="offices">
 	There are no administrative offices
 </logic:notPresent>
+<h3>Associate Person to Unit</h3>
+<html:link page="/manageAssociatedObjects.do?method=prepareAssociatePersonUnit">Create</html:link><br/>

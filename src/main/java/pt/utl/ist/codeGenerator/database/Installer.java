@@ -4,15 +4,20 @@ import java.io.BufferedReader;
 import java.io.Console;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.MissingResourceException;
 
+import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Instalation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ResourceAllocationRole;
 import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.PersistentAcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
@@ -401,7 +406,6 @@ public class Installer {
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.PERSON));
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL));
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.MANAGER));
-
         person.setRootDomainObject(bennu);
         person.setCountry(process.country);
         person.setCountryOfBirth(process.country);
@@ -414,6 +418,8 @@ public class Installer {
             partyContact.getPartyContactValidation().setState(PartyContactValidationState.VALID);
         }
         Authenticate.mock(user);
+        PersistentAcademicAuthorizationGroup group = new PersistentAcademicAuthorizationGroup(AcademicOperationType.MANAGE_AUTHORIZATIONS, new HashSet<AcademicProgram>(), new HashSet<AdministrativeOffice>());
+        group.addMember(person);
     }
 
     private static void createPartyTypeEnums() {

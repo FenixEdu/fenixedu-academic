@@ -1,5 +1,5 @@
 <%@ page language="java"%>
-<%@ page import="net.sourceforge.fenixedu.domain.ScientificCouncilSite"%>
+<%@ page import="net.sourceforge.fenixedu.domain.organizationalStructure.ScientificCouncilUnit"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -7,8 +7,7 @@
 
 <logic:present role="role(SCIENTIFIC_COUNCIL)">
 	<%
-		request.setAttribute("site", ScientificCouncilSite.getSite());
-		request.setAttribute("unit", ScientificCouncilSite.getSite().getUnit());
+		request.setAttribute("unit", ScientificCouncilUnit.getScientificCouncilUnit());	
 	%>
 
 	<ul>

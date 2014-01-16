@@ -23,8 +23,8 @@ public class AlterExecutionPeriodState {
         if (periodState.getStateCode().equals(PeriodState.CURRENT.getStateCode())) {
             // Deactivate the current
             final ExecutionSemester currentExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
-            final ExecutionYear currentExecutionYear = currentExecutionPeriod.getExecutionYear();
             if (currentExecutionPeriod != null) {
+                final ExecutionYear currentExecutionYear = currentExecutionPeriod.getExecutionYear();
                 currentExecutionPeriod.setState(PeriodState.OPEN);
                 currentExecutionYear.setState(PeriodState.OPEN);
             }
