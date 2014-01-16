@@ -20,7 +20,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.bennu.core.domain.User;
 
 public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
     private static final String SIBS_ENTITY_CODE = FenixConfigurationManager.getConfiguration().getSibsEntityCode();
@@ -75,10 +74,6 @@ public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandi
 
     protected void addValidationMessage(final HttpServletRequest request, final String key, final String... args) {
         addActionMessage("validation", request, key, args);
-    }
-
-    protected User createMockUserView(final Person person) {
-        return person.getUser();
     }
 
     public abstract ActionForward fillPersonalDataInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
