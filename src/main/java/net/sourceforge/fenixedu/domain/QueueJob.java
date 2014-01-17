@@ -1,16 +1,16 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
+
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 
 public abstract class QueueJob extends QueueJob_Base {
     public static enum Priority {
@@ -45,28 +45,13 @@ public abstract class QueueJob extends QueueJob_Base {
         return !getDone() && hasBennuQueueUndone();
     }
 
-    public static List<QueueJob> getAllJobsForClassOrSubClass(final Class aClass, int max) {
-        List<QueueJob> tempList = (List<QueueJob>) CollectionUtils.select(Bennu.getInstance().getQueueJobSet(), new Predicate() {
-
-            @Override
-            public boolean evaluate(Object arg0) {
-                return aClass.isInstance(arg0);
-            }
-
-        });
-
-        return tempList.size() > max ? tempList.subList(0, max) : tempList;
+    public static List<QueueJob> getAllJobsForClassOrSubClass(final Class<? extends QueueJob> type, int maxSize) {
+        List<QueueJob> tempList = Lists.newArrayList(Iterables.filter(Bennu.getInstance().getQueueJobSet(), type));
+        return tempList.size() > maxSize ? tempList.subList(0, maxSize) : tempList;
     }
 
-    public static List<QueueJob> getUndoneJobsForClass(final Class clazz) {
-        return new ArrayList<QueueJob>(CollectionUtils.select(Bennu.getInstance().getQueueJobUndoneSet(), new Predicate() {
-
-            @Override
-            public boolean evaluate(Object arg0) {
-                return clazz.isInstance(arg0);
-            }
-
-        }));
+    public static List<QueueJob> getUndoneJobsForClass(final Class<? extends QueueJob> type) {
+        return Lists.newArrayList(Iterables.filter(Bennu.getInstance().getQueueJobUndoneSet(), type));
     }
 
     public Priority getPriority() {
