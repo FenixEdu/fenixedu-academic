@@ -210,7 +210,7 @@ public class Unit extends Unit_Base {
         setRootDomainObjectForInstitutionUnit(null);
         setCampus(null);
         setUnitAcronym(null);
-
+        setAdministrativeOffice(null);
         super.delete();
     }
 

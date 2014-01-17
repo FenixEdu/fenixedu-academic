@@ -190,13 +190,14 @@
     <li class="navheader">
         <bean:message key="label.site.title"/>
     </li>
+    
+    <logic:notEmpty name="userView" property="person.employee.currentDepartmentWorkingPlace.departmentUnit.site">
     <li>
         <bean:define id="site" name="userView" property="person.employee.currentDepartmentWorkingPlace.departmentUnit.site"/>
         <app:contentLink name="site">
             <bean:message key="link.site.department.view"/>
         </app:contentLink>
     </li>
-    
     <bean:define id="siteId" name="site" property="externalId"/>
     
     <li>
@@ -204,6 +205,7 @@
             <bean:message key="link.site.managers.choose"/>
         </html:link>
     </li>
+    </logic:notEmpty>
 </logic:present>
     
 	</ul>
