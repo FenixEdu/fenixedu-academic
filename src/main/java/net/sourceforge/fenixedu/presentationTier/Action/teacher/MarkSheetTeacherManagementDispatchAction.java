@@ -108,6 +108,7 @@ public class MarkSheetTeacherManagementDispatchAction extends ManageExecutionCou
         submissionBean.setResponsibleTeacher(userView.getPerson().getTeacher());
 
         ActionMessages actionMessages = new ActionMessages();
+        request.setAttribute("executionCourse", submissionBean.getExecutionCourse());
         try {
             List<EnrolmentEvaluation> marksSubmited = CreateMarkSheetByTeacher.run(submissionBean);
             request.setAttribute("marksSubmited", marksSubmited);
