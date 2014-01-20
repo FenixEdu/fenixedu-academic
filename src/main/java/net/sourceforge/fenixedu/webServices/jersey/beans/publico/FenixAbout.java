@@ -82,4 +82,12 @@ public class FenixAbout {
         this.rssFeeds = rssFeeds;
     }
 
+    public String getCurrentAcademicTerm() {
+        return currentAcademicTerm;
+    }
+
+    public void setCurrentAcademicTerm(String currentAcademicTerm) {
+        this.currentAcademicTerm = currentAcademicTerm;
+    }
+
 }

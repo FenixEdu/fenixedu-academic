@@ -25,18 +25,29 @@ public abstract class FenixCourseEvaluation {
 
     public abstract static class WrittenEvaluation extends FenixCourseEvaluation {
 
+        private static FenixSpace.Room noSpaceRoom = new FenixSpace.Room();
+
         Boolean isInEnrolmentPeriod;
         FenixInterval enrollmentPeriod;
         Boolean isEnrolled;
         Set<FenixCourse> courses;
         Set<FenixSpace.Room> rooms;
-        FenixSpace.Room assignedRoom;
+        FenixSpace.Room assignedRoom = noSpaceRoom;
         String id;
+
+        protected WrittenEvaluation() {
+            super(null, null);
+        }
 
         public WrittenEvaluation(String id, String name, FenixPeriod evaluationPeriod, Boolean isInEnrolmentPeriod,
                 String enrollmentPeriodStart, String enrolmentPeriodEnd, List<AllocatableSpace> rooms, Boolean isEnrolled,
-                Set<ExecutionCourse> courses, AllocatableSpace assignedRoom) {
+                Set<ExecutionCourse> courses) {
             super(name, evaluationPeriod);
+            init(id, isInEnrolmentPeriod, enrollmentPeriodStart, enrolmentPeriodEnd, rooms, isEnrolled, courses);
+        }
+
+        private void init(String id, Boolean isInEnrolmentPeriod, String enrollmentPeriodStart, String enrolmentPeriodEnd,
+                List<AllocatableSpace> rooms, Boolean isEnrolled, Set<ExecutionCourse> courses) {
             setIsInEnrolmentPeriod(isInEnrolmentPeriod);
             setEnrollmentPeriod(new FenixInterval(enrollmentPeriodStart, enrolmentPeriodEnd));
             setRooms(rooms);
@@ -49,8 +60,15 @@ public abstract class FenixCourseEvaluation {
                 }
 
             }).toSet());
-            setAssignedRoom(assignedRoom);
             setId(id);
+        }
+
+        public WrittenEvaluation(String id, String name, FenixPeriod evaluationPeriod, Boolean isInEnrolmentPeriod,
+                String enrollmentPeriodStart, String enrolmentPeriodEnd, List<AllocatableSpace> rooms, Boolean isEnrolled,
+                Set<ExecutionCourse> courses, AllocatableSpace assignedRoom) {
+            super(name, evaluationPeriod);
+            init(id, isInEnrolmentPeriod, enrollmentPeriodStart, enrolmentPeriodEnd, rooms, isEnrolled, courses);
+            setAssignedRoom(assignedRoom);
         }
 
         public Boolean getIsInEnrolmentPeriod() {
@@ -94,6 +112,7 @@ public abstract class FenixCourseEvaluation {
             this.isEnrolled = isEnrolled;
         }
 
+        @JsonInclude(Include.NON_EMPTY)
         public Set<FenixCourse> getCourses() {
             return courses;
         }
@@ -102,6 +121,7 @@ public abstract class FenixCourseEvaluation {
             this.courses = courses;
         }
 
+        @JsonInclude(Include.NON_DEFAULT)
         public FenixSpace.Room getAssignedRoom() {
             return assignedRoom;
         }
@@ -122,15 +142,38 @@ public abstract class FenixCourseEvaluation {
 
     public static class Test extends WrittenEvaluation {
 
+        protected Test() {
+            super();
+        }
+
+        public Test(String id, String name, FenixPeriod evaluationPeriod, Boolean isInEnrolmentPeriod,
+                String enrollmentPeriodStart, String enrolmentPeriodEnd, List<AllocatableSpace> rooms, Boolean isEnrolled,
+                Set<ExecutionCourse> courses) {
+            super(id, name, evaluationPeriod, isInEnrolmentPeriod, enrollmentPeriodStart, enrolmentPeriodEnd, rooms, isEnrolled,
+                    courses);
+        }
+
         public Test(String externalId, String name, FenixPeriod evaluationPeriod, Boolean isEnrolmentPeriod,
                 String enrollmentPeriodStart, String enrolmentPeriodEnd, List<AllocatableSpace> rooms, Boolean isEnroled,
                 Set<ExecutionCourse> courses, AllocatableSpace assignedRoom) {
             super(externalId, name, evaluationPeriod, isEnrolmentPeriod, enrollmentPeriodStart, enrolmentPeriodEnd, rooms,
                     isEnroled, courses, assignedRoom);
         }
+
     }
 
     public static class Exam extends WrittenEvaluation {
+
+        protected Exam() {
+            super();
+        }
+
+        public Exam(String id, String name, FenixPeriod evaluationPeriod, Boolean isInEnrolmentPeriod,
+                String enrollmentPeriodStart, String enrolmentPeriodEnd, List<AllocatableSpace> rooms, Boolean isEnrolled,
+                Set<ExecutionCourse> courses) {
+            super(id, name, evaluationPeriod, isInEnrolmentPeriod, enrollmentPeriodStart, enrolmentPeriodEnd, rooms, isEnrolled,
+                    courses);
+        }
 
         public Exam(String externalId, String name, FenixPeriod evaluationPeriod, Boolean isEnrolmentPeriod,
                 String enrollmentPeriodStart, String enrolmentPeriodEnd, List<AllocatableSpace> rooms, Boolean isEnroled,

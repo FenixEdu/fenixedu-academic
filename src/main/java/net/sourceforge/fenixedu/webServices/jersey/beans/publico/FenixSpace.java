@@ -10,6 +10,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize.Typing;
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 
@@ -87,20 +89,39 @@ public class FenixSpace {
             }
         }
 
+        @JsonInclude(Include.NON_NULL)
         public String description;
+        @JsonInclude(Include.NON_NULL)
         public RoomCapacity capacity;
         @JsonInclude(Include.NON_NULL)
         public List<FenixRoomEvent> events;
 
+        /**
+         * this is used to create a null object so that assignedRoom in evaluations can be null
+         */
+        public Room() {
+
+        }
+
         public Room(AllocatableSpace allocationSpace) {
-            this(allocationSpace, null);
-            description = allocationSpace.getCompleteIdentificationWithoutCapacities();
+            this(allocationSpace, false, null);
+        }
+
+        public Room(AllocatableSpace allocationSpace, Boolean withParentAndContainedSpaces) {
+            this(allocationSpace, withParentAndContainedSpaces, null);
+        }
+
+        public Room(AllocatableSpace allocationSpace, Boolean withParentAndContainedSpaces, List<FenixRoomEvent> events) {
+            super(allocationSpace, withParentAndContainedSpaces);
+            if (withParentAndContainedSpaces) {
+                this.description = allocationSpace.getCompleteIdentificationWithoutCapacities();
+                this.capacity = new RoomCapacity(allocationSpace.getNormalCapacity(), allocationSpace.getExamCapacity());
+            }
+            this.events = events;
         }
 
         public Room(AllocatableSpace allocationSpace, List<FenixRoomEvent> events) {
-            super(allocationSpace);
-            this.capacity = new RoomCapacity(allocationSpace.getNormalCapacity(), allocationSpace.getExamCapacity());
-            this.events = events;
+            this(allocationSpace, true, events);
         }
     }
 
@@ -108,16 +129,22 @@ public class FenixSpace {
     public String name;
 
     @JsonInclude(Include.NON_NULL)
+    @JsonSerialize(typing = Typing.DYNAMIC)
     public Set<FenixSpace> containedSpaces = null;
 
     @JsonInclude(Include.NON_NULL)
+    @JsonSerialize(typing = Typing.DYNAMIC)
     public FenixSpace parentSpace = null;
 
-    public FenixSpace(Space space) {
+    protected FenixSpace() {
+
+    }
+
+    protected FenixSpace(Space space) {
         this(space, false);
     }
 
-    public FenixSpace(Space space, boolean withParentAndContainedSpaces) {
+    protected FenixSpace(Space space, boolean withParentAndContainedSpaces) {
         this.id = space.getExternalId();
         this.name = space.getSpaceInformation().getPresentationName();
         if (withParentAndContainedSpaces) {
@@ -131,13 +158,13 @@ public class FenixSpace {
 
             @Override
             public FenixSpace apply(Space input) {
-                return new FenixSpace(input);
+                return getSimpleSpace(input);
             }
         }).toSet();
     }
 
     private void setParentSpace(Space space) {
-        this.parentSpace = space.getSuroundingSpace() == null ? null : new FenixSpace(space.getSuroundingSpace());
+        this.parentSpace = space.getSuroundingSpace() == null ? null : getSimpleSpace(space.getSuroundingSpace());
     }
 
     public static FenixSpace getSpace(Space space, boolean withParentAndContainedSpaces) {
@@ -152,6 +179,10 @@ public class FenixSpace {
         }
         if (space.isFloor()) {
             return new FenixSpace.Floor(space, withParentAndContainedSpaces);
+        }
+
+        if (space.isRoom()) {
+            return new FenixSpace.Room((AllocatableSpace) space, withParentAndContainedSpaces);
         }
 
         return null;

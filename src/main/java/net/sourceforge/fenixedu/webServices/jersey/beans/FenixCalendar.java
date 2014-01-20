@@ -99,23 +99,23 @@ public class FenixCalendar {
 
     }
 
-    private String year;
+    private String academicTerm;
 
     @JsonSerialize(typing = Typing.DYNAMIC)
     private List<FenixCalendarEvent> events;
 
-    public FenixCalendar(String year, List<FenixCalendarEvent> events) {
+    public FenixCalendar(String academicTerm, List<FenixCalendarEvent> events) {
         super();
-        this.year = year;
+        this.academicTerm = academicTerm;
         this.events = events;
     }
 
-    public String getYear() {
-        return year;
+    public String getAcademicTerm() {
+        return academicTerm;
     }
 
-    public void setYear(String year) {
-        this.year = year;
+    public void setAcademicTerm(String academicTerm) {
+        this.academicTerm = academicTerm;
     }
 
     public List<FenixCalendarEvent> getEvents() {

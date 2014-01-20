@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.util.icalendar.EvaluationEventBean;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;

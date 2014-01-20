@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.webServices.jersey.api;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,6 +29,7 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.StreamingOutput;
 
 import net.fortuna.ical4j.model.Calendar;
 import net.sourceforge.fenixedu.applicationTier.Factory.RoomSiteComponentBuilder;
@@ -75,9 +80,12 @@ import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.B
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
+import net.sourceforge.fenixedu.domain.space.Blueprint;
+import net.sourceforge.fenixedu.domain.space.BlueprintFile;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.Space;
+import net.sourceforge.fenixedu.domain.space.SpaceInformation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
@@ -89,6 +97,7 @@ import net.sourceforge.fenixedu.domain.util.icalendar.EvaluationEventBean;
 import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
 import net.sourceforge.fenixedu.presentationTier.Action.ICalendarSyncPoint;
 import net.sourceforge.fenixedu.presentationTier.Action.externalServices.OAuthUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.spaceManager.ManageSpaceBlueprintsDA;
 import net.sourceforge.fenixedu.presentationTier.backBeans.student.enrolment.DisplayEvaluationsForStudentToEnrol;
 import net.sourceforge.fenixedu.util.ContentType;
 import net.sourceforge.fenixedu.util.EvaluationType;
@@ -125,6 +134,7 @@ import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixSchedule;
 import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixSpace;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.fileupload.util.Streams;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
@@ -337,7 +347,7 @@ public class FenixAPIv1 {
         CLASS, EVALUATION;
     }
 
-    private FenixCalendar getFenixCalendar(String year, List<EventBean> eventBeans, EventType eventType) {
+    private FenixCalendar getFenixCalendar(String academicTerm, List<EventBean> eventBeans, EventType eventType) {
 
         List<FenixCalendarEvent> events = new ArrayList<FenixCalendarEvent>();
         for (EventBean eventBean : eventBeans) {
@@ -351,7 +361,9 @@ public class FenixAPIv1 {
             Set<FenixSpace> rooms = new HashSet<>();
             if (eventBean.getRooms() != null) {
                 for (AllocatableSpace room : eventBean.getRooms()) {
-                    rooms.add(FenixSpace.getSimpleSpace(room));
+                    if (room != null) {
+                        rooms.add(FenixSpace.getSimpleSpace(room));
+                    }
                 }
             }
 
@@ -381,15 +393,15 @@ public class FenixAPIv1 {
 
             events.add(event);
         }
-        return new FenixCalendar(year, events);
+        return new FenixCalendar(academicTerm, events);
     }
 
-    private FenixCalendar getFenixClassCalendar(String year, List<EventBean> eventBeans) {
-        return getFenixCalendar(year, eventBeans, EventType.CLASS);
+    private FenixCalendar getFenixClassCalendar(String academicTerm, List<EventBean> eventBeans) {
+        return getFenixCalendar(academicTerm, eventBeans, EventType.CLASS);
     }
 
-    private FenixCalendar getFenixEvaluationsCalendar(String year, List<EventBean> eventBeans) {
-        return getFenixCalendar(year, eventBeans, EventType.EVALUATION);
+    private FenixCalendar getFenixEvaluationsCalendar(String academicTerm, List<EventBean> eventBeans) {
+        return getFenixCalendar(academicTerm, eventBeans, EventType.EVALUATION);
     }
 
     private String evaluationCalendarICal(Person person) {
@@ -406,13 +418,13 @@ public class FenixAPIv1 {
     private FenixCalendar evaluationCalendarJson(Person person) {
         final User user = person.getUser();
 
-        String year = ExecutionYear.readCurrentExecutionYear().getName();
+        String academicTerm = ExecutionYear.readCurrentExecutionYear().getQualifiedName();
 
         ICalendarSyncPoint calendarSyncPoint = new ICalendarSyncPoint();
         List<EventBean> listEventBean = calendarSyncPoint.getExams(user);
         listEventBean.addAll(calendarSyncPoint.getTeachingExams(user));
 
-        return getFenixEvaluationsCalendar(year, listEventBean);
+        return getFenixEvaluationsCalendar(academicTerm, listEventBean);
     }
 
     /**
@@ -460,13 +472,13 @@ public class FenixAPIv1 {
     private FenixCalendar classesCalendarJson(Person person) {
 
         final User user = person.getUser();
-        String year = ExecutionYear.readCurrentExecutionYear().getName();
+        String academicTerm = ExecutionYear.readCurrentExecutionYear().getQualifiedName();
 
         ICalendarSyncPoint calendarSyncPoint = new ICalendarSyncPoint();
         List<EventBean> listEventBean = calendarSyncPoint.getClasses(user);
         listEventBean.addAll(calendarSyncPoint.getTeachingClasses(user));
 
-        return getFenixClassCalendar(year, listEventBean);
+        return getFenixClassCalendar(academicTerm, listEventBean);
     }
 
     /**
@@ -859,7 +871,7 @@ public class FenixAPIv1 {
         String degreeUrl = FenixConfigurationManager.getFenixUrl() + degree.getSite().getReversePath();
 
         for (Campus campus : degree.getCampus(executionYear)) {
-            degreeCampus.add(FenixSpace.getSpace(campus));
+            degreeCampus.add(FenixSpace.getSimpleSpace(campus));
         }
 
         FenixDegreeExtended.FenixDegreeInfo fenixDegreeInfo = null;
@@ -1016,7 +1028,8 @@ public class FenixAPIv1 {
         for (Map.Entry<CompetenceCourse, Set<CurricularCourse>> entry : curricularCourses.entrySet()) {
 
             List<FenixCourseExtended.FenixCompetence.BiblioRef> biblios = new ArrayList<>();
-            for (BibliographicReference bibliographicReference : entry.getKey().getBibliographicReferences()
+            final CompetenceCourse competenceCourse = entry.getKey();
+            for (BibliographicReference bibliographicReference : competenceCourse.getBibliographicReferences()
                     .getBibliographicReferencesSortedByOrder()) {
 
                 String author = bibliographicReference.getAuthors();
@@ -1038,9 +1051,9 @@ public class FenixAPIv1 {
                 degrees.add(new FenixCourseExtended.FenixCompetence.Degree(id, dName, dacronym));
             }
 
-            String program = entry.getKey().getProgram();
+            String program = competenceCourse.getProgram();
 
-            moreInfo.add(new FenixCompetence(program, biblios, degrees));
+            moreInfo.add(new FenixCompetence(competenceCourse.getExternalId(), program, biblios, degrees));
 
         }
 
@@ -1193,9 +1206,9 @@ public class FenixAPIv1 {
         final String enrollmentPeriodEnd = end == null ? null : end.toString("yyyy-MM-dd HH:mm:ss");
 
         Set<ExecutionCourse> courses = new HashSet<>();
-        Room assignedRoom = null;
         String writtenEvaluationId = writtenEvaluation.getExternalId();
         if (student != null) {
+            Room assignedRoom = null;
             for (ExecutionCourse executionCourse : writtenEvaluation.getAssociatedExecutionCoursesSet()) {
                 final Registration registration = executionCourse.getRegistration(student.getPerson());
                 final Attends attendsByStudent = executionCourse.getAttendsByStudent(student);
@@ -1208,17 +1221,26 @@ public class FenixAPIv1 {
             if (evalEnrolment != null) {
                 assignedRoom = (Room) evalEnrolment.getRoom();
             }
+
+            if (type.equals(EvaluationType.EXAM_TYPE)) {
+                return new FenixCourseEvaluation.Exam(writtenEvaluationId, name, evaluationPeriod, isEnrolmentPeriod,
+                        enrollmentPeriodStart, enrollmentPeriodEnd, writtenEvaluation.getAssociatedRooms(), isEnrolled, courses,
+                        assignedRoom);
+            } else {
+                return new FenixCourseEvaluation.Test(writtenEvaluationId, name, evaluationPeriod, isEnrolmentPeriod,
+                        enrollmentPeriodStart, enrollmentPeriodEnd, writtenEvaluation.getAssociatedRooms(), isEnrolled, courses,
+                        assignedRoom);
+            }
         }
 
         if (type.equals(EvaluationType.EXAM_TYPE)) {
             return new FenixCourseEvaluation.Exam(writtenEvaluationId, name, evaluationPeriod, isEnrolmentPeriod,
-                    enrollmentPeriodStart, enrollmentPeriodEnd, writtenEvaluation.getAssociatedRooms(), isEnrolled, courses,
-                    assignedRoom);
+                    enrollmentPeriodStart, enrollmentPeriodEnd, writtenEvaluation.getAssociatedRooms(), isEnrolled, courses);
         } else {
             return new FenixCourseEvaluation.Test(writtenEvaluationId, name, evaluationPeriod, isEnrolmentPeriod,
-                    enrollmentPeriodStart, enrollmentPeriodEnd, writtenEvaluation.getAssociatedRooms(), isEnrolled, courses,
-                    assignedRoom);
+                    enrollmentPeriodStart, enrollmentPeriodEnd, writtenEvaluation.getAssociatedRooms(), isEnrolled, courses);
         }
+
     }
 
     /**
@@ -1276,6 +1298,63 @@ public class FenixAPIv1 {
             return getFenixRoom((Room) space, getRoomDay(day));
         }
         return FenixSpace.getSpace(space);
+    }
+
+    /**
+     * Returns the blueprint of this space
+     * 
+     * @param oid
+     * @param day
+     *            ("dd/mm/yyyy")
+     * @return
+     */
+    @GET
+    @Path("spaces/{id}/blueprint")
+    @FenixAPIPublic
+    public Response spaceBlueprint(@PathParam("id") String oid, final @QueryParam("format") String format) {
+
+        final boolean isDwgFormat = format != null && format.equals("dwg");
+        final Space space = getDomainObject(oid, Space.class);
+        Blueprint mostRecentBlueprint = space.getMostRecentBlueprint();
+        mostRecentBlueprint = (mostRecentBlueprint == null) ? space.getSuroundingSpaceMostRecentBlueprint() : mostRecentBlueprint;
+        StreamingOutput stream;
+
+        if (mostRecentBlueprint != null) {
+            if (isDwgFormat) {
+                final BlueprintFile blueprintFile = mostRecentBlueprint.getBlueprintFile();
+                final InputStream inputStream = new ByteArrayInputStream(blueprintFile.getContentFile().getBytes());
+                stream = new StreamingOutput() {
+
+                    @Override
+                    public void write(OutputStream output) throws IOException, WebApplicationException {
+                        Streams.copy(inputStream, output, false);
+                    }
+                };
+            } else {
+                final Blueprint blueprint = mostRecentBlueprint;
+                stream = new StreamingOutput() {
+                    @Override
+                    public void write(OutputStream os) throws IOException, WebApplicationException {
+                        SpaceInformation spaceInformation = space.getSpaceInformation();
+                        Boolean isSuroundingSpaceBlueprint = true;
+                        Boolean isToViewOriginalSpaceBlueprint = true;
+                        Boolean viewBlueprintNumbers = true;
+                        Boolean isToViewIdentifications = true;
+                        Boolean isToViewDoorNumbers = false;
+                        BigDecimal scalePercentage = new BigDecimal(100);
+                        ManageSpaceBlueprintsDA.writeBlueprint(spaceInformation, isSuroundingSpaceBlueprint,
+                                isToViewOriginalSpaceBlueprint, viewBlueprintNumbers, isToViewIdentifications,
+                                isToViewDoorNumbers, scalePercentage, blueprint, os);
+                        os.flush();
+                    }
+                };
+            }
+            final String contentType = isDwgFormat ? "application/dwg" : "image/jpeg";
+            final String filename = space.getExternalId() + (isDwgFormat ? ".dwg" : ".jpg");
+            return Response.ok(stream, contentType).header("Content-Disposition", "attachment; filename=" + filename).build();
+        }
+
+        return Response.noContent().build();
     }
 
     private FenixSpace.Room getFenixRoom(Room room, java.util.Calendar rightNow) {
