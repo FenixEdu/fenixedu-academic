@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalRegime;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
@@ -13,26 +13,24 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportGiaf;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.scheduler.CronTask;
 import org.fenixedu.bennu.scheduler.annotation.Task;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 @Task(englishTitle = "ImportProfessionalRegimesFromGiaf")
-public class ImportProfessionalRegimesFromGiaf extends CronTask {
+public class ImportProfessionalRegimesFromGiaf extends ImportFromGiaf {
 
     public ImportProfessionalRegimesFromGiaf() {
 
     }
 
     @Override
-    public void runTask() {
+    public void process() {
         getLogger().debug("Start ImportProfessionalRegimesFromGiaf");
         try {
             PersistentSuportGiaf oracleConnection = PersistentSuportGiaf.getInstance();
             Map<String, ProfessionalRegime> professionalRegimesMap = getProfessionalRegimesMap();
-            String query = getProfessionalRegimesQuery();
+            String query = getQuery();
             getLogger().debug(query);
             PreparedStatement preparedStatement = oracleConnection.prepareStatement(query);
             ResultSet result = preparedStatement.executeQuery();
@@ -89,31 +87,13 @@ public class ImportProfessionalRegimesFromGiaf extends CronTask {
     private boolean isEqual(ProfessionalRegime professionalRegime, MultiLanguageString name, Integer weighting,
             BigDecimal fullTimeEquivalent, CategoryType categoryType) {
         return professionalRegime.getName().getContent().equalsIgnoreCase(name.getContent())
-                && equal(professionalRegime.getFullTimeEquivalent(), fullTimeEquivalent)
-                && equal(professionalRegime.getWeighting(), weighting)
-                && equal(professionalRegime.getCategoryType(), categoryType);
+                && Objects.equals(professionalRegime.getFullTimeEquivalent(), fullTimeEquivalent)
+                && Objects.equals(professionalRegime.getWeighting(), weighting)
+                && Objects.equals(professionalRegime.getCategoryType(), categoryType);
     }
 
-    protected boolean equal(Object obj1, Object obj2) {
-        if (obj1 == null && obj2 == null) {
-            return true;
-        }
-        if (obj1 != null && obj2 != null) {
-            return obj1.equals(obj2);
-        }
-        return false;
-    }
-
-    private String getProfessionalRegimesQuery() {
+    @Override
+    protected String getQuery() {
         return "SELECT a.emp_regime, a.regime_dsc, a.regime_pond, a.valor_eti FROM sltregimes a";
     }
-
-    private Map<String, ProfessionalRegime> getProfessionalRegimesMap() {
-        Map<String, ProfessionalRegime> professionalRegimes = new HashMap<String, ProfessionalRegime>();
-        for (ProfessionalRegime professionalRegime : Bennu.getInstance().getProfessionalRegimesSet()) {
-            professionalRegimes.put(professionalRegime.getGiafId(), professionalRegime);
-        }
-        return professionalRegimes;
-    }
-
 }

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Country;
@@ -39,7 +40,7 @@ public class ImportPersonGrantOwnerEquivalentFromGiaf extends ImportFromGiaf {
     }
 
     @Override
-    public void runTask() {
+    public void process() {
         getLogger().debug("Start ImportPersonGrantOwnerEquivalentFromGiaf");
         try {
             PersistentSuportGiaf oracleConnection = PersistentSuportGiaf.getInstance();
@@ -317,16 +318,16 @@ public class ImportPersonGrantOwnerEquivalentFromGiaf extends ImportFromGiaf {
             if (personProfessionalExemption instanceof PersonGrantOwnerEquivalent) {
                 PersonGrantOwnerEquivalent personGrantOwnerEquivalent = (PersonGrantOwnerEquivalent) personProfessionalExemption;
                 if (personGrantOwnerEquivalent.getAnulationDate() == null
-                        && equal(beginDate, personGrantOwnerEquivalent.getBeginDate())
-                        && equal(endDate, personGrantOwnerEquivalent.getEndDate())
-                        && equal(motive, personGrantOwnerEquivalent.getMotive())
-                        && equal(local, personGrantOwnerEquivalent.getLocal())
-                        && equal(giafCountryName, personGrantOwnerEquivalent.getGiafCountryName())
-                        && equal(country, personGrantOwnerEquivalent.getCountry())
-                        && equal(grantOwnerEquivalent, personGrantOwnerEquivalent.getGrantOwnerEquivalent())
-                        && equal(grantOwnerEquivalentGiafId, personGrantOwnerEquivalent.getGrantOwnerEquivalentGiafId())
-                        && equal(creationDate, personGrantOwnerEquivalent.getCreationDate())
-                        && equal(modifiedDate, personGrantOwnerEquivalent.getModifiedDate())) {
+                        && Objects.equals(beginDate, personGrantOwnerEquivalent.getBeginDate())
+                        && Objects.equals(endDate, personGrantOwnerEquivalent.getEndDate())
+                        && Objects.equals(motive, personGrantOwnerEquivalent.getMotive())
+                        && Objects.equals(local, personGrantOwnerEquivalent.getLocal())
+                        && Objects.equals(giafCountryName, personGrantOwnerEquivalent.getGiafCountryName())
+                        && Objects.equals(country, personGrantOwnerEquivalent.getCountry())
+                        && Objects.equals(grantOwnerEquivalent, personGrantOwnerEquivalent.getGrantOwnerEquivalent())
+                        && Objects.equals(grantOwnerEquivalentGiafId, personGrantOwnerEquivalent.getGrantOwnerEquivalentGiafId())
+                        && Objects.equals(creationDate, personGrantOwnerEquivalent.getCreationDate())
+                        && Objects.equals(modifiedDate, personGrantOwnerEquivalent.getModifiedDate())) {
                     return true;
                 }
             }

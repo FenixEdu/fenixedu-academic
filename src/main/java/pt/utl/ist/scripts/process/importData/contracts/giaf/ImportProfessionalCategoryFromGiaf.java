@@ -3,7 +3,6 @@ package pt.utl.ist.scripts.process.importData.contracts.giaf;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
@@ -11,14 +10,12 @@ import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportGiaf;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.scheduler.CronTask;
 import org.fenixedu.bennu.scheduler.annotation.Task;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 @Task(englishTitle = "ImportProfessionalCategoryFromGiaf")
-public class ImportProfessionalCategoryFromGiaf extends CronTask {
+public class ImportProfessionalCategoryFromGiaf extends ImportFromGiaf {
 
     private static final String NDOCENTE = "NDOCENTE";
 
@@ -35,12 +32,12 @@ public class ImportProfessionalCategoryFromGiaf extends CronTask {
     }
 
     @Override
-    public void runTask() {
+    public void process() {
         getLogger().debug("Start ImportProfessionalCategoryFromGiaf");
         try {
             PersistentSuportGiaf oracleConnection = PersistentSuportGiaf.getInstance();
             Map<String, ProfessionalCategory> professionalCategoriesMap = getProfessionalCategoriesMap();
-            String query = getProfessionalCategoriesQuery();
+            String query = getQuery();
             getLogger().debug(query);
             PreparedStatement preparedStatement = oracleConnection.prepareStatement(query);
             ResultSet result = preparedStatement.executeQuery();
@@ -96,16 +93,9 @@ public class ImportProfessionalCategoryFromGiaf extends CronTask {
         getLogger().debug("The end");
     }
 
-    private String getProfessionalCategoriesQuery() {
+    @Override
+    protected String getQuery() {
         return "SELECT a.emp_cat_func, a.cat_func_dsc, a.agrupamento FROM sltcatfunc a where emp_cat_func in (select distinct emp_cat_func from sldemp24 where emp_sit is not null) or emp_cat_func in (select distinct emp_cat_func from sldemp25) or emp_cat_func in (select distinct emp_cat_func from sltprog_vinc) or emp_cat_func in (select distinct emp_cat_func from sldemp01)";
-    }
-
-    private Map<String, ProfessionalCategory> getProfessionalCategoriesMap() {
-        Map<String, ProfessionalCategory> professionalCategories = new HashMap<String, ProfessionalCategory>();
-        for (ProfessionalCategory professionalCategory : Bennu.getInstance().getProfessionalCategoriesSet()) {
-            professionalCategories.put(professionalCategory.getGiafId(), professionalCategory);
-        }
-        return professionalCategories;
     }
 
 }

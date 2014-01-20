@@ -12,8 +12,8 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCo
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ServiceExemption;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportGiaf;
-import org.apache.commons.lang.StringUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.scheduler.annotation.Task;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -36,7 +36,7 @@ public class ImportTypesFromGiaf extends ImportFromGiaf {
     }
 
     @Override
-    public void runTask() {
+    public void process() {
         getLogger().debug("Start ImportTypesFromGiaf");
         try {
             PersistentSuportGiaf oracleConnection = PersistentSuportGiaf.getInstance();

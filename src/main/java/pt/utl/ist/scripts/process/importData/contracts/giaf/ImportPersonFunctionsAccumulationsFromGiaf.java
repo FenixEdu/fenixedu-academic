@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Employee;
@@ -18,8 +19,8 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessi
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalRegime;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportGiaf;
-import org.apache.commons.lang.StringUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.scheduler.annotation.Task;
 import org.joda.time.DateTime;
@@ -38,7 +39,7 @@ public class ImportPersonFunctionsAccumulationsFromGiaf extends ImportFromGiaf {
     }
 
     @Override
-    public void runTask() {
+    public void process() {
         getLogger().debug("Start ImportPersonFunctionsAccumulationsFromGiaf");
         try {
             PersistentSuportGiaf oracleConnection = PersistentSuportGiaf.getInstance();
@@ -287,15 +288,16 @@ public class ImportPersonFunctionsAccumulationsFromGiaf extends ImportFromGiaf {
             ProfessionalRegime professionalRegime, String professionalRegimeGiafId, DateTime creationDate, DateTime modifiedDate) {
         for (PersonFunctionsAccumulation personFunctionsAccumulation : giafProfessionalData.getPersonFunctionsAccumulations()) {
             if (personFunctionsAccumulation.getAnulationDate() == null) {
-                if (equal(beginDate, personFunctionsAccumulation.getBeginDate())
-                        && equal(endDate, personFunctionsAccumulation.getEndDate())
-                        && equal(hours, personFunctionsAccumulation.getHours())
-                        && equal(functionsAccumulation, personFunctionsAccumulation.getFunctionsAccumulation())
-                        && equal(functionsAccumulationGiafId, personFunctionsAccumulation.getFunctionsAccumulationGiafId())
-                        && equal(professionalRegime, personFunctionsAccumulation.getProfessionalRegime())
-                        && equal(professionalRegimeGiafId, personFunctionsAccumulation.getProfessionalRegimeGiafId())
-                        && equal(creationDate, personFunctionsAccumulation.getCreationDate())
-                        && equal(modifiedDate, personFunctionsAccumulation.getModifiedDate())) {
+                if (Objects.equals(beginDate, personFunctionsAccumulation.getBeginDate())
+                        && Objects.equals(endDate, personFunctionsAccumulation.getEndDate())
+                        && Objects.equals(hours, personFunctionsAccumulation.getHours())
+                        && Objects.equals(functionsAccumulation, personFunctionsAccumulation.getFunctionsAccumulation())
+                        && Objects.equals(functionsAccumulationGiafId,
+                                personFunctionsAccumulation.getFunctionsAccumulationGiafId())
+                        && Objects.equals(professionalRegime, personFunctionsAccumulation.getProfessionalRegime())
+                        && Objects.equals(professionalRegimeGiafId, personFunctionsAccumulation.getProfessionalRegimeGiafId())
+                        && Objects.equals(creationDate, personFunctionsAccumulation.getCreationDate())
+                        && Objects.equals(modifiedDate, personFunctionsAccumulation.getModifiedDate())) {
                     return true;
                 }
             }

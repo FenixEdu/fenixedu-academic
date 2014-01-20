@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Employee;
@@ -17,8 +18,8 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessi
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportGiaf;
-import org.apache.commons.lang.StringUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.scheduler.annotation.Task;
 import org.joda.time.DateTime;
@@ -34,7 +35,7 @@ public class ImportPersonContractSituationsFromGiaf extends ImportFromGiaf {
     final static DateTimeFormatter dateTimeFormat = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
 
     @Override
-    public void runTask() {
+    public void process() {
         getLogger().debug("Start ImportPersonContractSituationsFromGiaf");
         try {
             PersistentSuportGiaf oracleConnection = PersistentSuportGiaf.getInstance();
@@ -287,14 +288,14 @@ public class ImportPersonContractSituationsFromGiaf extends ImportFromGiaf {
         for (PersonContractSituation personContractSituation : giafProfessionalData.getPersonContractSituations()) {
             if (personContractSituation.getAnulationDate() == null) {
                 if (personContractSituation.getCreationDate().equals(creationDate)
-                        && equal(contractSituation, personContractSituation.getContractSituation())
-                        && equal(contractSituationGiafId, personContractSituation.getContractSituationGiafId())
-                        && equal(beginDate, personContractSituation.getBeginDate())
-                        && equal(endDate, personContractSituation.getEndDate())
-                        && equal(modifiedDate, personContractSituation.getModifiedDate())
-                        && equal(category, personContractSituation.getProfessionalCategory())
-                        && equal(categoryGiafId, personContractSituation.getProfessionalCategoryGiafId())
-                        && equal(step, personContractSituation.getStep())) {
+                        && Objects.equals(contractSituation, personContractSituation.getContractSituation())
+                        && Objects.equals(contractSituationGiafId, personContractSituation.getContractSituationGiafId())
+                        && Objects.equals(beginDate, personContractSituation.getBeginDate())
+                        && Objects.equals(endDate, personContractSituation.getEndDate())
+                        && Objects.equals(modifiedDate, personContractSituation.getModifiedDate())
+                        && Objects.equals(category, personContractSituation.getProfessionalCategory())
+                        && Objects.equals(categoryGiafId, personContractSituation.getProfessionalCategoryGiafId())
+                        && Objects.equals(step, personContractSituation.getStep())) {
                     return true;
                 }
             }

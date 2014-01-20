@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Employee;
@@ -18,8 +19,8 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalRe
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalRelation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportGiaf;
-import org.apache.commons.lang.StringUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.scheduler.annotation.Task;
 import org.joda.time.DateTime;
@@ -34,7 +35,7 @@ public class ImportPersonProfessionalCategoriesFromGiaf extends ImportFromGiaf {
     final static DateTimeFormatter dateTimeFormat = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
 
     @Override
-    public void runTask() {
+    public void process() {
         getLogger().debug("Start ImportPersonProfessionalCategoriesFromGiaf");
         try {
             PersistentSuportGiaf oracleConnection = PersistentSuportGiaf.getInstance();
@@ -305,18 +306,18 @@ public class ImportPersonProfessionalCategoriesFromGiaf extends ImportFromGiaf {
             String professionalRelationGiafId, String step, String level, DateTime creationDate, DateTime modifiedDate) {
         for (PersonProfessionalCategory personProfessionalCategory : giafProfessionalData.getPersonProfessionalCategories()) {
             if (personProfessionalCategory.getAnulationDate() == null) {
-                if (equal(beginDate, personProfessionalCategory.getBeginDate())
-                        && equal(endDate, personProfessionalCategory.getEndDate())
-                        && equal(professionalCategory, personProfessionalCategory.getProfessionalCategory())
-                        && equal(professionalCategoryGiafId, personProfessionalCategory.getProfessionalCategoryGiafId())
-                        && equal(professionalRegime, personProfessionalCategory.getProfessionalRegime())
-                        && equal(professionalRegimeGiafId, personProfessionalCategory.getProfessionalRegimeGiafId())
-                        && equal(professionalRelation, personProfessionalCategory.getProfessionalRelation())
-                        && equal(professionalRelationGiafId, personProfessionalCategory.getProfessionalRelationGiafId())
-                        && equal(step, personProfessionalCategory.getStep())
-                        && equal(level, personProfessionalCategory.getLevel())
-                        && equal(creationDate, personProfessionalCategory.getCreationDate())
-                        && equal(modifiedDate, personProfessionalCategory.getModifiedDate())) {
+                if (Objects.equals(beginDate, personProfessionalCategory.getBeginDate())
+                        && Objects.equals(endDate, personProfessionalCategory.getEndDate())
+                        && Objects.equals(professionalCategory, personProfessionalCategory.getProfessionalCategory())
+                        && Objects.equals(professionalCategoryGiafId, personProfessionalCategory.getProfessionalCategoryGiafId())
+                        && Objects.equals(professionalRegime, personProfessionalCategory.getProfessionalRegime())
+                        && Objects.equals(professionalRegimeGiafId, personProfessionalCategory.getProfessionalRegimeGiafId())
+                        && Objects.equals(professionalRelation, personProfessionalCategory.getProfessionalRelation())
+                        && Objects.equals(professionalRelationGiafId, personProfessionalCategory.getProfessionalRelationGiafId())
+                        && Objects.equals(step, personProfessionalCategory.getStep())
+                        && Objects.equals(level, personProfessionalCategory.getLevel())
+                        && Objects.equals(creationDate, personProfessionalCategory.getCreationDate())
+                        && Objects.equals(modifiedDate, personProfessionalCategory.getModifiedDate())) {
                     return true;
                 }
             }

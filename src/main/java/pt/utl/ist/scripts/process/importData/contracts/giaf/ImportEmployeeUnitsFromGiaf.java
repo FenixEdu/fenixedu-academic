@@ -4,7 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.HashMap;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.Employee;
@@ -18,22 +17,20 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfession
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportGiaf;
-import org.apache.commons.lang.StringUtils;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.scheduler.CronTask;
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.scheduler.annotation.Task;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 @Task(englishTitle = "ImportEmployeeUnitsFromGiaf")
-public class ImportEmployeeUnitsFromGiaf extends CronTask {
+public class ImportEmployeeUnitsFromGiaf extends ImportFromGiaf {
     public ImportEmployeeUnitsFromGiaf() {
 
     }
 
     @Override
-    public void runTask() {
+    public void process() {
         getLogger().debug("Start ImportEmployeeUnitsFromGiaf");
         try {
             PersistentSuportGiaf oracleConnection = PersistentSuportGiaf.getInstance();
@@ -299,14 +296,6 @@ public class ImportEmployeeUnitsFromGiaf extends CronTask {
         }
     }
 
-    private Map<Integer, Employee> getEmployeesMap() {
-        Map<Integer, Employee> employees = new HashMap<Integer, Employee>();
-        for (Employee employee : Bennu.getInstance().getEmployeesSet()) {
-            employees.put(employee.getEmployeeNumber(), employee);
-        }
-        return employees;
-    }
-
     private String getEmployeeWorkingUnitsQuery() {
         return "SELECT emp.EMP_NUM ,emp.emp_sec_serv as cc, emp.emp_sec_serv_dt as cc_date FROM SLDEMP01 emp";
     }
@@ -315,4 +304,8 @@ public class ImportEmployeeUnitsFromGiaf extends CronTask {
         return "SELECT emp.EMP_NUM, emp.emp_sec_serv_ci as cc, null as cc_date FROM SLDEMP03 emp";
     }
 
+    @Override
+    protected String getQuery() {
+        return null;
+    }
 }
