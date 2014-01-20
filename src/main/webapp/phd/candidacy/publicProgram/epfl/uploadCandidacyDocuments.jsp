@@ -96,5 +96,6 @@
 <fr:view name="candidacyProcessDocuments" schema="Public.PhdProgramProcessDocument.view">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thlight thcenter"/>
+		<fr:link name="remove" link="<%= "/applications/epfl/phdProgramCandidacyProcess.do?method=removeDocument&documentId=${externalId}" %>" label="label.remove,PHD_RESOURCES"/>
 	</fr:layout>
 </fr:view>
