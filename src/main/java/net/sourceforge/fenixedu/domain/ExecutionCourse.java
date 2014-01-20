@@ -163,10 +163,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
         });
 
-        THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.add("deamb");
-        THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.add("dec");
-        THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.add("erpq");
-        THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.add("dfasse");
+        THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.add("deec");
+        THIRD_CYCLE_AVAILABLE_INQUIRY_DEGREES.add("deic");
     }
 
     public ExecutionCourse(final String nome, final String sigla, final ExecutionSemester executionSemester, EntryPhase entryPhase) {
