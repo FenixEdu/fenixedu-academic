@@ -22,7 +22,6 @@ import org.fenixedu.bennu.scheduler.CronTask;
 import org.fenixedu.bennu.scheduler.annotation.Task;
 import org.fenixedu.bennu.scheduler.domain.SchedulerSystem;
 
-import pt.ist.fenixframework.Atomic.TxMode;
 import pt.ist.fenixframework.FenixFramework;
 
 import com.google.common.base.Joiner;
@@ -31,7 +30,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 
-@Task(englishTitle = "Imports files from DSpace")
+@Task(englishTitle = "Imports files from DSpace", readOnly = true)
 public class ImportFilesFromDSpace extends CronTask {
 
     private final File errorsFile = new File(SchedulerSystem.getLogsPath() + "/dspaceErrors.json");
@@ -81,11 +80,6 @@ public class ImportFilesFromDSpace extends CronTask {
         Method method = GenericFile.class.getDeclaredMethod("updateFileStorage", new Class[] {});
         method.setAccessible(true);
         return method;
-    }
-
-    @Override
-    public TxMode getTxMode() {
-        return TxMode.READ;
     }
 
     private Set<String> loadOIDs(JsonArray ignores) throws SQLException {
