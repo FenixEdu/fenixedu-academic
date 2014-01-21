@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Employee;
@@ -16,8 +17,8 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessi
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonSabbatical;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportGiaf;
-import org.apache.commons.lang.StringUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.scheduler.annotation.Task;
 import org.joda.time.DateTime;
@@ -36,7 +37,7 @@ public class ImportPersonSabbaticalsFromGiaf extends ImportFromGiaf {
     }
 
     @Override
-    public void runTask() {
+    public void process() {
         getLogger().debug("Start ImportPersonSabbaticalsFromGiaf");
         try {
             PersistentSuportGiaf oracleConnection = PersistentSuportGiaf.getInstance();
@@ -236,9 +237,10 @@ public class ImportPersonSabbaticalsFromGiaf extends ImportFromGiaf {
             if (personProfessionalExemption.getAnulationDate() == null) {
                 if (personProfessionalExemption instanceof PersonSabbatical) {
                     PersonSabbatical personSabbatical = (PersonSabbatical) personProfessionalExemption;
-                    if (equal(beginDate, personSabbatical.getBeginDate()) && equal(endDate, personSabbatical.getEndDate())
-                            && equal(creationDate, personSabbatical.getCreationDate())
-                            && equal(modifiedDate, personSabbatical.getModifiedDate())) {
+                    if (Objects.equals(beginDate, personSabbatical.getBeginDate())
+                            && Objects.equals(endDate, personSabbatical.getEndDate())
+                            && Objects.equals(creationDate, personSabbatical.getCreationDate())
+                            && Objects.equals(modifiedDate, personSabbatical.getModifiedDate())) {
                         return true;
                     }
                 }

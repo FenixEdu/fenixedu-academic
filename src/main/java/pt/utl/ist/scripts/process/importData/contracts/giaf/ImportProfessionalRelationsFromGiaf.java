@@ -3,22 +3,19 @@ package pt.utl.ist.scripts.process.importData.contracts.giaf;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalRelation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportGiaf;
-import org.apache.commons.lang.StringUtils;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.bennu.scheduler.CronTask;
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.scheduler.annotation.Task;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 @Task(englishTitle = "ImportProfessionalRelationsFromGiaf")
-public class ImportProfessionalRelationsFromGiaf extends CronTask {
+public class ImportProfessionalRelationsFromGiaf extends ImportFromGiaf {
 
     private static final String TRUE_STRING = "S";
 
@@ -27,12 +24,12 @@ public class ImportProfessionalRelationsFromGiaf extends CronTask {
     }
 
     @Override
-    public void runTask() {
+    public void process() {
         getLogger().debug("Start ImportProfessionalRelationsFromGiaf");
         try {
             PersistentSuportGiaf oracleConnection = PersistentSuportGiaf.getInstance();
             Map<String, ProfessionalRelation> professionalRelationsMap = getProfessionalRelationsMap();
-            String query = getProfessionalRelationsQuery();
+            String query = getQuery();
             getLogger().debug(query);
             PreparedStatement preparedStatement = oracleConnection.prepareStatement(query);
             ResultSet result = preparedStatement.executeQuery();
@@ -74,16 +71,9 @@ public class ImportProfessionalRelationsFromGiaf extends CronTask {
         return ((!StringUtils.isEmpty(booleanString)) && booleanString.equalsIgnoreCase(TRUE_STRING));
     }
 
-    private String getProfessionalRelationsQuery() {
+    @Override
+    protected String getQuery() {
         return "SELECT tab_cod, tab_cod_dsc, tab_cod_alg, eti FROM SLTCODGER cod WHERE  ( cod.TAB_ID = 'FA' AND cod.TAB_NUM = 46.5 )";
-    }
-
-    private Map<String, ProfessionalRelation> getProfessionalRelationsMap() {
-        Map<String, ProfessionalRelation> professionalRelations = new HashMap<String, ProfessionalRelation>();
-        for (ProfessionalRelation professionalRelation : Bennu.getInstance().getProfessionalRelationsSet()) {
-            professionalRelations.put(professionalRelation.getGiafId(), professionalRelation);
-        }
-        return professionalRelations;
     }
 
 }

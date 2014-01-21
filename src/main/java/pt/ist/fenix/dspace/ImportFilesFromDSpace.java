@@ -22,7 +22,6 @@ import org.fenixedu.bennu.scheduler.CronTask;
 import org.fenixedu.bennu.scheduler.annotation.Task;
 import org.fenixedu.bennu.scheduler.domain.SchedulerSystem;
 
-import pt.ist.fenixframework.Atomic.TxMode;
 import pt.ist.fenixframework.FenixFramework;
 
 import com.google.common.base.Joiner;
@@ -31,7 +30,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 
-@Task(englishTitle = "Imports files from DSpace")
+@Task(englishTitle = "Imports files from DSpace", readOnly = true)
 public class ImportFilesFromDSpace extends CronTask {
 
     private final File errorsFile = new File(SchedulerSystem.getLogsPath() + "/dspaceErrors.json");
@@ -83,11 +82,6 @@ public class ImportFilesFromDSpace extends CronTask {
         return method;
     }
 
-    @Override
-    public TxMode getTxMode() {
-        return TxMode.READ;
-    }
-
     private Set<String> loadOIDs(JsonArray ignores) throws SQLException {
         String notIn = Joiner.on(',').join(ignores);
         String notInStatement = ignores.size() == 0 ? "" : "AND OID NOT IN (" + notIn + ")";
@@ -95,7 +89,7 @@ public class ImportFilesFromDSpace extends CronTask {
         try (Statement stmt = connection.createStatement()) {
             ResultSet rs =
                     stmt.executeQuery("SELECT OID FROM GENERIC_FILE where OID_STORAGE = "
-                            + Bennu.getInstance().getDSpaceFileStorage().getExternalId() + " " + notInStatement + " limit 50");
+                            + Bennu.getInstance().getDSpaceFileStorage().getExternalId() + " " + notInStatement + " limit 100");
             Set<String> oids = new HashSet<>();
             while (rs.next()) {
                 oids.add(rs.getString(1));

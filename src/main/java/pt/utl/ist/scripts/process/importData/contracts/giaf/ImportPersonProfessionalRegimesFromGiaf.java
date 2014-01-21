@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Employee;
@@ -16,8 +17,8 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessi
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalRegime;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportGiaf;
-import org.apache.commons.lang.StringUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.scheduler.annotation.Task;
 import org.joda.time.DateTime;
@@ -36,7 +37,7 @@ public class ImportPersonProfessionalRegimesFromGiaf extends ImportFromGiaf {
     }
 
     @Override
-    public void runTask() {
+    public void process() {
         getLogger().debug("Start ImportPersonProfessionalRegimesFromGiaf");
         try {
             PersistentSuportGiaf oracleConnection = PersistentSuportGiaf.getInstance();
@@ -248,12 +249,12 @@ public class ImportPersonProfessionalRegimesFromGiaf extends ImportFromGiaf {
             DateTime modifiedDate) {
         for (PersonProfessionalRegime personProfessionalRegime : giafProfessionalData.getPersonProfessionalRegimes()) {
             if (personProfessionalRegime.getAnulationDate() == null) {
-                if (equal(beginDate, personProfessionalRegime.getBeginDate())
-                        && equal(endDate, personProfessionalRegime.getEndDate())
-                        && equal(professionalRegime, personProfessionalRegime.getProfessionalRegime())
-                        && equal(professionalRegimeGiafId, personProfessionalRegime.getProfessionalRegimeGiafId())
-                        && equal(creationDate, personProfessionalRegime.getCreationDate())
-                        && equal(modifiedDate, personProfessionalRegime.getModifiedDate())) {
+                if (Objects.equals(beginDate, personProfessionalRegime.getBeginDate())
+                        && Objects.equals(endDate, personProfessionalRegime.getEndDate())
+                        && Objects.equals(professionalRegime, personProfessionalRegime.getProfessionalRegime())
+                        && Objects.equals(professionalRegimeGiafId, personProfessionalRegime.getProfessionalRegimeGiafId())
+                        && Objects.equals(creationDate, personProfessionalRegime.getCreationDate())
+                        && Objects.equals(modifiedDate, personProfessionalRegime.getModifiedDate())) {
                     return true;
                 }
             }

@@ -38,7 +38,7 @@ public class ImportContractSituationsFromGiaf extends ImportFromGiaf {
     }
 
     @Override
-    public void runTask() {
+    public void process() {
         getLogger().debug("Start ImportContractSituationsFromGiaf");
         List<String> endSituationList = getEndSituationList();
         List<String> serviceExemptionList = getServiceExemptionList();

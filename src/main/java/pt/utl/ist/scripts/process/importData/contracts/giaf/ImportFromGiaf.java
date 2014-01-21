@@ -23,8 +23,16 @@ import org.fenixedu.bennu.scheduler.CronTask;
 import org.fenixedu.commons.StringNormalizer;
 
 public abstract class ImportFromGiaf extends CronTask {
-
     abstract protected String getQuery();
+
+    @Override
+    public void runTask() throws Exception {
+        synchronized (ImportFromGiaf.class) {
+            process();
+        }
+    }
+
+    protected abstract void process() throws Exception;
 
     protected Map<Integer, Employee> getEmployeesMap() {
         Map<Integer, Employee> employees = new HashMap<Integer, Employee>();
@@ -171,16 +179,6 @@ public abstract class ImportFromGiaf extends CronTask {
             absences.put(absence.getGiafId(), absence);
         }
         return absences;
-    }
-
-    protected boolean equal(Object obj1, Object obj2) {
-        if (obj1 == null && obj2 == null) {
-            return true;
-        }
-        if (obj1 != null && obj2 != null) {
-            return obj1.equals(obj2);
-        }
-        return false;
     }
 
 }

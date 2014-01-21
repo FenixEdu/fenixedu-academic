@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Country;
@@ -49,7 +50,7 @@ public class UpdatePersonsFromGiaf extends ImportFromGiaf {
     }
 
     @Override
-    public void runTask() {
+    public void process() {
         getLogger().debug("Start UpdatePersonsFromGiaf");
         try {
             Authenticate.mock(User.findByUsername("ist23932"));
@@ -342,13 +343,14 @@ public class UpdatePersonsFromGiaf extends ImportFromGiaf {
     private boolean hasEqualPersonalInformation(MaritalStatus maritalStatus, Gender gender, YearMonthDay idEmissionDate,
             YearMonthDay idExpirationDate, String idArquive, IDDocumentType idDocumentType, String idDocNumberString,
             String socialSecurityNumber, String fiscalNeighborhood, Country nationality, Person person) {
-        return equal(person.getMaritalStatus(), maritalStatus) && equal(person.getGender(), gender)
-                && equal(person.getEmissionDateOfDocumentIdYearMonthDay(), idEmissionDate)
-                && equal(person.getExpirationDateOfDocumentIdYearMonthDay(), idExpirationDate)
-                && equal(person.getEmissionLocationOfDocumentId(), idArquive)
-                && equal(person.getDocumentIdNumber(), idDocNumberString) && equal(person.getIdDocumentType(), idDocumentType)
-                && equal(person.getSocialSecurityNumber(), socialSecurityNumber)
-                && equal(person.getFiscalCode(), fiscalNeighborhood) && equal(person.getCountry(), nationality);
+        return Objects.equals(person.getMaritalStatus(), maritalStatus) && Objects.equals(person.getGender(), gender)
+                && Objects.equals(person.getEmissionDateOfDocumentIdYearMonthDay(), idEmissionDate)
+                && Objects.equals(person.getExpirationDateOfDocumentIdYearMonthDay(), idExpirationDate)
+                && Objects.equals(person.getEmissionLocationOfDocumentId(), idArquive)
+                && Objects.equals(person.getDocumentIdNumber(), idDocNumberString)
+                && Objects.equals(person.getIdDocumentType(), idDocumentType)
+                && Objects.equals(person.getSocialSecurityNumber(), socialSecurityNumber)
+                && Objects.equals(person.getFiscalCode(), fiscalNeighborhood) && Objects.equals(person.getCountry(), nationality);
     }
 
     private void setPersonalInformation(MaritalStatus maritalStatus, Gender gender, YearMonthDay idEmissionDate,
@@ -367,10 +369,12 @@ public class UpdatePersonsFromGiaf extends ImportFromGiaf {
 
     private boolean hasEqualBirthInformation(YearMonthDay dateOfBirth, String parishOfBirth, String districtOfBirth,
             String districtSubdivisionOfBirth, String nameOfFather, String nameOfMother, Person person) {
-        return equal(person.getDateOfBirthYearMonthDay(), dateOfBirth) && equal(person.getParishOfBirth(), parishOfBirth)
-                && equal(person.getDistrictOfBirth(), districtOfBirth)
-                && equal(person.getDistrictSubdivisionOfBirth(), districtSubdivisionOfBirth)
-                && equal(person.getNameOfFather(), nameOfFather) && equal(person.getNameOfMother(), nameOfMother);
+        return Objects.equals(person.getDateOfBirthYearMonthDay(), dateOfBirth)
+                && Objects.equals(person.getParishOfBirth(), parishOfBirth)
+                && Objects.equals(person.getDistrictOfBirth(), districtOfBirth)
+                && Objects.equals(person.getDistrictSubdivisionOfBirth(), districtSubdivisionOfBirth)
+                && Objects.equals(person.getNameOfFather(), nameOfFather)
+                && Objects.equals(person.getNameOfMother(), nameOfMother);
     }
 
     private void setBirthInformation(YearMonthDay dateOfBirth, String parishOfBirth, String districtOfBirth,

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Employee;
@@ -20,8 +21,8 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalRe
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportGiaf;
-import org.apache.commons.lang.StringUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.scheduler.annotation.Task;
 import org.joda.time.DateTime;
@@ -37,7 +38,7 @@ public class ImportPersonProfessionalData extends ImportFromGiaf {
     }
 
     @Override
-    public void runTask() {
+    public void process() {
         getLogger().debug("Start ImportPersonProfessionalData");
         try {
             PersistentSuportGiaf oracleConnection = PersistentSuportGiaf.getInstance();
@@ -243,24 +244,25 @@ public class ImportPersonProfessionalData extends ImportFromGiaf {
             String professionalContractTypeGiafId, ProfessionalCategory professionalCategory, String professionalCategoryGiafId,
             LocalDate professionalCategoryDate, ProfessionalRegime professionalRegime, String professionalRegimeGiafId,
             LocalDate professionalRegimeDate, Campus campus, DateTime creationDate, DateTime modifiedDate) {
-        return (equal(giafProfessionalData.getContractSituation(), contractSituation)
-                && equal(giafProfessionalData.getInstitutionEntryDate(), institutionEntryDate)
-                && equal(giafProfessionalData.getContractSituationGiafId(), contractSituationGiafId)
-                && equal(giafProfessionalData.getContractSituationDate(), contractSituationDate)
-                && equal(giafProfessionalData.getTerminationSituationDate(), terminationSituationDate)
-                && equal(giafProfessionalData.getProfessionalRelation(), professionalRelation)
-                && equal(giafProfessionalData.getProfessionalRelationGiafId(), professionalRelationGiafId)
-                && equal(giafProfessionalData.getProfessionalRelationDate(), professionalRelationDate)
-                && equal(giafProfessionalData.getProfessionalContractType(), professionalContractType)
-                && equal(giafProfessionalData.getProfessionalContractTypeGiafId(), professionalContractTypeGiafId)
-                && equal(giafProfessionalData.getProfessionalCategory(), professionalCategory)
-                && equal(giafProfessionalData.getProfessionalCategoryGiafId(), professionalCategoryGiafId)
-                && equal(giafProfessionalData.getProfessionalCategoryDate(), professionalCategoryDate)
-                && equal(giafProfessionalData.getProfessionalRegime(), professionalRegime)
-                && equal(giafProfessionalData.getProfessionalRegimeGiafId(), professionalRegimeGiafId)
-                && equal(giafProfessionalData.getProfessionalRegimeDate(), professionalRegimeDate)
-                && equal(giafProfessionalData.getCampus(), campus) && equal(giafProfessionalData.getCreationDate(), creationDate) && equal(
-                    giafProfessionalData.getModifiedDate(), modifiedDate));
+        return (Objects.equals(giafProfessionalData.getContractSituation(), contractSituation)
+                && Objects.equals(giafProfessionalData.getInstitutionEntryDate(), institutionEntryDate)
+                && Objects.equals(giafProfessionalData.getContractSituationGiafId(), contractSituationGiafId)
+                && Objects.equals(giafProfessionalData.getContractSituationDate(), contractSituationDate)
+                && Objects.equals(giafProfessionalData.getTerminationSituationDate(), terminationSituationDate)
+                && Objects.equals(giafProfessionalData.getProfessionalRelation(), professionalRelation)
+                && Objects.equals(giafProfessionalData.getProfessionalRelationGiafId(), professionalRelationGiafId)
+                && Objects.equals(giafProfessionalData.getProfessionalRelationDate(), professionalRelationDate)
+                && Objects.equals(giafProfessionalData.getProfessionalContractType(), professionalContractType)
+                && Objects.equals(giafProfessionalData.getProfessionalContractTypeGiafId(), professionalContractTypeGiafId)
+                && Objects.equals(giafProfessionalData.getProfessionalCategory(), professionalCategory)
+                && Objects.equals(giafProfessionalData.getProfessionalCategoryGiafId(), professionalCategoryGiafId)
+                && Objects.equals(giafProfessionalData.getProfessionalCategoryDate(), professionalCategoryDate)
+                && Objects.equals(giafProfessionalData.getProfessionalRegime(), professionalRegime)
+                && Objects.equals(giafProfessionalData.getProfessionalRegimeGiafId(), professionalRegimeGiafId)
+                && Objects.equals(giafProfessionalData.getProfessionalRegimeDate(), professionalRegimeDate)
+                && Objects.equals(giafProfessionalData.getCampus(), campus)
+                && Objects.equals(giafProfessionalData.getCreationDate(), creationDate) && Objects.equals(
+                giafProfessionalData.getModifiedDate(), modifiedDate));
     }
 
     @Override

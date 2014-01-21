@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Employee;
@@ -17,8 +18,8 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonServiceE
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ServiceExemption;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportGiaf;
-import org.apache.commons.lang.StringUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.scheduler.annotation.Task;
 import org.joda.time.DateTime;
@@ -37,7 +38,7 @@ public class ImportPersonServiceExemptionsFromGiaf extends ImportFromGiaf {
     }
 
     @Override
-    public void runTask() {
+    public void process() {
         getLogger().debug("Start ImportPersonServiceExemptionsFromGiaf");
         try {
             PersistentSuportGiaf oracleConnection = PersistentSuportGiaf.getInstance();
@@ -257,12 +258,13 @@ public class ImportPersonServiceExemptionsFromGiaf extends ImportFromGiaf {
         for (PersonProfessionalExemption personProfessionalExemption : giafProfessionalData.getPersonProfessionalExemptions()) {
             if (personProfessionalExemption instanceof PersonServiceExemption) {
                 PersonServiceExemption personServiceExemption = (PersonServiceExemption) personProfessionalExemption;
-                if (personServiceExemption.getAnulationDate() == null && equal(personServiceExemption.getBeginDate(), beginDate)
-                        && equal(endDate, personServiceExemption.getEndDate())
-                        && equal(serviceExemption, personServiceExemption.getServiceExemption())
-                        && equal(serviceExemptionGiafId, personServiceExemption.getServiceExemptionGiafId())
-                        && equal(creationDate, personServiceExemption.getCreationDate())
-                        && equal(modifiedDate, personServiceExemption.getModifiedDate())) {
+                if (personServiceExemption.getAnulationDate() == null
+                        && Objects.equals(personServiceExemption.getBeginDate(), beginDate)
+                        && Objects.equals(endDate, personServiceExemption.getEndDate())
+                        && Objects.equals(serviceExemption, personServiceExemption.getServiceExemption())
+                        && Objects.equals(serviceExemptionGiafId, personServiceExemption.getServiceExemptionGiafId())
+                        && Objects.equals(creationDate, personServiceExemption.getCreationDate())
+                        && Objects.equals(modifiedDate, personServiceExemption.getModifiedDate())) {
                     return true;
                 }
             }

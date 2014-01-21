@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Employee;
@@ -19,8 +20,8 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessi
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalExemption;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportGiaf;
-import org.apache.commons.lang.StringUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.scheduler.annotation.Task;
 import org.joda.time.DateTime;
@@ -39,7 +40,7 @@ public class ImportPersonAbsencesFromGiaf extends ImportFromGiaf {
     }
 
     @Override
-    public void runTask() {
+    public void process() {
         getLogger().debug("Start ImportPersonAbsencesFromGiaf");
         try {
             PersistentSuportGiaf oracleConnection = PersistentSuportGiaf.getInstance();
@@ -253,11 +254,12 @@ public class ImportPersonAbsencesFromGiaf extends ImportFromGiaf {
         for (PersonProfessionalExemption personProfessionalExemption : giafProfessionalData.getPersonProfessionalExemptions()) {
             if (personProfessionalExemption instanceof PersonAbsence) {
                 PersonAbsence personAbsence = (PersonAbsence) personProfessionalExemption;
-                if (personAbsence.getAnulationDate() == null && equal(personAbsence.getBeginDate(), beginDate)
-                        && equal(endDate, personAbsence.getEndDate()) && equal(absence, personAbsence.getAbsence())
-                        && equal(absenceGiafId, personAbsence.getAbsenceGiafId())
-                        && equal(creationDate, personAbsence.getCreationDate())
-                        && equal(modifiedDate, personAbsence.getModifiedDate())) {
+                if (personAbsence.getAnulationDate() == null && Objects.equals(personAbsence.getBeginDate(), beginDate)
+                        && Objects.equals(endDate, personAbsence.getEndDate())
+                        && Objects.equals(absence, personAbsence.getAbsence())
+                        && Objects.equals(absenceGiafId, personAbsence.getAbsenceGiafId())
+                        && Objects.equals(creationDate, personAbsence.getCreationDate())
+                        && Objects.equals(modifiedDate, personAbsence.getModifiedDate())) {
                     return true;
                 }
             }
