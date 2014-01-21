@@ -49,8 +49,12 @@ public class ExternalApplication extends ExternalApplication_Base {
         return !StringUtils.isBlank(redirectUrl) && redirectUrl.equals(getRedirectUrl());
     }
 
+    public boolean matchesSecret(String secret) {
+        return !StringUtils.isBlank(secret) && secret.equals(getSecret());
+    }
+
     public boolean matches(String redirectUrl, String secret) {
-        return matchesUrl(redirectUrl) && (!StringUtils.isBlank(secret) && secret.equals(getSecret()));
+        return matchesUrl(redirectUrl) && matchesSecret(secret);
     }
 
     public AppUserSession getAppUserSession(String code) {

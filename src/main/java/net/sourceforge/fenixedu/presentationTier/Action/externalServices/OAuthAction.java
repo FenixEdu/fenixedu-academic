@@ -271,14 +271,13 @@ public class OAuthAction extends FenixDispatchAction {
         String clientId = oauthRequest.getClientId();
         String clientSecret = oauthRequest.getClientSecret();
         String refreshToken = oauthRequest.getRefreshToken();
-        String redirectUrl = oauthRequest.getRedirectURI();
 
         try {
             FenixOAuthToken fenixRefreshToken = FenixOAuthToken.parse(refreshToken);
             AppUserSession appUserSession = fenixRefreshToken.getAppUserSession();
 
             ExternalApplication externalApplication = getExternalApplication(clientId);
-            if (!externalApplication.matches(redirectUrl, clientSecret)) {
+            if (!externalApplication.matchesUrl(clientSecret)) {
                 return sendOAuthResponse(response,
                         getOAuthProblemResponse(SC_UNAUTHORIZED, INVALID_GRANT, "Credentials or redirect_uri don't match"));
             }
@@ -293,7 +292,8 @@ public class OAuthAction extends FenixDispatchAction {
             appUserSession.setNewAccessToken(accessToken);
 
             OAuthResponse r =
-                    OAuthASResponse.tokenResponse(HttpServletResponse.SC_OK).location(redirectUrl).setAccessToken(accessToken)
+                    OAuthASResponse.tokenResponse(HttpServletResponse.SC_OK).location(externalApplication.getRedirectUrl())
+                            .setAccessToken(accessToken)
                             .setExpiresIn(OAuthProperties.getConfiguration().getAccessTokenExpirationSeconds().toString())
                             .buildJSONMessage();
 
