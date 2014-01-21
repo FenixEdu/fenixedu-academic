@@ -89,7 +89,7 @@ public class ImportFilesFromDSpace extends CronTask {
         try (Statement stmt = connection.createStatement()) {
             ResultSet rs =
                     stmt.executeQuery("SELECT OID FROM GENERIC_FILE where OID_STORAGE = "
-                            + Bennu.getInstance().getDSpaceFileStorage().getExternalId() + " " + notInStatement + " limit 200");
+                            + Bennu.getInstance().getDSpaceFileStorage().getExternalId() + " " + notInStatement + " limit 100");
             Set<String> oids = new HashSet<>();
             while (rs.next()) {
                 oids.add(rs.getString(1));
