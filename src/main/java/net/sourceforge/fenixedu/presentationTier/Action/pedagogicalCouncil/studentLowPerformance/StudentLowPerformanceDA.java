@@ -74,7 +74,7 @@ public class StudentLowPerformanceDA extends FenixDispatchAction {
     }
 
     public List<QueueJob> getLatestJobs() {
-        return (QueueJob.getAllJobsForClassOrSubClass(TutorshipStudentLowPerformanceQueueJob.class, 5));
+        return QueueJob.getLastJobsForClassOrSubClass(TutorshipStudentLowPerformanceQueueJob.class, 5);
     }
 
     private ActionForward viewJobs(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

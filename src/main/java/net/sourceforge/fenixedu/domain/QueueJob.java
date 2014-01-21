@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -16,6 +18,13 @@ public abstract class QueueJob extends QueueJob_Base {
     public static enum Priority {
         HIGH, NORMAL;
     }
+
+    static final public Comparator<QueueJob> COMPARATORY_BY_REQUEST_DATE = new Comparator<QueueJob>() {
+        @Override
+        public int compare(QueueJob o1, QueueJob o2) {
+            return o2.getRequestDate().compareTo(o1.getRequestDate());
+        }
+    };
 
     public QueueJob() {
         super();
@@ -45,9 +54,15 @@ public abstract class QueueJob extends QueueJob_Base {
         return !getDone() && hasBennuQueueUndone();
     }
 
-    public static List<QueueJob> getAllJobsForClassOrSubClass(final Class<? extends QueueJob> type, int maxSize) {
-        List<QueueJob> tempList = Lists.newArrayList(Iterables.filter(Bennu.getInstance().getQueueJobSet(), type));
-        return tempList.size() > maxSize ? tempList.subList(0, maxSize) : tempList;
+    public static List<QueueJob> getLastJobsForClassOrSubClass(final Class<? extends QueueJob> type, int maxSize) {
+        return getAllJobsForClassOrSubClass(type, maxSize, COMPARATORY_BY_REQUEST_DATE);
+    }
+
+    public static List<QueueJob> getAllJobsForClassOrSubClass(final Class<? extends QueueJob> type, int maxSize,
+            Comparator<QueueJob> comparator) {
+        List<QueueJob> jobs = Lists.newArrayList(Iterables.filter(Bennu.getInstance().getQueueJobSet(), type));
+        Collections.sort(jobs, comparator);
+        return jobs.size() > maxSize ? jobs.subList(0, maxSize) : jobs;
     }
 
     public static List<QueueJob> getUndoneJobsForClass(final Class<? extends QueueJob> type) {

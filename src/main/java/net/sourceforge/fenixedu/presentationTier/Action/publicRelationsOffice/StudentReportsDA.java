@@ -29,7 +29,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class StudentReportsDA extends FenixDispatchAction {
 
     public List<QueueJob> getLatestJobs() {
-        return QueueJob.getAllJobsForClassOrSubClass(PublicRelationsStudentListQueueJob.class, 5);
+        return QueueJob.getLastJobsForClassOrSubClass(PublicRelationsStudentListQueueJob.class, 5);
     }
 
     public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -49,9 +49,7 @@ public class StudentReportsDA extends FenixDispatchAction {
             }
         }
 
-        List<QueueJob> queueJobList = getLatestJobs();
-
-        request.setAttribute("queueJobList", queueJobList);
+        request.setAttribute("queueJobList", getLatestJobs());
         request.setAttribute("studentReportPredicate", studentReportPredicate);
         return mapping.findForward("search");
     }
