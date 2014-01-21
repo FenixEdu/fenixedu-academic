@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.person;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Set;
 
@@ -15,8 +16,10 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.JerseyOAuth2Filter;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.fileupload.util.Streams;
 import org.apache.commons.io.IOUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -29,6 +32,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.Atomic.TxMode;
 
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
@@ -57,7 +61,6 @@ public class ExternalAppsDA extends FenixDispatchAction {
         }
     }
 
-    /** This will list the applications which you grant access */
     public ActionForward allowIstIds(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         Person person = getLoggedPerson(request);
@@ -166,9 +169,26 @@ public class ExternalAppsDA extends FenixDispatchAction {
         }
     }
 
+    private String getServiceAgreementHtml() {
+        final InputStream resourceAsStream = getClass().getResourceAsStream("/api/serviceAgreement.html");
+        if (resourceAsStream == null) {
+            return BundleUtil
+                    .getStringFromResourceBundle("resources.ApplicationResources", "oauthapps.default.service.agreement");
+        }
+        try {
+            return Streams.asString(resourceAsStream);
+        } catch (IOException e) {
+            return BundleUtil
+                    .getStringFromResourceBundle("resources.ApplicationResources", "oauthapps.default.service.agreement");
+        }
+    }
+
     public ActionForward manageApplications(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
+        if (!getUser().getPerson().hasRole(RoleType.DEVELOPER)) {
+            request.setAttribute("serviceAgreement", getServiceAgreementHtml());
+        }
         request.setAttribute("appsOwned", getUser().getOwnedAppSet());
         addAllowIstIds(request);
         return mapping.findForward("manageApplications");
@@ -247,6 +267,25 @@ public class ExternalAppsDA extends FenixDispatchAction {
         outputStream.flush();
         response.flushBuffer();
         return null;
+    }
+
+    public ActionForward agreeServiceAgreement(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        final String agreedServiceAgreement = request.getParameter("agreedServiceAgreement");
+        if ("on".equals(agreedServiceAgreement)) {
+            addDeveloperRole(getUser());
+        }
+        return redirect("/externalApps.do?method=manageApplications", request, true);
+    }
+
+    @Atomic(mode = TxMode.WRITE)
+    private void addDeveloperRole(User user) {
+        if (user != null) {
+            if (!user.getPerson().hasRole(RoleType.DEVELOPER)) {
+                user.getPerson().addPersonRoleByRoleType(RoleType.DEVELOPER);
+            }
+        }
+
     }
 
 }
