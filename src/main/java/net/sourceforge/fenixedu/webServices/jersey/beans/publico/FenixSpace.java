@@ -104,16 +104,16 @@ public class FenixSpace {
         }
 
         public Room(AllocatableSpace allocationSpace) {
-            this(allocationSpace, false, null);
+            this(allocationSpace, false, false, null);
         }
 
         public Room(AllocatableSpace allocationSpace, Boolean withParentAndContainedSpaces) {
-            this(allocationSpace, withParentAndContainedSpaces, null);
+            this(allocationSpace, withParentAndContainedSpaces, false, null);
         }
 
-        public Room(AllocatableSpace allocationSpace, Boolean withParentAndContainedSpaces, List<FenixRoomEvent> events) {
+        public Room(AllocatableSpace allocationSpace, Boolean withParentAndContainedSpaces, Boolean withDescriptionAndCapacity, List<FenixRoomEvent> events) {
             super(allocationSpace, withParentAndContainedSpaces);
-            if (withParentAndContainedSpaces) {
+            if (withDescriptionAndCapacity) {
                 this.description = allocationSpace.getCompleteIdentificationWithoutCapacities();
                 this.capacity = new RoomCapacity(allocationSpace.getNormalCapacity(), allocationSpace.getExamCapacity());
             }
@@ -121,7 +121,7 @@ public class FenixSpace {
         }
 
         public Room(AllocatableSpace allocationSpace, List<FenixRoomEvent> events) {
-            this(allocationSpace, true, events);
+            this(allocationSpace, true, true, events);
         }
     }
 

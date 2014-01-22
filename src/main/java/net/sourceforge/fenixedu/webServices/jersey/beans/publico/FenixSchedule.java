@@ -2,7 +2,9 @@ package net.sourceforge.fenixedu.webServices.jersey.beans.publico;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -12,8 +14,12 @@ import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixSpace.Room;
 
 import org.joda.time.Interval;
+
+import com.google.common.base.Function;
+import com.google.common.collect.FluentIterable;
 
 public class FenixSchedule {
 
@@ -55,55 +61,26 @@ public class FenixSchedule {
         }
     }
 
-    public static class FenixRoom {
-
-        String name;
-        String id;
-
-        public FenixRoom(final AllocatableSpace room) {
-            this.name = room.getName();
-            this.id = room.getExternalId();
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-    }
-
     public static class FenixLessonOccurence extends FenixInterval {
 
-        FenixRoom room;
+        FenixSpace.Room room;
 
         public FenixLessonOccurence(final LessonInstance instance) {
             super(instance.getBeginDateTime(), instance.getEndDateTime());
-            final AllocatableSpace room = instance.getRoom();
-            this.room = room == null ? null : new FenixRoom(room);
+            setRoom(instance.getRoom());
         }
 
         public FenixLessonOccurence(final Interval interval, final AllocatableSpace room) {
             super(interval);
-            this.room = room == null ? null : new FenixRoom(room);
+            setRoom(room);
         }
 
-        public FenixRoom getRoom() {
+        public FenixSpace.Room getRoom() {
             return room;
         }
 
-        public void setRoom(FenixRoom room) {
-            this.room = room;
+        public void setRoom(AllocatableSpace room) {
+            this.room = (Room) (room == null ? null : new FenixSpace.Room(room, false, false, null));
         }
 
     }
@@ -142,7 +119,8 @@ public class FenixSchedule {
         FenixShiftOccupation occupation;
         List<String> types = new ArrayList<>();
         List<FenixLessonOccurence> lessons = new ArrayList<>();
-
+        List<FenixSpace.Room> rooms = new ArrayList<>();
+        
         public FenixShift(final Shift shift) {
             this.name = shift.getNome();
             setOccupation(new FenixShiftOccupation(shift.getStudentsSet().size(), shift.getLotacao()));
@@ -152,7 +130,11 @@ public class FenixSchedule {
                     types.add(type.name());
                 }
             }
+            Set<AllocatableSpace> spaces = new HashSet<>();
             for (final Lesson lesson : shift.getAssociatedLessonsSet()) {
+                if (lesson.getSala() != null) {
+                    spaces.add(lesson.getSala());
+                }
                 for (final LessonInstance lessonInstance : lesson.getLessonInstancesSet()) {
                     lessons.add(new FenixLessonOccurence(lessonInstance));
                 }
@@ -160,8 +142,21 @@ public class FenixSchedule {
                     lessons.add(new FenixLessonOccurence(interval, lesson.getSala()));
                 }
             }
+            
+            setRooms(spaces);
+            
         }
+        
+        public void setRooms(Set<AllocatableSpace> rooms) {
+            this.rooms = FluentIterable.from(rooms).transform(new Function<AllocatableSpace, FenixSpace.Room>() {
 
+                @Override
+                public Room apply(AllocatableSpace input) {
+                    return new Room(input, false, true, null);
+                }
+            }).toList();
+        }
+        
         public String getName() {
             return name;
         }
@@ -194,6 +189,9 @@ public class FenixSchedule {
             this.occupation = occupation;
         }
 
+        public List<FenixSpace.Room> getRooms() {
+            return rooms;
+        }
     }
 
     List<FenixInterval> lessonPeriods = new ArrayList<>();

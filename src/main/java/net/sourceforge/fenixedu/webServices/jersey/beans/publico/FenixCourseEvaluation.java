@@ -98,7 +98,7 @@ public abstract class FenixCourseEvaluation {
 
                                 @Override
                                 public FenixSpace.Room apply(AllocatableSpace input) {
-                                    return new FenixSpace.Room(input);
+                                    return new FenixSpace.Room(input,false, true, null);
                                 }
                             }).toSet());
         }
@@ -127,7 +127,7 @@ public abstract class FenixCourseEvaluation {
         }
 
         public void setAssignedRoom(AllocatableSpace assignedRoom) {
-            this.assignedRoom = assignedRoom == null ? null : new FenixSpace.Room(assignedRoom);
+            this.assignedRoom = assignedRoom == null ? null : new FenixSpace.Room(assignedRoom, false, true, null);
         }
 
         public String getId() {

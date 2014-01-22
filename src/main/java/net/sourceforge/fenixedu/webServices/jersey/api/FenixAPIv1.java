@@ -931,15 +931,16 @@ public class FenixAPIv1 {
     public FenixDegree degreesByOid(@PathParam("id") String oid, @QueryParam("academicTerm") String academicTerm) {
         Degree degree = getDomainObject(oid, Degree.class);
         final AcademicInterval academicInterval = getAcademicInterval(academicTerm, true);
-
-        final ExecutionDegree max =
-                Ordering.from(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR).max(
-                        degree.getExecutionDegrees(academicInterval));
-
-        if (max != null) {
-            return getFenixDegree(max);
+        List<ExecutionDegree> executionDegrees = degree.getExecutionDegrees(academicInterval);
+        if (!executionDegrees.isEmpty()) {
+            final ExecutionDegree max =
+                    Ordering.from(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR).max(
+                            executionDegrees);
+            if (max != null) {
+                return getFenixDegree(max);
+            }
         }
-
+        
         throw newApplicationError(Status.NOT_FOUND, "resource_not_found", "No degree information found for " + degree.getName()
                 + " on " + academicInterval.getPresentationName());
     }
@@ -1337,7 +1338,7 @@ public class FenixAPIv1 {
                     public void write(OutputStream os) throws IOException, WebApplicationException {
                         SpaceInformation spaceInformation = space.getSpaceInformation();
                         Boolean isSuroundingSpaceBlueprint = true;
-                        Boolean isToViewOriginalSpaceBlueprint = true;
+                        Boolean isToViewOriginalSpaceBlueprint = false;
                         Boolean viewBlueprintNumbers = true;
                         Boolean isToViewIdentifications = true;
                         Boolean isToViewDoorNumbers = false;
