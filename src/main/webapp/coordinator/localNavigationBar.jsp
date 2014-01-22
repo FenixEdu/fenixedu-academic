@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.domain.ExternalUser"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
@@ -28,22 +29,19 @@
 		</li>
 		<li>
 			<html:link page="/phdEnrolmentsManagement.do?method=showPhdProgram">
-				Inscrições
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.externalUnits.externalEnrolments"/>
 			</html:link>
 		</li>
-		
-		<%-- BIG HACK :) - temporary --%>
-		<logic:equal name="LOGGED_USER_ATTRIBUTE" 
-				property="username" value="ist12760">
-
-			<li class="navheader">
-				<bean:message key="label.phd.ist.epfl.collaboration.type" bundle="PHD_RESOURCES" />
-			</li>
-			<li>
-				<html:link page="/candidacies/phdProgramCandidacyProcess.do?method=listProcesses">
-					<bean:message key="label.viewProcesses" bundle="PHD_RESOURCES" />
-				</html:link>
-			</li>
-		</logic:equal>
+		<bean:define id="un" type="java.lang.String" name="LOGGED_USER_ATTRIBUTE" property="username"/>
+		<% if (ExternalUser.isExternalUser(un)) { %>
+				<li class="navheader">
+					<bean:message key="label.phd.ist.epfl.collaboration.type" bundle="PHD_RESOURCES" />
+				</li>
+				<li>
+					<html:link page="/candidacies/phdProgramCandidacyProcess.do?method=listProcesses">
+						<bean:message key="label.viewProcesses" bundle="PHD_RESOURCES" />
+					</html:link>
+				</li>
+		<% } %>
 	</logic:present>
 </ul>
