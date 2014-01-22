@@ -137,9 +137,9 @@ public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContex
             return mapping.getInputForward();
 
         }
-        List classOIDs = new ArrayList();
+        List<String> classOIDs = new ArrayList<String>();
         for (String selectedClasse : selectedClasses) {
-            classOIDs.add(new Integer(selectedClasse));
+            classOIDs.add(selectedClasse);
         }
 
         DeleteClasses.run(classOIDs);
