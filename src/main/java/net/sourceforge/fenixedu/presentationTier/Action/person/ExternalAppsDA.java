@@ -88,6 +88,13 @@ public class ExternalAppsDA extends FenixDispatchAction {
                             public ExternalApplication apply(AppUserAuthorization appUserSession) {
                                 return appUserSession.getApplication();
                             }
+                        }).filter(new Predicate<ExternalApplication>() {
+
+                            @Override
+                            public boolean apply(ExternalApplication input) {
+                                return input.isActive();
+                            }
+
                         }).toSet();
 
         request.setAttribute("authApps", authApps);
@@ -152,7 +159,6 @@ public class ExternalAppsDA extends FenixDispatchAction {
         return mapping.findForward("viewAllSessions");
     }
 
-    @Atomic
     public ActionForward deleteApplication(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
@@ -164,7 +170,6 @@ public class ExternalAppsDA extends FenixDispatchAction {
 
     }
 
-    @Atomic
     public ActionForward deleteApplicationAdmin(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
@@ -176,7 +181,6 @@ public class ExternalAppsDA extends FenixDispatchAction {
 
     }
 
-    @Atomic
     public ActionForward banApplicationAdmin(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
@@ -188,7 +192,6 @@ public class ExternalAppsDA extends FenixDispatchAction {
 
     }
 
-    @Atomic
     public ActionForward unbanApplicationAdmin(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 

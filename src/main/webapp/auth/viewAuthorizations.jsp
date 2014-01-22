@@ -11,7 +11,6 @@
 
 <em><bean:message key="label.person.main.title" /></em>
 
-<logic:notEmpty name="authorizations">
 <h2 class="mtop15">
 	<bean:message key="oauthapps.label.app.details" bundle="APPLICATION_RESOURCES" />
 </h2>
@@ -23,7 +22,7 @@
 		<fr:property name="classes" value="tstyle4 thlight thright"/>
 	</fr:layout>
 </fr:view>
-
+<logic:notEmpty name="authorizations">
 
 <h2 class="mtop25">
 	<bean:message key="oauthapps.label.manage.authorizations" bundle="APPLICATION_RESOURCES" />
@@ -69,6 +68,10 @@
 			});
 </script>
 </logic:notEmpty>
+
+<logic:empty name="authorizations">
+	<bean:message key="oauthapps.label.no.authorization" bundle="APPLICATION_RESOURCES" />
+</logic:empty>
 
 <jsp:include page="/auth/scopesFooter.jsp"></jsp:include>
 	

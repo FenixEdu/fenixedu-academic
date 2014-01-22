@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.WebApplicationException;
 
 import org.apache.amber.oauth2.as.response.OAuthASResponse;
 import org.apache.amber.oauth2.common.exception.OAuthProblemException;
@@ -28,24 +29,33 @@ public class OAuthUtils {
         }
     }
 
-    public static OAuthResponse getOAuthProblemResponse(Integer httpStatus, String error, String errorDescription)
-            throws OAuthSystemException {
+    public static OAuthResponse getOAuthProblemResponse(Integer httpStatus, String error, String errorDescription) {
         OAuthProblemException ex = OAuthProblemException.error(error, errorDescription);
         OAuthResponse r = getOAuthResponse(httpStatus, ex);
         return r;
     }
 
-    public static OAuthResponse getOAuthResponse(Integer httpStatus, OAuthProblemException ex) throws OAuthSystemException {
-        return OAuthASResponse.errorResponse(httpStatus).error(ex).buildJSONMessage();
+    public static OAuthResponse getOAuthResponse(Integer httpStatus, OAuthProblemException ex) {
+        try {
+            return OAuthASResponse.errorResponse(httpStatus).error(ex).buildJSONMessage();
+        } catch (OAuthSystemException e) {
+            throw new WebApplicationException(e);
+        }
     }
 
-    public static ActionForward sendOAuthResponse(HttpServletResponse response, OAuthResponse r) throws IOException {
+    public static ActionForward sendOAuthResponse(HttpServletResponse response, OAuthResponse r) {
         response.setContentType("application/json; charset=UTF-8");
         response.setStatus(r.getResponseStatus());
-        PrintWriter pw = response.getWriter();
-        pw.print(r.getBody());
-        pw.flush();
-        pw.close();
-        return null;
+        PrintWriter pw;
+        try {
+            pw = response.getWriter();
+            pw.print(r.getBody());
+            pw.flush();
+            pw.close();
+            return null;
+        } catch (IOException e) {
+            throw new WebApplicationException(e);
+        }
+
     }
 }

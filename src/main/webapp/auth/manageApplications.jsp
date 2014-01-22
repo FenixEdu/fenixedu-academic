@@ -15,29 +15,7 @@
 </h2>
 
 <logic:present role="role(DEVELOPER)">
-	<div class="infoop2" style="width:500px;">
-		<bean:message key="oauthapps.text.manage.applications" bundle="APPLICATION_RESOURCES" />
-	</div>
-	<login:present name="allowIstIds">
-	    <html:link page="/externalApps.do?method=allowIstIds">
-			<logic:equal name="allowIstIds" value="true">
-		 		allow.ist.id is <b>ON</b>!
-			</logic:equal>
-			<logic:equal name="allowIstIds" value="false">
-		 		allow.ist.id is off!
-			</logic:equal>
-		</html:link>
-	</login:present>
-	
-	<logic:notEmpty name="appsOwned">
-			<fr:view name="appsOwned" schema="oauthapps.view.apps">
-				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle4 thcenter thcenter"/>
-					<fr:property name="columnClasses" value="tdcenter, tdcenter, tdcenter, tdcenter, tdcenter"/>
-					
-<div class="infoop2" style="width:500px;">
-	<bean:message key="oauthapps.text.manage.applications" bundle="APPLICATION_RESOURCES" />
-</div>
+
 <login:present name="allowIstIds">
     <html:link page="/externalApps.do?method=allowIstIds">
 		<logic:equal name="allowIstIds" value="true">
@@ -48,6 +26,11 @@
 		</logic:equal>
 	</html:link>
 </login:present>
+
+
+<div class="infoop2" style="width:500px;">
+	<bean:message key="oauthapps.text.manage.applications" bundle="APPLICATION_RESOURCES" />
+</div>
 
 <logic:notEmpty name="appsOwned">
 		<fr:view name="appsOwned" schema="oauthapps.view.apps">
@@ -64,29 +47,6 @@
 					<fr:property name="key(editApplication)" value="oauthapps.label.edit.application"/>
 					<fr:property name="bundle(editApplication)" value="APPLICATION_RESOURCES"/>
 					
-					<fr:property name="linkFormat(deleteApplication)" value="<%= "/externalApps.do?method=deleteApplication&appOid=${externalId}" %>" />
-					<fr:property name="key(deleteApplication)" value="oauthapps.label.delete.application"/>
-					<fr:property name="bundle(deleteApplication)" value="APPLICATION_RESOURCES"/>
-				</fr:layout>
-			</fr:view>
-	</logic:notEmpty>
-	
-	<logic:empty name="appsOwned">
-		<p><bean:message key="oauthapps.label.no.apps" bundle="APPLICATION_RESOURCES" /></p>
-	</logic:empty>
-	
-	<p>
-		<html:link page="/externalApps.do?method=prepareCreateApplication">
-			<bean:message key="oauthapps.label.create.application" bundle="APPLICATION_RESOURCES"/>
-		</html:link>
-	</p>
-	
-	<jsp:include page="/auth/scopesFooter.jsp"></jsp:include>
-	
-	<bean:define id="confirm">
-		<bean:message bundle="APPLICATION_RESOURCES" key="oauthapps.label.confirm.delete.application"/> 
-	</bean:define>
-	<script type="text/javascript">
 					<fr:property name="linkFormat(deleteApplication)" value="<%= "/externalApps.do?method=deleteApplication&appOid=${externalId}" %>" />				
 					<fr:property name="key(deleteApplication)" value="oauthapps.label.delete.application"/>
 					<fr:property name="bundle(deleteApplication)" value="APPLICATION_RESOURCES"/>
@@ -133,7 +93,7 @@
 			   answer = confirm('<%= confirm %>');
 			   return answer;
 			});
-	</script>
+</script>
 </logic:present>
 
 <logic:notPresent role="role(DEVELOPER)">

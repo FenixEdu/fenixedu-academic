@@ -52,11 +52,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.Atomic;
-
 @Mapping(module = "external", path = "/oauth", scope = "request", parameter = "method")
 @Forwards({ @Forward(name = "showAuthorizationPage", path = "showAuthorizationPage"),
         @Forward(name = "oauthErrorPage", path = "oauthErrorPage") })
@@ -86,7 +81,7 @@ public class OAuthAction extends FenixDispatchAction {
     }
 
     /** ACTIONS **/
-    // http://localhost:8080/ciapl/external/oauth.do?method=getUserPermission&client_id=123123&redirect_uri=http://www.google.com
+    // http://localhost:8080/ciapl/external/oauth/userdialog&client_id=123123&redirect_uri=http://www.google.com
 
     public ActionForward getUserPermission(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
@@ -116,7 +111,7 @@ public class OAuthAction extends FenixDispatchAction {
                 // this is the request that will recover client id from session
                 final Cookie cookie = CookieReaderUtils.getCookieForName(OAUTH_SESSION_KEY, request);
                 if (cookie == null) {
-                    logger.debug("Cookie can't be null because this a direct from this action with client id in session");
+                    logger.debug("Cookie can't be null because this a direct request from this action with cookie");
                     return mapping.findForward("oauthErrorPage");
                 }
                 final String sessionClientId = (String) cookie.getValue();
@@ -124,7 +119,7 @@ public class OAuthAction extends FenixDispatchAction {
                     return redirectToRedirectUrl(mapping, request, response, person, cookie);
                 }
             } else {
-                logger.debug("Person should not be null since this a redirect from this action putting client id in session");
+                logger.debug("Person should not be null since this a redirect from this action with cookie");
             }
         }
 
@@ -151,6 +146,10 @@ public class OAuthAction extends FenixDispatchAction {
             return mapping.findForward("oauthErrorPage");
         }
 
+        if (clientApplication.isBanned() || clientApplication.isDeleted()) {
+            return mapping.findForward("oauthErrorPage");
+        }
+
         if (!clientApplication.hasAppUserAuthorization(person.getUser())) {
             request.setAttribute("application", clientApplication);
             return mapping.findForward("showAuthorizationPage");
@@ -161,7 +160,7 @@ public class OAuthAction extends FenixDispatchAction {
 
     // http://localhost:8080/ciapl/external/oauth.do?method=userConfirmation&...
     public ActionForward userConfirmation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+            HttpServletResponse response) {
 
         Person person = getLoggedPerson(request);
         if (person == null) {
@@ -173,29 +172,30 @@ public class OAuthAction extends FenixDispatchAction {
 
         ExternalApplication externalApplication = getExternalApplication(clientId);
 
-        ActionForward actionForward = validApplication(response, externalApplication, mapping);
-        if (actionForward != null) {
-            return actionForward;
+        if (!isValidApplication(response, externalApplication)) {
+            return null;
         }
 
         if (externalApplication.matchesUrl(redirectUrl)) {
-            redirectWithCode(request, response, externalApplication);
+            return redirectWithCode(request, response, externalApplication);
         }
 
         return null;
     }
 
-    private ActionForward validApplication(HttpServletResponse response, ExternalApplication clientApplication,
-            ActionMapping mapping) throws Exception {
+    private boolean isValidApplication(HttpServletResponse response, ExternalApplication clientApplication) {
         if (clientApplication.isDeleted()) {
-            mapping.findForward("oauthErrorPage");
+            sendOAuthResponse(response,
+                    getOAuthProblemResponse(SC_UNAUTHORIZED, INVALID_GRANT, "The application has been deleted."));
+            return false;
         }
 
         if (clientApplication.isBanned()) {
-            return sendOAuthResponse(response,
+            sendOAuthResponse(response,
                     getOAuthProblemResponse(SC_UNAUTHORIZED, INVALID_GRANT, "The application has been banned."));
+            return false;
         }
-        return null;
+        return true;
     }
 
     private ActionForward redirectWithCode(HttpServletRequest request, HttpServletResponse response,
@@ -296,18 +296,18 @@ public class OAuthAction extends FenixDispatchAction {
         String refreshToken = oauthRequest.getRefreshToken();
 
         try {
+            ExternalApplication externalApplication = getExternalApplication(clientId);
+
+            if (!isValidApplication(response, externalApplication)) {
+                return null;
+            }
+
             FenixOAuthToken fenixRefreshToken = FenixOAuthToken.parse(refreshToken);
             AppUserSession appUserSession = fenixRefreshToken.getAppUserSession();
 
-            ExternalApplication externalApplication = getExternalApplication(clientId);
-            if (!externalApplication.matchesUrl(clientSecret)) {
+            if (!externalApplication.matchesSecret(clientSecret)) {
                 return sendOAuthResponse(response,
                         getOAuthProblemResponse(SC_UNAUTHORIZED, INVALID_GRANT, "Credentials or redirect_uri don't match"));
-            }
-
-            ActionForward actionForward = validApplication(response, externalApplication, mapping);
-            if (actionForward != null) {
-                return actionForward;
             }
 
             if (!appUserSession.matchesRefreshToken(refreshToken)) {
@@ -355,9 +355,8 @@ public class OAuthAction extends FenixDispatchAction {
             return sendOAuthResponse(response, getOAuthProblemResponse(SC_BAD_REQUEST, INVALID_GRANT, "Client ID not recognized"));
         }
 
-        ActionForward actionForward = validApplication(response, externalApplication, mapping);
-        if (actionForward != null) {
-            return actionForward;
+        if (!isValidApplication(response, externalApplication)) {
+            return null;
         }
 
         if (!externalApplication.matches(redirectUrl, clientSecret)) {

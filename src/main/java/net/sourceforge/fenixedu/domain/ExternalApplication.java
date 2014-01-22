@@ -124,6 +124,15 @@ public class ExternalApplication extends ExternalApplication_Base {
         return null;
     }
 
+    @Override
+    public ExternalApplicationState getState() {
+        final ExternalApplicationState state = super.getState();
+        if (state == null) {
+            setState(ExternalApplicationState.ACTIVE);
+        }
+        return super.getState();
+    }
+
     public boolean hasAppUserAuthorization(User user) {
         return getAppUserAuthorization(user) != null;
     }
@@ -142,6 +151,12 @@ public class ExternalApplication extends ExternalApplication_Base {
 
     public boolean isEditable() {
         return isActive() || isBanned();
+    }
+
+    @Override
+    @Atomic
+    public void setState(ExternalApplicationState state) {
+        super.setState(state);
     }
 
     public void setActive() {
