@@ -40,4 +40,12 @@ public class ExternalUser extends ExternalUser_Base {
         return getUsername() != null;
     }
 
+    public static final boolean isExternalUser(final String username) {
+        for (final ExternalUser externalUser : Bennu.getInstance().getExternalUserSet()) {
+            if (externalUser.getUsername().equals(username)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

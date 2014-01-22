@@ -10,11 +10,7 @@ public class ExportParkingData extends CronTask {
 
     @Override
     public void runTask() {
-        taskLog("Start ExportParkingData");
-
         new ParkingDataReportFile();
-
-        taskLog("The end");
     }
 
 }

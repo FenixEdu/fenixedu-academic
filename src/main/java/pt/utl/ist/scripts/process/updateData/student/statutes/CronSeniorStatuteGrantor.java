@@ -19,12 +19,10 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.scheduler.CronTask;
 import org.fenixedu.bennu.scheduler.annotation.Task;
 import org.joda.time.LocalDate;
-import org.slf4j.Logger;
 
-import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-@Task(englishTitle = "CronSeniorStatuteGrantor")
+@Task(englishTitle = "CronSeniorStatuteGrantor", readOnly = true)
 public class CronSeniorStatuteGrantor extends CronTask {
 
     final static int HOW_MANY_WEEKS_SOONER = 3;
@@ -36,6 +34,7 @@ public class CronSeniorStatuteGrantor extends CronTask {
 
     @Override
     public void runTask() {
+        Language.setLocale(new Locale("pt", "PT"));
         getLogger().info(".: Checking if a special season enrolment period is coming soon... :.");
         ExecutionYear subjectYear = specialSeasonEnrolmentPeriodOpeningSoonForThisYear(HOW_MANY_WEEKS_SOONER);
 
@@ -156,10 +155,14 @@ public class CronSeniorStatuteGrantor extends CronTask {
 
         for (Registration registration : generateRegistrationSet(executionYear)) {
             if (registration.isSeniorStatuteApplicable(executionYear)) {
-
-                final GrantSeniorStatute grantor = new GrantSeniorStatute(registration, executionYear, getLogger());
-                grantor.start();
-                grantor.join();
+                try {
+                    registration.grantSeniorStatute(executionYear);
+                } catch (final Exception e) {
+                    getLogger().error(
+                            "Error while granting SeniorStatute to '" + registration.getPerson().getName()
+                                    + "' for his/her registration in <" + registration.getDegreeNameWithDescription() + ">.", e);
+                    throw new Error(e);
+                }
 
                 if (registration.getDegreeType() == DegreeType.BOLONHA_DEGREE) {
                     cntBSc++;
@@ -192,38 +195,4 @@ public class CronSeniorStatuteGrantor extends CronTask {
         }
         return registrations;
     }
-
-    private static class GrantSeniorStatute extends Thread {
-        private final Registration registration;
-        private final ExecutionYear executionYear;
-        private Logger log;
-
-        protected GrantSeniorStatute(final Registration registration, final ExecutionYear executionYear, final Logger log) {
-            this.registration = registration;
-            this.executionYear = executionYear;
-            this.log = log;
-        }
-
-        private Registration getRegistration() {
-            return registration;
-        }
-
-        private ExecutionYear getExecutionYear() {
-            return executionYear;
-        }
-
-        @Atomic
-        @Override
-        public void run() {
-            Language.setLocale(new Locale("pt", "PT"));
-            try {
-                getRegistration().grantSeniorStatute(getExecutionYear());
-            } catch (final Exception e) {
-                log.error("Error while granting SeniorStatute to '" + getRegistration().getPerson().getName()
-                        + "' for his/her registration in <" + getRegistration().getDegreeNameWithDescription() + ">.", e);
-                throw new Error(e);
-            }
-        }
-    }
-
 }

@@ -406,6 +406,10 @@ public class Installer {
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.PERSON));
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL));
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.MANAGER));
+        person.addPersonRoles(Role.getRoleByRoleType(RoleType.PERSONNEL_SECTION));
+        person.addPersonRoles(Role.getRoleByRoleType(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE));
+        person.addPersonRoles(Role.getRoleByRoleType(RoleType.SPACE_MANAGER));
+        person.addPersonRoles(Role.getRoleByRoleType(RoleType.SPACE_MANAGER_SUPER_USER));
         person.setRootDomainObject(bennu);
         person.setCountry(process.country);
         person.setCountryOfBirth(process.country);
