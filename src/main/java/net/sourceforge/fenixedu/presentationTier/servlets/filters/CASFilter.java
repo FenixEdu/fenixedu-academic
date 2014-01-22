@@ -44,9 +44,8 @@ public class CASFilter implements Filter {
         return request instanceof HttpServletRequest && response instanceof HttpServletResponse;
     }
 
-    private boolean notHasTicket(final ServletRequest request) {
-        final String ticket = request.getParameter("ticket");
-        return ticket == null || ticket.equals("");
+    private boolean shouldRedirectToCas(final HttpServletRequest request) {
+        return !(Authenticate.isLogged() && request.getRequestURI().endsWith("/loginCAS.do"));
     }
 
     protected String encodeUrl(final String casUrl) throws UnsupportedEncodingException {
@@ -62,7 +61,7 @@ public class CASFilter implements Filter {
                 throw new ServletException("CASFilter only applies to HTTP resources");
             }
 
-            if (notHasTicket(servletRequest)) {
+            if (shouldRedirectToCas((HttpServletRequest) servletRequest)) {
                 // send user to CAS to get a ticket
                 redirectToCAS(casConfig, (HttpServletRequest) servletRequest, (HttpServletResponse) servletResponse);
                 return;

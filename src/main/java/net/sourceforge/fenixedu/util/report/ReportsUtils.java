@@ -303,6 +303,10 @@ public class ReportsUtils extends PropertiesManager {
 
         addFont(result, "Times New Roman", "tnr.ttf", BaseFont.CP1252);
 
+        addFont(result, "Courier-BoldItalic", "CourierBoldItalic.ttf", BaseFont.CP1252);
+
+        addFont(result, "Courier-Italic", "CourierItalic.ttf", BaseFont.CP1252);
+
         return result;
     }
 
