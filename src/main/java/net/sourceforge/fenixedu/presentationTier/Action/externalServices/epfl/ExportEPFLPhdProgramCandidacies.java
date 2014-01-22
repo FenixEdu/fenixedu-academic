@@ -136,6 +136,7 @@ public class ExportEPFLPhdProgramCandidacies {
         writer.println(addTabs(3) + "</gps>");
 
         writer.println(addTabs(3) + String.format(" <detail type=\"URL_IST-EPFL\">%s</detail>", getUrlForProcess(process)));
+        writer.println(addTabs(3) + String.format(" <detail type=\"URL_IST-EPFL_DOCUMENTS\">%s</detail>", getUrlForProcessDocs(process)));
 
         writer.println(addTabs(3)
                 + String.format("<detail type=\"PDOC_AT_EPFL\" format=\"COURTU\">%s</detail>", process.getExternalPhdProgram()
@@ -152,7 +153,12 @@ public class ExportEPFLPhdProgramCandidacies {
 
     private static String getUrlForProcess(PhdIndividualProgramProcess process) {
         return String.format("https://fenix.ist.utl.pt/phd/epfl/applications/show?process=%s", process
-                .getPhdIndividualProcessNumber().getNumber());
+                .getCandidacyProcessHashCode().getValue());
+    }
+
+    private static String getUrlForProcessDocs(PhdIndividualProgramProcess process) {
+        return String.format("https://fenix.ist.utl.pt/phd/epfl/applications/candidateDocuments?candidateOid=%s", process
+                .getExternalId());
     }
 
     private static String addTabs(int level) {
