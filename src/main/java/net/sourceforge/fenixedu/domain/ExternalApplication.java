@@ -94,7 +94,7 @@ public class ExternalApplication extends ExternalApplication_Base {
         if (!StringUtils.isBlank(name)) {
             return name;
         } else {
-            return getAuthor().getPerson().getName();
+            return getAuthor().getPerson().getPresentationName();
         }
     }
 
