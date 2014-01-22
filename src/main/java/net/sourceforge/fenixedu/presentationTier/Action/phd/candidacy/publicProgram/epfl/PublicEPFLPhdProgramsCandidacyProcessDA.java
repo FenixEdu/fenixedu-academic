@@ -877,8 +877,7 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
         personBean.setName(composedName);
 
         try {
-            ExecuteProcessActivity.run(createMockUserView(person), individualProgramProcess, EditPersonalInformation.class,
-                    bean.getPersonBean());
+            ExecuteProcessActivity.run(individualProgramProcess, EditPersonalInformation.class, bean.getPersonBean());
         } catch (final DomainException e) {
             addErrorMessage(request, e.getKey(), e.getArgs());
             request.setAttribute("candidacyBean", bean);
@@ -994,9 +993,7 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
         final PhdIndividualProgramProcessBean bean = getRenderedObject("individualProcessBean");
         try {
             PhdIndividualProgramProcess individualProgramProcess = bean.getIndividualProgramProcess();
-            final Person person = individualProgramProcess.getPerson();
-            ExecuteProcessActivity.run(createMockUserView(person), individualProgramProcess,
-                    EditIndividualProcessInformation.class, bean);
+            ExecuteProcessActivity.run(individualProgramProcess, EditIndividualProcessInformation.class, bean);
             addSuccessMessage(request, "message.phdIndividualProgramProcessInformation.edit.success");
 
         } catch (final DomainException e) {
@@ -1058,9 +1055,7 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
 
         try {
             PhdIndividualProgramProcess individualProgramProcess = bean.getCandidacyHashCode().getIndividualProgramProcess();
-            final Person person = individualProgramProcess.getPerson();
-            ExecuteProcessActivity.run(createMockUserView(person), individualProgramProcess, AddGuidingsInformation.class,
-                    bean.getGuidings());
+            ExecuteProcessActivity.run(individualProgramProcess, AddGuidingsInformation.class, bean.getGuidings());
             addSuccessMessage(request, "message.guiding.created.with.success");
 
         } catch (final DomainException e) {
@@ -1082,8 +1077,7 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
         try {
             PhdIndividualProgramProcess individualProgramProcess =
                     getCandidacyBean().getCandidacyHashCode().getIndividualProgramProcess();
-            final Person person = individualProgramProcess.getPerson();
-            ExecuteProcessActivity.run(createMockUserView(person), individualProgramProcess, DeleteGuiding.class, guiding);
+            ExecuteProcessActivity.run(individualProgramProcess, DeleteGuiding.class, guiding);
             addSuccessMessage(request, "message.guiding.deleted.with.success");
 
         } catch (final DomainException e) {
@@ -1129,9 +1123,8 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
         try {
             PhdIndividualProgramProcess individualProgramProcess =
                     getCandidacyBean().getCandidacyHashCode().getIndividualProgramProcess();
-            final Person person = individualProgramProcess.getPerson();
 
-            ExecuteProcessActivity.run(createMockUserView(person), individualProgramProcess, AddCandidacyReferees.class,
+            ExecuteProcessActivity.run(individualProgramProcess, AddCandidacyReferees.class,
                     Collections.singletonList(getRenderedObject("refereeBean")));
             addSuccessMessage(request, "message.qualification.information.create.success");
             RenderUtils.invalidateViewState("refereeBean");
@@ -1192,9 +1185,7 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
         try {
             PhdIndividualProgramProcess individualProgramProcess =
                     getCandidacyBean().getCandidacyHashCode().getIndividualProgramProcess();
-            final Person person = individualProgramProcess.getPerson();
-            ExecuteProcessActivity.run(createMockUserView(person), individualProgramProcess, AddQualification.class,
-                    getRenderedObject("qualificationBean"));
+            ExecuteProcessActivity.run(individualProgramProcess, AddQualification.class, getRenderedObject("qualificationBean"));
             addSuccessMessage(request, "message.qualification.information.create.success");
             RenderUtils.invalidateViewState("qualificationBean");
 
@@ -1213,13 +1204,11 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
 
         final String externalId = (String) getFromRequest(request, "removeIndex");
         PhdIndividualProgramProcess individualProgramProcess = bean.getCandidacyHashCode().getIndividualProgramProcess();
-        final Person person = individualProgramProcess.getPerson();
 
         final Qualification qualification = getQualification(individualProgramProcess, externalId);
 
         try {
-            ExecuteProcessActivity.run(createMockUserView(person), individualProgramProcess, DeleteQualification.class,
-                    qualification);
+            ExecuteProcessActivity.run(individualProgramProcess, DeleteQualification.class, qualification);
             addSuccessMessage(request, "message.qualification.information.delete.success");
 
         } catch (final DomainException e) {
@@ -1407,7 +1396,6 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
 
         final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
         final PhdIndividualProgramProcess process = bean.getCandidacyHashCode().getIndividualProgramProcess();
-        final Person person = process.getPerson();
 
         if (!validateProcess(request, process)) {
             request.setAttribute("candidacyBean", bean);
@@ -1415,7 +1403,7 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
         }
 
         try {
-            ExecuteProcessActivity.run(createMockUserView(person), process, ValidatedByCandidate.class, null);
+            ExecuteProcessActivity.run(process, ValidatedByCandidate.class, null);
             addSuccessMessage(request, "message.validation.with.success");
 
         } catch (final DomainException e) {

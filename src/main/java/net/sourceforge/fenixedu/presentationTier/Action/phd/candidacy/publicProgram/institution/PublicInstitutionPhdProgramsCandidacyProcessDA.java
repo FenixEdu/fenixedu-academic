@@ -544,8 +544,8 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
         canEditPersonalInformation(request, process.getPerson());
 
         try {
-            ExecuteProcessActivity.run(createMockUserView(process.getPerson()), process.getIndividualProgramProcess(),
-                    EditPersonalInformation.class, bean.getPersonBean());
+            ExecuteProcessActivity
+                    .run(process.getIndividualProgramProcess(), EditPersonalInformation.class, bean.getPersonBean());
         } catch (final DomainException e) {
             addErrorMessage(request, e.getKey(), e.getArgs());
             request.setAttribute("candidacyBean", bean);
@@ -609,8 +609,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
         canEditCandidacy(request, process.getCandidacyHashCode());
 
         try {
-            ExecuteProcessActivity.run(createMockUserView(process.getPerson()), process.getIndividualProgramProcess(),
-                    EditIndividualProcessInformation.class, bean);
+            ExecuteProcessActivity.run(process.getIndividualProgramProcess(), EditIndividualProcessInformation.class, bean);
             addSuccessMessage(request, "message.phdIndividualProgramProcessInformation.edit.success");
 
         } catch (final DomainException e) {
@@ -659,8 +658,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
         canEditCandidacy(request, process.getCandidacyHashCode());
 
         try {
-            ExecuteProcessActivity.run(createMockUserView(process.getPerson()), process.getIndividualProgramProcess(),
-                    AddQualification.class, getQualificationBean());
+            ExecuteProcessActivity.run(process.getIndividualProgramProcess(), AddQualification.class, getQualificationBean());
             addSuccessMessage(request, "message.qualification.information.create.success");
         } catch (final DomainException e) {
             addErrorMessage(request, e.getKey(), e.getArgs());
@@ -677,8 +675,8 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
         canEditCandidacy(request, process.getCandidacyHashCode());
 
         try {
-            ExecuteProcessActivity.run(createMockUserView(process.getPerson()), process.getIndividualProgramProcess(),
-                    DeleteQualification.class, getDomainObject(request, "qualificationId"));
+            ExecuteProcessActivity.run(process.getIndividualProgramProcess(), DeleteQualification.class,
+                    getDomainObject(request, "qualificationId"));
         } catch (final DomainException e) {
             addErrorMessage(request, e.getKey(), e.getArgs());
             return editQualificationsInvalid(mapping, form, request, response);
@@ -752,8 +750,8 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 
         }
         try {
-            ExecuteProcessActivity.run(createMockUserView(process.getPerson()), process.getIndividualProgramProcess(),
-                    UploadDocuments.class, Collections.singletonList(uploadBean));
+            ExecuteProcessActivity.run(process.getIndividualProgramProcess(), UploadDocuments.class,
+                    Collections.singletonList(uploadBean));
             addSuccessMessage(request, "message.documents.uploaded.with.success");
 
         } catch (final DomainException e) {
@@ -770,7 +768,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
         final PhdProgramProcessDocument document = getDomainObject(request, "documentId");
 
         try {
-            ExecuteProcessActivity.run(createMockUserView(process.getPerson()), process,
+            ExecuteProcessActivity.run(process,
                     net.sourceforge.fenixedu.domain.phd.candidacy.activities.RemoveCandidacyDocument.class, document);
             addSuccessMessage(request, "message.documents.uploaded.with.success");
 
@@ -804,8 +802,8 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
         final PhdProgramCandidacyProcess process = getProcess(request);
 
         try {
-            ExecuteProcessActivity.run(createMockUserView(process.getPerson()), process.getIndividualProgramProcess(),
-                    AddCandidacyReferees.class, Collections.singletonList(getRenderedObject("refereeBean")));
+            ExecuteProcessActivity.run(process.getIndividualProgramProcess(), AddCandidacyReferees.class,
+                    Collections.singletonList(getRenderedObject("refereeBean")));
 
             addSuccessMessage(request, "message.referee.information.create.success");
         } catch (final DomainException e) {
@@ -912,8 +910,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
         final PhdCandidacyReferee referee = getDomainObject(request, "candidacyRefereeId");
 
         try {
-            ExecuteProcessActivity.run(createMockUserView(process.getPerson()), process.getIndividualProgramProcess(),
-                    RemoveCandidacyReferee.class, referee);
+            ExecuteProcessActivity.run(process.getIndividualProgramProcess(), RemoveCandidacyReferee.class, referee);
 
             addSuccessMessage(request, "message.referee.information.remove.success");
         } catch (final DomainException e) {
@@ -965,8 +962,8 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
         PhdParticipantBean bean = getGuidingBean();
 
         try {
-            ExecuteProcessActivity.run(createMockUserView(process.getPerson()), process.getIndividualProgramProcess(),
-                    AddGuidingsInformation.class, Collections.singletonList(bean));
+            ExecuteProcessActivity.run(process.getIndividualProgramProcess(), AddGuidingsInformation.class,
+                    Collections.singletonList(bean));
 
             addSuccessMessage(request, "message.guiding.created.with.success");
         } catch (final DomainException e) {
@@ -998,8 +995,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
         PhdParticipantBean bean = getAssistantGuidingBean();
 
         try {
-            ExecuteProcessActivity.run(createMockUserView(process.getPerson()), process.getIndividualProgramProcess(),
-                    AddAssistantGuidingInformation.class, bean);
+            ExecuteProcessActivity.run(process.getIndividualProgramProcess(), AddAssistantGuidingInformation.class, bean);
 
             addSuccessMessage(request, "message.assistant.guiding.created.with.success");
         } catch (final DomainException e) {
@@ -1017,8 +1013,8 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
         final PhdProgramCandidacyProcess process = getProcess(request);
 
         try {
-            ExecuteProcessActivity.run(createMockUserView(process.getPerson()), process.getIndividualProgramProcess(),
-                    DeleteGuiding.class, getDomainObject(request, "guidingId"));
+            ExecuteProcessActivity.run(process.getIndividualProgramProcess(), DeleteGuiding.class,
+                    getDomainObject(request, "guidingId"));
             addSuccessMessage(request, "message.guiding.deleted.with.success");
         } catch (final DomainException e) {
             addErrorMessage(request, e.getKey(), e.getArgs());
@@ -1032,8 +1028,8 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
         final PhdProgramCandidacyProcess process = getProcess(request);
 
         try {
-            ExecuteProcessActivity.run(createMockUserView(process.getPerson()), process.getIndividualProgramProcess(),
-                    DeleteAssistantGuiding.class, getDomainObject(request, "guidingId"));
+            ExecuteProcessActivity.run(process.getIndividualProgramProcess(), DeleteAssistantGuiding.class,
+                    getDomainObject(request, "guidingId"));
             addSuccessMessage(request, "message.guiding.deleted.with.success");
         } catch (final DomainException e) {
             addErrorMessage(request, e.getKey(), e.getArgs());
@@ -1078,8 +1074,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
         }
 
         try {
-            ExecuteProcessActivity.run(createMockUserView(process.getPerson()), process.getIndividualProgramProcess(),
-                    ValidatedByCandidate.class, null);
+            ExecuteProcessActivity.run(process.getIndividualProgramProcess(), ValidatedByCandidate.class, null);
             addSuccessMessage(request, "message.validation.with.success");
 
         } catch (final DomainException e) {

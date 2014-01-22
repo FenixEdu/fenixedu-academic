@@ -67,7 +67,7 @@
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Bottom" lineSpacing="1_1_2">
-						<font size="12" isItalic="true" pdfFontName="Courier-Oblique"/>
+						<font fontName="Courier-Italic" size="12" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$P{administrativeOfficeCoordinator}.getName()]]></textFieldExpression>
 				</textField>
@@ -80,7 +80,7 @@
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" lineSpacing="1_1_2">
-						<font size="12" isItalic="true" pdfFontName="Courier-Oblique"/>
+						<font fontName="Courier-Italic" size="12" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$P{signer}]]></textFieldExpression>
 				</textField>
@@ -93,7 +93,7 @@
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement lineSpacing="1_1_2">
-						<font size="12" isItalic="true" pdfFontName="Courier-Oblique"/>
+						<font fontName="Courier-Italic" size="12" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$P{signerLocation}]]></textFieldExpression>
 				</textField>
@@ -134,7 +134,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Justified" lineSpacing="1_1_2">
-					<font size="12" isBold="true" isItalic="true" pdfFontName="Courier-BoldOblique"/>
+					<font fontName="Courier-BoldItalic" size="12" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{firstParagraph}]]></textFieldExpression>
 			</textField>
@@ -147,7 +147,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement lineSpacing="1_1_2">
-					<font size="12" isItalic="true" pdfFontName="Courier-Oblique"/>
+					<font fontName="Courier-Italic" size="12" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{certificate}]]></textFieldExpression>
 			</textField>
@@ -160,7 +160,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" lineSpacing="1_1_2">
-					<font size="12" isBold="true" isItalic="true" pdfFontName="Courier-BoldOblique"/>
+					<font fontName="Courier-BoldItalic" size="12" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{name}]]></textFieldExpression>
 			</textField>
@@ -173,7 +173,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" lineSpacing="1_1_2">
-					<font size="12" isItalic="true" pdfFontName="Courier-Oblique"/>
+					<font fontName="Courier-Italic" size="12" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{documentIdNumber}]]></textFieldExpression>
 			</textField>
@@ -186,7 +186,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" lineSpacing="1_1_2">
-					<font size="12" isItalic="true" pdfFontName="Courier-Oblique"/>
+					<font fontName="Courier-Italic" size="12" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{birthLocale}]]></textFieldExpression>
 			</textField>
@@ -199,7 +199,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" lineSpacing="1_1_2">
-					<font size="12" isItalic="true" pdfFontName="Courier-Oblique"/>
+					<font fontName="Courier-Italic" size="12" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{nationality}]]></textFieldExpression>
 			</textField>
@@ -212,7 +212,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Justified" lineSpacing="1_1_2">
-					<font size="12" isItalic="true" pdfFontName="Courier-Oblique"/>
+					<font fontName="Courier-Italic" size="12" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{secondParagraph}]]></textFieldExpression>
 			</textField>
@@ -225,7 +225,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement lineSpacing="1_1_2">
-					<font size="12" isItalic="true" pdfFontName="Courier-Oblique"/>
+					<font fontName="Courier-Italic" size="12" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{degreeFinalizationInfo}]]></textFieldExpression>
 			</textField>
@@ -245,7 +245,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement>
-					<font size="8" isItalic="true" pdfFontName="Courier-Oblique"/>
+					<font fontName="Courier-Italic" size="8" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{documentNumber}]]></textFieldExpression>
 			</textField>
@@ -258,7 +258,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement lineSpacing="Single">
-					<font size="8" isItalic="true" pdfFontName="Courier-Oblique"/>
+					<font fontName="Courier-Italic" size="8" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{checked}]]></textFieldExpression>
 			</textField>
@@ -271,7 +271,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement lineSpacing="Double">
-					<font size="8" isItalic="true" pdfFontName="Courier-Oblique"/>
+					<font fontName="Courier-Italic" size="8" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{studentNumber}]]></textFieldExpression>
 			</textField>
@@ -284,7 +284,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8" isItalic="true" pdfFontName="Courier-Oblique"/>
+					<font fontName="Courier-Italic" size="8" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{page}]]></textFieldExpression>
 			</textField>
@@ -297,7 +297,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8" isItalic="true" pdfFontName="Courier-Oblique"/>
+					<font fontName="Courier-Italic" size="8" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{pageOf}]]></textFieldExpression>
 			</textField>
@@ -310,7 +310,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8" isItalic="true" pdfFontName="Courier-Oblique"/>
+					<font fontName="Courier-Italic" size="8" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
@@ -323,7 +323,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8" isItalic="true" pdfFontName="Courier-Oblique"/>
+					<font fontName="Courier-Italic" size="8" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
@@ -338,7 +338,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement lineSpacing="Single">
-					<font size="8" isItalic="true" pdfFontName="Courier-Oblique"/>
+					<font fontName="Courier-Italic" size="8" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("label.stationery") + "....."]]></textFieldExpression>
 			</textField>
@@ -353,7 +353,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement lineSpacing="Single">
-					<font size="8" isItalic="true" pdfFontName="Courier-Oblique"/>
+					<font fontName="Courier-Italic" size="8" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("documents.Certificate.baseAmountPlusAmountForUnits")]]></textFieldExpression>
 			</textField>
@@ -368,7 +368,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement lineSpacing="Single">
-					<font size="8" isItalic="true" pdfFontName="Courier-Oblique"/>
+					<font fontName="Courier-Italic" size="8" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("label.urgency") + "......"]]></textFieldExpression>
 			</textField>
@@ -383,7 +383,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement lineSpacing="Single">
-					<font size="8" isItalic="true" pdfFontName="Courier-Oblique"/>
+					<font fontName="Courier-Italic" size="8" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Total]]></text>
 			</staticText>
@@ -398,7 +398,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right">
-					<font size="8" isItalic="true" pdfFontName="Courier-Oblique"/>
+					<font fontName="Courier-Italic" size="8" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{amountPerPage}.multiply(new BigDecimal($V{PAGE_NUMBER})).toString() + " Eur"]]></textFieldExpression>
 			</textField>
@@ -413,7 +413,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right">
-					<font size="8" isItalic="true" pdfFontName="Courier-Oblique"/>
+					<font fontName="Courier-Italic" size="8" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{baseAmountPlusAmountForUnits}.toString() + " Eur"]]></textFieldExpression>
 			</textField>
@@ -428,7 +428,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right">
-					<font size="8" isItalic="true" pdfFontName="Courier-Oblique"/>
+					<font fontName="Courier-Italic" size="8" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{urgencyAmount}.toString() + " Eur"]]></textFieldExpression>
 			</textField>
@@ -443,7 +443,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right">
-					<font size="8" isItalic="true" pdfFontName="Courier-Oblique"/>
+					<font fontName="Courier-Italic" size="8" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{amountPerPage}.multiply(new BigDecimal($V{PAGE_NUMBER})).add($P{baseAmountPlusAmountForUnits}).add($P{urgencyAmount}).toString() + " Eur"]]></textFieldExpression>
 			</textField>

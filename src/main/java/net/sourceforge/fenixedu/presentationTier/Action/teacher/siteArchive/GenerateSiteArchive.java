@@ -8,7 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
+import net.sourceforge.fenixedu.domain.FileContent;
+import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Section;
+import net.sourceforge.fenixedu.domain.contents.Attachment;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -264,20 +267,51 @@ public class GenerateSiteArchive extends FenixDispatchAction {
         }
 
         for (Section section : executionCourse.getSite().getAssociatedSections()) {
-            String name = String.format("section-%s.html", section.getExternalId());
-            String url =
-                    String.format("/publico/executionCourse.do?method=section&executionCourseID=%s&sectionID=%s",
-                            executionCourse.getExternalId(), section.getExternalId());
-            resource = new Resource(name, url);
-            resource.addAllRules(globalRules);
+            addSectionToFetcher(executionCourse, options, fetcher, contextPath, globalRules, section);
+        }
 
-            if (options.isFiles()) {
-                ResourceRule fileRule = new ResourceRule(".*?/bitstream/([0-9]+/[0-9]+/[0-9]+)/(.*)", "files/$2");
-                resource.addRule(fileRule);
+    }
+
+    private void addSectionToFetcher(ExecutionCourse executionCourse, ArchiveOptions options, Fetcher fetcher,
+            String contextPath, List<Rule> globalRules, Section section) {
+        Resource resource;
+        String name = String.format("section-%s.html", section.getExternalId());
+        String url =
+                String.format("/publico/executionCourse.do?method=section&executionCourseID=%s&sectionID=%s",
+                        executionCourse.getExternalId(), section.getExternalId());
+        resource = new Resource(name, url);
+        resource.addAllRules(globalRules);
+
+        if (options.isFiles()) {
+            getFilesFromSection(fetcher, resource, section, globalRules, contextPath);
+        }
+
+        for (Section subsection : section.getAssociatedSections()) {
+            addSectionToFetcher(executionCourse, options, fetcher, contextPath, globalRules, subsection);
+        }
+        fetcher.queue(resource);
+    }
+
+    private void getFilesFromSection(Fetcher fetcher, Resource sectionResource, Section section, List<Rule> globalRules,
+            String contextPath) {
+        for (Item item : section.getChildren(Item.class)) {
+            for (Attachment att : item.getChildren(Attachment.class)) {
+                FileContent file = att.getFile();
+                sectionResource.addRule(new ResourceRule(file.getDownloadUrl(), "files/" + file.getFilename()));
+                sectionResource.addRule(new ResourceRule(file.getFileDownloadPrefix() + file.getExternalId(), "files/"
+                        + file.getFilename()));
+                Resource fileResource = new Resource("files/" + file.getFilename(), file.getDownloadUrl());
+                fetcher.queue(fileResource);
             }
 
-            fetcher.queue(resource);
         }
+        for (Attachment att : section.getChildren(Attachment.class)) {
+            FileContent file = att.getFile();
+            sectionResource.addRule(new ResourceRule(contextPath + att.getReversePath(), "files/" + file.getFilename()));
+            Resource fileResource = new Resource("files/" + file.getFilename(), file.getDownloadUrl());
+            fetcher.queue(fileResource);
+        }
+
     }
 
     private ArchiveOptions getOptions(HttpServletRequest request) {
