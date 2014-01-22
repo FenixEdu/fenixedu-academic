@@ -153,7 +153,7 @@ public class FenixDegreeExtended extends FenixDegree {
 
     }
 
-    private String currentAcademicTerm;
+    private String academicTerm;
     private String type;
     private String typeName;
     private String url;
@@ -161,7 +161,7 @@ public class FenixDegreeExtended extends FenixDegree {
     private FenixDegreeInfo info;
     private List<FenixTeacher> teachers;
 
-    public FenixDegreeExtended(String currentAcademicTerm, Degree degree, String type, String typeName, String url,
+    public FenixDegreeExtended(String academicTerm, Degree degree, String type, String typeName, String url,
             List<FenixSpace> campus, FenixDegreeInfo info, List<FenixTeacher> teachers) {
         super(degree, true);
         this.type = type;
@@ -170,15 +170,15 @@ public class FenixDegreeExtended extends FenixDegree {
         this.campus = campus;
         this.info = info;
         this.teachers = teachers;
-        this.currentAcademicTerm = currentAcademicTerm;
+        this.academicTerm = academicTerm;
     }
 
-    public String getCurrentAcademicTerm() {
-        return currentAcademicTerm;
+    public String getAcademicTerm() {
+        return academicTerm;
     }
 
-    public void setCurrentAcademicTerm(String currentAcademicTerm) {
-        this.currentAcademicTerm = currentAcademicTerm;
+    public void setAcademicTerm(String academicTerm) {
+        this.academicTerm = academicTerm;
     }
 
     @Override

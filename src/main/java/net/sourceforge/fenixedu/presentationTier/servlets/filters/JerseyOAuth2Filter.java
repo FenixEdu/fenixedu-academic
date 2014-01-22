@@ -175,6 +175,7 @@ public class JerseyOAuth2Filter implements Filter {
         try {
             errorResponse =
                     new OAuthErrorResponseBuilder(401).setError(error).setErrorDescription(errorDescription).buildJSONMessage();
+            response.setContentType("application/json; charset=UTF-8");
             response.setStatus(errorResponse.getResponseStatus());
             PrintWriter pw = response.getWriter();
             pw.print(errorResponse.getBody());
