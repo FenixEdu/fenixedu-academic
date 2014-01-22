@@ -2,12 +2,18 @@ package net.sourceforge.fenixedu.webServices.jersey.beans.publico;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
+
+import com.google.common.base.Function;
+import com.google.common.collect.FluentIterable;
 
 public class FenixAbout {
 
@@ -41,6 +47,8 @@ public class FenixAbout {
     String institutionUrl = null;
     List<FenixRSSFeed> rssFeeds = new ArrayList<>();
     String currentAcademicTerm;
+    Set<String> languages;
+    String language;
 
     private FenixAbout() {
         final Bennu instance = Bennu.getInstance();
@@ -52,6 +60,15 @@ public class FenixAbout {
         currentAcademicTerm = ExecutionSemester.readActualExecutionSemester().getQualifiedName();
         rssFeeds.add(new FenixRSSFeed("News", FenixConfigurationManager.getConfiguration().getFenixApiNewsRSSUrl()));
         rssFeeds.add(new FenixRSSFeed("Events", FenixConfigurationManager.getConfiguration().getFenixApiEventsRSSUrl()));
+        languages = FluentIterable.from(CoreConfiguration.supportedLocales()).transform(new Function<Locale, String>() {
+
+            @Override
+            public String apply(Locale input) {
+                return input.toLanguageTag();
+            }
+        }).toSet();
+
+        language = Locale.getDefault().toLanguageTag();
     }
 
     public static FenixAbout getInstance() {
@@ -62,32 +79,24 @@ public class FenixAbout {
         return institutionName;
     }
 
-    public void setInstitutionName(String institutionName) {
-        this.institutionName = institutionName;
-    }
-
     public String getInstitutionUrl() {
         return institutionUrl;
-    }
-
-    public void setInstitutionUrl(String institutionUrl) {
-        this.institutionUrl = institutionUrl;
     }
 
     public List<FenixRSSFeed> getRssFeeds() {
         return rssFeeds;
     }
 
-    public void setRssFeeds(List<FenixRSSFeed> rssFeeds) {
-        this.rssFeeds = rssFeeds;
-    }
-
     public String getCurrentAcademicTerm() {
         return currentAcademicTerm;
     }
 
-    public void setCurrentAcademicTerm(String currentAcademicTerm) {
-        this.currentAcademicTerm = currentAcademicTerm;
+    public Set<String> getLanguages() {
+        return languages;
+    }
+
+    public String getLanguage() {
+        return language;
     }
 
 }
