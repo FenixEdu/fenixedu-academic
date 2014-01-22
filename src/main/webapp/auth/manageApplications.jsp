@@ -35,6 +35,27 @@
 					<fr:property name="classes" value="tstyle4 thcenter thcenter"/>
 					<fr:property name="columnClasses" value="tdcenter, tdcenter, tdcenter, tdcenter, tdcenter"/>
 					
+<div class="infoop2" style="width:500px;">
+	<bean:message key="oauthapps.text.manage.applications" bundle="APPLICATION_RESOURCES" />
+</div>
+<login:present name="allowIstIds">
+    <html:link page="/externalApps.do?method=allowIstIds">
+		<logic:equal name="allowIstIds" value="true">
+	 		allow.ist.id is <b>ON</b>!
+		</logic:equal>
+		<logic:equal name="allowIstIds" value="false">
+	 		allow.ist.id is off!
+		</logic:equal>
+	</html:link>
+</login:present>
+
+<logic:notEmpty name="appsOwned">
+		<fr:view name="appsOwned" schema="oauthapps.view.apps">
+			<fr:layout name="tabular">
+			
+					<fr:property name="classes" value="tstyle4 thcenter thcenter"/>
+					<fr:property name="columnClasses" value="tdcenter, tdcenter, tdcenter, tdcenter, tdcenter"/>
+								
 					<fr:property name="linkFormat(viewApplicationDetails)" value="<%= "/externalApps.do?method=viewApplicationDetails&appOid=${externalId}" %>" />
 					<fr:property name="key(viewApplicationDetails)" value="oauthapps.label.view.application.details"/>
 					<fr:property name="bundle(viewApplicationDetails)" value="APPLICATION_RESOURCES"/>
@@ -66,6 +87,47 @@
 		<bean:message bundle="APPLICATION_RESOURCES" key="oauthapps.label.confirm.delete.application"/> 
 	</bean:define>
 	<script type="text/javascript">
+					<fr:property name="linkFormat(deleteApplication)" value="<%= "/externalApps.do?method=deleteApplication&appOid=${externalId}" %>" />				
+					<fr:property name="key(deleteApplication)" value="oauthapps.label.delete.application"/>
+					<fr:property name="bundle(deleteApplication)" value="APPLICATION_RESOURCES"/>
+						
+			</fr:layout>
+		</fr:view>
+</logic:notEmpty>
+
+<logic:empty name="appsOwned">
+	<p><bean:message key="oauthapps.label.no.apps" bundle="APPLICATION_RESOURCES" /></p>
+</logic:empty>
+
+<p>
+	<html:link page="/externalApps.do?method=prepareCreateApplication">
+		<bean:message key="oauthapps.label.create.application" bundle="APPLICATION_RESOURCES"/>
+	</html:link>
+</p>
+
+<jsp:include page="/auth/scopesFooter.jsp"></jsp:include>
+
+<logic:notEmpty name="appsBanned">
+	<br><br><h2>	
+		<bean:message bundle="APPLICATION_RESOURCES" key="oauthapps.label.manage.banned.application"/>
+	</h2>
+	<fr:view name="appsBanned" schema="oauthapps.view.apps">
+		<fr:layout name="tabular">			
+				<fr:property name="classes" value="tstyle4 thcenter thcenter"/>
+				<fr:property name="columnClasses" value="tdcenter, tdcenter, tdcenter, tdcenter, tdcenter"/>								
+				<fr:property name="linkFormat(viewApplicationDetails)" value="<%= "/externalApps.do?method=viewApplicationDetails&appOid=${externalId}" %>" />
+				<fr:property name="key(viewApplicationDetails)" value="oauthapps.label.view.application.details"/>
+				<fr:property name="bundle(viewApplicationDetails)" value="APPLICATION_RESOURCES"/>											
+		</fr:layout>
+	</fr:view>
+</logic:notEmpty>
+
+<bean:define id="confirm">
+	<bean:message bundle="APPLICATION_RESOURCES" key="oauthapps.label.confirm.delete.application"/> 
+</bean:define>
+<br><br>
+
+<script type="text/javascript">
 		$("table img").width("75px").height("75px");
 		$("a[href*=deleteApplication]").click(function(e) {
 			   answer = confirm('<%= confirm %>');

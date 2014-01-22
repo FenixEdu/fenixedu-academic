@@ -30,6 +30,7 @@ public class ExternalApplication extends ExternalApplication_Base {
         super();
         setRootDomainObject(Bennu.getInstance());
         setSecret(RandomStringUtils.randomAlphanumeric(115));
+        setState(ExternalApplicationState.ACTIVE);
     }
 
     public void setScopeList(List<AuthScope> newScopes) {
@@ -88,6 +89,15 @@ public class ExternalApplication extends ExternalApplication_Base {
         return null;
     }
 
+    public String getAuthorAppName() {
+        String name = getAuthorName();
+        if (!StringUtils.isBlank(name)) {
+            return name;
+        } else {
+            return getAuthor().getPerson().getName();
+        }
+    }
+
     public void setLogoStream(InputStream stream) {
         try {
             if (stream != null) {
@@ -105,15 +115,6 @@ public class ExternalApplication extends ExternalApplication_Base {
         setLogoStream((InputStream) stream);
     }
 
-    @Atomic
-    public void delete() {
-        setRootDomainObject(null);
-        setAuthor(null);
-        getScopesSet().clear();
-        deleteAuthorizations();
-        deleteDomainObject();
-    }
-
     public AppUserAuthorization getAppUserAuthorization(User user) {
         for (AppUserAuthorization authorization : getAppUserAuthorizationSet()) {
             if (authorization.getUser().equals(user)) {
@@ -125,6 +126,34 @@ public class ExternalApplication extends ExternalApplication_Base {
 
     public boolean hasAppUserAuthorization(User user) {
         return getAppUserAuthorization(user) != null;
+    }
+
+    public boolean isActive() {
+        return getState().equals(ExternalApplicationState.ACTIVE);
+    }
+
+    public boolean isBanned() {
+        return getState().equals(ExternalApplicationState.BANNED);
+    }
+
+    public boolean isDeleted() {
+        return getState().equals(ExternalApplicationState.DELETED);
+    }
+
+    public boolean isEditable() {
+        return isActive() || isBanned();
+    }
+
+    public void setActive() {
+        setState(ExternalApplicationState.ACTIVE);
+    }
+
+    public void setBanned() {
+        setState(ExternalApplicationState.BANNED);
+    }
+
+    public void setDeleted() {
+        setState(ExternalApplicationState.DELETED);
     }
 
 }

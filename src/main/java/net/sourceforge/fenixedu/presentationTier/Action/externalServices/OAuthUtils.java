@@ -40,6 +40,7 @@ public class OAuthUtils {
     }
 
     public static ActionForward sendOAuthResponse(HttpServletResponse response, OAuthResponse r) throws IOException {
+        response.setContentType("application/json; charset=UTF-8");
         response.setStatus(r.getResponseStatus());
         PrintWriter pw = response.getWriter();
         pw.print(r.getBody());

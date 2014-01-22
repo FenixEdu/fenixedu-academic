@@ -30,7 +30,6 @@
 	<logic:present role="role(MANAGER)">
 		<li><html:link page="/externalApps.do?method=viewAllApplications"><bean:message key="oauthapps.label.manage.all.applications"  bundle="APPLICATION_RESOURCES"/></html:link></li>
 	</logic:present>
-		
 	<!-- Vigilancy link for people who do not have ROLE TEACHER -->
 
 	<logic:notEmpty name="LOGGED_USER_ATTRIBUTE" property="person.vigilantWrappers">

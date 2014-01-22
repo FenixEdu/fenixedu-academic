@@ -35,12 +35,14 @@ import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 
 import com.google.common.base.Function;
+import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableSet;
 
 @Mapping(module = "person", path = "/externalApps")
 @Forwards(value = { @Forward(name = "createApplication", path = "/auth/createApplication.jsp"),
         @Forward(name = "editApplication", path = "/auth/editApplication.jsp"),
+        @Forward(name = "editApplicationAdmin", path = "/auth/editApplicationAdmin.jsp"),
         @Forward(name = "manageAuthorizations", path = "/auth/manageAuthorizations.jsp"),
         @Forward(name = "returnKeys", path = "/auth/returnkeys.jsp"),
         @Forward(name = "manageApplications", path = "/auth/manageApplications.jsp"),
@@ -150,14 +152,51 @@ public class ExternalAppsDA extends FenixDispatchAction {
         return mapping.findForward("viewAllSessions");
     }
 
+    @Atomic
     public ActionForward deleteApplication(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
         ExternalApplication application = getDomainObject(request, "appOid");
 
-        application.delete();
+        application.setDeleted();
 
         return manageApplications(mapping, actionForm, request, response);
+
+    }
+
+    @Atomic
+    public ActionForward deleteApplicationAdmin(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+
+        ExternalApplication application = getDomainObject(request, "appOid");
+
+        application.setDeleted();
+
+        return redirect("/externalApps.do?method=viewAllApplications", request, true);
+
+    }
+
+    @Atomic
+    public ActionForward banApplicationAdmin(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+
+        ExternalApplication application = getDomainObject(request, "appOid");
+
+        application.setBanned();
+
+        return redirect("/externalApps.do?method=viewAllApplications", request, true);
+
+    }
+
+    @Atomic
+    public ActionForward unbanApplicationAdmin(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+
+        ExternalApplication application = getDomainObject(request, "appOid");
+
+        application.setActive();
+
+        return redirect("/externalApps.do?method=viewAllApplications", request, true);
 
     }
 
@@ -190,6 +229,26 @@ public class ExternalAppsDA extends FenixDispatchAction {
             request.setAttribute("serviceAgreement", getServiceAgreementHtml());
         }
         request.setAttribute("appsOwned", getUser().getOwnedAppSet());
+        Set<ExternalApplication> externalApplicationsSet = getUser().getOwnedAppSet();
+
+        Set<ExternalApplication> externalApplications =
+                FluentIterable.from(externalApplicationsSet).filter(new Predicate<ExternalApplication>() {
+                    @Override
+                    public boolean apply(ExternalApplication externalApplication) {
+                        return externalApplication.isActive();
+                    }
+                }).toSet();
+
+        Set<ExternalApplication> externalApplicationsBanned =
+                FluentIterable.from(externalApplicationsSet).filter(new Predicate<ExternalApplication>() {
+                    @Override
+                    public boolean apply(ExternalApplication externalApplication) {
+                        return externalApplication.isBanned();
+                    }
+                }).toSet();
+
+        request.setAttribute("appsOwned", externalApplications);
+        request.setAttribute("appsBanned", externalApplicationsBanned);
         addAllowIstIds(request);
         return mapping.findForward("manageApplications");
     }
@@ -207,7 +266,13 @@ public class ExternalAppsDA extends FenixDispatchAction {
         Set<AppUserSession> authSessions = null;
 
         if (appUserAuthorization != null) {
-            authSessions = appUserAuthorization.getSessionSet();
+            authSessions = FluentIterable.from(appUserAuthorization.getSessionSet()).filter(new Predicate<AppUserSession>() {
+
+                @Override
+                public boolean apply(AppUserSession appUserSession) {
+                    return appUserSession.isRefreshTokenValid();
+                }
+            }).toSet();
         }
 
         if (authSessions == null) {
@@ -249,6 +314,13 @@ public class ExternalAppsDA extends FenixDispatchAction {
         ExternalApplication app = getDomainObject(request, "appOid");
         request.setAttribute("application", app);
         return mapping.findForward("editApplication");
+    }
+
+    public ActionForward prepareEditApplicationAdmin(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        ExternalApplication app = getDomainObject(request, "appOid");
+        request.setAttribute("application", app);
+        return mapping.findForward("editApplicationAdmin");
     }
 
     public ActionForward appLogo(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
