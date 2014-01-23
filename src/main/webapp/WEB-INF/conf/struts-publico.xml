@@ -266,12 +266,6 @@
                   <forward path="/chooseDayAndShift.jsp" name="Show Choose Form"></forward>
                   <forward path="/viewExamsDayAndShiftForm.do?method=view" name="view Exams"></forward>
             </action>
-            <action validate="false" scope="request" name="examForm" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ViewExamsByDayAndShiftDispatchAction" input="/viewExamsDayAndShift.jsp" path="/viewExamsDayAndShiftForm">
-                  <forward path="/viewExamsByDayAndShift.jsp" name="View Exams"></forward>
-                  <forward path="/viewExamsDayAndShiftForm.do?method=view" name="Deleted Exam"></forward>
-                  <forward path="/editExam.jsp" name="Edit Exam"></forward>
-                  <forward path="/chooseExamsContextDA.do?method=prepare&amp;page=0&amp;inputPage=chooseExamsContext&amp;nextPage=addExecutionCourseToExam" name="Add Execution Course"></forward>
-            </action>
             <action type="net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseContextDispatchAction" validate="true" scope="request" path="/chooseExamsContextDA" parameter="method" name="chooseContextForm" input="/chooseExamsContextDA.do?method=prepare&amp;page=0&amp;inputPage=chooseExamsContext">
                   <forward path="/chooseExamsContext.jsp" name="chooseExamsContext"></forward>
                   <forward path="/chooseExecutionCourseForm.do" name="createExam"></forward>

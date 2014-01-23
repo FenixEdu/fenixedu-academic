@@ -463,12 +463,6 @@
                   <forward name="viewExams" path="/viewExamsDayAndShiftForm.do?method=view"></forward>
                   <forward name="viewEmptyRooms" path="/viewEmptyRoomsInDayAndShift.do"></forward>
             </action>
-            <action path="/viewExamsDayAndShiftForm" input="/viewExamsDayAndShift.jsp" type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ViewExamsByDayAndShiftDispatchAction" parameter="method" name="examForm" scope="request" validate="false">
-                  <forward name="View Exams" path="/viewExamsByDayAndShift.jsp"></forward>
-                  <forward name="Deleted Exam" path="/viewExamsDayAndShiftForm.do?method=view"></forward>
-                  <forward name="Edit Exam" path="/editExam.jsp"></forward>
-                  <forward name="Add Execution Course" path="/chooseExamsContextDA.do?method=prepare&amp;page=0&amp;inputPage=chooseExamsContext&amp;nextPage=addExecutionCourseToExam"></forward>
-            </action>
             <action input="/viewEmptyRoomsInDayAndShift.jsp" path="/viewEmptyRoomsInDayAndShift" type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ViewEmptyRoomsInDayAndShiftAction">
                   <forward name="View" path="/viewEmptyRoomsInDayAndShift.jsp"></forward>
             </action>
