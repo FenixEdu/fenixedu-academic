@@ -1,8 +1,16 @@
 package net.sourceforge.fenixedu.webServices.jersey.beans;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.student.Registration;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -50,17 +58,46 @@ public class FenixPerson {
 
     public static class TeacherFenixRole extends FenixRole {
 
-        String department;
+        public static class FenixDepartment {
 
-        public TeacherFenixRole(String department) {
-            this.department = department;
+            public FenixDepartment(String name, String acronym) {
+                super();
+                this.name = name;
+                this.acronym = acronym;
+            }
+
+            String name;
+            String acronym;
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getAcronym() {
+                return acronym;
+            }
+
+            public void setAcronym(String acronym) {
+                this.acronym = acronym;
+            }
+
         }
 
-        public String getDepartment() {
+        private FenixDepartment department;
+
+        public TeacherFenixRole(Department department) {
+            setDepartment(new FenixDepartment(department.getName(), department.getAcronym()));
+        }
+
+        public FenixDepartment getDepartment() {
             return department;
         }
 
-        public void setDepartment(String department) {
+        public void setDepartment(FenixDepartment department) {
             this.department = department;
         }
 
@@ -68,25 +105,86 @@ public class FenixPerson {
 
     public static class StudentFenixRole extends FenixRole {
 
-        List<String> degrees;
+        public static class FenixRegistration {
 
-        public StudentFenixRole(List<String> degrees) {
-            this.degrees = degrees;
+            public FenixRegistration(Registration registration) {
+                setName(registration.getDegreeName());
+                setAcronym(registration.getDegree().getSigla());
+                setId(registration.getDegree().getExternalId());
+                academicTerms = new TreeSet<>();
+                for (ExecutionSemester semester : registration.getEnrolmentsExecutionPeriods()) {
+                    academicTerms.add(semester.getQualifiedName());
+                }
+            }
+
+            String name;
+            String acronym;
+            String id;
+            Collection<String> academicTerms;
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getAcronym() {
+                return acronym;
+            }
+
+            public void setAcronym(String acronym) {
+                this.acronym = acronym;
+            }
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
+
+            public Collection<String> getAcademicTerms() {
+                return academicTerms;
+            }
+
+            public void setAcademicTerms(List<String> academicTerms) {
+                this.academicTerms = academicTerms;
+            }
+
         }
 
-        public List<String> getDegrees() {
-            return degrees;
+        List<FenixRegistration> registrations;
+
+        public StudentFenixRole(List<Registration> registrations) {
+            this.registrations = new ArrayList<>();
+            for (Registration registration : registrations) {
+                this.registrations.add(new FenixRegistration(registration));
+            }
         }
 
-        public void setDegrees(List<String> degrees) {
-            this.degrees = degrees;
+        public List<FenixRegistration> getRegistrations() {
+            return registrations;
+        }
+
+        public void setRegistrations(List<FenixRegistration> registrations) {
+            this.registrations = registrations;
         }
 
     }
 
-    public static class AlumniFenixRole extends FenixRole {
+    public static class AlumniFenixRole extends StudentFenixRole {
 
-        public AlumniFenixRole() {
+        public AlumniFenixRole(List<Registration> registrations) {
+            super(registrations);
+        }
+
+        @Override
+        @JsonProperty("concludedRegistrations")
+        public List<FenixRegistration> getRegistrations() {
+            return super.getRegistrations();
         }
 
     }
@@ -96,7 +194,7 @@ public class FenixPerson {
     FenixPhoto photo;
 
     String name;
-    String istId;
+    String username;
     String email;
 
     List<String> personalEmails;
@@ -104,14 +202,14 @@ public class FenixPerson {
     List<String> webAddresses;
     List<String> workWebAddresses;
 
-    public FenixPerson(String campus, Set<FenixRole> roles, FenixPhoto photo, String name, String istId, String email,
+    public FenixPerson(String campus, Set<FenixRole> roles, FenixPhoto photo, String name, String username, String email,
             List<String> personalEmails, List<String> workEmails, List<String> webAddresses, List<String> workWebAddresses) {
         super();
         this.campus = campus;
         this.roles = roles;
         this.photo = photo;
         this.name = name;
-        this.istId = istId;
+        this.username = username;
         this.email = email;
         this.personalEmails = personalEmails;
         this.workEmails = workEmails;
@@ -151,12 +249,12 @@ public class FenixPerson {
         this.name = name;
     }
 
-    public String getIstId() {
-        return istId;
+    public String getUsername() {
+        return username;
     }
 
-    public void setIstId(String istId) {
-        this.istId = istId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {

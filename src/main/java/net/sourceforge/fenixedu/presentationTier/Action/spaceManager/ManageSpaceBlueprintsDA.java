@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.spaceManager;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.math.BigDecimal;
 
 import javax.servlet.ServletOutputStream;
@@ -166,15 +167,27 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
             response.setStatus(404);
             return null;
         }
-        final Blueprint blueprint = (Blueprint) obj;
-        final BlueprintFile blueprintFile = blueprint.getBlueprintFile();
 
-        final byte[] blueprintBytes = blueprintFile.getContentFile().getBytes();
-        final InputStream inputStream = new ByteArrayInputStream(blueprintBytes);
+        final Blueprint blueprint = (Blueprint) obj;
 
         response.setContentType("text/plain");
         response.setHeader("Content-disposition", "attachment; filename=blueprint.jpeg");
         final ServletOutputStream writer = response.getOutputStream();
+
+        writeBlueprint(getSpaceInformationFromParameter(request), isSuroundingSpaceBlueprint, isToViewOriginalSpaceBlueprint,
+                viewBlueprintNumbers, isToViewIdentifications, isToViewDoorNumbers, scalePercentage, blueprint, writer);
+
+        return null;
+    }
+
+    public static void writeBlueprint(SpaceInformation spaceInformation, Boolean isSuroundingSpaceBlueprint,
+            Boolean isToViewOriginalSpaceBlueprint, Boolean viewBlueprintNumbers, Boolean isToViewIdentifications,
+            Boolean isToViewDoorNumbers, BigDecimal scalePercentage, final Blueprint blueprint, final OutputStream writer)
+            throws IOException {
+
+        final BlueprintFile blueprintFile = blueprint.getBlueprintFile();
+        final byte[] blueprintBytes = blueprintFile.getContentFile().getBytes();
+        final InputStream inputStream = new ByteArrayInputStream(blueprintBytes);
 
         SpaceBlueprintsDWGProcessor processor = null;
 
@@ -182,11 +195,11 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
             processor = new SpaceBlueprintsDWGProcessor(scalePercentage);
 
         } else if (isSuroundingSpaceBlueprint != null && isSuroundingSpaceBlueprint) {
-            SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
-            processor =
-                    new SpaceBlueprintsDWGProcessor(blueprint.getSpace(), spaceInformation.getSpace(), viewBlueprintNumbers,
-                            isToViewIdentifications, isToViewDoorNumbers, scalePercentage);
-
+            if (spaceInformation != null) {
+                processor =
+                        new SpaceBlueprintsDWGProcessor(blueprint.getSpace(), spaceInformation.getSpace(), viewBlueprintNumbers,
+                                isToViewIdentifications, isToViewDoorNumbers, scalePercentage);
+            }
         } else {
             processor =
                     new SpaceBlueprintsDWGProcessor(blueprint.getSpace(), viewBlueprintNumbers, isToViewIdentifications,
@@ -196,8 +209,6 @@ public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
         if (processor != null) {
             processor.generateJPEGImage(inputStream, writer);
         }
-
-        return null;
     }
 
     private void setSpaceInfo(HttpServletRequest request, SpaceInformation spaceInformation) {

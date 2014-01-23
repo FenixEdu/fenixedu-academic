@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.webServices.jersey.beans;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 public class FenixEvaluation {
 
@@ -113,6 +115,7 @@ public class FenixEvaluation {
         this.enrollmentEndDay = enrollmentEndDay;
     }
 
+    @JsonInclude(Include.NON_NULL)
     public Boolean getIsEnrolled() {
         return isEnrolled;
     }

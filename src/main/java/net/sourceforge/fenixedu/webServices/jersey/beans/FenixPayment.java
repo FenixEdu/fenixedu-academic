@@ -2,18 +2,20 @@ package net.sourceforge.fenixedu.webServices.jersey.beans;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixPeriod;
+
 public class FenixPayment {
 
     public static class PaymentEvent {
         String amount;
-        String name;
+        String type;
         String description;
         String date;
 
-        public PaymentEvent(String amount, String name, String description, String date) {
+        public PaymentEvent(String amount, String type, String description, String date) {
             super();
             this.amount = amount;
-            this.name = name;
+            this.type = type;
             this.description = description;
             this.date = date;
         }
@@ -26,12 +28,12 @@ public class FenixPayment {
             this.amount = amount;
         }
 
-        public String getName() {
-            return name;
+        public String getType() {
+            return type;
         }
 
-        public void setName(String name) {
-            this.name = name;
+        public void setType(String type) {
+            this.type = type;
         }
 
         public String getDescription() {
@@ -52,19 +54,17 @@ public class FenixPayment {
 
     }
 
-    public static class NotPayedEvent {
+    public static class PendingEvent {
         String description;
-        String startDate;
-        String endDate;
+        FenixPeriod paymentPeriod;
         String entity;
         String reference;
         String amount;
 
-        public NotPayedEvent(String description, String startDate, String endDate, String entity, String reference, String amount) {
+        public PendingEvent(String description, FenixPeriod paymentPeriod, String entity, String reference, String amount) {
             super();
             this.description = description;
-            this.startDate = startDate;
-            this.endDate = endDate;
+            this.paymentPeriod = paymentPeriod;
             this.entity = entity;
             this.reference = reference;
             this.amount = amount;
@@ -78,20 +78,12 @@ public class FenixPayment {
             this.description = description;
         }
 
-        public String getStartDate() {
-            return startDate;
+        public FenixPeriod getPaymentPeriod() {
+            return paymentPeriod;
         }
 
-        public void setStartDate(String startDate) {
-            this.startDate = startDate;
-        }
-
-        public String getEndDate() {
-            return endDate;
-        }
-
-        public void setEndDate(String endDate) {
-            this.endDate = endDate;
+        public void setPaymentPeriod(FenixPeriod paymentPeriod) {
+            this.paymentPeriod = paymentPeriod;
         }
 
         public String getEntity() {
@@ -120,29 +112,29 @@ public class FenixPayment {
 
     }
 
-    private List<PaymentEvent> payed;
-    private List<NotPayedEvent> notPayed;
+    private List<PaymentEvent> completed;
+    private List<PendingEvent> pending;
 
-    public FenixPayment(List<PaymentEvent> payed, List<NotPayedEvent> notPayed) {
+    public FenixPayment(List<PaymentEvent> completed, List<PendingEvent> pending) {
         super();
-        this.payed = payed;
-        this.notPayed = notPayed;
+        this.completed = completed;
+        this.pending = pending;
     }
 
-    public List<PaymentEvent> getPayed() {
-        return payed;
+    public List<PaymentEvent> getCompleted() {
+        return completed;
     }
 
-    public void setPayed(List<PaymentEvent> payed) {
-        this.payed = payed;
+    public void setCompleted(List<PaymentEvent> completed) {
+        this.completed = completed;
     }
 
-    public List<NotPayedEvent> getNotPayed() {
-        return notPayed;
+    public List<PendingEvent> getPending() {
+        return pending;
     }
 
-    public void setNotPayed(List<NotPayedEvent> notPayed) {
-        this.notPayed = notPayed;
+    public void setPending(List<PendingEvent> pending) {
+        this.pending = pending;
     }
 
 }

@@ -103,12 +103,20 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
         setExamCapacity(capacidadeExame);
     }
 
-    public String getCompleteIdentification() {
+    public String getCompleteIdentificationWithoutCapacities() {
         StringBuilder builder = new StringBuilder();
         if (containsIdentification()) {
             Building building = getSpaceBuilding();
             builder.append(getIdentification()).append(" - ");
             builder.append(building != null ? building.getNameWithCampus() : "");
+        }
+        return builder.toString();
+    }
+
+    public String getCompleteIdentification() {
+        StringBuilder builder = new StringBuilder();
+        if (containsIdentification()) {
+            builder.append(getCompleteIdentificationWithoutCapacities());
             builder.append(String.format(" [%d,%d]", getNormalCapacity(), getExamCapacity()));
         }
         return builder.toString();

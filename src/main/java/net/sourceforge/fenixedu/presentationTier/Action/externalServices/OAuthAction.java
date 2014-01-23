@@ -81,7 +81,7 @@ public class OAuthAction extends FenixDispatchAction {
     }
 
     /** ACTIONS **/
-    // http://localhost:8080/ciapl/external/oauth.do?method=getUserPermission&client_id=123123&redirect_uri=http://www.google.com
+    // http://localhost:8080/ciapl/external/oauth/userdialog&client_id=123123&redirect_uri=http://www.google.com
 
     public ActionForward getUserPermission(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
@@ -111,7 +111,7 @@ public class OAuthAction extends FenixDispatchAction {
                 // this is the request that will recover client id from session
                 final Cookie cookie = CookieReaderUtils.getCookieForName(OAUTH_SESSION_KEY, request);
                 if (cookie == null) {
-                    logger.debug("Cookie can't be null because this a direct from this action with client id in session");
+                    logger.debug("Cookie can't be null because this a direct request from this action with cookie");
                     return mapping.findForward("oauthErrorPage");
                 }
                 final String sessionClientId = (String) cookie.getValue();
@@ -119,7 +119,7 @@ public class OAuthAction extends FenixDispatchAction {
                     return redirectToRedirectUrl(mapping, request, response, person, cookie);
                 }
             } else {
-                logger.debug("Person should not be null since this a redirect from this action putting client id in session");
+                logger.debug("Person should not be null since this a redirect from this action with cookie");
             }
         }
 
@@ -146,6 +146,10 @@ public class OAuthAction extends FenixDispatchAction {
             return mapping.findForward("oauthErrorPage");
         }
 
+        if (clientApplication.isBanned() || clientApplication.isDeleted()) {
+            return mapping.findForward("oauthErrorPage");
+        }
+
         if (!clientApplication.hasAppUserAuthorization(person.getUser())) {
             request.setAttribute("application", clientApplication);
             return mapping.findForward("showAuthorizationPage");
@@ -166,13 +170,32 @@ public class OAuthAction extends FenixDispatchAction {
         String clientId = request.getParameter("client_id");
         String redirectUrl = request.getParameter("redirect_uri");
 
-        ExternalApplication clientApplication = getExternalApplication(clientId);
+        ExternalApplication externalApplication = getExternalApplication(clientId);
 
-        if (clientApplication.matchesUrl(redirectUrl)) {
-            redirectWithCode(request, response, clientApplication);
+        if (!isValidApplication(response, externalApplication)) {
+            return null;
+        }
+
+        if (externalApplication.matchesUrl(redirectUrl)) {
+            return redirectWithCode(request, response, externalApplication);
         }
 
         return null;
+    }
+
+    private boolean isValidApplication(HttpServletResponse response, ExternalApplication clientApplication) {
+        if (clientApplication.isDeleted()) {
+            sendOAuthResponse(response,
+                    getOAuthProblemResponse(SC_UNAUTHORIZED, INVALID_GRANT, "The application has been deleted."));
+            return false;
+        }
+
+        if (clientApplication.isBanned()) {
+            sendOAuthResponse(response,
+                    getOAuthProblemResponse(SC_UNAUTHORIZED, INVALID_GRANT, "The application has been banned."));
+            return false;
+        }
+        return true;
     }
 
     private ActionForward redirectWithCode(HttpServletRequest request, HttpServletResponse response,
@@ -271,14 +294,18 @@ public class OAuthAction extends FenixDispatchAction {
         String clientId = oauthRequest.getClientId();
         String clientSecret = oauthRequest.getClientSecret();
         String refreshToken = oauthRequest.getRefreshToken();
-        String redirectUrl = oauthRequest.getRedirectURI();
 
         try {
+            ExternalApplication externalApplication = getExternalApplication(clientId);
+
+            if (!isValidApplication(response, externalApplication)) {
+                return null;
+            }
+
             FenixOAuthToken fenixRefreshToken = FenixOAuthToken.parse(refreshToken);
             AppUserSession appUserSession = fenixRefreshToken.getAppUserSession();
 
-            ExternalApplication externalApplication = getExternalApplication(clientId);
-            if (!externalApplication.matches(redirectUrl, clientSecret)) {
+            if (!externalApplication.matchesSecret(clientSecret)) {
                 return sendOAuthResponse(response,
                         getOAuthProblemResponse(SC_UNAUTHORIZED, INVALID_GRANT, "Credentials or redirect_uri don't match"));
             }
@@ -293,7 +320,8 @@ public class OAuthAction extends FenixDispatchAction {
             appUserSession.setNewAccessToken(accessToken);
 
             OAuthResponse r =
-                    OAuthASResponse.tokenResponse(HttpServletResponse.SC_OK).location(redirectUrl).setAccessToken(accessToken)
+                    OAuthASResponse.tokenResponse(HttpServletResponse.SC_OK).location(externalApplication.getRedirectUrl())
+                            .setAccessToken(accessToken)
                             .setExpiresIn(OAuthProperties.getConfiguration().getAccessTokenExpirationSeconds().toString())
                             .buildJSONMessage();
 
@@ -325,6 +353,10 @@ public class OAuthAction extends FenixDispatchAction {
 
         if (externalApplication == null) {
             return sendOAuthResponse(response, getOAuthProblemResponse(SC_BAD_REQUEST, INVALID_GRANT, "Client ID not recognized"));
+        }
+
+        if (!isValidApplication(response, externalApplication)) {
+            return null;
         }
 
         if (!externalApplication.matches(redirectUrl, clientSecret)) {

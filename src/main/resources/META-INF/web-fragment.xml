@@ -143,6 +143,10 @@
  				 Since this is wanted behaviour, the header X-XSS-Protection must be set to 0.
  		</description>
 	</filter>
+	<filter>
+		<filter-name>FenixAPILanguageFilter</filter-name>
+		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.FenixAPILanguageFilter</filter-class>
+	</filter>
 	<!-- Filter Mapping -->
 	<filter-mapping>
  		 <filter-name>RequestIgnorer</filter-name>
@@ -233,6 +237,10 @@
     <filter-mapping>
         <filter-name>RequestChecksumFilter</filter-name>
         <url-pattern>*.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+    	<filter-name>FenixAPILanguageFilter</filter-name>
+    	<url-pattern>/api/fenix/*</url-pattern>
     </filter-mapping>
 
 	<!-- Servlet -->

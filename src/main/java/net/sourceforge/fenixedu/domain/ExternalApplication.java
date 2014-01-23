@@ -30,6 +30,7 @@ public class ExternalApplication extends ExternalApplication_Base {
         super();
         setRootDomainObject(Bennu.getInstance());
         setSecret(RandomStringUtils.randomAlphanumeric(115));
+        setState(ExternalApplicationState.ACTIVE);
     }
 
     public void setScopeList(List<AuthScope> newScopes) {
@@ -49,8 +50,12 @@ public class ExternalApplication extends ExternalApplication_Base {
         return !StringUtils.isBlank(redirectUrl) && redirectUrl.equals(getRedirectUrl());
     }
 
+    public boolean matchesSecret(String secret) {
+        return !StringUtils.isBlank(secret) && secret.equals(getSecret());
+    }
+
     public boolean matches(String redirectUrl, String secret) {
-        return matchesUrl(redirectUrl) && (!StringUtils.isBlank(secret) && secret.equals(getSecret()));
+        return matchesUrl(redirectUrl) && matchesSecret(secret);
     }
 
     public AppUserSession getAppUserSession(String code) {
@@ -84,6 +89,15 @@ public class ExternalApplication extends ExternalApplication_Base {
         return null;
     }
 
+    public String getAuthorAppName() {
+        String name = getAuthorName();
+        if (!StringUtils.isBlank(name)) {
+            return name;
+        } else {
+            return getAuthor().getPerson().getPresentationName();
+        }
+    }
+
     public void setLogoStream(InputStream stream) {
         try {
             if (stream != null) {
@@ -101,15 +115,6 @@ public class ExternalApplication extends ExternalApplication_Base {
         setLogoStream((InputStream) stream);
     }
 
-    @Atomic
-    public void delete() {
-        setRootDomainObject(null);
-        setAuthor(null);
-        getScopesSet().clear();
-        deleteAuthorizations();
-        deleteDomainObject();
-    }
-
     public AppUserAuthorization getAppUserAuthorization(User user) {
         for (AppUserAuthorization authorization : getAppUserAuthorizationSet()) {
             if (authorization.getUser().equals(user)) {
@@ -119,8 +124,51 @@ public class ExternalApplication extends ExternalApplication_Base {
         return null;
     }
 
+    @Override
+    public ExternalApplicationState getState() {
+        final ExternalApplicationState state = super.getState();
+        if (state == null) {
+            setState(ExternalApplicationState.ACTIVE);
+        }
+        return super.getState();
+    }
+
     public boolean hasAppUserAuthorization(User user) {
         return getAppUserAuthorization(user) != null;
+    }
+
+    public boolean isActive() {
+        return getState().equals(ExternalApplicationState.ACTIVE);
+    }
+
+    public boolean isBanned() {
+        return getState().equals(ExternalApplicationState.BANNED);
+    }
+
+    public boolean isDeleted() {
+        return getState().equals(ExternalApplicationState.DELETED);
+    }
+
+    public boolean isEditable() {
+        return isActive() || isBanned();
+    }
+
+    @Override
+    @Atomic
+    public void setState(ExternalApplicationState state) {
+        super.setState(state);
+    }
+
+    public void setActive() {
+        setState(ExternalApplicationState.ACTIVE);
+    }
+
+    public void setBanned() {
+        setState(ExternalApplicationState.BANNED);
+    }
+
+    public void setDeleted() {
+        setState(ExternalApplicationState.DELETED);
     }
 
 }

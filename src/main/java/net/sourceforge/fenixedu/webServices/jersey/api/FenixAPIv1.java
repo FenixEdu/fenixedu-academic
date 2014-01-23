@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.webServices.jersey.api;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,6 +29,7 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.StreamingOutput;
 
 import net.fortuna.ical4j.model.Calendar;
 import net.sourceforge.fenixedu.applicationTier.Factory.RoomSiteComponentBuilder;
@@ -43,6 +48,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.domain.AdHocEvaluation;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.AuthScope;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -52,71 +59,86 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.ExternalApplication;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Project;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
+import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.WebAddress;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
+import net.sourceforge.fenixedu.domain.space.Blueprint;
+import net.sourceforge.fenixedu.domain.space.BlueprintFile;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.Space;
+import net.sourceforge.fenixedu.domain.space.SpaceInformation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.util.icalendar.CalendarFactory;
+import net.sourceforge.fenixedu.domain.util.icalendar.ClassEventBean;
+import net.sourceforge.fenixedu.domain.util.icalendar.EvaluationEventBean;
 import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
 import net.sourceforge.fenixedu.presentationTier.Action.ICalendarSyncPoint;
 import net.sourceforge.fenixedu.presentationTier.Action.externalServices.OAuthUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.spaceManager.ManageSpaceBlueprintsDA;
 import net.sourceforge.fenixedu.presentationTier.backBeans.student.enrolment.DisplayEvaluationsForStudentToEnrol;
 import net.sourceforge.fenixedu.util.ContentType;
 import net.sourceforge.fenixedu.util.EvaluationType;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.webServices.jersey.beans.FenixCalendar;
 import net.sourceforge.fenixedu.webServices.jersey.beans.FenixCalendar.FenixCalendarEvent;
+import net.sourceforge.fenixedu.webServices.jersey.beans.FenixCalendar.FenixClassEvent;
+import net.sourceforge.fenixedu.webServices.jersey.beans.FenixCalendar.FenixEvaluationEvent;
+import net.sourceforge.fenixedu.webServices.jersey.beans.FenixCourse;
 import net.sourceforge.fenixedu.webServices.jersey.beans.FenixCurriculum;
-import net.sourceforge.fenixedu.webServices.jersey.beans.FenixCurriculum.FenixCourseInfo;
-import net.sourceforge.fenixedu.webServices.jersey.beans.FenixEvaluation;
 import net.sourceforge.fenixedu.webServices.jersey.beans.FenixPayment;
-import net.sourceforge.fenixedu.webServices.jersey.beans.FenixPayment.NotPayedEvent;
 import net.sourceforge.fenixedu.webServices.jersey.beans.FenixPayment.PaymentEvent;
+import net.sourceforge.fenixedu.webServices.jersey.beans.FenixPayment.PendingEvent;
 import net.sourceforge.fenixedu.webServices.jersey.beans.FenixPerson;
 import net.sourceforge.fenixedu.webServices.jersey.beans.FenixPerson.FenixPhoto;
 import net.sourceforge.fenixedu.webServices.jersey.beans.FenixPerson.FenixRole;
 import net.sourceforge.fenixedu.webServices.jersey.beans.FenixPersonCourses;
 import net.sourceforge.fenixedu.webServices.jersey.beans.FenixPersonCourses.FenixEnrolment;
 import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixAbout;
-import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixCourse;
-import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixCourse.FenixCompetence;
-import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixCourse.FenixCompetence.BiblioRef;
 import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixCourseEvaluation;
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixCourseExtended;
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixCourseExtended.FenixCompetence;
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixCourseExtended.FenixCompetence.BiblioRef;
 import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixCourseGroup;
 import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixCourseStudents;
 import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixDegree;
-import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixDegree.FenixDegreeInfo;
-import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixDegree.FenixTeacher;
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixDegreeExtended;
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixDegreeExtended.FenixDegreeInfo;
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixDegreeExtended.FenixTeacher;
 import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixExecutionCourse;
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixPeriod;
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixRoomEvent;
 import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixSchedule;
 import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixSpace;
-import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixSpace.Room.RoomEvent.WrittenEvaluationEvent;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.fileupload.util.Streams;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
@@ -130,8 +152,16 @@ import pt.ist.fenixframework.DomainObject;
 import pt.utl.ist.fenix.tools.resources.DefaultResourceBundleProvider;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
+import com.google.common.base.Function;
 import com.google.common.base.Joiner;
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.Ordering;
 import com.google.common.net.HttpHeaders;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import com.qmino.miredot.annotations.ReturnType;
 
 @SuppressWarnings("unchecked")
@@ -148,13 +178,20 @@ public class FenixAPIv1 {
 
     public final static String JSON_UTF8 = "application/json; charset=utf-8";
 
+    DateTimeFormatter formatDayHour = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm");
+
     public static final DateTimeFormatter formatDay = DateTimeFormat.forPattern("dd/MM/yyyy");
-    public static final DateTimeFormatter formatHour = DateTimeFormat.forPattern("HH:mm");
     public static final SimpleDateFormat dataFormatDay = new SimpleDateFormat("dd/MM/yyyy");
     public static final SimpleDateFormat dataFormatHour = new SimpleDateFormat("HH:mm");
 
+    private static Gson gson;
+
     private static final String ENROL = "yes";
     private static final String UNENROL = "no";
+
+    static {
+        gson = new GsonBuilder().setPrettyPrinting().create();
+    }
 
     private String mls(MultiLanguageString mls) {
         if (mls == null) {
@@ -205,20 +242,25 @@ public class FenixAPIv1 {
         final Set<FenixRole> roles = new HashSet<FenixRole>();
 
         if (isTeacher(person) || person.hasRole(RoleType.TEACHER)) {
-            roles.add(new FenixPerson.TeacherFenixRole(pib.getTeacherDepartment()));
+            roles.add(new FenixPerson.TeacherFenixRole(pib.getTeacherDepartmentUnit()));
         }
 
         if (person.hasRole(RoleType.STUDENT)) {
-            roles.add(new FenixPerson.StudentFenixRole(pib.getStudentDegrees()));
+            roles.add(new FenixPerson.StudentFenixRole(pib.getStudentRegistrations()));
 
         }
 
         if (person.hasRole(RoleType.ALUMNI)) {
-            roles.add(new FenixPerson.AlumniFenixRole());
+
+            ArrayList<Registration> concludedRegistrations = new ArrayList<>();
+            if (person.getStudent() != null) {
+                concludedRegistrations.addAll(person.getStudent().getConcludedRegistrations());
+            }
+            roles.add(new FenixPerson.AlumniFenixRole(concludedRegistrations));
         }
 
         final String name = pib.getName();
-        final String istid = person.getIstUsername();
+        final String username = person.getUsername();
         final String campus = pib.getCampus();
         final String email = pib.getEmail();
         final List<String> personalEmails = pib.getPersonalEmails();
@@ -227,7 +269,7 @@ public class FenixAPIv1 {
         List<String> workWebAdresses = pib.getWorkWebAdresses();
         final FenixPhoto photo = getPhoto(person);
 
-        return new FenixPerson(campus, roles, photo, name, istid, email, personalEmails, workEmails, personalWebAdresses,
+        return new FenixPerson(campus, roles, photo, name, username, email, personalEmails, workEmails, personalWebAdresses,
                 workWebAdresses);
     }
 
@@ -246,90 +288,145 @@ public class FenixAPIv1 {
     @GET
     @Produces(JSON_UTF8)
     @Path("person/courses/")
-    public FenixPersonCourses personCourses(@QueryParam("sem") String sem, @QueryParam("year") String year) {
+    public FenixPersonCourses personCourses(@QueryParam("academicTerm") String academicTerm) {
 
         final Person person = getPerson();
 
         // PersonInformationBean pib = new PersonInformationBean(person);
-        ExecutionSemester executionSemester = getExecutionSemester(sem, year);
-
-        String executionYear = executionSemester.getYear();
-        Integer semester = executionSemester.getSemester();
+        Set<ExecutionSemester> semesters = getExecutionSemesters(academicTerm);
 
         List<FenixEnrolment> enrolments = new ArrayList<FenixEnrolment>();
+        List<FenixCourse> teachingCourses = new ArrayList<FenixCourse>();
 
-        final Student foundStudent = person.getStudent();
-
-        for (Registration registration : foundStudent.getAllRegistrations()) {
-            for (Enrolment enrolment : registration.getEnrolments(executionSemester)) {
-                String id = enrolment.getExecutionCourseFor(executionSemester).getExternalId();
-                String grade = enrolment.getGrade().getValue();
-                String sigla = enrolment.getExecutionCourseFor(executionSemester).getSigla();
-                String name = enrolment.getExecutionCourseFor(executionSemester).getName();
-                enrolments.add(new FenixEnrolment(id, sigla, name, grade));
-            }
+        for (ExecutionSemester executionSemester : semesters) {
+            fillEnrolments(person, enrolments, executionSemester);
+            fillTeachingCourses(person, teachingCourses, executionSemester);
         }
 
-        List<FenixPersonCourses.FenixCourse> teachingCourses = new ArrayList<FenixPersonCourses.FenixCourse>();
+        return new FenixPersonCourses(enrolments, teachingCourses);
+    }
 
+    public Set<ExecutionSemester> getExecutionSemesters(String academicTerm) {
+        ExecutionInterval executionInterval = ExecutionInterval.getExecutionInterval(getAcademicInterval(academicTerm));
+
+        Set<ExecutionSemester> semesters = new HashSet<ExecutionSemester>();
+
+        if (executionInterval instanceof ExecutionYear) {
+            semesters.addAll(((ExecutionYear) executionInterval).getExecutionPeriods());
+        } else if (executionInterval instanceof ExecutionSemester) {
+            semesters.add((ExecutionSemester) executionInterval);
+        }
+        return semesters;
+    }
+
+    public void fillTeachingCourses(final Person person, List<FenixCourse> teachingCourses, ExecutionSemester executionSemester) {
         for (final Professorship professorship : person.getProfessorships(executionSemester)) {
             final ExecutionCourse executionCourse = professorship.getExecutionCourse();
             // final ExecutionSemester executionCourseSemester =
             // executionCourse.getExecutionPeriod();
             if (executionCourse.getExecutionPeriod().equals(executionSemester)) {
-                String id = executionCourse.getExternalId();
-                String name = executionCourse.getName();
-                String sigla = executionCourse.getSigla();
-                teachingCourses.add(new FenixPersonCourses.FenixCourse(id, sigla, name));
+                teachingCourses.add(new FenixCourse(executionCourse));
 
             }
         }
-        return new FenixPersonCourses(executionYear, semester, enrolments, teachingCourses);
+    }
+
+    public void fillEnrolments(final Person person, List<FenixEnrolment> enrolments, ExecutionSemester executionSemester) {
+        final Student foundStudent = person.getStudent();
+
+        for (Registration registration : foundStudent.getAllRegistrations()) {
+            for (Enrolment enrolment : registration.getEnrolments(executionSemester)) {
+                final ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
+                String grade = enrolment.getGrade().getValue();
+                enrolments.add(new FenixEnrolment(executionCourse, grade));
+            }
+        }
     }
 
     /* CALENDARS */
 
-    private FenixCalendar getFenixCalendar(String year, List<EventBean> eventBeans) {
+    private enum EventType {
+        CLASS, EVALUATION;
+    }
+
+    private FenixCalendar getFenixCalendar(String academicTerm, List<EventBean> eventBeans, EventType eventType) {
 
         List<FenixCalendarEvent> events = new ArrayList<FenixCalendarEvent>();
         for (EventBean eventBean : eventBeans) {
 
-            String startDay = formatDay.print(eventBean.getBegin());
-            String endDay = formatDay.print(eventBean.getEnd());
-            String startTime = formatHour.print(eventBean.getBegin());
-            String endTime = formatHour.print(eventBean.getEnd());
-            String location = eventBean.getLocation();
-            String title = eventBean.getTitle();
-            String url = eventBean.getUrl();
-            String note = eventBean.getNote();
-            boolean allDay = eventBean.isAllDay();
+            String start = formatDayHour.print(eventBean.getBegin());
+            String end = formatDayHour.print(eventBean.getEnd());
 
-            events.add(new FenixCalendarEvent(startDay, endDay, startTime, endTime, location, title, url, note, allDay));
+            FenixPeriod eventPeriod = new FenixPeriod(start, end);
+            String title = eventBean.getOriginalTitle();
+
+            Set<FenixSpace> rooms = new HashSet<>();
+            if (eventBean.getRooms() != null) {
+                for (AllocatableSpace room : eventBean.getRooms()) {
+                    if (room != null) {
+                        rooms.add(FenixSpace.getSimpleSpace(room));
+                    }
+                }
+            }
+
+            FenixCalendarEvent event = null;
+
+            switch (eventType) {
+            case CLASS:
+                final Shift classShift = ((ClassEventBean) eventBean).getClassShift();
+                event = new FenixClassEvent(eventPeriod, rooms, title, new FenixCourse(classShift.getExecutionCourse()));
+                break;
+
+            case EVALUATION:
+
+                Set<FenixCourse> fenixCourses =
+                        FluentIterable.from(((EvaluationEventBean) eventBean).getCourses())
+                                .transform(new Function<ExecutionCourse, FenixCourse>() {
+
+                                    @Override
+                                    public FenixCourse apply(ExecutionCourse course) {
+                                        return new FenixCourse(course);
+                                    }
+
+                                }).toSet();
+                event = new FenixEvaluationEvent(eventPeriod, rooms, title, fenixCourses);
+                break;
+            }
+
+            events.add(event);
         }
-        return new FenixCalendar(year, events);
+        return new FenixCalendar(academicTerm, events);
     }
 
-    private String evaluationCalendarICal(Person person, String serverScheme, String serverName, int serverPort) {
+    private FenixCalendar getFenixClassCalendar(String academicTerm, List<EventBean> eventBeans) {
+        return getFenixCalendar(academicTerm, eventBeans, EventType.CLASS);
+    }
+
+    private FenixCalendar getFenixEvaluationsCalendar(String academicTerm, List<EventBean> eventBeans) {
+        return getFenixCalendar(academicTerm, eventBeans, EventType.EVALUATION);
+    }
+
+    private String evaluationCalendarICal(Person person) {
         ICalendarSyncPoint calendarSyncPoint = new ICalendarSyncPoint();
 
-        List<EventBean> listEventBean = calendarSyncPoint.getExams(person.getUser(), serverScheme, serverName, serverPort);
-        listEventBean.addAll(calendarSyncPoint.getTeachingExams(person.getUser(), serverScheme, serverName, serverPort));
+        List<EventBean> listEventBean = calendarSyncPoint.getExams(person.getUser());
+        listEventBean.addAll(calendarSyncPoint.getTeachingExams(person.getUser()));
 
         Calendar createCalendar = CalendarFactory.createCalendar(listEventBean);
 
         return createCalendar.toString();
     }
 
-    private FenixCalendar evaluationCalendarJson(Person person, String serverScheme, String serverName, Integer serverPort) {
+    private FenixCalendar evaluationCalendarJson(Person person) {
         final User user = person.getUser();
 
-        String year = ExecutionYear.readCurrentExecutionYear().getName();
+        String academicTerm = ExecutionYear.readCurrentExecutionYear().getQualifiedName();
 
         ICalendarSyncPoint calendarSyncPoint = new ICalendarSyncPoint();
-        List<EventBean> listEventBean = calendarSyncPoint.getExams(user, serverScheme, serverName, serverPort);
-        listEventBean.addAll(calendarSyncPoint.getTeachingExams(user, serverScheme, serverName, serverPort));
+        List<EventBean> listEventBean = calendarSyncPoint.getExams(user);
+        listEventBean.addAll(calendarSyncPoint.getTeachingExams(user));
 
-        return getFenixCalendar(year, listEventBean);
+        return getFenixEvaluationsCalendar(academicTerm, listEventBean);
     }
 
     /**
@@ -347,30 +444,27 @@ public class FenixAPIv1 {
     @GET
     @Path("person/calendar/evaluations")
     @ReturnType("net.sourceforge.fenixedu.webServices.jersey.beans.FenixCalendar")
-    public Response calendarEvaluation(@QueryParam("format") String format, @Context HttpServletRequest httpRequest) {
+    public Response calendarEvaluation(@QueryParam("format") String format) {
         validateFormat(format);
         final Person person = getPerson();
         if (!person.hasRole(RoleType.STUDENT)) {
             return Response.status(Status.OK).header(HttpHeaders.CONTENT_TYPE, JSON_UTF8).entity("{}").build();
         }
 
-        final String serverName = httpRequest.getServerName();
-        final int serverPort = httpRequest.getServerPort();
-        final String serverScheme = httpRequest.getScheme();
         if ("calendar".equals(format)) {
-            String evaluationCalendarICal = evaluationCalendarICal(person, serverScheme, serverName, serverPort);
+            String evaluationCalendarICal = evaluationCalendarICal(person);
             return Response.ok(evaluationCalendarICal, "text/calendar;charset=UTF-8").build();
         } else {
-            return Response.status(Status.OK).header(HttpHeaders.CONTENT_TYPE, JSON_UTF8)
-                    .entity(evaluationCalendarJson(person, serverScheme, serverName, serverPort)).build();
+            return Response.status(Status.OK).header(HttpHeaders.CONTENT_TYPE, JSON_UTF8).entity(evaluationCalendarJson(person))
+                    .build();
         }
     }
 
-    private String classesCalendarICal(Person person, String serverScheme, String serverName, int serverPort) {
+    private String classesCalendarICal(Person person) {
         ICalendarSyncPoint calendarSyncPoint = new ICalendarSyncPoint();
 
-        List<EventBean> listEventBean = calendarSyncPoint.getClasses(person.getUser(), serverScheme, serverName, serverPort);
-        listEventBean.addAll(calendarSyncPoint.getTeachingClasses(person.getUser(), serverScheme, serverName, serverPort));
+        List<EventBean> listEventBean = calendarSyncPoint.getClasses(person.getUser());
+        listEventBean.addAll(calendarSyncPoint.getTeachingClasses(person.getUser()));
 
         Calendar createCalendar = CalendarFactory.createCalendar(listEventBean);
 
@@ -380,13 +474,13 @@ public class FenixAPIv1 {
     private FenixCalendar classesCalendarJson(Person person) {
 
         final User user = person.getUser();
-        String year = ExecutionYear.readCurrentExecutionYear().getName();
+        String academicTerm = ExecutionYear.readCurrentExecutionYear().getQualifiedName();
 
         ICalendarSyncPoint calendarSyncPoint = new ICalendarSyncPoint();
-        List<EventBean> listEventBean = calendarSyncPoint.getClasses(user, "", "", 0);
-        listEventBean.addAll(calendarSyncPoint.getTeachingClasses(user, "", "", 0));
+        List<EventBean> listEventBean = calendarSyncPoint.getClasses(user);
+        listEventBean.addAll(calendarSyncPoint.getTeachingClasses(user));
 
-        return getFenixCalendar(year, listEventBean);
+        return getFenixClassCalendar(academicTerm, listEventBean);
     }
 
     /**
@@ -403,14 +497,11 @@ public class FenixAPIv1 {
     @GET
     @Path("person/calendar/classes")
     @ReturnType("net.sourceforge.fenixedu.webServices.jersey.beans.FenixCalendar")
-    public Response calendarClasses(@QueryParam("format") String format, @Context HttpServletRequest httpRequest) {
+    public Response calendarClasses(@QueryParam("format") String format) {
         validateFormat(format);
         Person person = getPerson();
         if ("calendar".equals(format)) {
-            final String serverName = httpRequest.getServerName();
-            final int serverPort = httpRequest.getServerPort();
-            final String serverScheme = httpRequest.getScheme();
-            String classesCalendarICal = classesCalendarICal(person, serverScheme, serverName, serverPort);
+            String classesCalendarICal = classesCalendarICal(person);
             return Response.ok(classesCalendarICal, "text/calendar; charset=UTF-8").build();
         } else {
             return Response.status(Status.OK).header(HttpHeaders.CONTENT_TYPE, JSON_UTF8).entity(classesCalendarJson(person))
@@ -444,11 +535,6 @@ public class FenixAPIv1 {
 
         for (Registration registration : registrationsList) {
             for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
-                String name = studentCurricularPlan.getName();
-                String id = studentCurricularPlan.getDegree().getExternalId();
-                DegreeType degreeType = studentCurricularPlan.getDegreeType();
-                String campus = studentCurricularPlan.getCurrentCampus().getName();
-                String presentationName = studentCurricularPlan.getPresentationName();
                 String start = studentCurricularPlan.getStartDateYearMonthDay().toString(formatDay);
                 String end = null;
                 if (studentCurricularPlan.getEndDate() != null) {
@@ -458,45 +544,41 @@ public class FenixAPIv1 {
 
                 ICurriculum icurriculum = registrationConclusionBean.getCurriculumForConclusion();
 
-                BigDecimal ects = icurriculum.getSumEctsCredits();
+                BigDecimal credits = icurriculum.getSumEctsCredits();
                 BigDecimal average = icurriculum.getAverage();
 
                 Integer calculatedAverage = icurriculum.getRoundedAverage();
 
                 boolean isFinished = registrationConclusionBean.isConcluded();
 
-                String approvedCourses = StringUtils.EMPTY;
-                if (icurriculum.getCurriculumEntries() != null) {
-                    approvedCourses = Integer.toString(icurriculum.getCurriculumEntries().size());
-                }
-
-                final List<FenixCourseInfo> courseInfos = new ArrayList<>();
+                final List<FenixCurriculum.ApprovedCourse> courseInfos = new ArrayList<>();
 
                 for (ICurriculumEntry iCurriculumEntry : icurriculum.getCurriculumEntries()) {
 
-                    String entryName = mls(iCurriculumEntry.getPresentationName());
                     String entryGradeValue = iCurriculumEntry.getGradeValue();
                     BigDecimal entryEcts = iCurriculumEntry.getEctsCreditsForCurriculum();
 
-                    String executionCourseOid = StringUtils.EMPTY;
+                    FenixCourse course = null;
                     if (iCurriculumEntry instanceof Enrolment) {
                         Enrolment enrolment = (Enrolment) iCurriculumEntry;
                         ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(enrolment.getExecutionPeriod());
                         if (executionCourse != null) {
-                            executionCourseOid = executionCourse.getExternalId();
+                            course = new FenixCourse(executionCourse);
+                        } else {
+                            String entryName = mls(iCurriculumEntry.getPresentationName());
+                            course = new FenixCourse(null, null, entryName);
                         }
+
+                    } else {
+                        String entryName = mls(iCurriculumEntry.getPresentationName());
+                        course = new FenixCourse(null, null, entryName);
                     }
 
-                    // enrolments.getExecutionCourseFor(enrolments.getExecutionPeriod()).getExternalId());
-
-                    Integer semester = iCurriculumEntry.getExecutionPeriod().getSemester();
-                    String year = iCurriculumEntry.getExecutionYear().getYear();
-                    courseInfos
-                            .add(new FenixCourseInfo(entryName, entryGradeValue, entryEcts, executionCourseOid, semester, year));
+                    courseInfos.add(new FenixCurriculum.ApprovedCourse(course, entryGradeValue, entryEcts));
 
                 }
-                curriculums.add(new FenixCurriculum(id, name, degreeType, campus, presentationName, start, end, ects, average,
-                        calculatedAverage, isFinished, approvedCourses, courseInfos));
+                curriculums.add(new FenixCurriculum(new FenixDegree(studentCurricularPlan.getDegree()), start, end, credits,
+                        average, calculatedAverage, isFinished, courseInfos));
             }
         }
         return curriculums;
@@ -543,18 +625,18 @@ public class FenixAPIv1 {
         }
 
         List<Event> notPayedEvents = calculateNotPayedEvents(person);
-        List<NotPayedEvent> notPayed = new ArrayList<>();
+        List<PendingEvent> notPayed = new ArrayList<>();
 
         for (Event event : notPayedEvents) {
 
             for (AccountingEventPaymentCode accountingEventPaymentCode : event.getNonProcessedPaymentCodes()) {
                 String description = accountingEventPaymentCode.getDescription();
-                String startDate = formatDay.print(accountingEventPaymentCode.getStartDate());
-                String endDate = formatDay.print(accountingEventPaymentCode.getEndDate());
+                String startDate = formatDay.print(accountingEventPaymentCode.getStartDate()) + " 00:00";
+                String endDate = formatDay.print(accountingEventPaymentCode.getEndDate()) + " 23:59";
                 String entity = accountingEventPaymentCode.getEntityCode();
                 String reference = accountingEventPaymentCode.getFormattedCode();
                 String amount = accountingEventPaymentCode.getMaxAmount().getAmountAsString();
-                notPayed.add(new NotPayedEvent(description, startDate, endDate, entity, reference, amount));
+                notPayed.add(new PendingEvent(description, new FenixPeriod(startDate, endDate), entity, reference, amount));
             }
         }
 
@@ -572,63 +654,38 @@ public class FenixAPIv1 {
     @GET
     @Path("person/evaluations")
     @Produces(JSON_UTF8)
-    public List<FenixEvaluation> evaluations(@Context HttpServletResponse response, @Context HttpServletRequest request,
-            @Context ServletContext context) {
+    public List<FenixCourseEvaluation.WrittenEvaluation> evaluations(@Context HttpServletResponse response,
+            @Context HttpServletRequest request, @Context ServletContext context) {
 
         Person person = getPerson();
-        if (!person.hasRole(RoleType.STUDENT)) {
-            List<FenixEvaluation> evaluations = new ArrayList<FenixEvaluation>();
-            return evaluations;
+        final Student student = person.getStudent();
+        if (!person.hasRole(RoleType.STUDENT) || student == null) {
+            return new ArrayList<FenixCourseEvaluation.WrittenEvaluation>();
         }
 
         new JerseyFacesContext(context, request, response);
 
         DisplayEvaluationsForStudentToEnrol manageEvaluationsForStudents = new DisplayEvaluationsForStudentToEnrol();
 
-        List<FenixEvaluation> evaluations =
-                processEvaluation(manageEvaluationsForStudents, manageEvaluationsForStudents.getEnroledEvaluations());
-        List<FenixEvaluation> notEnrolled =
-                processEvaluation(manageEvaluationsForStudents, manageEvaluationsForStudents.getNotEnroledEvaluations());
-        evaluations.addAll(notEnrolled);
+        List<FenixCourseEvaluation.WrittenEvaluation> evaluations = new ArrayList<>();
+
+        evaluations.addAll(processEvaluation(manageEvaluationsForStudents.getEnroledEvaluations(), true, student));
+        evaluations.addAll(processEvaluation(manageEvaluationsForStudents.getNotEnroledEvaluations(), false, student));
 
         return evaluations;
     }
 
-    private List<FenixEvaluation> processEvaluation(DisplayEvaluationsForStudentToEnrol processEvaluation,
-            List<Evaluation> listEvaluation) {
+    private List<FenixCourseEvaluation.WrittenEvaluation> processEvaluation(List<Evaluation> listEvaluation,
+            final Boolean isEnrolled, final Student student) {
 
-        List<FenixEvaluation> evaluations = new ArrayList<>();
+        return FluentIterable.from(listEvaluation).transform(new Function<Evaluation, FenixCourseEvaluation.WrittenEvaluation>() {
 
-        for (Evaluation eval : listEvaluation) {
-            WrittenEvaluation evaluation = (WrittenEvaluation) eval;
-
-            String name = evaluation.getPresentationName();
-            String type = evaluation.getEvaluationType().toString();
-            String id = evaluation.getExternalId();
-
-            boolean inEnrolmentPeriod = evaluation.isInEnrolmentPeriod();
-            String day = dataFormatDay.format(evaluation.getDay().getTime());
-
-            String startHour = dataFormatHour.format(evaluation.getBeginning().getTime());
-            String endHour = dataFormatHour.format(evaluation.getEnd().getTime());
-
-            String rooms = evaluation.getAssociatedRoomsAsString();
-
-            String enrollmentBeginDay = dataFormatDay.format(evaluation.getEnrollmentBeginDay().getTime());
-            String enrollmentEndDay = dataFormatDay.format(evaluation.getEnrollmentEndDay().getTime());
-            boolean isEnrolled = processEvaluation.getEnroledEvaluations().contains(evaluation);
-
-            Set<String> courses = new HashSet<String>();
-            for (ExecutionCourse course : evaluation.getAssociatedExecutionCoursesSet()) {
-                courses.add(course.getName());
+            @Override
+            public FenixCourseEvaluation.WrittenEvaluation apply(Evaluation writtenEvaluation) {
+                return getWrittenEvaluationJSON((WrittenEvaluation) writtenEvaluation, isEnrolled, student);
             }
 
-            String course = Joiner.on(",").join(courses);
-
-            evaluations.add(new FenixEvaluation(name, type, id, inEnrolmentPeriod, day, startHour, endHour, rooms,
-                    enrollmentBeginDay, enrollmentEndDay, isEnrolled, course));
-        }
-        return evaluations;
+        }).toList();
     }
 
     /**
@@ -647,8 +704,9 @@ public class FenixAPIv1 {
     @PUT
     @Produces(JSON_UTF8)
     @Path("person/evaluations/{id}")
-    public List<FenixEvaluation> evaluations(@PathParam("id") String oid, @QueryParam("enrol") String enrol,
-            @Context HttpServletResponse response, @Context HttpServletRequest request, @Context ServletContext context) {
+    public List<FenixCourseEvaluation.WrittenEvaluation> evaluations(@PathParam("id") String oid,
+            @QueryParam("enrol") String enrol, @Context HttpServletResponse response, @Context HttpServletRequest request,
+            @Context ServletContext context) {
         // JSONObject jsonResult = new JSONObject();
         validateEnrol(enrol);
         try {
@@ -688,30 +746,6 @@ public class FenixAPIv1 {
         return false;
     }
 
-    private ExecutionSemester getExecutionSemester(String sem, String year) {
-        ExecutionSemester executionSemester;
-
-        validateSemester(sem);
-        validateYear(year);
-
-        boolean isBlank = StringUtils.isBlank(sem) || StringUtils.isBlank(year);
-        if (!isBlank) {
-            int semester;
-            try {
-                semester = Integer.parseInt(sem);
-            } catch (NumberFormatException e) {
-                semester = 0;
-            }
-            executionSemester = ExecutionSemester.readBySemesterAndExecutionYear(semester, year);
-            if (executionSemester == null) {
-                executionSemester = ExecutionSemester.readActualExecutionSemester();
-            }
-        } else {
-            executionSemester = ExecutionSemester.readActualExecutionSemester();
-        }
-        return executionSemester;
-    }
-
     private <T extends DomainObject> T getDomainObject(String externalId, Class<T> clazz) {
         T domainObject = OAuthUtils.getDomainObject(externalId, clazz);
         if (domainObject == null) {
@@ -728,9 +762,9 @@ public class FenixAPIv1 {
     }
 
     /**
-     * IST generic information
+     * generic information about the institution
      * 
-     * @summary IST information
+     * @summary Information about the institution
      * @return news and events rss
      */
     @GET
@@ -739,6 +773,28 @@ public class FenixAPIv1 {
     @FenixAPIPublic
     public FenixAbout about() {
         return FenixAbout.getInstance();
+    }
+
+    /**
+     * Academic Terms
+     * 
+     * @summary Lists all academic terms
+     * @return all the academic terms available to be used in other endpoints as academicTerm query parameter.
+     */
+    @GET
+    @Produces(JSON_UTF8)
+    @Path("academicterms")
+    @FenixAPIPublic
+    public String academicTerms() {
+        JsonObject obj = new JsonObject();
+        for (ExecutionYear year : Bennu.getInstance().getExecutionYearsSet()) {
+            JsonArray sems = new JsonArray();
+            for (ExecutionSemester semester : year.getExecutionPeriodsSet()) {
+                sems.add(new JsonPrimitive(semester.getQualifiedName()));
+            }
+            obj.add(year.getQualifiedName(), sems);
+        }
+        return gson.toJson(obj);
     }
 
     /***
@@ -770,43 +826,57 @@ public class FenixAPIv1 {
     }
 
     /**
-     * All public degrees
+     * All information about degrees available
      * 
      * @summary All degrees
-     * @param year
-     *            ("yyyy/yyyy")
+     * @param academicTerm
+     * @see academicTerms
+     * 
      */
     @GET
     @Produces(JSON_UTF8)
     @Path("degrees")
     @FenixAPIPublic
-    public List<FenixDegree> degrees(@QueryParam("year") String year) {
+    public List<FenixDegreeExtended> degrees(@QueryParam("academicTerm") String academicTerm) {
 
-        ExecutionYear executionYear = getExecutionYear(year);
+        AcademicInterval academicInterval = getAcademicInterval(academicTerm);
 
-        List<FenixDegree> fenixDegrees = new ArrayList<>();
+        List<FenixDegreeExtended> fenixDegrees = new ArrayList<>();
 
-        for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
-            fenixDegrees.add(getFenixDegree(executionYear, executionDegree));
+        for (final ExecutionDegree executionDegree : ExecutionDegree.filterByAcademicInterval(academicInterval)) {
+            fenixDegrees.add(getFenixDegree(executionDegree));
         }
         return fenixDegrees;
     }
 
-    private FenixDegree getFenixDegree(ExecutionYear executionYear, ExecutionDegree executionDegree) {
-        final Degree degree = executionDegree.getDegree();
-        List<String> degreeCampus = new ArrayList<>();
+    @GET
+    @Produces(JSON_UTF8)
+    @Path("degrees/all")
+    @FenixAPIPublic
+    public Set<FenixDegree> degreesAll() {
 
-        String id = degree.getExternalId();
-        String name = degree.getPresentationName(executionYear);
+        Set<FenixDegree> degrees = new HashSet<FenixDegree>();
+
+        for (final Degree degree : Degree.readNotEmptyDegrees()) {
+            degrees.add(new FenixDegree(degree, true));
+        }
+        return degrees;
+    }
+
+    private FenixDegreeExtended getFenixDegree(ExecutionDegree executionDegree) {
+        final Degree degree = executionDegree.getDegree();
+        List<FenixSpace> degreeCampus = new ArrayList<>();
+        ExecutionYear executionYear = executionDegree.getExecutionYear();
+
         String type = degree.getDegreeTypeName();
-        String sigla = degree.getSigla();
         String typeName = degree.getDegreeType().getFilteredName();
+        String degreeUrl = FenixConfigurationManager.getFenixUrl() + degree.getSite().getReversePath();
 
         for (Campus campus : degree.getCampus(executionYear)) {
-            degreeCampus.add(campus.getName());
+            degreeCampus.add(FenixSpace.getSimpleSpace(campus));
         }
 
-        FenixDegreeInfo fenixDegreeInfo = null;
+        FenixDegreeExtended.FenixDegreeInfo fenixDegreeInfo = null;
 
         DegreeInfo degreeInfo = degree.getDegreeInfoFor(executionYear);
         if (degreeInfo == null) {
@@ -840,8 +910,9 @@ public class FenixAPIv1 {
             teachers.add(new FenixTeacher(teacherName, istId, mails, urls));
         }
 
-        FenixDegree fenixDegree =
-                new FenixDegree(executionYear.getName(), id, name, type, sigla, typeName, degreeCampus, fenixDegreeInfo, teachers);
+        FenixDegreeExtended fenixDegree =
+                new FenixDegreeExtended(executionYear.getQualifiedName(), degree, type, typeName, degreeUrl, degreeCampus,
+                        fenixDegreeInfo, teachers);
         return fenixDegree;
     }
 
@@ -859,17 +930,21 @@ public class FenixAPIv1 {
     @Produces(JSON_UTF8)
     @Path("degrees/{id}")
     @FenixAPIPublic
-    public FenixDegree degreesByOid(@PathParam("id") String oid, @QueryParam("year") String year) {
+    public FenixDegree degreesByOid(@PathParam("id") String oid, @QueryParam("academicTerm") String academicTerm) {
         Degree degree = getDomainObject(oid, Degree.class);
-        ExecutionYear executionYear = getExecutionYear(year);
-
-        if (degree.isBolonhaMasterOrDegree()) {
-            for (final ExecutionDegree executionDegree : degree.getExecutionDegreesForExecutionYear(executionYear)) {
-                return getFenixDegree(executionYear, executionDegree);
+        final AcademicInterval academicInterval = getAcademicInterval(academicTerm, true);
+        List<ExecutionDegree> executionDegrees = degree.getExecutionDegrees(academicInterval);
+        if (!executionDegrees.isEmpty()) {
+            final ExecutionDegree max =
+                    Ordering.from(ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR).max(
+                            executionDegrees);
+            if (max != null) {
+                return getFenixDegree(max);
             }
         }
-
-        return new FenixDegree();
+        
+        throw newApplicationError(Status.NOT_FOUND, "resource_not_found", "No degree information found for " + degree.getName()
+                + " on " + academicInterval.getPresentationName());
     }
 
     /**
@@ -885,35 +960,31 @@ public class FenixAPIv1 {
     @Produces(JSON_UTF8)
     @Path("degrees/{id}/courses")
     @FenixAPIPublic
-    public List<FenixExecutionCourse> coursesByODegreesId(@PathParam("id") String oid, @QueryParam("year") String year) {
+    public List<FenixExecutionCourse> coursesByODegreesId(@PathParam("id") String oid,
+            @QueryParam("academicTerm") String academicTerm) {
 
         Degree degree = getDomainObject(oid, Degree.class);
 
-        ExecutionYear executionYear = getExecutionYear(year);
+        ExecutionSemester[] executionSemesters = getExecutionSemesters(academicTerm).toArray(new ExecutionSemester[0]);
 
-        ExecutionSemester[] executionSemesters = executionYear.getExecutionPeriodsSet().toArray(new ExecutionSemester[0]);
-
-        final Set<ExecutionCourseView> executionCourses = new HashSet<ExecutionCourseView>();
+        final Set<ExecutionCourseView> executionCoursesViews = new HashSet<ExecutionCourseView>();
         for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlansSet()) {
             if (degreeCurricularPlan.isActive()) {
-                degreeCurricularPlan.addExecutionCourses(executionCourses, executionSemesters);
+                degreeCurricularPlan.addExecutionCourses(executionCoursesViews, executionSemesters);
             }
         }
 
         List<FenixExecutionCourse> fenixExecutionCourses = new ArrayList<>();
 
-        if (degree.isBolonhaMasterOrDegree()) {
-            for (ExecutionCourseView executionCourseView : executionCourses) {
-                ExecutionCourse ec = executionCourseView.getExecutionCourse();
-                String sigla = ec.getSigla();
-                String credits = getCredits(ec, degree);
-                String name = ec.getName();
-                String id = ec.getExternalId();
-                String ecYear = ec.getExecutionYear().getName();
-                String sem = ec.getExecutionPeriod().getName();
+        for (ExecutionCourseView executionCourseView : executionCoursesViews) {
+            ExecutionCourse executionCourse = executionCourseView.getExecutionCourse();
+            String sigla = executionCourse.getSigla();
+            String credits = getCredits(executionCourse, degree);
+            String name = executionCourse.getName();
+            String id = executionCourse.getExternalId();
+            String academicTermValue = executionCourse.getExecutionPeriod().getQualifiedName();
 
-                fenixExecutionCourses.add(new FenixExecutionCourse(sigla, credits, name, id, ecYear, sem));
-            }
+            fenixExecutionCourses.add(new FenixExecutionCourse(sigla, credits, name, id, academicTermValue));
         }
         return fenixExecutionCourses;
     }
@@ -928,22 +999,7 @@ public class FenixAPIv1 {
     }
 
     private String getServerLink() {
-        String serverLink;
-        final String appName = FenixConfigurationManager.getConfiguration().getHTTPHost();
-        final String appContext = FenixConfigurationManager.getConfiguration().appContext();
-        final String httpPort = FenixConfigurationManager.getConfiguration().getHTTPPort();
-        final String httpProtocol = FenixConfigurationManager.getConfiguration().getHTTPProtocol();
-
-        if (StringUtils.isEmpty(httpPort)) {
-            serverLink = String.format("%s://%s/", httpProtocol, appName);
-        } else {
-            serverLink = String.format("%s://%s:%s/", httpProtocol, appName, httpPort);
-        }
-        if (!StringUtils.isEmpty(appContext)) {
-            serverLink += appContext;
-        }
-        serverLink = StringUtils.removeEnd(serverLink, "/");
-        return serverLink;
+        return FenixConfigurationManager.getFenixUrl();
     }
 
     /**
@@ -958,23 +1014,25 @@ public class FenixAPIv1 {
     @Produces(JSON_UTF8)
     @Path("courses/{id}/")
     @FenixAPIPublic
-    public FenixCourse coursesByOid(@PathParam("id") String oid) {
+    public FenixCourseExtended coursesByOid(@PathParam("id") String oid) {
         ExecutionCourse executionCourse = getDomainObject(oid, ExecutionCourse.class);
 
         String acronym = executionCourse.getSigla();
         String name = executionCourse.getName();
         String evaluationMethod = executionCourse.getEvaluationMethodText();
         String academicTerm = executionCourse.getExecutionPeriod().getQualifiedName();
+        String courseUrl = FenixConfigurationManager.getFenixUrl() + executionCourse.getSite().getReversePath();
 
         Map<CompetenceCourse, Set<CurricularCourse>> curricularCourses =
                 executionCourse.getCurricularCoursesIndexedByCompetenceCourse();
 
-        List<FenixCourse.FenixCompetence> moreInfo = new ArrayList<>();
+        List<FenixCourseExtended.FenixCompetence> moreInfo = new ArrayList<>();
 
         for (Map.Entry<CompetenceCourse, Set<CurricularCourse>> entry : curricularCourses.entrySet()) {
 
-            List<FenixCourse.FenixCompetence.BiblioRef> biblios = new ArrayList<>();
-            for (BibliographicReference bibliographicReference : entry.getKey().getBibliographicReferences()
+            List<FenixCourseExtended.FenixCompetence.BiblioRef> biblios = new ArrayList<>();
+            final CompetenceCourse competenceCourse = entry.getKey();
+            for (BibliographicReference bibliographicReference : competenceCourse.getBibliographicReferences()
                     .getBibliographicReferencesSortedByOrder()) {
 
                 String author = bibliographicReference.getAuthors();
@@ -987,18 +1045,18 @@ public class FenixAPIv1 {
                 biblios.add(new BiblioRef(author, reference, title, bibYear, type, url));
             }
 
-            List<FenixCourse.FenixCompetence.Degree> degrees = new ArrayList<>();
+            List<FenixCourseExtended.FenixCompetence.Degree> degrees = new ArrayList<>();
             for (CurricularCourse curricularCourse : entry.getValue()) {
                 String id = curricularCourse.getDegree().getExternalId();
                 String dName = curricularCourse.getDegree().getPresentationName();
                 String dacronym = curricularCourse.getAcronym();
 
-                degrees.add(new FenixCourse.FenixCompetence.Degree(id, dName, dacronym));
+                degrees.add(new FenixCourseExtended.FenixCompetence.Degree(id, dName, dacronym));
             }
 
-            String program = entry.getKey().getProgram();
+            String program = competenceCourse.getProgram();
 
-            moreInfo.add(new FenixCompetence(program, biblios, degrees));
+            moreInfo.add(new FenixCompetence(competenceCourse.getExternalId(), program, biblios, degrees));
 
         }
 
@@ -1022,8 +1080,8 @@ public class FenixAPIv1 {
         String summaryLink =
                 getServerLink().concat("/publico/summariesRSS.do?id=").concat(executionCourse.getExternalId().toString());
 
-        return new FenixCourse(acronym, name, evaluationMethod, academicTerm, numberOfStudents, annoucementLink, summaryLink,
-                moreInfo, teachers);
+        return new FenixCourseExtended(acronym, name, evaluationMethod, academicTerm, numberOfStudents, annoucementLink,
+                summaryLink, courseUrl, moreInfo, teachers);
     }
 
     /**
@@ -1102,6 +1160,7 @@ public class FenixAPIv1 {
     }
 
     private FenixCourseEvaluation.AdHocEvaluation getAdhocEvaluationJSON(AdHocEvaluation adHocEvaluation) {
+
         return new FenixCourseEvaluation.AdHocEvaluation(adHocEvaluation.getPresentationName(), adHocEvaluation.getDescription());
     }
 
@@ -1113,24 +1172,24 @@ public class FenixAPIv1 {
 
         String name = projectEvaluation.getPresentationName();
 
-        String beginningDay = null;
-        String beginningTime = null;
-        String endDay = null;
-        String endTime = null;
+        String start = null;
+        String end = null;
+
         if (projectEvaluation.getProjectBeginDateTime() != null) {
-            beginningDay = formatDay.print(projectEvaluation.getProjectBeginDateTime());
-            beginningTime = formatHour.print(projectEvaluation.getProjectBeginDateTime());
+            start = formatDayHour.print(projectEvaluation.getProjectBeginDateTime());
         }
         if (projectEvaluation.getProjectEndDateTime() != null) {
-            endDay = formatDay.print(projectEvaluation.getProjectEndDateTime());
-            endTime = formatHour.print(projectEvaluation.getProjectEndDateTime());
-
+            end = formatDayHour.print(projectEvaluation.getProjectEndDateTime());
         }
-        return new FenixCourseEvaluation.Project(name, beginningDay, beginningTime, endDay, endTime);
+        return new FenixCourseEvaluation.Project(name, new FenixPeriod(start, end));
     }
 
     private FenixCourseEvaluation.WrittenEvaluation getWrittenEvaluationJSON(WrittenEvaluation writtenEvaluation) {
+        return getWrittenEvaluationJSON(writtenEvaluation, null, null);
+    }
 
+    private FenixCourseEvaluation.WrittenEvaluation getWrittenEvaluationJSON(WrittenEvaluation writtenEvaluation,
+            Boolean isEnrolled, Student student) {
         String name = writtenEvaluation.getPresentationName();
         EvaluationType type = writtenEvaluation.getEvaluationType();
 
@@ -1139,15 +1198,8 @@ public class FenixAPIv1 {
         String beginningTime = dataFormatHour.format(writtenEvaluation.getBeginning().getTime());
         String endTime = dataFormatHour.format(writtenEvaluation.getEnd().getTime());
 
-        List<FenixCourseEvaluation.WrittenEvaluation.Room> rooms = new ArrayList<>();
-
-        for (AllocatableSpace allocationSpace : writtenEvaluation.getAssociatedRooms()) {
-
-            String roomId = allocationSpace.getExternalId();
-            String roomName = allocationSpace.getSpaceInformation().getPresentationName();
-            String roomDescription = allocationSpace.getCompleteIdentification();
-            rooms.add(new FenixCourseEvaluation.WrittenEvaluation.Room(roomId, roomName, roomDescription));
-        }
+        FenixPeriod evaluationPeriod =
+                new FenixPeriod(Joiner.on(" ").join(day, beginningTime), Joiner.on(" ").join(day, endTime));
 
         boolean isEnrolmentPeriod = writtenEvaluation.getIsInEnrolmentPeriod();
 
@@ -1156,13 +1208,42 @@ public class FenixAPIv1 {
         final String enrollmentPeriodStart = start == null ? null : start.toString("yyyy-MM-dd HH:mm:ss");
         final String enrollmentPeriodEnd = end == null ? null : end.toString("yyyy-MM-dd HH:mm:ss");
 
-        if (type.equals(EvaluationType.EXAM_TYPE)) {
-            return new FenixCourseEvaluation.Exam(name, day, beginningTime, endTime, isEnrolmentPeriod, enrollmentPeriodStart,
-                    enrollmentPeriodEnd, rooms);
-        } else {
-            return new FenixCourseEvaluation.Test(name, day, beginningTime, endTime, isEnrolmentPeriod, enrollmentPeriodStart,
-                    enrollmentPeriodEnd, rooms);
+        Set<ExecutionCourse> courses = new HashSet<>();
+        String writtenEvaluationId = writtenEvaluation.getExternalId();
+        if (student != null) {
+            Room assignedRoom = null;
+            for (ExecutionCourse executionCourse : writtenEvaluation.getAssociatedExecutionCoursesSet()) {
+                final Registration registration = executionCourse.getRegistration(student.getPerson());
+                final Attends attendsByStudent = executionCourse.getAttendsByStudent(student);
+                if (registration != null || attendsByStudent != null) {
+                    courses.add(executionCourse);
+                }
+            }
+
+            final WrittenEvaluationEnrolment evalEnrolment = writtenEvaluation.getWrittenEvaluationEnrolmentFor(student);
+            if (evalEnrolment != null) {
+                assignedRoom = (Room) evalEnrolment.getRoom();
+            }
+
+            if (type.equals(EvaluationType.EXAM_TYPE)) {
+                return new FenixCourseEvaluation.Exam(writtenEvaluationId, name, evaluationPeriod, isEnrolmentPeriod,
+                        enrollmentPeriodStart, enrollmentPeriodEnd, writtenEvaluation.getAssociatedRooms(), isEnrolled, courses,
+                        assignedRoom);
+            } else {
+                return new FenixCourseEvaluation.Test(writtenEvaluationId, name, evaluationPeriod, isEnrolmentPeriod,
+                        enrollmentPeriodStart, enrollmentPeriodEnd, writtenEvaluation.getAssociatedRooms(), isEnrolled, courses,
+                        assignedRoom);
+            }
         }
+
+        if (type.equals(EvaluationType.EXAM_TYPE)) {
+            return new FenixCourseEvaluation.Exam(writtenEvaluationId, name, evaluationPeriod, isEnrolmentPeriod,
+                    enrollmentPeriodStart, enrollmentPeriodEnd, writtenEvaluation.getAssociatedRooms(), isEnrolled, courses);
+        } else {
+            return new FenixCourseEvaluation.Test(writtenEvaluationId, name, evaluationPeriod, isEnrolmentPeriod,
+                    enrollmentPeriodStart, enrollmentPeriodEnd, writtenEvaluation.getAssociatedRooms(), isEnrolled, courses);
+        }
+
     }
 
     /**
@@ -1196,7 +1277,7 @@ public class FenixAPIv1 {
         List<FenixSpace> campi = new ArrayList<>();
 
         for (Campus campus : Space.getAllCampus()) {
-            campi.add(getSimpleSpace(campus));
+            campi.add(FenixSpace.getSimpleSpace(campus));
         }
         return campi;
     }
@@ -1219,64 +1300,82 @@ public class FenixAPIv1 {
         if (space.isRoom()) {
             return getFenixRoom((Room) space, getRoomDay(day));
         }
-        return getSpace(space);
+        return FenixSpace.getSpace(space);
     }
 
-    private String getSpaceType(Space space) {
-        if (space.isCampus()) {
-            return "CAMPUS";
-        } else if (space.isBuilding()) {
-            return "BUILDING";
-        } else if (space.isFloor()) {
-            return "FLOOR";
-        } else if (space.isRoom()) {
-            return "ROOM";
+    /**
+     * Returns the blueprint of this space
+     * 
+     * @param oid
+     * @param day
+     *            ("dd/mm/yyyy")
+     * @return
+     */
+    @GET
+    @Path("spaces/{id}/blueprint")
+    @FenixAPIPublic
+    public Response spaceBlueprint(@PathParam("id") String oid, final @QueryParam("format") String format) {
+
+        final boolean isDwgFormat = format != null && format.equals("dwg");
+        final Space space = getDomainObject(oid, Space.class);
+        Blueprint mostRecentBlueprint = space.getMostRecentBlueprint();
+        mostRecentBlueprint = (mostRecentBlueprint == null) ? space.getSuroundingSpaceMostRecentBlueprint() : mostRecentBlueprint;
+        StreamingOutput stream;
+
+        if (mostRecentBlueprint != null) {
+            if (isDwgFormat) {
+                final BlueprintFile blueprintFile = mostRecentBlueprint.getBlueprintFile();
+                final InputStream inputStream = new ByteArrayInputStream(blueprintFile.getContentFile().getBytes());
+                stream = new StreamingOutput() {
+
+                    @Override
+                    public void write(OutputStream output) throws IOException, WebApplicationException {
+                        Streams.copy(inputStream, output, false);
+                    }
+                };
+            } else {
+                final Blueprint blueprint = mostRecentBlueprint;
+                stream = new StreamingOutput() {
+                    @Override
+                    public void write(OutputStream os) throws IOException, WebApplicationException {
+                        SpaceInformation spaceInformation = space.getSpaceInformation();
+                        Boolean isSuroundingSpaceBlueprint = true;
+                        Boolean isToViewOriginalSpaceBlueprint = false;
+                        Boolean viewBlueprintNumbers = true;
+                        Boolean isToViewIdentifications = true;
+                        Boolean isToViewDoorNumbers = false;
+                        BigDecimal scalePercentage = new BigDecimal(100);
+                        ManageSpaceBlueprintsDA.writeBlueprint(spaceInformation, isSuroundingSpaceBlueprint,
+                                isToViewOriginalSpaceBlueprint, viewBlueprintNumbers, isToViewIdentifications,
+                                isToViewDoorNumbers, scalePercentage, blueprint, os);
+                        os.flush();
+                    }
+                };
+            }
+            final String contentType = isDwgFormat ? "application/dwg" : "image/jpeg";
+            final String filename = space.getExternalId() + (isDwgFormat ? ".dwg" : ".jpg");
+            return Response.ok(stream, contentType).header("Content-Disposition", "attachment; filename=" + filename).build();
         }
-        return null;
-    }
 
-    private FenixSpace getSimpleSpace(Space space) {
-        if (space == null) {
-            return null;
-        }
-        return new FenixSpace(space.getExternalId(), space.getSpaceInformation().getPresentationName(), getSpaceType(space));
-    }
-
-    public FenixSpace getSpace(Space space) {
-        String id = space.getExternalId();
-        String name = space.getSpaceInformation().getPresentationName();
-        List<FenixSpace> containedSpaces = getSimpleSpace(space.getContainedSpacesSet());
-        FenixSpace parentSpace = getSimpleSpace(space.getSuroundingSpace());
-        return new FenixSpace(id, name, getSpaceType(space), containedSpaces, parentSpace);
-    }
-
-    private List<FenixSpace> getSimpleSpace(Set<Space> containedSpacesSet) {
-        List<FenixSpace> fenixSpaces = new ArrayList<FenixSpace>();
-        for (Space space : containedSpacesSet) {
-            fenixSpaces.add(getSimpleSpace(space));
-        }
-        return fenixSpaces;
+        return Response.noContent().build();
     }
 
     private FenixSpace.Room getFenixRoom(Room room, java.util.Calendar rightNow) {
 
         InfoSiteRoomTimeTable bodyComponent = new InfoSiteRoomTimeTable();
         RoomSiteComponentBuilder builder = new RoomSiteComponentBuilder();
-        List<FenixSpace.Room.RoomEvent> roomEvents = new ArrayList<FenixSpace.Room.RoomEvent>();
+        List<FenixRoomEvent> roomEvents = new ArrayList<FenixRoomEvent>();
 
         try {
             builder.getComponent(bodyComponent, rightNow, room, null);
             for (Object occupation : bodyComponent.getInfoShowOccupation()) {
                 InfoShowOccupation showOccupation = (InfoShowOccupation) occupation;
 
-                FenixSpace.Room.RoomEvent roomEvent = null;
+                FenixRoomEvent roomEvent = null;
 
                 if (showOccupation instanceof InfoLesson || showOccupation instanceof InfoLessonInstance) {
                     InfoShowOccupation lesson = showOccupation;
                     InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
-                    String sigla = infoExecutionCourse.getSigla();
-                    String name = infoExecutionCourse.getNome();
-                    String id = infoExecutionCourse.getExecutionCourse().getExternalId();
 
                     String start = dataFormatHour.format(lesson.getInicio().getTime());
                     String end = dataFormatHour.format(lesson.getFim().getTime());
@@ -1284,21 +1383,18 @@ public class FenixAPIv1 {
 
                     String info = lesson.getInfoShift().getShiftTypesCodePrettyPrint();
 
-                    WrittenEvaluationEvent.ExecutionCourse course = new WrittenEvaluationEvent.ExecutionCourse(sigla, name, id);
+                    FenixCourse course = new FenixCourse(infoExecutionCourse.getExecutionCourse());
 
-                    roomEvent = new FenixSpace.Room.RoomEvent.LessonEvent(start, end, weekday, info, course);
+                    roomEvent = new FenixRoomEvent.LessonEvent(start, end, weekday, info, course);
 
                 } else if (showOccupation instanceof InfoWrittenEvaluation) {
                     InfoWrittenEvaluation infoWrittenEvaluation = (InfoWrittenEvaluation) showOccupation;
 
-                    List<WrittenEvaluationEvent.ExecutionCourse> courses = new ArrayList<>();
+                    List<FenixCourse> courses = new ArrayList<>();
 
                     for (int iterEC = 0; iterEC < infoWrittenEvaluation.getAssociatedExecutionCourse().size(); iterEC++) {
                         InfoExecutionCourse infoEC = infoWrittenEvaluation.getAssociatedExecutionCourse().get(iterEC);
-                        String sigla = infoEC.getSigla();
-                        String name = infoEC.getNome();
-                        String id = infoEC.getExecutionCourse().getExternalId();
-                        courses.add(new WrittenEvaluationEvent.ExecutionCourse(sigla, name, id));
+                        courses.add(new FenixCourse(infoEC.getExecutionCourse()));
                     }
 
                     String start = null;
@@ -1312,9 +1408,7 @@ public class FenixAPIv1 {
                         weekday = infoWrittenEvaluation.getDiaSemana().getDiaSemanaString();
                         Integer season = infoExam.getSeason().getSeason();
 
-                        roomEvent =
-                                new FenixSpace.Room.RoomEvent.WrittenEvaluationEvent.ExamEvent(start, end, weekday, courses,
-                                        season);
+                        roomEvent = new FenixRoomEvent.WrittenEvaluationEvent.ExamEvent(start, end, weekday, courses, season);
 
                     } else if (infoWrittenEvaluation instanceof InfoWrittenTest) {
                         InfoWrittenTest infoWrittenTest = (InfoWrittenTest) infoWrittenEvaluation;
@@ -1324,8 +1418,7 @@ public class FenixAPIv1 {
                         weekday = infoWrittenTest.getDiaSemana().getDiaSemanaString();
 
                         roomEvent =
-                                new FenixSpace.Room.RoomEvent.WrittenEvaluationEvent.TestEvent(start, end, weekday, courses,
-                                        description);
+                                new FenixRoomEvent.WrittenEvaluationEvent.TestEvent(start, end, weekday, courses, description);
                     }
 
                 } else if (showOccupation instanceof InfoGenericEvent) {
@@ -1337,7 +1430,7 @@ public class FenixAPIv1 {
                     String end = dataFormatHour.format(infoGenericEvent.getFim().getTime());
                     String weekday = infoGenericEvent.getDiaSemana().getDiaSemanaString();
 
-                    roomEvent = new FenixSpace.Room.RoomEvent.GenericEvent(start, end, weekday, description, title);
+                    roomEvent = new FenixRoomEvent.GenericEvent(start, end, weekday, description, title);
                 }
 
                 if (roomEvent != null) {
@@ -1346,14 +1439,7 @@ public class FenixAPIv1 {
 
             }
 
-            String id = room.getExternalId();
-            String name = room.getSpaceInformation().getPresentationName();
-            String description = room.getSpaceInformation().getDescription();
-            Integer normalCapacity = room.getNormalCapacity();
-            Integer examCapacity = room.getExamCapacity();
-
-            return new FenixSpace.Room(id, name, getSimpleSpace(room.getSpaceFloor()), description, normalCapacity, examCapacity,
-                    roomEvents);
+            return new FenixSpace.Room(room, roomEvents);
 
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
@@ -1375,50 +1461,28 @@ public class FenixAPIv1 {
         return rightNow;
     }
 
-    private ExecutionYear getExecutionYear(String year) {
-        validateYear(year);
-        ExecutionYear executionYear;
-
-        boolean isBlank = StringUtils.isBlank(year);
-        if (!isBlank) {
-            executionYear = ExecutionYear.readExecutionYearByName(year);
-            if (executionYear == null) {
-                executionYear = ExecutionYear.readCurrentExecutionYear();
-            }
-        } else {
-            executionYear = ExecutionYear.readCurrentExecutionYear();
-        }
-        return executionYear;
+    private AcademicInterval getDefaultAcademicTerm() {
+        return ExecutionSemester.readActualExecutionSemester().getAcademicInterval();
     }
 
-    private void validateYear(String year) {
-        if (!StringUtils.isBlank(year)) {
-            String[] split = year.split("/");;
-            if (split.length != 2) {
-                throw newApplicationError(Status.BAD_REQUEST, "format_error", "year must be xxxx/yyyy");
-            }
-            try {
-                int y1 = Integer.parseInt(split[0]);
-                int y2 = Integer.parseInt(split[1]);
-                int start = ExecutionYear.readFirstExecutionYear().getBeginCivilYear();
-                int end = ExecutionYear.readFirstExecutionYear().getEndCivilYear();
-                ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
-                if (!(y1 >= start && y1 <= currentYear.getBeginCivilYear())) {
-                    throw newApplicationError(Status.BAD_REQUEST, "format_error",
-                            String.format("start year must be between %d and %d", start, currentYear.getBeginCivilYear()));
-                }
-                if (!(y2 >= end && y2 <= currentYear.getEndCivilYear())) {
-                    throw newApplicationError(Status.BAD_REQUEST, "format_error",
-                            String.format("end year must be between %d and %d", end, currentYear.getEndCivilYear()));
-                }
-                if (y2 - y1 != 1) {
-                    throw newApplicationError(Status.BAD_REQUEST, "format_error",
-                            String.format("difference between start and end year must be 1"));
-                }
-            } catch (NumberFormatException e) {
-                throw newApplicationError(Status.BAD_REQUEST, "format_error", "year must be a number");
-            }
+    private AcademicInterval getAcademicInterval(String academicTerm) {
+        return getAcademicInterval(academicTerm, false);
+    }
+
+    private AcademicInterval getAcademicInterval(String academicTerm, Boolean nullDefault) {
+
+        if (StringUtils.isEmpty(academicTerm)) {
+            return nullDefault ? null : getDefaultAcademicTerm();
         }
+
+        ExecutionInterval interval = ExecutionInterval.getExecutionInterval(academicTerm);
+
+        if (interval == null) {
+            throw newApplicationError(Status.NOT_FOUND, "resource_not_found", "Can't find the academic term : " + academicTerm);
+        }
+
+        return interval.getAcademicInterval();
+
     }
 
     private void validateDay(String day) {
@@ -1433,14 +1497,6 @@ public class FenixAPIv1 {
                 if (invalid) {
                     throw newApplicationError(Status.BAD_REQUEST, "format_error", "day must be " + dataFormatDay.toPattern());
                 }
-            }
-        }
-    }
-
-    private void validateSemester(String sem) {
-        if (!StringUtils.isBlank(sem)) {
-            if (!("1".equals(sem) || "2".equals(sem))) {
-                throw newApplicationError(Status.BAD_REQUEST, "format_error", "semester must be 1 or 2");
             }
         }
     }

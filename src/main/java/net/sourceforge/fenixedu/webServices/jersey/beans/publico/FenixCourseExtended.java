@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.webServices.jersey.beans.publico;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixDegree.FenixTeacher;
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixDegreeExtended.FenixTeacher;
 
-public class FenixCourse {
+public class FenixCourseExtended {
 
     public static class FenixCompetence {
 
@@ -114,12 +114,14 @@ public class FenixCourse {
 
         }
 
+        String id;
         String program;
         List<BiblioRef> bibliographicReferences;
         List<Degree> degrees;
 
-        public FenixCompetence(String program, List<BiblioRef> bibliographicReferences, List<Degree> degrees) {
+        public FenixCompetence(String id, String program, List<BiblioRef> bibliographicReferences, List<Degree> degrees) {
             super();
+            this.id = id;
             this.program = program;
             this.bibliographicReferences = bibliographicReferences;
             this.degrees = degrees;
@@ -149,6 +151,14 @@ public class FenixCourse {
             this.degrees = degrees;
         }
 
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
     }
 
     String acronym;
@@ -158,12 +168,13 @@ public class FenixCourse {
     Integer numberOfAttendingStudents;
     String announcementLink;
     String summaryLink;
-    List<FenixCompetence> moreInfo;
+    String url;
+    List<FenixCompetence> competences;
     List<FenixTeacher> teachers;
 
-    public FenixCourse(String acronym, String name, String evaluationMethod, String academicTerm,
-            Integer numberOfAttendingStudents, String announcementLink, String summaryLink, List<FenixCompetence> moreInfo,
-            List<FenixTeacher> teachers) {
+    public FenixCourseExtended(String acronym, String name, String evaluationMethod, String academicTerm,
+            Integer numberOfAttendingStudents, String announcementLink, String summaryLink, String url,
+            List<FenixCompetence> competences, List<FenixTeacher> teachers) {
         super();
         this.acronym = acronym;
         this.name = name;
@@ -172,8 +183,9 @@ public class FenixCourse {
         this.numberOfAttendingStudents = numberOfAttendingStudents;
         this.announcementLink = announcementLink;
         this.summaryLink = summaryLink;
-        this.moreInfo = moreInfo;
+        this.competences = competences;
         this.teachers = teachers;
+        this.url = url;
     }
 
     public String getAcronym() {
@@ -232,12 +244,20 @@ public class FenixCourse {
         this.summaryLink = summaryLink;
     }
 
-    public List<FenixCompetence> getMoreInfo() {
-        return moreInfo;
+    public String getUrl() {
+        return url;
     }
 
-    public void setMoreInfo(List<FenixCompetence> moreInfo) {
-        this.moreInfo = moreInfo;
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public List<FenixCompetence> getCompetences() {
+        return competences;
+    }
+
+    public void setMoreInfo(List<FenixCompetence> competences) {
+        this.competences = competences;
     }
 
     public List<FenixTeacher> getTeachers() {

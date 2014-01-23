@@ -1,9 +1,19 @@
 package net.sourceforge.fenixedu.webServices.jersey.beans.publico;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
+import net.sourceforge.fenixedu.webServices.jersey.beans.FenixCourse;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.google.common.base.Function;
+import com.google.common.collect.FluentIterable;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({ @JsonSubTypes.Type(value = FenixCourseEvaluation.Test.class, name = "TEST"),
@@ -13,92 +23,52 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(value = FenixCourseEvaluation.AdHocEvaluation.class, name = "AD_HOC"), })
 public abstract class FenixCourseEvaluation {
 
-    public FenixCourseEvaluation(String name) {
-        super();
-        this.name = name;
-    }
-
     public abstract static class WrittenEvaluation extends FenixCourseEvaluation {
 
-        public static class Room {
-            String id;
-            String name;
-            String description;
+        private static FenixSpace.Room noSpaceRoom = new FenixSpace.Room();
 
-            public Room(String id, String name, String description) {
-                super();
-                this.id = id;
-                this.name = name;
-                this.description = description;
-            }
-
-            public String getId() {
-                return id;
-            }
-
-            public void setId(String id) {
-                this.id = id;
-            }
-
-            public String getName() {
-                return name;
-            }
-
-            public void setName(String name) {
-                this.name = name;
-            }
-
-            public String getDescription() {
-                return description;
-            }
-
-            public void setDescription(String description) {
-                this.description = description;
-            }
-
-        }
-
-        String day;
-        String beginningTime;
-        String endTime;
         Boolean isInEnrolmentPeriod;
         FenixInterval enrollmentPeriod;
+        Boolean isEnrolled;
+        Set<FenixCourse> courses;
+        Set<FenixSpace.Room> rooms;
+        FenixSpace.Room assignedRoom = noSpaceRoom;
+        String id;
 
-        List<Room> rooms;
-
-        public WrittenEvaluation(String name, String day, String beginningTime, String endTime, Boolean isInEnrolmentPeriod,
-                String enrollmentPeriodStart, String enrolmentPeriodEnd, List<Room> rooms) {
-            super(name);
-            this.day = day;
-            this.beginningTime = beginningTime;
-            this.endTime = endTime;
-            this.isInEnrolmentPeriod = isInEnrolmentPeriod;
-            enrollmentPeriod = new FenixInterval(enrollmentPeriodStart, enrolmentPeriodEnd);
-            this.rooms = rooms;
+        protected WrittenEvaluation() {
+            super(null, null);
         }
 
-        public String getDay() {
-            return day;
+        public WrittenEvaluation(String id, String name, FenixPeriod evaluationPeriod, Boolean isInEnrolmentPeriod,
+                String enrollmentPeriodStart, String enrolmentPeriodEnd, List<AllocatableSpace> rooms, Boolean isEnrolled,
+                Set<ExecutionCourse> courses) {
+            super(name, evaluationPeriod);
+            init(id, isInEnrolmentPeriod, enrollmentPeriodStart, enrolmentPeriodEnd, rooms, isEnrolled, courses);
         }
 
-        public void setDay(String day) {
-            this.day = day;
+        private void init(String id, Boolean isInEnrolmentPeriod, String enrollmentPeriodStart, String enrolmentPeriodEnd,
+                List<AllocatableSpace> rooms, Boolean isEnrolled, Set<ExecutionCourse> courses) {
+            setIsInEnrolmentPeriod(isInEnrolmentPeriod);
+            setEnrollmentPeriod(new FenixInterval(enrollmentPeriodStart, enrolmentPeriodEnd));
+            setRooms(rooms);
+            setIsEnrolled(isEnrolled);
+            setCourses(FluentIterable.from(courses).transform(new Function<ExecutionCourse, FenixCourse>() {
+
+                @Override
+                public FenixCourse apply(ExecutionCourse input) {
+                    return new FenixCourse(input);
+                }
+
+            }).toSet());
+            setId(id);
         }
 
-        public String getBeginningTime() {
-            return beginningTime;
-        }
-
-        public void setBeginningTime(String beginningTime) {
-            this.beginningTime = beginningTime;
-        }
-
-        public String getEndTime() {
-            return endTime;
-        }
-
-        public void setEndTime(String endTime) {
-            this.endTime = endTime;
+        public WrittenEvaluation(String id, String name, FenixPeriod evaluationPeriod, Boolean isInEnrolmentPeriod,
+                String enrollmentPeriodStart, String enrolmentPeriodEnd, List<AllocatableSpace> rooms, Boolean isEnrolled,
+                Set<ExecutionCourse> courses, AllocatableSpace assignedRoom) {
+            super(name, evaluationPeriod);
+            init(id, isInEnrolmentPeriod, enrollmentPeriodStart, enrolmentPeriodEnd, rooms, isEnrolled, courses);
+            setAssignedRoom(assignedRoom);
         }
 
         public Boolean getIsInEnrolmentPeriod() {
@@ -117,82 +87,107 @@ public abstract class FenixCourseEvaluation {
             this.enrollmentPeriod = enrollmentPeriod;
         }
 
-        public List<Room> getRooms() {
+        public Set<FenixSpace.Room> getRooms() {
             return rooms;
         }
 
-        public void setRooms(List<Room> rooms) {
-            this.rooms = rooms;
+        public void setRooms(List<AllocatableSpace> rooms) {
+            this.rooms =
+                    rooms == null ? new HashSet<FenixSpace.Room>() : (FluentIterable.from(rooms).transform(
+                            new Function<AllocatableSpace, FenixSpace.Room>() {
+
+                                @Override
+                                public FenixSpace.Room apply(AllocatableSpace input) {
+                                    return new FenixSpace.Room(input,false, true, null);
+                                }
+                            }).toSet());
+        }
+
+        @JsonInclude(Include.NON_NULL)
+        public Boolean getIsEnrolled() {
+            return isEnrolled;
+        }
+
+        public void setIsEnrolled(Boolean isEnrolled) {
+            this.isEnrolled = isEnrolled;
+        }
+
+        @JsonInclude(Include.NON_EMPTY)
+        public Set<FenixCourse> getCourses() {
+            return courses;
+        }
+
+        public void setCourses(Set<FenixCourse> courses) {
+            this.courses = courses;
+        }
+
+        @JsonInclude(Include.NON_DEFAULT)
+        public FenixSpace.Room getAssignedRoom() {
+            return assignedRoom;
+        }
+
+        public void setAssignedRoom(AllocatableSpace assignedRoom) {
+            this.assignedRoom = assignedRoom == null ? null : new FenixSpace.Room(assignedRoom, false, true, null);
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
         }
 
     }
 
     public static class Test extends WrittenEvaluation {
 
-        public Test(String name, String day, String beginningTime, String endTime, Boolean isEnrolmentPeriod,
-                String enrollmentPeriodStart, String enrolmentPeriodEnd, List<Room> rooms) {
-            super(name, day, beginningTime, endTime, isEnrolmentPeriod, enrollmentPeriodStart, enrolmentPeriodEnd, rooms);
+        protected Test() {
+            super();
         }
+
+        public Test(String id, String name, FenixPeriod evaluationPeriod, Boolean isInEnrolmentPeriod,
+                String enrollmentPeriodStart, String enrolmentPeriodEnd, List<AllocatableSpace> rooms, Boolean isEnrolled,
+                Set<ExecutionCourse> courses) {
+            super(id, name, evaluationPeriod, isInEnrolmentPeriod, enrollmentPeriodStart, enrolmentPeriodEnd, rooms, isEnrolled,
+                    courses);
+        }
+
+        public Test(String externalId, String name, FenixPeriod evaluationPeriod, Boolean isEnrolmentPeriod,
+                String enrollmentPeriodStart, String enrolmentPeriodEnd, List<AllocatableSpace> rooms, Boolean isEnroled,
+                Set<ExecutionCourse> courses, AllocatableSpace assignedRoom) {
+            super(externalId, name, evaluationPeriod, isEnrolmentPeriod, enrollmentPeriodStart, enrolmentPeriodEnd, rooms,
+                    isEnroled, courses, assignedRoom);
+        }
+
     }
 
     public static class Exam extends WrittenEvaluation {
 
-        public Exam(String name, String day, String beginningTime, String endTime, Boolean isEnrolmentPeriod,
-                String enrollmentPeriodStart, String enrolmentPeriodEnd, List<Room> rooms) {
-            super(name, day, beginningTime, endTime, isEnrolmentPeriod, enrollmentPeriodStart, enrolmentPeriodEnd, rooms);
+        protected Exam() {
+            super();
+        }
+
+        public Exam(String id, String name, FenixPeriod evaluationPeriod, Boolean isInEnrolmentPeriod,
+                String enrollmentPeriodStart, String enrolmentPeriodEnd, List<AllocatableSpace> rooms, Boolean isEnrolled,
+                Set<ExecutionCourse> courses) {
+            super(id, name, evaluationPeriod, isInEnrolmentPeriod, enrollmentPeriodStart, enrolmentPeriodEnd, rooms, isEnrolled,
+                    courses);
+        }
+
+        public Exam(String externalId, String name, FenixPeriod evaluationPeriod, Boolean isEnrolmentPeriod,
+                String enrollmentPeriodStart, String enrolmentPeriodEnd, List<AllocatableSpace> rooms, Boolean isEnroled,
+                Set<ExecutionCourse> courses, AllocatableSpace assignedRoom) {
+            super(externalId, name, evaluationPeriod, isEnrolmentPeriod, enrollmentPeriodStart, enrolmentPeriodEnd, rooms,
+                    isEnroled, courses, assignedRoom);
         }
 
     }
 
     public static class Project extends FenixCourseEvaluation {
 
-        String beginningDay;
-        String beginningTime;
-        String endDay;
-        String endTime;
-
-        private Project(String name) {
-            super(name);
-        }
-
-        public Project(String name, String beginningDay, String beginningTime, String endDay, String endTime) {
-            this(name);
-            this.beginningDay = beginningDay;
-            this.beginningTime = beginningTime;
-            this.endDay = endDay;
-            this.endTime = endTime;
-        }
-
-        public String getBeginningDay() {
-            return beginningDay;
-        }
-
-        public void setBeginningDay(String beginningDay) {
-            this.beginningDay = beginningDay;
-        }
-
-        public String getBeginningTime() {
-            return beginningTime;
-        }
-
-        public void setBeginningTime(String beginningTime) {
-            this.beginningTime = beginningTime;
-        }
-
-        public String getEndDay() {
-            return endDay;
-        }
-
-        public void setEndDay(String endDay) {
-            this.endDay = endDay;
-        }
-
-        public String getEndTime() {
-            return endTime;
-        }
-
-        public void setEndTime(String endTime) {
-            this.endTime = endTime;
+        public Project(String name, FenixPeriod evaluationPeriod) {
+            super(name, evaluationPeriod);
         }
 
     }
@@ -200,7 +195,11 @@ public abstract class FenixCourseEvaluation {
     public static class OnlineTest extends FenixCourseEvaluation {
 
         public OnlineTest(String name) {
-            super(name);
+            this(name, new FenixPeriod());
+        }
+
+        public OnlineTest(String name, FenixPeriod evaluationPeriod) {
+            super(name, evaluationPeriod);
         }
 
     }
@@ -209,7 +208,11 @@ public abstract class FenixCourseEvaluation {
         String description;
 
         public AdHocEvaluation(String name, String description) {
-            super(name);
+            this(name, description, new FenixPeriod());
+        }
+
+        public AdHocEvaluation(String name, String description, FenixPeriod evaluationPeriod) {
+            super(name, evaluationPeriod);
             this.description = description;
         }
 
@@ -224,6 +227,12 @@ public abstract class FenixCourseEvaluation {
     }
 
     String name;
+    FenixPeriod evaluationPeriod;
+
+    public FenixCourseEvaluation(String name, FenixPeriod evaluationPeriod) {
+        setName(name);
+        setEvaluationPeriod(evaluationPeriod);
+    }
 
     public String getName() {
         return name;
@@ -231,6 +240,14 @@ public abstract class FenixCourseEvaluation {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public FenixPeriod getEvaluationPeriod() {
+        return evaluationPeriod;
+    }
+
+    public void setEvaluationPeriod(FenixPeriod evaluationPeriod) {
+        this.evaluationPeriod = evaluationPeriod;
     }
 
 }

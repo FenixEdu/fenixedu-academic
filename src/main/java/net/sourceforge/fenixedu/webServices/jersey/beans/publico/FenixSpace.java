@@ -1,183 +1,199 @@
 package net.sourceforge.fenixedu.webServices.jersey.beans.publico;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
+import net.sourceforge.fenixedu.domain.space.Space;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize.Typing;
+import com.google.common.base.Function;
+import com.google.common.collect.FluentIterable;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({ @JsonSubTypes.Type(value = FenixSpace.Campus.class, name = "CAMPUS"),
+        @JsonSubTypes.Type(value = FenixSpace.Building.class, name = "BUILDING"),
+        @JsonSubTypes.Type(value = FenixSpace.Floor.class, name = "FLOOR"),
+        @JsonSubTypes.Type(value = FenixSpace.Room.class, name = "ROOM") })
 public class FenixSpace {
 
     public static class Campus extends FenixSpace {
-        public Campus(String id, String name) {
-            super(id, name, "CAMPUS");
+
+        private Campus(Space space, boolean withParentAndContainedSpaces) {
+            super(space, withParentAndContainedSpaces);
         }
 
-        public Campus(String id, String name, List<FenixSpace> containedSpaces, FenixSpace parentSpace) {
-            super(id, name, "CAMPUS", containedSpaces, parentSpace);
+        private Campus(Space space) {
+            super(space);
         }
+
     }
 
     public static class Building extends FenixSpace {
-        public Building(String id, String name) {
-            super(id, name, "BUILDING");
+
+        private Building(Space space, boolean withParentAndContainedSpaces) {
+            super(space, withParentAndContainedSpaces);
+            // TODO Auto-generated constructor stub
         }
 
-        public Building(String id, String name, List<FenixSpace> containedSpaces, FenixSpace parentSpace) {
-            super(id, name, "BUILDING", containedSpaces, parentSpace);
+        private Building(Space space) {
+            super(space);
+            // TODO Auto-generated constructor stub
         }
 
     }
 
     public static class Floor extends FenixSpace {
-        public Floor(String id, String name) {
-            super(id, name, "FLOOR");
+
+        private Floor(Space space, boolean withParentAndContainedSpaces) {
+            super(space, withParentAndContainedSpaces);
         }
 
-        public Floor(String id, String name, List<FenixSpace> containedSpaces, FenixSpace parentSpace) {
-            super(id, name, "FLOOR", containedSpaces, parentSpace);
+        private Floor(Space space) {
+            super(space);
         }
 
     }
 
     public static class Room extends FenixSpace {
 
-        @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
-        @JsonSubTypes({ @JsonSubTypes.Type(value = RoomEvent.LessonEvent.class, name = "LESSON"),
-                @JsonSubTypes.Type(value = RoomEvent.WrittenEvaluationEvent.TestEvent.class, name = "TEST"),
-                @JsonSubTypes.Type(value = RoomEvent.WrittenEvaluationEvent.ExamEvent.class, name = "EXAM"),
-                @JsonSubTypes.Type(value = RoomEvent.GenericEvent.class, name = "GENERIC") })
-        public static abstract class RoomEvent {
+        public static class RoomCapacity {
+            Integer normal;
+            Integer exam;
 
-            public static class LessonEvent extends RoomEvent {
-                public String info;
-                public WrittenEvaluationEvent.ExecutionCourse course;
-
-                public LessonEvent(String start, String end, String weekday, String info,
-                        WrittenEvaluationEvent.ExecutionCourse course) {
-                    super(start, end, weekday);
-                    this.info = info;
-                    this.course = course;
-                }
-
-            }
-
-            public static abstract class WrittenEvaluationEvent extends RoomEvent {
-
-                public static class ExecutionCourse {
-                    public String acronym;
-                    public String name;
-                    public String id;
-
-                    public ExecutionCourse(String acronym, String name, String id) {
-                        super();
-                        this.acronym = acronym;
-                        this.name = name;
-                        this.id = id;
-                    }
-
-                }
-
-                public static class TestEvent extends WrittenEvaluationEvent {
-                    public String description;
-
-                    public TestEvent(String start, String end, String weekday, List<ExecutionCourse> courses, String description) {
-                        super(start, end, weekday, courses);
-                        this.description = description;
-                    }
-
-                }
-
-                public static class ExamEvent extends WrittenEvaluationEvent {
-                    public Integer season;
-
-                    public ExamEvent(String start, String end, String weekday, List<ExecutionCourse> courses, Integer season) {
-                        super(start, end, weekday, courses);
-                        this.season = season;
-                    }
-
-                }
-
-                public List<WrittenEvaluationEvent.ExecutionCourse> courses;
-
-                public WrittenEvaluationEvent(String start, String end, String weekday, List<ExecutionCourse> courses) {
-                    super(start, end, weekday);
-                    this.courses = courses;
-                }
-
-            }
-
-            public static class GenericEvent extends RoomEvent {
-                public String description;
-                public String title;
-
-                public GenericEvent(String start, String end, String weekday, String description, String title) {
-                    super(start, end, weekday);
-                    this.description = description;
-                    this.title = title;
-                }
-
-            }
-
-            public String start;
-            public String end;
-            public String weekday;
-
-            public RoomEvent(String start, String end, String weekday) {
+            public RoomCapacity(Integer normal, Integer exam) {
                 super();
-                this.start = start;
-                this.end = end;
-                this.weekday = weekday;
+                this.normal = normal;
+                this.exam = exam;
             }
 
-        }
+            public Integer getNormal() {
+                return normal;
+            }
 
-        public String description;
-        public Integer normalCapacity;
-        public Integer examCapacity;
+            public void setNormal(Integer normalCapacity) {
+                this.normal = normalCapacity;
+            }
+
+            public Integer getExam() {
+                return exam;
+            }
+
+            public void setExam(Integer examCapacity) {
+                this.exam = examCapacity;
+            }
+        }
 
         @JsonInclude(Include.NON_NULL)
-        public List<RoomEvent> events;
+        public String description;
+        @JsonInclude(Include.NON_NULL)
+        public RoomCapacity capacity;
+        @JsonInclude(Include.NON_NULL)
+        public List<FenixRoomEvent> events;
 
-        public Room(String id, String name) {
-            super(id, name, "ROOM");
+        /**
+         * this is used to create a null object so that assignedRoom in evaluations can be null
+         */
+        public Room() {
+
         }
 
-        public Room(String id, String name, FenixSpace parentSpace, String description, Integer normalCapacity,
-                Integer examCapacity, List<RoomEvent> events) {
-            super(id, name, "ROOM", null, parentSpace);
-            this.description = description;
-            this.normalCapacity = normalCapacity;
-            this.examCapacity = examCapacity;
-            if (events == null || events.isEmpty()) {
-                events = new ArrayList<>();
+        public Room(AllocatableSpace allocationSpace) {
+            this(allocationSpace, false, false, null);
+        }
+
+        public Room(AllocatableSpace allocationSpace, Boolean withParentAndContainedSpaces) {
+            this(allocationSpace, withParentAndContainedSpaces, false, null);
+        }
+
+        public Room(AllocatableSpace allocationSpace, Boolean withParentAndContainedSpaces, Boolean withDescriptionAndCapacity, List<FenixRoomEvent> events) {
+            super(allocationSpace, withParentAndContainedSpaces);
+            if (withDescriptionAndCapacity) {
+                this.description = allocationSpace.getCompleteIdentificationWithoutCapacities();
+                this.capacity = new RoomCapacity(allocationSpace.getNormalCapacity(), allocationSpace.getExamCapacity());
             }
             this.events = events;
         }
 
+        public Room(AllocatableSpace allocationSpace, List<FenixRoomEvent> events) {
+            this(allocationSpace, true, true, events);
+        }
     }
 
     public String id;
     public String name;
-    public String type;
-    @JsonInclude(Include.NON_NULL)
-    public List<FenixSpace> containedSpaces;
-    @JsonInclude(Include.NON_NULL)
-    public FenixSpace parentSpace;
 
-    public FenixSpace(String id, String name, String type) {
-        this.id = id;
-        this.name = name;
-        this.type = type;
-        this.parentSpace = null;
-        this.containedSpaces = null;
+    @JsonInclude(Include.NON_NULL)
+    @JsonSerialize(typing = Typing.DYNAMIC)
+    public Set<FenixSpace> containedSpaces = null;
+
+    @JsonInclude(Include.NON_NULL)
+    @JsonSerialize(typing = Typing.DYNAMIC)
+    public FenixSpace parentSpace = null;
+
+    protected FenixSpace() {
+
     }
 
-    public FenixSpace(String id, String name, String type, List<FenixSpace> containedSpaces, FenixSpace parentSpace) {
-        this(id, name, type);
-        this.containedSpaces = containedSpaces;
-        this.parentSpace = parentSpace;
+    protected FenixSpace(Space space) {
+        this(space, false);
     }
+
+    protected FenixSpace(Space space, boolean withParentAndContainedSpaces) {
+        this.id = space.getExternalId();
+        this.name = space.getSpaceInformation().getPresentationName();
+        if (withParentAndContainedSpaces) {
+            setParentSpace(space);
+            setContainedSpaces(space);
+        }
+    }
+
+    private void setContainedSpaces(Space space) {
+        this.containedSpaces = FluentIterable.from(space.getActiveContainedSpaces()).transform(new Function<Space, FenixSpace>() {
+
+            @Override
+            public FenixSpace apply(Space input) {
+                return getSimpleSpace(input);
+            }
+        }).toSet();
+    }
+
+    private void setParentSpace(Space space) {
+        this.parentSpace = space.getSuroundingSpace() == null ? null : getSimpleSpace(space.getSuroundingSpace());
+    }
+
+    public static FenixSpace getSpace(Space space, boolean withParentAndContainedSpaces) {
+        if (space == null) {
+            return null;
+        }
+        if (space.isCampus()) {
+            return new FenixSpace.Campus(space, withParentAndContainedSpaces);
+        }
+        if (space.isBuilding()) {
+            return new FenixSpace.Building(space, withParentAndContainedSpaces);
+        }
+        if (space.isFloor()) {
+            return new FenixSpace.Floor(space, withParentAndContainedSpaces);
+        }
+
+        if (space.isRoom()) {
+            return new FenixSpace.Room((AllocatableSpace) space, withParentAndContainedSpaces);
+        }
+
+        return null;
+    }
+
+    public static FenixSpace getSimpleSpace(Space space) {
+        return getSpace(space, false);
+    }
+
+    public static FenixSpace getSpace(Space space) {
+        return getSpace(space, true);
+    }
+
 }
