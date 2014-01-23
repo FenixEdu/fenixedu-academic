@@ -17776,7 +17776,7 @@ relation RootDomainObjectSantanderEntry {
 }
 
 relation RootDomainObjectSantanderCardInformation {
-	RootDomainObject playsRole rootDomainObject;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	cardGeneration.SantanderCardInformation playsRole santanderCardsInformation {
 		multiplicity *;
 	}
