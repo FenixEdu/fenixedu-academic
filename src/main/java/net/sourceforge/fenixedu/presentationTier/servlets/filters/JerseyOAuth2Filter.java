@@ -29,7 +29,7 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
-@WebFilter(urlPatterns = "/api/fenix/*")
+@WebFilter(urlPatterns = "/api/fenix/v1/*")
 public class JerseyOAuth2Filter implements Filter {
 
     final static String ACCESS_TOKEN = "access_token";
