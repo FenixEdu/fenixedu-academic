@@ -6,7 +6,9 @@ import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 
 import org.joda.time.DateTime;
 
+import com.google.common.base.Function;
 import com.google.common.base.Joiner;
+import com.google.common.collect.FluentIterable;
 
 public class EventBean {
     private DateTime begin;
@@ -61,7 +63,14 @@ public class EventBean {
     }
 
     public String getLocation() {
-        return rooms == null ? "Fenix" : Joiner.on("; ").join(rooms);
+        return rooms == null ? "Fenix" : Joiner.on("; ").join(
+                FluentIterable.from(rooms).transform(new Function<AllocatableSpace, String>() {
+
+                    @Override
+                    public String apply(AllocatableSpace input) {
+                        return input.getIdentification();
+                    }
+                }).toSet());
     }
 
     public String getUrl() {
