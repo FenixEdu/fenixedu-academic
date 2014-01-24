@@ -65,42 +65,24 @@ public class ManageSantanderCardGenerationDA extends FenixDispatchAction {
         try {
             final String stringResults = readFile(dchpFileBean);
             String[] splitedFile = stringResults.split("\r\n");
-            String firstDetailedLine = (splitedFile.length > 1) ? splitedFile[1] : null;
-            int numberOfRegisters = (splitedFile.length > 1) ? Integer.parseInt(splitedFile[0].substring(32, 41)) : 0;
-            boolean error = false;
-            /*verify the file format and the number of registers*/
-            if (firstDetailedLine == null || (splitedFile.length - 2) != numberOfRegisters) {
+            if (!isFileFormatCorrected(splitedFile)) {
                 addErrorMessage(request, "errors", "message.dchp.file.submit.wrong.format");
-                error = true;
-            }
-            /*verify if the file was submitted*/
-            if (!error) {
-                String ist_id = SantanderCardInformation.getCardID(firstDetailedLine).trim();
-                Person person = Person.findByUsername(ist_id);
-                Object[] cards_info = person.getSantanderCardsInformationSet().toArray();
-                SantanderCardInformation test_card_info = createNewCardInformation(person, firstDetailedLine);
-                for (Object obj : cards_info) {
-                    SantanderCardInformation card_info = (SantanderCardInformation) obj;
-                    if (card_info.getDchpRegisteLine().equals(test_card_info.getDchpRegisteLine())) {
-                        addErrorMessage(request, "errors", "message.dchp.file.submit.already.submited");
-                        error = true;
-                        break;
-                    }
-                }
-                deleteCardInformation(test_card_info);
-            }
-            /*store the new entries of the dchp file*/
-            if (!error) {
+            } else if (!isFileAlreadySubmitted(splitedFile[1])) {
+                addErrorMessage(request, "errors", "message.dchp.file.submit.already.submited");
+            } else {
+                /*store the new entries of the dchp file*/
                 for (int i = 1; i < splitedFile.length - 1; i++) {
                     String detailedLine = splitedFile[i];
                     /*get Person object*/
-                    String username = SantanderCardInformation.getCardID(detailedLine).trim();
+                    String username = SantanderCardInformation.getIdentificationCardNumber(detailedLine).trim();
                     Person p = Person.findByUsername(username);
                     /*create new CardInformation*/
                     createNewCardInformation(p, detailedLine);
                 }
                 request.setAttribute("success", "true");
             }
+        } catch (NumberFormatException e) {
+            addErrorMessage(request, "errors", "message.dchp.file.submit.wrong.format");
         } catch (IOException e) {
             addErrorMessage(request, e.getMessage(), e.getMessage());
         }
@@ -233,6 +215,41 @@ public class ManageSantanderCardGenerationDA extends FenixDispatchAction {
         }
         SantanderBatch lastCreatedBatch = batches.iterator().next();
         return (lastCreatedBatch != null && lastCreatedBatch.getSent() != null);
+    }
+
+    private boolean isFileFormatCorrected(String[] splitedFile) {
+        int len = splitedFile.length - 1;
+        for (int i = 0; i < len; ++i) {
+            if (splitedFile[i].length() != 731) {
+                return false;
+            }
+        }
+        if (splitedFile[len].length() != 730) {
+            return false;
+        }
+        String firstDetailedLine = (splitedFile.length > 1) ? splitedFile[1] : null;
+        int numberOfRegisters = (splitedFile.length > 1) ? Integer.parseInt(splitedFile[0].substring(32, 41)) : 0;
+        /*verify the number of registers*/
+        if (firstDetailedLine == null || (splitedFile.length - 2) != numberOfRegisters) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isFileAlreadySubmitted(String firstDetailedLine) {
+        String ist_id = SantanderCardInformation.getIdentificationCardNumber(firstDetailedLine).trim();
+        Person person = Person.findByUsername(ist_id);
+        Object[] cards_info = person.getSantanderCardsInformationSet().toArray();
+        SantanderCardInformation test_card_info = createNewCardInformation(person, firstDetailedLine);
+        for (Object obj : cards_info) {
+            SantanderCardInformation card_info = (SantanderCardInformation) obj;
+            if (card_info.getDchpRegisteLine().equals(test_card_info.getDchpRegisteLine())) {
+                deleteCardInformation(test_card_info);
+                return false;
+            }
+        }
+        deleteCardInformation(test_card_info);
+        return true;
     }
 
     @Atomic

@@ -47,6 +47,7 @@ public class IdentificationCardDA extends FenixDispatchAction {
                 lastEntry = entry;
             }
         }
+
         Set<SantanderCardInformation> cards = person.getSantanderCardsInformationSet();
         if (lastEntry == null) {
             return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
@@ -68,7 +69,7 @@ public class IdentificationCardDA extends FenixDispatchAction {
         }
         DateTime prod_card_date = SantanderCardInformation.getProductionDateTime(lastCard.getDchpRegisteLine());
         return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
-                "label.identification.card.production.state.three", new String[] { prod_card_date.toString("dd/MM/yyyy"), });
+                "label.identification.card.production.state.three", new String[] { prod_card_date.toString("dd/MM/yyyy") });
     }
 
 }
