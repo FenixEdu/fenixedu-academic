@@ -75,7 +75,6 @@ public class DissertationsWithExternalAffiliationsReportFile extends Dissertatio
                 addTeacherRows(thesis, row, ThesisParticipationType.COORIENTATOR);
             }
         }
-        spreadsheet.exportToXLSSheet(new File("dissertacoes" + executionYear.getYear().replace("/", "") + ".xls"));
     }
 
     protected void addTeacherRows(final Thesis thesis, final Row row, final ThesisParticipationType thesisParticipationType) {
