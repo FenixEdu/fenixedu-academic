@@ -29,7 +29,10 @@
 
 
 <div class="infoop2" style="width:500px;">
-	<bean:message key="oauthapps.text.manage.applications" bundle="APPLICATION_RESOURCES" />
+	<bean:message key="oauthapps.text.manage.applications" bundle="APPLICATION_RESOURCES" /></br>
+	<html:link  target="_blank" page="/externalApps.do?method=showServiceAgreement">
+		<bean:message key="oauthapps.label.show.service.agreement" bundle="APPLICATION_RESOURCES"/>
+	</html:link>
 </div>
 
 <logic:notEmpty name="appsOwned">
