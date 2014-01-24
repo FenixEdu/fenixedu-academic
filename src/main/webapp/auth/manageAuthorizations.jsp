@@ -39,7 +39,7 @@
 <jsp:include page="/auth/scopesFooter.jsp"></jsp:include>
 </logic:notEmpty>
 <logic:empty name="authApps">
-	<bean:message key="oauthapps.label.no.authorizations" bundle="APPLICATION_RESOURCES" />
+	<bean:message key="oauthapps.label.no.authorization" bundle="APPLICATION_RESOURCES" />
 </logic:empty>
 
 <bean:define id="confirm">

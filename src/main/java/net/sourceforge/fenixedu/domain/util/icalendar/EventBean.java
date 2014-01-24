@@ -1,22 +1,31 @@
 package net.sourceforge.fenixedu.domain.util.icalendar;
 
+import java.util.Set;
+
+import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
+
 import org.joda.time.DateTime;
+
+import com.google.common.base.Function;
+import com.google.common.base.Joiner;
+import com.google.common.collect.FluentIterable;
 
 public class EventBean {
     private DateTime begin;
     private DateTime end;
     private boolean allDay;
     private String title;
-    private String location;
+    private Set<AllocatableSpace> rooms;
     private String url;
     private String note;
 
-    public EventBean(String title, DateTime begin, DateTime end, boolean allDay, String location, String url, String note) {
+    public EventBean(String title, DateTime begin, DateTime end, boolean allDay, Set<AllocatableSpace> rooms, String url,
+            String note) {
         this.allDay = allDay;
         this.begin = begin;
         this.end = end;
-        this.location = location;
         this.note = note;
+        this.rooms = rooms;
         this.title = title;
         this.url = url;
     }
@@ -54,11 +63,14 @@ public class EventBean {
     }
 
     public String getLocation() {
-        return location;
-    }
+        return rooms == null ? "Fenix" : Joiner.on("; ").join(
+                FluentIterable.from(rooms).transform(new Function<AllocatableSpace, String>() {
 
-    public void setLocation(String location) {
-        this.location = location;
+                    @Override
+                    public String apply(AllocatableSpace input) {
+                        return input.getIdentification();
+                    }
+                }).toSet());
     }
 
     public String getUrl() {
@@ -75,6 +87,18 @@ public class EventBean {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public Set<AllocatableSpace> getRooms() {
+        return rooms;
+    }
+
+    public void setRoom(Set<AllocatableSpace> room) {
+        this.rooms = room;
+    }
+
+    public String getOriginalTitle() {
+        return getTitle();
     }
 
 }

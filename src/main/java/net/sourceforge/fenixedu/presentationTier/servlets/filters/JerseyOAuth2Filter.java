@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu._development.OAuthProperties;
 import net.sourceforge.fenixedu.domain.AppUserSession;
 import net.sourceforge.fenixedu.domain.AuthScope;
+import net.sourceforge.fenixedu.domain.ExternalApplication;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.FenixOAuthToken.FenixOAuthTokenException;
@@ -119,6 +120,15 @@ public class JerseyOAuth2Filter implements Filter {
         try {
             FenixOAuthToken fenixAccessToken = FenixOAuthToken.parse(accessToken);
             AppUserSession appUserSession = fenixAccessToken.getAppUserSession();
+            ExternalApplication externalApplication = appUserSession.getAppUserAuthorization().getApplication();
+
+            if (externalApplication.isDeleted()) {
+                return sendError(response, "accessTokenInvalidFormat", "Access Token not recognized.");
+            }
+
+            if (externalApplication.isBanned()) {
+                return sendError(response, "appBanned", "The application has been banned.");
+            }
 
             if (!validScope(appUserSession, uri)) {
                 return sendError(response, "invalidScope", "Application doesn't have permissions to this endpoint.");
@@ -126,7 +136,6 @@ public class JerseyOAuth2Filter implements Filter {
 
             if (!appUserSession.matchesAccessToken(accessToken)) {
                 return sendError(response, "accessTokenInvalid", "Access Token doesn't match.");
-
             }
 
             if (!appUserSession.isAccessTokenValid()) {
@@ -166,6 +175,7 @@ public class JerseyOAuth2Filter implements Filter {
         try {
             errorResponse =
                     new OAuthErrorResponseBuilder(401).setError(error).setErrorDescription(errorDescription).buildJSONMessage();
+            response.setContentType("application/json; charset=UTF-8");
             response.setStatus(errorResponse.getResponseStatus());
             PrintWriter pw = response.getWriter();
             pw.print(errorResponse.getBody());

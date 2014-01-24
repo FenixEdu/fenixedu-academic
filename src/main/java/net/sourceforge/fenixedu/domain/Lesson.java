@@ -24,10 +24,12 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.LessonInstanceSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.LessonSpaceOccupation;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
+import net.sourceforge.fenixedu.domain.util.icalendar.ClassEventBean;
 import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.ResourceAllocationRolePredicates;
 import net.sourceforge.fenixedu.util.DiaSemana;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.WeekDay;
 
@@ -1041,7 +1043,7 @@ public class Lesson extends Lesson_Base {
         return getExecutionPeriod().getAcademicInterval();
     }
 
-    public List<EventBean> getAllLessonsEvents(String scheme, String serverName, int serverPort) {
+    public List<EventBean> getAllLessonsEvents() {
         HashMap<DateTime, LessonInstance> hashmap = new HashMap<DateTime, LessonInstance>();
         ArrayList<EventBean> result = new ArrayList<EventBean>();
         LocalDate lessonEndDay = null;
@@ -1060,16 +1062,14 @@ public class Lesson extends Lesson_Base {
 
             LessonInstance lessonInstance = hashmap.get(beginDate);
             EventBean bean;
-            String location = null;
+            Set<AllocatableSpace> location = new HashSet<>();
 
-            String url =
-                    scheme + "://" + serverName + ((serverPort == 80 || serverPort == 443) ? "" : ":" + serverPort)
-                            + getExecutionCourse().getSite().getReversePath();
+            String url = FenixConfigurationManager.getFenixUrl() + getExecutionCourse().getSite().getReversePath();
 
             if (lessonInstance != null) {
 
                 if (lessonInstance.getLessonInstanceSpaceOccupation() != null) {
-                    location = lessonInstance.getLessonInstanceSpaceOccupation().getRoom().getName();
+                    location.add(lessonInstance.getLessonInstanceSpaceOccupation().getRoom());
                 }
                 String summary = null;
                 if (lessonInstance.getSummary() != null) {
@@ -1084,22 +1084,18 @@ public class Lesson extends Lesson_Base {
                 }
 
                 bean =
-                        new EventBean(getShift().getExecutionCourse().getNome() + " : "
-                                + getShift().getShiftTypesCapitalizedPrettyPrint(), lessonInstance.getBeginDateTime(),
-                                lessonInstance.getEndDateTime(), false, location, url + "/sumarios", summary);
+                        new ClassEventBean(lessonInstance.getBeginDateTime(), lessonInstance.getEndDateTime(), false, location,
+                                url + "/sumarios", summary, getShift());
             } else {
                 if (getLessonSpaceOccupation() != null) {
-                    location = getLessonSpaceOccupation().getRoom().getName();
+                    location.add(getLessonSpaceOccupation().getRoom());
                 }
                 DateTime endDate =
                         new DateTime(aDay.getYear(), aDay.getMonthOfYear(), aDay.getDayOfMonth(), getEndHourMinuteSecond()
                                 .getHour(), getEndHourMinuteSecond().getMinuteOfHour(), getEndHourMinuteSecond()
                                 .getSecondOfMinute(), 0);
 
-                bean =
-                        new EventBean(getShift().getExecutionCourse().getNome() + " : "
-                                + getShift().getShiftTypesCapitalizedPrettyPrint(), beginDate, endDate, false, location, url,
-                                null);
+                bean = new ClassEventBean(beginDate, endDate, false, location, url, null, getShift());
             }
 
             result.add(bean);

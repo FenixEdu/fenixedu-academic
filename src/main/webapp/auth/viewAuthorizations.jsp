@@ -11,7 +11,6 @@
 
 <em><bean:message key="label.person.main.title" /></em>
 
-<logic:notEmpty name="authorizations">
 <h2 class="mtop15">
 	<bean:message key="oauthapps.label.app.details" bundle="APPLICATION_RESOURCES" />
 </h2>
@@ -23,7 +22,7 @@
 		<fr:property name="classes" value="tstyle4 thlight thright"/>
 	</fr:layout>
 </fr:view>
-
+<logic:notEmpty name="authorizations">
 
 <h2 class="mtop25">
 	<bean:message key="oauthapps.label.manage.authorizations" bundle="APPLICATION_RESOURCES" />
@@ -31,16 +30,16 @@
 
 
 
-		<fr:view name="authorizations" schema="oauthapps.view.authorizations">
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 thcenter thcenter"/>
-				<fr:property name="columnClasses" value="tdcenter, tdcenter, tdcenter, tdcenter, tdcenter"/>
-				
-				<fr:property name="linkFormat(revokeAuthorization)" value="<%= "/externalApps.do?method=revokeAuth&authorizationOid=${externalId}" %>" />
-				<fr:property name="key(revokeAuthorization)" value="oauthapps.label.revoke.authorization"/>
-				<fr:property name="bundle(revokeAuthorization)" value="APPLICATION_RESOURCES"/>
-			</fr:layout>
-		</fr:view>
+<fr:view name="authorizations" schema="oauthapps.view.authorizations">
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle4 thcenter thcenter"/>
+		<fr:property name="columnClasses" value="tdcenter, tdcenter, tdcenter, tdcenter, tdcenter"/>
+		
+		<fr:property name="linkFormat(revokeAuthorization)" value="<%= "/externalApps.do?method=revokeAuth&authorizationOid=${externalId}" %>" />
+		<fr:property name="key(revokeAuthorization)" value="oauthapps.label.revoke.authorization"/>
+		<fr:property name="bundle(revokeAuthorization)" value="APPLICATION_RESOURCES"/>
+	</fr:layout>
+</fr:view>
 
 
 <p>
@@ -69,6 +68,10 @@
 			});
 </script>
 </logic:notEmpty>
+
+<logic:empty name="authorizations">
+	<bean:message key="oauthapps.label.no.authorization" bundle="APPLICATION_RESOURCES" />
+</logic:empty>
 
 <jsp:include page="/auth/scopesFooter.jsp"></jsp:include>
 	

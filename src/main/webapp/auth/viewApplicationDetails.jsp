@@ -31,6 +31,7 @@
 	<bean:message key="oauthapps.label.no.apps" bundle="APPLICATION_RESOURCES" />
 </logic:empty>
 
+<logic:equal name="application" property="active" value="true">
 <p>
 	<html:link page="/externalApps.do?method=prepareEditApplication" paramId="appOid" paramName="application" paramProperty="externalId">
 		<bean:message key="oauthapps.label.edit.application" bundle="APPLICATION_RESOURCES"/>
@@ -39,6 +40,7 @@
 		<bean:message key="oauthapps.label.delete.application" bundle="APPLICATION_RESOURCES"/>
 	</html:link>
 </p>
+</logic:equal>
 
 <bean:define id="confirm">
 	<bean:message bundle="APPLICATION_RESOURCES" key="oauthapps.label.confirm.delete.application"/> 

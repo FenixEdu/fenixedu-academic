@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.student.ICalStudentTimeTable;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.lang.CharEncoding;
 import org.apache.struts.action.ActionForm;
@@ -41,15 +42,11 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
 
     private Calendar getClassCalendar(User user, DateTime validity, HttpServletRequest request) {
 
-        String scheme = request.getScheme();
-        String serverName = request.getServerName();
-        int serverPort = request.getServerPort();
-        List<EventBean> allEvents = getClasses(user, scheme, serverName, serverPort);
-        String url = scheme + "://" + serverName + ((serverPort == 80 || serverPort == 443) ? "" : ":" + serverPort) + "/privado";
+        List<EventBean> allEvents = getClasses(user);
+        String url = FenixConfigurationManager.getFenixUrl() + "/privado";
         EventBean event =
-                new EventBean("Renovar a chave do calendario.", validity.minusMinutes(30), validity.plusMinutes(30), false,
-                        "Portal Fénix", url,
-                        "A sua chave de sincronização do calendario vai expirar. Diriga-se ao Portal Fénix para gerar nova chave");
+                new EventBean("Renovar a chave do calendario.", validity.minusMinutes(30), validity.plusMinutes(30), false, null,
+                        url, "A sua chave de sincronização do calendario vai expirar. Diriga-se ao Fénix para gerar nova chave");
 
         allEvents.add(event);
 
@@ -57,7 +54,7 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
 
     }
 
-    public List<EventBean> getClasses(User user, String scheme, String serverName, int serverPort) {
+    public List<EventBean> getClasses(User user) {
 
         List<EventBean> allEvents = new ArrayList<EventBean>();
         ExecutionSemester currentExecutionSemester = ExecutionSemester.readActualExecutionSemester();
@@ -65,44 +62,40 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
         for (Registration registration : user.getPerson().getStudent().getRegistrations()) {
             for (Shift shift : registration.getShiftsForCurrentExecutionPeriod()) {
                 for (Lesson lesson : shift.getAssociatedLessons()) {
-                    allEvents.addAll(lesson.getAllLessonsEvents(scheme, serverName, serverPort));
+                    allEvents.addAll(lesson.getAllLessonsEvents());
                 }
             }
 
             for (Shift shift : registration.getShiftsFor(currentExecutionSemester.getPreviousExecutionPeriod())) {
                 for (Lesson lesson : shift.getAssociatedLessons()) {
-                    allEvents.addAll(lesson.getAllLessonsEvents(scheme, serverName, serverPort));
+                    allEvents.addAll(lesson.getAllLessonsEvents());
                 }
             }
         }
         return allEvents;
     }
 
-    public List<EventBean> getTeachingClasses(User user, String scheme, String serverName, int serverPort) {
+    public List<EventBean> getTeachingClasses(User user) {
 
         List<EventBean> allEvents = new ArrayList<EventBean>();
 
         for (Professorship professorShip : user.getPerson().getProfessorships()) {
             ExecutionCourse executionCourse = professorShip.getExecutionCourse();
             for (Lesson lesson : executionCourse.getLessons()) {
-                allEvents.addAll(lesson.getAllLessonsEvents(scheme, serverName, serverPort));
+                allEvents.addAll(lesson.getAllLessonsEvents());
             }
         }
         return allEvents;
     }
 
     private Calendar getExamsCalendar(User user, DateTime validity, HttpServletRequest request) {
-        String scheme = request.getScheme();
-        String serverName = request.getServerName();
-        int serverPort = request.getServerPort();
 
-        List<EventBean> allEvents = getExams(user, scheme, serverName, serverPort);
+        List<EventBean> allEvents = getExams(user);
 
-        String url = scheme + "://" + serverName + ((serverPort == 80 || serverPort == 443) ? "" : ":" + serverPort) + "/privado";
+        String url = FenixConfigurationManager.getFenixUrl() + "/privado";
         EventBean event =
-                new EventBean("Renovar a chave do calendario.", validity.minusMinutes(30), validity.plusMinutes(30), false,
-                        "Portal Fénix", url,
-                        "A sua chave de sincronização do calendario vai expirar. Diriga-se ao Portal Fénix para gerar nova chave");
+                new EventBean("Renovar a chave do calendario.", validity.minusMinutes(30), validity.plusMinutes(30), false, null,
+                        url, "A sua chave de sincronização do calendario vai expirar. Diriga-se ao Fénix para gerar nova chave");
 
         allEvents.add(event);
 
@@ -110,37 +103,37 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
 
     }
 
-    public List<EventBean> getExams(User user, String scheme, String serverName, int serverPort) {
+    public List<EventBean> getExams(User user) {
         List<EventBean> allEvents = new ArrayList<EventBean>();
         ExecutionSemester currentExecutionSemester = ExecutionSemester.readActualExecutionSemester();
 
         for (Registration registration : user.getPerson().getStudent().getRegistrations()) {
             for (WrittenEvaluation writtenEvaluation : registration.getWrittenEvaluations(currentExecutionSemester)) {
-                allEvents.addAll(writtenEvaluation.getAllEvents(registration, scheme, serverName, serverPort));
+                allEvents.addAll(writtenEvaluation.getAllEvents(registration));
             }
 
             for (Attends attends : registration.getAttendsForExecutionPeriod(currentExecutionSemester)) {
                 for (Project project : attends.getExecutionCourse().getAssociatedProjects()) {
-                    allEvents.addAll(project.getAllEvents(attends.getExecutionCourse(), scheme, serverName, serverPort));
+                    allEvents.addAll(project.getAllEvents(attends.getExecutionCourse()));
                 }
             }
 
             for (WrittenEvaluation writtenEvaluation : registration.getWrittenEvaluations(currentExecutionSemester
                     .getPreviousExecutionPeriod())) {
-                allEvents.addAll(writtenEvaluation.getAllEvents(registration, scheme, serverName, serverPort));
+                allEvents.addAll(writtenEvaluation.getAllEvents(registration));
             }
 
             for (Attends attends : registration.getAttendsForExecutionPeriod(currentExecutionSemester
                     .getPreviousExecutionPeriod())) {
                 for (Project project : attends.getExecutionCourse().getAssociatedProjects()) {
-                    allEvents.addAll(project.getAllEvents(attends.getExecutionCourse(), scheme, serverName, serverPort));
+                    allEvents.addAll(project.getAllEvents(attends.getExecutionCourse()));
                 }
             }
         }
         return allEvents;
     }
 
-    public List<EventBean> getTeachingExams(User user, String scheme, String serverName, int serverPort) {
+    public List<EventBean> getTeachingExams(User user) {
 
         List<EventBean> allEvents = new ArrayList<EventBean>();
 
@@ -148,11 +141,11 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
             ExecutionCourse executionCourse = professorShip.getExecutionCourse();
 
             for (WrittenEvaluation writtenEvaluation : executionCourse.getWrittenEvaluations()) {
-                allEvents.addAll(writtenEvaluation.getAllEvents(null, scheme, serverName, serverPort));
+                allEvents.addAll(writtenEvaluation.getAllEvents(null));
             }
 
             for (Project project : executionCourse.getAssociatedProjects()) {
-                allEvents.addAll(project.getAllEvents(executionCourse, scheme, serverName, serverPort));
+                allEvents.addAll(project.getAllEvents(executionCourse));
             }
 
         }

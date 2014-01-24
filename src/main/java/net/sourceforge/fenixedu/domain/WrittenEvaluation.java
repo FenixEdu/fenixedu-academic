@@ -21,11 +21,13 @@ import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
+import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.util.icalendar.EvaluationEventBean;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.EvaluationType;
+import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -371,7 +373,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     private boolean checkValidHours(Date beginning, Date end) {
         if (beginning.after(end)) {
-            throw new DomainException("error.data.exame.inv�lida");
+            throw new DomainException("error.data.exame.invalida");
         }
         return true;
     }
@@ -623,6 +625,16 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         return null;
     }
 
+    public WrittenEvaluationEnrolment getWrittenEvaluationEnrolmentFor(final Student student) {
+        for (Registration registration : student.getActiveRegistrations()) {
+            final WrittenEvaluationEnrolment evaluationEnrolment = getWrittenEvaluationEnrolmentFor(registration);
+            if (evaluationEnrolment != null) {
+                return evaluationEnrolment;
+            }
+        }
+        return null;
+    }
+
     public boolean isInEnrolmentPeriod() {
         if (this.getEnrollmentBeginDayDate() == null || this.getEnrollmentBeginTimeDate() == null
                 || this.getEnrollmentEndDayDate() == null || this.getEnrollmentEndTimeDate() == null) {
@@ -828,26 +840,12 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
                 hourMinuteSecond.getHour(), hourMinuteSecond.getMinuteOfHour(), hourMinuteSecond.getSecondOfMinute(), 0);
     }
 
-    protected List<EventBean> getAllEvents(String description, Registration registration, String scheme, String serverName,
-            int serverPort) {
-        List<EventBean> result = new ArrayList<EventBean>();
-        String url = scheme + "://" + serverName + ((serverPort == 80 || serverPort == 443) ? "" : ":" + serverPort);
+    protected List<EvaluationEventBean> getAllEvents(String description, Registration registration) {
+        List<EvaluationEventBean> result = new ArrayList<EvaluationEventBean>();
+        String url = FenixConfigurationManager.getFenixUrl();
 
-        String courseName = "";
-        ExecutionCourse executionCourse = null;
-        if (this.getAttendingExecutionCoursesFor(registration).size() > 1) {
-            Iterator<ExecutionCourse> it = this.getAttendingExecutionCoursesFor(registration).iterator();
-            for (executionCourse = it.next(); it.hasNext(); executionCourse = it.next()) {
-                if (it.hasNext()) {
-                    courseName += executionCourse.getSigla() + "; ";
-                } else {
-                    courseName += executionCourse.getSigla();
-                }
-            }
-        } else {
-            courseName = this.getAttendingExecutionCoursesFor(registration).iterator().next().getNome();
-            executionCourse = this.getAttendingExecutionCoursesFor(registration).iterator().next();
-        }
+        Set<ExecutionCourse> executionCourses = new HashSet<ExecutionCourse>();
+        executionCourses.addAll(this.getAttendingExecutionCoursesFor(registration));
 
         if (this.getEnrollmentBeginDayDateYearMonthDay() != null) {
             DateTime enrollmentBegin =
@@ -855,28 +853,25 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
             DateTime enrollmentEnd =
                     convertTimes(this.getEnrollmentEndDayDateYearMonthDay(), this.getEnrollmentEndTimeDateHourMinuteSecond());
 
-            result.add(new EventBean("Inicio das inscrições para " + description + " : " + courseName, enrollmentBegin,
-                    enrollmentBegin.plusHours(1), false, "Sistema Fénix", url + "/privado", null));
+            result.add(new EvaluationEventBean("Inicio das inscrições para " + description, enrollmentBegin, enrollmentBegin
+                    .plusHours(1), false, null, url + "/privado", null, executionCourses));
 
-            result.add(new EventBean("Fim das inscrições para " + description + " : " + courseName, enrollmentEnd.minusHours(1),
-                    enrollmentEnd, false, "Sistema Fénix", url + "/privado", null));
+            result.add(new EvaluationEventBean("Fim das inscrições para " + description, enrollmentEnd.minusHours(1),
+                    enrollmentEnd, false, null, url + "/privado", null, executionCourses));
         }
 
-        String room = "";
+        Set<AllocatableSpace> rooms = new HashSet<>();
 
         if (registration.getRoomFor(this) != null) {
-            room = registration.getRoomFor(this).getName();
+            rooms.add(registration.getRoomFor(this));
         } else {
             for (WrittenEvaluationSpaceOccupation weSpaceOcupation : this.getWrittenEvaluationSpaceOccupations()) {
-                if (!room.isEmpty()) {
-                    room += "; ";
-                }
-                room += weSpaceOcupation.getRoom().getName();
+                rooms.add(weSpaceOcupation.getRoom());
             }
         }
 
-        result.add(new EventBean(description + " : " + courseName, this.getBeginningDateTime(), this.getEndDateTime(), false,
-                room, url + executionCourse.getSite().getReversePath(), null));
+        result.add(new EvaluationEventBean(description, this.getBeginningDateTime(), this.getEndDateTime(), false, rooms, url
+                + executionCourses.iterator().next().getSite().getReversePath(), null, executionCourses));
 
         return result;
     }
@@ -891,7 +886,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         return persons;
     }
 
-    public abstract List<EventBean> getAllEvents(Registration registration, String scheme, String serverName, int serverPort);
+    public abstract List<EvaluationEventBean> getAllEvents(Registration registration);
 
     public String getAssociatedRoomsAsStringList() {
         StringBuilder builder = new StringBuilder("(");

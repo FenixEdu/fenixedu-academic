@@ -55,6 +55,9 @@ import org.joda.time.DateTime;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.FluentIterable;
+
 public class Degree extends Degree_Base implements Comparable<Degree> {
 
     public static final String DEFAULT_MINISTRY_CODE = "9999";
@@ -434,12 +437,29 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return AcademicPredicates.MANAGE_DEGREE_CURRICULAR_PLANS.evaluate(this);
     }
 
-    public List<ExecutionDegree> getExecutionDegrees() {
+    private List<ExecutionDegree> getInternalExecutionDegrees() {
         List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
         for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
             result.addAll(degreeCurricularPlan.getExecutionDegrees());
         }
         return result;
+    }
+
+    public List<ExecutionDegree> getExecutionDegrees() {
+        return getExecutionDegrees(null);
+    }
+
+    public List<ExecutionDegree> getExecutionDegrees(final AcademicInterval academicInterval) {
+        if (academicInterval == null) {
+            return getInternalExecutionDegrees();
+        }
+        return FluentIterable.from(getInternalExecutionDegrees()).filter(new Predicate<ExecutionDegree>() {
+
+            @Override
+            public boolean apply(ExecutionDegree input) {
+                return academicInterval.equals(input.getAcademicInterval());
+            }
+        }).toList();
     }
 
     public List<ExecutionDegree> getExecutionDegreesForExecutionYear(final ExecutionYear executionYear) {

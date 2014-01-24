@@ -158,7 +158,7 @@ public class ExportEPFLPhdProgramCandidacies {
 
     private static String getUrlForProcessDocs(PhdIndividualProgramProcess process) {
         return String.format("https://fenix.ist.utl.pt/phd/epfl/applications/candidateDocuments?candidateOid=%s", process
-                .getExternalId());
+                .getCandidacyProcessHashCode().getExternalId());
     }
 
     private static String addTabs(int level) {

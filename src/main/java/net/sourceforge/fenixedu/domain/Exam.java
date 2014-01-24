@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
+import net.sourceforge.fenixedu.domain.util.icalendar.EvaluationEventBean;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.Season;
 
@@ -184,8 +184,8 @@ public class Exam extends Exam_Base {
     }
 
     @Override
-    public List<EventBean> getAllEvents(Registration registration, String scheme, String serverName, int serverPort) {
-        return getAllEvents("Exame (" + this.getSeason() + ")", registration, scheme, serverName, serverPort);
+    public List<EvaluationEventBean> getAllEvents(Registration registration) {
+        return getAllEvents("Exame (" + this.getSeason() + ")", registration);
     }
 
     @Override

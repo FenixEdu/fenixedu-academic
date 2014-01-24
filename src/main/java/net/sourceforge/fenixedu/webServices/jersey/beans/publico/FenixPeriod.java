@@ -7,6 +7,10 @@ public class FenixPeriod {
     String start;
     String end;
 
+    public FenixPeriod() {
+        this((String) null, (String) null);
+    }
+
     public FenixPeriod(final String start, final String end) {
         this.start = start;
         this.end = end;
