@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.identificationCardManager;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -8,10 +9,12 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.dataTransferObject.research.result.OpenFileBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.cardGeneration.SantanderBatch;
 import net.sourceforge.fenixedu.domain.cardGeneration.SantanderBatchSender;
+import net.sourceforge.fenixedu.domain.cardGeneration.SantanderCardInformation;
 import net.sourceforge.fenixedu.domain.cardGeneration.SantanderSequenceNumberGenerator;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -26,6 +29,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
+import pt.utl.ist.fenix.tools.util.FileUtils;
 
 @Mapping(module = "identificationCardManager", path = "/manageSantander", scope = "session", parameter = "method")
 @Forwards(value = {
@@ -38,6 +42,7 @@ public class ManageSantanderCardGenerationDA extends FenixDispatchAction {
     public ActionForward intro(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
             final HttpServletResponse response) throws Exception {
         request.setAttribute("santanderBean", new ManageSantanderCardGenerationBean());
+        request.setAttribute("uploadDCHPFileBean", new OpenFileBean());
         return mapping.findForward("entryPoint");
     }
 
@@ -49,7 +54,45 @@ public class ManageSantanderCardGenerationDA extends FenixDispatchAction {
             refreshBeanState(santanderBean);
         }
         request.setAttribute("santanderBean", santanderBean);
+        request.setAttribute("uploadDCHPFileBean", new OpenFileBean());
         return mapping.findForward("entryPoint");
+    }
+
+    public ActionForward submitDCHPFile(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+        OpenFileBean dchpFileBean = getRenderedObject("uploadDCHPFileBean");
+
+        try {
+            final String stringResults = readFile(dchpFileBean);
+            String[] splitedFile = stringResults.split("\r\n");
+            if (!isFileFormatCorrected(splitedFile)) {
+                addErrorMessage(request, "errors", "message.dchp.file.submit.wrong.format");
+            } else if (!isFileAlreadySubmitted(splitedFile[1])) {
+                addErrorMessage(request, "errors", "message.dchp.file.submit.already.submited");
+            } else {
+                /*store the new entries of the dchp file*/
+                for (int i = 1; i < splitedFile.length - 1; i++) {
+                    String detailedLine = splitedFile[i];
+                    /*get Person object*/
+                    String username = SantanderCardInformation.getIdentificationCardNumber(detailedLine).trim();
+                    Person p = Person.findByUsername(username);
+                    /*create new CardInformation*/
+                    createNewCardInformation(p, detailedLine);
+                }
+                request.setAttribute("success", "true");
+            }
+        } catch (NumberFormatException e) {
+            addErrorMessage(request, "errors", "message.dchp.file.submit.wrong.format");
+        } catch (IOException e) {
+            addErrorMessage(request, e.getMessage(), e.getMessage());
+        }
+        request.setAttribute("santanderBean", new ManageSantanderCardGenerationBean());
+        request.setAttribute("uploadDCHPFileBean", new OpenFileBean());
+        return mapping.findForward("entryPoint");
+    }
+
+    private String readFile(OpenFileBean dchpFileBean) throws IOException {
+        return FileUtils.readFile(dchpFileBean.getInputStream());
     }
 
     public ActionForward createBatch(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
@@ -68,6 +111,7 @@ public class ManageSantanderCardGenerationDA extends FenixDispatchAction {
         }
 
         request.setAttribute("santanderBean", santanderBean);
+        request.setAttribute("uploadDCHPFileBean", new OpenFileBean());
         return mapping.findForward("entryPoint");
     }
 
@@ -95,6 +139,7 @@ public class ManageSantanderCardGenerationDA extends FenixDispatchAction {
             santanderBean = new ManageSantanderCardGenerationBean(executionYear);
             refreshBeanState(santanderBean);
             request.setAttribute("santanderBean", santanderBean);
+            request.setAttribute("uploadDCHPFileBean", new OpenFileBean());
             return mapping.findForward("entryPoint");
         }
 
@@ -121,6 +166,7 @@ public class ManageSantanderCardGenerationDA extends FenixDispatchAction {
             santanderBean = new ManageSantanderCardGenerationBean(executionYear);
             refreshBeanState(santanderBean);
             request.setAttribute("santanderBean", santanderBean);
+            request.setAttribute("uploadDCHPFileBean", new OpenFileBean());
             return mapping.findForward("entryPoint");
         }
 
@@ -152,6 +198,7 @@ public class ManageSantanderCardGenerationDA extends FenixDispatchAction {
         }
 
         request.setAttribute("santanderBean", santanderBean);
+        request.setAttribute("uploadDCHPFileBean", new OpenFileBean());
         return mapping.findForward("entryPoint");
     }
 
@@ -170,6 +217,41 @@ public class ManageSantanderCardGenerationDA extends FenixDispatchAction {
         return (lastCreatedBatch != null && lastCreatedBatch.getSent() != null);
     }
 
+    private boolean isFileFormatCorrected(String[] splitedFile) {
+        int len = splitedFile.length - 1;
+        for (int i = 0; i < len; ++i) {
+            if (splitedFile[i].length() != 731) {
+                return false;
+            }
+        }
+        if (splitedFile[len].length() != 730) {
+            return false;
+        }
+        String firstDetailedLine = (splitedFile.length > 1) ? splitedFile[1] : null;
+        int numberOfRegisters = (splitedFile.length > 1) ? Integer.parseInt(splitedFile[0].substring(32, 41)) : 0;
+        /*verify the number of registers*/
+        if (firstDetailedLine == null || (splitedFile.length - 2) != numberOfRegisters) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isFileAlreadySubmitted(String firstDetailedLine) {
+        String ist_id = SantanderCardInformation.getIdentificationCardNumber(firstDetailedLine).trim();
+        Person person = Person.findByUsername(ist_id);
+        Object[] cards_info = person.getSantanderCardsInformationSet().toArray();
+        SantanderCardInformation test_card_info = createNewCardInformation(person, firstDetailedLine);
+        for (Object obj : cards_info) {
+            SantanderCardInformation card_info = (SantanderCardInformation) obj;
+            if (card_info.getDchpRegisteLine().equals(test_card_info.getDchpRegisteLine())) {
+                deleteCardInformation(test_card_info);
+                return false;
+            }
+        }
+        deleteCardInformation(test_card_info);
+        return true;
+    }
+
     @Atomic
     private void createNewBatch(Person requester, ExecutionYear executionYear) {
         new SantanderBatch(requester, executionYear);
@@ -178,6 +260,16 @@ public class ManageSantanderCardGenerationDA extends FenixDispatchAction {
     @Atomic
     private void destroyBatch(SantanderBatch batch) {
         batch.delete();
+    }
+
+    @Atomic
+    private SantanderCardInformation createNewCardInformation(Person person, String line) {
+        return new SantanderCardInformation(person, line);
+    }
+
+    @Atomic
+    private void deleteCardInformation(SantanderCardInformation card_info) {
+        card_info.delete();
     }
 
     private void refreshBeanState(ManageSantanderCardGenerationBean santanderBean) {
