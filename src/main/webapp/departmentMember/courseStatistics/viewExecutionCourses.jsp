@@ -1,109 +1,107 @@
-<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
-<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
+<%@ page language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
+<html:xhtml />
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers"	prefix="fr"%>
 
-<ft:tilesView definition="departmentMember.masterPage" attributeName="body-inline">
-	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
-	<f:loadBundle basename="resources/DepartmentMemberResources" var="bundle"/>
+<bean:define id="executionSemesterId" name="courseStatisticsBean" property="executionSemester.externalId" />
+<bean:define id="competenceCourseId" name="courseStatisticsBean" property="competenceCourse.externalId" />
+
+<h2><bean:message key="label.courseStatistics.executionStatistics" bundle="DEPARTMENT_MEMBER_RESOURCES"/></h2>
+<h3><bean:write name="courseStatisticsBean" property="competenceCourseName"/></h3>
+
+<fr:form id="chooseSemesterForm" action="/departmentCourses.do?method=prepareExecutionCourses">
+	<fr:edit id="courseStatisticsBean" name="courseStatisticsBean">
+		<fr:schema bundle="DEPARTMENT_MEMBER_RESOURCES"
+			type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.CourseStatisticsBean">
+			<fr:slot name="executionSemester" layout="menu-select-postback" key="label.common.executionYear">
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.NotClosedExecutionPeriodsProvider" />
+				<fr:property name="format" value="${qualifiedName}" />
+				<fr:property name="saveOptions" value="true" />
+			</fr:slot>
+			<fr:layout>
+				<fr:property name="classes" value="tstyle5 mtop05 mbottom15" />
+			</fr:layout>
+		</fr:schema>
+	</fr:edit>
+</fr:form>
+
+<p>
+<html:link action="<%="/departmentCourses.do?method=prepareDegreeCourses&executionSemesterId=" + executionSemesterId + "&competenceCourseId=" + competenceCourseId %>" >
+	« <bean:message key="link.back"/>
+</html:link>
+</p>
+
+<logic:iterate id="executionCourse" name="courseStatisticsBean" property="executionCourses">
+	<table class="vtsbc">
+		<thead>
+		</thead>
+		<tbody>
+			<tr>
+				<th colspan="11"><bean:message key="label.courseStatistics.teacher" />:</th>
+			</tr>
+			<tr>
+				<td colspan="11">
+					<logic:iterate id="teacher" name="executionCourse" property="teachers">
+						<bean:write name="teacher" /><br/>
+					</logic:iterate>
+				</td>
+			</tr>
+			
+			<tr>
+				<th colspan="11"><bean:message key="label.courseStatistics.hadExecutionTogether" />:</th>
+			</tr>
+			<tr>
+				<td colspan="11">
+					<logic:iterate id="degree" name="executionCourse" property="degrees">
+						<bean:write name="degree" /><br/>
+					</logic:iterate>
+				</td>
+			</tr>
+
+			<tr>
+				
+				<th>&nbsp;</th>
+				<th colspan="3"><bean:message key="label.courseStatistics.firstCount" /></th>
+				<th colspan="3"><bean:message key="label.courseStatistics.restCount" /></th>
+				<th colspan="3"><bean:message key="label.courseStatistics.totalCount" /></th>
+				<th>&nbsp;</th>
+			</tr>
+			<tr>
+				<th><bean:message key="label.courseStatistics.executionPeriod" /></th>
+				<th><bean:message key="label.courseStatistics.enrolled" /></th>
+				<th><bean:message key="label.courseStatistics.approved" /></th>
+				<th><bean:message key="label.courseStatistics.average" /></th>
+				<th><bean:message key="label.courseStatistics.enrolled" /></th>
+				<th><bean:message key="label.courseStatistics.approved" /></th>
+				<th><bean:message key="label.courseStatistics.average" /></th>
+				<th><bean:message key="label.courseStatistics.enrolled" /></th>
+				<th><bean:message key="label.courseStatistics.approved" /></th>
+				<th><bean:message key="label.courseStatistics.average" /></th>
+				<th><bean:message key="label.courseStatistics.approvedPercentage" /></th>
 	
-	<h:outputText value="<h2>#{bundle['label.courseStatistics.executionStatistics']}</h2>" escape="false" />
-	<h:outputText value="<h3>#{courseStatistics.competenceCourse.name}</h3>" escape="false" />
+			</tr>
+			<tr>
+				<td class="courses"><bean:write name="executionCourse" property="executionPeriod" /> de <bean:write name="executionCourse" property="executionYear" /></td>
+				<td><bean:write name="executionCourse" property="firstEnrolledCount" /></td>
+				<td><bean:write name="executionCourse" property="firstApprovedCount" /></td>
+				<td><bean:write name="executionCourse" property="firstApprovedAveragex" /></td>
 
-	<h:form>
-		<fc:viewState binding="#{courseStatistics.viewState}" />
+				<td><bean:write name="executionCourse" property="restEnrolledCount" /></td>
+				<td><bean:write name="executionCourse" property="restApprovedCount" /></td>
+				<td><bean:write name="executionCourse" property="restApprovedAveragex" /></td>
 
-		<h:panelGrid columns="2" styleClass="search">
-			<h:outputText value="#{bundle['label.common.executionYear']}&nbsp;" escape="false" styleClass="aright"/>
-			<fc:selectOneMenu
-				value="#{courseStatistics.executionPeriodId}"
-				valueChangeListener="#{courseStatistics.onExecutionPeriodChangeForExecutionCourses}"
-				onchange="this.form.submit();">
-				<f:selectItems value="#{courseStatistics.executionPeriods}" />
-			</fc:selectOneMenu>
-			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
-		</h:panelGrid>
-
-		<h:outputText value="<br />" escape="false" />
-		
-		<fc:commandLink value="#{bundle['link.back']}" action="backToDegreeCourses" />
-
-		<h:outputText value="<br /><br />" escape="false" />
-		
-		<f:verbatim>
-			<table class="vtsbc">
-				<thead>
-				<tr>
-		</f:verbatim>
-		
-		<h:outputText value="<th>&nbsp;</th>" escape="false" />
-		<h:outputText value="<th colspan=\"3\">#{bundle['label.courseStatistics.firstCount']}</th>" escape="false" />
-		<h:outputText value="<th colspan=\"3\">#{bundle['label.courseStatistics.restCount']}</th>" escape="false" />
-		<h:outputText value="<th colspan=\"3\">#{bundle['label.courseStatistics.totalCount']}</th>" escape="false" />
-		<h:outputText value="<th>&nbsp;</th>" escape="false" />
-		<h:outputText value="</tr><tr>" escape="false" />
-		<h:outputText value="<th>#{bundle['label.courseStatistics.executionPeriod']}</th>" escape="false" />
-		<h:outputText value="<th>#{bundle['label.courseStatistics.enrolled']}</th>" escape="false" />
-		<h:outputText value="<th>#{bundle['label.courseStatistics.approved']}</th>" escape="false" />
-		<h:outputText value="<th>#{bundle['label.courseStatistics.average']}</th>" escape="false" />
-		<h:outputText value="<th>#{bundle['label.courseStatistics.enrolled']}</th>" escape="false" />
-		<h:outputText value="<th>#{bundle['label.courseStatistics.approved']}</th>" escape="false" />
-		<h:outputText value="<th>#{bundle['label.courseStatistics.average']}</th>" escape="false" />
-		<h:outputText value="<th>#{bundle['label.courseStatistics.enrolled']}</th>" escape="false" />
-		<h:outputText value="<th>#{bundle['label.courseStatistics.approved']}</th>" escape="false" />
-		<h:outputText value="<th>#{bundle['label.courseStatistics.average']}</th>" escape="false" />
-		<h:outputText value="<th>#{bundle['label.courseStatistics.approvedPercentage']}</th>" escape="false" />
-
-		<f:verbatim>
-					</tr>
-				</thead>
-				<tbody>
-		</f:verbatim>
-		
-
-		<fc:dataRepeater value="#{courseStatistics.executionCourses}" var="executionCourse">
-				<h:outputText value="<tr>" escape="false"/>
-				<h:outputText value="<th colspan=\"11\">#{bundle['label.courseStatistics.teacher']}: #{executionCourse.teacher}</th>" escape="false"/>
-				<h:outputText value="</tr>" escape="false"/>
+				<td><bean:write name="executionCourse" property="totalEnrolledCount" /></td>
+				<td><bean:write name="executionCourse" property="totalApprovedCount" /></td>
+				<td><bean:write name="executionCourse" property="totalApprovedAveragex" /></td>
 				
-				<h:outputText value="<tr>" escape="false"/>
-				<h:outputText value="<th colspan=\"11\">#{bundle['label.courseStatistics.hadExecutionTogether']}:</th>" escape="false"/>
-				<h:outputText value="</tr>" escape="false"/>
-				
-				<h:outputText value="<tr><td colspan=\"11\">" escape="false"/>
-				<fc:dataRepeater value="#{executionCourse.degrees}" var="degree" >
-					<h:outputText value="#{degree}<br />" escape="false" />
-				</fc:dataRepeater>
-				<h:outputText value="</td></tr>" escape="false"/>
-				
-				<h:outputText value="<tr>" escape="false"/>
-				<h:outputText value="<td class=\"courses\">#{executionCourse.executionPeriod} de #{executionCourse.executionYear}</td>" escape="false"/>
-				<h:outputText value="<td>#{executionCourse.firstEnrolledCount}</td>" escape="false"/>
-				<h:outputText value="<td>#{executionCourse.firstApprovedCount}</td>" escape="false"/>
-				<h:outputText value="<td>#{executionCourse.firstApprovedCount == 0 ? bundle['label.common.notAvailable'] : executionCourse.firstApprovedAverage.gradeValue}</td>" escape="false"/>
+				<td><bean:write name="executionCourse" property="approvedPercentage" /></td>
+			</tr>
+		</tbody>
+	</table>
+</logic:iterate>
 
-				<h:outputText value="<td>#{executionCourse.restEnrolledCount}</td>" escape="false"/>
-				<h:outputText value="<td>#{executionCourse.restApprovedCount}</td>" escape="false"/>
-				<h:outputText value="<td>#{executionCourse.restApprovedCount == 0 ? bundle['label.common.notAvailable'] : executionCourse.restApprovedAverage.gradeValue}</td>" escape="false"/>
-
-				<h:outputText value="<td>#{executionCourse.totalEnrolledCount}</td>" escape="false"/>
-				<h:outputText value="<td>#{executionCourse.totalApprovedCount}</td>" escape="false"/>
-				<h:outputText value="<td>#{executionCourse.totalApprovedCount == 0 ? bundle['label.common.notAvailable'] : executionCourse.totalApprovedAverage.gradeValue}</td>" escape="false"/>
-				
-				<h:outputText value="<td>" escape="false" />
-				<h:outputText value="#{(executionCourse.totalEnrolledCount == 0)  ? bundle['label.common.notAvailable'] : (executionCourse.totalApprovedCount / executionCourse.totalEnrolledCount)}" escape="false">
-					<f:convertNumber maxFractionDigits="2" type="percent"/>
- 		  		</h:outputText>
-				<h:outputText value="</td></tr>" escape="false"/>
-		
-		</fc:dataRepeater>
-		<f:verbatim>
-				</tbody>
-			</table>
-		</f:verbatim>
-		
-		<fc:commandLink value="#{bundle['link.back']}" action="backToDegreeCourses" />
-		
-	</h:form>
-
-</ft:tilesView>
+<html:link action="<%="/departmentCourses.do?method=prepareDegreeCourses&executionSemesterId=" + executionSemesterId + "&competenceCourseId=" + competenceCourseId %>" >
+	« <bean:message key="link.back"/>
+</html:link>

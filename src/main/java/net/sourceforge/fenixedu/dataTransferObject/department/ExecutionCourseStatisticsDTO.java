@@ -10,7 +10,7 @@ public class ExecutionCourseStatisticsDTO extends CourseStatisticsDTO {
 
     private String executionYear;
 
-    private String teacher;
+    private List<String> teachers;
 
     private List<String> degrees;
 
@@ -22,11 +22,11 @@ public class ExecutionCourseStatisticsDTO extends CourseStatisticsDTO {
             IGrade firstApprovedAverage, IGrade firstApprovedSum, int restEnrolledCount, int restApprovedCount,
             IGrade restApprovedAverage, IGrade restApprovedSum, int totalEnrolledCount, int totalApprovedCount,
             IGrade totalApprovedAverage, IGrade totalApprovedSum, List<String> degrees, String executionPeriod,
-            String executionYear, String teacher) {
+            String executionYear, List<String> teachers) {
         super(externalId, name, firstEnrolledCount, firstApprovedCount, firstApprovedAverage, restEnrolledCount,
                 restApprovedCount, restApprovedAverage, totalEnrolledCount, totalApprovedCount, totalApprovedAverage);
         this.executionPeriod = executionPeriod;
-        this.teacher = teacher;
+        this.teachers = teachers;
         this.executionYear = executionYear;
         this.degrees = degrees;
     }
@@ -39,12 +39,12 @@ public class ExecutionCourseStatisticsDTO extends CourseStatisticsDTO {
         this.executionPeriod = executionPeriod;
     }
 
-    public String getTeacher() {
-        return teacher;
+    public List<String> getTeachers() {
+        return teachers;
     }
 
-    public void setTeacher(String teacher) {
-        this.teacher = teacher;
+    public void setTeachers(List<String> teachers) {
+        this.teachers = teachers;
     }
 
     public String getExecutionYear() {

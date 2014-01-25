@@ -15,15 +15,11 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
 import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.FenixFramework;
 
 public class ComputeExecutionCourseStatistics extends ComputeCourseStatistics {
 
-    public List<ExecutionCourseStatisticsDTO> run(String competenceCourseId, String degreeId, String executionPeriodId)
-            throws FenixServiceException {
-        CompetenceCourse competenceCourse = FenixFramework.getDomainObject(competenceCourseId);
-        Degree degree = FenixFramework.getDomainObject(degreeId);
-        ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodId);
+    public List<ExecutionCourseStatisticsDTO> run(CompetenceCourse competenceCourse, Degree degree,
+            ExecutionSemester executionSemester) throws FenixServiceException {
 
         List<CurricularCourse> curricularCourses = competenceCourse.getAssociatedCurricularCoursesGroupedByDegree().get(degree);
 
@@ -41,10 +37,10 @@ public class ComputeExecutionCourseStatistics extends ComputeCourseStatistics {
         for (ExecutionCourse executionCourse : executionCourses) {
             ExecutionCourseStatisticsDTO executionCourseStatistics = new ExecutionCourseStatisticsDTO();
             executionCourseStatistics.setExternalId(competenceCourse.getExternalId());
-            executionCourseStatistics.setName(competenceCourse.getName());
+            executionCourseStatistics.setName(competenceCourse.getNameI18N(executionSemester).getContent());
 
             executionCourseStatistics.setExecutionPeriod(executionCourse.getExecutionPeriod().getName());
-            executionCourseStatistics.setTeacher(getResponsibleTeacherName(executionCourse));
+            executionCourseStatistics.setTeachers(getResponsibleTeachersName(executionCourse));
             executionCourseStatistics.setExecutionYear(executionCourse.getExecutionPeriod().getExecutionYear().getYear());
             executionCourseStatistics.setDegrees(getDegrees(executionCourse));
 
@@ -56,14 +52,15 @@ public class ComputeExecutionCourseStatistics extends ComputeCourseStatistics {
         return results;
     }
 
-    private String getResponsibleTeacherName(ExecutionCourse executionCourse) {
+    private List<String> getResponsibleTeachersName(ExecutionCourse executionCourse) {
+        List<String> result = new ArrayList<String>();
         for (Professorship professorship : executionCourse.getProfessorships()) {
             if (professorship.getResponsibleFor().booleanValue()) {
-                return professorship.getPerson().getName();
+                result.add(professorship.getPerson().getName());
             }
         }
 
-        return "";
+        return result;
     }
 
     private List<String> getDegrees(ExecutionCourse executionCourse) {
@@ -87,9 +84,9 @@ public class ComputeExecutionCourseStatistics extends ComputeCourseStatistics {
     private static final ComputeExecutionCourseStatistics serviceInstance = new ComputeExecutionCourseStatistics();
 
     @Atomic
-    public static List<ExecutionCourseStatisticsDTO> runComputeExecutionCourseStatistics(String competenceCourseId,
-            String degreeId, String executionPeriodId) throws FenixServiceException {
-        return serviceInstance.run(competenceCourseId, degreeId, executionPeriodId);
+    public static List<ExecutionCourseStatisticsDTO> runComputeExecutionCourseStatistics(CompetenceCourse competenceCourse,
+            Degree degree, ExecutionSemester executionSemester) throws FenixServiceException {
+        return serviceInstance.run(competenceCourse, degree, executionSemester);
     }
 
 }

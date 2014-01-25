@@ -541,42 +541,7 @@
 		</navigation-case>	
 	</navigation-rule>
 	
-	<!-- DEPARTMENT MEMBER Managed Beans -->
-	<managed-bean>
-		<description>Provides statistics with various degrees of granularity</description>
-		<managed-bean-name>courseStatistics</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.departmentMember.CourseStatistics</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-	<!-- END: DEPARTMENT MEMBER Managed Beans -->
-	
 	<!-- NAVIGATION RULES -->
-	
-	<navigation-rule>
-		<from-view-id>/departmentMember/courseStatistics/viewCompetenceCourses.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>viewDegreeCourses</from-outcome>
-			<to-view-id>/departmentMember/courseStatistics/viewDegreeCourses.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	<navigation-rule>
-		<from-view-id>/departmentMember/courseStatistics/viewDegreeCourses.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>viewExecutionCourses</from-outcome>
-			<to-view-id>/departmentMember/courseStatistics/viewExecutionCourses.jsp</to-view-id>
-		</navigation-case>
-		<navigation-case>
-			<from-outcome>backToCompetenceCourses</from-outcome>
-			<to-view-id>/departmentMember/courseStatistics/viewCompetenceCourses.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-	<navigation-rule>
-		<from-view-id>/departmentMember/courseStatistics/viewExecutionCourses.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>backToDegreeCourses</from-outcome>
-			<to-view-id>/departmentMember/courseStatistics/viewDegreeCourses.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
 
 	<navigation-rule>
 		<from-view-id>/manager/somePage.jsp</from-view-id>

@@ -1,12 +1,16 @@
 package net.sourceforge.fenixedu.dataTransferObject.department;
 
+import java.io.Serializable;
 import java.text.Collator;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.curriculum.IGrade;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-public abstract class CourseStatisticsDTO {
+public abstract class CourseStatisticsDTO implements Serializable, Comparable<CourseStatisticsDTO> {
+
+    private static final long serialVersionUID = 1L;
+
     private String externalId;
 
     private String name;
@@ -67,6 +71,10 @@ public abstract class CourseStatisticsDTO {
         return firstApprovedAverage;
     }
 
+    public String getFirstApprovedAveragex() {
+        return (firstApprovedCount != 0) ? firstApprovedAverage.getGradeValue().toString() : "n/a";
+    }
+
     public void setFirstApprovedAverage(IGrade firstApprovedAverage) {
         this.firstApprovedAverage = firstApprovedAverage;
     }
@@ -107,6 +115,10 @@ public abstract class CourseStatisticsDTO {
         return restApprovedAverage;
     }
 
+    public String getRestApprovedAveragex() {
+        return (restApprovedCount != 0) ? restApprovedAverage.getGradeValue().toString() : "n/a";
+    }
+
     public void setRestApprovedAverage(IGrade restApprovedAverage) {
         this.restApprovedAverage = restApprovedAverage;
     }
@@ -131,6 +143,10 @@ public abstract class CourseStatisticsDTO {
         return totalApprovedAverage;
     }
 
+    public String getTotalApprovedAveragex() {
+        return (totalApprovedCount != 0) ? totalApprovedAverage.getGradeValue().toString() : "n/a";
+    }
+
     public void setTotalApprovedAverage(IGrade totalApprovedAverage) {
         this.totalApprovedAverage = totalApprovedAverage;
     }
@@ -151,4 +167,18 @@ public abstract class CourseStatisticsDTO {
         this.totalEnrolledCount = totalEnrolledCount;
     }
 
+    public String getApprovedPercentage() {
+        if (totalEnrolledCount == 0) {
+            return "n/a";
+        }
+
+        String result = "";
+        result = String.format("%.2f%%", totalApprovedCount * 100.0 / totalEnrolledCount);
+        return result;
+    }
+
+    @Override
+    public int compareTo(CourseStatisticsDTO o) {
+        return Collator.getInstance(Language.getLocale()).compare(this.getName(), o.getName());
+    }
 }
