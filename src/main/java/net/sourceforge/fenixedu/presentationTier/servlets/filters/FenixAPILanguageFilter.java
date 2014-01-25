@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.servlets.filters;
 
 import java.io.IOException;
+import java.util.IllformedLocaleException;
 import java.util.Locale;
+import java.util.Locale.Builder;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -44,10 +46,13 @@ public class FenixAPILanguageFilter implements Filter {
             throws ServletException, IOException {
         final String localeTag = request.getParameter("lang");
         if (localeTag != null) {
-            final Locale locale = Locale.forLanguageTag(localeTag);
-            if (CoreConfiguration.supportedLocales().contains(locale)) {
-                I18N.setLocale(locale);
-                Language.setLocale(locale);
+            try {
+                final Locale locale = new Builder().setLanguageTag(localeTag).build();
+                if (CoreConfiguration.supportedLocales().contains(locale)) {
+                    I18N.setLocale(locale);
+                    Language.setLocale(locale);
+                }
+            } catch (IllformedLocaleException e) {
             }
         }
         chain.doFilter(request, response);
