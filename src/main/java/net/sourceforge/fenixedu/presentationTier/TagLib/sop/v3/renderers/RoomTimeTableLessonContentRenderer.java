@@ -16,6 +16,8 @@ import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContent
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
+
 /**
  * @author jpvl
  */
@@ -36,10 +38,7 @@ public class RoomTimeTableLessonContentRenderer extends LessonSlotContentRendere
             final Site site = infoExecutionCourse.getExecutionCourse().getSite();
 
             if (site.isPublic()) {
-                strBuffer
-                        .append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
-            } else {
-                strBuffer.append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
+                strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
             }
             strBuffer.append("<a href=\"").append(context);
             strBuffer.append(site.getReversePath());
@@ -60,10 +59,7 @@ public class RoomTimeTableLessonContentRenderer extends LessonSlotContentRendere
             final Site site = infoExecutionCourse.getExecutionCourse().getSite();
 
             if (site.isPublic()) {
-                strBuffer
-                        .append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
-            } else {
-                strBuffer.append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
+                strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
             }
             strBuffer.append("<a href=\"").append(context);
             strBuffer.append(site.getReversePath());

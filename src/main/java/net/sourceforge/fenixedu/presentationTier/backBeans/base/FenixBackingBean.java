@@ -19,6 +19,7 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class FenixBackingBean {
@@ -225,16 +226,12 @@ public class FenixBackingBean {
         return FacesContext.getCurrentInstance().getMessages().hasNext();
     }
 
-    public String getHasContextCommentString() {
-        return pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX;
-    }
-
     public String getContentContextPathAttributeName() {
         return ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME;
     }
 
-    public String getHasContextAndChecksumString() {
-        return pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX;
+    public String getHasChecksumString() {
+        return GenericChecksumRewriter.NO_CHECKSUM_PREFIX;
     }
 
     public String getInstalationUrl() {

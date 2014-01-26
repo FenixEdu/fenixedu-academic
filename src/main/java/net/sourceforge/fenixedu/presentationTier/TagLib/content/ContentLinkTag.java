@@ -10,6 +10,8 @@ import net.sourceforge.fenixedu.domain.contents.Content;
 
 import org.apache.struts.util.RequestUtils;
 
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
+
 public class ContentLinkTag extends BodyTagSupport {
 
     protected String body = null;
@@ -103,9 +105,7 @@ public class ContentLinkTag extends BodyTagSupport {
     protected void writeStartTag() throws IOException, JspException {
         final Content content = DefineContentPathTag.getContent(name, pageContext, getScope(), getProperty());
         if (content.isPublic()) {
-            write(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
-        } else {
-            write(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
+            write(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
         }
         write("<a href=\"");
         write(getContextPath());

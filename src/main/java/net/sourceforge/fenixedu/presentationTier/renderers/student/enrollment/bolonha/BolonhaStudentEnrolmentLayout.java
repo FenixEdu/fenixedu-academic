@@ -39,7 +39,6 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlCheckBox;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlLink;
-import pt.ist.fenixWebFramework.renderers.components.HtmlLinkWithPreprendedComment;
 import pt.ist.fenixWebFramework.renderers.components.HtmlMultipleHiddenField;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTable;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell;
@@ -292,9 +291,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
     }
 
     protected HtmlLink createDegreeCurricularPlanLink(final StudentCurriculumGroupBean studentCurriculumGroupBean) {
-        final HtmlLink degreeCurricularPlanLink =
-                new HtmlLinkWithPreprendedComment(
-                        pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
+        final HtmlLink degreeCurricularPlanLink = new HtmlLink();
         degreeCurricularPlanLink.setText(studentCurriculumGroupBean.getCurriculumModule().getName().getContent());
         degreeCurricularPlanLink.setModuleRelative(false);
         degreeCurricularPlanLink.setTarget("_blank");

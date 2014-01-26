@@ -11,6 +11,7 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,6 +25,7 @@ import org.slf4j.LoggerFactory;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
+@MultipartConfig
 @WebServlet(urlPatterns = "*.faces")
 public class FenixFacesServlet implements Servlet {
 

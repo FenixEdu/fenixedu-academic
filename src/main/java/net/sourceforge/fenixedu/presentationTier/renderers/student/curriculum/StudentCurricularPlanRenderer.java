@@ -47,7 +47,6 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlForm;
 import pt.ist.fenixWebFramework.renderers.components.HtmlImage;
 import pt.ist.fenixWebFramework.renderers.components.HtmlInlineContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlLink;
-import pt.ist.fenixWebFramework.renderers.components.HtmlLinkWithPreprendedComment;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTable;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableRow;
@@ -1109,9 +1108,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
                 return new HtmlText(degreeCurricularPlan.getName());
             }
 
-            final HtmlLink result =
-                    new HtmlLinkWithPreprendedComment(
-                            pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
+            final HtmlLink result = new HtmlLink();
 
             result.setText(degreeCurricularPlan.getName());
             result.setModuleRelative(false);
@@ -1177,9 +1174,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
         private HtmlLink createCurricularCourseLink(final String text, final CurricularCourse curricularCourse) {
 
-            final HtmlLink result =
-                    new HtmlLinkWithPreprendedComment(
-                            pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
+            final HtmlLink result = new HtmlLink();
             result.setBody(new HtmlText(text));
             result.setModuleRelative(false);
             result.setTarget(HtmlLink.Target.BLANK);

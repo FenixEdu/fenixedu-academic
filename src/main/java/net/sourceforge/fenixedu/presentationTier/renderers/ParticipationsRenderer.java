@@ -20,6 +20,7 @@ import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.ist.fenixWebFramework.renderers.schemas.Schema;
 import pt.ist.fenixWebFramework.renderers.utils.RenderKit;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 
 /**
  * This renderer provides a way of presenting a list of
@@ -207,10 +208,7 @@ public class ParticipationsRenderer extends OutputRenderer {
             if (!person.isHomePageAvailable()) {
                 component = personComponent;
             } else {
-                HtmlLink link =
-                        iscontextAvailable() ? new HtmlLinkWithPreprendedComment(
-                                pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX) : new HtmlLinkWithPreprendedComment(
-                                pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
+                HtmlLink link = new HtmlLinkWithPreprendedComment(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
 
                 link.setTarget(Target.BLANK);
                 link.setModuleRelative(isModuleRelative());

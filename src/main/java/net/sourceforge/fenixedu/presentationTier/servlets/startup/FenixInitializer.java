@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.domain.person.PersonNamePart;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.externalServices.PhoneValidationUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.util.ExceptionInformation;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
@@ -48,9 +47,6 @@ import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumFilter;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumFilter.ChecksumPredicate;
-import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter;
-import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriterFilter;
-import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriterFilter.RequestRewriterFactory;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 import pt.ist.fenixframework.plugins.remote.domain.RemoteSystem;
@@ -91,7 +87,6 @@ public class FenixInitializer implements ServletContextListener {
         startContactValidationServices();
 
         registerChecksumFilterRules();
-        registerContentInjectionRewriter();
         registerUncaughtExceptionHandler();
 
         initializeFenixAPI();
@@ -284,15 +279,6 @@ public class FenixInitializer implements ServletContextListener {
 
             private FilterFunctionalityContext getContextAttibute(final HttpServletRequest httpServletRequest) {
                 return (FilterFunctionalityContext) httpServletRequest.getAttribute(FunctionalityContext.CONTEXT_KEY);
-            }
-        });
-    }
-
-    private void registerContentInjectionRewriter() {
-        RequestRewriterFilter.registerRequestRewriter(new RequestRewriterFactory() {
-            @Override
-            public RequestRewriter createRequestRewriter(HttpServletRequest request) {
-                return new ContentInjectionRewriter(request);
             }
         });
     }

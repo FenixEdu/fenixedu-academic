@@ -34,18 +34,6 @@
 	    <filter-class>pt.ist.fenixWebFramework.servlets.filters.RequestIgnorerFilter</filter-class>
 	</filter>
 	<filter>
-	    <filter-name>MultipartFilter</filter-name>
-	    <filter-class>org.apache.myfaces.component.html.util.MultipartFilter</filter-class>
-		<init-param>
-			<param-name>uploadMaxFileSize</param-name>
-			<param-value>10m</param-value>
-		</init-param>
-		<init-param>
-			<param-name>uploadThresholdSize</param-name>
-			<param-value>1m</param-value>
-		</init-param>
-	</filter>
-	<filter>
 	    <filter-name>RequestWrapperFilter</filter-name>
 	    <filter-class>pt.ist.fenixWebFramework.servlets.filters.RequestWrapperFilter</filter-class>
 	</filter>
@@ -160,10 +148,6 @@
     	<filter-name>StaticCacheFilter</filter-name>
     	<url-pattern>/*</url-pattern>
     </filter-mapping>
-	<filter-mapping>
-		<filter-name>MultipartFilter</filter-name>
-		<url-pattern>*.faces</url-pattern>
-	</filter-mapping>
     <filter-mapping>
         <filter-name>ExceptionHandlerFilter</filter-name>
         <url-pattern>*.faces</url-pattern>
@@ -233,10 +217,6 @@
     <filter-mapping>
         <filter-name>RequestChecksumFilter</filter-name>
         <url-pattern>*.faces</url-pattern>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>RequestChecksumFilter</filter-name>
-        <url-pattern>*.jsp</url-pattern>
     </filter-mapping>
     <filter-mapping>
     	<filter-name>FenixAPILanguageFilter</filter-name>

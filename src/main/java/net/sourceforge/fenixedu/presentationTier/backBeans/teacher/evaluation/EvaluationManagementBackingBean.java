@@ -24,8 +24,10 @@ import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
+import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
@@ -71,9 +73,6 @@ import net.sourceforge.fenixedu.util.Season;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.myfaces.component.html.util.MultipartRequestWrapper;
 import org.apache.struts.util.MessageResources;
 
 import pt.ist.fenixframework.Atomic;
@@ -694,13 +693,11 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         this.marks = marks;
     }
 
-    public String loadMarks() throws FenixServiceException, FileUploadException {
+    public String loadMarks() throws FenixServiceException, ServletException, IOException {
         final HttpServletRequest httpServletRequest =
                 (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        final MultipartRequestWrapper multipartRequestWrapper =
-                (MultipartRequestWrapper) httpServletRequest.getAttribute("multipartRequestWrapper");
 
-        final FileItem fileItem = multipartRequestWrapper.getFileItem("theFile");
+        final Part fileItem = httpServletRequest.getPart("theFile");
         InputStream inputStream = null;
         try {
             inputStream = fileItem.getInputStream();

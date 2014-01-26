@@ -66,7 +66,7 @@ public class ContextBreadCrumRenderer extends OutputRenderer {
                 }
 
                 if (targetContent.isAvailable()) {
-                    final String prefix = GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX;
+                    final String prefix = GenericChecksumRewriter.NO_CHECKSUM_PREFIX;
                     HtmlLink link = new HtmlLinkWithPreprendedComment(prefix);
 
                     HtmlInlineContainer container = new HtmlInlineContainer();

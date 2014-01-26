@@ -17,6 +17,7 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.ist.fenixWebFramework.renderers.schemas.Schema;
 import pt.ist.fenixWebFramework.renderers.utils.RenderKit;
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 
 /**
  * 
@@ -150,9 +151,8 @@ public class UnitSiteRenderer extends OutputRenderer {
         private HtmlComponent getUnitComponent(Unit unit, final boolean isPublic) {
             HtmlComponent component;
             if (unitHasSite(unit)) {
-                final String preapendedComment =
-                        isPublic ? pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX : pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX;
-                HtmlLink link = new HtmlLinkWithPreprendedComment(preapendedComment);
+                HtmlLink link =
+                        isPublic ? new HtmlLinkWithPreprendedComment(GenericChecksumRewriter.NO_CHECKSUM_PREFIX) : new HtmlLink();
 
                 link.setUrl(resolveUnitURL(unit));
                 link.setBody(renderValue(unit, findSchema(), getUnitLayout()));

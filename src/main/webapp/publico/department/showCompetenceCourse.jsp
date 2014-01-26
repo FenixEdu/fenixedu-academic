@@ -172,7 +172,7 @@
 			<h:outputText value="<div class='lfloat mbottom2'>" escape="false"/>
 			<h:outputText value="<p class='mvert0'>" escape="false"/>
 			<h:outputText value="<label>#{bolonhaBundle['title']}:</label>" escape="false"/>
-			<h:outputText value="#{CompetenceCourseManagement.hasContextAndChecksumString}" escape="false"/><h:outputText rendered="#{bibliographicReference.url != 'http://'}" value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a>" escape="false"/>
+			<h:outputText value="#{CompetenceCourseManagement.hasChecksumString}" escape="false"/><h:outputText rendered="#{bibliographicReference.url != 'http://'}" value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a>" escape="false"/>
 			<h:outputText rendered="#{bibliographicReference.url == 'http://'}" value="#{bibliographicReference.title}" escape="false"/>
 			<h:outputText value="</p>" escape="false"/>
 			
@@ -203,7 +203,7 @@
 			<h:outputText value="<div class='lfloat mbottom2'>" escape="false"/>
 			<h:outputText value="<p class='mvert0'>" escape="false"/>
 			<h:outputText value="<label>#{bolonhaBundle['title']}:</label>" escape="false"/>
-			<h:outputText value="#{CompetenceCourseManagement.hasContextAndChecksumString}" escape="false"/><h:outputText rendered="#{bibliographicReference.url != 'http://'}" value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a>" escape="false"/>
+			<h:outputText value="#{CompetenceCourseManagement.hasChecksumString}" escape="false"/><h:outputText rendered="#{bibliographicReference.url != 'http://'}" value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a>" escape="false"/>
 			<h:outputText rendered="#{bibliographicReference.url == 'http://'}" value="#{bibliographicReference.title}" escape="false"/>
 			<h:outputText value="</p>" escape="false"/>
 			

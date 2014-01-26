@@ -23,6 +23,7 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.ist.fenixWebFramework.renderers.utils.RenderKit;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 
 public class UnitStructureRenderer extends OutputRenderer {
 
@@ -462,9 +463,7 @@ public class UnitStructureRenderer extends OutputRenderer {
         HtmlComponent name = generatePersonName(person);
 
         if (person.isHomePageAvailable()) {
-            HtmlLink link =
-                    new HtmlLinkWithPreprendedComment(
-                            pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
+            HtmlLink link = new HtmlLinkWithPreprendedComment(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
             link.setUrl(String.format(getHomepageLocation(), person.getIstUsername()));
             link.setModuleRelative(false);
             link.setIndented(false);

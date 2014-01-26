@@ -232,7 +232,7 @@ public class MenuRenderer extends OutputRenderer {
         String path = entry.getPath();
         if (path != null && canMakeLink && entry.isAvailable()) {
             final Content content = entry.getReferingContent();
-            final String linkPrefix = GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX;
+            final String linkPrefix = GenericChecksumRewriter.NO_CHECKSUM_PREFIX;
             HtmlLink link = new HtmlLinkWithPreprendedComment(linkPrefix);
 
             link.setContextRelative(false);

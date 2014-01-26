@@ -18,6 +18,8 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.joda.time.LocalDate;
 
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
+
 /**
  * @author Ricardo Rodrigues
  * 
@@ -57,10 +59,7 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer extends LessonSlotCon
             strBuffer.append("<span class=\"float-left\">");
             // CONTENT / CHECKSUM prefixes have to be right before <a> tag
             if (site.isPublic()) {
-                strBuffer
-                        .append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
-            } else {
-                strBuffer.append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
+                strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
             }
             strBuffer.append("<a href=\"").append(context);
             strBuffer.append(site.getReversePath());
@@ -83,10 +82,7 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer extends LessonSlotCon
             strBuffer.append("<span class=\"float-left\">");
             // CONTENT / CHECKSUM prefixes have to be right before <a> tag
             if (site.isPublic()) {
-                strBuffer
-                        .append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
-            } else {
-                strBuffer.append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
+                strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
             }
             strBuffer.append("<a href=\"").append(context);
             strBuffer.append(site.getReversePath());
@@ -106,10 +102,7 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer extends LessonSlotCon
             strBuffer.append("<span class=\"float-left\">");
             // CONTENT / CHECKSUM prefixes have to be right before <a> tag
             if (site.isPublic()) {
-                strBuffer
-                        .append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
-            } else {
-                strBuffer.append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
+                strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
             }
             strBuffer.append("<a href=\"").append(context);
             strBuffer.append(site.getReversePath());

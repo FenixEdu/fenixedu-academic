@@ -26,6 +26,7 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlList;
 import pt.ist.fenixWebFramework.renderers.components.HtmlListItem;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -212,9 +213,8 @@ public class SiteMenuRenderer extends OutputRenderer {
             private HtmlLink generateLink(FilterFunctionalityContext context, Content content, final HtmlComponent body,
                     final boolean isPublic, Integer depth) {
                 final String url = getPath(context, content);
-                final String preapendedComment =
-                        isPublic ? pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX : pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX;
-                HtmlLink link = new HtmlLinkWithPreprendedComment(preapendedComment);
+                HtmlLink link =
+                        isPublic ? new HtmlLinkWithPreprendedComment(GenericChecksumRewriter.NO_CHECKSUM_PREFIX) : new HtmlLink();
 
                 link.setContextRelative(false);
                 link.setUrl(url);
