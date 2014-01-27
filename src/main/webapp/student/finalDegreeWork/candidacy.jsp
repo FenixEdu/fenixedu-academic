@@ -113,8 +113,8 @@
 					<% } %>
 				</li>
 			</ul>
-			<!-- HAS_CONTEXT --><html:link href="<%= request.getContextPath()
-					+ "/publico/finalDegreeWorks.do?method=search&" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/student")
+			<html:link href="<%= request.getContextPath()
+					+ "/publico/finalDegreeWorks.do?method=search"
 					+ "&amp;executionYearOID=" + executionDegree.getExecutionYear().getExternalId()
 					+ "&amp;executionDegreeOID=" + executionDegree.getExternalId() %>"
 					target="blank">

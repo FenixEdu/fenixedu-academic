@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.PendingRequestParameter;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson;
 import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.inquiries.RegentInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.TeacherInquiryTemplate;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -28,7 +29,6 @@ import net.sourceforge.fenixedu.domain.teacher.ReductionService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.LoginRedirectAction;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.util.HostAccessControl;
 
 import org.apache.struts.action.ActionForm;
@@ -279,9 +279,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
         HtmlLink link = new HtmlLink();
         link.setModule("/departmentMember");
         link.setUrl("/credits.do?method=viewAnnualTeachingCredits&teacherOid=" + teacherOid + "&executionYearOid="
-                + executionYearOid + "&"
-                + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
-                + "=/departamento/departamento");
+                + executionYearOid);
         link.setEscapeAmpersand(false);
         String calculatedUrl = link.calculateUrl();
         return new ActionForward(
@@ -289,9 +287,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
                         + teacherOid
                         + "&executionYearOid="
                         + executionYearOid
-                        + "&"
-                        + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
-                        + "=/departamento/departamento&_request_checksum_="
+                        + "&_request_checksum_="
                         + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
                                 .calculateChecksum(calculatedUrl),
                 true);
@@ -304,20 +300,13 @@ public abstract class BaseAuthenticationAction extends FenixAction {
         final FunctionalityContext context = new FunctionalityContext(request, contents);
         request.setAttribute(FunctionalityContext.CONTEXT_KEY, context);
 
-        String teacherOid = userView.getPerson().getTeacher().getExternalId();
-        String executionYearOid = ExecutionYear.readCurrentExecutionYear().getExternalId();
-
         HtmlLink link = new HtmlLink();
         link.setModule("/departmentMember");
-        link.setUrl("/creditsReductions.do?method=showReductionServices&"
-                + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
-                + "=/departamento/departamento");
+        link.setUrl("/creditsReductions.do?method=showReductionServices");
         link.setEscapeAmpersand(false);
         String calculatedUrl = link.calculateUrl();
         return new ActionForward(
-                "/departmentMember/creditsReductions.do?method=showReductionServices&"
-                        + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
-                        + "=/departamento/departamento&_request_checksum_="
+                "/departmentMember/creditsReductions.do?method=showReductionServices&_request_checksum_="
                         + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
                                 .calculateChecksum(calculatedUrl),
                 true);
@@ -332,15 +321,12 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 
         HtmlLink link = new HtmlLink();
         link.setModule("/student");
-        link.setUrl("/editMissingCandidacyInformation.do?method=prepareEdit&"
-                + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
-                + "=/estudante/estudante");
+        link.setUrl("/editMissingCandidacyInformation.do?method=prepareEdit");
         link.setEscapeAmpersand(false);
         String calculatedUrl = link.calculateUrl();
         return new ActionForward(
                 "/student/editMissingCandidacyInformation.do?method=prepareEdit&"
-                        + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
-                        + "=/estudante/estudante&_request_checksum_="
+                        + "_request_checksum_="
                         + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
                                 .calculateChecksum(calculatedUrl),
                 true);

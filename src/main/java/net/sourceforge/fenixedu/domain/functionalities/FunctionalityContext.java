@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.contents.InvalidContentPathException;
 import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.domain.contents.Portal;
 import net.sourceforge.fenixedu.domain.contents.Redirect;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 
@@ -224,12 +223,7 @@ public final class FunctionalityContext {
     }
 
     private String getCurrentContextPathFromRequest() {
-        final HttpServletRequest httpServletRequest = getRequest();
-        String currentContextPath = httpServletRequest.getParameter(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
-        if (currentContextPath == null || currentContextPath.length() == 0) {
-            currentContextPath = (String) httpServletRequest.getAttribute(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
-        }
-        return currentContextPath == null || currentContextPath.length() == 0 ? null : currentContextPath;
+        throw new UnsupportedOperationException("Request is no more!");
     }
 
     public String getCurrentContextPath() {
@@ -264,11 +258,6 @@ public final class FunctionalityContext {
     }
 
     public void setHasBeenForwarded() {
-    }
-
-    public void addContent(Content content) {
-        contents.add(content);
-        findSelectedContainerPath();
     }
 
     public void addAllContent(List<Content> contents) {

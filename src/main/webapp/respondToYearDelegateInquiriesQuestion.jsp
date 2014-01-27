@@ -31,7 +31,6 @@
 						<td>
 							<form method="post" action="<%= request.getContextPath() %>/respondToYearDelegateInquiriesQuestion.do">
 								<html:hidden property="method" value="respondNow"/>
-								<html:hidden property="<%=net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME%>" value="/delegado/delegado"/>
 								<html:submit bundle="HTMLALT_RESOURCES" altKey="inquiries.respond.now" property="ok">
 									<bean:message key="button.inquiries.respond.now" />
 								</html:submit>
@@ -40,7 +39,6 @@
 						<td>
 							<form method="post" action="<%= request.getContextPath() %>/respondToYearDelegateInquiriesQuestion.do">
 								<html:hidden property="method" value="respondLater"/>
-								<html:hidden property="<%=net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME%>" value="/comunicacao/comunicacao"/>
 									<html:submit bundle="HTMLALT_RESOURCES" altKey="inquiries.respond.later" property="ok">
 										<bean:message key="button.inquiries.respond.later" />
 									</html:submit>

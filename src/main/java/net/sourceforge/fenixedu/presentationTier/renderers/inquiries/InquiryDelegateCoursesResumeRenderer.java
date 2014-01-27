@@ -44,9 +44,7 @@ public class InquiryDelegateCoursesResumeRenderer extends InquiryBlocksResumeRen
         String resultsParameters = buildParametersForResults(courseResumeResult);
 
         HtmlLink link = new HtmlLink();
-        link.setUrl("/delegateInquiry.do?" + resultsParameters + "&method=viewCourseInquiryResults&"
-                + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
-                + "=/delegado/delegado");
+        link.setUrl("/delegateInquiry.do?" + resultsParameters + "&method=viewCourseInquiryResults");
         link.setEscapeAmpersand(false);
 
         HtmlMenu menu = new HtmlMenu();
@@ -64,9 +62,7 @@ public class InquiryDelegateCoursesResumeRenderer extends InquiryBlocksResumeRen
             String teacherResultsParameters = buildParametersForTeacherResults(teacherShiftTypeResultsBean);
             HtmlLink teacherLink = new HtmlLink();
             teacherLink.setEscapeAmpersand(false);
-            teacherLink.setUrl("/delegateInquiry.do?" + teacherResultsParameters + "&method=viewTeacherShiftTypeInquiryResults&"
-                    + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
-                    + "=/delegado/delegado");
+            teacherLink.setUrl("/delegateInquiry.do?" + teacherResultsParameters + "&method=viewTeacherShiftTypeInquiryResults");
             calculatedUrl = teacherLink.calculateUrl();
 
             HtmlMenuOption optionTeacher =

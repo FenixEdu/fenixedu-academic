@@ -53,8 +53,6 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.EvaluationManagementBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.Season;
@@ -1238,10 +1236,6 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                 stringBuilder.append(DateFormatUtil.format("HH:mm", this.getEnd().getTime()));
             }
             stringBuilder.append("&academicInterval=").append(academicInterval);
-            stringBuilder.append("&");
-            stringBuilder.append(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
-            stringBuilder.append("=");
-            stringBuilder.append(FunctionalityContext.getCurrentContext(getRequest()).getCurrentContextPath());
             String url = stringBuilder.toString();
 
             String checksum =

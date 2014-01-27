@@ -2,7 +2,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %><%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 <html:xhtml/>
 
 <bean:define id="institutionUrl" type="java.lang.String"><%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %></bean:define>
@@ -63,13 +62,13 @@
 	<!-- TOP LINKS -->
 	<logic:equal value="true" name="renderCurrentExecutionPeriod">
 		<logic:equal value="true" name="renderPreviousExecutionPeriod">
-			<li><!-- NO_CHECKSUM --><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><a href="#currentSem">
+			<li><!-- NO_CHECKSUM --><a href="#currentSem">
 					<bean:write name="execution_period" property="infoExecutionYear.year" />,
 					<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.semester.abbr" />
 					<bean:write name="execution_period" property="semester"/>
 				</a>
 			</li>
-			<li><!-- NO_CHECKSUM --><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><a href="#otherSem">
+			<li><!-- NO_CHECKSUM --><a href="#otherSem">
 					<bean:write name="previousInfoExecutionPeriod" property="infoExecutionYear.year" />,
 					<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.semester.abbr" />
 					<bean:write name="previousInfoExecutionPeriod" property="semester"/>

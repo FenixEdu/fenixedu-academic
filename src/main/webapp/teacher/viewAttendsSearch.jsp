@@ -33,9 +33,9 @@
 		<h3> <bean:write name="size"/>
 			<bean:message key="message.attendingStudents"/> </h3>
 	
-		<fr:form id="sendMailForm" action="<%="/searchECAttends.do?method=sendEmail&" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/messaging")%>">
+		<fr:form id="sendMailForm" action="/searchECAttends.do?method=sendEmail">
 			<fr:edit name="searchBean" id="mailViewState" visible="false"/>
-			<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><a href="javascript:document.getElementById('sendMailForm').submit()"><bean:message key="link.sendEmailToAllStudents"/></a>
+			<a href="javascript:document.getElementById('sendMailForm').submit()"><bean:message key="link.sendEmailToAllStudents"/></a>
 		</fr:form>
 		
 		<fr:form id="downloadStudentListForm" action="/getTabSeparatedStudentList.do">

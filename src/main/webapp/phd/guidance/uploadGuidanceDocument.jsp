@@ -1,6 +1,5 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean" %>
 <%@page import="pt.ist.fenixWebFramework.renderers.validators.FileValidator" %>
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.phd.guidance.provider.PhdGuidanceDocumentTypeProvider" %>

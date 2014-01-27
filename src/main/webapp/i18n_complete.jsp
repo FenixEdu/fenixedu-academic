@@ -10,11 +10,10 @@
 <%@page import="pt.utl.ist.fenix.tools.util.i18n.Language"%><html:xhtml/>
 
 <div id="version">
-	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.BLOCK_HAS_CONTEXT_PREFIX %>
 		<%
 			final RequestReconstructor requestReconstructor = (RequestReconstructor) request.getAttribute("requestReconstructor");
 		%>
-		<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><form method="post" action="<%= requestReconstructor.getUrl().toString().replace('<', '_').replace('>', '_').replace('"', '_') %>">
+		<form method="post" action="<%= requestReconstructor.getUrl().toString().replace('<', '_').replace('>', '_').replace('"', '_') %>">
 			<%
 				for (Pair entry : requestReconstructor.getAttributes()) {
     				String key = (String) entry.getKey();
@@ -33,5 +32,4 @@
 		 		</logic:iterate>
 			</html:select>
 		</form>
-	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.END_BLOCK_HAS_CONTEXT_PREFIX %>
 </div>

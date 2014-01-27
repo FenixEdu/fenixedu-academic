@@ -31,7 +31,6 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
@@ -1113,8 +1112,6 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
             result.setText(degreeCurricularPlan.getName());
             result.setModuleRelative(false);
             result.setTarget("_blank");
-            result.setParameter(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME, degreeCurricularPlan.getDegree().getSite()
-                    .getReversePath());
 
             if (degreeCurricularPlan.isBoxStructure()) {
                 result.setUrl("/publico/degreeSite/showDegreeCurricularPlanBolonha.faces");
@@ -1182,8 +1179,6 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
             result.setParameter("degreeID", curricularCourse.getDegreeCurricularPlan().getDegree().getExternalId());
             result.setParameter("curricularCourseID", curricularCourse.getExternalId());
             result.setParameter("degreeCurricularPlanID", curricularCourse.getDegreeCurricularPlan().getExternalId());
-            result.setParameter(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME, "cursos/"
-                    + curricularCourse.getDegree().getSigla() + "/plano-curricular");
 
             if (curricularCourse.isBolonhaDegree()) {
                 result.setParameter("organizeBy", "groups");

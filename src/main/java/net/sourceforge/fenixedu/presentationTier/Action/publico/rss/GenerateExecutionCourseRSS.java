@@ -1,13 +1,11 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico.rss;
 
 import java.net.URL;
-import java.util.Collection;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import pt.ist.fenixframework.DomainObject;
 import pt.ist.fenixframework.FenixFramework;
@@ -33,10 +31,9 @@ public abstract class GenerateExecutionCourseRSS extends InformaRSSAction {
             final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
             final String commonLocalUrl =
                     context + "/publico/executionCourse.do?method=" + getMethodName() + "&executionCourseID="
-                            + executionCourse.getExternalId().toString() + "&" + ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
-                            + "=" + executionCourse.getSite().getReversePath() + "#";
+                            + executionCourse.getExternalId().toString() + "#";
 
-            for (final DomainObject domainObject : ((Collection<DomainObject>) getObjects(executionCourse))) {
+            for (final DomainObject domainObject : getObjects(executionCourse)) {
                 final ItemIF item = new Item();
                 fillItem(item, domainObject);
                 item.setGuid(getItemGuidIF(item, domainObject));
@@ -54,7 +51,7 @@ public abstract class GenerateExecutionCourseRSS extends InformaRSSAction {
 
     public abstract String getMethodName();
 
-    public abstract Set getObjects(final ExecutionCourse executionCourse);
+    public abstract Set<DomainObject> getObjects(final ExecutionCourse executionCourse);
 
     public abstract void fillItem(final ItemIF item, final DomainObject domainObject);
 

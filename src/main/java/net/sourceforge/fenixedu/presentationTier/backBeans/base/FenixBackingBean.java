@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.Instalation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.UIViewState;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -224,10 +223,6 @@ public class FenixBackingBean {
 
     public boolean isMessagesEmpty() {
         return FacesContext.getCurrentInstance().getMessages().hasNext();
-    }
-
-    public String getContentContextPathAttributeName() {
-        return ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME;
     }
 
     public String getHasChecksumString() {

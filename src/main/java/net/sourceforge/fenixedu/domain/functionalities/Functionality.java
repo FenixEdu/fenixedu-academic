@@ -672,16 +672,6 @@ public class Functionality extends Functionality_Base implements IFunctionality 
     // FunctionalityContext
     //
 
-    private static ThreadLocal<FunctionalityContext> CURRENT_CONTEXT = new ThreadLocal<FunctionalityContext>();
-
-    public static void setCurrentContext(FunctionalityContext context) {
-        Functionality.CURRENT_CONTEXT.set(context);
-    }
-
-    public static FunctionalityContext getCurrentContext() {
-        return Functionality.CURRENT_CONTEXT.get();
-    }
-
     public static Functionality findByExecutionPath(final String executionPathValue) {
         int endIndex = executionPathValue.indexOf('?');
         int firstIndex =

@@ -5,8 +5,6 @@
 
 <%@ page
 	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
-<%@page
-	import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 <%@page import="net.sourceforge.fenixedu.domain.person.RoleType"%>
 <html:xhtml />
 

@@ -122,10 +122,7 @@ public class SetEmailDA extends FenixDispatchAction {
             final String url =
                     contextPath
                             + "/publico/regenerateDocuments.do?method=doOperation&operationType=PRINT_ALL_DOCUMENTS&candidacyID="
-                            + candidacyId
-                            + "&"
-                            + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
-                            + "=/candidaturas";
+                            + candidacyId;
 
             final GetMethod method = new GetMethod(url);
             method.setFollowRedirects(false);

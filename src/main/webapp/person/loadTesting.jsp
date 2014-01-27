@@ -8,7 +8,6 @@
 <html:html xhtml="true"/>
 
 <%@page import="pt.ist.fenixframework.FenixFramework"%>
-<%@page import="pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter"%>
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl" %>
 <%@page import="net.sourceforge.fenixedu.domain.Person" %>
 
@@ -18,12 +17,11 @@
 
 <% Degree degree = (Degree) FenixFramework.getDomainObject((String)request.getAttribute("degreeOID")); %>
 
-<%= RequestRewriter.HAS_CONTEXT_PREFIX %><a id="viewRandom" href="<%= request.getContextPath()
+<a id="viewRandom" href="<%= request.getContextPath()
 							+ "/publico/degreeSite/showDegreeCurricularPlanBolonha.faces?degreeID=" + request.getAttribute("degreeID")
 							+ "&degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() 
 							+ "&executionPeriodOID=" + request.getAttribute("executionPeriodOID")
-							+ "&organizeBy=groups&showRules=false&hideCourses=false"
-							+ "&" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=/cursos/" + degree.getSigla() + "/plano-curricular"%>" >
+							+ "&organizeBy=groups&showRules=false&hideCourses=false" %>" >
 	View a Random Degree Curricular Plan
 </a>
 

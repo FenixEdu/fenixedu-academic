@@ -70,7 +70,7 @@ public class ExternalAppsDA extends FenixDispatchAction {
         Person person = getLoggedPerson(request);
         if (person.hasRole(RoleType.MANAGER)) {
             JerseyOAuth2Filter.toggleAllowIstIds();
-            return redirect("/externalApps.do?method=manageApplications", request, true);
+            return redirect("/externalApps.do?method=manageApplications", request);
         } else {
             throw new ServletException("no.permissions");
         }
@@ -179,7 +179,7 @@ public class ExternalAppsDA extends FenixDispatchAction {
 
         application.setDeleted();
 
-        return redirect("/externalApps.do?method=viewAllApplications", request, true);
+        return redirect("/externalApps.do?method=viewAllApplications", request);
 
     }
 
@@ -190,7 +190,7 @@ public class ExternalAppsDA extends FenixDispatchAction {
 
         application.setBanned();
 
-        return redirect("/externalApps.do?method=viewAllApplications", request, true);
+        return redirect("/externalApps.do?method=viewAllApplications", request);
 
     }
 
@@ -201,7 +201,7 @@ public class ExternalAppsDA extends FenixDispatchAction {
 
         application.setActive();
 
-        return redirect("/externalApps.do?method=viewAllApplications", request, true);
+        return redirect("/externalApps.do?method=viewAllApplications", request);
 
     }
 
@@ -281,7 +281,7 @@ public class ExternalAppsDA extends FenixDispatchAction {
         }
 
         if (authSessions == null) {
-            return redirect("/externalApps.do?method=manageAuthorizations", request, true);
+            return redirect("/externalApps.do?method=manageAuthorizations", request);
         } else {
             request.setAttribute("logo", Base64.encodeBase64String(app.getLogo()));
             request.setAttribute("authorizations", authSessions);
@@ -305,7 +305,7 @@ public class ExternalAppsDA extends FenixDispatchAction {
     public ActionForward createApplication(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         RenderUtils.invalidateViewState();
-        return redirect("/externalApps.do?method=manageApplications", request, true);
+        return redirect("/externalApps.do?method=manageApplications", request);
     }
 
     public ActionForward prepareCreateApplication(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -352,7 +352,7 @@ public class ExternalAppsDA extends FenixDispatchAction {
         if ("on".equals(agreedServiceAgreement)) {
             addDeveloperRole(getUser());
         }
-        return redirect("/externalApps.do?method=manageApplications", request, true);
+        return redirect("/externalApps.do?method=manageApplications", request);
     }
 
     @Atomic(mode = TxMode.WRITE)

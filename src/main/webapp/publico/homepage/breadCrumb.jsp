@@ -6,7 +6,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
 
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 <html:xhtml/>
 
 <bean:define id="homepage" name="<%= FunctionalityContext.CONTEXT_KEY %>" property="selectedContainer" toScope="request"/>
@@ -26,7 +25,6 @@
         
         	
             <div class="breadcumbs mvert0">
-                <%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.BLOCK_HAS_CONTEXT_PREFIX %>
                 <html:link href="<%= institutionUrl %>">
                     <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>
                 </html:link>
@@ -35,7 +33,6 @@
                     <bean:message bundle="PUBLIC_DEPARTMENT_RESOURCES" key="structure"/>
                 </html:link>
                 &nbsp;&gt;&nbsp;
-                <%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.END_BLOCK_HAS_CONTEXT_PREFIX %>
                 <html:link page="/publico/department/showDepartments.faces" module="">
                     <bean:message bundle="PUBLIC_DEPARTMENT_RESOURCES" key="academic.units"/>
                 </html:link>

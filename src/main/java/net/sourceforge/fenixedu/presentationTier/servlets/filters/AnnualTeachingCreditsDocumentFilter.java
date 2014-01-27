@@ -120,10 +120,7 @@ public class AnnualTeachingCreditsDocumentFilter implements Filter {
     }
 
     private String buildRedirectURL(HttpServletRequest request) {
-        String url =
-                "/scientificCouncil/defineCreditsPeriods.do?method=showPeriods&"
-                        + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
-                        + "=/conselho-cientifico/conselho-cientifico";
+        String url = "/scientificCouncil/defineCreditsPeriods.do?method=showPeriods";
 
         String urlWithChecksum =
                 pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.injectChecksumInUrl(

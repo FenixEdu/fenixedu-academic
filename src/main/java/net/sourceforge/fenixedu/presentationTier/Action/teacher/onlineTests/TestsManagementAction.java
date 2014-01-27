@@ -70,8 +70,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.util.tests.CardinalityType;
 import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
 import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
@@ -659,15 +657,10 @@ public class TestsManagementAction extends FenixDispatchAction {
         actionForward.setRedirect(true);
         final String path =
                 request.getContextPath() + "/teacher/testDistribution.do?method=showDistributedTests&amp;objectCode="
-                        + objectCode + "&" + ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "="
-                        + FunctionalityContext.getCurrentContext(request).getCurrentContextPath();
+                        + objectCode;
         final String requestPath =
                 "/testDistribution.do?method=showDistributedTests&objectCode="
                         + objectCode
-                        + "&"
-                        + ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
-                        + "="
-                        + FunctionalityContext.getCurrentContext(request).getCurrentContextPath()
                         + "&_request_checksum_="
                         + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
                                 .calculateChecksum(path);

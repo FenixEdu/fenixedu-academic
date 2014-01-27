@@ -79,7 +79,7 @@
 			</li>
 		</logic:equal>
         <li>
-            <%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><html:link page="<%="/sendEmail.do?method=sendEmail&amp;" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/messaging") + "&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString() %>">
+            <html:link page="<%="/sendEmail.do?method=sendEmail&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString() %>">
                 <bean:message key="link.coordinator.sendMail" />
             </html:link>
         </li>
@@ -212,7 +212,7 @@
 				<bean:message key="label.coordinator.degreeSite.tutorship" />
 			</li>
 			<li>
-				<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><html:link href="<%= request.getContextPath() + "/tutorado" %>" target="_blank">
+				<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><html:link href="<%= request.getContextPath() + "/tutorado" %>" target="_blank">
                     <bean:message key="link.coordinator.gepTutorshipPage" />
 	            </html:link>
 			</li>

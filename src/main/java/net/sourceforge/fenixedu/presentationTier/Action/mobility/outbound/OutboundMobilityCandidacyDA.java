@@ -179,11 +179,6 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
     }
 
     private String constructRedirectPath(final ActionMapping mapping, final HttpServletRequest request, final StringBuilder path) {
-        path.append('&');
-        path.append(net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
-        path.append('=');
-        path.append(getFromRequest(request,
-                net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME));
         final String result = GenericChecksumRewriter.injectChecksumInUrl(request.getContextPath(), path.toString());
         return result.substring(mapping.getModuleConfig().getPrefix().length());
     }

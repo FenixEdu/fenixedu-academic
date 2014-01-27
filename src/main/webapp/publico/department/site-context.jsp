@@ -5,7 +5,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 <bean:define id="announcementActionVariable" value="/department/announcements.do" toScope="request"/>
 <bean:define id="eventActionVariable" value="/department/events.do" toScope="request"/>
 <bean:define id="announcementRSSActionVariable" value="/department/announcementsRSS.do" toScope="request"/>

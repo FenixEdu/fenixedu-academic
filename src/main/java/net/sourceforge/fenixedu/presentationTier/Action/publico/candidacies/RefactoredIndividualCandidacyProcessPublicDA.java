@@ -36,7 +36,6 @@ import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.IndividualCandidacyProcessDA;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -482,8 +481,6 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 
     private ActionForward forward(HttpServletRequest request, String windowLocation) {
         final ActionForward actionForward = new ActionForward();
-        String contextContextPath = request.getParameter(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
-        windowLocation = windowLocation + "&" + ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=" + contextContextPath;
         actionForward.setName(windowLocation);
         actionForward.setPath(windowLocation);
         actionForward.setRedirect(true);
@@ -649,10 +646,10 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 
         String institutionalURL = Instalation.getInstance().getInstituitionURL();
         if ("PT".equals(countryCode)) {
-            return redirect(institutionalURL + "pt/candidatos/candidaturas/", request, false);
+            return redirect(institutionalURL + "pt/candidatos/candidaturas/", request);
         }
 
-        return redirect(institutionalURL + "en/prospective-students/admissions/", request, false);
+        return redirect(institutionalURL + "en/prospective-students/admissions/", request);
     }
 
     static private String readCountryCode(final Locale locale) {

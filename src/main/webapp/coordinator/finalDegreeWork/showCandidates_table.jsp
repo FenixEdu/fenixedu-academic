@@ -1,7 +1,7 @@
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@page import="pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%><html:xhtml/>
+<html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
@@ -90,7 +90,7 @@ color: #0a3f72;
 								<bean:define id="studentNumber" name="student" property="registration.student.number"/>
 								<bean:define id="candidateNumber" name="candidate" property="registration.student.number"/>
 								<logic:notEqual name="candidateNumber" value="<%= "" + studentNumber %>">
-								<%--(<%= GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><a href="<%= "#" + studentNumber %>"></a>) --%>
+								<%--(<%= GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="<%= "#" + studentNumber %>"></a>) --%>
 								 (<bean:write name="studentNumber"/>)
 								</logic:notEqual>
 							</logic:iterate>

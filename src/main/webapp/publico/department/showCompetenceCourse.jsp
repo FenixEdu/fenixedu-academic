@@ -3,7 +3,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 <ft:tilesView locale="<%=request.getAttribute(org.apache.struts.Globals.LOCALE_KEY).toString()%>" definition="definition.public.department" attributeName="body-inline">
 	
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
@@ -75,15 +74,12 @@
 			
 			<h:outputText value=" > "/>
 								
-			<h:outputText value="<!-- BLOCK_HAS_CONTEXT -->" escape="false"/>
 			<h:outputLink value="#{CompetenceCourseManagement.contextPath}/publico/degreeSite/viewCurricularCourse.faces">
 				<h:outputText value="#{curricularCourse.oneFullName}" escape="false"/>
 				<f:param name="degreeID" value="#{curricularCourse.parentDegreeCurricularPlan.degree.externalId}"/>
 				<f:param name="degreeCurricularPlanID" value="#{curricularCourse.parentDegreeCurricularPlan.externalId}"/>
 				<f:param name="curricularCourseID" value="#{curricularCourse.externalId}"/>
-				<f:param name="#{CompetenceCourseManagement.contentContextPathAttributeName}" value="#{curricularCourse.parentDegreeCurricularPlan.degree.site.reversePath}"/>
 			</h:outputLink>
-			<h:outputText value="<!-- END_BLOCK_HAS_CONTEXT -->" escape="false"/>			
 			
 			<h:outputText value="</i></p>" escape="false"/>
 		</fc:dataRepeater>

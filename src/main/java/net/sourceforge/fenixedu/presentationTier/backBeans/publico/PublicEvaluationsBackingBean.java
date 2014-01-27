@@ -24,10 +24,9 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
+import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -56,8 +55,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
     private Degree degree;
 
     public String getDegreeID() {
-        FunctionalityContext context =
-                (FunctionalityContext) FunctionalityContext.getCurrentContext(getRequest());
+        FunctionalityContext context = FunctionalityContext.getCurrentContext(getRequest());
         final DegreeSite site = (DegreeSite) context.getSelectedContainer();
         if (site != null) {
             final Degree degree = site.getDegree();
@@ -285,7 +283,6 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
         final Map<String, String> linkParameters = new HashMap<String, String>();
         linkParameters.put("method", "evaluations");
         linkParameters.put("executionCourseID", executionCourse.getExternalId().toString());
-        linkParameters.put(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME, executionCourse.getSite().getReversePath());
         return linkParameters;
     }
 

@@ -27,12 +27,7 @@ public class ManagePersonFunctions extends FenixDispatchAction {
         personFunction.delete();
 
         final ActionForward actionForward =
-                new ActionForward(
-                        "/functionsManagement/listPersonFunctions.faces?personID="
-                                + person.getExternalId()
-                                + "&"
-                                + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
-                                + "=/conselho-cientifico/conselho-cientifico");
+                new ActionForward("/functionsManagement/listPersonFunctions.faces?personID=" + person.getExternalId());
         actionForward.setRedirect(false);
         return actionForward;
     }

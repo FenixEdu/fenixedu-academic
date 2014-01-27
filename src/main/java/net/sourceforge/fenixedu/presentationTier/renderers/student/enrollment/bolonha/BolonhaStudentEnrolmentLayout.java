@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.renderers.controllers.CopyCheckBoxValuesController;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 
 import org.apache.commons.lang.StringUtils;
@@ -298,8 +297,6 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         degreeCurricularPlanLink.setUrl("/publico/degreeSite/showDegreeCurricularPlanBolonha.faces");
 
         final StudentCurricularPlan studentCurricularPlan = getBolonhaStudentEnrollmentBean().getStudentCurricularPlan();
-        degreeCurricularPlanLink.setParameter(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME, studentCurricularPlan.getDegree()
-                .getSite().getReversePath());
         degreeCurricularPlanLink.setParameter("organizeBy", "groups");
         degreeCurricularPlanLink.setParameter("showRules", "false");
         degreeCurricularPlanLink.setParameter("hideCourses", "false");

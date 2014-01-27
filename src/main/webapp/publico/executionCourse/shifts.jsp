@@ -3,7 +3,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt" %>
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 <html:xhtml/>
 
 <h2>
@@ -97,7 +96,7 @@
 				<td>
 				    <logic:notEmpty name="lesson" property="roomOccupation">
 				    	<bean:define id="url"><%= request.getContextPath() %>/publico/siteViewer.do?method=roomViewer&amp;roomName=<bean:write name="lesson" property="roomOccupation.room.name"/>&amp;objectCode=<bean:write name="executionCourse" property="externalId"/>&amp;executionPeriodOID=<bean:write name="executionCourse" property="executionPeriod.externalId"/></bean:define>
-						<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><a href="<%= url %>"><bean:write name="lesson" property="roomOccupation.room.name"/></a>
+						<a href="<%= url %>"><bean:write name="lesson" property="roomOccupation.room.name"/></a>
 					</logic:notEmpty>
 				</td>
 			</tr>

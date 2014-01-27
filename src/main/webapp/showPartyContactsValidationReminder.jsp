@@ -45,7 +45,7 @@
 				<table>
 					<tr>
 						<td>
-							<fr:form action="<%="/person/visualizePersonalInfo.do?" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/person") + "#pendingContacts"%>">
+							<fr:form action="/person/visualizePersonalInfo.do#pendingContacts">
 								<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="APPLICATION_RESOURCES" key="label.proceed"/></html:submit>
 							</fr:form>
 						</td>

@@ -34,14 +34,10 @@ public class RespondToFirstTimeCycleInquiry extends FenixDispatchAction {
 
     public final ActionForward respondNow(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        final String path =
-                "/student/studentCycleInquiry.do?method=prepare&"
-                        + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
-                        + "=/estudante/estudante";
+        final String path = "/student/studentCycleInquiry.do?method=prepare";
         return forward(path
                 + "&_request_checksum_="
                 + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.calculateChecksum(request
                         .getContextPath() + path));
     }
-
 }

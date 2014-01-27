@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.contents.Attachment;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncementBoard_Base {
@@ -132,10 +131,6 @@ public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncemen
         ExecutionCourse executionCourse = this.getExecutionCourse();
 
         actionPath.append("&executionCourseID=" + executionCourse.getExternalId());
-        actionPath.append("&");
-        actionPath.append(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
-        actionPath.append("=");
-        actionPath.append(executionCourse.getSite().getReversePath());
         return base + actionPath.toString();
     }
 

@@ -8,7 +8,6 @@
 
 <%@page import="java.util.Collections"%>
 <%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 <html:xhtml/>
 
 <% final String appContext = FenixConfigurationManager.getConfiguration().appContext(); %>

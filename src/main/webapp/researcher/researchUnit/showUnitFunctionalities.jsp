@@ -12,7 +12,7 @@
 
 <ul>
 	<li>
-		<html:link page="<%= "/sendEmailToResearchUnitGroups.do?method=prepare&" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/messaging") + "&unitExternalId=" + unitExternalId %>">
+		<html:link page="<%= "/sendEmailToResearchUnitGroups.do?method=prepare&unitExternalId=" + unitExternalId %>">
 			<bean:message key="label.sendEmailToGroups" bundle="RESEARCHER_RESOURCES"/>
 		</html:link>
 		<br/>
