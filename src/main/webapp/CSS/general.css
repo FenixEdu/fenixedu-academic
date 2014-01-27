@@ -1577,10 +1577,8 @@ display: none;
 .left { text-align: left; }
 
 table {
-color: #333;
+color: #4b565c;
 }
-
-h1, h2, h3 { font-family: Trebuchet MS, Arial, Helvetica, sans-serif; }
 
 h1	{
 font-size: 1.7em;

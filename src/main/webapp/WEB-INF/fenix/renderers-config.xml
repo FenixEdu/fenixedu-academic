@@ -305,9 +305,9 @@ Documentation:
         <property name="format" value="${expression}"/>
     </renderer>
 
-    <renderer type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext" layout="side-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.MenuRenderer"/>
-    <renderer type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext" layout="top-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.TopLevelMenuRenderer"/>
-	<renderer type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext" layout="bread-crumbs" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.ContextBreadCrumRenderer"/>
+    <renderer type="org.fenixedu.bennu.portal.domain.MenuFunctionality" layout="side-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.MenuRenderer"/>
+    <renderer type="org.fenixedu.bennu.portal.domain.MenuFunctionality" layout="top-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.TopLevelMenuRenderer"/>
+	<renderer type="org.fenixedu.bennu.portal.domain.MenuFunctionality" layout="bread-crumbs" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.ContextBreadCrumRenderer"/>
 
     <renderer type="net.sourceforge.fenixedu.domain.contents.Content" layout="manage-content-bread-crumbs" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.BreadCrumbsRenderer"/>
 

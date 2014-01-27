@@ -6,6 +6,13 @@
 <html:xhtml/>
 
 <ul>
+
+<h3>From Renderer:</h3>
+
+	<jsp:include page="/commons/functionalities/side-menu.jsp"/>
+
+<h3>Hard-Coded:</h3>
+
 	<li class="navheader"><bean:message key="label.navheader.person"  /></li>
 	<li><html:link page="/visualizePersonalInfo.do" titleKey="link.title.visualizeInformation"  ><bean:message key="label.person.visualizeInformation"  /></html:link></li>
 	<li><html:link page="/changePasswordForward.do" titleKey="link.title.person.changePassword" ><bean:message key="label.person.changePassword"  /></html:link></li>

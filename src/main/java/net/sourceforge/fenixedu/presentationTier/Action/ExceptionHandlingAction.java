@@ -117,7 +117,7 @@ public final class ExceptionHandlingAction extends FenixDispatchAction {
     private String generateEmailSubject(HttpServletRequest request, SupportRequestBean requestBean, Person loggedPerson) {
         StringBuilder builder = new StringBuilder();
         builder.append("[")
-                .append(requestBean.getSelectedFunctionality() != null ? requestBean.getSelectedFunctionality().getFullPath()
+                .append(requestBean.getSelectedFunctionality() != null ? requestBean.getSelectedFunctionality().getPathFromRoot()
                         .get(0).getTitle().getContent() : "").append("] ");
         builder.append("[").append(getRequestTypeAsString(requestBean)).append("] ");
         builder.append("[").append(getRequestPriorityAsString(requestBean)).append("] ");
@@ -168,7 +168,7 @@ public final class ExceptionHandlingAction extends FenixDispatchAction {
 
         if (requestBean.getSelectedFunctionality() != null) {
             boolean first = true;
-            for (MenuItem item : requestBean.getSelectedFunctionality().getFullPath()) {
+            for (MenuItem item : requestBean.getSelectedFunctionality().getPathFromRoot()) {
                 if (first) {
                     first = false;
                 } else {

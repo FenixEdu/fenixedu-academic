@@ -10,21 +10,27 @@ import net.sourceforge.fenixedu.domain.cardGeneration.SantanderCardInformation;
 import net.sourceforge.fenixedu.domain.cardGeneration.SantanderEntry;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.person.PersonApplication.PersonalAreaApp;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@StrutsFunctionality(application = PersonalAreaApp.class, descriptionKey = "label.identification.card",
+        path = "identification-card", titleKey = "label.identification.card")
 @Mapping(module = "person", path = "/identificationCard", parameter = "method")
 @Forwards(value = { @Forward(name = "show.card.information", path = "/person/identificationCard/showCardInformation.jsp") })
 public class IdentificationCardDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepare(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
             final HttpServletResponse response) throws Exception {
         final Person person = AccessControl.getPerson();

@@ -1,14 +1,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
-<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 
-
-<logic:present name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>">
-     <div class="breadcrumbs">
-	
-	  <fr:view name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>" 
-	  layout="bread-crumbs"/>
-
-    
-    </div>
-
-</logic:present>
+<div class="breadcrumbs">
+	<fr:view name="<%= org.fenixedu.bennu.portal.servlet.BennuPortalDispatcher.SELECTED_FUNCTIONALITY %>" 
+			 type="org.fenixedu.bennu.portal.domain.MenuFunctionality"
+			 layout="bread-crumbs"/>
+</div>

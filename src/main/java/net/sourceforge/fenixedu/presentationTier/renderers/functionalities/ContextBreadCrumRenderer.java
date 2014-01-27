@@ -1,10 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.functionalities;
 
-import java.util.Iterator;
-import java.util.List;
+import org.fenixedu.bennu.portal.domain.MenuItem;
 
-import net.sourceforge.fenixedu.domain.contents.Content;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlInlineContainer;
@@ -37,42 +34,42 @@ public class ContextBreadCrumRenderer extends OutputRenderer {
 
             @Override
             public HtmlComponent createComponent(Object object, Class type) {
-                FunctionalityContext context = (FunctionalityContext) object;
-                List<Content> contents = context.getSelectedContents();
+                return new HtmlInlineContainer();
+/*                MenuFunctionality context = (MenuFunctionality) object;
+
+                if (context == null) {
+                }
 
                 HtmlInlineContainer inlineContainer = new HtmlInlineContainer();
 
-                Iterator<Content> contentIterator = contents.iterator();
+                List<MenuItem> contents = context.getPathFromRoot();
+
+                Iterator<MenuItem> contentIterator = contents.iterator();
                 while (contentIterator.hasNext()) {
 
-                    inlineContainer.addChild(getMenuComponent(context, contentIterator.next()));
+                    inlineContainer.addChild(getMenuComponent(contentIterator.next()));
                     if (contentIterator.hasNext()) {
                         inlineContainer.addChild(new HtmlText(getSeparator(), false));
                     }
                 }
 
                 return inlineContainer;
+                */
             }
 
-            private HtmlComponent getMenuComponent(FunctionalityContext context, Content targetContent) {
+            private HtmlComponent getMenuComponent(MenuItem menuItem) {
 
-                HtmlComponent component = new HtmlText(targetContent.getName().getContent());
-                List<Content> contents = context.getPathBetween(context.getSelectedTopLevelContainer(), targetContent);
+                HtmlComponent component = new HtmlText(menuItem.getTitle().getContent());
 
-                StringBuilder buffer = new StringBuilder(context.getRequest().getContextPath());
-                for (Content content : contents) {
-                    buffer.append("/");
-                    buffer.append(content.getNormalizedName().getContent());
-                }
-
-                if (targetContent.isAvailable()) {
+                if (menuItem.isAvailableForCurrentUser()) {
                     final String prefix = GenericChecksumRewriter.NO_CHECKSUM_PREFIX;
                     HtmlLink link = new HtmlLinkWithPreprendedComment(prefix);
 
                     HtmlInlineContainer container = new HtmlInlineContainer();
                     container.addChild(component);
-                    link.setContextRelative(false);
-                    link.setUrl(buffer.toString());
+                    link.setContextRelative(true);
+                    link.setModuleRelative(false);
+                    link.setUrl(menuItem.getFullPath());
                     link.setBody(container);
 
                     component = link;

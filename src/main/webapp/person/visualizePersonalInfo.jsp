@@ -10,7 +10,7 @@
 <logic:present role="role(PERSON)">
 <bean:define id="person" name="LOGGED_USER_ATTRIBUTE" property="person"/>
 
-<em><bean:message key="label.person.main.title" /></em>
+<jsp:include page="/commons/functionalities/breadCrumbs.jsp" />
 <h2><bean:message key="label.person.title.personalConsult"/></h2>
 
 <p>

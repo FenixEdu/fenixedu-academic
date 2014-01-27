@@ -1,13 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.functionalities;
 
-import net.sourceforge.fenixedu.domain.Section;
-import net.sourceforge.fenixedu.domain.contents.Content;
-import net.sourceforge.fenixedu.domain.contents.ContentJump;
-import net.sourceforge.fenixedu.domain.contents.MenuEntry;
-import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
-import net.sourceforge.fenixedu.domain.contents.Portal;
-import net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
+import org.fenixedu.bennu.portal.domain.MenuContainer;
+import org.fenixedu.bennu.portal.domain.MenuItem;
+import org.fenixedu.bennu.portal.domain.PortalConfiguration;
+
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlInlineContainer;
@@ -80,68 +76,57 @@ public class TopLevelMenuRenderer extends OutputRenderer {
             @Override
             public HtmlComponent createComponent(Object object, Class type) {
                 HtmlList menu = new HtmlList();
-                FunctionalityContext context = (FunctionalityContext) object;
+                MenuItem selectedContainer = findTopLevelContainerFor((MenuItem) object);
 
-                for (MenuEntry node : Portal.getRootPortal().getMenu()) {
+                for (MenuItem menuItem : PortalConfiguration.getInstance().getMenu().getOrderedChild()) {
 
-                    AvailabilityPolicy policy = getAvailablityPocility(node);
-
-                    if (!node.isNodeVisible() || (policy != null && !policy.isAvailable())
-                            || node.getReferingContent() instanceof MetaDomainObjectPortal
-                            || node.getReferingContent() instanceof ContentJump) {
+                    if (!menuItem.isAvailableForCurrentUser()) {
                         continue;
                     }
 
                     HtmlListItem item = menu.createItem();
 
-                    if (node.getReferingContent() == context.getSelectedTopLevelContainer()) {
+                    if (menuItem.equals(selectedContainer)) {
                         item.setClasses(getSelectedClasses());
                         item.setStyle(getSelectedStyle());
                     } else {
                         item.setClasses(getTopLevelClasses());
                     }
 
-                    item.addChild(getMenuComponent(context, node));
-
+                    item.addChild(getMenuComponent(menuItem));
                 }
 
                 return menu;
             }
 
-            private HtmlComponent getMenuComponent(FunctionalityContext context, MenuEntry node) {
-
-                Content child = node.getReferingContent();
-                Content content = (child instanceof Section) ? ((Section) child).getInitialContent() : child;
-                if (content == null) {
-                    return new HtmlText(child.getName().getContent());
+            private MenuItem findTopLevelContainerFor(MenuItem selectedItem) {
+                if (selectedItem == null) {
+                    return null;
                 }
-                String path = content.getPath();
-
-                HtmlComponent component = new HtmlText(child.getName().getContent());
-
-                if (path != null && content.isAvailable()) {
-                    final String linkPrefix = GenericChecksumRewriter.NO_CHECKSUM_PREFIX;
-                    HtmlLink link = new HtmlLinkWithPreprendedComment(linkPrefix);
-
-                    HtmlInlineContainer container = new HtmlInlineContainer();
-                    container.addChild(component);
-                    link.setContextRelative(false);
-                    link.setUrl(context.getRequest().getContextPath() + "/"
-                            + node.getReferingContent().getNormalizedName().getContent());
-                    link.setBody(container);
-
-                    component = link;
+                MenuContainer root = PortalConfiguration.getInstance().getMenu();
+                while (selectedItem.getParent() != root) {
+                    selectedItem = selectedItem.getParent();
                 }
-
-                return component;
+                return selectedItem;
             }
 
-            private AvailabilityPolicy getAvailablityPocility(MenuEntry node) {
-                Content content = node.getReferingContent();
-                return content.getAvailabilityPolicy();
+            private HtmlComponent getMenuComponent(MenuItem menuItem) {
+
+                HtmlLink link = new HtmlLinkWithPreprendedComment(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
+
+                HtmlInlineContainer container = new HtmlInlineContainer();
+                HtmlComponent component = new HtmlText(menuItem.getTitle().getContent());
+                container.addChild(component);
+
+                link.setUrl("/" + menuItem.getPath());
+
+                link.setContextRelative(true);
+                link.setModuleRelative(false);
+
+                link.setBody(container);
+                return link;
             }
 
         };
     }
-
 }

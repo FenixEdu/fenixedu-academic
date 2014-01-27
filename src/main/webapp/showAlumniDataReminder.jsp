@@ -34,7 +34,7 @@
 				<table>
 					<tr>
 						<td>
-							<fr:form action="/alumniRedirect.do">
+							<fr:form action="/alumni">
 								<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="APPLICATION_RESOURCES" key="label.proceed"/></html:submit>
 							</fr:form>
 						</td>

@@ -1,14 +1,16 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.functionalities;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Hashtable;
-import java.util.Map;
+import java.util.Collections;
+import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
-import net.sourceforge.fenixedu.domain.contents.MenuEntry;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
+
+import org.fenixedu.bennu.portal.domain.MenuContainer;
+import org.fenixedu.bennu.portal.domain.MenuFunctionality;
+import org.fenixedu.bennu.portal.domain.MenuItem;
+
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.Face;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
@@ -19,7 +21,6 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlListItem;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
  * This renderer generates a menu with a tree of functionalities available to
@@ -35,21 +36,10 @@ public class MenuRenderer extends OutputRenderer {
 
     private String selectedClasses;
 
-    private String selectedStyle;
-
     private String moduleClasses;
-
-    private String moduleStyle;
-
-    private final Map<Integer, String> levelClasses;
-
-    private final Map<Integer, String> levelStyle;
 
     public MenuRenderer() {
         super();
-
-        this.levelClasses = new Hashtable<Integer, String>();
-        this.levelStyle = new Hashtable<Integer, String>();
     }
 
     public String getSelectedClasses() {
@@ -66,47 +56,6 @@ public class MenuRenderer extends OutputRenderer {
         this.selectedClasses = selectedClasses;
     }
 
-    public String getSelectedStyle() {
-        return this.selectedStyle;
-    }
-
-    /**
-     * Sets the CSS style to be applied to the menu entry that corresponds to
-     * the selected funcitonality
-     * 
-     * @property
-     */
-    public void setSelectedStyle(String selectedStyle) {
-        this.selectedStyle = selectedStyle;
-    }
-
-    public String getLevelClasses(String index) {
-        return this.levelClasses.get(Integer.parseInt(index));
-    }
-
-    /**
-     * Selects the CSS classes to apply to each level of the menu. The first
-     * level is level 0.
-     * 
-     * @property
-     */
-    public void setLevelClasses(String index, String value) {
-        this.levelClasses.put(Integer.parseInt(index), value);
-    }
-
-    public String getLevelStyle(String index) {
-        return this.levelStyle.get(Integer.parseInt(index));
-    }
-
-    /**
-     * Selects the CSS style to apply to each level of the menu.
-     * 
-     * @property
-     */
-    public void getLevelStyle(String index, String value) {
-        this.levelStyle.put(Integer.parseInt(index), value);
-    }
-
     public String getModuleClasses() {
         return this.moduleClasses;
     }
@@ -121,137 +70,91 @@ public class MenuRenderer extends OutputRenderer {
         this.moduleClasses = moduleClasses;
     }
 
-    public String getModuleStyle() {
-        return this.moduleStyle;
-    }
-
-    /**
-     * Sets the CSS style to apply to an a module entry.
-     * 
-     * @property
-     */
-    public void setModuleStyle(String moduleStyle) {
-        this.moduleStyle = moduleStyle;
-    }
-
     @Override
     protected Layout getLayout(Object object, Class type) {
         return new Layout() {
 
             @Override
             public HtmlComponent createComponent(final Object object, final Class type) {
-                final FunctionalityContext context = (FunctionalityContext) object;
+                final MenuFunctionality selectedFunctionality = (MenuFunctionality) object;
 
-                if (context == null || context.getCurrentContextPath() == null) {
+                if (selectedFunctionality == null) {
                     return new HtmlText();
                 }
 
-                final Container container = context.getSelectedContainer();
-
                 final HtmlList menu = new HtmlList();
-                addMenuEntries(context, menu, (Collection) container.getOrderedChildrenNodes(), new ArrayList<String>());
+
+                MenuContainer entryPoint = selectedFunctionality.getParent();
+
+                Set<MenuItem> containers =
+                        entryPoint.getParent() == null ? Collections.<MenuItem> singleton(entryPoint) : entryPoint.getParent()
+                                .getOrderedChild();
+
+                addMenuEntries(selectedFunctionality.getPathFromRoot(), menu, containers);
 
                 return menu;
             }
 
-            private void addMenuEntries(final FunctionalityContext context, final HtmlList menu,
-                    final Collection<MenuEntry> entries, final Collection<String> subPath) {
+            private void addMenuEntries(final Collection<MenuItem> fullPath, final HtmlList menu,
+                    final Collection<MenuItem> entries) {
 
-                for (MenuEntry entry : entries) {
-                    if (!entry.isNodeVisible() || !entry.isAvailable()) {
+                for (MenuItem menuItem : entries) {
+                    if (!menuItem.isAvailableForCurrentUser()) {
                         continue;
                     }
 
                     HtmlListItem item = menu.createItem();
-                    item.addChild(getFunctionalityNameComponent(context, entry, true, subPath));
+                    item.addChild(getFunctionalityNameComponent(menuItem));
 
-                    if (!entry.getChildren().isEmpty()) {
-                        HtmlComponent child = item.getChildren().iterator().next();
-
-                        HtmlText text;
-                        if (child instanceof HtmlText) {
-                            text = (HtmlText) child;
-                        } else {
-                            text = (HtmlText) ((HtmlLink) child).getBody();
-                        }
-
-                        text.setFace(Face.STRONG);
+                    if (menuItem instanceof MenuContainer) {
 
                         item.setClasses(getModuleClasses());
-                        item.setStyle(getModuleStyle());
 
                         HtmlList subMenu = new HtmlList();
                         item.addChild(subMenu);
 
-                        final String name = entry.getReferingContent().getNormalizedName().getContent();
-                        subPath.add(name);
-                        addMenuEntries(context, subMenu, entry.getChildren(), subPath);
-                        subPath.remove(name);
+                        MenuContainer container = (MenuContainer) menuItem;
+
+                        addMenuEntries(fullPath, subMenu, container.getOrderedChild());
                     }
 
-                    boolean selected = false;
-                    if (context.getSelectedContent() != null
-                            && context.getSelectedContent().getContentId().equals(entry.getEntryId())) {
-                        selected = true;
-                    } else {
-                        String nodeId = context.getRequest().getParameter("nodeID");
-                        if (nodeId != null && nodeId.equals(entry.getEntryId())) {
-                            selected = true;
-                        }
-                    }
-
-                    if (selected) {
-                        String existingClasses = item.getClasses() == null ? "" : item.getClasses();
-                        String existingStyle = item.getStyle() == null ? "" : item.getStyle();
-
+                    if (fullPath.contains(menuItem)) {
+                        String existingClasses = item.getClasses() == null ? "" : item.getClasses() + " ";
                         item.setClasses(existingClasses + getSelectedClasses());
-                        item.setStyle(existingStyle + getSelectedStyle());
                     }
-
                 }
-
-                menu.setClasses(getLevelClasses(String.valueOf(subPath.size())));
-                menu.setStyle(getLevelStyle(String.valueOf(subPath.size())));
             }
-
         };
     }
 
-    /**
-     * Creates a component that shows the functionality name, possibly in a link
-     * to the functionality's public path. If the fuctionality is parameterized
-     * then the required parameters are appended to the link.
-     */
-    public static HtmlComponent getFunctionalityNameComponent(FunctionalityContext context, MenuEntry entry,
-            boolean canMakeLink, final Collection<String> subPath) {
-        HtmlText text = new HtmlText(entry.getName().getContent());
+    private HtmlComponent getFunctionalityNameComponent(MenuItem entry) {
+        HtmlText text = new HtmlText(entry.getTitle().getContent());
         text.setFace(Face.STANDARD);
 
         HtmlComponent component = text;
 
-        String path = entry.getPath();
-        if (path != null && canMakeLink && entry.isAvailable()) {
-            final Content content = entry.getReferingContent();
+        if (entry instanceof MenuFunctionality) {
             final String linkPrefix = GenericChecksumRewriter.NO_CHECKSUM_PREFIX;
             HtmlLink link = new HtmlLinkWithPreprendedComment(linkPrefix);
 
-            link.setContextRelative(false);
-            link.setUrl(findPathFor(context.getRequest().getContextPath(), content, context, subPath));
+            link.setContextRelative(true);
+            link.setModuleRelative(false);
+
+            link.setUrl(entry.getFullPath());
             link.setBody(component);
 
             component = link;
+        } else {
+            text.setFace(Face.STRONG);
         }
 
-        MultiLanguageString title = entry.getTitle();
-        if (title != null && !title.isEmpty()) {
-            component.setTitle(title.getContent());
-        }
+        component.setTitle(entry.getTitle().getContent());
 
         return component;
     }
 
-    public static String findPathFor(final String contextPath, final Content targetContent,
-            final FunctionalityContext context, final Collection<String> subPath) {
+    public static String findPathFor(final String contextPath, final Content targetContent, final FunctionalityContext context,
+            final Collection<String> subPath) {
         final StringBuilder buffer = new StringBuilder(contextPath);
         buffer.append(context.getSelectedContainerPath());
         for (final String name : subPath) {
