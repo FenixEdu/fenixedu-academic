@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.contents;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public interface MenuEntry {
@@ -18,8 +17,6 @@ public interface MenuEntry {
     public boolean isNodeVisible();
 
     public boolean isAvailable();
-
-    public boolean isAvailable(FunctionalityContext context);
 
     public Collection<MenuEntry> getChildren();
 

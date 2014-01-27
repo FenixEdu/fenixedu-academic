@@ -28,7 +28,7 @@ import net.sourceforge.fenixedu.domain.teacher.ReductionService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.LoginRedirectAction;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
+import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.util.HostAccessControl;
 
 import org.apache.struts.action.ActionForm;
@@ -270,8 +270,8 @@ public abstract class BaseAuthenticationAction extends FenixAction {
             HttpSession session) {
         final List<Content> contents = new ArrayList<Content>();
         Bennu.getInstance().getRootPortal().addPathContentsForTrailingPath(contents, "departamento/departamento");
-        final FilterFunctionalityContext context = new FilterFunctionalityContext(request, contents);
-        request.setAttribute(FilterFunctionalityContext.CONTEXT_KEY, context);
+        final FunctionalityContext context = new FunctionalityContext(request, contents);
+        request.setAttribute(FunctionalityContext.CONTEXT_KEY, context);
 
         String teacherOid = userView.getPerson().getTeacher().getExternalId();
         String executionYearOid = ExecutionYear.readCurrentExecutionYear().getExternalId();
@@ -301,8 +301,8 @@ public abstract class BaseAuthenticationAction extends FenixAction {
             User userView, HttpSession session) {
         final List<Content> contents = new ArrayList<Content>();
         Bennu.getInstance().getRootPortal().addPathContentsForTrailingPath(contents, "departamento/departamento");
-        final FilterFunctionalityContext context = new FilterFunctionalityContext(request, contents);
-        request.setAttribute(FilterFunctionalityContext.CONTEXT_KEY, context);
+        final FunctionalityContext context = new FunctionalityContext(request, contents);
+        request.setAttribute(FunctionalityContext.CONTEXT_KEY, context);
 
         String teacherOid = userView.getPerson().getTeacher().getExternalId();
         String executionYearOid = ExecutionYear.readCurrentExecutionYear().getExternalId();
@@ -327,8 +327,8 @@ public abstract class BaseAuthenticationAction extends FenixAction {
             User userView, HttpSession session) {
         final List<Content> contents = new ArrayList<Content>();
         Bennu.getInstance().getRootPortal().addPathContentsForTrailingPath(contents, "estudante/estudante");
-        final FilterFunctionalityContext context = new FilterFunctionalityContext(request, contents);
-        request.setAttribute(FilterFunctionalityContext.CONTEXT_KEY, context);
+        final FunctionalityContext context = new FunctionalityContext(request, contents);
+        request.setAttribute(FunctionalityContext.CONTEXT_KEY, context);
 
         HtmlLink link = new HtmlLink();
         link.setModule("/student");

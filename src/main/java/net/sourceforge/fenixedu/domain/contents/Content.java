@@ -18,8 +18,6 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.ExpressionGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy;
-import net.sourceforge.fenixedu.domain.functionalities.Functionality;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.functionalities.GroupAvailability;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
 
@@ -121,17 +119,13 @@ public abstract class Content extends Content_Base {
      * @return <code>true</code> if the item is available for the person hold in
      *         the context
      */
-    public boolean isAvailable(FunctionalityContext context) {
-        if (context == null) {
-            return true;
-        }
-
+    public boolean isAvailable() {
         if (getAvailabilityPolicy() == null) {
             return true;
         }
 
         try {
-            return getAvailabilityPolicy().isAvailable(context);
+            return getAvailabilityPolicy().isAvailable();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             return false;
@@ -233,10 +227,6 @@ public abstract class Content extends Content_Base {
      */
     protected void deleteSelf() {
         // do nothing
-    }
-
-    public boolean isAvailable() {
-        return isAvailable(Functionality.getCurrentContext());
     }
 
     // This method is to determine if the content is publicly available in the

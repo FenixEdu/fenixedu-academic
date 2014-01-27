@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.contents;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 
@@ -85,11 +84,6 @@ public abstract class Node extends Node_Base implements MenuEntry, Comparable<No
     @Override
     public MultiLanguageString getTitle() {
         return getChild().getTitle();
-    }
-
-    @Override
-    public boolean isAvailable(FunctionalityContext context) {
-        return getChild().isAvailable(context);
     }
 
     @Override

@@ -40,7 +40,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
+import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
@@ -418,7 +418,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     public String getSelectedDepartmentUnitID() {
         if (selectedDepartmentUnitID == null) {
-            Container site = AbstractFunctionalityContext.getCurrentContext(getRequest()).getSelectedContainer();
+            Container site = FunctionalityContext.getCurrentContext(getRequest()).getSelectedContainer();
             if (site != null && site instanceof DepartmentSite) {
                 selectedDepartmentUnitID = ((DepartmentSite) site).getDepartment().getDepartmentUnit().getExternalId();
             } else if (getAndHoldStringParameter("selectedDepartmentUnitID") != null) {

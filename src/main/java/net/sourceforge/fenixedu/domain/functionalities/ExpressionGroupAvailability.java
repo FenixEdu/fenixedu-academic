@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupExpressionException;
 import net.sourceforge.fenixedu.domain.contents.Content;
 
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -103,9 +104,9 @@ public class ExpressionGroupAvailability extends ExpressionGroupAvailability_Bas
      *                when the evaluation of the expression group fails
      */
     @Override
-    public boolean isAvailable(FunctionalityContext context) {
+    public boolean isAvailable() {
         try {
-            return getTargetGroup().allows(new GroupContextFromFunctionality(context), context.getUserView());
+            return getTargetGroup().allows(Authenticate.getUser());
         } catch (GroupDynamicExpressionException e) {
             logger.error(e.getMessage(), e);
             throw e;

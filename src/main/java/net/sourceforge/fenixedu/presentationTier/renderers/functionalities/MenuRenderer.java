@@ -8,7 +8,7 @@ import java.util.Map;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.MenuEntry;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
+import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.Face;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
@@ -140,7 +140,7 @@ public class MenuRenderer extends OutputRenderer {
 
             @Override
             public HtmlComponent createComponent(final Object object, final Class type) {
-                final FilterFunctionalityContext context = (FilterFunctionalityContext) object;
+                final FunctionalityContext context = (FunctionalityContext) object;
 
                 if (context == null || context.getCurrentContextPath() == null) {
                     return new HtmlText();
@@ -154,11 +154,11 @@ public class MenuRenderer extends OutputRenderer {
                 return menu;
             }
 
-            private void addMenuEntries(final FilterFunctionalityContext context, final HtmlList menu,
+            private void addMenuEntries(final FunctionalityContext context, final HtmlList menu,
                     final Collection<MenuEntry> entries, final Collection<String> subPath) {
 
                 for (MenuEntry entry : entries) {
-                    if (!entry.isNodeVisible() || !entry.isAvailable(context)) {
+                    if (!entry.isNodeVisible() || !entry.isAvailable()) {
                         continue;
                     }
 
@@ -222,7 +222,7 @@ public class MenuRenderer extends OutputRenderer {
      * to the functionality's public path. If the fuctionality is parameterized
      * then the required parameters are appended to the link.
      */
-    public static HtmlComponent getFunctionalityNameComponent(FilterFunctionalityContext context, MenuEntry entry,
+    public static HtmlComponent getFunctionalityNameComponent(FunctionalityContext context, MenuEntry entry,
             boolean canMakeLink, final Collection<String> subPath) {
         HtmlText text = new HtmlText(entry.getName().getContent());
         text.setFace(Face.STANDARD);
@@ -251,7 +251,7 @@ public class MenuRenderer extends OutputRenderer {
     }
 
     public static String findPathFor(final String contextPath, final Content targetContent,
-            final FilterFunctionalityContext context, final Collection<String> subPath) {
+            final FunctionalityContext context, final Collection<String> subPath) {
         final StringBuilder buffer = new StringBuilder(contextPath);
         buffer.append(context.getSelectedContainerPath());
         for (final String name : subPath) {

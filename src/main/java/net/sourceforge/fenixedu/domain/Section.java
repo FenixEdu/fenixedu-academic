@@ -192,12 +192,12 @@ public class Section extends Section_Base {
     }
 
     @Override
-    public boolean isAvailable(FunctionalityContext context) {
-        if (getSuperiorSection() != null && !getSuperiorSection().isAvailable(context)) {
+    public boolean isAvailable() {
+        if (getSuperiorSection() != null && !getSuperiorSection().isAvailable()) {
             return false;
         }
 
-        return super.isAvailable(context);
+        return super.isAvailable();
     }
 
     public boolean isSubSectionAllowed() {

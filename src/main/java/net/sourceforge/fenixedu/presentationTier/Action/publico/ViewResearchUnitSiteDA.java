@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.ResearchUnitSite;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
-import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -72,7 +72,7 @@ public class ViewResearchUnitSiteDA extends UnitSiteVisualizationDA {
     }
 
     private ResearchUnitSite getSite(HttpServletRequest request) {
-        Container container = AbstractFunctionalityContext.getCurrentContext(request).getSelectedContainer();
+        Container container = FunctionalityContext.getCurrentContext(request).getSelectedContainer();
         if (container == null) {
             String siteID = request.getParameter(getContextParamName(request));
             return (ResearchUnitSite) FenixFramework.getDomainObject(siteID);

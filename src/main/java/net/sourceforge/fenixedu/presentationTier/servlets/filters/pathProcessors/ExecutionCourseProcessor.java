@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
+import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 
 public class ExecutionCourseProcessor extends PathProcessor {
 
@@ -86,7 +86,7 @@ public class ExecutionCourseProcessor extends PathProcessor {
         contents.add(site);
 
         HttpServletRequest request = context.getRequest();
-        FilterFunctionalityContext filterContext = new FilterFunctionalityContext(request, contents);
+        FunctionalityContext filterContext = new FunctionalityContext(request, contents);
         filterContext.setHasBeenForwarded();
         request.removeAttribute(FunctionalityContext.CONTEXT_KEY);
         request.setAttribute(FunctionalityContext.CONTEXT_KEY, filterContext);

@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode;
 import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.exceptions.DuplicatedNameException;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 
@@ -135,12 +134,12 @@ public class Item extends Item_Base {
     }
 
     @Override
-    public boolean isAvailable(FunctionalityContext context) {
-        if (getSection() != null && !getSection().isAvailable(context)) {
+    public boolean isAvailable() {
+        if (getSection() != null && !getSection().isAvailable()) {
             return false;
         }
 
-        return super.isAvailable(context);
+        return super.isAvailable();
     }
 
     /**

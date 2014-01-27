@@ -6,7 +6,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext"%>
+<%@page import="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext"%>
 
 <html:html xhtml="true">
 
@@ -36,8 +36,8 @@
 	<logic:present name="titleK">
 		<bean:message name="titleK" bundle="<%= bundleT.toString() %>" /> -
 	</logic:present>
-	<logic:present name="<%= FilterFunctionalityContext.CONTEXT_KEY %>">
-		<bean:define id="contentContext" name="<%= FilterFunctionalityContext.CONTEXT_KEY %>" property="selectedContainer" type="net.sourceforge.fenixedu.domain.contents.Content"/>
+	<logic:present name="<%= FunctionalityContext.CONTEXT_KEY %>">
+		<bean:define id="contentContext" name="<%= FunctionalityContext.CONTEXT_KEY %>" property="selectedContainer" type="net.sourceforge.fenixedu.domain.contents.Content"/>
 		<logic:equal name="contentContext" property="unitSite" value="true">
 			<bean:write name="contentContext" property="unit.partyName"/> -
 		</logic:equal>
@@ -45,8 +45,8 @@
 </logic:present>
 <logic:notPresent name="bundleT">
 	<tiles:getAsString name="title" ignore="true"/> -
-	<logic:present name="<%= FilterFunctionalityContext.CONTEXT_KEY %>">
-		<bean:define id="contentContext" name="<%= FilterFunctionalityContext.CONTEXT_KEY %>" property="selectedContainer" type="net.sourceforge.fenixedu.domain.contents.Content"/>
+	<logic:present name="<%= FunctionalityContext.CONTEXT_KEY %>">
+		<bean:define id="contentContext" name="<%= FunctionalityContext.CONTEXT_KEY %>" property="selectedContainer" type="net.sourceforge.fenixedu.domain.contents.Content"/>
 		<logic:equal name="contentContext" property="unitSite" value="true">
 			<bean:write name="contentContext" property="unit.partyName"/> -
 		</logic:equal>

@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Instalation;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.contents.Container;
-import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart;
@@ -28,7 +27,7 @@ import net.sourceforge.fenixedu.domain.person.PersonNamePart;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.externalServices.PhoneValidationUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
+import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.util.ExceptionInformation;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.webServices.jersey.api.FenixJerseyAPIConfig;
@@ -249,9 +248,9 @@ public class FenixInitializer implements ServletContextListener {
                 if (FileUpload.isMultipartContent(request)) {
                     return false;
                 }
-                final FilterFunctionalityContext filterFunctionalityContext = getContextAttibute(request);
-                if (filterFunctionalityContext != null) {
-                    final Container container = filterFunctionalityContext.getSelectedTopLevelContainer();
+                final FunctionalityContext FunctionalityContext = getContextAttibute(request);
+                if (FunctionalityContext != null) {
+                    final Container container = FunctionalityContext.getSelectedTopLevelContainer();
                     if (container != null && container.isPublic() && (uri.indexOf(".do") < 0 || uri.indexOf("publico/") >= 0)) {
                         return false;
                     }
@@ -277,8 +276,8 @@ public class FenixInitializer implements ServletContextListener {
                         && (uri.indexOf("api/fenix") == -1);
             }
 
-            private FilterFunctionalityContext getContextAttibute(final HttpServletRequest httpServletRequest) {
-                return (FilterFunctionalityContext) httpServletRequest.getAttribute(FunctionalityContext.CONTEXT_KEY);
+            private FunctionalityContext getContextAttibute(final HttpServletRequest httpServletRequest) {
+                return (FunctionalityContext) httpServletRequest.getAttribute(FunctionalityContext.CONTEXT_KEY);
             }
         });
     }
@@ -293,9 +292,9 @@ public class FenixInitializer implements ServletContextListener {
         public void handle(HttpServletRequest request, ServletResponse response, final Throwable t) throws ServletException,
                 IOException {
             ExceptionInformation exceptionInfo = new ExceptionInformation(request, t);
-            if (AbstractFunctionalityContext.getCurrentContext(request) != null) {
+            if (FunctionalityContext.getCurrentContext(request) != null) {
                 exceptionInfo.getRequestBean().setRequestContext(
-                        AbstractFunctionalityContext.getCurrentContext(request).getSelectedTopLevelContainer());
+                        FunctionalityContext.getCurrentContext(request).getSelectedTopLevelContainer());
             }
 
             if (CoreConfiguration.getConfiguration().developmentMode()) {

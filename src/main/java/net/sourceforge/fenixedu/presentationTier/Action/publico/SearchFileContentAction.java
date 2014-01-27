@@ -6,9 +6,9 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceCoursesBean;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
-import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -30,7 +30,7 @@ public class SearchFileContentAction extends FenixDispatchAction {
 
         ExecutionCourse course = null;
 
-        FunctionalityContext context = AbstractFunctionalityContext.getCurrentContext(request);
+        FunctionalityContext context = FunctionalityContext.getCurrentContext(request);
         if (context != null && context.getSelectedContainer() instanceof ExecutionCourseSite) {
             course = ((ExecutionCourseSite) context.getSelectedContainer()).getSiteExecutionCourse();
         }

@@ -15,14 +15,13 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.contents.Container;
-import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteVisualizationDA;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
+import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -121,7 +120,7 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
     }
 
     protected UnitSite getUnitSite(HttpServletRequest request) {
-        FilterFunctionalityContext context = (FilterFunctionalityContext) AbstractFunctionalityContext.getCurrentContext(request);
+        FunctionalityContext context = (FunctionalityContext) FunctionalityContext.getCurrentContext(request);
         Container container = (Container) context.getLastContentInPath(UnitSite.class);
         return (UnitSite) container;
     }
@@ -130,8 +129,8 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
         Unit unit = (Unit) request.getAttribute("unit");
 
         if (unit == null) {
-            FilterFunctionalityContext context =
-                    (FilterFunctionalityContext) AbstractFunctionalityContext.getCurrentContext(request);
+            FunctionalityContext context =
+                    (FunctionalityContext) FunctionalityContext.getCurrentContext(request);
             UnitSite site = (UnitSite) context.getSelectedContainer();
             unit = site.getUnit();
         }

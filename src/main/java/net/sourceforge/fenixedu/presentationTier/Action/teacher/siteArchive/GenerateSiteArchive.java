@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.rules.ResourceRule;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.rules.Rule;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.rules.SimpleTransformRule;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
+import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -94,7 +94,7 @@ public class GenerateSiteArchive extends FenixDispatchAction {
         List<Content> contents = new ArrayList<Content>();
         contents.add(MetaDomainObjectPortal.getPortal(ExecutionCourseSite.class));
         contents.add(executionCourse.getSite());
-        FilterFunctionalityContext context = new FilterFunctionalityContext(request, contents);
+        FunctionalityContext context = new FunctionalityContext(request, contents);
 
         fetcher.process(context);
         archive.finish();

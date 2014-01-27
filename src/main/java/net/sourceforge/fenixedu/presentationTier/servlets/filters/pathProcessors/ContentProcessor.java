@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
+import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 
 public class ContentProcessor extends SiteElementPathProcessor {
 
@@ -55,10 +55,10 @@ public class ContentProcessor extends SiteElementPathProcessor {
             }
 
             HttpServletRequest request = ownContext.getRequest();
-            FilterFunctionalityContext filterContext =
-                    (FilterFunctionalityContext) request.getAttribute(FunctionalityContext.CONTEXT_KEY);
+            FunctionalityContext filterContext =
+                    (FunctionalityContext) request.getAttribute(FunctionalityContext.CONTEXT_KEY);
             if (filterContext == null) {
-                filterContext = new FilterFunctionalityContext(request, ownContext.getContents());
+                filterContext = new FunctionalityContext(request, ownContext.getContents());
                 filterContext.setHasBeenForwarded();
                 request.setAttribute(FunctionalityContext.CONTEXT_KEY, filterContext);
             }

@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
+import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 
 public class DegreeProcessor extends PathProcessor {
 
@@ -76,7 +76,7 @@ public class DegreeProcessor extends PathProcessor {
             contents.add(portalInstance);
 
             HttpServletRequest request = context.getRequest();
-            FilterFunctionalityContext filterContext = new FilterFunctionalityContext(request, contents);
+            FunctionalityContext filterContext = new FunctionalityContext(request, contents);
             filterContext.setHasBeenForwarded();
             request.setAttribute(FunctionalityContext.CONTEXT_KEY, filterContext);
             return true;

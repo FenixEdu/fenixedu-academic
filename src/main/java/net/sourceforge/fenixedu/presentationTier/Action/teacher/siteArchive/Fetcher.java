@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.streams.FetcherRequestWrapper;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.streams.FetcherServletResponseWrapper;
 import net.sourceforge.fenixedu.presentationTier.servlets.FileDownloadServlet;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
+import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 
 import com.google.common.io.ByteStreams;
 
@@ -46,7 +46,7 @@ public class Fetcher {
     private Archive archive;
     private HttpServletRequest request;
     private HttpServletResponse response;
-    private FilterFunctionalityContext requestContext;
+    private FunctionalityContext requestContext;
 
     public Fetcher() {
         super();
@@ -101,7 +101,7 @@ public class Fetcher {
      * Processes the current queue retrieving all resources and saving them in
      * the archive.
      */
-    public void process(FilterFunctionalityContext context) throws ServletException, IOException {
+    public void process(FunctionalityContext context) throws ServletException, IOException {
         this.requestContext = context;
         process();
     }
@@ -192,7 +192,7 @@ public class Fetcher {
         return url;
     }
 
-    private ServletRequest createForwardRequest(FilterFunctionalityContext context) {
+    private ServletRequest createForwardRequest(FunctionalityContext context) {
         ServletRequest wrapper = createForwardRequest();
         wrapper.removeAttribute(FunctionalityContext.CONTEXT_KEY);
         wrapper.setAttribute(FunctionalityContext.CONTEXT_KEY, context);

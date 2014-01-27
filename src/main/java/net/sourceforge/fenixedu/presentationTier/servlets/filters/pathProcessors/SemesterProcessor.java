@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
+import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 
 public class SemesterProcessor extends PathProcessor {
 
@@ -70,12 +70,12 @@ public class SemesterProcessor extends PathProcessor {
                 contents.add(portal);
                 contents.add(portalInstance);
 
-                FilterFunctionalityContext filterContext =
-                        (FilterFunctionalityContext) request.getAttribute(FunctionalityContext.CONTEXT_KEY);
+                FunctionalityContext filterContext =
+                        (FunctionalityContext) request.getAttribute(FunctionalityContext.CONTEXT_KEY);
                 if (filterContext != null) {
                     request.removeAttribute(FunctionalityContext.CONTEXT_KEY);
                 }
-                filterContext = new FilterFunctionalityContext(request, contents);
+                filterContext = new FunctionalityContext(request, contents);
                 filterContext.setHasBeenForwarded();
                 request.setAttribute(FunctionalityContext.CONTEXT_KEY, filterContext);
 

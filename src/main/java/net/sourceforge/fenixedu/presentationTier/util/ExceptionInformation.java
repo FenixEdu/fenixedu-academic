@@ -19,9 +19,9 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
+import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionMapping;
@@ -370,8 +370,8 @@ public class ExceptionInformation {
             user = userView.getUsername();
             exceptionInfo.append(userView.getUsername()).append("\n");
             requestBean = SupportRequestBean.generateExceptionBean(userView.getPerson());
-            if (AbstractFunctionalityContext.getCurrentContext(request) != null) {
-                requestBean.setRequestContext(AbstractFunctionalityContext.getCurrentContext(request)
+            if (FunctionalityContext.getCurrentContext(request) != null) {
+                requestBean.setRequestContext(FunctionalityContext.getCurrentContext(request)
                         .getSelectedTopLevelContainer());
             }
             setUserName(user);

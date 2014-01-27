@@ -6,6 +6,8 @@ import java.util.Map;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupContext;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.VariableNotDefinedException;
 
+import org.fenixedu.bennu.core.security.Authenticate;
+
 /**
  * A wrapper to a {@link FunctionalityContext} so that it can be used as a {@link GroupContext}.
  * 
@@ -13,7 +15,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
  */
 public class GroupContextFromFunctionality implements GroupContext {
 
-    private FunctionalityContext context;
+    private final FunctionalityContext context;
     private Map<String, Object> variables;
 
     public GroupContextFromFunctionality(FunctionalityContext context) {
@@ -32,8 +34,8 @@ public class GroupContextFromFunctionality implements GroupContext {
     private void setupVariables() {
         this.variables = new HashMap<String, Object>();
 
-        this.variables.put(VAR_USER, getContext().getLoggedUser());
-        this.variables.put(VAR_USERVIEW, getContext().getLoggedUser());
+        this.variables.put(VAR_USER, Authenticate.getUser());
+        this.variables.put(VAR_USERVIEW, Authenticate.getUser());
         this.variables.put(VAR_REQUEST, getContext().getRequest());
     }
 

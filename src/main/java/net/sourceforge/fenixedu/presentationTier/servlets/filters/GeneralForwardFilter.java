@@ -7,14 +7,15 @@ import java.util.List;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.InvalidContentPathException;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.CheckAvailabilityFilter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.ContentProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.DegreeCurricularPlanProcessor;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors.DegreeProcessor;
@@ -31,7 +32,7 @@ import net.sourceforge.fenixedu.presentationTier.servlets.filters.pathProcessors
 
 public class GeneralForwardFilter implements Filter {
 
-    private List<PathProcessor> processors = new ArrayList<PathProcessor>();
+    private final List<PathProcessor> processors = new ArrayList<PathProcessor>();
 
     // private String notFoundURI;
 
@@ -99,11 +100,11 @@ public class GeneralForwardFilter implements Filter {
 
         if (!context.isChildAccepted()) {
             final InvalidContentPathException invalidContentPathException =
-                    (InvalidContentPathException) request.getAttribute(ContextFilter.INVALID_CONTENT_PATH_EXCEPTION);
+                    (InvalidContentPathException) request.getAttribute("");
             if (invalidContentPathException == null) {
                 chain.doFilter(request, response);
             } else {
-                CheckAvailabilityFilter.showUnavailablePage(invalidContentPathException.getContent(), httpRequest, httpResponse);
+                showUnavailablePage(invalidContentPathException.getContent(), httpRequest, httpResponse);
                 return;
             }
         } else {
@@ -116,6 +117,17 @@ public class GeneralForwardFilter implements Filter {
     @Override
     public void destroy() {
         // do nothing
+    }
+
+    private static void showUnavailablePage(final Content content, final HttpServletRequest request,
+            final HttpServletResponse response) throws IOException, ServletException {
+        final RequestDispatcher dispatcher = request.getRequestDispatcher("/publico/notFound.do");
+
+        if (dispatcher == null) {
+            response.sendRedirect(request.getContextPath() + "/publico/notFound.do");
+        } else {
+            dispatcher.forward(request, response);
+        }
     }
 
 }

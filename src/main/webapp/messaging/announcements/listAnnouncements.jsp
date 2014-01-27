@@ -7,7 +7,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/messaging" prefix="messaging"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
 
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext"%>
+<%@page import="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext"%>
 <html:xhtml />
 
 
@@ -134,7 +134,7 @@
 
 							<%-- Manage --%> 
 							
-							<bean:define id="contentContext" name="<%= FilterFunctionalityContext.CONTEXT_KEY%>"/>
+							<bean:define id="contentContext" name="<%= FunctionalityContext.CONTEXT_KEY%>"/>
 							<bean:define id="showWritePermission" value="true"/>
 									
 							<logic:equal name="contentContext" property="selectedContainer.publicAvailable" value="false">

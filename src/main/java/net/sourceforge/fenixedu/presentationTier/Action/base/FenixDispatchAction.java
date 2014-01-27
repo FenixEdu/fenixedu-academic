@@ -18,11 +18,11 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResultMessage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.FenixActionForward;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
+import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.util.struts.StrutsMessageResourceProvider;
 
 import org.apache.commons.io.IOUtils;
@@ -381,7 +381,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
             stringBuilder.append("&");
             stringBuilder.append(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
             stringBuilder.append("=");
-            final FunctionalityContext functionalityContext = AbstractFunctionalityContext.getCurrentContext(request);
+            final FunctionalityContext functionalityContext = FunctionalityContext.getCurrentContext(request);
             String currentContextPath = functionalityContext == null ? null : functionalityContext.getCurrentContextPath();
             stringBuilder.append(currentContextPath);
         }

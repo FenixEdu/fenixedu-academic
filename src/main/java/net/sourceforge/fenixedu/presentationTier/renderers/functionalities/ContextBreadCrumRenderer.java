@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.contents.Content;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
+import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlInlineContainer;
@@ -37,7 +37,7 @@ public class ContextBreadCrumRenderer extends OutputRenderer {
 
             @Override
             public HtmlComponent createComponent(Object object, Class type) {
-                FilterFunctionalityContext context = (FilterFunctionalityContext) object;
+                FunctionalityContext context = (FunctionalityContext) object;
                 List<Content> contents = context.getSelectedContents();
 
                 HtmlInlineContainer inlineContainer = new HtmlInlineContainer();
@@ -54,7 +54,7 @@ public class ContextBreadCrumRenderer extends OutputRenderer {
                 return inlineContainer;
             }
 
-            private HtmlComponent getMenuComponent(FilterFunctionalityContext context, Content targetContent) {
+            private HtmlComponent getMenuComponent(FunctionalityContext context, Content targetContent) {
 
                 HtmlComponent component = new HtmlText(targetContent.getName().getContent());
                 List<Content> contents = context.getPathBetween(context.getSelectedTopLevelContainer(), targetContent);

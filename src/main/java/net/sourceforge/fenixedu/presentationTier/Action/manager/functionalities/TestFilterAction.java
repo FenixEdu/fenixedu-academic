@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -51,9 +50,8 @@ public class TestFilterAction extends FenixDispatchAction {
                 continue;
             }
 
-            FunctionalityContext context = new TestFilterContext(request, bean, functionality);
             try {
-                results.add(new TestFilterResultBean(functionality, functionality.isAvailable(context), bean.getParametersMap()));
+                results.add(new TestFilterResultBean(functionality, functionality.isAvailable(), bean.getParametersMap()));
             } catch (GroupDynamicExpressionException e) {
                 results.add(new TestFilterResultBean(functionality, false, bean.getParametersMap()));
             }

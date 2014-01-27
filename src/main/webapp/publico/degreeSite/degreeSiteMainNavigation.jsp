@@ -9,7 +9,7 @@
 <html:xhtml/>
 
 <%
-	net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext currentContext = (net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext) net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext.getCurrentContext(request);
+	net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext currentContext = (net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext) net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext.getCurrentContext(request);
 	net.sourceforge.fenixedu.domain.DegreeSite selectedContainer = (net.sourceforge.fenixedu.domain.DegreeSite) currentContext.getSelectedContainer();	
 	net.sourceforge.fenixedu.domain.Degree degree = selectedContainer.getDegree();
 

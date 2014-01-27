@@ -8,10 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.ResearchUnitSite;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.contents.Container;
-import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
+import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -31,7 +30,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 public class ManageResearchUnitAnnoucementsDA extends UnitSiteBoardsDA {
 
     protected ResearchUnitSite getSite(HttpServletRequest request) {
-        FilterFunctionalityContext context = (FilterFunctionalityContext) AbstractFunctionalityContext.getCurrentContext(request);
+        FunctionalityContext context = (FunctionalityContext) FunctionalityContext.getCurrentContext(request);
         Container container = (Container) context.getLastContentInPath(Site.class);
         if (container != null) {
             return (ResearchUnitSite) container;

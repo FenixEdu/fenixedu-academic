@@ -1,4 +1,4 @@
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext"%>
+<%@page import="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext"%>
 <%@ page language="java" %>
 
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>

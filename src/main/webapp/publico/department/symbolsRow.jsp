@@ -8,11 +8,11 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
 <%@page import="net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext"%>
+<%@page import="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext"%>
 <bean:define id="language" name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language"/>
 
 <%
-	FilterFunctionalityContext context = (FilterFunctionalityContext) AbstractFunctionalityContext.getCurrentContext(request);
+	FunctionalityContext context = (FunctionalityContext) AbstractFunctionalityContext.getCurrentContext(request);
 	UnitSite site = (UnitSite) context.getSelectedContainer();
 	Unit unit = site.getUnit();
 		

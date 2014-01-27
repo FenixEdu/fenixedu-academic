@@ -31,7 +31,7 @@ public abstract class AvailabilityPolicy extends AvailabilityPolicy_Base {
      * 
      * @see Functionality#isAvailable(FunctionalityContext)
      */
-    public abstract boolean isAvailable(FunctionalityContext context);
+    public abstract boolean isAvailable();
 
     /**
      * Deletes this object from persistent storage.

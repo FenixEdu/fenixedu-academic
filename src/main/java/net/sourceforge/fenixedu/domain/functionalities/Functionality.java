@@ -488,20 +488,12 @@ public class Functionality extends Functionality_Base implements IFunctionality 
      *         person hold in the context
      */
     @Override
-    public boolean isAvailable(FunctionalityContext context) {
-        if (context == null) {
-            return true;
-        }
-
-        if (!hasRequiredParameters(context)) {
+    public boolean isAvailable() {
+        if (getModule() != null && !getModule().isAvailable()) {
             return false;
         }
 
-        if (getModule() != null && !getModule().isAvailable(context)) {
-            return false;
-        }
-
-        return super.isAvailable(context);
+        return super.isAvailable();
     }
 
     /**

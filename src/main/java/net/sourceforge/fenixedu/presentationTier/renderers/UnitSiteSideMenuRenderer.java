@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.presentationTier.renderers.functionalities.MenuRenderer;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
+import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -72,7 +72,7 @@ public class UnitSiteSideMenuRenderer extends UnitSiteMenuRenderer {
     }
 
     @Override
-    protected String getPath(FilterFunctionalityContext context, Content content) {
+    protected String getPath(FunctionalityContext context, Content content) {
         Site site = (Site) context.getLastContentInPath(Site.class);
         Section sideSection = getSideSection(site);
         List<Content> contents = null;

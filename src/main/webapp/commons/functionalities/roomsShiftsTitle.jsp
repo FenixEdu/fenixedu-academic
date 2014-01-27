@@ -2,7 +2,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext"%>
+<%@page import="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext"%>
 
 <tiles:useAttribute name="titleString" id="titleK" ignore="true" />
 <tiles:useAttribute name="bundle" id="bundleT" ignore="true" />
@@ -13,9 +13,9 @@
 	</logic:present>
 </logic:present>
 <logic:notPresent name="bundleT">
-	<logic:present name="<%= FilterFunctionalityContext.CONTEXT_KEY %>">
-		<bean:define id="funcContext" name="<%= FilterFunctionalityContext.CONTEXT_KEY %>" property="selectedContent" type="net.sourceforge.fenixedu.domain.contents.Content"/>
-		<bean:define id="contentContext" name="<%= FilterFunctionalityContext.CONTEXT_KEY %>" property="selectedContainer" type="net.sourceforge.fenixedu.domain.contents.Content"/>
+	<logic:present name="<%= FunctionalityContext.CONTEXT_KEY %>">
+		<bean:define id="funcContext" name="<%= FunctionalityContext.CONTEXT_KEY %>" property="selectedContent" type="net.sourceforge.fenixedu.domain.contents.Content"/>
+		<bean:define id="contentContext" name="<%= FunctionalityContext.CONTEXT_KEY %>" property="selectedContainer" type="net.sourceforge.fenixedu.domain.contents.Content"/>
 		<logic:equal name="contentContext" property="unitSite" value="true">
 			<bean:write name="funcContext" property="name" /> -
 			<bean:write name="contentContext" property="unit.partyName"/> -

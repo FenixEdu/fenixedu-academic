@@ -5,9 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeSite;
-import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
+import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -31,8 +30,7 @@ public class DegreeShowThesesDA extends PublicShowThesesDA {
 
     public Degree getDegree(HttpServletRequest request) throws FenixActionException {
 
-        FilterFunctionalityContext currentContext =
-                (FilterFunctionalityContext) AbstractFunctionalityContext.getCurrentContext(request);
+        FunctionalityContext currentContext = FunctionalityContext.getCurrentContext(request);
         DegreeSite selectedContainer = (DegreeSite) currentContext.getSelectedContainer();
         Degree degree = selectedContainer.getDegree();
 

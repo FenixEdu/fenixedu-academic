@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.contents.MenuEntry;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.presentationTier.renderers.functionalities.MenuRenderer;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
+import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.Face;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
@@ -170,11 +170,11 @@ public class SiteMenuRenderer extends OutputRenderer {
 
                 HtmlList list = new HtmlList();
                 HttpServletRequest request = getContext().getViewState().getRequest();
-                FilterFunctionalityContext context =
-                        (FilterFunctionalityContext) request.getAttribute(FunctionalityContext.CONTEXT_KEY);
+                FunctionalityContext context =
+                        (FunctionalityContext) request.getAttribute(FunctionalityContext.CONTEXT_KEY);
 
                 if (context == null) {
-                    context = new FilterFunctionalityContext(request, Charset.defaultCharset().name());
+                    context = new FunctionalityContext(request, Charset.defaultCharset().name());
                 }
 
                 Collection<MenuEntry> entries = getEntries(object);
@@ -187,7 +187,7 @@ public class SiteMenuRenderer extends OutputRenderer {
                 return list;
             }
 
-            public void createList(HtmlList list, FilterFunctionalityContext context, Collection<MenuEntry> entries, Integer depth) {
+            public void createList(HtmlList list, FunctionalityContext context, Collection<MenuEntry> entries, Integer depth) {
                 for (MenuEntry entry : entries) {
                     if (!entry.isNodeVisible()) {
                         continue;
@@ -210,7 +210,7 @@ public class SiteMenuRenderer extends OutputRenderer {
                 }
             }
 
-            private HtmlLink generateLink(FilterFunctionalityContext context, Content content, final HtmlComponent body,
+            private HtmlLink generateLink(FunctionalityContext context, Content content, final HtmlComponent body,
                     final boolean isPublic, Integer depth) {
                 final String url = getPath(context, content);
                 HtmlLink link =
@@ -237,7 +237,7 @@ public class SiteMenuRenderer extends OutputRenderer {
 
             }
 
-            public HtmlComponent generateComponent(FilterFunctionalityContext context, Content content, boolean canMakeLink,
+            public HtmlComponent generateComponent(FunctionalityContext context, Content content, boolean canMakeLink,
                     Integer depth) {
 
                 HtmlText text = new HtmlText(content.getName().getContent());
@@ -261,7 +261,7 @@ public class SiteMenuRenderer extends OutputRenderer {
             }
 
             private boolean isSelectedContent(Content current, FunctionalityContext context) {
-                FilterFunctionalityContext filterContext = (FilterFunctionalityContext) context;
+                FunctionalityContext filterContext = (FunctionalityContext) context;
                 Container selectedContainer = filterContext.getSelectedContainer();
                 return !filterContext.getPathBetween(selectedContainer, current).isEmpty();
             }
@@ -288,7 +288,7 @@ public class SiteMenuRenderer extends OutputRenderer {
         return (Site) object;
     }
 
-    protected String getPath(FilterFunctionalityContext context, Content content) {
+    protected String getPath(FunctionalityContext context, Content content) {
         return MenuRenderer.findPathFor(context.getRequest().getContextPath(), content, context,
                 subPath(context.getSelectedContainer(), content));
     }

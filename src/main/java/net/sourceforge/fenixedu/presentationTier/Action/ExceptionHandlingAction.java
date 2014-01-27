@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.contents.Content;
-import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
+import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.ExceptionHandlingAction.ErrorMailForm;
@@ -205,9 +205,8 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
             HttpServletResponse response, SupportRequestBean requestBean) throws Exception {
 
         if (requestBean != null && requestBean.getRequestContext() == null) {
-            if (AbstractFunctionalityContext.getCurrentContext(request) != null) {
-                requestBean.setRequestContext(AbstractFunctionalityContext.getCurrentContext(request)
-                        .getSelectedTopLevelContainer());
+            if (FunctionalityContext.getCurrentContext(request) != null) {
+                requestBean.setRequestContext(FunctionalityContext.getCurrentContext(request).getSelectedTopLevelContainer());
             }
         }
 
