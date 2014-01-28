@@ -37,26 +37,18 @@
 				<bean:define id="degreeCode" name="degree" property="sigla"/>
 				<bean:define id="degreeName" name="degree" property="presentationName"/>
 				<tr>
+					<bean:define id="degreeSitePath" name="degree" property="site.reversePath"/>
 					<td>
-						<bean:define id="degreeSitePath" name="degree" property="site.reversePath"/>
-						<html:link href="<%= request.getContextPath() + degreeSitePath.toString() %>" title="<%= degreeName.toString() %>"><bean:write name="degree" property="sigla"/></html:link>
+						<!-- NO_CHECKSUM --><html:link href="<%= request.getContextPath() + degreeSitePath.toString() %>" title="<%= degreeName.toString() %>"><bean:write name="degree" property="sigla"/></html:link>
 					</td>
 					<td>
-						<html:link href="<%= degreeCode.toString() %>" title="<%= degreeName.toString() %>"><bean:write name="degree" property="sigla"/></html:link>
-					</td>
-					<td>
-						<html:link href="<%= degreeCode.toString() + "/disciplinas"%>">
+						<!-- NO_CHECKSUM --><html:link href="<%= request.getContextPath() + degreeSitePath.toString() + "/paginas-de-disciplinas"%>">
 							<bean:message key="courseSite.url.subpattern" bundle="GLOBAL_RESOURCES"/>
 						</html:link>
 					</td>
 					<td>
-						<html:link href="<%= degreeCode.toString() + "/horarios"%>">
+						<!-- NO_CHECKSUM --><html:link href="<%= request.getContextPath() + degreeSitePath.toString() + "/horarios-por-turma"%>">
 							<bean:message key="schedules.url.subpattern" bundle="GLOBAL_RESOURCES"/>
-						</html:link>
-					</td>
-					<td>
-						<html:link href="<%= degreeCode.toString() + "/exames"%>">
-							<bean:message key="exams.url.subpattern" bundle="GLOBAL_RESOURCES"/>
 						</html:link>
 					</td>
 				</tr>
