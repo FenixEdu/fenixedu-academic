@@ -109,7 +109,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     }
 
     public List<QueueJob> getLatestJobs() {
-        return QueueJob.getAllJobsForClassOrSubClass(GepReportFile.class, 5);
+        return QueueJob.getLastJobsForClassOrSubClass(GepReportFile.class, 5);
     }
 
     @SuppressWarnings("unused")
@@ -205,7 +205,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
         final ExecutionYear executionYear = getExecutionYear(request);
         request.setAttribute("executionYearID", (executionYear == null) ? null : executionYear.getExternalId());
         final String fileType = getFileType(request);
-        for (QueueJob queueJob : QueueJob.getAllJobsForClassOrSubClass(GepReportFile.class, 5)) {
+        for (QueueJob queueJob : getLatestJobs()) {
             GepReportFile gepReportFile = (GepReportFile) queueJob;
             if ((gepReportFile.getPerson() == person) && (gepReportFile.getClass() == aClass) && (!gepReportFile.getDone())
                     && (gepReportFile.getExecutionYear() == executionYear) && (gepReportFile.getDegreeType() == degreeType)
