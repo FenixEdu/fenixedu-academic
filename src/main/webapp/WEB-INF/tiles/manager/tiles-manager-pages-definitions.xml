@@ -850,7 +850,4 @@
     </definition>
 	
 	
-	<definition name="errors.list" extends="definition.manager.masterPage">
-        <put name="body" value="/manager/listErrors.jsp"/>
-    </definition>
 </tiles-definitions>

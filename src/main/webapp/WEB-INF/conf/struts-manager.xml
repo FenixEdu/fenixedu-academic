@@ -246,10 +246,6 @@
                   <form-property type="java.lang.String" name="file"></form-property>
                   <form-property type="org.apache.struts.upload.FormFile" name="uploadedFile"></form-property>
             </form-bean>
-            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="monitorRequestLogsPathForm">
-                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
-                  <form-property type="java.lang.String" name="logDirName"></form-property>
-            </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="faqSectionForm">
                   <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
                   <form-property type="java.lang.String" name="parentSectionId"></form-property>

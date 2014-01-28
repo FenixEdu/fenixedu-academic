@@ -148,8 +148,6 @@ enum net.sourceforge.fenixedu.domain.student.RegistrationRegimeType             
 enum net.sourceforge.fenixedu.domain.student.StudentStatuteType                                                           as StudentStatuteType;
 enum net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization                                                 as Specialization;
 enum net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState                                     as StudentCurricularPlanState;
-enum net.sourceforge.fenixedu.domain.support.SupportRequestPriority                                                       as SupportRequestPriority;
-enum net.sourceforge.fenixedu.domain.support.SupportRequestType                                                           as SupportRequestType;
 enum net.sourceforge.fenixedu.domain.system.WhenToSendEmail                                                               as WhenToSendEmail;
 enum net.sourceforge.fenixedu.domain.teacher.AdviseType                                                                   as AdviseType;
 enum net.sourceforge.fenixedu.domain.teacher.CategoryType                                                                 as CategoryType;
@@ -5399,29 +5397,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         String term;
     }
 
-    class support.SupportRequest  {
-        SupportRequestPriority requestPriority;
-        String responseEmail;
-        String subject;
-        String message;
-        DateTime requestTime;
-    }
-
-        class support.SupportSugestion extends support.SupportRequest {
-    }
-
-        class support.SupportDoubt extends support.SupportRequest {
-        }
-        
-        class support.SupportError extends support.SupportRequest {
-        }
-        
-        class support.SupportException extends support.SupportRequest {
-        }
-        
-        class support.SupportDemand extends support.SupportRequest {
-        }
-
     class system.CronRegistry  {
         DateTime buildVersion;
     }
@@ -6578,42 +6553,6 @@ class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionP
         }   
         
         
-class log.requests.RequestMapping  {
-    String path;
-    String parameters;
-}
-
-
-class log.requests.RequestLogYear  {
-    Integer year;
-}
-
-class log.requests.RequestLogMonth  {
-    Integer monthOfYear;
-}
-
-class log.requests.RequestLogDay  {
-    Integer dayOfMonth;
-}
-    
-class log.requests.RequestLog  {
-    String queryString;
-    DateTime requestTime;
-    String requester;
-    String requestAttributes;
-    String sessionAttributes;
-    String referer;
-    Boolean post;
-}   
-    
-class log.requests.ErrorLog  {
-    String stackTrace;
-}   
-
-class log.requests.ExceptionType  {
-    String type;
-}
-
 class caseHandling.Process  {
     
 }
@@ -18079,107 +18018,6 @@ relation DeployNotifierRootDomainObject {
     DeployNotifier playsRole deployNotifier; 
 }
 
-relation RequestLogDayRequestLog {
-    log.requests.RequestLogDay playsRole day;
-    log.requests.RequestLog playsRole logs {
-        multiplicity *;
-    }
-}
-
-relation RequestLogMonthRequestLogDay {
-    log.requests.RequestLogMonth playsRole month;
-    log.requests.RequestLogDay playsRole days {
-        multiplicity *;
-    }
-}
-
-relation RequestLogYearRequestLogDay {
-    log.requests.RequestLogYear playsRole year;
-    log.requests.RequestLogMonth playsRole months {
-        multiplicity *;
-    }
-}
-
-relation RequestLogDayRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    log.requests.RequestLogDay playsRole requestLogDays {
-        multiplicity *;
-    }
-}
-
-relation MostRecentRequestLogDay {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectRequestLogDay;
-    log.requests.RequestLogDay playsRole mostRecentRequestLogDay;
-}
-
-relation RequestLogDayRequestLogDay {
-    log.requests.RequestLogDay playsRole next;
-    log.requests.RequestLogDay playsRole previous;
-}
-
-relation RequestLogMonthRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    log.requests.RequestLogMonth playsRole requestLogMonths {
-        multiplicity *;
-    }
-}
-
-relation RequestLogYearRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    log.requests.RequestLogYear playsRole requestLogYears {
-        multiplicity *;
-    }
-}
-
-
-relation RequestMappingRequestLog {
-    log.requests.RequestMapping playsRole mapping;
-    log.requests.RequestLog playsRole logs {
-        multiplicity *;
-    }
-}
-
-relation RequestLogErrorLog {
-    log.requests.RequestLog playsRole requestLogs {
-        multiplicity *;
-    }
-    log.requests.ErrorLog playsRole errorLog;
-}
-
-relation ErrorLogExceptionType {
-    log.requests.ErrorLog playsRole errorLogs {
-        multiplicity *;
-    }
-    log.requests.ExceptionType playsRole exception;
-}
-
-relation RequestMappingRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    log.requests.RequestMapping playsRole requestMappings {
-        multiplicity *;
-    }
-}
-
-relation ErrorLogRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    log.requests.ErrorLog playsRole errorLogs {
-        multiplicity *;
-    }
-}
-
-relation RequestLogRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    log.requests.RequestLog playsRole requestLogs {
-        multiplicity *;
-    }
-}
-
-relation ExceptionTypeRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    log.requests.ExceptionType playsRole exceptionTypes {
-        multiplicity *;
-    }
-}
 
 relation ProcessRootDomainObject {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
@@ -18482,34 +18320,6 @@ relation ResidenceManagementUnitResidenceEvent {
     residence.ResidenceYear playsRole residenceYears {
         multiplicity *;
     }
-}
-
-relation RootDomainObjectSupportRequest {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    support.SupportRequest playsRole supportRequests {
-        multiplicity *;
-    }
-}
-
-relation SupportRequestPerson {
-    Person playsRole requester;
-    support.SupportRequest playsRole supportRequests {
-        multiplicity *;
-    }
-}
-
-relation SupportRequestContent {
-    contents.Content playsRole requestContext;
-    support.SupportRequest playsRole supportRequests {
-        multiplicity *;
-    }
-}
-
-relation SupportExceptionErrorLog {
-    support.SupportException playsRole supportExceptions {
-        multiplicity *;
-    }
-    log.requests.ErrorLog playsRole errorLog;
 }
 
 relation AlumniStudent {

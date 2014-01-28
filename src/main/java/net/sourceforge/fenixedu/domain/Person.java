@@ -4802,16 +4802,6 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.support.SupportRequest> getSupportRequests() {
-        return getSupportRequestsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnySupportRequests() {
-        return !getSupportRequestsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.PunctualRoomsOccupationComment> getPunctualRoomsOccupationComments() {
         return getPunctualRoomsOccupationCommentsSet();
     }

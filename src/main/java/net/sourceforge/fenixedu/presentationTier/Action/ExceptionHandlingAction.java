@@ -11,11 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.CreateSupportRequest;
 import net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.contents.Content;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -223,15 +221,6 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
         String mailSubject = generateEmailSubject(request, requestBean, getLoggedPerson(request), builder);
         builder.setLength(0);
         String mailBody = generateEmailBody(request, requestBean, getLoggedPerson(request), builder);
-
-        try {
-            CreateSupportRequest.run(getLoggedPerson(request), requestBean);
-        } catch (DomainException e) {
-            // a mail must be always sent, no need to give error feedback
-        }
-
-        // System.out.println(mailSubject);
-        // System.out.println(mailBody);
 
         try {
             sendMail(request, requestBean, mailSubject, mailBody);
