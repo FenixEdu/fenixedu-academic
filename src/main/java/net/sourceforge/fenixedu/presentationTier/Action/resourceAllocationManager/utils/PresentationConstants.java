@@ -559,8 +559,6 @@ public abstract class PresentationConstants {
 
     public static final String EXCEPTION_STACK_TRACE = "exception_stack_trace";
 
-    public static final String REQUEST_CONTEXT = "request_context";
-
     public static final String ACADEMIC_INTERVAL = "academicInterval";
 
     public static final String CONTEXT_SELECTION_BEAN = "context_selection_bean";

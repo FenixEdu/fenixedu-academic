@@ -86,11 +86,9 @@ public class FenixExceptionHandler extends ExceptionHandler {
         super.storeException(request, property, error, null, ae.getScope());
 
         ExceptionInformation exceptionInfo = new ExceptionInformation(request, ex);
-        String requestContext = exceptionInfo.getRequestContext();
 
         request.setAttribute(PresentationConstants.ORIGINAL_MAPPING_KEY, mapping);
         request.setAttribute(PresentationConstants.EXCEPTION_STACK_TRACE, ex.getStackTrace());
-        request.setAttribute(PresentationConstants.REQUEST_CONTEXT, requestContext);
 
         if (CoreConfiguration.getConfiguration().developmentMode()) {
             request.setAttribute("debugExceptionInfo", exceptionInfo);

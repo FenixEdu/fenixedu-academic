@@ -19,12 +19,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrat
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Instalation;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.contents.Container;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart;
 import net.sourceforge.fenixedu.domain.person.PersonNamePart;
-import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.externalServices.PhoneValidationUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
@@ -292,10 +289,6 @@ public class FenixInitializer implements ServletContextListener {
         public void handle(HttpServletRequest request, ServletResponse response, final Throwable t) throws ServletException,
                 IOException {
             ExceptionInformation exceptionInfo = new ExceptionInformation(request, t);
-            if (FunctionalityContext.getCurrentContext(request) != null) {
-                exceptionInfo.getRequestBean().setRequestContext(
-                        FunctionalityContext.getCurrentContext(request).getSelectedTopLevelContainer());
-            }
 
             if (CoreConfiguration.getConfiguration().developmentMode()) {
                 request.setAttribute("debugExceptionInfo", exceptionInfo);
@@ -304,9 +297,7 @@ public class FenixInitializer implements ServletContextListener {
                 request.setAttribute("exceptionInfo", exceptionInfo.getExceptionInfo());
             }
 
-            String urlToForward =
-                    t instanceof IllegalDataAccessException ? "/exception/notAuthorizedForward.jsp" : "/showErrorPage.do";
-            request.getRequestDispatcher(urlToForward).forward(request, response);
+            request.getRequestDispatcher("/showErrorPage.do").forward(request, response);
         }
     }
 

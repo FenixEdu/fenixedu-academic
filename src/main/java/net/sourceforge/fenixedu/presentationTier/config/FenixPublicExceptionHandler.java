@@ -5,8 +5,6 @@
  */
 package net.sourceforge.fenixedu.presentationTier.config;
 
-import java.util.Enumeration;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -61,8 +59,6 @@ public class FenixPublicExceptionHandler extends FenixExceptionHandler {
 
         request.setAttribute(PresentationConstants.EXCEPTION_STACK_TRACE, ex.getStackTrace());
 
-        request.setAttribute(PresentationConstants.REQUEST_CONTEXT, requestContextGetter(request));
-
         if (ae.getScope() != "request") {
             ae.setScope("request");
         }
@@ -83,19 +79,6 @@ public class FenixPublicExceptionHandler extends FenixExceptionHandler {
         super.storeException(request, property, error, forward, ae.getScope());
 
         return super.execute(ex, ae, mapping, formInstance, request, response);
-    }
-
-    private String requestContextGetter(HttpServletRequest request) {
-
-        Enumeration requestContents = request.getAttributeNames();
-        String context = "";
-        while (requestContents.hasMoreElements()) {
-            String requestElement = requestContents.nextElement().toString();
-            context += "RequestElement:" + requestElement + "\n";
-            context += "RequestElement Value:" + request.getAttribute(requestElement) + "\n";
-        }
-
-        return context;
     }
 
 }
