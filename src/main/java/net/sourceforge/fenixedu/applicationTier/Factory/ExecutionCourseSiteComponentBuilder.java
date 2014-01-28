@@ -419,7 +419,7 @@ public class ExecutionCourseSiteComponentBuilder {
             infoSection = new InfoSection();
             infoSection.setExternalId(section.getExternalId());
             infoSection.setName(section.getName().getContent(Language.pt));
-            infoSection.setSectionOrder(section.getSectionOrder());
+            infoSection.setSectionOrder(section.getOrder());
             infoSection.setSuperiorInfoSection(copyISection2InfoSection(section.getSuperiorSection()));
             infoSection.setInfoSite(copyISite2InfoSite((ExecutionCourseSite) section.getSite()));
         }

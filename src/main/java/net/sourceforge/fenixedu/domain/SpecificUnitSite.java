@@ -23,10 +23,6 @@ public abstract class SpecificUnitSite extends SpecificUnitSite_Base {
     }
 
     @Override
-    public void appendReversePathPart(final StringBuilder stringBuilder) {
-    }
-
-    @Override
     public MultiLanguageString getName() {
         return new MultiLanguageString("");
     }

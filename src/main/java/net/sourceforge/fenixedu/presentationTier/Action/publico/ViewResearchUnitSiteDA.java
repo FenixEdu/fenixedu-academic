@@ -1,20 +1,16 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
-import java.net.MalformedURLException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.ResearchUnitSite;
-import net.sourceforge.fenixedu.domain.contents.Container;
-import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
+import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.Site.SiteMapper;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.util.RequestUtils;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -72,25 +68,12 @@ public class ViewResearchUnitSiteDA extends UnitSiteVisualizationDA {
     }
 
     private ResearchUnitSite getSite(HttpServletRequest request) {
-        Container container = FunctionalityContext.getCurrentContext(request).getSelectedContainer();
+        Site container = SiteMapper.getSite(request);
         if (container == null) {
             String siteID = request.getParameter(getContextParamName(request));
             return (ResearchUnitSite) FenixFramework.getDomainObject(siteID);
         } else {
             return (ResearchUnitSite) container;
-        }
-    }
-
-    @Override
-    protected String getDirectLinkContext(HttpServletRequest request) {
-        ResearchUnitSite site = getSite(request);
-
-        try {
-            MetaDomainObjectPortal portal = MetaDomainObjectPortal.getPortal(ResearchUnitSite.class);
-            String path = portal.getNormalizedName().getContent() + "/" + site.getUnit().getUnitPath("/");
-            return RequestUtils.absoluteURL(request, path).toString();
-        } catch (MalformedURLException e) {
-            return null;
         }
     }
 

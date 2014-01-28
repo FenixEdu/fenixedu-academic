@@ -254,7 +254,7 @@ public class InfoSection extends InfoObject implements Comparable, ISiteComponen
         super.copyFromDomain(section);
         if (section != null) {
             setName(section.getName().getContent(Language.pt));
-            setSectionOrder(section.getSectionOrder());
+            setSectionOrder(section.getOrder());
             setLastModifiedDate(section.getModificationDate());
             setSectionDepth(calculateDepth());
         }

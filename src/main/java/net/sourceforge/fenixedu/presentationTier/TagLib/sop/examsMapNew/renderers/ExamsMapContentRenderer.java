@@ -118,9 +118,7 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
                 } else if (typeUser.equals("public")) {
 
                     final Site site = infoExecutionCourse.getExecutionCourse().getSite();
-                    if (site.isPublic()) {
-                        strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
-                    }
+                    strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
                     strBuffer.append("<a href=\"").append(((HttpServletRequest) pageContext.getRequest()).getContextPath());
                     strBuffer.append(site.getReversePath());
                     strBuffer.append("\">");

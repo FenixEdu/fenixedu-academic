@@ -35,6 +35,8 @@ import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.Site.SiteMapper;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.executionCourse.SummariesSearchBean;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
@@ -47,7 +49,6 @@ import net.sourceforge.fenixedu.domain.oldInquiries.teacher.TeachingInquiry;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.YearDelegateCourseInquiry;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteVisualizationDA;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.httpclient.HttpStatus;
@@ -85,8 +86,7 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
                 return null;
             }
         } else {
-            ExecutionCourseSite site =
-                    (ExecutionCourseSite) FunctionalityContext.getCurrentContext(request).getSelectedContainer();
+            ExecutionCourseSite site = SiteMapper.getSite(request);
             executionCourse = site.getSiteExecutionCourse();
         }
 

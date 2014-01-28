@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.domain.messaging;
 
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -21,8 +19,8 @@ public class ExecutionCourseForum extends ExecutionCourseForum_Base {
 
     @Override
     public void setName(MultiLanguageString name) {
-        if (this.getForumExecutionCourse() != null) {
-            getForumExecutionCourse().checkIfCanAddForum(name);
+        if (this.getExecutionCourse() != null) {
+            getExecutionCourse().checkIfCanAddForum(name);
         }
 
         super.setName(name);
@@ -40,20 +38,12 @@ public class ExecutionCourseForum extends ExecutionCourseForum_Base {
 
     @Override
     public Group getAdminGroup() {
-        return new ExecutionCourseTeachersGroup(getForumExecutionCourse());
+        return new ExecutionCourseTeachersGroup(getExecutionCourse());
     }
 
     private Group getExecutionCourseMembersGroup() {
-        return new GroupUnion(new ExecutionCourseTeachersGroup(getForumExecutionCourse()), new ExecutionCourseStudentsGroup(
-                getForumExecutionCourse()));
+        return new GroupUnion(new ExecutionCourseTeachersGroup(getExecutionCourse()), new ExecutionCourseStudentsGroup(
+                getExecutionCourse()));
     }
 
-    @Deprecated
-    public ExecutionCourse getExecutionCourse() {
-        return getForumExecutionCourse();
-    }
-
-    public ExecutionCourse getForumExecutionCourse() {
-        return hasAnyParents() ? ((ExecutionCourseSite) getUniqueParentContainer()).getSiteExecutionCourse() : null;
-    }
 }

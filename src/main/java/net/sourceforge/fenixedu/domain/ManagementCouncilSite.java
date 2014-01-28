@@ -19,10 +19,6 @@ public class ManagementCouncilSite extends ManagementCouncilSite_Base {
     }
 
     @Override
-    public void appendReversePathPart(final StringBuilder stringBuilder) {
-    }
-
-    @Override
     public MultiLanguageString getName() {
         return new MultiLanguageString("");
     }

@@ -7,8 +7,6 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
-import net.sourceforge.fenixedu.domain.contents.Content;
-
 import org.apache.commons.lang.StringUtils;
 
 public class DefineContentPathTag extends BodyTagSupport {
@@ -83,26 +81,26 @@ public class DefineContentPathTag extends BodyTagSupport {
 
     @Override
     public int doEndTag() throws JspException {
-        final String id = getId();
-        final String name = getName();
-
-        if (id == null || name == null) {
-            throw new JspException("Both id and name are required for define content path.");
-        }
-
-        final Content content = getContent(name, pageContext, getScope(), getProperty());
-        final int toScope = getPageToScope();
-        final String path = content.getReversePath();
-
-        pageContext.setAttribute(id, path, toScope);
+//        final String id = getId();
+//        final String name = getName();
+//
+//        if (id == null || name == null) {
+//            throw new JspException("Both id and name are required for define content path.");
+//        }
+//
+//        final Content content = getContent(name, pageContext, getScope(), getProperty());
+//        final int toScope = getPageToScope();
+//        final String path = content.getReversePath();
+//
+//        pageContext.setAttribute(id, path, toScope);
 
         return (EVAL_PAGE);
     }
 
-    public static Content getContent(final String name, final PageContext pageContext, final String scope, final String property) {
-        final Object object = getObject(name, pageContext, scope);
-        return getContent(object, property);
-    }
+//    public static Content getContent(final String name, final PageContext pageContext, final String scope, final String property) {
+//        final Object object = getObject(name, pageContext, scope);
+//        return getContent(object, property);
+//    }
 
     public static Object getObject(final String name, final PageContext pageContext, final String scope) {
         final int pageScope = getPageScope(scope);
@@ -129,17 +127,17 @@ public class DefineContentPathTag extends BodyTagSupport {
         }
     }
 
-    public static Content getContent(final Object object, final String property) {
-        if (property == null) {
-            return (Content) object;
-        }
-        final String[] properties = property.split("\\.");
-        Object currentObject = object;
-        for (final String p : properties) {
-            currentObject = getObject(currentObject, p);
-        }
-        return (Content) currentObject;
-    }
+//    public static Content getContent(final Object object, final String property) {
+//        if (property == null) {
+//            return (Content) object;
+//        }
+//        final String[] properties = property.split("\\.");
+//        Object currentObject = object;
+//        for (final String p : properties) {
+//            currentObject = getObject(currentObject, p);
+//        }
+//        return (Content) currentObject;
+//    }
 
     public static Object getObject(final Object object, final String property) {
         final String methodName = "get" + StringUtils.capitalize(property);

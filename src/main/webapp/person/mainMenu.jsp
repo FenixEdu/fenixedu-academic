@@ -43,33 +43,6 @@
 			<li><html:link  page="/vigilancy/vigilantManagement.do?method=prepareMap"><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.vigilant"/></html:link></li>
 		</logic:notPresent>
 	</logic:notEmpty>
-
-	<logic:present role="role(MANAGER)">
-		<li class="navheader"><bean:message key="label.person.system.configuration"/></li>
-		<logic:notEqual name="LOGGED_USER_ATTRIBUTE" property="username" value="ist24518"> 
-			<logic:notEqual name="LOGGED_USER_ATTRIBUTE" property="username" value="ist24421">
-				<li>
-					<html:link page="/contentManagement.do?method=viewContainer">
-						<bean:message key="label.person.system.configuration.root.portal"/>
-					</html:link>
-					<html:link page="/portalManagement.do?method=prepare">
-						<bean:message key="label.person.system.configuration.meta.domain.objects"/>
-					</html:link>
-				</li>
-				<!-- Functionalities -->
-				<li>
-					<html:link page="/functionalities/module/viewRoot.do">
-						<bean:message key="label.person.system.configuration.functionalities"/>
-					</html:link>
-				</li>
-			</logic:notEqual>
-		</logic:notEqual>
-		<li>
-			<html:link page="/irsDeclaration.do?method=edit" titleKey="link.title.irsDeclaration">
-				<bean:message key="label.person.edit.irs.declaration.link"  />
-			</html:link>
-		</li>
-	</logic:present>
 	
 	<!-- FOR LOAD TESTING -->
 	<html:link styleId="loadTesting" page="/loadTesting.do?method=loadTesting" style="display:none"/>

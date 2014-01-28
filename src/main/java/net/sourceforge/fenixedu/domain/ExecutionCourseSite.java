@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.util.Collection;
 import java.util.Formatter;
 import java.util.List;
 
@@ -8,11 +7,6 @@ import net.sourceforge.fenixedu.domain.accessControl.CompetenceCourseGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DegreesOfExecutionCourseGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersAndStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup;
-import net.sourceforge.fenixedu.domain.contents.Attachment;
-import net.sourceforge.fenixedu.domain.contents.Content;
-import net.sourceforge.fenixedu.domain.contents.FunctionalityCall;
-import net.sourceforge.fenixedu.domain.contents.Node;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.util.BundleUtil;
@@ -32,9 +26,9 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
     public ExecutionCourseSite(ExecutionCourse course) {
         this();
 
+        course.addForum(new ExecutionCourseForum(new MultiLanguageString().with(Language.pt, course.getNome().replace('?', ' ')
+                .replace('/', ' ')), new MultiLanguageString("")));
         setSiteExecutionCourse(course);
-        createForum(new MultiLanguageString().with(Language.pt, course.getNome().replace('?', ' ').replace('/', ' ')),
-                new MultiLanguageString(""));
     }
 
     public void edit(final String initialStatement, final String introduction, final String mail, final String alternativeSite) {
@@ -58,9 +52,9 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
     }
 
     @Override
-    protected void disconnect() {
+    public void delete() {
         setSiteExecutionCourse(null);
-        super.disconnect();
+        super.delete();
     }
 
     @Override
@@ -81,16 +75,6 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
     public IGroup getOwner() {
         return new ExecutionCourseTeachersGroup(getSiteExecutionCourse());
 
-    }
-
-    @Override
-    public String getAuthorName() {
-        return getSiteExecutionCourse().getNome();
-    }
-
-    @Override
-    public ExecutionSemester getExecutionPeriod() {
-        return getSiteExecutionCourse().getExecutionPeriod();
     }
 
     public static ExecutionCourseSite readExecutionCourseSiteByOID(String oid) {
@@ -116,47 +100,6 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
         return super.getSiteExecutionCourse();
     }
 
-    public Collection<ExecutionCourseForum> getForuns() {
-        return getChildren(ExecutionCourseForum.class);
-    }
-
-    public void addForum(ExecutionCourseForum executionCourseForum) {
-        checkIfCanAddForum(executionCourseForum.getNormalizedName());
-        addChild(executionCourseForum);
-    }
-
-    public void removeForum(ExecutionCourseForum executionCourseForum) {
-        removeChild(executionCourseForum);
-    }
-
-    public void checkIfCanAddForum(MultiLanguageString name) {
-        if (hasForumWithName(name)) {
-            throw new DomainException("executionCourse.already.existing.forum");
-        }
-    }
-
-    public boolean hasForumWithName(MultiLanguageString name) {
-        return getForumByName(name) != null;
-    }
-
-    public ExecutionCourseForum getForumByName(MultiLanguageString name) {
-        for (final ExecutionCourseForum executionCourseForum : getForuns()) {
-            if (executionCourseForum.getNormalizedName().equalInAnyLanguage(name)) {
-                return executionCourseForum;
-            }
-        }
-
-        return null;
-    }
-
-    public void createForum(MultiLanguageString name, MultiLanguageString description) {
-
-        if (hasForumWithName(name)) {
-            throw new DomainException("executionCourse.already.existing.forum");
-        }
-        addForum(new ExecutionCourseForum(name, description));
-    }
-
     @Override
     public MultiLanguageString getName() {
         final ExecutionSemester executionSemester = getSiteExecutionCourse().getExecutionPeriod();
@@ -167,13 +110,6 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
                         .toString());
     }
 
-    @Override
-    public void setNormalizedName(final MultiLanguageString normalizedName) {
-        // unable to optimize because we cannot track changes to name correctly.
-        // don't call super.setNormalizedName() !
-    }
-
-    @Override
     public void logCreateSection(Section section) {
         ContentManagementLog.createLog(getSiteExecutionCourse(), "resources.MessagingResources",
                 "log.executionCourse.content.section.created", section.getName().getContent(),
@@ -181,50 +117,30 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
 
     }
 
-    @Override
     public void logEditSection(Section section) {
         ContentManagementLog.createLog(getSiteExecutionCourse(), "resources.MessagingResources",
                 "log.executionCourse.content.section.edited", section.getName().getContent(), getSiteExecutionCourse().getNome(),
                 getSiteExecutionCourse().getDegreePresentationString());
     }
 
-    @Override
     public void logRemoveSection(Section section) {
         ContentManagementLog.createLog(getSiteExecutionCourse(), "resources.MessagingResources",
                 "log.executionCourse.content.section.removed", section.getName().getContent(),
                 getSiteExecutionCourse().getNome(), getSiteExecutionCourse().getDegreePresentationString());
     }
 
-    @Override
-    public void logRemoveFile(Attachment attachment) {
+    public void logRemoveFile(FileContent attachment) {
         ContentManagementLog.createLog(getSiteExecutionCourse(), "resources.MessagingResources",
-                "log.executionCourse.content.file.removed", attachment.getName().getContent(),
-                getSiteExecutionCourse().getNome(), getSiteExecutionCourse().getDegreePresentationString());
-    }
-
-    @Override
-    public void logEditFile(Attachment attachment) {
-        ContentManagementLog.createLog(getSiteExecutionCourse(), "resources.MessagingResources",
-                "log.executionCourse.content.file.edited", attachment.getName().getContent(), getSiteExecutionCourse().getNome(),
+                "log.executionCourse.content.file.removed", attachment.getDisplayName(), getSiteExecutionCourse().getNome(),
                 getSiteExecutionCourse().getDegreePresentationString());
     }
 
-    @Override
-    protected Node createChildNode(Content childContent) {
+    public void logEditFile(FileContent attachment) {
         ContentManagementLog.createLog(getSiteExecutionCourse(), "resources.MessagingResources",
-                "log.executionCourse.content.section.institutional", childContent.getName().getContent(),
-                getSiteExecutionCourse().getNome(), getSiteExecutionCourse().getDegreePresentationString());
-        return super.createChildNode(childContent);
+                "log.executionCourse.content.file.edited", attachment.getDisplayName(), getSiteExecutionCourse().getNome(),
+                getSiteExecutionCourse().getDegreePresentationString());
     }
 
-    @Override
-    public void logRemoveFunctionalityCall(FunctionalityCall functionalityCall) {
-        ContentManagementLog.createLog(getSiteExecutionCourse(), "resources.MessagingResources",
-                "log.executionCourse.content.section.remove.institutional", functionalityCall.getName().getContent(),
-                getSiteExecutionCourse().getNome(), getSiteExecutionCourse().getDegreePresentationString());
-    }
-
-    @Override
     public void logCreateItemtoSection(Item item) {
         ContentManagementLog
                 .createLog(getSiteExecutionCourse(), "resources.MessagingResources",
@@ -233,7 +149,6 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
                                 .getDegreePresentationString());
     }
 
-    @Override
     public void logEditItemtoSection(Item item) {
         ContentManagementLog
                 .createLog(getSiteExecutionCourse(), "resources.MessagingResources",
@@ -242,7 +157,6 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
                                 .getDegreePresentationString());
     }
 
-    @Override
     public void logDeleteItemtoSection(Item item) {
         ContentManagementLog
                 .createLog(getSiteExecutionCourse(), "resources.MessagingResources",
@@ -251,7 +165,6 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
                                 .getDegreePresentationString());
     }
 
-    @Override
     public void logEditItemPermission(Item item) {
         ContentManagementLog
                 .createLog(getSiteExecutionCourse(), "resources.MessagingResources",
@@ -260,55 +173,47 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
                                 .getDegreePresentationString());
     }
 
-    @Override
-    public void logSectionInsertInstitutional(Content childContent, Section section) {
-        ContentManagementLog.createLog(getSiteExecutionCourse(), "resources.MessagingResources",
-                "log.executionCourse.content.section.item.insert.institutional", childContent.getName().getContent(), section
-                        .getName().getContent(), getSiteExecutionCourse().getNome(), getSiteExecutionCourse()
-                        .getDegreePresentationString());
-    }
+//    public void logSectionInsertInstitutional(Content childContent, Section section) {
+//        ContentManagementLog.createLog(getSiteExecutionCourse(), "resources.MessagingResources",
+//                "log.executionCourse.content.section.item.insert.institutional", childContent.getName().getContent(), section
+//                        .getName().getContent(), getSiteExecutionCourse().getNome(), getSiteExecutionCourse()
+//                        .getDegreePresentationString());
+//    }
 
-    @Override
     public void logEditSectionPermission(Section section) {
         ContentManagementLog.createLog(getSiteExecutionCourse(), "resources.MessagingResources",
                 "log.executionCourse.content.section.permitted", section.getName().getContent(), getSiteExecutionCourse()
                         .getNome(), getSiteExecutionCourse().getDegreePresentationString());
     }
 
-    @Override
-    public void logAddFileToItem(Item item, Section section, Content childContent) {
+//    public void logAddFileToItem(Item item, Section section, Content childContent) {
+//        ContentManagementLog.createLog(getSiteExecutionCourse(), "resources.MessagingResources",
+//                "log.executionCourse.content.section.item.add.file", childContent.getName().getContent(), item.getName()
+//                        .getContent(), section.getName().getContent(), getSiteExecutionCourse().getNome(),
+//                getSiteExecutionCourse().getDegreePresentationString());
+//    }
+
+    public void logEditFileToItem(FileContent attachment, Section section) {
         ContentManagementLog.createLog(getSiteExecutionCourse(), "resources.MessagingResources",
-                "log.executionCourse.content.section.item.add.file", childContent.getName().getContent(), item.getName()
-                        .getContent(), section.getName().getContent(), getSiteExecutionCourse().getNome(),
-                getSiteExecutionCourse().getDegreePresentationString());
+                "log.executionCourse.content.section.item.edit.file", attachment.getDisplayName(),
+                section.getName().getContent(), getSiteExecutionCourse().getNome(), getSiteExecutionCourse()
+                        .getDegreePresentationString());
     }
 
-    @Override
-    public void logEditFileToItem(Attachment attachment, Section section) {
-        ContentManagementLog
-                .createLog(getSiteExecutionCourse(), "resources.MessagingResources",
-                        "log.executionCourse.content.section.item.edit.file", attachment.getName().getContent(), section
-                                .getName().getContent(), getSiteExecutionCourse().getNome(), getSiteExecutionCourse()
-                                .getDegreePresentationString());
+    public void logItemFilePermittedGroup(FileContent attachment, Section section) {
+        ContentManagementLog.createLog(getSiteExecutionCourse(), "resources.MessagingResources",
+                "log.executionCourse.content.section.file.permitted", attachment.getDisplayName(),
+                section.getName().getContent(), getSiteExecutionCourse().getNome(), getSiteExecutionCourse()
+                        .getDegreePresentationString());
     }
 
-    @Override
-    public void logItemFilePermittedGroup(Attachment attachment, Section section) {
-        ContentManagementLog
-                .createLog(getSiteExecutionCourse(), "resources.MessagingResources",
-                        "log.executionCourse.content.section.file.permitted", attachment.getName().getContent(), section
-                                .getName().getContent(), getSiteExecutionCourse().getNome(), getSiteExecutionCourse()
-                                .getDegreePresentationString());
-    }
-
-    @Override
-    public void logSectionInsertFile(Content childContent, Section section) {
-        ContentManagementLog
-                .createLog(getSiteExecutionCourse(), "resources.MessagingResources",
-                        "log.executionCourse.content.section.file.insert", childContent.getName().getContent(), section.getName()
-                                .getContent(), getSiteExecutionCourse().getNome(), getSiteExecutionCourse()
-                                .getDegreePresentationString());
-    }
+//    public void logSectionInsertFile(Content childContent, Section section) {
+//        ContentManagementLog
+//                .createLog(getSiteExecutionCourse(), "resources.MessagingResources",
+//                        "log.executionCourse.content.section.file.insert", childContent.getName().getContent(), section.getName()
+//                                .getContent(), getSiteExecutionCourse().getNome(), getSiteExecutionCourse()
+//                                .getDegreePresentationString());
+//    }
 
     @Override
     public void setLessonPlanningAvailable(Boolean lessonPlanningAvailable) {

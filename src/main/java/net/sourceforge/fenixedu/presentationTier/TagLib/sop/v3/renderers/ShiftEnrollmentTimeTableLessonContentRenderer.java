@@ -58,9 +58,7 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer extends LessonSlotCon
 
             strBuffer.append("<span class=\"float-left\">");
             // CONTENT / CHECKSUM prefixes have to be right before <a> tag
-            if (site.isPublic()) {
-                strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
-            }
+            strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
             strBuffer.append("<a href=\"").append(context);
             strBuffer.append(site.getReversePath());
             strBuffer.append("\">");
@@ -81,9 +79,7 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer extends LessonSlotCon
 
             strBuffer.append("<span class=\"float-left\">");
             // CONTENT / CHECKSUM prefixes have to be right before <a> tag
-            if (site.isPublic()) {
-                strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
-            }
+            strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
             strBuffer.append("<a href=\"").append(context);
             strBuffer.append(site.getReversePath());
             strBuffer.append("\">");
@@ -101,9 +97,7 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer extends LessonSlotCon
 
             strBuffer.append("<span class=\"float-left\">");
             // CONTENT / CHECKSUM prefixes have to be right before <a> tag
-            if (site.isPublic()) {
-                strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
-            }
+            strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
             strBuffer.append("<a href=\"").append(context);
             strBuffer.append(site.getReversePath());
             strBuffer.append("\">");

@@ -10,7 +10,7 @@ public class FileItemPermissionBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private FileContent fileItem;
+    private final FileContent fileItem;
     private Group permittedGroup;
 
     public FileItemPermissionBean(FileContent fileItem) {
@@ -34,7 +34,4 @@ public class FileItemPermissionBean implements Serializable {
         this.permittedGroup = permittedGroup;
     }
 
-    public void logItemFilePermittedGroup() {
-        fileItem.logItemFilePermittedGroup();
-    }
 }

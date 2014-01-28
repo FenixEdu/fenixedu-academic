@@ -6,12 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
-import net.sourceforge.fenixedu.domain.contents.Content;
-
-import org.apache.struts.util.RequestUtils;
-
-import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
-
 public class ContentLinkTag extends BodyTagSupport {
 
     protected String body = null;
@@ -86,9 +80,9 @@ public class ContentLinkTag extends BodyTagSupport {
         try {
             writeStartTag();
             if (getHrefInBody() != null && getHrefInBody()) {
-                final Content content = DefineContentPathTag.getContent(name, pageContext, getScope(), getProperty());
-                final String path = content.getReversePath();
-                write(RequestUtils.absoluteURL((HttpServletRequest) pageContext.getRequest(), path).toString());
+//                final Content content = DefineContentPathTag.getContent(name, pageContext, getScope(), getProperty());
+//                final String path = content.getReversePath();
+//                write(RequestUtils.absoluteURL((HttpServletRequest) pageContext.getRequest(), path).toString());
             } else {
                 write(getBodyContent().getString().trim());
             }
@@ -103,24 +97,24 @@ public class ContentLinkTag extends BodyTagSupport {
     }
 
     protected void writeStartTag() throws IOException, JspException {
-        final Content content = DefineContentPathTag.getContent(name, pageContext, getScope(), getProperty());
-        if (content.isPublic()) {
-            write(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
-        }
-        write("<a href=\"");
-        write(getContextPath());
-        write(content.getReversePath());
-        write("\"");
-        if (getTarget() != null) {
-            write(" target=\"" + getTarget() + "\"");
-        }
-        if (getTitle() != null) {
-            write(" title=\"" + getTitle() + "\"");
-        }
-        if (getStyleClass() != null) {
-            write(" class=\"" + getStyleClass() + "\"");
-        }
-        write(">");
+//        final Content content = DefineContentPathTag.getContent(name, pageContext, getScope(), getProperty());
+//        if (content.isPublic()) {
+//            write(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
+//        }
+//        write("<a href=\"");
+//        write(getContextPath());
+//        write(content.getReversePath());
+//        write("\"");
+//        if (getTarget() != null) {
+//            write(" target=\"" + getTarget() + "\"");
+//        }
+//        if (getTitle() != null) {
+//            write(" title=\"" + getTitle() + "\"");
+//        }
+//        if (getStyleClass() != null) {
+//            write(" class=\"" + getStyleClass() + "\"");
+//        }
+//        write(">");
     }
 
     protected void writeEndTag() throws IOException {

@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.messaging;
 
 import java.util.Comparator;
 
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class UnitAnnouncementBoard extends UnitAnnouncementBoard_Base {
@@ -10,8 +10,8 @@ public class UnitAnnouncementBoard extends UnitAnnouncementBoard_Base {
     public static final Comparator<UnitAnnouncementBoard> BY_UNIT_DEPTH_AND_NAME = new Comparator<UnitAnnouncementBoard>() {
         @Override
         public int compare(UnitAnnouncementBoard o1, UnitAnnouncementBoard o2) {
-            Unit unit1 = o1.getParty();
-            Unit unit2 = o2.getParty();
+            Unit unit1 = o1.getUnit();
+            Unit unit2 = o2.getUnit();
 
             int result = unit1.getUnitDepth() - unit2.getUnitDepth();
 
@@ -31,21 +31,26 @@ public class UnitAnnouncementBoard extends UnitAnnouncementBoard_Base {
     }
 
     @Override
-    public void setParty(Party party) {
-        super.setParty(party);
+    public String getFullName() {
+        return getUnit().getName();
     }
 
     @Override
-    public Unit getParty() {
-        return (Unit) super.getParty();
+    public String getQualifiedName() {
+        StringBuilder buffer = new StringBuilder();
+        buffer.append(this.getName()).append(" - ").append(this.getUnit().getName());
+        return buffer.toString();
     }
 
-    public void setUnit(Unit unit) {
-        this.setParty(unit);
+    @Override
+    public void delete() {
+        setUnit(null);
+        super.delete();
     }
 
-    public Unit getUnit() {
-        return getParty();
+    @Override
+    public Site getSite() {
+        return getUnit().getSite();
     }
 
     @Override

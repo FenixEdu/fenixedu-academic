@@ -6,11 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,25 +18,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteFileConten
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteItem;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteSection;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.EditFilePermissions;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.AddFunctionalityToContainer;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.ApplyStructureModifications;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.RemoveContentFromContainer;
 import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.FileContent.EducationalResourceType;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.contents.Attachment;
-import net.sourceforge.fenixedu.domain.contents.Container;
-import net.sourceforge.fenixedu.domain.contents.Content;
-import net.sourceforge.fenixedu.domain.contents.FunctionalityCall;
-import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.functionalities.Functionality;
-import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.person.ModifiedContentBean;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -139,10 +124,9 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
     public ActionForward uploadFile(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        Container container = getSelectContainer(request);
         Site site = getSite(request);
 
-        FileContentCreationBean bean = new FileContentCreationBean(container, site);
+        FileContentCreationBean bean = null; // new FileContentCreationBean(container, site);
 
         if (!site.isFileClassificationSupported()) {
             bean.setEducationalLearningResourceType(EducationalResourceType.SITE_CONTENT);
@@ -153,12 +137,6 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
         request.setAttribute("fileItemCreator", bean);
 
         return mapping.findForward("uploadFile");
-    }
-
-    private Container getSelectContainer(HttpServletRequest request) {
-        Item item = selectItem(request);
-
-        return item == null ? selectSection(request) : item;
     }
 
     private Item selectItem(HttpServletRequest request) {
@@ -242,22 +220,6 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
         selectSection(request);
 
         return mapping.findForward("section");
-    }
-
-    public ActionForward functionality(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
-        Site site = getSite(request);
-        FunctionalityCall functionality = getFunctionalityCall(request);
-
-        List<Content> contents = site.getPathTo(functionality);
-        Content selectedContent = contents.get(contents.size() - 2);
-
-        if (selectedContent instanceof Section) {
-            selectSection(request, (Section) selectedContent);
-            return mapping.findForward("section");
-        } else {
-            return sections(mapping, form, request, response);
-        }
     }
 
     protected Section selectSection(final HttpServletRequest request) {
@@ -370,12 +332,12 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
         FileContentCreationBean bean = (FileContentCreationBean) viewState.getMetaObject().getObject();
         RenderUtils.invalidateViewState();
 
-        Container container = bean.getFileHolder();
-        if (container instanceof Item) {
-            selectItem(request);
-        } else {
-            selectSection(request);
-        }
+        // Container container = null; // bean.getFileHolder();
+        //if (container instanceof Item) {
+        //    selectItem(request);
+        //} else {
+        selectSection(request);
+        //}
 
         InputStream formFileInputStream = null;
         File file = null;
@@ -393,7 +355,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 
             file = FileUtils.copyToTemporaryFile(formFileInputStream);
 
-            CreateFileContent.runCreateFileContent(bean.getSite(), container, file, bean.getFileName(), bean.getDisplayName(),
+            CreateFileContent.runCreateFileContent(bean.getSite(), null, file, bean.getFileName(), bean.getDisplayName(),
                     bean.getPermittedGroup(), getLoggedPerson(request), bean.getEducationalLearningResourceType());
 
         } catch (DomainException e) {
@@ -447,7 +409,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
             selectSection(request);
         }
         FileContent fileContent = selectFileContent(request);
-        Site site = fileContent != null ? fileContent.getSite() : null;
+        Site site = fileContent != null ? fileContent.getSection().getSite() : null;
 
         if (site == null) {
             return mapping.findForward("section");
@@ -460,24 +422,6 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
         }
 
         return mapping.findForward("section");
-    }
-
-    public ActionForward editDisplayName(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixActionException, FenixServiceException {
-
-        Item item = selectItem(request);
-        Section section = selectSection(request);
-        FileContent fileItem = selectFileContent(request);
-
-        if (fileItem == null) {
-            return mapping.findForward("section");
-        }
-
-        Attachment attachment = fileItem.getAttachment();
-        Node node = attachment.getParentNode(item != null ? item : section);
-        request.setAttribute("node", node);
-
-        return mapping.findForward("edit-fileItem-name");
     }
 
     private FileContent selectFileContent(HttpServletRequest request) {
@@ -525,7 +469,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 
         FileItemPermissionBean bean = (FileItemPermissionBean) viewState.getMetaObject().getObject();
         try {
-            Site site = fileItem.getSite();
+            Site site = fileItem.getSection().getSite();
             EditFilePermissions.runEditFilePermissions(site, fileItem, bean.getPermittedGroup());
             return mapping.findForward("section");
         } catch (DomainException ex) {
@@ -534,93 +478,6 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
             request.setAttribute("fileItemBean", bean);
             return mapping.findForward("editFile");
         }
-    }
-
-    public ActionForward saveSectionsOrder(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        String orderString = request.getParameter("sectionsOrder");
-        Site site = getSite(request);
-        Section parentSection = getSection(request);
-
-        List<ModifiedContentBean> modifiedContent = getModifiedContent(site, orderString, Collections.EMPTY_LIST);
-
-        try {
-            ApplyStructureModifications.run(modifiedContent);
-        } catch (DomainException de) {
-            addActionMessage(request, de.getMessage(), de.getArgs());
-        } catch (Exception e) {
-            addActionMessage(request, e.getMessage());
-        }
-
-        if (parentSection == null) {
-            return sections(mapping, form, request, response);
-        } else {
-            return section(mapping, form, request, response);
-        }
-    }
-
-    public List<ModifiedContentBean> getModifiedContent(Container container, String structure, List<Class> ignoreClasses) {
-
-        List<Content> flatContent = flatten(Collections.singletonList((Content) container), ignoreClasses);
-
-        List<ModifiedContentBean> modifiedContent = new ArrayList<ModifiedContentBean>();
-
-        if (structure == null) {
-            return new ArrayList<ModifiedContentBean>();
-        }
-
-        String[] nodes = structure.split(",");
-        Map<Integer, Integer> nodeOrder = new HashMap<Integer, Integer>();
-
-        for (String node : nodes) {
-            String[] parts = node.split("-");
-
-            Integer childIndex = getId(parts[0]);
-            Integer currentParentIndex = getId(parts[1]);
-            Integer newParentIndex = getId(parts[2]);
-
-            int orderForParent = 0;
-            if (nodeOrder.containsKey(newParentIndex)) {
-                orderForParent = nodeOrder.get(newParentIndex) + 1;
-                nodeOrder.remove(newParentIndex);
-                nodeOrder.put(newParentIndex, orderForParent);
-            } else {
-                nodeOrder.put(newParentIndex, orderForParent);
-            }
-
-            Container parentContainer = (Container) flatContent.get(newParentIndex);
-            Content content = flatContent.get(childIndex);
-            Container currentContainer = (Container) flatContent.get(currentParentIndex);
-            modifiedContent.add(new ModifiedContentBean(currentContainer, content, parentContainer, orderForParent));
-        }
-
-        return modifiedContent;
-
-    }
-
-    private List<Content> flatten(Collection<Content> contents, List<Class> ignoreClasses) {
-        List<Content> flatContent = new ArrayList<Content>();
-        for (Content content : contents) {
-            if (!shouldBeIgnored(content, ignoreClasses)) {
-                if (content instanceof Container && !(content instanceof Forum)) {
-                    flatContent.add(content);
-                    flatContent.addAll(flatten(((Container) content).getDirectChildrenAsContent(), ignoreClasses));
-                } else {
-                    flatContent.add(content);
-                }
-            }
-        }
-        return flatContent;
-    }
-
-    private boolean shouldBeIgnored(Content content, List<Class> ignoreClasses) {
-        Class contentClass = content.getClass();
-        for (Class clazz : ignoreClasses) {
-            if (contentClass.equals(clazz)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     private Integer getId(String id) {
@@ -647,42 +504,10 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
         return mapping.findForward("organizeItems");
     }
 
-    public ActionForward saveItemsOrder(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        String orderString = request.getParameter("itemsOrder");
-        Section section = getSection(request);
-
-        if (section == null) {
-            return sections(mapping, form, request, response);
-        }
-
-        List<Class> ignoreClasses = new ArrayList<Class>();
-        ignoreClasses.add(Attachment.class);
-
-        List<ModifiedContentBean> modifiedContent = getModifiedContent(section, orderString, ignoreClasses);
-
-        ApplyStructureModifications.run(modifiedContent);
-
-        return section(mapping, form, request, response);
-    }
-
     public ActionForward organizeItemFiles(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         selectItem(request);
         return mapping.findForward("organizeFiles");
-    }
-
-    public ActionForward saveFilesOrder(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        String orderString = request.getParameter("filesOrder");
-        Item item = getItem(request);
-
-        List<ModifiedContentBean> modifiedContent = getModifiedContent(item, orderString, Collections.EMPTY_LIST);
-
-        ApplyStructureModifications.run(modifiedContent);
-
-        return section(mapping, form, request, response);
     }
 
     private void addErrorMessage(HttpServletRequest request, String key) {
@@ -703,48 +528,12 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 
     public ActionForward prepareAddFromPool(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Container container = selectSection(request);
+        Section container = selectSection(request);
         Site site = getSite(request);
 
         request.setAttribute("parent", container == null ? site : container);
-        request.setAttribute("template", site.getTemplate());
 
         return mapping.findForward("addInstitutionSection");
-    }
-
-    public ActionForward addFromPool(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        String containerId = request.getParameter("containerId");
-        String contentId = request.getParameter("contentId");
-
-        if (containerId == null || contentId == null) {
-            return prepareAddFromPool(mapping, actionForm, request, response);
-        }
-
-        Container container = (Container) FenixFramework.getDomainObject(containerId);
-        Content content = FenixFramework.getDomainObject(contentId);
-
-        AddFunctionalityToContainer.run((Functionality) content, container);
-
-        return container instanceof Section ? section(mapping, actionForm, request, response) : sections(mapping, actionForm,
-                request, response);
-    }
-
-    public ActionForward removeFunctionalityFromContainer(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) {
-        String contentId = request.getParameter("contentID");
-        Content content = FenixFramework.getDomainObject(contentId);
-        String containerId = request.getParameter("containerID");
-        Container container = (Container) FenixFramework.getDomainObject(containerId);
-
-        try {
-            RemoveContentFromContainer.run(container, content);
-        } catch (Exception e) {
-            addActionMessage(request, e.getMessage());
-        }
-
-        return container instanceof Section ? section(mapping, actionForm, request, response) : sections(mapping, actionForm,
-                request, response);
     }
 
     protected Site getSite(HttpServletRequest request) {
@@ -755,16 +544,6 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
         }
 
         return (Site) FenixFramework.getDomainObject(siteId);
-    }
-
-    protected FunctionalityCall getFunctionalityCall(HttpServletRequest request) {
-        String functionalityId = request.getParameter("functionalityID");
-
-        if (functionalityId == null) {
-            return null;
-        }
-
-        return (FunctionalityCall) FenixFramework.getDomainObject(functionalityId);
     }
 
     protected abstract String getAuthorNameForFile(HttpServletRequest request);

@@ -4,11 +4,7 @@ import java.io.IOException;
 
 import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
 import javax.servlet.http.HttpServletRequest;
-
-import net.sourceforge.fenixedu.domain.contents.Content;
-import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 
 public class UIContentLink extends UIOutput {
 
@@ -32,19 +28,19 @@ public class UIContentLink extends UIOutput {
             return;
         }
 
-        ResponseWriter writer = context.getResponseWriter();
-        Content content = (Content) this.getAttributes().get("content");
-        String label = (String) this.getAttributes().get("label");
-
-        if (content != null) {
-            if (content.isPublic()) {
-                writer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
-            }
-            writer.append("<a href=\"");
-            writer.append(getContextPath(context));
-            writer.append(content.getReversePath());
-            writer.append("\">").append(label).append("</a>");
-        }
+//        ResponseWriter writer = context.getResponseWriter();
+//        Content content = (Content) this.getAttributes().get("content");
+//        String label = (String) this.getAttributes().get("label");
+//
+//        if (content != null) {
+//            if (content.isPublic()) {
+//                writer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
+//            }
+//            writer.append("<a href=\"");
+//            writer.append(getContextPath(context));
+//            writer.append(content.getReversePath());
+//            writer.append("\">").append(label).append("</a>");
+//        }
     }
 
     private static String getContextPath(FacesContext facesContext) {

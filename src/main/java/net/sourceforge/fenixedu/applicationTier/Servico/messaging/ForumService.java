@@ -46,7 +46,7 @@ public abstract class ForumService {
         final Set<ForumSubscription> subscriptionsToRemove = new HashSet<ForumSubscription>();
 
         for (final ForumSubscription subscription : conversationMessage.getConversationThread().getForum()
-                .getForumSubscriptions()) {
+                .getForumSubscriptionsSet()) {
             Person subscriber = subscription.getPerson();
             if (!readers.contains(subscriber)) {
                 subscriptionsToRemove.add(subscription);

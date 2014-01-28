@@ -12,8 +12,6 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.WebSiteManagersGroup;
-import net.sourceforge.fenixedu.domain.contents.Container;
-import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
@@ -45,8 +43,8 @@ public class UnitSite extends UnitSite_Base {
         setShowAnnouncements(true);
         setShowEvents(true);
 
-        new Section(this, TOP_SECTION_NAME);
-        new Section(this, SIDE_SECTION_NAME);
+        addAssociatedSections(TOP_SECTION_NAME);
+        addAssociatedSections(SIDE_SECTION_NAME);
     }
 
     public UnitSite(Unit unit) {
@@ -134,19 +132,14 @@ public class UnitSite extends UnitSite_Base {
     }
 
     @Override
-    public boolean isDeletable() {
-        return super.isDeletable() && !hasAnyBanners() && !hasLogo() && getManagersOfUnitSiteGroup() == null;
-    }
-
-    @Override
-    protected void disconnect() {
+    public void delete() {
         deleteLinks(getTopLinksSet());
         for (final Person person : getManagersSet()) {
             removeManagers(person);
         }
         setUnit(null);
         deleteLinks(getFooterLinksSet());
-        super.disconnect();
+        super.delete();
     }
 
     protected void deleteLinks(final Set<UnitSiteLink> unitSiteLinks) {
@@ -340,31 +333,6 @@ public class UnitSite extends UnitSite_Base {
             }
         }
 
-    }
-
-    // TODO: Refactor this part in order to have relations instead of a naming
-    // convention.
-
-    private Container getHardCodedContainers(MultiLanguageString name) {
-        for (Content content : getChildrenAsContent()) {
-            if (content.getName().equalInAnyLanguage(name)) {
-                return (Container) content;
-            }
-        }
-        return null;
-    }
-
-    public Container getSideContainer() {
-        return getHardCodedContainers(this.SIDE_SECTION_NAME);
-    }
-
-    public Container getTopContainer() {
-        return getHardCodedContainers(this.TOP_SECTION_NAME);
-    }
-
-    @Override
-    public boolean isUnitSite() {
-        return true;
     }
 
     @Override

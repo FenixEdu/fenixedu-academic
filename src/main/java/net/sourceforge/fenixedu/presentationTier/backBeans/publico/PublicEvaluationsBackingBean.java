@@ -22,9 +22,10 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Project;
+import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.Site.SiteMapper;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
@@ -55,8 +56,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
     private Degree degree;
 
     public String getDegreeID() {
-        FunctionalityContext context = FunctionalityContext.getCurrentContext(getRequest());
-        final DegreeSite site = (DegreeSite) context.getSelectedContainer();
+        final DegreeSite site = SiteMapper.getSite(getRequest());
         if (site != null) {
             final Degree degree = site.getDegree();
             setRequestAttribute("degreeID", degree.getExternalId());

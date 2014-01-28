@@ -247,9 +247,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
                         strBuffer.append("<td class='" + rowClass + "'>");
 
                         final Site site = infoExecutionCourse.getExecutionCourse().getSite();
-                        if (site.isPublic()) {
-                            strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
-                        }
+                        strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
                         strBuffer.append("<a href=\"").append(((HttpServletRequest) pageContext.getRequest()).getContextPath());
                         strBuffer.append(site.getReversePath());
                         strBuffer.append("\">");

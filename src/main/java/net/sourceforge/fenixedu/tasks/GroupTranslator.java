@@ -19,8 +19,6 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.Group.InvalidGroupException;
 import net.sourceforge.fenixedu.domain.accessControl.NoOneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.groups.BennuGroupBridge;
-import net.sourceforge.fenixedu.domain.contents.Content;
-import net.sourceforge.fenixedu.domain.functionalities.GroupAvailability;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
@@ -380,22 +378,6 @@ public class GroupTranslator extends CronTask {
     private int convertContents(List<String> oids) {
 //      net.sourceforge.fenixedu.domain.functionalities.GroupAvailability: targetGroup
         int counter = 0;
-        for (String oid : oids) {
-            Content content = FenixFramework.getDomainObject(oid);
-            try {
-                if (content.getOwnAvailabilityPolicy() != null) {
-                    GroupAvailability group = (GroupAvailability) content.getOwnAvailabilityPolicy();
-                    try {
-                        group.setTargetGroup(convert(group.getTargetGroup()));
-                    } catch (InvalidGroupException e) {
-                        taskLog("Invalid group for content %s\n", oid);
-                        group.setTargetGroup(convert(new NoOneGroup()));
-                    }
-                }
-                counter++;
-            } catch (AlreadyConverted e) {
-            }
-        }
         return counter;
     }
 

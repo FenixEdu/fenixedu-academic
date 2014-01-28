@@ -195,9 +195,6 @@ Documentation:
 		<property name="messageClass" value="warning0"/>
      </renderer>   
 
-    <!--@ The default layout for the a parser report.  -->
-    <renderer type="net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities.ParserReport" class="net.sourceforge.fenixedu.presentationTier.renderers.ParserReportRenderer"/>
-    
     <renderer mode="input" type="java.lang.String" layout="tag-cloud" class="net.sourceforge.fenixedu.presentationTier.renderers.TagInputCloudRenderer">
     	<property name="textClasses" value="smalltxt color888"/>
     </renderer>
@@ -245,24 +242,6 @@ Documentation:
     <!--@ The tree layout allows a collection to be presented as a tree, that is, were you specify how an hierarchy is
           formed and a structure made by lists inside lists is created. -->
 
-	<renderer type="net.sourceforge.fenixedu.domain.contents.Content" layout="content-tree" class="net.sourceforge.fenixedu.presentationTier.renderers.ContentHierarchyTreeRenderer">
-		<property name="rootDragDisabled" value="true"/>
-		<property name="imageFor(Portal)" value="/images/functionalities/folder-disabled.gif"/>
-		<property name="imageFor(ContentJump)" value="/images/functionalities/folder-disabled.gif"/>
-		<property name="imageFor(Section)" value="/images/functionalities/folder.gif"/>
-		<property name="imageFor(Functionality)" value="/images/functionalities/sheet.gif"/>
-		<property name="imageFor(Module)" value="/images/functionalities/folder.gif"/>
-	</renderer>
-	
-    <renderer type="java.util.Collection" layout="functionalities-tree" class="net.sourceforge.fenixedu.presentationTier.renderers.FunctionalitiesTreeRenderer">
-        <property name="moduleEnabledImage" value="/images/functionalities/folder.gif"/>
-        <property name="moduleDisabledImage" value="/images/functionalities/folder-disabled.gif"/>
-        <property name="functionalityEnabledImage" value="/images/functionalities/sheet.gif"/>
-        <property name="functionalityDisabledImage" value="/images/functionalities/sheet-disabled.gif"/>
-        <property name="enabledClass" value="fEnabled"/>
-        <property name="disabledClass" value="fDisabled"/>
-    </renderer>
-
     <renderer type="java.util.Collection" layout="unit-functions-tree" class="net.sourceforge.fenixedu.presentationTier.renderers.UnitFunctionsTreeRenderer">
         <property name="imageFor(Unit)" value="/javaScript/drag-drop-folder-tree/images/folder.gif"/>
         <property name="systemFunctionImage" value="/images/blue-bullet.gif"/>
@@ -277,15 +256,6 @@ Documentation:
         <property name="activePersonFunctionImage" value="/images/list-bullet.gif"/>
     </renderer>
 	
-    <renderer mode="input" type="net.sourceforge.fenixedu.domain.functionalities.Functionality" layout="functionalities-tree" class="net.sourceforge.fenixedu.presentationTier.renderers.FunctionalityInputTreeRenderer">
-        <property name="moduleEnabledImage" value="/images/functionalities/folder.gif"/>
-        <property name="moduleDisabledImage" value="/images/functionalities/folder-disabled.gif"/>
-        <property name="functionalityEnabledImage" value="/images/functionalities/sheet.gif"/>
-        <property name="functionalityDisabledImage" value="/images/functionalities/sheet-disabled.gif"/>
-        <property name="enabledClass" value="fEnabled"/>
-        <property name="disabledClass" value="fDisabled"/>
-    </renderer>
-
     <!--@ Special layout to present a vigilant table with a slightly different organization. -->
     <renderer type="net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup" layout="vigilant-table" class="net.sourceforge.fenixedu.presentationTier.renderers.VigilantTableRender">
     	<property name="convokeTitleKey" value="vigilantTable.convoke.title"/> 
@@ -301,25 +271,10 @@ Documentation:
     	<property name="nullLabel" value="-"/>
     </renderer>
 
-    <renderer type="net.sourceforge.fenixedu.domain.functionalities.GroupAvailability" layout="textual" class="pt.ist.fenixWebFramework.renderers.FormatRenderer">
-        <property name="format" value="${expression}"/>
-    </renderer>
-
     <renderer type="org.fenixedu.bennu.portal.domain.MenuFunctionality" layout="side-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.MenuRenderer"/>
     <renderer type="org.fenixedu.bennu.portal.domain.MenuFunctionality" layout="top-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.TopLevelMenuRenderer"/>
 	<renderer type="org.fenixedu.bennu.portal.domain.MenuFunctionality" layout="bread-crumbs" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.ContextBreadCrumRenderer"/>
 
-    <renderer type="net.sourceforge.fenixedu.domain.contents.Content" layout="manage-content-bread-crumbs" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.BreadCrumbsRenderer"/>
-
-    <renderer type="net.sourceforge.fenixedu.domain.Site" layout="side-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.SiteMenuRenderer">
-    	<property name="depthStyle" value="margin-left: 1em;"/>
-    </renderer>
-    <renderer type="net.sourceforge.fenixedu.domain.Site" layout="unit-side-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.UnitSiteSideMenuRenderer" >
-       	<property name="depthStyle" value="margin-left: 1em;"/>
-    </renderer>
-    <renderer type="net.sourceforge.fenixedu.domain.Site" layout="unit-top-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.UnitSiteTopMenuRenderer"/>
-    <renderer type="net.sourceforge.fenixedu.domain.Section" layout="section-sub-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.SectionMenuRenderer" />
-    
 	<!--@ File displayed as an html picture -->
     <renderer type="net.sourceforge.fenixedu.domain.File"
               class="net.sourceforge.fenixedu.presentationTier.renderers.FileAsPictureRenderer"

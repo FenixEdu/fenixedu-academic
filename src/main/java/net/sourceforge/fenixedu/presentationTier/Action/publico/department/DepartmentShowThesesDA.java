@@ -7,8 +7,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.Site.SiteMapper;
 import net.sourceforge.fenixedu.domain.UnitSite;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.PublicShowThesesDA;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.ThesisFilterBean;
@@ -27,7 +28,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class DepartmentShowThesesDA extends PublicShowThesesDA {
 
     private Unit getUnit(HttpServletRequest request) {
-        UnitSite site = (UnitSite) FunctionalityContext.getCurrentContext(request).getSelectedContainer();
+        UnitSite site = SiteMapper.getSite(request);
         Unit unit = site.getUnit();
 
         if (unit == null) {

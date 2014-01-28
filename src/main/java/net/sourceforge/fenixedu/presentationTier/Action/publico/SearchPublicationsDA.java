@@ -4,9 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
+import net.sourceforge.fenixedu.domain.Site.SiteMapper;
 import net.sourceforge.fenixedu.presentationTier.Action.research.result.publication.SearchPublicationsAction;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -40,11 +39,8 @@ public class SearchPublicationsDA extends SearchPublicationsAction {
 
     protected void setRequestDomainObject(HttpServletRequest request) {
 
-        FunctionalityContext context = FunctionalityContext.getCurrentContext(request);
-        Site site = null;
-        if (context != null) {
-            site = (Site) context.getLastContentInPath(Site.class);
-        } else {
+        Site site = SiteMapper.getSite(request);
+        if (site == null) {
             String siteID = request.getParameter("siteID");
             site = (Site) FenixFramework.getDomainObject(siteID);
         }

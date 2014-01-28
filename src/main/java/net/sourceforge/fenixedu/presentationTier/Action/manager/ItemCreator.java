@@ -17,7 +17,7 @@ public class ItemCreator implements Serializable {
     private boolean visible;
     private boolean showName;
 
-    private Section section;
+    private final Section section;
     private Item nextItem;
 
     private Group permittedGroup;
@@ -89,9 +89,7 @@ public class ItemCreator implements Serializable {
 
         item.setBody(getInformation());
         item.setNextItem(getNextItem());
-        item.setPermittedGroup(getPermittedGroup());
         item.setVisible(isVisible());
         item.setShowName(isShowName());
-        item.logCreateItemtoSection();
     }
 }

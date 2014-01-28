@@ -1735,16 +1735,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard> getBoards() {
-        return getBoardsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyBoards() {
-        return !getBoardsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Event> getEvents() {
         return getEventsSet();
     }

@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.contents.Attachment;
 import pt.ist.fenixframework.FenixFramework;
 
 public class FileContent extends FileContent_Base {
@@ -34,54 +33,21 @@ public class FileContent extends FileContent_Base {
         setResourceType(type);
     }
 
-    @Override
-    public void delete() {
-        Attachment attachment = getAttachment();
-        if (attachment != null) {
-            attachment.delete();
-            setAttachment(null);
-        }
-        super.delete();
-    }
-
     public static FileContent readByOID(String externalId) {
         return FenixFramework.getDomainObject(externalId);
-    }
-
-    public Site getSite() {
-        return getAttachment().getSite();
     }
 
     private String processDisplayName(String name) {
         return name.replace('\\', '-').replace('/', '-');
     }
 
+    public Section getSection() {
+        throw new UnsupportedOperationException("Not implemented");
+    }
+
     @Override
     public void setDisplayName(String displayName) {
         super.setDisplayName(processDisplayName(displayName));
-        final Attachment attachment = getAttachment();
-        if (attachment != null) {
-            attachment.logEditFileToItem();
-        }
-    }
-
-    public void logEditFile() {
-        final Attachment attachment = getAttachment();
-        if (attachment != null) {
-            attachment.logEditFile();
-        }
-    }
-
-    public void logItemFilePermittedGroup() {
-        final Attachment attachment = getAttachment();
-        if (attachment != null) {
-            attachment.logItemFilePermittedGroup();
-        }
-    }
-
-    @Deprecated
-    public boolean hasAttachment() {
-        return getAttachment() != null;
     }
 
 }

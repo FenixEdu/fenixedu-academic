@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -393,19 +392,7 @@ public class Department extends Department_Base {
     }
 
     public DepartmentForum getDepartmentForum() {
-        if (hasDepartmentUnit()) {
-            return getForumFromNodes(getDepartmentUnit().getSite().getChildren());
-        }
-        return null;
-    }
-
-    private DepartmentForum getForumFromNodes(Collection<Node> siteNodes) {
-        for (Node node : siteNodes) {
-            if (node.getChild() instanceof DepartmentForum) {
-                return (DepartmentForum) node.getChild();
-            }
-        }
-        return null;
+        return getForum();
     }
 
     public Person getCurrentDepartmentPresident() {

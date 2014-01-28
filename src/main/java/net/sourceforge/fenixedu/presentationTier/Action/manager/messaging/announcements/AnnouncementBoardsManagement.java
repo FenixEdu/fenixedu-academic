@@ -7,8 +7,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager.messaging.annou
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
+import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -17,6 +17,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -59,13 +60,10 @@ public class AnnouncementBoardsManagement extends FenixDispatchAction {
         int invisibleNotExpiredAnnouncementsCount = 0;
         int invisibleExpiredAnnouncementsCount = 0;
 
-        for (final Content content : rootDomainObject.getContentsSet()) {
-            if (content.isAnAnnouncementBoard()) {
-                boardsCount++;
-            }
+        for (final AnnouncementBoard board : Bennu.getInstance().getAnnouncementBoardSet()) {
+            boardsCount++;
 
-            if (content.isAnAnnouncement()) {
-                final Announcement announcement = (Announcement) content;
+            for (Announcement announcement : board.getAnnouncementSet()) {
                 announcementsCount++;
 
                 if (!announcement.getVisible()) {

@@ -13,15 +13,14 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYear
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean.ResultPublicationType;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.Site.SiteMapper;
 import net.sourceforge.fenixedu.domain.UnitSite;
-import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteVisualizationDA;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -120,18 +119,14 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
     }
 
     protected UnitSite getUnitSite(HttpServletRequest request) {
-        FunctionalityContext context = (FunctionalityContext) FunctionalityContext.getCurrentContext(request);
-        Container container = (Container) context.getLastContentInPath(UnitSite.class);
-        return (UnitSite) container;
+        return SiteMapper.getSite(request);
     }
 
     protected Unit getUnit(HttpServletRequest request) {
         Unit unit = (Unit) request.getAttribute("unit");
 
         if (unit == null) {
-            FunctionalityContext context =
-                    (FunctionalityContext) FunctionalityContext.getCurrentContext(request);
-            UnitSite site = (UnitSite) context.getSelectedContainer();
+            UnitSite site = SiteMapper.getSite(request);
             unit = site.getUnit();
         }
 

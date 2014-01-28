@@ -37,9 +37,7 @@ public class RoomTimeTableLessonContentRenderer extends LessonSlotContentRendere
 
             final Site site = infoExecutionCourse.getExecutionCourse().getSite();
 
-            if (site.isPublic()) {
-                strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
-            }
+            strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
             strBuffer.append("<a href=\"").append(context);
             strBuffer.append(site.getReversePath());
             strBuffer.append("\">");
@@ -58,9 +56,7 @@ public class RoomTimeTableLessonContentRenderer extends LessonSlotContentRendere
             InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
             final Site site = infoExecutionCourse.getExecutionCourse().getSite();
 
-            if (site.isPublic()) {
-                strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
-            }
+            strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
             strBuffer.append("<a href=\"").append(context);
             strBuffer.append(site.getReversePath());
             strBuffer.append("\">");

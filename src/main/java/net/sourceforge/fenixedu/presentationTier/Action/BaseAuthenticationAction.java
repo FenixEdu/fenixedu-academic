@@ -2,10 +2,8 @@ package net.sourceforge.fenixedu.presentationTier.Action;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,8 +17,6 @@ import net.sourceforge.fenixedu.domain.PendingRequest;
 import net.sourceforge.fenixedu.domain.PendingRequestParameter;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson;
-import net.sourceforge.fenixedu.domain.contents.Content;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.inquiries.RegentInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.TeacherInquiryTemplate;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -37,7 +33,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
-import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.exceptions.AuthorizationException;
 
@@ -268,11 +263,6 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 
     private ActionForward handleSessionCreationAndForwardToTeachingService(HttpServletRequest request, User userView,
             HttpSession session) {
-        final List<Content> contents = new ArrayList<Content>();
-        Bennu.getInstance().getRootPortal().addPathContentsForTrailingPath(contents, "departamento/departamento");
-        final FunctionalityContext context = new FunctionalityContext(request, contents);
-        request.setAttribute(FunctionalityContext.CONTEXT_KEY, context);
-
         String teacherOid = userView.getPerson().getTeacher().getExternalId();
         String executionYearOid = ExecutionYear.readCurrentExecutionYear().getExternalId();
 
@@ -295,11 +285,6 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 
     private ActionForward handleSessionCreationAndForwardToPendingTeachingReductionService(HttpServletRequest request,
             User userView, HttpSession session) {
-        final List<Content> contents = new ArrayList<Content>();
-        Bennu.getInstance().getRootPortal().addPathContentsForTrailingPath(contents, "departamento/departamento");
-        final FunctionalityContext context = new FunctionalityContext(request, contents);
-        request.setAttribute(FunctionalityContext.CONTEXT_KEY, context);
-
         HtmlLink link = new HtmlLink();
         link.setModule("/departmentMember");
         link.setUrl("/creditsReductions.do?method=showReductionServices");
@@ -314,11 +299,6 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 
     private ActionForward handleSessionCreationAndForwardToRAIDESInquiriesResponseQuestion(HttpServletRequest request,
             User userView, HttpSession session) {
-        final List<Content> contents = new ArrayList<Content>();
-        Bennu.getInstance().getRootPortal().addPathContentsForTrailingPath(contents, "estudante/estudante");
-        final FunctionalityContext context = new FunctionalityContext(request, contents);
-        request.setAttribute(FunctionalityContext.CONTEXT_KEY, context);
-
         HtmlLink link = new HtmlLink();
         link.setModule("/student");
         link.setUrl("/editMissingCandidacyInformation.do?method=prepareEdit");

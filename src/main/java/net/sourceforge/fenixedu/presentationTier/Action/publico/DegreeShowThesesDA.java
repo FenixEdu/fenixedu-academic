@@ -5,7 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeSite;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
+import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.Site.SiteMapper;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
 import org.apache.struts.action.ActionForm;
@@ -30,8 +31,7 @@ public class DegreeShowThesesDA extends PublicShowThesesDA {
 
     public Degree getDegree(HttpServletRequest request) throws FenixActionException {
 
-        FunctionalityContext currentContext = FunctionalityContext.getCurrentContext(request);
-        DegreeSite selectedContainer = (DegreeSite) currentContext.getSelectedContainer();
+        DegreeSite selectedContainer = SiteMapper.getSite(request);
         Degree degree = selectedContainer.getDegree();
 
         if (degree == null) {

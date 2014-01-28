@@ -3,12 +3,10 @@ package net.sourceforge.fenixedu.domain;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
-import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 import org.apache.commons.lang.StringUtils;
@@ -60,33 +58,6 @@ public class ScientificAreaSite extends ScientificAreaSite_Base {
         }
 
         return new MultiLanguageString().with(Language.pt, buffer.toString());
-    }
-
-    @Override
-    public void setNormalizedName(final MultiLanguageString normalizedName) {
-        // unable to optimize because we cannot track changes to name correctly.
-        // don't call super.setNormalizedName() !
-    }
-
-    @Override
-    public void appendReversePathPart(final StringBuilder stringBuilder) {
-        final ScientificAreaUnit unit = getUnit();
-        appendReversePathPart(stringBuilder, unit);
-    }
-
-    public void appendReversePathPart(final StringBuilder stringBuilder, final Unit unit) {
-        if (stringBuilder.length() > 0) {
-            stringBuilder.append('/');
-        }
-        Unit institutionalUnit = UnitUtils.readInstitutionUnit();
-
-        for (final Unit parentUnit : unit.getParentUnitsPath()) {
-            if (!parentUnit.isAggregateUnit() && parentUnit != institutionalUnit) {
-                stringBuilder.append(Content.normalize(parentUnit.getAcronym()));
-                stringBuilder.append('/');
-            }
-        }
-        stringBuilder.append(Content.normalize(unit.getAcronym()));
     }
 
 }

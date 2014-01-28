@@ -7,18 +7,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
 import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Section;
-import net.sourceforge.fenixedu.domain.contents.Attachment;
-import net.sourceforge.fenixedu.domain.contents.Content;
-import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.rules.ResourceRule;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.rules.Rule;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.rules.SimpleTransformRule;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -91,12 +86,7 @@ public class GenerateSiteArchive extends FenixDispatchAction {
 
         queueResources(request, executionCourse, options, fetcher);
 
-        List<Content> contents = new ArrayList<Content>();
-        contents.add(MetaDomainObjectPortal.getPortal(ExecutionCourseSite.class));
-        contents.add(executionCourse.getSite());
-        FunctionalityContext context = new FunctionalityContext(request, contents);
-
-        fetcher.process(context);
+        fetcher.process();
         archive.finish();
 
         return null;
@@ -286,7 +276,7 @@ public class GenerateSiteArchive extends FenixDispatchAction {
             getFilesFromSection(fetcher, resource, section, globalRules, contextPath);
         }
 
-        for (Section subsection : section.getAssociatedSections()) {
+        for (Section subsection : section.getChildrenSections()) {
             addSectionToFetcher(executionCourse, options, fetcher, contextPath, globalRules, subsection);
         }
         fetcher.queue(resource);
@@ -294,9 +284,8 @@ public class GenerateSiteArchive extends FenixDispatchAction {
 
     private void getFilesFromSection(Fetcher fetcher, Resource sectionResource, Section section, List<Rule> globalRules,
             String contextPath) {
-        for (Item item : section.getChildren(Item.class)) {
-            for (Attachment att : item.getChildren(Attachment.class)) {
-                FileContent file = att.getFile();
+        for (Item item : section.getAssociatedItems()) {
+            for (FileContent file : item.getFileSet()) {
                 sectionResource.addRule(new ResourceRule(file.getDownloadUrl(), "files/" + file.getFilename()));
                 sectionResource.addRule(new ResourceRule(file.getFileDownloadPrefix() + file.getExternalId(), "files/"
                         + file.getFilename()));
@@ -305,13 +294,12 @@ public class GenerateSiteArchive extends FenixDispatchAction {
             }
 
         }
-        for (Attachment att : section.getChildren(Attachment.class)) {
-            FileContent file = att.getFile();
-            sectionResource.addRule(new ResourceRule(contextPath + att.getReversePath(), "files/" + file.getFilename()));
+        for (FileContent file : section.getChildrenFiles()) {
+            sectionResource
+                    .addRule(new ResourceRule(contextPath + "" /* att.getReversePath() */, "files/" + file.getFilename()));
             Resource fileResource = new Resource("files/" + file.getFilename(), file.getDownloadUrl());
             fetcher.queue(fileResource);
         }
-
     }
 
     private ArchiveOptions getOptions(HttpServletRequest request) {

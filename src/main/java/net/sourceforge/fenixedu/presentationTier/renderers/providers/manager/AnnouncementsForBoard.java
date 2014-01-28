@@ -14,7 +14,7 @@ public class AnnouncementsForBoard implements DataProvider {
     @Override
     public Object provide(Object arg0, Object arg1) {
         ExecutionCourseBean bean = (ExecutionCourseBean) arg0;
-        return bean.getSourceExecutionCourse().getBoard().getAnnouncements();
+        return bean.getSourceExecutionCourse().getBoard().getAnnouncementSet();
     }
 
 }

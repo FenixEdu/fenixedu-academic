@@ -188,7 +188,7 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
     protected Collection<Announcement> getThisMonthAnnouncements(AnnouncementBoard board, HttpServletRequest request) {
 
         final List<Announcement> announcements =
-                board.hasWriter(getLoggedPerson(request)) ? new ArrayList<Announcement>(board.getAnnouncements()) : board
+                board.hasWriter(getLoggedPerson(request)) ? new ArrayList<Announcement>(board.getAnnouncementSet()) : board
                         .getApprovedAnnouncements();
 
         List<Announcement> thisMonthAnnouncements = getThisMonthAnnouncements(announcements);
@@ -217,7 +217,7 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
     protected List<Announcement> getStickyAnnouncements(AnnouncementBoard board, HttpServletRequest request) {
 
         final List<Announcement> announcements =
-                board.hasWriter(getLoggedPerson(request)) ? new ArrayList<Announcement>(board.getAnnouncements()) : board
+                board.hasWriter(getLoggedPerson(request)) ? new ArrayList<Announcement>(board.getAnnouncementSet()) : board
                         .getApprovedAnnouncements();
 
         List<Announcement> stickies = filterStickies(announcements);
@@ -363,8 +363,8 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
             formFileInputStream = bean.getFile();
             file = FileUtils.copyToTemporaryFile(formFileInputStream);
 
-            CreateFileContentForBoard.runCreateFileContentForBoard((AnnouncementBoard) bean.getFileHolder(), file,
-                    bean.getFileName(), bean.getDisplayName(), bean.getPermittedGroup(), getLoggedPerson(request));
+            CreateFileContentForBoard.runCreateFileContentForBoard(bean.getFileHolder(), file, bean.getFileName(),
+                    bean.getDisplayName(), bean.getPermittedGroup(), getLoggedPerson(request));
         } catch (DomainException e) {
             addErrorMessage(request, "board", e.getKey(), (Object[]) e.getArgs());
         } finally {

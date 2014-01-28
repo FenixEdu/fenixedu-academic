@@ -11,6 +11,6 @@ public class PublicBoardFileContent extends PublicBoardFileContent_Base {
     public PublicBoardFileContent(String fileName, byte[] content, String creatorName, AnnouncementBoard board) {
         super();
         init(fileName, fileName, content, new EveryoneGroup());
-        board.addFile(this);
+        board.addFileContent(this);
     }
 }

@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.CreateUnitSite;
 import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.contents.Portal;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.CustomUnitSiteManagementDA;
@@ -80,7 +79,7 @@ public class UnitSiteManagementDA extends CustomUnitSiteManagementDA {
             HttpServletResponse response) throws Exception {
         VariantBean multilanguagebean = getMultiLanguageString();
         Site site = getSite(request);
-        Portal.getRootPortal().addContentJump(site, multilanguagebean.getMLString());
+//        Portal.getRootPortal().addContentJump(site, multilanguagebean.getMLString());
         return prepare(mapping, actionForm, request, response);
     }
 

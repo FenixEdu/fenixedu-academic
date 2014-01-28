@@ -35,9 +35,9 @@ public class DegreeSite extends DegreeSite_Base {
     }
 
     @Override
-    protected void disconnect() {
+    public void delete() {
         setDegree(null);
-        super.disconnect();
+        super.delete();
     }
 
     @Override
@@ -45,12 +45,6 @@ public class DegreeSite extends DegreeSite_Base {
         final Degree degree = getDegree();
         final String name = degree.getSigla();
         return new MultiLanguageString().with(Language.pt, name);
-    }
-
-    @Override
-    public void setNormalizedName(final MultiLanguageString normalizedName) {
-        // unable to optimize because we cannot track changes to name correctly.
-        // don't call super.setNormalizedName() !
     }
 
     @Override

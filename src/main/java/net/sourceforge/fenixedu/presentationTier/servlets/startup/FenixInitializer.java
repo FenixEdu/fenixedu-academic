@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart;
 import net.sourceforge.fenixedu.domain.person.PersonNamePart;
 import net.sourceforge.fenixedu.presentationTier.Action.externalServices.PhoneValidationUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.util.ExceptionInformation;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.webServices.jersey.api.FenixJerseyAPIConfig;
@@ -245,13 +244,6 @@ public class FenixInitializer implements ServletContextListener {
                 if (FileUpload.isMultipartContent(request)) {
                     return false;
                 }
-                final FunctionalityContext FunctionalityContext = getContextAttibute(request);
-                if (FunctionalityContext != null) {
-                    final Container container = FunctionalityContext.getSelectedTopLevelContainer();
-                    if (container != null && container.isPublic() && (uri.indexOf(".do") < 0 || uri.indexOf("publico/") >= 0)) {
-                        return false;
-                    }
-                }
                 if (uri.indexOf("notAuthorized.do") >= 0) {
                     return false;
                 }
@@ -273,9 +265,6 @@ public class FenixInitializer implements ServletContextListener {
                         && (uri.indexOf("api/fenix") == -1);
             }
 
-            private FunctionalityContext getContextAttibute(final HttpServletRequest httpServletRequest) {
-                return (FunctionalityContext) httpServletRequest.getAttribute(FunctionalityContext.CONTEXT_KEY);
-            }
         });
     }
 

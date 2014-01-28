@@ -63,10 +63,4 @@ public class DepartmentSite extends DepartmentSite_Base {
         return new MultiLanguageString().with(Language.pt, getUnit().getAcronym());
     }
 
-    @Override
-    public void setNormalizedName(final MultiLanguageString normalizedName) {
-        // unable to optimize because we cannot track changes to name correctly.
-        // don't call super.setNormalizedName() !
-    }
-
 }

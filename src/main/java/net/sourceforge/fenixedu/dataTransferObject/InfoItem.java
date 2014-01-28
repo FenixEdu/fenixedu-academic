@@ -156,7 +156,7 @@ public class InfoItem extends InfoObject implements Comparable {
 
             List<InfoFileContent> infoFileItems = new ArrayList<InfoFileContent>();
 
-            for (FileContent fileItem : item.getFileItems()) {
+            for (FileContent fileItem : item.getFileSet()) {
                 infoFileItems.add(InfoFileContent.newInfoFromDomain(fileItem));
             }
 

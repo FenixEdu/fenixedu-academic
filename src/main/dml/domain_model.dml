@@ -3068,18 +3068,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         HourMinuteSecond startOfProposalPeriodTimeHourMinuteSecond;
     }
 
-    class functionalities.AvailabilityPolicy  {
-        String contentId;
-    }
-
-        class functionalities.GroupAvailability extends functionalities.AvailabilityPolicy {
-            Group targetGroup;
-        }
-
-            class functionalities.ExpressionGroupAvailability extends functionalities.GroupAvailability {
-                String expression;
-            }
-
     class gesdis.CourseHistoric  {
         Integer approved;
         String curricularYear;
@@ -5858,29 +5846,10 @@ class elections.DelegateElectionCandidacyPeriod extends elections.DelegateElecti
 class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionPeriod {
 }
 
-    class contents.Content  {
-        String contentId;
-        DateTime creationDate;
-        MultiLanguageString name;
-        MultiLanguageString title;
-        MultiLanguageString body;
-        MultiLanguageString description;
-        MultiLanguageString normalizedName;
-    }
-
-        class contents.Element extends contents.Content {
-	    }
-
-	        class contents.Redirect extends contents.Element {
-	        	String url;
-		    }
-        
-        class contents.Attachment extends contents.Element {
-}
-
-            class messaging.Announcement extends contents.Element {
+            class messaging.Announcement {
                 String author;
                 String authorEmail;
+                MultiLanguageString body;
                 MultiLanguageString excerpt;
                 MultiLanguageString keywords;
                 DateTime lastModification;
@@ -5898,55 +5867,12 @@ class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionP
                 Boolean sticky;
                 Integer priority;
                 Boolean publication;
+                DateTime creationDate;
     }
 
-                        class functionalities.ExecutionPath  {
-                            String executionPath;
-                            String contentId;
-}
-
-            class functionalities.Functionality extends contents.Element {
-                //MultiLanguageString description;
-                //Integer orderInModule;
-                //String parameters;
-                //UUID uuid; // TODO: replace uuid by relative content ids
-                String executionPath;
-                //Boolean principal;
-                //Boolean relative;
-                Boolean visible;
-    }
-    
-            class contents.FunctionalityCall extends contents.Element {
-                
-            }
-
-    class functionalities.FunctionalityParameter  {
-        String name;
-}
-
-        class contents.Container extends contents.Content {
-            Boolean maximizable;
-            String prefix;
-    }
-
-            class contents.Portal extends contents.Container {
-            }
-
-            class contents.MetaDomainObjectPortal extends contents.Portal {
-                String type;
-            }
-
-            class contents.ContentJump extends contents.Portal {
-            }
-            
-            class functionalities.Module extends contents.Container {
-                //Boolean maximized;
-                //String prefix;
-                String executionPath;
-                Boolean visible;
-            }
-
-                class messaging.AnnouncementBoard extends contents.Container {
+                class messaging.AnnouncementBoard {
+                    DateTime creationDate;
+                    MultiLanguageString name;
                     Group managers;
                     Boolean mandatory;
                     Group readers;
@@ -5960,40 +5886,27 @@ class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionP
                             ExecutionCourseBoardPermittedGroupType executionCoursePermittedWriteGroupType;
                     }
 
-                    class messaging.PartyAnnouncementBoard extends messaging.AnnouncementBoard {
-                        }
-
-                        class messaging.UnitAnnouncementBoard extends messaging.PartyAnnouncementBoard {
+                        class messaging.UnitAnnouncementBoard extends messaging.AnnouncementBoard {
                                 UnitBoardPermittedGroupType unitPermittedManagementGroupType;
                                 UnitBoardPermittedGroupType unitPermittedReadGroupType;
                                 UnitBoardPermittedGroupType unitPermittedWriteGroupType;
                         }
 
 
-    class contents.Node  {
-        Boolean ascending;
-        Boolean visible;
-        String contentId;
+    class messaging.ConversationMessage {
+        DateTime creationDate;
+        MultiLanguageString body;
     }
 
-        class contents.DateOrderedNode extends contents.Node {
-        }
-
-        class contents.ExplicitOrderNode extends contents.Node {
-            Integer nodeOrder;
-        }
-        
-        class messaging.AnnouncementNode extends contents.Node {
-        }
-    
-        
-    class messaging.ConversationMessage extends contents.Element {
+    class messaging.ConversationThread {
+        DateTime creationDate;
+        MultiLanguageString title;
     }
 
-    class messaging.ConversationThread extends contents.Container {
-    }
-
-    class messaging.Forum extends contents.Container {
+    class messaging.Forum {
+        DateTime creationDate;
+        MultiLanguageString name;
+        MultiLanguageString description;
     }
 
     class messaging.ForumSubscription  {
@@ -6006,18 +5919,23 @@ class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionP
         class messaging.DepartmentForum extends messaging.Forum {
         }
 
-    class Item extends contents.Container {
+    class Item {
+        MultiLanguageString name;
+        MultiLanguageString body;
         Boolean enabled;
         Boolean showName;
     }
 
-    class Section extends contents.Container {
+    class Section {
+        DateTime creationDate;
+        MultiLanguageString name;
         Boolean enabled;
         YearMonthDay modificationDate;
         Boolean showSubSections;
     }
 
-    class Site extends contents.Portal {
+    class Site {
+        MultiLanguageString description;
         String alternativeSite;
         String style;
     }
@@ -11389,6 +11307,18 @@ relation FileTagging {
     }
 }
 
+relation ExecutionCourseForumCourse {
+    messaging.ExecutionCourseForum playsRole forum {
+        multiplicity *;
+    }
+    ExecutionCourse playsRole executionCourse;
+}
+
+relation DepartmentForumDepartment {
+    messaging.DepartmentForum playsRole forum;
+    Department playsRole department;
+}
+
 relation ForumSubscriptionForum {
     messaging.ForumSubscription playsRole forumSubscriptions {
         multiplicity *;
@@ -11401,6 +11331,41 @@ relation ForumSubscriptionPerson {
         multiplicity *;
     }
     Person playsRole person;
+}
+
+relation ForumConversationThreads {
+    public messaging.Forum playsRole forum;
+    public messaging.ConversationThread playsRole conversationThread {
+        multiplicity *;
+    }
+}
+
+relation ConversationThreadHasMessages {
+    public messaging.ConversationThread playsRole conversationThread;
+    public messaging.ConversationMessage playsRole message {
+        multiplicity *;
+    }
+}
+
+relation ConversationMessageCreator {
+    public Person playsRole creator;
+    public messaging.ConversationMessage playsRole conversationMessage {
+        multiplicity *;
+    }
+}
+
+relation ConversationThreadCreator {
+    public Person playsRole creator;
+    public messaging.ConversationThread playsRole conversationThread {
+        multiplicity *;
+    }
+}
+
+relation ForumCreator {
+    public Person playsRole creator;
+    public messaging.Forum playsRole forum {
+        multiplicity *;
+    }
 }
 
 relation FunctionParentInherentFunction {
@@ -11780,11 +11745,6 @@ relation InvitationParty {
     organizationalStructure.Invitation playsRole invitationAccountabilities {
         multiplicity *;
     }
-}
-
-relation AttachmentFileContent {
-    contents.Attachment playsRole attachment;
-    FileContent playsRole file;
 }
 
 relation JournalIssueArticleAssociation {
@@ -12230,11 +12190,11 @@ relation PartyAccount {
     }
 }
 
-relation PartyAnnouncementBoard {
-    messaging.PartyAnnouncementBoard playsRole boards {
+relation UnitAnnouncementBoard {
+    messaging.UnitAnnouncementBoard playsRole boards {
         multiplicity *;
     }
-    organizationalStructure.Party playsRole party;
+    organizationalStructure.Unit playsRole unit;
 }
 
 relation PartyCountry {
@@ -14096,13 +14056,6 @@ relation RootDomainObjectGuideSituation {
     }
 }
 
-relation RootDomainObjectHasAvailabilityPolicy {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    functionalities.AvailabilityPolicy playsRole availabilityPolicy {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectHoliday {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Holiday playsRole holidays {
@@ -15387,9 +15340,11 @@ relation SibsPaymentFileEntrySibsPaymentFile {
     gratuity.masterDegree.SibsPaymentFile playsRole sibsPaymentFile;
 }
 
-relation ContentJumpSite {
-    contents.ContentJump playsRole jumpPoint;
-    Site playsRole jumpTo;
+relation SiteBennu {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole bennu;
+    Site playsRole site {
+        multiplicity *;
+    }
 }
 
 /*
@@ -16780,111 +16735,6 @@ relation PersonSantanderPIN {
 	cardGeneration.SantanderPIN playsRole santanderPIN;
 }
 
-relation ContentHasCreator {
-    Person playsRole creator;
-    contents.Content playsRole createdContents {
-        multiplicity *;
-    }
-}
-
-relation ContentHasAvailabilityPolicy {
-    contents.Content playsRole content;
-    functionalities.AvailabilityPolicy playsRole availabilityPolicy;
-}
-
-relation ContentRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    contents.Content playsRole contents {
-        multiplicity *;
-    }
-}
-
-
-relation FunctionalityFunctionalityCall {
-    functionalities.Functionality playsRole functionality;
-    contents.FunctionalityCall playsRole functionalityCalls {
-        multiplicity *;
-    }
-}
-
-relation ContainerNode {
-    contents.Container playsRole parent;
-    contents.Node playsRole children {
-        multiplicity *;
-    }
-}
-
-relation ContentNode {
-    contents.Content playsRole child;
-    contents.Node playsRole parents {
-        multiplicity *;
-    }
-}
-
-relation NodeRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-        contents.Node playsRole nodes {
-        multiplicity *;
-    }
-}
-
-relation FunctionalityExecutionPath {
-    functionalities.Functionality playsRole functionality;
-    functionalities.ExecutionPath playsRole executionPathValue;
-}
-
-relation FunctionalityHasParameters {
-    functionalities.Functionality playsRole functionality;
-    functionalities.FunctionalityParameter playsRole parameters {
-        multiplicity *;
-    }
-}
-
-relation RootModule {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole moduleRootDomainObject;
-    functionalities.Module playsRole rootModule;
-        }
-
-relation RootPortal {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole portalRootDomainObject;
-    contents.Portal playsRole rootPortal;
-}
-
-relation ContainerPointsContent {
-    contents.Container playsRole initialContainer {
-                multiplicity *;
-        }
-    contents.Content playsRole initialContent;
-}
-
-relation RootDomainObjectFunctionalityParameter {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    functionalities.FunctionalityParameter playsRole functionalityParameters {
-                multiplicity *;
-        }
-}
-
-relation ExecutionPathRootDomainObject {
-        .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-        functionalities.ExecutionPath playsRole executionPaths {
-                multiplicity *;
-        }
-}
-
-relation MetaDomainObjectPortalBennu {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole bennu;
-    contents.MetaDomainObjectPortal playsRole metaDomainObjectPortal {
-        multiplicity *;
-    }
-}
-
-relation PortalPool {
-    contents.MetaDomainObjectPortal playsRole portal;
-    contents.Content playsRole pool {
-                multiplicity *;
-        }
-}
-
 relation PersonCardGenerationProblem {
         Person playsRole person;
         cardGeneration.CardGenerationProblem playsRole cardGenerationProblems {
@@ -17779,6 +17629,34 @@ relation AnnouncementCategoryAnnouncement {
 relation AnnouncementCampus {
     space.Campus playsRole campus;
     messaging.Announcement playsRole announcements {
+        multiplicity *;
+    }
+}
+
+relation AnnouncementCreator {
+    Person playsRole creator;
+    messaging.Announcement playsRole createAnnouncements {
+        multiplicity *;
+    }
+}
+
+relation AnnouncementBoardAnnouncement {
+    messaging.AnnouncementBoard playsRole announcementBoard;
+    messaging.Announcement playsRole announcement {
+        multiplicity *;
+    }
+}
+
+relation AnnnouncementBoardFileContent {
+    messaging.AnnouncementBoard playsRole announcementBoard;
+    FileContent playsRole fileContent {
+        multiplicity *;
+    }
+}
+
+relation AnnouncementBoardBennu {
+    .org.fenixedu.bennu.core.domain.Bennu playsRole bennu;
+    messaging.AnnouncementBoard playsRole announcementBoard {
         multiplicity *;
     }
 }

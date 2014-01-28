@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard.AnnouncementPresentationBean;
@@ -28,6 +27,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -103,16 +103,13 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
         final DateTime startDate = getStartDate(request);
         int toShowCount = AnnouncementsStartPageHandler.RECENT_BOARDS_TO_SHOW;
 
-        for (final Content content : rootDomainObject.getContentsSet()) {
-            if (content.isAnAnnouncementBoard()) {
-                final AnnouncementBoard board = (AnnouncementBoard) content;
-                if (board.hasReader(getLoggedPerson(request)) || board.hasWriter(getLoggedPerson(request))) {
-                    if (toShowCount == 0 || (startDate != null && board.getCreationDate().isBefore(startDate))) {
-                        break;
-                    }
-                    result.add(board);
-                    toShowCount--;
+        for (final AnnouncementBoard board : Bennu.getInstance().getAnnouncementBoardSet()) {
+            if (board.hasReader(getLoggedPerson(request)) || board.hasWriter(getLoggedPerson(request))) {
+                if (toShowCount == 0 || (startDate != null && board.getCreationDate().isBefore(startDate))) {
+                    break;
                 }
+                result.add(board);
+                toShowCount--;
             }
         }
 
@@ -247,20 +244,17 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
                 new TreeSet<ExecutionCourseAnnouncementBoard>(
                         ExecutionCourseAnnouncementBoard.COMPARE_BY_EXECUTION_PERIOD_AND_NAME);
 
-        for (final Content content : rootDomainObject.getContentsSet()) {
-            if (content.isAnAnnouncementBoard()) {
-                final AnnouncementBoard board = (AnnouncementBoard) content;
-                if (board.hasReaderOrWriter(getLoggedPerson(request))) {
-                    if (board instanceof UnitAnnouncementBoard) {
-                        unitAnnouncementBoards.add((UnitAnnouncementBoard) board);
+        for (final AnnouncementBoard board : Bennu.getInstance().getAnnouncementBoardSet()) {
+            if (board.hasReaderOrWriter(getLoggedPerson(request))) {
+                if (board instanceof UnitAnnouncementBoard) {
+                    unitAnnouncementBoards.add((UnitAnnouncementBoard) board);
 
-                    } else if (board instanceof ExecutionCourseAnnouncementBoard) {
-                        ExecutionCourseAnnouncementBoard executionCourseBoard = (ExecutionCourseAnnouncementBoard) board;
-                        if (executionCourseBoard.hasExecutionCourse()
-                                && executionCourseBoard.getExecutionCourse().getExecutionPeriod().getState()
-                                        .equals(PeriodState.CURRENT)) {
-                            executionCourseAnnouncementBoards.add(executionCourseBoard);
-                        }
+                } else if (board instanceof ExecutionCourseAnnouncementBoard) {
+                    ExecutionCourseAnnouncementBoard executionCourseBoard = (ExecutionCourseAnnouncementBoard) board;
+                    if (executionCourseBoard.hasExecutionCourse()
+                            && executionCourseBoard.getExecutionCourse().getExecutionPeriod().getState()
+                                    .equals(PeriodState.CURRENT)) {
+                        executionCourseAnnouncementBoards.add(executionCourseBoard);
                     }
                 }
             }

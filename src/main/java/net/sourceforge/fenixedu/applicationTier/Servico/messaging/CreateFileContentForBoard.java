@@ -32,7 +32,7 @@ public class CreateFileContentForBoard extends FileContentService {
         final byte[] bs = FileUtils.readFileToByteArray(file);
         FileContent fileContent = new FileContent(originalFilename, displayName, bs, permittedGroup, null);
 
-        board.addFile(fileContent);
+        board.addFileContent(fileContent);
     }
 
     // Service Invokers migrated from Berserk

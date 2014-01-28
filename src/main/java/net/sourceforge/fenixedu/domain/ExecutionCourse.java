@@ -601,7 +601,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         }
 
         for (ExecutionCourseForum forum : getForuns()) {
-            if (forum.getConversationThreads().size() != 0) {
+            if (forum.getConversationThreadSet().size() != 0) {
                 throw new DomainException("error.execution.course.cant.delete");
             }
         }
@@ -1202,47 +1202,43 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return visibleMetadata;
     }
 
-    public void createForum(MultiLanguageString name, MultiLanguageString description) {
-
-        if (hasForumWithName(name)) {
-            throw new DomainException("executionCourse.already.existing.forum");
-        }
-        this.addForuns(new ExecutionCourseForum(name, description));
-    }
-
     public ExecutionCourseAnnouncementBoard createExecutionCourseAnnouncementBoard(final String name) {
         return new ExecutionCourseAnnouncementBoard(name, this, new ExecutionCourseTeachersGroup(this), null, new RoleTypeGroup(
                 RoleType.MANAGER), ExecutionCourseBoardPermittedGroupType.ECB_EXECUTION_COURSE_TEACHERS,
                 ExecutionCourseBoardPermittedGroupType.ECB_PUBLIC, ExecutionCourseBoardPermittedGroupType.ECB_MANAGER);
     }
 
-    public boolean hasForumWithName(MultiLanguageString name) {
-        return hasSite() && getForumByName(name) != null;
-    }
-
-    public ExecutionCourseForum getForumByName(MultiLanguageString name) {
-        if (!hasSite()) {
-            return null;
-        }
-
-        return getSite().getForumByName(name);
-    }
-
-    public void addForuns(ExecutionCourseForum forum) {
-        if (!hasSite()) {
-            throw new DomainException("error.cannot.add.forum.empty.site");
-        }
-
-        getSite().addForum(forum);
-    }
-
-    public void checkIfCanAddForum(MultiLanguageString name) {
-        if (!hasSite()) {
-            throw new DomainException("error.cannot.add.forum.empty.site");
-        }
+    public void createForum(MultiLanguageString name, MultiLanguageString description) {
         if (hasForumWithName(name)) {
             throw new DomainException("executionCourse.already.existing.forum");
         }
+        this.addForum(new ExecutionCourseForum(name, description));
+    }
+
+    @Override
+    public void addForum(ExecutionCourseForum executionCourseForum) {
+        checkIfCanAddForum(executionCourseForum.getNormalizedName());
+        super.addForum(executionCourseForum);
+    }
+
+    public void checkIfCanAddForum(MultiLanguageString name) {
+        if (hasForumWithName(name)) {
+            throw new DomainException("executionCourse.already.existing.forum");
+        }
+    }
+
+    public boolean hasForumWithName(MultiLanguageString name) {
+        return getForumByName(name) != null;
+    }
+
+    public ExecutionCourseForum getForumByName(MultiLanguageString name) {
+        for (final ExecutionCourseForum executionCourseForum : getForuns()) {
+            if (executionCourseForum.getNormalizedName().equalInAnyLanguage(name)) {
+                return executionCourseForum;
+            }
+        }
+
+        return null;
     }
 
     public SortedSet<Degree> getDegreesSortedByDegreeName() {
@@ -2086,12 +2082,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         }
     }
 
-    public List<ExecutionCourseForum> getForuns() {
-        if (hasSite()) {
-            return new ArrayList<ExecutionCourseForum>(getSite().getForuns());
-        } else {
-            return Collections.emptyList();
-        }
+    public Set<ExecutionCourseForum> getForuns() {
+        return getForumSet();
     }
 
     public AcademicInterval getAcademicInterval() {
@@ -2672,7 +2664,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public boolean getHasAnnouncements() {
         ExecutionCourseAnnouncementBoard board = getBoard();
         if (board != null) {
-            return !board.getAnnouncements().isEmpty();
+            return !board.getAnnouncementSet().isEmpty();
         }
         return false;
     }

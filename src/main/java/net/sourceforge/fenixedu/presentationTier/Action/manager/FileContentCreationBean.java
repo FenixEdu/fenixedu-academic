@@ -7,13 +7,13 @@ import net.sourceforge.fenixedu.domain.FileContent.EducationalResourceType;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.contents.Container;
+import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 
 public class FileContentCreationBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Container fileHolder;
+    private AnnouncementBoard fileHolder;
     private Site site;
 
     private String fileName;
@@ -30,11 +30,11 @@ public class FileContentCreationBean implements Serializable {
         return authorsName;
     }
 
-    public Container getFileHolder() {
+    public AnnouncementBoard getFileHolder() {
         return fileHolder;
     }
 
-    public void setFileHolder(Container fileHolder) {
+    public void setFileHolder(AnnouncementBoard fileHolder) {
         this.fileHolder = fileHolder;
     }
 
@@ -50,7 +50,7 @@ public class FileContentCreationBean implements Serializable {
         this.authorsName = authorsName;
     }
 
-    public FileContentCreationBean(Container container, Site site) {
+    public FileContentCreationBean(AnnouncementBoard container, Site site) {
         super();
         setSite(site);
         setFileHolder(container);

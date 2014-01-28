@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.FileContent.EducationalResourceType;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.io.FileUtils;
@@ -23,7 +23,7 @@ import pt.ist.fenixframework.Atomic;
  */
 public class CreateFileContent extends FileContentService {
 
-    protected void run(Site site, Container container, File file, String originalFilename, String displayName,
+    protected void run(Site site, Section container, File file, String originalFilename, String displayName,
             Group permittedGroup, Person person, EducationalResourceType type) throws DomainException, IOException {
 
         final byte[] bs = FileUtils.readFileToByteArray(file);
@@ -48,9 +48,9 @@ public class CreateFileContent extends FileContentService {
     private static final CreateFileContent serviceInstance = new CreateFileContent();
 
     @Atomic
-    public static void runCreateFileContent(Site site, Container container, File file, String originalFilename,
-            String displayName, Group permittedGroup, Person person, EducationalResourceType type) throws FenixServiceException,
-            DomainException, IOException, NotAuthorizedException {
+    public static void runCreateFileContent(Site site, Section container, File file, String originalFilename, String displayName,
+            Group permittedGroup, Person person, EducationalResourceType type) throws FenixServiceException, DomainException,
+            IOException, NotAuthorizedException {
         SiteManagerAuthorizationFilter.instance.execute(site);
         serviceInstance.run(site, container, file, originalFilename, displayName, permittedGroup, person, type);
     }

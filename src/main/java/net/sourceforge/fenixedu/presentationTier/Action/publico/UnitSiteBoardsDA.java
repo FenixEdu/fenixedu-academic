@@ -8,11 +8,12 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.Site.SiteMapper;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.AnnouncementManagement;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -67,7 +68,7 @@ public abstract class UnitSiteBoardsDA extends AnnouncementManagement {
         String parameter = request.getParameter(getContextParamName());
 
         if (parameter == null) {
-            UnitSite site = (UnitSite) FunctionalityContext.getCurrentContext(request).getSelectedContainer();
+            UnitSite site = SiteMapper.getSite(request);
             return site.getUnit();
         }
 

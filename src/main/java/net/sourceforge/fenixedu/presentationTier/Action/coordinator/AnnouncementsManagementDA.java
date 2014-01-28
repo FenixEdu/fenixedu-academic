@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
-import net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard;
+import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.AnnouncementManagement;
@@ -66,7 +66,7 @@ public class AnnouncementsManagementDA extends AnnouncementManagement {
         if (unit == null || unit.getBoards().isEmpty()) {
             return mapping.findForward("noBoards");
         } else {
-            Collection<PartyAnnouncementBoard> boards = unit.getBoards();
+            Collection<UnitAnnouncementBoard> boards = unit.getBoards();
             if (boards.size() > 1) {
                 return start(mapping, actionForm, request, response);
             } else {

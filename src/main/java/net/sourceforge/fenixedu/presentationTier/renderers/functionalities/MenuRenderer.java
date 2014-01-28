@@ -4,9 +4,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.contents.Content;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
-
 import org.fenixedu.bennu.portal.domain.MenuContainer;
 import org.fenixedu.bennu.portal.domain.MenuFunctionality;
 import org.fenixedu.bennu.portal.domain.MenuItem;
@@ -151,19 +148,6 @@ public class MenuRenderer extends OutputRenderer {
         component.setTitle(entry.getTitle().getContent());
 
         return component;
-    }
-
-    public static String findPathFor(final String contextPath, final Content targetContent, final FunctionalityContext context,
-            final Collection<String> subPath) {
-        final StringBuilder buffer = new StringBuilder(contextPath);
-        buffer.append(context.getSelectedContainerPath());
-        for (final String name : subPath) {
-            buffer.append('/');
-            buffer.append(name);
-        }
-        buffer.append('/');
-        buffer.append(targetContent.getNormalizedName().getContent());
-        return buffer.toString();
     }
 
 }

@@ -84,7 +84,6 @@
     { "name": "personnelSection", "configFile": "struts-personnelSection.xml" },
     { "name": "scientificCouncil", "configFile": "struts-scientificCouncil.xml" },
     { "name": "person", "configFile": "struts-person.xml" },
-    { "name": "functionalities", "configFile": "struts-functionalities.xml" },
     { "name": "bolonhaManager", "configFile": "struts-bolonhaManager.xml" },
     { "name": "operator", "configFile": "struts-operator.xml" },
     { "name": "resourceAllocationManager", "configFile": "struts-resourceAllocationManager.xml" },
@@ -108,9 +107,7 @@
     { "name": "internationalRelatOffice", "configFile": "struts-internationalRelatOffice.xml" },
     { "name": "pedagogicalCouncil", "configFile": "struts-pedagogicalCouncil.xml" },
     { "name": "facultyAdmOffice", "configFile": "struts-facultyAdmOffice.xml" },
-    { "name": "student", "configFile": "struts-student.xml" },
-    { "name": "person/functionalities", "configFile": "struts-functionalities.xml" },
-    { "name": "manager/functionalities", "configFile": "struts-functionalities.xml" }
+    { "name": "student", "configFile": "struts-student.xml" }
   ],
   "exceptionHandlers": [
     {

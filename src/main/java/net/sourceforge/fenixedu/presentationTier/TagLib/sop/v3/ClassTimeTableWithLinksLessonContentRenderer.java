@@ -44,9 +44,7 @@ public class ClassTimeTableWithLinksLessonContentRenderer extends LessonSlotCont
             final InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
             final Site site = infoExecutionCourse.getExecutionCourse().getSite();
 
-            if (site.isPublic()) {
-                strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
-            }
+            strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
 
             strBuffer.append("<a href=\"").append(context);
             strBuffer.append(site.getReversePath());
@@ -68,9 +66,7 @@ public class ClassTimeTableWithLinksLessonContentRenderer extends LessonSlotCont
             final InfoExecutionCourse infoExecutionCourse = lesson.getInfoShift().getInfoDisciplinaExecucao();
             final Site site = infoExecutionCourse.getExecutionCourse().getSite();
 
-            if (site.isPublic()) {
-                strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
-            }
+            strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
             strBuffer.append("<a href=\"").append(context);
             strBuffer.append(infoExecutionCourse.getExecutionCourse().getSite().getReversePath());
             strBuffer.append("\">");
@@ -89,9 +85,7 @@ public class ClassTimeTableWithLinksLessonContentRenderer extends LessonSlotCont
             final ExecutionCourse executionCourse = aggregation.getShift().getExecutionCourse();
             final Site site = executionCourse.getSite();
 
-            if (site.isPublic()) {
-                strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
-            }
+            strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
             strBuffer.append("<a href=\"").append(context);
             strBuffer.append(site.getReversePath());
             strBuffer.append("\">");

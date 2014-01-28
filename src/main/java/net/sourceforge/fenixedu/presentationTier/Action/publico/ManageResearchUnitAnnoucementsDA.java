@@ -7,10 +7,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.ResearchUnitSite;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.contents.Container;
-import net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard;
+import net.sourceforge.fenixedu.domain.Site.SiteMapper;
+import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -30,10 +29,9 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 public class ManageResearchUnitAnnoucementsDA extends UnitSiteBoardsDA {
 
     protected ResearchUnitSite getSite(HttpServletRequest request) {
-        FunctionalityContext context = (FunctionalityContext) FunctionalityContext.getCurrentContext(request);
-        Container container = (Container) context.getLastContentInPath(Site.class);
-        if (container != null) {
-            return (ResearchUnitSite) container;
+        Site content = SiteMapper.getSite(request);
+        if (content != null) {
+            return (ResearchUnitSite) content;
         }
         String siteID = request.getParameter("siteID");
         if (siteID != null) {
@@ -52,7 +50,7 @@ public class ManageResearchUnitAnnoucementsDA extends UnitSiteBoardsDA {
     public ActionForward editAnnouncementBoards(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         ResearchUnitSite site = getSite(request);
-        Collection<PartyAnnouncementBoard> boards = site.getUnit().getBoards();
+        Collection<UnitAnnouncementBoard> boards = site.getUnit().getBoards();
         request.setAttribute("announcementBoards", boards);
         return mapping.findForward(boards.isEmpty() ? "noBoards" : "listAnnouncementBoards");
     }

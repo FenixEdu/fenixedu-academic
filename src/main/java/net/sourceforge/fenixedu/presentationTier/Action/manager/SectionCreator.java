@@ -18,7 +18,7 @@ public class SectionCreator implements Serializable {
 
     private Section nextSection;
 
-    private Site site;
+    private final Site site;
 
     private Section superiorSection;
 
@@ -85,10 +85,8 @@ public class SectionCreator implements Serializable {
     }
 
     public void createSection() {
-        Section section = new Section((getSuperiorSection() == null) ? getSite() : getSuperiorSection(), getName());
+        Section section = new Section(getSuperiorSection(), getName());
         section.setNextSection(getNextSection());
-        section.setPermittedGroup(getPermittedGroup());
         section.setVisible(getVisible());
-        site.logCreateSection(section);
     }
 }

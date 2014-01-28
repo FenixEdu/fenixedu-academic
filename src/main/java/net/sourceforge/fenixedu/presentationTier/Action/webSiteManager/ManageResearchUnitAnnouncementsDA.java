@@ -5,7 +5,7 @@ import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard;
+import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -28,7 +28,7 @@ public class ManageResearchUnitAnnouncementsDA extends UnitSiteAnnouncementManag
 
     public ActionForward editAnnouncementBoards(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Collection<PartyAnnouncementBoard> boards = getUnit(request).getBoards();
+        Collection<UnitAnnouncementBoard> boards = getUnit(request).getBoards();
         request.setAttribute("announcementBoards", boards);
         return mapping.findForward(boards.isEmpty() ? "noBoards" : "listAnnouncementBoards");
     }

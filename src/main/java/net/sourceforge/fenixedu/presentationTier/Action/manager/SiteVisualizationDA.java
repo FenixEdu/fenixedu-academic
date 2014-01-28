@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYear
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Section;
-import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.ProtectedItem;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
@@ -134,7 +133,7 @@ public abstract class SiteVisualizationDA extends FenixDispatchAction {
     private List<ProtectedItem> setupItems(HttpServletRequest request, Collection<Item> items) {
         List<ProtectedItem> protectedItems = new ArrayList<ProtectedItem>();
         for (Item item : items) {
-            if (item.getVisible()) {
+            if (item.isVisible()) {
                 protectedItems.add(new ProtectedItem(item));
             }
         }
@@ -201,8 +200,8 @@ public abstract class SiteVisualizationDA extends FenixDispatchAction {
             return null;
         }
 
-        final Content content = FenixFramework.getDomainObject(parameter);
-        return content instanceof Section ? (Section) content : null;
+        final Section content = FenixFramework.getDomainObject(parameter);
+        return content instanceof Section ? content : null;
     }
 
     protected void setSectionBreadCrumbs(HttpServletRequest request) {

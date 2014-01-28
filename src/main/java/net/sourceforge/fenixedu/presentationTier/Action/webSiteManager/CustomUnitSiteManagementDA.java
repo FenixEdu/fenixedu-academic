@@ -441,7 +441,7 @@ public class CustomUnitSiteManagementDA extends SiteManagementDA {
         UnitSite site = getSite(request);
         Section sideSection = site.getSideSection();
 
-        if (sideSection != null && sideSection.hasAnyChildren()) {
+        if (sideSection != null && !sideSection.getChildrenSections().isEmpty()) {
             request.setAttribute("canChoose", true);
         }
 

@@ -1312,9 +1312,8 @@ public class Person extends Person_Base {
                 && !hasAnyExportGroupingSenders() && !hasAnyResponsabilityTransactions() && !hasAnyMasterDegreeCandidates()
                 && !hasAnyGuides() && !hasEmployee() && !hasTeacher() && !hasAnyPayedGuides() && !hasAnyPayedReceipts()
                 && !hasParking() && !hasAnyResearchInterests() && !hasAnyProjectParticipations() && !hasAnyParticipations()
-                && !hasAnyBoards() && !hasAnyPersonFunctions() && (!hasHomepage() || getHomepage().isDeletable())
-                && !hasAnyCardGenerationEntries() && !hasAnyInternalParticipants() && !hasAnyCreatedQualifications()
-                && !hasAnyCreateJobs();
+                && !hasAnyPersonFunctions() && (!hasHomepage() || getHomepage().isDeletable()) && !hasAnyCardGenerationEntries()
+                && !hasAnyInternalParticipants() && !hasAnyCreatedQualifications() && !hasAnyCreateJobs();
     }
 
     private boolean hasParking() {
@@ -5037,16 +5036,6 @@ public class Person extends Person_Base {
     @Deprecated
     public boolean hasAnyThesisEvaluationParticipants() {
         return !getThesisEvaluationParticipantsSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.contents.Content> getCreatedContents() {
-        return getCreatedContentsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCreatedContents() {
-        return !getCreatedContentsSet().isEmpty();
     }
 
     @Deprecated

@@ -5,27 +5,14 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import javax.servlet.http.HttpServletRequest;
+
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.InternalPersonGroup;
-import net.sourceforge.fenixedu.domain.contents.Attachment;
-import net.sourceforge.fenixedu.domain.contents.Container;
-import net.sourceforge.fenixedu.domain.contents.Content;
-import net.sourceforge.fenixedu.domain.contents.Element;
-import net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode;
-import net.sourceforge.fenixedu.domain.contents.FunctionalityCall;
-import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
-import net.sourceforge.fenixedu.domain.contents.Node;
-import net.sourceforge.fenixedu.domain.contents.Redirect;
-import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -41,69 +28,26 @@ public abstract class Site extends Site_Base {
     public Site() {
         super();
 
-        setRootDomainObject(Bennu.getInstance());
+        setBennu(Bennu.getInstance());
     }
 
-    @Override
-    public boolean isChildAccepted(Content child) {
-        return child instanceof Section || child instanceof FunctionalityCall || Forum.class.isAssignableFrom(child.getClass());
-    }
-
-    public Section createSection(MultiLanguageString sectionName, Container parentContainer, Integer sectionOrder) {
+    public Section createSection(MultiLanguageString sectionName, Section parentContainer, Integer sectionOrder) {
         return new Section(parentContainer, sectionName, sectionOrder);
     }
 
     public abstract IGroup getOwner();
 
-    public List<Section> getTopLevelSections() {
-        return getAssociatedSections(null);
-    }
-
-    @Override
-    public void appendReversePathPart(final StringBuilder stringBuilder) {
-        if (getJumpPoint() == null) {
-            final String name = getNormalizedName().getContent();
-            stringBuilder.append("/");
-            stringBuilder.append(name);
-        }
-    }
-
-    public List<Section> getAllAssociatedSections() {
-        List<Section> sections = new ArrayList<Section>();
-        for (Section section : getTopLevelSections()) {
-            sections.add(section);
-            sections.addAll(section.getSubSections());
-        }
-        return sections;
-    }
-
-    public List<Section> getAssociatedSections(final Section parentSection) {
-        final List<Section> result;
-
-        if (parentSection != null) {
-            result = parentSection.getAssociatedSections();
-        } else {
-            result = new ArrayList<Section>();
-            result.addAll(getChildren(Section.class));
-        }
-        return result;
-    }
-
     public SortedSet<Section> getOrderedTopLevelSections() {
         final SortedSet<Section> sections = new TreeSet<Section>(Section.COMPARATOR_BY_ORDER);
-        for (final Section section : getChildren(Section.class)) {
+        for (final Section section : getAssociatedSections()) {
             sections.add(section);
         }
         return sections;
-    }
-
-    public int getNumberOfTopLevelSections() {
-        return getChildren(Section.class).size();
     }
 
     public void copySectionsAndItemsFrom(Site siteFrom) {
         for (Section sectionFrom : siteFrom.getAssociatedSections()) {
-            Section sectionTo = this.createSection(sectionFrom.getName(), this, sectionFrom.getSectionOrder());
+            Section sectionTo = addAssociatedSections(sectionFrom.getName());
             sectionTo.copyItemsFrom(sectionFrom);
             sectionTo.copySubSectionsAndItemsFrom(sectionFrom);
         }
@@ -121,63 +65,6 @@ public abstract class Site extends Site_Base {
         groups.add(new InternalPersonGroup());
 
         return groups;
-    }
-
-    public void setTopLevelSectionsOrder(List<Section> sections) {
-        // SECTION_ORDER_ADAPTER.updateOrder(this, sections);
-    }
-
-    public String getAuthorName() {
-        return null;
-    }
-
-    public ExecutionSemester getExecutionPeriod() {
-        return null;
-    }
-
-    public MetaDomainObjectPortal getTemplate() {
-        return MetaDomainObjectPortal.getPortal(this.getClass());
-    }
-
-    public boolean isTemplateAvailable() {
-        return getTemplate() != null;
-    }
-
-    public List<Content> getOrderedTemplateSections() {
-        List<Content> sections = new ArrayList<Content>();
-
-        MetaDomainObjectPortal template = getTemplate();
-
-        if (template != null) {
-            sections.addAll(template.getChildrenAsContent());
-        }
-
-        return sections;
-    }
-
-    public List<Content> getTemplateSections() {
-        return getOrderedTemplateSections();
-    }
-
-    public List<Content> getAllOrderedTopLevelSections() {
-        List<Content> sections = getOrderedTemplateSections();
-        sections.addAll(getOrderedTopLevelSections());
-
-        return sections;
-    }
-
-    public List<Content> getAllTopLevelSections() {
-        List<Content> sections = getTemplateSections();
-        sections.addAll(getTopLevelSections());
-
-        return sections;
-    }
-
-    public static List<Section> getOrderedSections(Collection<Section> sections) {
-        List<Section> orderedSections = new ArrayList<Section>(sections);
-        Collections.sort(orderedSections, Section.COMPARATOR_BY_ORDER);
-
-        return orderedSections;
     }
 
     /**
@@ -208,11 +95,11 @@ public abstract class Site extends Site_Base {
         long size = 0;
 
         for (Section section : getAssociatedSections()) {
-            for (Attachment attachment : section.getChildren(Attachment.class)) {
-                size += attachment.getFile().getSize();
+            for (FileContent attachment : section.getChildrenFiles()) {
+                size += attachment.getSize();
             }
             for (Item item : section.getAssociatedItems()) {
-                for (FileContent file : item.getFileItems()) {
+                for (FileContent file : item.getFileSet()) {
                     size += file.getSize();
                 }
             }
@@ -225,184 +112,34 @@ public abstract class Site extends Site_Base {
         return false;
     }
 
-    public boolean hasAnyAssociatedSections() {
-        return !getAssociatedSections().isEmpty();
-    }
-
     public List<Section> getAssociatedSections() {
-        return (List<Section>) getChildren(Section.class);
+        throw new UnsupportedOperationException("Not implemented");
     }
 
-    public Set<Section> getAssociatedSectionsSet() {
-        Set<Section> sections = new HashSet<Section>();
-        sections.addAll(getAssociatedSections());
-        return sections;
-
+    public Section addAssociatedSections(MultiLanguageString sectionName) {
+        throw new UnsupportedOperationException("");
     }
 
-    public int getAssociatedSectionsCount() {
-        return getAssociatedSections().size();
-    }
-
-    public void addAssociatedSections(Section section) {
-        new ExplicitOrderNode(this, section);
-    }
-
-    @Override
-    public Collection<Node> getOrderedChildrenNodes(Class<? extends Content> childType) {
-        Collection<Node> nodes = getChildren();
-        for (Iterator<Node> nodeIterator = nodes.iterator(); nodeIterator.hasNext();) {
-            Node node = nodeIterator.next();
-            if (!childType.isAssignableFrom(node.getClass())) {
-                nodeIterator.remove();
-            }
-        }
-        return nodes;
-    }
-
-    @Override
-    public <T extends Content> Collection<T> getOrderedChildren(Class<T> type) {
-        List<T> contents = new ArrayList<T>();
-        for (Node node : new TreeSet<Node>(super.getChildren())) {
-            T parent = (T) node.getChild();
-
-            if (type != null && !type.isAssignableFrom(parent.getClass())) {
-                continue;
-            }
-
-            contents.add(parent);
-        }
-
-        return contents;
-    }
-
-    @Override
-    public Collection<Node> getOrderedChildrenNodes() {
-        List<Node> nodes = new ArrayList<Node>();
-        MetaDomainObjectPortal template = getTemplate();
-        if (template != null) {
-            nodes.addAll(template.getOrderedChildrenNodes());
-        }
-        nodes.addAll(new TreeSet<Node>(super.getChildren()));
-        return nodes;
-    }
-
-    @Override
-    public Set<Node> getChildren() {
-        Set<Node> nodes = new HashSet<Node>();
-        MetaDomainObjectPortal template = getTemplate();
-        if (template != null) {
-            nodes.addAll(template.getChildren());
-        }
-        nodes.addAll(super.getChildren());
-        return nodes;
-    }
-
-    @Override
-    public Collection<Content> getDirectChildrenAsContent() {
-        List<Content> contents = new ArrayList<Content>();
-        for (Node node : getOrderedDirectChildren()) {
-            contents.add(node.getChild());
-        }
-        return contents;
-    }
-
-    @Override
-    public Collection<Node> getOrderedDirectChildren() {
-        return new TreeSet<Node>(super.getChildren());
-    }
-
-    @Override
     public MultiLanguageString getName() {
         return new MultiLanguageString().with(Language.pt, String.valueOf(getExternalId()));
     }
 
-    @Override
-    protected Container findSomeNonModuleParent() {
-        return getJumpPoint() != null ? getJumpPoint() : getTemplate();
+    public void delete() {
+        throw new UnsupportedOperationException("");
     }
 
-    public Collection<FunctionalityCall> getAssociatedFunctionalities() {
-        List<FunctionalityCall> functionalities = new ArrayList<FunctionalityCall>();
-        for (Content content : getDirectChildrenAsContent()) {
-            if (content instanceof FunctionalityCall) {
-                functionalities.add((FunctionalityCall) content);
-            }
+    public boolean isDeletable() {
+        throw new UnsupportedOperationException("");
+    }
+
+    public String getReversePath() {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    public static final class SiteMapper {
+        public static <T extends Site> T getSite(HttpServletRequest request) {
+            throw new UnsupportedOperationException("Not yet implemented");
         }
-        return functionalities;
-    }
-
-    @Override
-    public Content getInitialContent() {
-        final Content content = super.getInitialContent();
-        if (content != null && content instanceof Redirect) {
-            return content;
-        }
-        Content initialContent = null;
-        if (hasBennu()) {
-            final MetaDomainObjectPortal template = getTemplate();
-            if (template != null) {
-
-                initialContent = getTemplate().getInitialContent();
-                if (initialContent != null) {
-                    return initialContent;
-                }
-
-                Collection<Element> children = getOrderedChildren(Element.class);
-                if (!children.isEmpty()) {
-                    return children.iterator().next();
-                }
-
-                for (Container container : getOrderedChildren(Container.class)) {
-                    initialContent = container.getInitialContent();
-                    if (initialContent != null) {
-                        break;
-                    }
-                }
-            }
-        }
-        return initialContent;
-    }
-
-    @Override
-    protected void disconnect() {
-        for (Node node : getChildrenSet()) {
-            removeNode(node);
-        }
-        disconnectContent();
-    }
-
-    public void logCreateSection(Section section) {
-    }
-
-    public void logEditSection(Section section) {
-    }
-
-    public void logRemoveSection(Section section) {
-    }
-
-    public void logRemoveFile(Attachment attachment) {
-    }
-
-    public void logEditFile(Attachment attachment) {
-    }
-
-    public void logSectionInsertInstitutional(Content childContent, Section section) {
-    }
-
-    @Deprecated
-    public boolean hasStyle() {
-        return getStyle() != null;
-    }
-
-    @Deprecated
-    public boolean hasAlternativeSite() {
-        return getAlternativeSite() != null;
-    }
-
-    @Deprecated
-    public boolean hasJumpPoint() {
-        return getJumpPoint() != null;
     }
 
 }

@@ -266,7 +266,7 @@
         <property name="eachLayout" value="values"/>
         <property name="saveOptions" value="true"/>
     </slot>
-	<setter signature="edit(name, nextSection, permittedGroup)"/>
+	<setter signature="edit(name, nextSection)"/>
 </schema>
 <schema name="site.section.edit.permittedGroup"
         type="net.sourceforge.fenixedu.domain.Section"
@@ -650,15 +650,6 @@
     <slot name="filename"/>
     <slot name="uploadTime"/>
     <slot name="permittedGroup"  layout="values" schema="permittedGroup.class.text"/>
-</schema>
-
-<schema name="site.item.files.visible" type="net.sourceforge.fenixedu.domain.contents.Node" bundle="SITE_RESOURCES">
-    <slot name="visible"/>
-    <slot name="child.file.displayName" layout="link" read-only="true" key="label.displayName">
-        <property name="useParent" value="true"/>
-        <property name="contextRelative" value="false"/>
-        <property name="linkFormat" value="${child.file.downloadUrl}"/>
-    </slot>
 </schema>
 
 <schema name="section.group.edit" type="net.sourceforge.fenixedu.domain.Section">

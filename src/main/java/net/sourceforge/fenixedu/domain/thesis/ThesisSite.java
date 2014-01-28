@@ -23,9 +23,9 @@ public class ThesisSite extends ThesisSite_Base {
     }
 
     @Override
-    protected void disconnect() {
+    public void delete() {
         setThesis(null);
-        super.disconnect();
+        super.delete();
 
     }
 

@@ -31,8 +31,9 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.Site.SiteMapper;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel;
@@ -40,7 +41,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
@@ -418,7 +418,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     public String getSelectedDepartmentUnitID() {
         if (selectedDepartmentUnitID == null) {
-            Container site = FunctionalityContext.getCurrentContext(getRequest()).getSelectedContainer();
+            Site site = SiteMapper.getSite(getRequest());
             if (site != null && site instanceof DepartmentSite) {
                 selectedDepartmentUnitID = ((DepartmentSite) site).getDepartment().getDepartmentUnit().getExternalId();
             } else if (getAndHoldStringParameter("selectedDepartmentUnitID") != null) {

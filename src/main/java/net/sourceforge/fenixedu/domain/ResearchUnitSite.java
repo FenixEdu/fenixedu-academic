@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
-import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
@@ -34,8 +33,8 @@ public class ResearchUnitSite extends ResearchUnitSite_Base {
             throw new DomainException("unit.acronym.cannot.be.null");
         }
         this.setUnit(unit);
-        new Section(this, new MultiLanguageString().with(Language.pt, "Lateral").with(Language.en, "Side"));
-        new Section(this, new MultiLanguageString().with(Language.pt, "Topo").with(Language.en, "Top"));
+        addAssociatedSections(new MultiLanguageString().with(Language.pt, "Lateral").with(Language.en, "Side"));
+        addAssociatedSections(new MultiLanguageString().with(Language.pt, "Topo").with(Language.en, "Top"));
     }
 
     @Override
@@ -65,31 +64,6 @@ public class ResearchUnitSite extends ResearchUnitSite_Base {
         }
 
         return new MultiLanguageString().with(Language.pt, buffer.toString());
-    }
-
-    @Override
-    public void setNormalizedName(final MultiLanguageString normalizedName) {
-        // unable to optimize because we cannot track changes to name correctly.
-        // don't call super.setNormalizedName() !
-    }
-
-    @Override
-    public void appendReversePathPart(final StringBuilder stringBuilder) {
-        final ResearchUnit researchUnit = getUnit();
-        appendReversePathPart(stringBuilder, researchUnit);
-    }
-
-    public void appendReversePathPart(final StringBuilder stringBuilder, final Unit unit) {
-        if (stringBuilder.length() > 0) {
-            stringBuilder.append('/');
-        }
-        for (final Unit parentUnit : unit.getParentUnitsPath()) {
-            if (parentUnit.isResearchUnit()) {
-                stringBuilder.append(Content.normalize(parentUnit.getAcronym()));
-                stringBuilder.append('/');
-            }
-        }
-        stringBuilder.append(unit.getAcronym());
     }
 
 }

@@ -25,19 +25,10 @@ public class FileItemGroupProvider implements DataProvider {
 
         if (source instanceof FileContent) {
             FileContent fileContent = (FileContent) source;
-            site = fileContent.getSite();
+            site = fileContent.getSection().getSite();
 
             if (site == null) {
-                UnitAnnouncementBoard board = fileContent.getAttachment().getUniqueParentContainer(UnitAnnouncementBoard.class);
-                if (board != null) {
-                    site = board.getUnit().getSite();
-                } else {
-                    ExecutionCourseAnnouncementBoard executionBoard =
-                            fileContent.getAttachment().getUniqueParentContainer(ExecutionCourseAnnouncementBoard.class);
-                    if (executionBoard != null) {
-                        site = executionBoard.getExecutionCourse().getSite();
-                    }
-                }
+                site = fileContent.getAnnouncementBoard().getSite();
             }
         } else if (source instanceof FileContentCreationBean) {
             FileContentCreationBean bean = (FileContentCreationBean) source;
@@ -54,7 +45,7 @@ public class FileItemGroupProvider implements DataProvider {
             }
         } else if (source instanceof FileItemPermissionBean) {
             FileItemPermissionBean bean = (FileItemPermissionBean) source;
-            site = bean.getFileItem().getSite();
+            site = bean.getFileItem().getSection().getSite();
         }
 
         return site != null ? site.getContextualPermissionGroups() : getDefaultPermissions();
