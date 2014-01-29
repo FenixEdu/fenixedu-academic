@@ -32,7 +32,7 @@ To compile Fenix, simply run:
 
 To initialize an instalation of Fenix in an empty Database, see: 
 
-http://fenixedu.org/dev/tutorials/install-fenixedu/
+http://fenixedu.org/dev/tutorials/install-fenix-edu/
 
 ##Generate Fenix API Documentation
 

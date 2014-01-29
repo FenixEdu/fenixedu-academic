@@ -851,7 +851,7 @@
 		<property name="bundle" value="PHD_RESOURCES" />
 	</slot>
 	<slot name="uploadTime" />
-	<slot name="this" layout="link" />
+	<slot name="filename"/>
 </schema>
 
 <schema name="Public.PhdIndividualProgramProcessBean.editDetails" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean" bundle="PHD_RESOURCES">

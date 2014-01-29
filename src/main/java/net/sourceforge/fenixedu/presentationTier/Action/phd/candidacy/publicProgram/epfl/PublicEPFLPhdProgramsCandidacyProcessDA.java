@@ -37,12 +37,14 @@ import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean.PhdParticipantType;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.candidacy.EPFLPhdCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetterBean;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdThesisSubjectOrderBean;
@@ -892,7 +894,12 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
 
         final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
         RenderUtils.invalidateViewState();
+        prepareUploadDocumentsAttributes(bean, request);
 
+        return mapping.findForward("uploadCandidacyDocuments");
+    }
+
+    private void prepareUploadDocumentsAttributes(PhdProgramCandidacyProcessBean bean, HttpServletRequest request) {
         request.setAttribute("candidacyBean", bean);
         request.setAttribute("candidacyProcessDocuments", bean.getCandidacyHashCode().getIndividualProgramProcess()
                 .getCandidacyProcessDocuments());
@@ -902,8 +909,6 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
         request.setAttribute("documentByType", uploadBean);
 
         validateProcessDocuments(request, bean.getCandidacyHashCode().getIndividualProgramProcess());
-
-        return mapping.findForward("uploadCandidacyDocuments");
     }
 
     @Override
@@ -951,6 +956,26 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
         }
 
         return prepareUploadDocuments(mapping, form, request, response);
+    }
+
+    public ActionForward removeDocument(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        final PhdProgramProcessDocument document = getDomainObject(request, "documentId");
+        final PhdProgramCandidacyProcess process = (PhdProgramCandidacyProcess) document.getPhdProgramProcess();
+        final PhdProgramCandidacyProcessBean bean = new PhdProgramCandidacyProcessBean(process);
+        try {
+            ExecuteProcessActivity.run(process,
+                    net.sourceforge.fenixedu.domain.phd.candidacy.activities.RemoveCandidacyDocument.class, document);
+            addSuccessMessage(request, "message.documents.uploaded.with.success");
+
+        } catch (final DomainException e) {
+            addErrorMessage(request, "message.no.documents.to.upload");
+            return uploadDocumentsInvalid(mapping, form, request, response);
+        }
+        RenderUtils.invalidateViewState();
+        request.setAttribute("canEditCandidacy", true);
+        prepareUploadDocumentsAttributes(bean, request);
+        return mapping.findForward("uploadCandidacyDocuments");
     }
 
     public ActionForward prepareEditPhdIndividualProgramProcessInformation(ActionMapping mapping, ActionForm actionForm,

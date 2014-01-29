@@ -32,13 +32,14 @@ a {border-bottom: none !important;}
 <p class="santanderSubtitle"><strong><bean:message bundle="CARD_GENERATION_RESOURCES" key="subtitle.santander.cards.tui.generation"/></strong></p>
 
 	
-<logic:messagesPresent message="true" property="error">
-	<div class="error3 mbottom05" style="width: 700px;">
-		<html:messages id="messages" message="true" bundle="ACADEMIC_OFFICE_RESOURCES" property="error">
-			<p class="mvert025"><bean:write name="messages" /></p>
-		</html:messages>
-	</div>
-</logic:messagesPresent>
+<span class="error"><html:errors bundle="CARD_GENERATION_RESOURCES" /></span>
+<html:messages id="message" message="true" bundle="CARD_GENERATION_RESOURCES">
+    <p><span class="error"><bean:write name="message" /></span></p>
+</html:messages>
+
+<logic:present name="success">
+	<p><span class="success0"><bean:message key="message.dchp.upload.sucess" bundle="CARD_GENERATION_RESOURCES"/></span></p>
+</logic:present>
 
 <fr:form action="/manageSantander.do?method=selectExecutionYearPostback">
 	<fr:edit id="santanderBean" name="santanderBean">
@@ -139,3 +140,18 @@ a {border-bottom: none !important;}
 		</table>		
 	</logic:notEmpty>
 </logic:present>
+
+<p class="santanderSubtitle"><strong><bean:message bundle="CARD_GENERATION_RESOURCES" key="subtitle.santander.cards.dchp.managment"/></strong></p>
+
+<fr:edit id="uploadDCHPFileBean" name="uploadDCHPFileBean" action="/manageSantander.do?method=submitDCHPFile" >
+  <fr:schema type="net.sourceforge.fenixedu.dataTransferObject.research.result.OpenFileBean" bundle="CARD_GENERATION_RESOURCES">
+    <fr:slot name="inputStream" required="true" key="label.card.generation.dchp.choosefile" />
+  </fr:schema>
+
+  <fr:layout name="tabular">
+    <fr:property name="classes" value="tstyle1 thlight mtop05 thleft"/>
+    <fr:property name="columnClasses" value=",,tderror1 tdclear"/>
+  </fr:layout>
+  <fr:destination name="cancel" path="/manageSantander.do?method=intro"/>    
+</fr:edit>
+  

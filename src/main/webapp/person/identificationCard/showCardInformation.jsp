@@ -35,7 +35,6 @@
 			+ "&userEmail=" + email
 			+ "&userPhoto=https%3A%2F%2Ffenix.ist.utl.pt%2Fpublico%2FretrievePersonalPhoto.do%3Fmethod%3DretrievePhotographOnPublicSpace%26personId%3D" + person.getExternalId() + "%26contentContextPath_PATH%3D%2Fhomepage%2F" + username + "%2Fapresentacao";
 %>
-
 <pre style="font-family: Trebuchet MS, Arial, Helvetica, sans-serif; text-align: justify; width: 80%; white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word;"
 ><bean:message bundle="APPLICATION_RESOURCES" key="<%= instructionKey %>" arg0="<%= sibUrl %>" arg1="<%= institutionAcronym %>" arg2="<%= institutionName %>"/></pre>
 
@@ -45,3 +44,11 @@
 	<bean:message bundle="APPLICATION_RESOURCES" key="label.identification.card.download.template"/>
 </html:link>
  --%>
+
+<p class="cardProdutionStateSubtitle"><strong><bean:message bundle="CARD_GENERATION_RESOURCES" key="subtitle.santander.cards.dchp.state"/></strong></p>
+
+<pre style="font-family: Trebuchet MS, Arial, Helvetica, sans-serif; text-align: justify; width: 80%; white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word;"
+><bean:write name="state"/></pre>
+
+
+ 

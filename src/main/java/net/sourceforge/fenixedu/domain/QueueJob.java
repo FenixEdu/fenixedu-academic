@@ -1,21 +1,30 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
 
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
+
 public abstract class QueueJob extends QueueJob_Base {
     public static enum Priority {
         HIGH, NORMAL;
     }
+
+    static final public Comparator<QueueJob> COMPARATORY_BY_REQUEST_DATE = new Comparator<QueueJob>() {
+        @Override
+        public int compare(QueueJob o1, QueueJob o2) {
+            return o2.getRequestDate().compareTo(o1.getRequestDate());
+        }
+    };
 
     public QueueJob() {
         super();
@@ -45,28 +54,19 @@ public abstract class QueueJob extends QueueJob_Base {
         return !getDone() && hasBennuQueueUndone();
     }
 
-    public static List<QueueJob> getAllJobsForClassOrSubClass(final Class aClass, int max) {
-        List<QueueJob> tempList = (List<QueueJob>) CollectionUtils.select(Bennu.getInstance().getQueueJobSet(), new Predicate() {
-
-            @Override
-            public boolean evaluate(Object arg0) {
-                return aClass.isInstance(arg0);
-            }
-
-        });
-
-        return tempList.size() > max ? tempList.subList(0, max) : tempList;
+    public static List<QueueJob> getLastJobsForClassOrSubClass(final Class<? extends QueueJob> type, int maxSize) {
+        return getAllJobsForClassOrSubClass(type, maxSize, COMPARATORY_BY_REQUEST_DATE);
     }
 
-    public static List<QueueJob> getUndoneJobsForClass(final Class clazz) {
-        return new ArrayList<QueueJob>(CollectionUtils.select(Bennu.getInstance().getQueueJobUndoneSet(), new Predicate() {
+    public static List<QueueJob> getAllJobsForClassOrSubClass(final Class<? extends QueueJob> type, int maxSize,
+            Comparator<QueueJob> comparator) {
+        List<QueueJob> jobs = Lists.newArrayList(Iterables.filter(Bennu.getInstance().getQueueJobSet(), type));
+        Collections.sort(jobs, comparator);
+        return jobs.size() > maxSize ? jobs.subList(0, maxSize) : jobs;
+    }
 
-            @Override
-            public boolean evaluate(Object arg0) {
-                return clazz.isInstance(arg0);
-            }
-
-        }));
+    public static List<QueueJob> getUndoneJobsForClass(final Class<? extends QueueJob> type) {
+        return Lists.newArrayList(Iterables.filter(Bennu.getInstance().getQueueJobUndoneSet(), type));
     }
 
     public Priority getPriority() {

@@ -22,7 +22,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class StudentHighPerformance extends FenixDispatchAction {
     public ActionForward listRequests(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        List<QueueJob> jobs = QueueJob.getAllJobsForClassOrSubClass(StudentHighPerformanceQueueJob.class, 5);
+        List<QueueJob> jobs = QueueJob.getLastJobsForClassOrSubClass(StudentHighPerformanceQueueJob.class, 5);
         request.setAttribute("jobs", jobs);
         return mapping.findForward("listRequests");
     }

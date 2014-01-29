@@ -753,6 +753,10 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
     	String encryptedPIN;
     }
 
+    class cardGeneration.SantanderCardInformation {
+        String dchpRegisteLine;
+    }
+
     class CompetenceCourse  {
         String code;
         YearMonthDay creationDateYearMonthDay;
@@ -17771,6 +17775,13 @@ relation RootDomainObjectSantanderEntry {
 	}
 }
 
+relation RootDomainObjectSantanderCardInformation {
+	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
+	cardGeneration.SantanderCardInformation playsRole santanderCardsInformation {
+		multiplicity *;
+	}
+}
+
 relation RootDomainObjectSantanderProblem {
 	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 	cardGeneration.SantanderProblem playsRole santanderProblem {
@@ -17833,6 +17844,13 @@ relation PersonSantanderBatchSender {
 relation PersonSantanderEntry {
 	Person playsRole person;
 	cardGeneration.SantanderEntry playsRole santanderEntries {
+		multiplicity *;
+	}
+}
+
+relation PersonSantanderCardInformation {
+	Person playsRole person;
+	cardGeneration.SantanderCardInformation playsRole santanderCardsInformation {
 		multiplicity *;
 	}
 }

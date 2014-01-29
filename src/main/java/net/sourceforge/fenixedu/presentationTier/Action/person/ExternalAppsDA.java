@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.JerseyOAuth2Filter;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
+import org.apache.commons.codec.Charsets;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.fileupload.util.Streams;
 import org.apache.commons.io.IOUtils;
@@ -38,6 +39,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.hash.Hashing;
 
 @Mapping(module = "person", path = "/externalApps")
 @Forwards(value = { @Forward(name = "createApplication", path = "/auth/createApplication.jsp"),
@@ -360,7 +362,15 @@ public class ExternalAppsDA extends FenixDispatchAction {
                 user.getPerson().addPersonRoleByRoleType(RoleType.DEVELOPER);
             }
         }
+    }
 
+    public ActionForward showServiceAgreement(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        final String serviceAgreementHtml = getServiceAgreementHtml();
+        request.setAttribute("serviceAgreement", serviceAgreementHtml);
+        request.setAttribute("serviceAgreementChecksum", Hashing.md5().newHasher()
+                .putString(serviceAgreementHtml, Charsets.UTF_8).hash().toString());
+        return new ActionForward(null, "/auth/showServiceAgreement.jsp", false, "");
     }
 
 }

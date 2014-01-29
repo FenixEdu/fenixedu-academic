@@ -19,11 +19,13 @@ public class OAuthUtils {
 
     public static final <T extends DomainObject> T getDomainObject(final String externalId, final Class<T> clazz) {
         try {
+
             final T domainObject = FenixFramework.getDomainObject(externalId);
-            if (FenixFramework.isDomainObjectValid(domainObject)) {
-                return domainObject;
+
+            if (!FenixFramework.isDomainObjectValid(domainObject) || !clazz.isAssignableFrom(domainObject.getClass())) {
+                return null;
             }
-            return null;
+            return domainObject;
         } catch (Exception nfe) {
             return null;
         }
