@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -19,6 +20,7 @@ import net.sourceforge.fenixedu.domain.cardGeneration.SantanderBatch;
 import net.sourceforge.fenixedu.domain.cardGeneration.SantanderEntry;
 import net.sourceforge.fenixedu.domain.cardGeneration.SantanderProblem;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -35,6 +37,9 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 import org.slf4j.Logger;
+
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.Atomic.TxMode;
 
 public class SantanderBatchFillerWorker {
     private static String recordEnd = "*";
@@ -59,26 +64,38 @@ public class SantanderBatchFillerWorker {
         this.logger = logger;
     }
 
-    public void run() throws Exception {
+    public void run() {
         logger.info("[" + (new DateTime()).toString("yyyy-MM-dd HH:mm") + "] Looking for open batches to populate...\n");
         for (SantanderBatch batch : Bennu.getInstance().getSantanderBatchesSet()) {
             if (batch.getGenerated() != null) {
                 continue;
             }
+            final Set<Object[]> lines = new HashSet<Object[]>();
             final Role personRole = Role.getRoleByRoleType(RoleType.PERSON);
             for (final Person person : personRole.getAssociatedPersonsSet()) {
-                if (person.getIstUsername() != null) {
-                    generateLine(batch, person);
+                if (person.getIstUsername() != null
+                        && person.namesCorrectlyPartitioned()) {
+                    generateLine(lines, batch, person);
                 }
             }
-            batch.setGenerated(new DateTime());
-            logger.info("Processed batch #" + batch.getExternalId());
-            logger.info("Total number of records: " + batch.getSantanderEntriesSet().size() + "\n");
+            fillBatch(batch, lines);
         }
         logger.info("[" + (new DateTime()).toString("yyyy-MM-dd HH:mm") + "] Work finished. :)");
     }
 
-    private void generateLine(SantanderBatch batch, Person person) throws Exception {
+    @Atomic
+    private void fillBatch(final SantanderBatch batch, final Set<Object[]> lines) {
+        for (final Object[] o : lines) {
+            final Person person = (Person) o[0];
+            final String line = (String) o[1];
+            new SantanderEntry(batch, person, line);
+        }
+        batch.setGenerated(new DateTime());
+        logger.info("Processed batch #" + batch.getExternalId());
+        logger.info("Total number of records: " + batch.getSantanderEntriesSet().size() + "\n");
+    }
+
+    private void generateLine(final Set<Object[]> lines, SantanderBatch batch, Person person) {
         /*
          * 1. Teacher
          * 2. Researcher
@@ -87,26 +104,22 @@ public class SantanderBatchFillerWorker {
          * 5. Student
          */
         String line = null;
-        try {
-            if (treatAsTeacher(person)) {
-                line = createLine(batch, person, RoleType.TEACHER);
-            } else if (treatAsResearcher(person)) {
-                line = createLine(batch, person, RoleType.RESEARCHER);
-            } else if (treatAsEmployee(person)) {
-                line = createLine(batch, person, RoleType.EMPLOYEE);
-            } else if (treatAsGrantOwner(person)) {
-                line = createLine(batch, person, RoleType.GRANT_OWNER);
-            } else if (treatAsStudent(person, batch.getExecutionYear())) {
-                line = createLine(batch, person, RoleType.STUDENT);
-            } else {
-                return;
-            }
-        } catch (Exception e) {
-            generateProblem(batch, person, e.getMessage());
-            throw e;
+        if (treatAsTeacher(person)) {
+            line = createLine(batch, person, RoleType.TEACHER);
+        } else if (treatAsResearcher(person)) {
+            line = createLine(batch, person, RoleType.RESEARCHER);
+        } else if (treatAsEmployee(person)) {
+            line = createLine(batch, person, RoleType.EMPLOYEE);
+        } else if (treatAsGrantOwner(person)) {
+            line = createLine(batch, person, RoleType.GRANT_OWNER);
+        } else if (treatAsStudent(person, batch.getExecutionYear())) {
+            line = createLine(batch, person, RoleType.STUDENT);
+        } else {
+            return;
         }
         if (line != null) {
-            new SantanderEntry(batch, person, line);
+            lines.add(new Object[] { person, line });
+            //new SantanderEntry(batch, person, line);
         }
     }
 
@@ -136,8 +149,11 @@ public class SantanderBatchFillerWorker {
 
     private boolean treatAsStudent(Person person, ExecutionYear executionYear) {
         if (person.hasStudent()) {
-            if (!person.getStudent().getActiveRegistrations().isEmpty()) {
-                return true;
+            final List<Registration> activeRegistrations = person.getStudent().getActiveRegistrations();
+            for (final Registration registration : activeRegistrations) {
+                if (registration.isBolonha()) {
+                    return true;
+                }
             }
             final InsuranceEvent event = person.getInsuranceEventFor(executionYear);
             final PhdIndividualProgramProcess phdIndividualProgramProcess =
@@ -174,10 +190,10 @@ public class SantanderBatchFillerWorker {
         return result;
     }
 
-    private String makeStringBlock(String content, int size) throws Exception {
+    private String makeStringBlock(String content, int size) {
         int fillerLength = size - content.length();
         if (fillerLength < 0) {
-            throw new Exception("Content is bigger than string block.");
+            throw new DomainException("Content is bigger than string block.");
         }
         StringBuilder blockBuilder = new StringBuilder(size);
         blockBuilder.append(content);
@@ -189,9 +205,9 @@ public class SantanderBatchFillerWorker {
         return blockBuilder.toString();
     }
 
-    private String makeZeroPaddedNumber(int number, int size) throws Exception {
+    private String makeZeroPaddedNumber(int number, int size) {
         if (String.valueOf(number).length() > size) {
-            throw new Exception("Number has more digits than allocated room.");
+            throw new DomainException("Number has more digits than allocated room.");
         }
         String format = "%0" + size + "d";
         return String.format(format, number);
@@ -391,7 +407,7 @@ public class SantanderBatchFillerWorker {
         }
     }
 
-    private String createLine(SantanderBatch batch, Person person, RoleType role) throws Exception {
+    private String createLine(SantanderBatch batch, Person person, RoleType role) {
 //        if (SantanderPhotoEntry.getOrCreatePhotoEntryForPerson(person) == null) {
 //            return null;
 //        }
@@ -405,12 +421,17 @@ public class SantanderBatchFillerWorker {
         String surname = makeStringBlock(names[1], 15);
         String middleNames = makeStringBlock(names[2], 40);
 
+        String degreeCode = makeStringBlock(getDegreeDescription(batch, person, role), 16);
+        if (role == RoleType.STUDENT && degreeCode.startsWith(" ")) {
+            return null;
+        }
+
         CampusAddress campusAddr = getCampusAddress(person, role);
         if (campusAddr == null) {
             return null;
         }
         String address1 = makeStringBlock(campusAddr.getAddress(), 50);
-        String address2 = IST_FULL_NAME; //makeStringBlock(getDegreeDescription(batch, person, role), 50);
+        String address2 = makeStringBlock((IST_FULL_NAME + (degreeCode == null ? "" : " " + degreeCode)).trim(), 50); //makeStringBlock(getDegreeDescription(batch, person, role), 50);
         String zipCode = campusAddr.getZip();
         String town = makeStringBlock(campusAddr.getTown(), 30);
 
@@ -420,7 +441,6 @@ public class SantanderBatchFillerWorker {
 
         String expireDate = getExpireDate(batch.getExecutionYear());
 
-        String degreeCode = makeStringBlock(getDegreeDescription(batch, person, role), 16);
 //        if (role == RoleType.STUDENT) {
 //            degreeCode = getDegreeCode(batch, person);
 //            if (degreeCode == null) {
@@ -531,7 +551,7 @@ public class SantanderBatchFillerWorker {
         return degree;
     }
 
-    private String buildChip1Block(SantanderBatch batch, Person person, RoleType role) throws Exception {
+    private String buildChip1Block(SantanderBatch batch, Person person, RoleType role) {
         StringBuilder chip1String = new StringBuilder(185);
 
         String idNumber = makeZeroPaddedNumber(Integer.parseInt(person.getIstUsername().substring(3)), 10);
