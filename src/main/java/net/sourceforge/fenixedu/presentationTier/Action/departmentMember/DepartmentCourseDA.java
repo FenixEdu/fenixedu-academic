@@ -33,7 +33,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(path = "/departmentCourses", module = "departmentMember")
 @Forwards({ @Forward(name = "viewDegreeCourses", path = "/departmentMember/courseStatistics/viewDegreeCourses.jsp"),
@@ -106,11 +105,10 @@ public class DepartmentCourseDA extends FenixDispatchAction {
         return getLoggedPerson(request).getTeacher().getLastWorkingDepartment();
     }
 
-    //EXPORT TO EXCEL vvvvv
     private void exportStudentsToExcel(HttpServletResponse response, CurricularCourse curricularCourse,
             ExecutionYear executionYear) throws FenixServiceException {
         try {
-            final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale());
+            final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources");
             String filename =
                     String.format("%s_%s_%s.xls", new DateTime().toString("dd-MM-yyyy_HH:mm"),
                             bundle.getString("label.students"), curricularCourse.getName().replaceAll(" ", "_"));
@@ -183,5 +181,4 @@ public class DepartmentCourseDA extends FenixDispatchAction {
 
         return null;
     }
-    //END Export
 }

@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject.department;
 import java.io.Serializable;
 import java.text.Collator;
 import java.util.Comparator;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.curriculum.IGrade;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -33,6 +34,8 @@ public abstract class CourseStatisticsDTO implements Serializable, Comparable<Co
 
     private IGrade totalApprovedAverage;
 
+    private String NOT_AVAILABLE;
+
     public static final Comparator<CourseStatisticsDTO> COURSE_STATISTICS_COMPARATOR_BY_NAME =
             new Comparator<CourseStatisticsDTO>() {
 
@@ -44,6 +47,8 @@ public abstract class CourseStatisticsDTO implements Serializable, Comparable<Co
             };
 
     public CourseStatisticsDTO() {
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources/DepartmentMemberResources", Language.getLocale());
+        NOT_AVAILABLE = bundle.getString("label.common.notAvailable");
     }
 
     public CourseStatisticsDTO(String externalId, String name, int firstEnrolledCount, int firstApprovedCount,
@@ -72,7 +77,7 @@ public abstract class CourseStatisticsDTO implements Serializable, Comparable<Co
     }
 
     public String getFirstApprovedAveragex() {
-        return (firstApprovedCount != 0) ? firstApprovedAverage.getGradeValue().toString() : "n/a";
+        return (firstApprovedCount != 0) ? firstApprovedAverage.getGradeValue().toString() : NOT_AVAILABLE;
     }
 
     public void setFirstApprovedAverage(IGrade firstApprovedAverage) {
@@ -116,7 +121,7 @@ public abstract class CourseStatisticsDTO implements Serializable, Comparable<Co
     }
 
     public String getRestApprovedAveragex() {
-        return (restApprovedCount != 0) ? restApprovedAverage.getGradeValue().toString() : "n/a";
+        return (restApprovedCount != 0) ? restApprovedAverage.getGradeValue().toString() : NOT_AVAILABLE;
     }
 
     public void setRestApprovedAverage(IGrade restApprovedAverage) {
@@ -144,7 +149,7 @@ public abstract class CourseStatisticsDTO implements Serializable, Comparable<Co
     }
 
     public String getTotalApprovedAveragex() {
-        return (totalApprovedCount != 0) ? totalApprovedAverage.getGradeValue().toString() : "n/a";
+        return (totalApprovedCount != 0) ? totalApprovedAverage.getGradeValue().toString() : NOT_AVAILABLE;
     }
 
     public void setTotalApprovedAverage(IGrade totalApprovedAverage) {
@@ -169,7 +174,7 @@ public abstract class CourseStatisticsDTO implements Serializable, Comparable<Co
 
     public String getApprovedPercentage() {
         if (totalEnrolledCount == 0) {
-            return "n/a";
+            return NOT_AVAILABLE;
         }
 
         String result = "";
