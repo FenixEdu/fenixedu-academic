@@ -1,12 +1,17 @@
 package net.sourceforge.fenixedu.dataTransferObject.department;
 
+import java.io.Serializable;
 import java.text.Collator;
 import java.util.Comparator;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.curriculum.IGrade;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-public abstract class CourseStatisticsDTO {
+public abstract class CourseStatisticsDTO implements Serializable, Comparable<CourseStatisticsDTO> {
+
+    private static final long serialVersionUID = 1L;
+
     private String externalId;
 
     private String name;
@@ -29,6 +34,8 @@ public abstract class CourseStatisticsDTO {
 
     private IGrade totalApprovedAverage;
 
+    private String NOT_AVAILABLE;
+
     public static final Comparator<CourseStatisticsDTO> COURSE_STATISTICS_COMPARATOR_BY_NAME =
             new Comparator<CourseStatisticsDTO>() {
 
@@ -40,6 +47,8 @@ public abstract class CourseStatisticsDTO {
             };
 
     public CourseStatisticsDTO() {
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources/DepartmentMemberResources", Language.getLocale());
+        NOT_AVAILABLE = bundle.getString("label.common.notAvailable");
     }
 
     public CourseStatisticsDTO(String externalId, String name, int firstEnrolledCount, int firstApprovedCount,
@@ -65,6 +74,10 @@ public abstract class CourseStatisticsDTO {
 
     public IGrade getFirstApprovedAverage() {
         return firstApprovedAverage;
+    }
+
+    public String getFirstApprovedAveragex() {
+        return (firstApprovedCount != 0) ? firstApprovedAverage.getGradeValue().toString() : NOT_AVAILABLE;
     }
 
     public void setFirstApprovedAverage(IGrade firstApprovedAverage) {
@@ -107,6 +120,10 @@ public abstract class CourseStatisticsDTO {
         return restApprovedAverage;
     }
 
+    public String getRestApprovedAveragex() {
+        return (restApprovedCount != 0) ? restApprovedAverage.getGradeValue().toString() : NOT_AVAILABLE;
+    }
+
     public void setRestApprovedAverage(IGrade restApprovedAverage) {
         this.restApprovedAverage = restApprovedAverage;
     }
@@ -131,6 +148,10 @@ public abstract class CourseStatisticsDTO {
         return totalApprovedAverage;
     }
 
+    public String getTotalApprovedAveragex() {
+        return (totalApprovedCount != 0) ? totalApprovedAverage.getGradeValue().toString() : NOT_AVAILABLE;
+    }
+
     public void setTotalApprovedAverage(IGrade totalApprovedAverage) {
         this.totalApprovedAverage = totalApprovedAverage;
     }
@@ -151,4 +172,18 @@ public abstract class CourseStatisticsDTO {
         this.totalEnrolledCount = totalEnrolledCount;
     }
 
+    public String getApprovedPercentage() {
+        if (totalEnrolledCount == 0) {
+            return NOT_AVAILABLE;
+        }
+
+        String result = "";
+        result = String.format("%.2f%%", totalApprovedCount * 100.0 / totalEnrolledCount);
+        return result;
+    }
+
+    @Override
+    public int compareTo(CourseStatisticsDTO o) {
+        return Collator.getInstance(Language.getLocale()).compare(this.getName(), o.getName());
+    }
 }
