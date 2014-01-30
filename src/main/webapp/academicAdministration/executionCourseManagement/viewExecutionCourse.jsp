@@ -6,7 +6,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <html:xhtml/>
 
-<h2><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.edit.executionCourse"/></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.edit.executionCourse"/></h2>
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
@@ -92,12 +92,11 @@
 	<table>
 		<tr>
 			<td>
-				<fr:form action="<%="/editExecutionCourse.do?method=editExecutionCourse&executionCourseId=" + executionCourseId.toString() + linkGetRequestBigMessage.toString() %>">
-					<fr:edit id="sessionBeanJSP" name="sessionBean" visible="false"/>
-					<html:submit>
+				<html:link action="<%= "/editExecutionCourse.do?method=editExecutionCourse&executionCourseId="+executionCourseId+linkGetRequestBigMessage%>">
+					<button>
 						<bean:message bundle="MANAGER_RESOURCES" key="label.edit"/>
-					</html:submit>
-				</fr:form>
+					</button>
+				</html:link>
 			</td>
 			<td>
 				<fr:form action="/editExecutionCourseChooseExPeriod.do?method=listExecutionCourseActions">

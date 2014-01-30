@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.serviceRequests.IRegistryDiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
 
-import org.apache.commons.lang.WordUtils;
 import org.joda.time.LocalDate;
 
 public class RegistryDiploma extends AdministrativeOfficeDocument {
@@ -38,6 +37,7 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
         setHeader();
 
         addParameter("institution", getInstitutionName());
+        addParameter("university", getUniversity(getDocumentRequest().getRequestDate()));
 
         setFirstParagraph(request);
         setSecondParagraph(person, request);
@@ -46,7 +46,7 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
         String dateWord[] = getDateByWords(request.getConclusionDate());
 
         addParameter("thirdParagraph", MessageFormat.format(thirdParagraph, dateWord[0], dateWord[1], dateWord[2]));
-
+        addParameter("by", getResourceBundle().getString("label.by.university"));
         if (getDocumentRequest().isRequestForRegistration()) {
             setFifthParagraph();
         }
@@ -62,9 +62,7 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
         if (graduateTitle.contains("Master")) {
             graduateTitle = graduateTitle.replace("Master", "Mestre");
         }
-
         addParameter("graduateTitle", graduateTitle);
-
         setFooter();
     }
 
@@ -137,10 +135,8 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
         String secondParagraph = getResourceBundle().getString("label.phd.registryDiploma.secondParagraph");
 
         String country;
-        String countryUpperCase;
         if (person.getCountry() != null) {
-            countryUpperCase = person.getCountry().getCountryNationality().getContent(getLanguage()).toLowerCase();
-            country = WordUtils.capitalize(countryUpperCase);
+            country = person.getCountry().getCountryNationality().getContent(getLanguage()).toLowerCase();
         } else {
             throw new DomainException("error.personWithoutParishOfBirth");
         }
@@ -161,15 +157,24 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 
         if (presidentIst.isMale()) {
             presidentGender = getResourceBundle().getString("label.phd.registryDiploma.presidentMale");
+            addParameter("presidentName", getResourceBundle().getString("label.phd.registryDiploma.presidentGrantMale") + " "
+                    + presidentIst.getName());
+
         } else {
             presidentGender = getResourceBundle().getString("label.phd.registryDiploma.presidentFemale");
+            addParameter("presidentName", getResourceBundle().getString("label.phd.registryDiploma.presidentGrantFemale") + " "
+                    + presidentIst.getName());
         }
 
         String rectorGender;
         if (rectorIst.isMale()) {
             rectorGender = getResourceBundle().getString("label.phd.registryDiploma.rectorMale");
+            addParameter("rectorName", getResourceBundle().getString("label.phd.registryDiploma.presidentGrantMale") + " "
+                    + rectorIst.getName());
         } else {
             rectorGender = getResourceBundle().getString("label.phd.registryDiploma.rectorFemale");
+            addParameter("rectorName", getResourceBundle().getString("label.phd.registryDiploma.presidentGrantFemale") + " "
+                    + rectorIst.getName());
         }
 
         String universityName = university.getPartyName().getPreferedContent();
@@ -177,20 +182,21 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
         addParameter("dateParagraph", getFormatedCurrentDate(universityName));
         addParameter("rector", rectorGender);
         addParameter("president", MessageFormat.format(presidentGender, institutionUnitName));
+
     }
 
     private String getFormatedCurrentDate(String universityName) {
         final StringBuilder result = new StringBuilder();
         LocalDate date = new LocalDate();
-        String dayOrdinal = Integer.toString(date.getDayOfMonth());
-        String day = getEnumerationBundle().getString(dayOrdinal);
-        String month = date.toString("MMMM", getLocale());
+        String day = Integer.toString(date.getDayOfMonth());
+        String month = date.toString("MMMM", getLocale()).toLowerCase();
         result.append(universityName).append(", ");
         result.append(getResourceBundle().getString("label.in"));
         result.append(" " + day + " ");
         result.append(getApplicationBundle().getString("label.of"));
-        result.append(" " + month + ", ");
-        result.append(date.getYear()).append(".");
+        result.append(" " + month + " ");
+        result.append(getApplicationBundle().getString("label.of"));
+        result.append(" ").append(date.getYear()).append(".");
         return result.toString();
     }
 
@@ -206,10 +212,9 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 
     protected String[] getDateByWords(LocalDate date) {
 
-        String dayOrdinal = Integer.toString(date.getDayOfMonth());
-        String day = getEnumerationBundle().getString(dayOrdinal);
-        String month = date.toString("MMMM", getLocale());
-        String year = getEnumerationBundle().getString(Integer.toString(date.getYear()));
+        String day = Integer.toString(date.getDayOfMonth());
+        String month = date.toString("MMMM", getLocale()).toLowerCase();
+        String year = Integer.toString(date.getYear());
         String finalDate[] = new String[] { day, month, year };
         return finalDate;
 
