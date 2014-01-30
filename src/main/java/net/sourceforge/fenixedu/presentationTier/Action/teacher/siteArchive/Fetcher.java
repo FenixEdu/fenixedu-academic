@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Collection;
 import java.util.HashSet;
@@ -154,22 +155,27 @@ public class Fetcher {
 //                return;
 //            }
 //        }
+        if (url.startsWith(File.getFileDownloadPrefix())) {
+            writeFileToStream(url, stream);
+        } else {
+            RequestDispatcher dispatcher = this.request.getRequestDispatcher(url);
+            ServletRequest request = this.requestContext == null ? createForwardRequest() : createForwardRequest(requestContext);
+            FetcherServletResponseWrapper response = createForwardResponse(resource, stream);
 
-        writeFileToStream(url, stream);
-
-        RequestDispatcher dispatcher = this.request.getRequestDispatcher(url);
-        ServletRequest request = this.requestContext == null ? createForwardRequest() : createForwardRequest(requestContext);
-        FetcherServletResponseWrapper response = createForwardResponse(resource, stream);
-
-        dispatcher.forward(request, response);
+            dispatcher.forward(request, response);
+        }
     }
 
     private void writeFileToStream(String url, OutputStream stream) throws IOException {
         if (url.startsWith(File.getFileDownloadPrefix())) {
             File fileFromURL = FileDownloadServlet.getFileFromURL(url);
             if (fileFromURL != null) {
-                ByteStreams.copy(fileFromURL.getStream(), stream);
+                InputStream inputStream = fileFromURL.getStream();
+                ByteStreams.copy(inputStream, stream);
+                inputStream.close();
+                stream.close();
             }
+
         }
     }
 
