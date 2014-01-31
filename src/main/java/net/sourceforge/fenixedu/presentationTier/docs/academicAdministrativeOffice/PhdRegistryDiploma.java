@@ -7,9 +7,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdRegistryDiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.IRegistryDiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
-
-import org.apache.commons.lang.WordUtils;
-
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -57,6 +54,7 @@ public class PhdRegistryDiploma extends RegistryDiploma {
         }
 
         addParameter("fifthParagraph", MessageFormat.format(fifthParagraph, getDocumentRequest().getFinalAverage(getLocale())));
+        addParameter("by", getResourceBundle().getString("label.by.university"));
 
         setFooter();
 
@@ -86,8 +84,7 @@ public class PhdRegistryDiploma extends RegistryDiploma {
         String country;
         String countryUpperCase;
         if (person.getCountry() != null) {
-            countryUpperCase = person.getCountry().getCountryNationality().getContent(getLanguage()).toLowerCase();
-            country = WordUtils.capitalize(countryUpperCase);
+            country = person.getCountry().getCountryNationality().getContent(getLanguage()).toLowerCase();
         } else {
             throw new DomainException("error.personWithoutParishOfBirth");
         }
