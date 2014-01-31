@@ -176,4 +176,15 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
         return !getLessonInstancesSet().isEmpty();
     }
 
+    @Override
+    protected boolean overlaps(final Interval interval) {
+        for (final LessonInstance instance : getLessonInstancesSet()) {
+            final Interval lessonInterval = instance.getInterval();
+            if (interval.overlaps(lessonInterval)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

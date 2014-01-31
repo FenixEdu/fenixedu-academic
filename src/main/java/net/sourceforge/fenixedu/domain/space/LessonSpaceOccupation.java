@@ -188,4 +188,14 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
         return getLesson() != null;
     }
 
+    @Override
+    protected boolean overlaps(final Interval interval) {
+        for (final Interval lessonInterval : getLesson().getAllLessonIntervalsWithoutInstanceDates()) {
+            if (interval.overlaps(lessonInterval)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

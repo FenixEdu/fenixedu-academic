@@ -171,4 +171,14 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
         return !getWrittenEvaluationsSet().isEmpty();
     }
 
+    protected boolean overlaps(final Interval interval) {
+        for (final WrittenEvaluation writtenEvaluation : getWrittenEvaluationsSet()) {
+            final Interval evaluationInterval = writtenEvaluation.getInterval();
+            if (interval.overlaps(evaluationInterval)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

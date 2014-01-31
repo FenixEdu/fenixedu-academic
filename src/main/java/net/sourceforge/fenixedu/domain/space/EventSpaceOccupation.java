@@ -7,8 +7,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.FrequencyType;
@@ -160,15 +158,20 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
 
     public boolean overlaps(final Interval[] intervals) {
         for (final Interval interval : intervals) {
-            final DateTime start = interval.getStart();
-            final DateTime end = interval.getEnd();
-            if (alreadyWasOccupiedIn(start.toYearMonthDay(), end.toYearMonthDay(), new HourMinuteSecond(start.toDate()),
-                    new HourMinuteSecond(end.toDate()), null, null, null, null)) {
+            if (overlaps(interval)) {
                 return true;
             }
+//            final DateTime start = interval.getStart();
+//            final DateTime end = interval.getEnd();
+//            if (alreadyWasOccupiedIn(start.toYearMonthDay(), end.toYearMonthDay(), new HourMinuteSecond(start.toDate()),
+//                    new HourMinuteSecond(end.toDate()), null, null, null, null)) {
+//                return true;
+//            }
         }
         return false;
     }
+
+    protected abstract boolean overlaps(final Interval interval);
 
     public List<Interval> getEventSpaceOccupationIntervals(DateTime start, DateTime end) {
         final Interval i = new Interval(start, end);
