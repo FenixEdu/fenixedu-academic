@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"%>
 <%@ page language="java"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <html:xhtml />
@@ -12,8 +13,9 @@
 	
 <br/>
 
-<fr:view name="degreeCurricularPlans"
-	schema="DegreeCurricularPlan.view">
+<logic:present name="degreeCurricularPlans">
+
+<fr:view  name="degreeCurricularPlans" schema="DegreeCurricularPlan.view">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle4 thlight thcenter mtop05" />
 		<fr:property name="sortBy" value="degree.name=asc" />
@@ -31,6 +33,7 @@
 					
 	</fr:layout>
 </fr:view>
+</logic:present>
 	
 <html:link
 	action="/postingRules.do?method=prepareCreatePaymentPlan">
@@ -51,3 +54,4 @@
 	action="/postingRules.do?method=prepare">
 	<bean:message key="label.back" bundle="APPLICATION_RESOURCES" />
 </html:link>
+ 

@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOff
 import java.text.MessageFormat;
 
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -141,9 +142,12 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
             throw new DomainException("error.personWithoutParishOfBirth");
         }
 
+        Degree degree = ((RegistryDiplomaRequest) getDocumentRequest()).getDegree();
+        ExecutionYear year = ((RegistryDiplomaRequest) getDocumentRequest()).getExecutionYear();
+
         addParameter("secondParagraph", MessageFormat.format(secondParagraph, studentGender,
                 getEnumerationBundle().getString(person.getIdDocumentType().getName()), person.getDocumentIdNumber(), country,
-                getCycleDescription()));
+                getCycleDescription(), degree.getFilteredName(year, getLocale())));
     }
 
     protected void setFooter() {

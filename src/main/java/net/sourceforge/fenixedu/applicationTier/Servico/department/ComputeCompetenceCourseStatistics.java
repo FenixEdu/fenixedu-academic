@@ -17,22 +17,18 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author pcma
  */
 public class ComputeCompetenceCourseStatistics extends ComputeCourseStatistics {
 
-    public List<CompetenceCourseStatisticsDTO> run(String departementID, String executionPeriodID) throws FenixServiceException {
+    public List<CompetenceCourseStatisticsDTO> run(Department department, ExecutionSemester executionSemester)
+            throws FenixServiceException {
         final List<CompetenceCourseStatisticsDTO> results = new ArrayList<CompetenceCourseStatisticsDTO>();
 
-        final Department department = FenixFramework.getDomainObject(departementID);
-
-        final ExecutionSemester executionSemester = FenixFramework.getDomainObject(executionPeriodID);
-
         final Set<CompetenceCourse> competenceCourses = new HashSet<CompetenceCourse>();
-        department.addAllCompetenceCoursesByExecutionPeriod(competenceCourses, executionSemester);
+
         department.addAllBolonhaCompetenceCourses(competenceCourses, executionSemester);
 
         for (CompetenceCourse competenceCourse : competenceCourses) {
@@ -40,7 +36,7 @@ public class ComputeCompetenceCourseStatistics extends ComputeCourseStatistics {
             if (enrollments.size() > 0) {
                 CompetenceCourseStatisticsDTO competenceCourseStatistics = new CompetenceCourseStatisticsDTO();
                 competenceCourseStatistics.setExternalId(competenceCourse.getExternalId());
-                competenceCourseStatistics.setName(competenceCourse.getName());
+                competenceCourseStatistics.setName(competenceCourse.getNameI18N(executionSemester).getContent());
                 createCourseStatistics(competenceCourseStatistics, enrollments);
                 results.add(competenceCourseStatistics);
             }
@@ -56,9 +52,9 @@ public class ComputeCompetenceCourseStatistics extends ComputeCourseStatistics {
     private static final ComputeCompetenceCourseStatistics serviceInstance = new ComputeCompetenceCourseStatistics();
 
     @Atomic
-    public static List<CompetenceCourseStatisticsDTO> runComputeCompetenceCourseStatistics(String departementID,
-            String executionPeriodID) throws FenixServiceException {
-        return serviceInstance.run(departementID, executionPeriodID);
+    public static List<CompetenceCourseStatisticsDTO> runComputeCompetenceCourseStatistics(Department department,
+            ExecutionSemester executionSemester) throws FenixServiceException {
+        return serviceInstance.run(department, executionSemester);
     }
 
 }

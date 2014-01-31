@@ -158,15 +158,20 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
 
     public boolean overlaps(final Interval[] intervals) {
         for (final Interval interval : intervals) {
-            final DateTime start = interval.getStart();
-            final DateTime end = interval.getEnd();
-            if (alreadyWasOccupiedIn(start.toYearMonthDay(), end.toYearMonthDay(), new HourMinuteSecond(start.toDate()),
-                    new HourMinuteSecond(end.toDate()), null, null, null, null)) {
+            if (overlaps(interval)) {
                 return true;
             }
+//            final DateTime start = interval.getStart();
+//            final DateTime end = interval.getEnd();
+//            if (alreadyWasOccupiedIn(start.toYearMonthDay(), end.toYearMonthDay(), new HourMinuteSecond(start.toDate()),
+//                    new HourMinuteSecond(end.toDate()), null, null, null, null)) {
+//                return true;
+//            }
         }
         return false;
     }
+
+    protected abstract boolean overlaps(final Interval interval);
 
     public List<Interval> getEventSpaceOccupationIntervals(DateTime start, DateTime end) {
         final Interval i = new Interval(start, end);
@@ -275,7 +280,7 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
         return begin;
     }
 
-    protected Interval createNewInterval(YearMonthDay begin, YearMonthDay end, HourMinuteSecond beginTime,
+    protected static Interval createNewInterval(YearMonthDay begin, YearMonthDay end, HourMinuteSecond beginTime,
             HourMinuteSecond endTime) {
         return new Interval(begin.toDateTime(new TimeOfDay(beginTime.getHour(), beginTime.getMinuteOfHour(), 0, 0)),
                 end.toDateTime(new TimeOfDay(endTime.getHour(), endTime.getMinuteOfHour(), 0, 0)));

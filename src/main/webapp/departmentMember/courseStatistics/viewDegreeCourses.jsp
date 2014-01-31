@@ -1,115 +1,89 @@
-<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
-<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
+<%@ page language="java"%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
+<html:xhtml />
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<ft:tilesView definition="departmentMember.masterPage" attributeName="body-inline">
-	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
-	<f:loadBundle basename="resources/DepartmentMemberResources" var="bundle"/>
-	
-	<h:outputText value="<em>#{bundle['label.departmentMember']}</em>" escape="false" />
-	<h:outputText value="<h2>#{bundle['label.courseStatistics.degreeStatistics']}</h2>" escape="false" />
-	<h:outputText value="<h3>#{courseStatistics.competenceCourse.name}</h3>" escape="false" />
+<bean:define id="executionSemesterId" name="courseStatisticsBean" property="executionSemester.externalId" />
+<bean:define id="competenceCourseId" name="courseStatisticsBean" property="competenceCourse.externalId" />
 
-	<h:form>
-		<fc:viewState binding="#{courseStatistics.viewState}" />
+<em><bean:message key="label.departmentMember"/></em>
+<h2><bean:message key="label.courseStatistics.degreeStatistics"/></h2>
+<h3><bean:write name="courseStatisticsBean" property="competenceCourseName" /></h3>
 
-		<h:outputText value="<ul><li>" escape="false" />
-		<fc:commandLink value="#{bundle['link.back']}" action="backToCompetenceCourses" />
-		<h:outputText value="</li></ul>" escape="false" />
+<html:link action="<%="/departmentCourses.do?method=prepareListCourses&executionSemesterId="+executionSemesterId %>" >
+	« <bean:message key="link.back"/>
+</html:link>
 
-		<h:outputText value="<table class='tstyle5 mtop05 mbottom15'>" escape="false" />
-		<h:outputText value="<tr><td>" escape="false" />
-		<h:outputText value="#{bundle['label.common.executionYear']}&nbsp;" escape="false" styleClass="aright" />
-		<h:outputText value="<td>" escape="false" />
-			<fc:selectOneMenu
-				value="#{courseStatistics.executionPeriodId}"
-				valueChangeListener="#{courseStatistics.onExecutionPeriodChangeForDegreeCourses}"
-				onchange="this.form.submit();">
-				<f:selectItems value="#{courseStatistics.executionPeriods}" />
-			</fc:selectOneMenu>
-			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
-		<h:outputText value="</td>" escape="false" />
-		<h:outputText value="</td></tr>" escape="false" />
-		<h:outputText value="</table>" escape="false" />
+<fr:form id="chooseSemesterForm" action="/departmentCourses.do?method=prepareDegreeCourses" >
+	<fr:edit id="courseStatisticsBean" name="courseStatisticsBean">
+		<fr:schema bundle="DEPARTMENT_MEMBER_RESOURCES"
+			type="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.CourseStatisticsBean">
+			<fr:slot name="executionSemester" layout="menu-select-postback" key="label.common.executionYear">
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.NotClosedExecutionPeriodsProvider" />
+				<fr:property name="format" value="${qualifiedName}" />
+				<fr:property name="saveOptions" value="true" />
+			</fr:slot>
+			<fr:layout>
+				<fr:property name="classes" value="tstyle5 mtop05 mbottom15" />
+			</fr:layout>
+		</fr:schema>
+	</fr:edit>
+</fr:form>
 
-
-
-		<f:verbatim>
-			<table class="tstyle1">
-				<tr>
-		</f:verbatim>
+<table class="tstyle1">
+	<tr>
+		<th>&nbsp;</th>
+		<th colspan="3"><bean:message key="label.courseStatistics.firstCount" /></th>
+		<th colspan="3"><bean:message key="label.courseStatistics.restCount" /></th>
+		<th colspan="3"><bean:message key="label.courseStatistics.totalCount" /></th>
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>
+	</tr>
+	<tr>
+		<th><bean:message key="label.courseStatistics.degree" /></th>
+		<th><bean:message key="label.courseStatistics.enrolled" /></th>
+		<th><bean:message key="label.courseStatistics.approved" /></th>
+		<th><bean:message key="label.courseStatistics.average" /></th>
+		<th><bean:message key="label.courseStatistics.enrolled" /></th>
+		<th><bean:message key="label.courseStatistics.approved" /></th>
+		<th><bean:message key="label.courseStatistics.average" /></th>
+		<th><bean:message key="label.courseStatistics.enrolled" /></th>
+		<th><bean:message key="label.courseStatistics.approved" /></th>
+		<th><bean:message key="label.courseStatistics.average" /></th>
+		<th><bean:message key="label.courseStatistics.approvedPercentage" /></th>
+		<th>&nbsp;</th>
+	</tr>
+	<tbody>
 		
-		<h:outputText value="<th>&nbsp;</th>" escape="false" />
-		<h:outputText value="<th colspan=\"3\">#{bundle['label.courseStatistics.firstCount']}</th>" escape="false" />
-		<h:outputText value="<th colspan=\"3\">#{bundle['label.courseStatistics.restCount']}</th>" escape="false" />
-		<h:outputText value="<th colspan=\"3\">#{bundle['label.courseStatistics.totalCount']}</th>" escape="false" />
-		<h:outputText value="<th>&nbsp;</th>" escape="false" />
-		<h:outputText value="<th>&nbsp;</th>" escape="false" />
-		<h:outputText value="</tr><tr>" escape="false" />
-		
-		<h:outputText value="<th>#{bundle['label.courseStatistics.degree']}</th>" escape="false" />
-		<h:outputText value="<th>#{bundle['label.courseStatistics.enrolled']}</th>" escape="false" />
-		<h:outputText value="<th>#{bundle['label.courseStatistics.approved']}</th>" escape="false" />
-		<h:outputText value="<th>#{bundle['label.courseStatistics.average']}</th>" escape="false" />
-		<h:outputText value="<th>#{bundle['label.courseStatistics.enrolled']}</th>" escape="false" />
-		<h:outputText value="<th>#{bundle['label.courseStatistics.approved']}</th>" escape="false" />
-		<h:outputText value="<th>#{bundle['label.courseStatistics.average']}</th>" escape="false" />
-		<h:outputText value="<th>#{bundle['label.courseStatistics.enrolled']}</th>" escape="false" />
-		<h:outputText value="<th>#{bundle['label.courseStatistics.approved']}</th>" escape="false" />
-		<h:outputText value="<th>#{bundle['label.courseStatistics.average']}</th>" escape="false" />
-		<h:outputText value="<th>#{bundle['label.courseStatistics.approvedPercentage']}</th>" escape="false" />
-		<h:outputText value="<th>&nbsp;</th>" escape="false" />
+		<logic:iterate id="degreeCourse" name="courseStatisticsBean" property="degreeCourses">
+			<bean:define id="degreeId" name="degreeCourse" property="externalId"/>
+			<tr>
+				<td>
+ 					<html:link action="<%="/departmentCourses.do?method=prepareExecutionCourses&degreeId=" + degreeId + "&competenceCourseId="+ competenceCourseId +"&executionSemesterId="+ executionSemesterId %>">
+						<bean:write name="degreeCourse" property="name"/>
+					</html:link>
+				</td>
+				<td class="aright"><bean:write name="degreeCourse" property="firstEnrolledCount" /></td>
+				<td class="aright"><bean:write name="degreeCourse" property="firstApprovedCount" /></td>
+				<td class="aright"><bean:write name="degreeCourse" property="firstApprovedAveragex" /></td>
+				<td class="aright"><bean:write name="degreeCourse" property="restEnrolledCount" /></td>
+				<td class="aright"><bean:write name="degreeCourse" property="restApprovedCount" /></td>
+				<td class="aright"><bean:write name="degreeCourse" property="restApprovedAveragex" /></td>
+				<td class="aright"><bean:write name="degreeCourse" property="totalEnrolledCount" /></td>
+				<td class="aright"><bean:write name="degreeCourse" property="totalApprovedCount" /></td>
+				<td class="aright"><bean:write name="degreeCourse" property="totalApprovedAveragex" /></td>
+				<td class="aright"><bean:write name="degreeCourse" property="approvedPercentage" /></td>
+				<td>
+	 		  		<html:img alt="excel" src="<%= request.getContextPath() + "/images/excel.gif"%>" bundle="IMAGE_RESOURCES" />
+					&nbsp;
+					<html:link action="<%="/departmentCourses.do?method=downloadExcel&degreeId=" + degreeId + "&competenceCourseId="+ competenceCourseId +"&executionSemesterId="+ executionSemesterId %>" >
+						<bean:message key="label.teacherService.exportToExcel"  />
+					</html:link>					
+				</td>
+			</tr>
+		</logic:iterate>
 
-		<f:verbatim>
-					</tr>
-				<tbody>
-		</f:verbatim>
-		
-		<fc:dataRepeater value="#{courseStatistics.degreeCourses}" var="degreeCourse">
-			<h:outputText value="<tr><td>" escape="false"/>
-				
-				<fc:commandLink value="#{degreeCourse.name}"	
-					action="viewExecutionCourses"
-					actionListener="#{courseStatistics.onDegreeCourseSelect}">
-					<f:param id="degreeId" name="degreeId" value="#{degreeCourse.externalId}" />
-				</fc:commandLink>
-
-				<h:outputText value="</td>" escape="false" />
-				<h:outputText value="<td class='aright'>#{degreeCourse.firstEnrolledCount}</td>" escape="false"/>
-				<h:outputText value="<td class='aright'>#{degreeCourse.firstApprovedCount}</td>" escape="false"/>
-				<h:outputText value="<td class='aright'>#{degreeCourse.firstApprovedCount == 0 ? bundle['label.common.notAvailable'] : degreeCourse.firstApprovedAverage.gradeValue}</td>" escape="false"/>
-
-				<h:outputText value="<td class='aright'>#{degreeCourse.restEnrolledCount}</td>" escape="false"/>
-				<h:outputText value="<td class='aright'>#{degreeCourse.restApprovedCount}</td>" escape="false"/>
-				<h:outputText value="<td class='aright'>#{degreeCourse.restApprovedCount == 0 ? bundle['label.common.notAvailable'] : degreeCourse.restApprovedAverage.gradeValue}</td>" escape="false"/>
-
-				<h:outputText value="<td class='aright'>#{degreeCourse.totalEnrolledCount}</td>" escape="false"/>
-				<h:outputText value="<td class='aright'>#{degreeCourse.totalApprovedCount}</td>" escape="false"/>
-				<h:outputText value="<td class='aright'>#{degreeCourse.totalApprovedCount == 0 ? bundle['label.common.notAvailable'] : degreeCourse.totalApprovedAverage.gradeValue}</td>" escape="false"/>
-				
-				<h:outputText value="<td class='aright'>" escape="false" />
-				<h:outputText value="#{(degreeCourse.totalEnrolledCount == 0)  ? bundle['label.common.notAvailable'] : (degreeCourse.totalApprovedCount / degreeCourse.totalEnrolledCount)}" escape="false">
-					<f:convertNumber maxFractionDigits="2" type="percent"/>
- 		  		</h:outputText>
- 		  		<h:outputText value="</td><td>" escape="false" />
- 		  		
- 		  			<h:graphicImage id="image" alt="Excel" url="/images/excel.gif" />
-					<h:outputText value="&nbsp;" escape="false" />
-					
-					<fc:commandLink value="#{bundle['label.teacherService.exportToExcel']}" 
-									action="#{courseStatistics.exportStudentsToExcel}"
-									actionListener="#{courseStatistics.onDegreeCourseSelect}">
-						<f:param id="degreeToExportId" name="degreeId" value="#{degreeCourse.externalId}" />
-					</fc:commandLink>
-					
-				<h:outputText value="</td></tr>" escape="false"/>
-		</fc:dataRepeater>
-		<f:verbatim>
-				</tbody>
-			</table>
-		</f:verbatim>
-			
-	</h:form>
-
-</ft:tilesView>
+	</tbody>
+</table>

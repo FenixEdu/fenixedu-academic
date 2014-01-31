@@ -308,7 +308,11 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
         final List<DegreeCurricularPlan> degreeCurricularPlans =
                 DegreeCurricularPlan.readByDegreeTypesAndState(DegreeType.getDegreeTypesFor(AdministrativeOfficeType.DEGREE),
                         null);
-        degreeCurricularPlans.add(DegreeCurricularPlan.readEmptyDegreeCurricularPlan());
+        DegreeCurricularPlan empty = DegreeCurricularPlan.readEmptyDegreeCurricularPlan();
+        
+        if (empty != null) {
+            degreeCurricularPlans.add(DegreeCurricularPlan.readEmptyDegreeCurricularPlan());            
+        }
 
         request.setAttribute("degreeCurricularPlans", degreeCurricularPlans);
 

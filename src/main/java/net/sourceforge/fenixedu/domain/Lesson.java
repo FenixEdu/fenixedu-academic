@@ -816,7 +816,9 @@ public class Lesson extends Lesson_Base {
             while (true) {
                 if (isDayValid(startDateToSearch, lessonCampus)) {
                     if (getFrequency() != FrequencyType.BIWEEKLY || shouldAdd) {
-                        result.add(startDateToSearch);
+                        if (!isHoliday(startDateToSearch, lessonCampus)) {
+                            result.add(startDateToSearch);
+                        }
                     }
                     shouldAdd = !shouldAdd;
                 }
@@ -829,8 +831,12 @@ public class Lesson extends Lesson_Base {
         return result;
     }
 
+    private boolean isHoliday(YearMonthDay day, Campus lessonCampus) {
+        return Holiday.isHoliday(day.toLocalDate(), lessonCampus);
+    }
+
     private boolean isDayValid(YearMonthDay day, Campus lessonCampus) {
-        return !Holiday.isHoliday(day.toLocalDate(), lessonCampus) && getPeriod().nestedOccupationPeriodsContainsDay(day);
+        return /* !Holiday.isHoliday(day.toLocalDate(), lessonCampus) && */ getPeriod().nestedOccupationPeriodsContainsDay(day);
     }
 
     public YearMonthDay getNextPossibleLessonInstanceDate() {

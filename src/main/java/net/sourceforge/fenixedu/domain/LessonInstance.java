@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
+import org.joda.time.Interval;
 import org.joda.time.Minutes;
 import org.joda.time.YearMonthDay;
 
@@ -287,6 +288,10 @@ public class LessonInstance extends LessonInstance_Base {
     @Deprecated
     public boolean hasBeginDateTime() {
         return getBeginDateTime() != null;
+    }
+
+    public Interval getInterval() {
+        return new Interval(getBeginDateTime(), getEndDateTime());
     }
 
 }
