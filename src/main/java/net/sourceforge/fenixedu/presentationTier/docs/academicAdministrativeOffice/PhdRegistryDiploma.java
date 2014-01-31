@@ -54,6 +54,7 @@ public class PhdRegistryDiploma extends RegistryDiploma {
         }
 
         addParameter("fifthParagraph", MessageFormat.format(fifthParagraph, getDocumentRequest().getFinalAverage(getLocale())));
+        addParameter("by", getResourceBundle().getString("label.by.university"));
 
         setFooter();
 
