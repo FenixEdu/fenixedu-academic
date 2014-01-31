@@ -45,8 +45,8 @@
 				
 				<h2><bean:write name="application" property="name"/></h2>
 				
-				<h4><bean:write name="application" property="authorAppName"/></h4>
-				
+				<h4><bean:write name="application" property="authorNameForUserDialog"/></h4>
+
 				<code><a href="<%= siteURL %>"><%= siteURL %></a></code>
 				<p>
 					<bean:write name="application" property="description"/> 
