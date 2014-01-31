@@ -482,6 +482,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         if (canBeDeleted()) {
 
             if (hasSender()) {
+                getSender().getRecipientsSet().clear();
                 setSender(null);
             }
 
