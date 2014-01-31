@@ -21,6 +21,8 @@
 	<parameter name="fourthParagraph" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="fifthParagraph" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="dateParagraph" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="presidentName" class="java.lang.String"/>
+	<parameter name="rectorName" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -72,8 +74,8 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{institution}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement key="textField-5" positionType="Float" x="0" y="139" width="455" height="22"/>
-				<textElement textAlignment="Justified">
+				<reportElement key="textField-5" positionType="Float" x="0" y="137" width="455" height="22"/>
+				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="10" pdfFontName="tnr.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{thirdParagraph}]]></textFieldExpression>
@@ -93,14 +95,14 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{fifthParagraph}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement key="textField-12" positionType="Float" x="0" y="194" width="455" height="19"/>
-				<textElement textAlignment="Justified">
+				<reportElement key="textField-12" positionType="Float" x="0" y="199" width="455" height="19"/>
+				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="10" pdfFontName="tnr.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{fourthParagraph}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-13" positionType="Float" x="0" y="161" width="455" height="33" isPrintWhenDetailOverflows="true"/>
+				<reportElement key="textField-13" positionType="Float" x="0" y="160" width="455" height="33" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font fontName="Times New Roman" size="14" pdfFontName="tnr.ttf" isPdfEmbedded="true"/>
 				</textElement>
@@ -115,7 +117,7 @@
 		<band splitType="Stretch"/>
 	</pageFooter>
 	<lastPageFooter>
-		<band height="100" splitType="Stretch">
+		<band height="130" splitType="Stretch">
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField-8" x="1" y="0" width="455" height="20"/>
 				<textElement>
@@ -123,25 +125,39 @@
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{dateParagraph}]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement key="line-1" x="0" y="64" width="220" height="1"/>
-			</line>
-			<line>
-				<reportElement key="line-2" x="235" y="64" width="220" height="1"/>
-			</line>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement key="textField-9" positionType="Float" x="0" y="76" width="220" height="22"/>
+				<reportElement key="textField-10" positionType="Float" x="236" y="108" width="220" height="22"/>
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="9" pdfFontName="tnr.ttf" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{president}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{rectorName}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement key="textField-10" positionType="Float" x="235" y="76" width="220" height="22"/>
+				<reportElement key="textField-9" positionType="Float" x="1" y="108" width="220" height="22"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="9" pdfFontName="tnr.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{presidentName}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line-2" x="236" y="99" width="220" height="1"/>
+			</line>
+			<line>
+				<reportElement key="line-1" x="1" y="99" width="220" height="1"/>
+			</line>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement key="textField-10" positionType="Float" x="236" y="48" width="220" height="22"/>
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="9" pdfFontName="tnr.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{rector}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement key="textField-9" positionType="Float" x="1" y="48" width="220" height="22"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="9" pdfFontName="tnr.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{president}]]></textFieldExpression>
 			</textField>
 		</band>
 	</lastPageFooter>
