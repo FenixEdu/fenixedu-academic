@@ -12,7 +12,12 @@ import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.TeacherCurricularInformation;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.TeacherCurricularInformation.LecturedCurricularUnit;
@@ -54,13 +59,9 @@ import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
-
 public class A3ESDegreeProcess implements Serializable {
     private static final String BASE_URL = "http://www.a3es.pt/si/iportal.php";
-    //private static final String BASE_URL = "http://formacao.a3es.pt/iportal.php";
+//    private static final String BASE_URL = "http://formacao.a3es.pt/iportal.php";
 
     private static final String API_PROCESS = "api_process";
 
@@ -220,15 +221,15 @@ public class A3ESDegreeProcess implements Serializable {
                             .queryParam("folderId", competencesId));
                 }
                 for (Entry<JSONObject, String> json : buildCompetenceCoursesJson().entrySet()) {
-                    ClientResponse response =
+                    Response response =
                             post(webResource().path(API_ANNEX).queryParam("formId", formId).queryParam("folderId", competencesId),
                                     json.getKey().toJSONString());
                     int status = response.getStatus();
                     if (status == 201) {
                         output.add("201 Created: " + json.getKey().get("q-6.2.1.1") + ": " + json.getValue());
                     } else {
-                        output.add(status + ": " + json.getKey().get("q-6.2.1.1") + ": " + response.getEntity(String.class)
-                                + " input: " + json.getKey().toJSONString());
+                        output.add(status + ": " + json.getKey().get("q-6.2.1.1") + ": " + response.getEntity() + " input: "
+                                + json.getKey().toJSONString());
                     }
                 }
                 break;
@@ -250,15 +251,15 @@ public class A3ESDegreeProcess implements Serializable {
                             .queryParam("folderId", teacherCurriculumId));
                 }
                 for (Entry<JSONObject, String> json : buildTeacherCurriculumJson().entrySet()) {
-                    ClientResponse response =
+                    Response response =
                             post(webResource().path(API_ANNEX).queryParam("formId", formId)
                                     .queryParam("folderId", teacherCurriculumId), json.getKey().toJSONString());
                     int status = response.getStatus();
                     if (status == 201) {
                         output.add("201 Created: " + json.getKey().get("q-cf-name") + ": " + json.getValue());
                     } else {
-                        output.add(status + ": " + json.getKey().get("q-cf-name") + ": " + response.getEntity(String.class)
-                                + " input: " + json.getKey().toJSONString());
+                        output.add(status + ": " + json.getKey().get("q-cf-name") + ": " + response.getEntity() + " input: "
+                                + json.getKey().toJSONString());
                     }
                 }
                 break;
@@ -267,24 +268,24 @@ public class A3ESDegreeProcess implements Serializable {
         return output;
     }
 
-    protected WebResource webResource() {
-        Client client = Client.create();
-        return client.resource(BASE_URL);
+    protected WebTarget webResource() {
+        Client client = ClientBuilder.newClient();
+        return client.target(BASE_URL);
     }
 
-    protected JSONArray invoke(WebResource resource) {
-        return (JSONArray) ((JSONObject) JSONValue.parse(resource.header("Authorization", "Basic " + base64Hash)
-                .get(String.class))).get("list");
+    protected JSONArray invoke(WebTarget resource) {
+        return (JSONArray) ((JSONObject) JSONValue.parse(resource.request(MediaType.APPLICATION_JSON)
+                .header("Authorization", "Basic " + base64Hash).get(String.class))).get("list");
     }
 
-    protected ClientResponse post(WebResource resource, String arg) {
-        return resource.header("Authorization", "Basic " + base64Hash).type(MediaType.APPLICATION_JSON_TYPE)
-                .post(ClientResponse.class, arg);
+    protected Response post(WebTarget resource, String arg) {
+        return resource.request(MediaType.APPLICATION_JSON).header("Authorization", "Basic " + base64Hash)
+                .buildPost(Entity.text(arg)).invoke();
+
     }
 
-    protected ClientResponse delete(WebResource resource) {
-        return resource.header("Authorization", "Basic " + base64Hash).type(MediaType.APPLICATION_JSON_TYPE)
-                .delete(ClientResponse.class);
+    protected Response delete(WebTarget resource) {
+        return resource.request(MediaType.APPLICATION_JSON).header("Authorization", "Basic " + base64Hash).buildDelete().invoke();
     }
 
     protected Map<JSONObject, String> buildCompetenceCoursesJson() {

@@ -104,8 +104,10 @@ public class JerseyOAuth2Filter implements Filter {
     private Boolean checkAccessToken(final HttpServletRequest request, final HttpServletResponse response) throws IOException,
             ServletException {
 
-        final String uri =
-                StringUtils.removeStart(request.getRequestURI(), request.getContextPath() + request.getServletPath() + "/fenix/");
+//        final String uri =
+//                StringUtils.removeStart(request.getRequestURI(), request.getContextPath() + request.getServletPath() + "/fenix/");
+
+        final String uri = StringUtils.removeStart(request.getRequestURI(), request.getContextPath() + "/api/");
 
         if (FenixJerseyAPIConfig.isPublicScope(uri)) {
             return true;

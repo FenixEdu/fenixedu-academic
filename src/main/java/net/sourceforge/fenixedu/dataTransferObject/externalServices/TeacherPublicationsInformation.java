@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
+
 import net.sourceforge.fenixedu.domain.Teacher;
 
 import org.apache.commons.lang.StringUtils;
@@ -16,10 +20,6 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.UniformInterfaceException;
-import com.sun.jersey.api.client.WebResource;
 
 public class TeacherPublicationsInformation implements Serializable {
 
@@ -32,8 +32,8 @@ public class TeacherPublicationsInformation implements Serializable {
     public static Map<Teacher, List<String>> getTeacherPublicationsInformations(Set<Teacher> teachers) {
         Map<Teacher, List<String>> teacherPublicationsInformationMap = new HashMap<Teacher, List<String>>();
 
-        Client client = Client.create();
-        WebResource resource = client.resource(BASE_URL);
+        Client client = ClientBuilder.newClient();
+        WebTarget resource = client.target(BASE_URL);
         List<String> teacherIds = new ArrayList<String>();
 
         for (Teacher teacher : teachers) {
@@ -42,7 +42,7 @@ public class TeacherPublicationsInformation implements Serializable {
 
         resource = resource.path(CURRICULUM_PATH).queryParam("istids", StringUtils.join(teacherIds, ","));
         try {
-            String allPublications = resource.get(String.class);
+            String allPublications = resource.request().get(String.class);
             JSONParser parser = new JSONParser();
             for (Object teacherPublications : (JSONArray) parser.parse(allPublications)) {
                 JSONObject teacherPublicationsInfo = (JSONObject) teacherPublications;
@@ -57,12 +57,12 @@ public class TeacherPublicationsInformation implements Serializable {
 
                 teacherPublicationsInformationMap.put(teacher, teacherPublicationsList);
             }
-        } catch (UniformInterfaceException e) {
-            logger.error(e.getMessage(), e);
         } catch (ParseException e) {
             logger.error(e.getMessage(), e);
+        } finally {
+            client.close();
         }
+
         return teacherPublicationsInformationMap;
     }
-
 }

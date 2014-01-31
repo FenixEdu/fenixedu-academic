@@ -5,17 +5,11 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
 import java.io.PrintWriter;
-import java.security.MessageDigest;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -38,7 +32,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.RoomClassification;
 import net.sourceforge.fenixedu.domain.space.RoomInformation;
@@ -54,17 +47,6 @@ import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.util.Base64;
-import org.restlet.Client;
-import org.restlet.Context;
-import org.restlet.Request;
-import org.restlet.Response;
-import org.restlet.data.Method;
-import org.restlet.data.Parameter;
-import org.restlet.data.Protocol;
-import org.restlet.data.Reference;
-import org.restlet.engine.security.SslContextFactory;
-import org.restlet.util.Series;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -120,71 +102,6 @@ public class MonitorSystemDA extends FenixDispatchAction {
         }
 
         return null;
-    }
-
-    public ActionForward testRestlet(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-        byte[] hashedSecret =
-                messageDigest.digest(FenixConfigurationManager.getConfiguration()
-                        .getExternalApplicationWorkflowEquivalencesUriSecret().getBytes());
-
-        final Reference reference =
-                new Reference(FenixConfigurationManager.getConfiguration().getExternalApplicationWorkflowEquivalencesUri()
-                        + "aaaa").addQueryParameter("creator", "xxxx").addQueryParameter("requestor", "yyyyy")
-                        .addQueryParameter("base64Secret", new String(Base64.encode(hashedSecret)));
-
-        TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
-
-            @Override
-            public X509Certificate[] getAcceptedIssuers() {
-                return null;
-            }
-
-            @Override
-            public void checkServerTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
-            }
-
-            @Override
-            public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
-            }
-        } };
-
-        // Install the all-trusting trust manager
-        final SSLContext sc = SSLContext.getInstance("SSL");
-        sc.init(null, trustAllCerts, new java.security.SecureRandom());
-
-        Client client = null;
-        try {
-            client = new Client(Protocol.HTTPS);
-            client.setContext(new org.restlet.Context());
-            client.getContext().getAttributes().put("sslContextFactory", new SslContextFactory() {
-                @Override
-                public SSLContext createSslContext() throws Exception {
-                    return sc;
-                }
-
-                @Override
-                public void init(Series<Parameter> parameters) {
-                }
-            });
-
-            final Response responseFromClient = client.handle(new Request(Method.POST, reference, null));
-
-            if (responseFromClient.getStatus().getCode() != 200) {
-                throw new DomainException(responseFromClient.getStatus().getThrowable() != null ? responseFromClient.getStatus()
-                        .getThrowable().getMessage() : "error.equivalence.externalEntity");
-            }
-        } finally {
-            Context.setCurrent(null);
-            Response.setCurrent(null);
-            if (client != null) {
-                client.stop();
-            }
-        }
-
-        return mapping.findForward("Show");
     }
 
     public ActionForward switchBarraAsAuthenticationBroker(ActionMapping mapping, ActionForm form, HttpServletRequest request,
