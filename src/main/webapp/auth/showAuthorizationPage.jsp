@@ -42,7 +42,11 @@
 			</div>
 			<div class="auth-app-info">
 				<img class="app-thumbnail" src="<%= request.getContextPath() + "/person/externalApps.do?method=appLogo&amp;contentContextPath_PATH=/pessoal/pessoal&amp;appOid=" + appOid %>" />
+				
 				<h2><bean:write name="application" property="name"/></h2>
+				
+				<h4><bean:write name="application" property="authorAppName"/></h4>
+				
 				<code><a href="<%= siteURL %>"><%= siteURL %></a></code>
 				<p>
 					<bean:write name="application" property="description"/> 
