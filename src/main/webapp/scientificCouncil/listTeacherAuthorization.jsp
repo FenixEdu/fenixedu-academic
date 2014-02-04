@@ -13,6 +13,8 @@
 	<html:link action="teacherAuthorization.do?method=pre">+ <bean:message key="label.create.authorization" /></html:link>
 	|
 	<html:link action="teacherAuthorization.do?method=prepareUpload">+ <bean:message key="label.upload.authorizations" /></html:link>
+	|
+	<a href="http://fenix-ashes.ist.utl.pt/professoresexternos/"><bean:message key="label.manage" /></a>
 </p>
 <logic:present name="uploadMessages">
 	<logic:iterate id="uploadMessage" name="uploadMessages">
