@@ -38,9 +38,9 @@
 				</fr:layout>	
 			</fr:edit>			
 			<html:submit onclick="this.form.method.value='showExistentPersonsWithSameMandatoryDetails';"><bean:message key="label.search" bundle="MANAGER_RESOURCES" /></html:submit>	
-		
-		
 		<p>
+		<br />
+
 			<logic:notEmpty name="resultPersons">
 				<table class="tstyle4">
 					<tr>
@@ -98,8 +98,46 @@
 				<html:submit onclick="this.form.method.value='prepareCreatePersonFillInformation';"><bean:message key="link.create.person.because.does.not.exist" bundle="MANAGER_RESOURCES" /></html:submit>	
 			</logic:present>
 			</fr:form>
-		
 	</logic:empty>	
 					
 </logic:present>
+			
+<!-- 			UPLOAD FILES - START -->
+<logic:present name="personsUploadBean">
+	<fr:form action="/personnelManagePeople.do" encoding="multipart/form-data">
+		<html:hidden property="method" value="importPersonsFromCSV"/>
+		
+		<fr:edit id="personsUploadBean" name="personsUploadBean">
+			<fr:schema bundle="SCIENTIFIC_COUNCIL_RESOURCES"
+				type="net.sourceforge.fenixedu.presentationTier.Action.personnelSection.ManagePeople$PersonsUploadBean">
+				
+				<fr:slot name="inputStream" key="label.file" required="true" bundle="APPLICATION_RESOURCES">
+					<fr:property name="fileNameSlot" value="filename"/>
+				</fr:slot>
+				
+			</fr:schema>
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle5 thlight thright" />
+				<fr:property name="columnClasses" value=",,tdclear tderror1" />
+			</fr:layout>
+			
+		</fr:edit>
+		
+		<p>
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+				<bean:message bundle="APPLICATION_RESOURCES" key="label.submit"/>
+			</html:submit>
+		
+			<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.cancel" onclick="this.form.method.value='list';">
+				<bean:message bundle="APPLICATION_RESOURCES" key="label.cancel"/>	
+			</html:cancel>
+		</p>
+	</fr:form>
+</logic:present>
+<logic:notPresent name="personsUploadBean">
+	<html:link action="/personnelManagePeople.do?method=prepareImportPersonsFromCSV">+ Import Persons</html:link>
+</logic:notPresent>
+
+<!-- UPLOAD FILES - END -->
+		
 
