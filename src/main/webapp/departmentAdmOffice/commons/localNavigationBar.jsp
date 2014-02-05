@@ -63,6 +63,11 @@
 					<bean:message key="link.teachers.search"/>
 				</html:link>
 			</li>
+			<li>
+				<a href="http://fenix-ashes.ist.utl.pt/professoresexternos/">
+					<bean:message key="link.teachers.externalTeachers"/>
+				</a>
+			</li>
 
 			<li class="navheader">
 				<strong><bean:message key="label.credits" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></strong>

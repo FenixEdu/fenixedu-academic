@@ -79,14 +79,6 @@ public class FenixConfigurationManager {
         @ConfigurationProperty(key = "exportParkingData.username")
         public String getExportParkingDataUsername();
 
-        @ConfigurationProperty(key = "external.application.workflow.equivalences.uri",
-                description = "This equivalences workflow process now uses jersey so it uses its credentials",
-                defaultValue = "http://localhost:8080/dot/jersey/equivalenceplan/acceptNewProcess")
-        public String getExternalApplicationWorkflowEquivalencesUri();
-
-        @ConfigurationProperty(key = "external.application.workflow.equivalences.uri.secret")
-        public String getExternalApplicationWorkflowEquivalencesUriSecret();
-
         @ConfigurationProperty(key = "externalServices.AEIST.password")
         public String getExternalServicesAEISTPassword();
 

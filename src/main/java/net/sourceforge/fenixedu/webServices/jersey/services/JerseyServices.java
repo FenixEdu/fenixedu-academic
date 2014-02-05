@@ -64,7 +64,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
-@Path("/jersey/services")
+@Path("/fenix/jersey/services")
 public class JerseyServices {
     @Context
     HttpServletRequest request;
@@ -477,9 +477,8 @@ public class JerseyServices {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     @Path("userAliasses")
-    public String userAliasses(@QueryParam("username") final String username)
-            throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
-            InvocationTargetException {
+    public String userAliasses(@QueryParam("username") final String username) throws NoSuchMethodException, SecurityException,
+            IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         final Person person = Person.readPersonByUsername(username);
         if (person != null) {
             final StringBuilder builder = new StringBuilder(username);

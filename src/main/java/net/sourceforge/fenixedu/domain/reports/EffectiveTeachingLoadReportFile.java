@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.reports;
 
-import java.io.File;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
@@ -52,7 +51,6 @@ public class EffectiveTeachingLoadReportFile extends EffectiveTeachingLoadReport
                 row.setCell(executionCourseLoad.get(executionCourse));
             }
         }
-        spreadsheet.exportToXLSSheet(new File("CLE_" + executionYear.getQualifiedName().replace("/", "") + ".xls"));
     }
 
     protected Map<Teacher, Map<ExecutionCourse, BigDecimal>> getLoad(ExecutionYear executionYear) {

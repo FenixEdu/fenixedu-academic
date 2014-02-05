@@ -163,7 +163,7 @@ import com.google.gson.JsonPrimitive;
 import com.qmino.miredot.annotations.ReturnType;
 
 @SuppressWarnings("unchecked")
-@Path("/v1")
+@Path("/fenix/v1")
 public class FenixAPIv1 {
 
     private static final Logger logger = LoggerFactory.getLogger(FenixAPIv1.class);

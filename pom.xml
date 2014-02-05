@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
@@ -10,7 +11,7 @@
 	<groupId>pt.ist</groupId>
 	<artifactId>fenix</artifactId>
 	<packaging>jar</packaging>
-	<version>2.1.1</version>
+	<version>2.1.2</version>
 	<name>Fenix</name>
 	<url>http://fenix-ashes.ist.utl.pt</url>
 
@@ -19,12 +20,12 @@
 		<skipTests>true</skipTests>
 	</properties>
 
-    <scm>
-        <connection>scm:git:git@github.com:fenixedu/fenix.git</connection>
-        <developerConnection>scm:git:git@github.com:fenixedu/fenix.git</developerConnection>
-        <url>http://fenixedu.org</url>
-        <tag>HEAD</tag>
-    </scm>
+	<scm>
+		<connection>scm:git:git@github.com:fenixedu/fenix.git</connection>
+		<developerConnection>scm:git:git@github.com:fenixedu/fenix.git</developerConnection>
+		<url>http://fenixedu.org</url>
+		<tag>HEAD</tag>
+	</scm>
 
 	<build>
 		<resources>
@@ -131,9 +132,9 @@
 			<version>1.1</version>
 		</dependency>
 		<dependency>
-		    <groupId>com.google.guava</groupId>
-		    <artifactId>guava</artifactId>
-		    <version>15.0</version>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>15.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
@@ -242,12 +243,12 @@
 			<groupId>pt.ist</groupId>
 			<artifactId>sotis-metadata</artifactId>
 			<version>1.0.0</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>pt.ist</groupId>
-                    <artifactId>fenix-tools</artifactId>
-                </exclusion>
-            </exclusions>
+			<exclusions>
+				<exclusion>
+					<groupId>pt.ist</groupId>
+					<artifactId>fenix-tools</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.healthmarketscience.jackcess</groupId>
@@ -305,25 +306,15 @@
 			<artifactId>jstl</artifactId>
 			<version>1.0.6</version>
 		</dependency>
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-core</artifactId>
-            <version>1.18</version>
-        </dependency>
 		<dependency>
-			<groupId>com.sun.jersey</groupId>
+			<groupId>org.glassfish.jersey.core</groupId>
 			<artifactId>jersey-client</artifactId>
-			<version>1.18</version>
+			<version>2.4</version>
 		</dependency>
 		<dependency>
-			<groupId>com.sun.jersey.contribs</groupId>
-			<artifactId>jersey-multipart</artifactId>
-			<version>1.18</version>
-		</dependency>
-		<dependency>
-		    <groupId>commons-httpclient</groupId>
-		    <artifactId>commons-httpclient</artifactId>
-		    <version>3.0</version>
+			<groupId>commons-httpclient</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>pt.ist</groupId>
@@ -407,9 +398,9 @@
 			<version>1.2</version>
 		</dependency>
 		<dependency>
-		    <groupId>pt.ist</groupId>
-		    <artifactId>fenix-legacy-tools</artifactId>
-		    <version>1.0.0</version>
+			<groupId>pt.ist</groupId>
+			<artifactId>fenix-legacy-tools</artifactId>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.fenixedu</groupId>
@@ -419,7 +410,7 @@
 		<dependency>
 			<groupId>org.fenixedu</groupId>
 			<artifactId>bennu-core</artifactId>
-			<version>2.0.0</version>
+			<version>2.1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.fenixedu</groupId>
@@ -429,12 +420,12 @@
 		<dependency>
 			<groupId>org.fenixedu</groupId>
 			<artifactId>bennu-scheduler</artifactId>
-			<version>2.0.0</version>
+			<version>2.1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.fenixedu</groupId>
 			<artifactId>bennu-io</artifactId>
-			<version>2.0.0</version>
+			<version>2.1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>joda-time</groupId>
@@ -484,8 +475,7 @@
 							</execution>
 						</executions>
 						<configuration>
-							<licence> <!-- Free open source license for the pro version of MireDot, valid for one 
-									year (expires 2014-09-23) -->
+							<licence> <!-- Free open source license for the pro version of MireDot, valid for one year (expires 2014-09-23) -->
 								UHJvamVjdHxwdC5pc3R8ZmVuaXgjTUN3Q0ZIWGIrVlJsQ2hIWUJLUDJONWkyNG1CekpObHlBaFJDTnZ2K0hqZlcraVhoVFhwRG1BVWlubG9DVlE9PQ==
 							</licence>
 						</configuration>

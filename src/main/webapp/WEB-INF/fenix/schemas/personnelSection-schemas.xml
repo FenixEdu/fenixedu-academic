@@ -228,10 +228,7 @@
 			<property name="imageFormat" value="/externalApps.do?method=appLogo&amp;appOid=${externalId}"/>
 	</slot>
 	<slot name="name" key="oauthapps.label.app.name" />
-	<slot name="authorAppName" key="oauthapps.label.app.author.name" />
-	<slot name="author" key="oauthapps.label.app.author" layout="format">
-		<property name="format" value="${person.name} (${person.username})"/>
-	</slot>
+	<slot name="authorAppName" key="oauthapps.label.app.author" />
 	
 	<slot name="appUserAuthorizationCount" key="oauthapps.label.app.authorizations" />
 	

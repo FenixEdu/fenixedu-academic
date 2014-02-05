@@ -27,35 +27,38 @@ public class SubmitFinalWorkProposalAuthorization {
         final InfoProposalEditor infoProposalEditor = infoProposal;
         if (infoProposalEditor.getExternalId() != null) {
             final Proposal proposal = FenixFramework.getDomainObject(infoProposalEditor.getExternalId());
-            if (!authorized(userView.getPerson(), proposal)) {
-                throw new NotAuthorizedException();
-            }
+            authorize(userView.getPerson(), proposal);
+
         } else {
             final String executionDegreeId = infoProposalEditor.getExecutionDegree().getExternalId();
             final ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeId);
             final Scheduleing scheduleing = executionDegree.getScheduling();
-            if (!authorized(userView.getPerson(), scheduleing)) {
-                throw new NotAuthorizedException();
+            authorize(userView.getPerson(), scheduleing);
+
+        }
+    }
+
+    private void authorize(final Person person, final Scheduleing scheduleing) throws NotAuthorizedException {
+        if (!isCoordinatorOrDepartmentAdminOffice(person, scheduleing)) {
+            if (!person.hasRole(RoleType.TEACHER) && !person.hasAnyProfessorships() && !person.hasRole(RoleType.RESEARCHER)) {
+                throw new NotAuthorizedException("finalDegreeWorkProposal.validator.NotAuthorized");
+            }
+            if (!scheduleing.isInsideProposalSubmissionPeriod()) {
+                throw new NotAuthorizedException("finalDegreeWorkProposal.ProposalPeriod.validator.OutOfPeriod");
             }
         }
     }
 
-    private boolean authorized(final Person person, final Scheduleing scheduleing) {
-        if ((person.hasRole(RoleType.TEACHER) || person.hasAnyProfessorships() || person.hasRole(RoleType.RESEARCHER))
-                && scheduleing.isInsideProposalSubmissionPeriod()) {
-            return true;
-        }
-        return isCoordinatorOrDepartmentAdminOffice(person, scheduleing);
-    }
-
-    private boolean authorized(final Person person, final Proposal proposal) {
+    private void authorize(final Person person, final Proposal proposal) throws NotAuthorizedException {
         final Scheduleing scheduleing = proposal.getScheduleing();
-        if (proposal.getOrientator() == person || proposal.getCoorientator() == person) {
-            if (scheduleing.isInsideProposalSubmissionPeriod()) {
-                return true;
+        if (!isCoordinatorOrDepartmentAdminOffice(person, scheduleing)) {
+            if (proposal.getOrientator() != person && proposal.getCoorientator() != person) {
+                throw new NotAuthorizedException("finalDegreeWorkProposal.validator.NotAdvisorOrCoAdvisor");
+            }
+            if (!scheduleing.isInsideProposalSubmissionPeriod()) {
+                throw new NotAuthorizedException("finalDegreeWorkProposal.ProposalPeriod.validator.OutOfPeriod");
             }
         }
-        return isCoordinatorOrDepartmentAdminOffice(person, scheduleing);
     }
 
     private boolean isCoordinatorOrDepartmentAdminOffice(final Person person, final Scheduleing scheduleing) {

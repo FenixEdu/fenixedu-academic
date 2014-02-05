@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.reports;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -176,8 +175,6 @@ public class TeacherCreditsReportFile extends TeacherCreditsReportFile_Base {
                 }
             }
         }
-
-        spreadsheet.exportToXLSSheet(new File("Serviço_Docência_ " + executionYear.getQualifiedName().replace("/", "") + ".xls"));
     }
 
     private ProfessionalRegime getProfessionalRegime(PersonContractSituation teacherContractSituation, Interval interval) {

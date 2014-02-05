@@ -213,8 +213,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
             return mapping.getInputForward();
         } catch (NotAuthorizedException nafe) {
             ActionErrors actionErrors = new ActionErrors();
-            actionErrors.add("finalDegreeWorkProposal.ProposalPeriod.validator.OutOfPeriod", new ActionError(
-                    "finalDegreeWorkProposal.ProposalPeriod.validator.OutOfPeriod"));
+            actionErrors.add(nafe.getMessage(), new ActionError(nafe.getMessage()));
             saveErrors(request, actionErrors);
 
             return mapping.findForward("OutOfSubmisionPeriod");
