@@ -105,11 +105,11 @@
 <!-- 			UPLOAD FILES - START -->
 <logic:present name="personsUploadBean">
 	<fr:form action="/personnelManagePeople.do" encoding="multipart/form-data">
-		<html:hidden property="method" value="importPersonsFromCSV"/>
+		<html:hidden property="method" value="importPersons"/>
 		
 		<fr:edit id="personsUploadBean" name="personsUploadBean">
 			<fr:schema bundle="SCIENTIFIC_COUNCIL_RESOURCES"
-				type="net.sourceforge.fenixedu.presentationTier.Action.personnelSection.ManagePeople$PersonsUploadBean">
+				type="net.sourceforge.fenixedu.presentationTier.Action.personnelSection.PersonsUploadBean">
 				
 				<fr:slot name="inputStream" key="label.file" required="true" bundle="APPLICATION_RESOURCES">
 					<fr:property name="fileNameSlot" value="filename"/>
@@ -135,7 +135,7 @@
 	</fr:form>
 </logic:present>
 <logic:notPresent name="personsUploadBean">
-	<html:link action="/personnelManagePeople.do?method=prepareImportPersonsFromCSV">+ Import Persons</html:link>
+	<html:link action="/personnelManagePeople.do?method=prepareImportPersons">+ Import Persons</html:link>
 </logic:notPresent>
 
 <!-- UPLOAD FILES - END -->
