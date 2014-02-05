@@ -34,7 +34,7 @@ public class InternationalRegistrationDA extends FenixDispatchAction {
             request.setAttribute("person", person);
             return mapping.findForward("international-registration");
         } else {
-            return setError(request, mapping, "internationalRegistration.error.invalidLink", null, null);
+            return setError(request, mapping, "internationalRegistration.error.invalidLink", "international-registration", null);
         }
 
     }
@@ -42,7 +42,7 @@ public class InternationalRegistrationDA extends FenixDispatchAction {
     public ActionForward updateUserPassword(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        if (!(form instanceof InternationalRegistrationForm)) {
+        if ((form == null) || !(form instanceof InternationalRegistrationForm)) {
             return setError(request, mapping, "internationalRegistration.error.invalidLink", "international-registration", null);
         }
 
