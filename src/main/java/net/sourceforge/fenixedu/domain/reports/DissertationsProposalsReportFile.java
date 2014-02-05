@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.reports;
 
-import java.io.File;
 import java.io.IOException;
 
 import net.sourceforge.fenixedu.domain.Degree;
@@ -79,8 +78,6 @@ public class DissertationsProposalsReportFile extends DissertationsProposalsRepo
                 row.setCell(proposal.getLocation());
             }
         }
-
-        spreadsheet.exportToXLSSheet(new File("propostas" + executionYear.getNextYearsYearString().replace("/", "") + ".xls"));
     }
 
     private String getProposalAttributee(final Proposal proposal) {

@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.reports;
 
-import java.io.File;
 import java.io.IOException;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -131,9 +130,6 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 
             }
         }
-
-        spreadsheet.exportToXLSSheet(new File("Docentes do " + Unit.getInstitutionAcronym() + " "
-                + executionYear.getQualifiedName().replace("/", "") + ".xls"));
     }
 
     private ExecutionSemester getLastSemester(PersonContractSituation personContractSituation, ExecutionYear executionYear) {

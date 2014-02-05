@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.reports;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -206,7 +205,5 @@ public class TimetablesReportFile extends TimetablesReportFile_Base {
                 }
             }
         }
-        spreadsheet.exportToXLSSheet(new File("Horarios " + executionYear.getQualifiedName().replace("/", "") + " "
-                + degreeType.getName() + ".xls"));
     }
 }
