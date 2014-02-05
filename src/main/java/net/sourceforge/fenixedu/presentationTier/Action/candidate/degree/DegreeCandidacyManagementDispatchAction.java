@@ -52,6 +52,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction {
@@ -368,8 +369,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
                         + candidacy.getExternalId();
 
         String urlWithChecksum =
-                pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.injectChecksumInUrl(
-                        request.getContextPath(), url);
+                GenericChecksumRewriter.injectChecksumInUrl(request.getContextPath(), url, request.getSession(false));
 
         return urlWithChecksum.substring("/candidate".length());
     }

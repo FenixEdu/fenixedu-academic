@@ -65,6 +65,7 @@ import org.apache.struts.util.MessageResources;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -1238,11 +1239,9 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
             stringBuilder.append("&academicInterval=").append(academicInterval);
             String url = stringBuilder.toString();
 
-            String checksum =
-                    pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.calculateChecksum(url);
+            String checksum = GenericChecksumRewriter.calculateChecksum(url, getRequest().getSession());
             stringBuilder.append("&");
-            stringBuilder
-                    .append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.CHECKSUM_ATTRIBUTE_NAME);
+            stringBuilder.append(GenericChecksumRewriter.CHECKSUM_ATTRIBUTE_NAME);
             stringBuilder.append("=");
             stringBuilder.append(checksum);
 

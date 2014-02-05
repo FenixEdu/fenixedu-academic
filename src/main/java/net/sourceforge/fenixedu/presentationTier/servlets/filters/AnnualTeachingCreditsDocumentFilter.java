@@ -39,6 +39,7 @@ import org.w3c.dom.NodeList;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 import org.xml.sax.SAXException;
 
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.ResponseWrapper;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -122,9 +123,7 @@ public class AnnualTeachingCreditsDocumentFilter implements Filter {
     private String buildRedirectURL(HttpServletRequest request) {
         String url = "/scientificCouncil/defineCreditsPeriods.do?method=showPeriods";
 
-        String urlWithChecksum =
-                pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.injectChecksumInUrl(
-                        request.getContextPath(), url);
+        String urlWithChecksum = GenericChecksumRewriter.injectChecksumInUrl(request.getContextPath(), url, request.getSession());
 
         return request.getContextPath() + urlWithChecksum;
     }

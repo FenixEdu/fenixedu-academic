@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.presentationTier.renderers.inquiries;
 
+import javax.servlet.http.HttpSession;
+
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.BlockResumeResult;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseResumeResult;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherShiftTypeResultsBean;
@@ -18,6 +20,7 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableRow;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 
 /**
  * @author - Ricardo Rodrigues (ricardo.rodrigues@ist.utl.pt)
@@ -103,10 +106,8 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
         link.setUrl("/viewCourseResults.do?" + resultsParameters);
         link.setEscapeAmpersand(false);
         String calculatedUrl = link.calculateUrl();
-        optionUC.setValue(calculatedUrl
-                + "&_request_checksum_="
-                + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
-                        .calculateChecksum(calculatedUrl));
+        optionUC.setValue(calculatedUrl + "&_request_checksum_="
+                + GenericChecksumRewriter.calculateChecksum(calculatedUrl, getSession()));
 
         for (TeacherShiftTypeResultsBean teacherShiftTypeResultsBean : courseResumeResult.getTeachersResults()) {
             String teacherResultsParameters = buildParametersForTeacherResults(teacherShiftTypeResultsBean);
@@ -119,10 +120,8 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
             HtmlMenuOption optionTeacher = resultsGroup.createOption();
             optionTeacher.setText(teacherShiftTypeResultsBean.getShiftType().getFullNameTipoAula() + " - "
                     + teacherShiftTypeResultsBean.getProfessorship().getPerson().getName());
-            optionTeacher.setValue(calculatedUrl
-                    + "&_request_checksum_="
-                    + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
-                            .calculateChecksum(calculatedUrl));
+            optionTeacher.setValue(calculatedUrl + "&_request_checksum_="
+                    + GenericChecksumRewriter.calculateChecksum(calculatedUrl, getSession()));
         }
     }
 
@@ -142,10 +141,8 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
 
                 HtmlMenuOption optionDelegate = reportsGroup.createOption();
                 optionDelegate.setText(RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.delegate"));
-                optionDelegate.setValue(calculatedUrl
-                        + "&_request_checksum_="
-                        + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
-                                .calculateChecksum(calculatedUrl));
+                optionDelegate.setValue(calculatedUrl + "&_request_checksum_="
+                        + GenericChecksumRewriter.calculateChecksum(calculatedUrl, getSession()));
             }
         }
 
@@ -160,10 +157,8 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
                 HtmlMenuOption optionTeacher = reportsGroup.createOption();
                 optionTeacher.setText(RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.teacher") + " ("
                         + professorship.getPerson().getName() + ")");
-                optionTeacher.setValue(calculatedUrl
-                        + "&_request_checksum_="
-                        + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
-                                .calculateChecksum(calculatedUrl));
+                optionTeacher.setValue(calculatedUrl + "&_request_checksum_="
+                        + GenericChecksumRewriter.calculateChecksum(calculatedUrl, getSession()));
             }
         }
 
@@ -178,12 +173,14 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
                 HtmlMenuOption optionRegent = reportsGroup.createOption();
                 optionRegent.setText(RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.regent") + " ("
                         + professorship.getPerson().getName() + ")");
-                optionRegent.setValue(calculatedUrl
-                        + "&_request_checksum_="
-                        + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
-                                .calculateChecksum(calculatedUrl));
+                optionRegent.setValue(calculatedUrl + "&_request_checksum_="
+                        + GenericChecksumRewriter.calculateChecksum(calculatedUrl, getSession()));
             }
         }
+    }
+
+    private HttpSession getSession() {
+        return getContext().getViewState().getRequest().getSession();
     }
 
     private String buildParametersForDelegateInquiry(InquiryDelegateAnswer inquiryDelegateAnswer) {

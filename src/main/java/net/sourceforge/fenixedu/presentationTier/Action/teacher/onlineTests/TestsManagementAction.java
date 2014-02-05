@@ -96,6 +96,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -659,11 +660,8 @@ public class TestsManagementAction extends FenixDispatchAction {
                 request.getContextPath() + "/teacher/testDistribution.do?method=showDistributedTests&amp;objectCode="
                         + objectCode;
         final String requestPath =
-                "/testDistribution.do?method=showDistributedTests&objectCode="
-                        + objectCode
-                        + "&_request_checksum_="
-                        + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
-                                .calculateChecksum(path);
+                "/testDistribution.do?method=showDistributedTests&objectCode=" + objectCode + "&_request_checksum_="
+                        + GenericChecksumRewriter.calculateChecksum(path, request.getSession());
         actionForward.setPath(requestPath);
         return actionForward;
     }

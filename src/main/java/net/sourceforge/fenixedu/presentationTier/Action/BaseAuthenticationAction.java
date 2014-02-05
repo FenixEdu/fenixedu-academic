@@ -58,7 +58,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
             String pendingRequest = request.getParameter("pendingRequest");
             if (pendingRequest != null && pendingRequest.length() > 0 && !pendingRequest.equals("null")
                     && FenixFramework.getDomainObject(pendingRequest) != null
-                    && isValidChecksumForUser((PendingRequest) FenixFramework.getDomainObject(pendingRequest))) {
+                    && isValidChecksumForUser((PendingRequest) FenixFramework.getDomainObject(pendingRequest), httpSession)) {
                 return handleSessionRestoreAndGetForward(request, form, userView, httpSession);
             } else if (hasMissingTeacherService(userView)) {
                 return handleSessionCreationAndForwardToTeachingService(request, userView, httpSession);
@@ -272,15 +272,9 @@ public abstract class BaseAuthenticationAction extends FenixAction {
                 + executionYearOid);
         link.setEscapeAmpersand(false);
         String calculatedUrl = link.calculateUrl();
-        return new ActionForward(
-                "/departmentMember/credits.do?method=viewAnnualTeachingCredits&teacherOid="
-                        + teacherOid
-                        + "&executionYearOid="
-                        + executionYearOid
-                        + "&_request_checksum_="
-                        + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
-                                .calculateChecksum(calculatedUrl),
-                true);
+        return new ActionForward("/departmentMember/credits.do?method=viewAnnualTeachingCredits&teacherOid=" + teacherOid
+                + "&executionYearOid=" + executionYearOid + "&_request_checksum_="
+                + GenericChecksumRewriter.calculateChecksum(calculatedUrl, session), true);
     }
 
     private ActionForward handleSessionCreationAndForwardToPendingTeachingReductionService(HttpServletRequest request,
@@ -290,11 +284,8 @@ public abstract class BaseAuthenticationAction extends FenixAction {
         link.setUrl("/creditsReductions.do?method=showReductionServices");
         link.setEscapeAmpersand(false);
         String calculatedUrl = link.calculateUrl();
-        return new ActionForward(
-                "/departmentMember/creditsReductions.do?method=showReductionServices&_request_checksum_="
-                        + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
-                                .calculateChecksum(calculatedUrl),
-                true);
+        return new ActionForward("/departmentMember/creditsReductions.do?method=showReductionServices&_request_checksum_="
+                + GenericChecksumRewriter.calculateChecksum(calculatedUrl, session), true);
     }
 
     private ActionForward handleSessionCreationAndForwardToRAIDESInquiriesResponseQuestion(HttpServletRequest request,
@@ -304,12 +295,8 @@ public abstract class BaseAuthenticationAction extends FenixAction {
         link.setUrl("/editMissingCandidacyInformation.do?method=prepareEdit");
         link.setEscapeAmpersand(false);
         String calculatedUrl = link.calculateUrl();
-        return new ActionForward(
-                "/student/editMissingCandidacyInformation.do?method=prepareEdit&"
-                        + "_request_checksum_="
-                        + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
-                                .calculateChecksum(calculatedUrl),
-                true);
+        return new ActionForward("/student/editMissingCandidacyInformation.do?method=prepareEdit&_request_checksum_="
+                + GenericChecksumRewriter.calculateChecksum(calculatedUrl, session), true);
     }
 
     private ActionForward handleSessionCreationAndForwardToAlumniInquiriesResponseQuestion(HttpServletRequest request,
@@ -342,7 +329,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
         return new ActionForward("/respondToCoordinationExecutionDegreeReportsQuestion.do?method=showQuestion");
     }
 
-    private boolean isValidChecksumForUser(final PendingRequest pendingRequest) {
+    private boolean isValidChecksumForUser(final PendingRequest pendingRequest, HttpSession session) {
         try {
             String url = pendingRequest.getUrl();
 
@@ -359,7 +346,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
             if (url.contains("/external/") && requestChecksumParameter == null) { //TODO: check if it is necessary
                 return true;
             }
-            return GenericChecksumRewriter.calculateChecksum(url).equals(requestChecksumParameter);
+            return GenericChecksumRewriter.calculateChecksum(url, session).equals(requestChecksumParameter);
         } catch (Exception ex) {
             return false;
         }
