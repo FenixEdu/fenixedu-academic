@@ -841,18 +841,18 @@ public class CurriculumGroup extends CurriculumGroup_Base {
         }
     }
 
-    public void assertCorrectStructure(final Collection<CurriculumGroup> result) {
+    public void assertCorrectStructure(final Collection<CurriculumGroup> result, ExecutionYear lastApprovedYear) {
         for (final CurriculumGroup curriculumGroup : getCurriculumGroups()) {
-            if (curriculumGroup.getCurriculumGroups().isEmpty() && curriculumGroup.hasUnexpectedCredits()) {
+            if (curriculumGroup.getCurriculumGroups().isEmpty() && curriculumGroup.hasUnexpectedCredits(lastApprovedYear)) {
                 result.add(curriculumGroup);
             } else {
-                curriculumGroup.assertCorrectStructure(result);
+                curriculumGroup.assertCorrectStructure(result, lastApprovedYear);
             }
         }
     }
 
-    public boolean hasUnexpectedCredits() {
-        return getAprovedEctsCredits().doubleValue() != getCreditsConcluded().doubleValue();
+    public boolean hasUnexpectedCredits(ExecutionYear lastApprovedYear) {
+        return getAprovedEctsCredits().doubleValue() != getCreditsConcluded(lastApprovedYear).doubleValue();
     }
 
     public boolean hasInsufficientCredits() {

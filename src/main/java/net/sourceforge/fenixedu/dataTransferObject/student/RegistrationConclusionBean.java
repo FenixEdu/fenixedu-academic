@@ -230,7 +230,7 @@ public class RegistrationConclusionBean implements Serializable, IRegistrationBe
     public Collection<CurriculumGroup> getCurriculumGroupsNotVerifyingStructure() {
         if (isByCycle()) {
             final Collection<CurriculumGroup> result = new HashSet<CurriculumGroup>();
-            getCycleCurriculumGroup().assertCorrectStructure(result);
+            getCycleCurriculumGroup().assertCorrectStructure(result, getConclusionYear());
             return result;
         } else {
             return Collections.emptyList();
