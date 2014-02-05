@@ -258,10 +258,12 @@ public class JerseyServices {
     }
 
     private void add(final Map<User, Set<Unit>> researchUnitMap, final User user, final ResearchUnit unit) {
-        if (!researchUnitMap.containsKey(user)) {
-            researchUnitMap.put(user, new HashSet<Unit>());
+        if (user != null) {
+            if (!researchUnitMap.containsKey(user)) {
+                researchUnitMap.put(user, new HashSet<Unit>());
+            }
+            researchUnitMap.get(user).add(unit);
         }
-        researchUnitMap.get(user).add(unit);
     }
 
     @GET
