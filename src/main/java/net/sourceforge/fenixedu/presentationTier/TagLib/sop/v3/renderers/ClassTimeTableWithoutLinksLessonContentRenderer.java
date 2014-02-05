@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlot;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContentRenderer;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -120,6 +121,24 @@ public class ClassTimeTableWithoutLinksLessonContentRenderer extends LessonSlotC
         }
 
         return strBuffer;
+    }
+
+    @Override
+    public String renderSecondLine(final String context, final LessonSlot lessonSlot) {
+        final StringBuilder builder = new StringBuilder();
+        final InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
+        if (showOccupation instanceof InfoLesson) {
+            final InfoLesson infoLesson = (InfoLesson) showOccupation;
+
+            builder.append("<span>");
+            builder.append(BundleUtil.getStringFromResourceBundle("resources.CandidateResources", "label.weeks"));
+            builder.append(": &nbsp;&nbsp;");
+            builder.append(infoLesson.getOccurrenceWeeksAsString());
+            builder.append("&nbsp;");
+            builder.append("</span>");
+        }
+        builder.append(super.renderSecondLine(context, lessonSlot));
+        return builder.toString();
     }
 
 }

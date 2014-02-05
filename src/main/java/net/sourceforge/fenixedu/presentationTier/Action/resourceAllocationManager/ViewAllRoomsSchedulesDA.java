@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadPavillionsRoomsLessons;
+import net.sourceforge.fenixedu.dataTransferObject.InfoViewRoomSchedule;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -58,13 +59,14 @@ public class ViewAllRoomsSchedulesDA extends FenixContextDispatchAction {
             selectedPavillions = pavillions;
         } else {
             String[] selectedPavillionsNames = (String[]) chooseViewAllRoomsSchedulesContextForm.get("selectedPavillions");
-            selectedPavillions = new ArrayList();
+            selectedPavillions = new ArrayList<String>();
             for (String selectedPavillionsName : selectedPavillionsNames) {
                 selectedPavillions.add(selectedPavillionsName);
             }
         }
 
-        List infoViewClassScheduleList = ReadPavillionsRoomsLessons.run(selectedPavillions, academicInterval);
+        List<InfoViewRoomSchedule> infoViewClassScheduleList =
+                ReadPavillionsRoomsLessons.run(selectedPavillions, academicInterval);
 
         if (infoViewClassScheduleList != null && infoViewClassScheduleList.isEmpty()) {
             request.removeAttribute(PresentationConstants.ALL_INFO_VIEW_ROOM_SCHEDULE);

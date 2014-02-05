@@ -25,7 +25,7 @@ import pt.ist.fenixframework.Atomic;
 public class ReadPavillionsRoomsLessons {
 
     @Atomic
-    public static List run(List<String> pavillions, AcademicInterval academicInterval) {
+    public static List<InfoViewRoomSchedule> run(List<String> pavillions, AcademicInterval academicInterval) {
         check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
 
         final List<Building> buildings = Building.getActiveBuildingsByNames(pavillions);
@@ -34,7 +34,7 @@ public class ReadPavillionsRoomsLessons {
             rooms.addAll(building.getAllActiveSubRoomsForEducation());
         }
 
-        final List infoViewRoomScheduleList = new ArrayList();
+        final List<InfoViewRoomSchedule> infoViewRoomScheduleList = new ArrayList<InfoViewRoomSchedule>();
         for (final AllocatableSpace room : rooms) {
             if (room.containsIdentification()) {
 
@@ -44,10 +44,10 @@ public class ReadPavillionsRoomsLessons {
                 final InfoRoom infoRoom = InfoRoom.newInfoFromDomain(room);
                 infoViewRoomSchedule.setInfoRoom(infoRoom);
 
-                final List lessons = room.getAssociatedLessons(academicInterval);
-                final List infoLessons = new ArrayList(lessons.size());
-                for (final Iterator iterator2 = lessons.iterator(); iterator2.hasNext();) {
-                    final Lesson lesson = (Lesson) iterator2.next();
+                final List<Lesson> lessons = room.getAssociatedLessons(academicInterval);
+                final List<InfoLesson> infoLessons = new ArrayList<InfoLesson>(lessons.size());
+                for (final Iterator<Lesson> iterator2 = lessons.iterator(); iterator2.hasNext();) {
+                    final Lesson lesson = iterator2.next();
                     infoLessons.add(InfoLesson.newInfoFromDomain(lesson));
                 }
                 infoViewRoomSchedule.setRoomLessons(infoLessons);

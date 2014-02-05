@@ -32,12 +32,12 @@ import pt.ist.fenixframework.FenixFramework;
 public class ReadDegreesClassesLessons {
 
     @Atomic
-    public static List run(List infoExecutionDegrees, AcademicInterval academicInterval) {
+    public static List<InfoViewClassSchedule> run(List infoExecutionDegrees, AcademicInterval academicInterval) {
         check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
 
-        List infoViewClassScheduleList = new ArrayList();
+        List<InfoViewClassSchedule> infoViewClassScheduleList = new ArrayList<InfoViewClassSchedule>();
 
-        List classes = new ArrayList();
+        List<SchoolClass> classes = new ArrayList<SchoolClass>();
         for (int i = 0; i < infoExecutionDegrees.size(); i++) {
             InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegrees.get(i);
             ExecutionDegree executionDegree = FenixFramework.getDomainObject(infoExecutionDegree.getExternalId());
@@ -52,12 +52,12 @@ public class ReadDegreesClassesLessons {
 
         for (int i = 0; i < classes.size(); i++) {
             InfoViewClassSchedule infoViewClassSchedule = new InfoViewClassSchedule();
-            SchoolClass turma = (SchoolClass) classes.get(i);
+            SchoolClass turma = classes.get(i);
 
             // read class lessons
             Collection<Shift> shiftList = turma.getAssociatedShifts();
             Iterator<Shift> iterator = shiftList.iterator();
-            List infoLessonList = new ArrayList();
+            List<InfoLesson> infoLessonList = new ArrayList<InfoLesson>();
             while (iterator.hasNext()) {
                 Shift shift = iterator.next();
 

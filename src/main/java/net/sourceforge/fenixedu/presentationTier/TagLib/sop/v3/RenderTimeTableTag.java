@@ -41,6 +41,8 @@ import org.slf4j.LoggerFactory;
 
 public final class RenderTimeTableTag extends TagSupport {
 
+    private static final Integer DEFAULT_END_TIME = 0;
+
     private static final Logger logger = LoggerFactory.getLogger(RenderTimeTableTag.class);
 
     private LessonSlotContentRenderer lessonSlotContentRenderer = null;
@@ -99,13 +101,29 @@ public final class RenderTimeTableTag extends TagSupport {
 
         setLessonSlotRendererAndColorPicker();
 
-        Integer startTimeTableHour = new Integer(8);
+        Integer startTimeTableHour = Integer.MAX_VALUE;
+        this.endTimeTableHour = DEFAULT_END_TIME;
 
-        List infoLessonList = null;
+        List<InfoShowOccupation> infoLessonList = null;
         try {
-            infoLessonList = (ArrayList) pageContext.findAttribute(name);
+            infoLessonList = (List<InfoShowOccupation>) pageContext.findAttribute(name);
             if (hasLessonBefore8(infoLessonList)) {
                 startTimeTableHour = new Integer(0);
+            } else if (infoLessonList.size() > 0) {
+
+                for (InfoShowOccupation occupation : infoLessonList) {
+                    // Calculate start hour based on earliest event
+                    if (occupation.getFirstHourOfDay() < startTimeTableHour) {
+                        startTimeTableHour = occupation.getFirstHourOfDay();
+                    }
+                    // Calculate end hour based on latest event
+                    if (occupation.getLastHourOfDay() > this.endTimeTableHour) {
+                        this.endTimeTableHour = occupation.getLastHourOfDay();
+                    }
+                }
+            } else {
+                startTimeTableHour = DEFAULT_END_TIME;
+                this.endTimeTableHour = DEFAULT_END_TIME + 1;
             }
         } catch (ClassCastException e) {
             logger.error(e.getMessage(), e);
