@@ -16,21 +16,27 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentViewApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@StrutsFunctionality(app = StudentViewApp.class, descriptionKey = "link.student.tutorInfo", path = "tutor-info",
+        titleKey = "link.title.tutorInfo")
 @Mapping(module = "student", path = "/viewTutorInfo", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "ShowStudentTutorInfo", path = "/student/tutor/showStudentTutorInfo.jsp",
         tileProperties = @Tile(title = "private.student.view.tutoring")) })
 public class TutorInfoDispatchAction extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 

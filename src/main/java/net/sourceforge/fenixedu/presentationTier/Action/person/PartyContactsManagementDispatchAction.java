@@ -40,7 +40,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "person", path = "/partyContacts", scope = "request", parameter = "method")
+@Mapping(module = "person", path = "/partyContacts", scope = "request", parameter = "method",
+        functionality = VisualizePersonalInfo.class)
 @Forwards(value = {
         @Forward(name = "visualizePersonalInformation", path = "/person/visualizePersonalInfo.jsp", tileProperties = @Tile(
                 title = "private.personal.dspace.information")),

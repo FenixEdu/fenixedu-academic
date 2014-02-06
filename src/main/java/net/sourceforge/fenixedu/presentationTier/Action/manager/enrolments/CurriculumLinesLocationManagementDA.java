@@ -4,15 +4,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.presentationTier.Action.commons.student.AbstractCurriculumLinesLocationManagementDA;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.StudentsApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@StrutsFunctionality(app = StudentsApp.class, descriptionKey = "label.course.moveEnrolments",
+        path = "curriculum-location-management", titleKey = "label.course.moveEnrolments")
 @Mapping(path = "/curriculumLinesLocationManagement", module = "manager")
 @Forwards({
 

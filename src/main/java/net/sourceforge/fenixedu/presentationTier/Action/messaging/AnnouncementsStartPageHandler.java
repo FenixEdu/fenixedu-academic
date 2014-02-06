@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoardAccessLevel;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoardAccessType;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
+import net.sourceforge.fenixedu.presentationTier.Action.messaging.CommunicationApplication.AnnouncementsApp;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -28,6 +29,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -42,6 +45,8 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
  *         Created on Jul 4, 2006,3:26:38 PM
  * 
  */
+@StrutsFunctionality(app = AnnouncementsApp.class, descriptionKey = "messaging.menu.news.link", path = "announcements",
+        titleKey = "messaging.menu.news.link")
 @Mapping(module = "messaging", path = "/announcements/announcementsStartPageHandler", attribute = "announcementsStartPageForm",
         formBean = "announcementsStartPageForm", scope = "request", parameter = "method")
 @Forwards(value = {
@@ -62,6 +67,7 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
     private static final int RECENT_BOARDS_TO_SHOW = 40;
     private static final int PAGE_SIZE = 20;
 
+    @EntryPoint
     public ActionForward news(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 

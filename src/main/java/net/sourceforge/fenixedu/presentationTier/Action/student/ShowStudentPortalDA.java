@@ -21,17 +21,22 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentViewApp;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@StrutsFunctionality(app = StudentViewApp.class, descriptionKey = "link.student.portalTitle", path = "portal",
+        titleKey = "title.student.portalTitle")
 @Mapping(module = "student", path = "/showStudentPortal", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "studentPortal", path = "/student/main_bd.jsp") })
 public class ShowStudentPortalDA extends FenixDispatchAction {
@@ -39,6 +44,7 @@ public class ShowStudentPortalDA extends FenixDispatchAction {
     private static int NUMBER_OF_DAYS_BEFORE_PERIOD_TO_WARN = 100;
     private static int NUMBER_OF_DAYS_AFTER_PERIOD_TO_WARN = 5;
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         List<StudentPortalBean> studentPortalBeans = new ArrayList<StudentPortalBean>();

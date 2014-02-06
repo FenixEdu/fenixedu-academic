@@ -1,11 +1,17 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.manager;
 
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.PeopleManagementApp;
+
+import org.fenixedu.bennu.portal.StrutsFunctionality;
+
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@StrutsFunctionality(app = PeopleManagementApp.class, descriptionKey = "link.manager.studentsManagement",
+        path = "manage-student", titleKey = "link.manager.studentsManagement")
 @Mapping(module = "manager", path = "/studentsManagement", input = "/studentsManagement.do?method=show&page=0",
         attribute = "studentCurricularPlanForm", formBean = "studentCurricularPlanForm", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "createStudentCurricularPlan", path = "/manager/createStudentCurricularPlan.jsp"),

@@ -15,6 +15,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -22,6 +23,7 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 public class ViewPersonsWithRoleDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         request.setAttribute(PresentationConstants.ROLES, rootDomainObject.getRolesSet());

@@ -38,6 +38,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.portal.EntryPoint;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -52,6 +53,7 @@ import pt.utl.ist.fenix.tools.util.FileUtils;
  */
 public abstract class AnnouncementManagement extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward start(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         request.setAttribute("announcementBoard", this.getRequestedAnnouncementBoard(request));

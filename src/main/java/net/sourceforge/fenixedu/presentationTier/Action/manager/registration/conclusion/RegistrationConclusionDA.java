@@ -10,15 +10,20 @@ import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusio
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.StudentsApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@StrutsFunctionality(app = StudentsApp.class, descriptionKey = "label.conclusion.management",
+        path = "conclusion-management", titleKey = "label.conclusion.management")
 @Mapping(module = "manager", path = "/registrationConclusion", input = "show.markSheetManagement.search.page", scope = "request",
         parameter = "method")
 @Forwards(value = { @Forward(name = "editForRegistration", path = "/manager/registration/conclusion/editForRegistration.jsp"),
@@ -27,6 +32,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "editForCycle", path = "/manager/registration/conclusion/editForCycle.jsp") })
 public class RegistrationConclusionDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         final Registration registration = getRegistration(request);
         if (registration.isBolonha()) {

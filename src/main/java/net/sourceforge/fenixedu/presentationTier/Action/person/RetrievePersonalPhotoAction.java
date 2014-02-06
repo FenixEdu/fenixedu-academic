@@ -32,7 +32,8 @@ import com.google.common.io.ByteStreams;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-@Mapping(module = "person", path = "/retrievePersonalPhoto", scope = "session", parameter = "method")
+@Mapping(module = "person", path = "/retrievePersonalPhoto", scope = "session", parameter = "method",
+        functionality = VisualizePersonalInfo.class)
 public class RetrievePersonalPhotoAction extends FenixDispatchAction {
 
     private static final Logger logger = LoggerFactory.getLogger(RetrievePersonalPhotoAction.class);

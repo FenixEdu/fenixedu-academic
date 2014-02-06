@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManageFinanceApp;
 import net.sourceforge.fenixedu.util.Data;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -46,6 +47,8 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,6 +60,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author <a href="mailto:shezad@ist.utl.pt">Shezad Anavarali </a>
  * 
  */
+@StrutsFunctionality(app = ManageFinanceApp.class, descriptionKey = "label.guidesManagement", path = "guides",
+        titleKey = "label.guidesManagement")
 @Mapping(module = "manager", path = "/guideManagement", attribute = "editGuideForm", formBean = "editGuideForm",
         scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "editGuide", path = "/manager/guideManagement/editGuide.jsp"),
@@ -66,6 +71,7 @@ public class GuideManagementDispatchAction extends FenixDispatchAction {
 
     private static final Logger logger = LoggerFactory.getLogger(GuideManagementDispatchAction.class);
 
+    @EntryPoint
     public ActionForward firstPage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         return mapping.findForward("firstPage");

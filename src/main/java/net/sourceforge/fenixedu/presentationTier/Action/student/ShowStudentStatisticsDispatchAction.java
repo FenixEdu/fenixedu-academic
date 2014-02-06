@@ -23,10 +23,13 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentViewApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -38,11 +41,14 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
+@StrutsFunctionality(app = StudentViewApp.class, descriptionKey = "link.student.statistics", path = "statistics",
+        titleKey = "link.title.statistics")
 @Mapping(module = "student", path = "/showStudentStatistics", scope = "request", parameter = "method")
 @Forwards({ @Forward(name = "showStudentStatisticsHome", path = "/student/statistics/home.jsp"),
         @Forward(name = "showExecutionCourseStatistics", path = "/student/statistics/executionCourse.jsp") })
 public class ShowStudentStatisticsDispatchAction extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward showStudentStatisticsHome(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final Student student = getLoggedPerson(request).getStudent();

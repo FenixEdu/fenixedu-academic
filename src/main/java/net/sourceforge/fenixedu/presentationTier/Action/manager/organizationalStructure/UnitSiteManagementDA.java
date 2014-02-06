@@ -11,12 +11,15 @@ import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.OrganizationalStructureManagementApp;
 import net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.CustomUnitSiteManagementDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -24,6 +27,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
+@StrutsFunctionality(app = OrganizationalStructureManagementApp.class, descriptionKey = "title.unitSite.manage.sites",
+        path = "unit-site", titleKey = "title.unitSite.manage.sites")
 @Mapping(module = "manager", path = "/unitSiteManagement", scope = "request", parameter = "method")
 @Forwards(value = {
         @Forward(name = "chooseManagers", path = "/manager/organizationalStructureManagament/unitSites/editSiteManagers.jsp"),
@@ -43,6 +48,7 @@ public class UnitSiteManagementDA extends CustomUnitSiteManagementDA {
         return getDomainObject(request, "unitID");
     }
 
+    @EntryPoint
     @Override
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {

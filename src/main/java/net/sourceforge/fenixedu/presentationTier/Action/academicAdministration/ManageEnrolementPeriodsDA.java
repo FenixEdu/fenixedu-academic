@@ -38,6 +38,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
@@ -320,6 +321,7 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
         }
     }
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         ExecutionSemester semester = getDomainObject(request, "semester");
         EnrolmentPeriodBean bean = new EnrolmentPeriodBean();

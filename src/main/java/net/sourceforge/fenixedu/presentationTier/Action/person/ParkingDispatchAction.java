@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.parking.ParkingRequestPeriod;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequestState;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.person.PersonApplication.PersonalAreaApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -31,6 +32,8 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -40,6 +43,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 import com.google.common.io.ByteStreams;
 
+@StrutsFunctionality(app = PersonalAreaApp.class, descriptionKey = "label.parking", bundle = "ParkingResources",
+        path = "parking", titleKey = "label.parking")
 @Mapping(module = "person", path = "/parking", input = "/parking.do?method=prepareEditParking&page=0", attribute = "parkingForm",
         formBean = "parkingForm", scope = "request", validate = false, parameter = "method")
 @Forwards(value = {
@@ -47,6 +52,8 @@ import com.google.common.io.ByteStreams;
                 title = "private.personal.dspace.parking")),
         @Forward(name = "editParkingRequest", path = "/person/parking/editParkingRequest.jsp") })
 public class ParkingDispatchAction extends FenixDispatchAction {
+
+    @EntryPoint
     public ActionForward prepareParking(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         User userView = Authenticate.getUser();

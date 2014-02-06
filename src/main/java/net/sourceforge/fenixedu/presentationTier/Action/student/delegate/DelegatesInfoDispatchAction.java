@@ -20,10 +20,13 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentViewApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -31,11 +34,13 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@StrutsFunctionality(app = StudentViewApp.class, descriptionKey = "link.student.delegatesInfo", path = "delegates-info",
+        titleKey = "link.title.delegatesInfo")
 @Mapping(module = "student", path = "/delegatesInfo", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "showDegreeDelegates", path = "/student/delegates/showDelegates.jsp", tileProperties = @Tile(
         title = "private.student.view.delegates")) })
 public class DelegatesInfoDispatchAction extends FenixDispatchAction {
-
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 

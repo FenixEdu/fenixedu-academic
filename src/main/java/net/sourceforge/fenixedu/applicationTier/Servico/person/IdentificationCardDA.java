@@ -24,7 +24,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@StrutsFunctionality(application = PersonalAreaApp.class, descriptionKey = "label.identification.card",
+@StrutsFunctionality(app = PersonalAreaApp.class, descriptionKey = "label.identification.card",
         path = "identification-card", titleKey = "label.identification.card")
 @Mapping(module = "person", path = "/identificationCard", parameter = "method")
 @Forwards(value = { @Forward(name = "show.card.information", path = "/person/identificationCard/showCardInformation.jsp") })

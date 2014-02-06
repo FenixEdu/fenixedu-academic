@@ -8,4 +8,5 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards(value = { @Forward(name = "showPlan", path = "/manager/degreeCurricularPlan/showEquivalencyPlan.jsp"),
         @Forward(name = "addEquivalency", path = "/manager/degreeCurricularPlan/addEquivalency.jsp") })
 public class EquivalencyPlanDAForManager extends net.sourceforge.fenixedu.presentationTier.Action.coordinator.EquivalencyPlanDA {
+
 }

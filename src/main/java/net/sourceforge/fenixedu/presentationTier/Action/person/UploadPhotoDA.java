@@ -36,7 +36,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
  * @author Pedro Santos (pmrsa)
  */
 @Mapping(module = "person", path = "/uploadPhoto", attribute = "voidForm", formBean = "voidForm", scope = "request",
-        parameter = "method")
+        parameter = "method", functionality = VisualizePersonalInfo.class)
 @Forwards(value = {
         @Forward(name = "visualizePersonalInformation", path = "/person/visualizePersonalInfo.jsp", tileProperties = @Tile(
                 title = "private.personal.dspace.information")),

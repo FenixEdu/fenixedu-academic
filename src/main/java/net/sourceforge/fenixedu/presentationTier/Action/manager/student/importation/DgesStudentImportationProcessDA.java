@@ -17,10 +17,13 @@ import net.sourceforge.fenixedu.domain.student.importation.DgesStudentImportatio
 import net.sourceforge.fenixedu.domain.student.importation.ExportDegreeCandidaciesByDegreeForPasswordGeneration;
 import net.sourceforge.fenixedu.domain.student.importation.ExportExistingStudentsFromImportationProcess;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.StudentsApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -29,6 +32,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@StrutsFunctionality(app = StudentsApp.class, descriptionKey = "label.course.specialSeasonEnrolments",
+        path = "special-season", titleKey = "label.course.specialSeasonEnrolments")
 @Mapping(path = "/dgesStudentImportationProcess", module = "manager")
 @Forwards({
         @Forward(name = "list", path = "/manager/student/importation/list.jsp"),
@@ -37,6 +42,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
                 path = "/manager/student/importation/prepareCreateNewExportationForPasswordGeneration.jsp") })
 public class DgesStudentImportationProcessDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
         DgesBaseProcessBean bean = getRenderedBean();

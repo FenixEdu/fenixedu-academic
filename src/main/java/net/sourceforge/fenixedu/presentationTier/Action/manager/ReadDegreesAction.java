@@ -10,10 +10,12 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.TeachingStructureApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -23,6 +25,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author lmac1
  */
 
+@StrutsFunctionality(app = TeachingStructureApp.class, descriptionKey = "label.old.courses.structure",
+        path = "old-courses", titleKey = "label.old.courses.structure")
 @Mapping(module = "manager", path = "/readDegrees", input = "mainPageInput.do", scope = "session")
 @Forwards(value = { @Forward(name = "readDegrees", path = "/manager/readDegrees_bd.jsp") })
 public class ReadDegreesAction extends FenixAction {

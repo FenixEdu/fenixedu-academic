@@ -12,12 +12,15 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentViewApp;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -30,12 +33,15 @@ import pt.ist.fenixframework.FenixFramework;
  * @author zenida
  * 
  */
+@StrutsFunctionality(app = StudentViewApp.class, descriptionKey = "link.my.timetable", path = "time-table",
+        titleKey = "link.title.timetable")
 @Mapping(module = "student", path = "/studentTimeTable", input = "/studentTimeTable.do?page=0",
         attribute = "studentTimeTableForm", formBean = "studentTimeTableForm", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "showTimeTable", path = "df.timeTable.show"),
         @Forward(name = "chooseRegistration", path = "/student/timeTable/chooseRegistration.jsp") })
 public class ViewStudentTimeTable extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException, FenixServiceException {
 

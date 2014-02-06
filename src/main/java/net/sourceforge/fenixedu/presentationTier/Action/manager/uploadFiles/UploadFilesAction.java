@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.mast
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.gratuity.ProcessSibsPaymentFile;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManageFilesApp;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -29,6 +30,8 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.upload.FormFile;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -40,6 +43,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  * 
  */
+@StrutsFunctionality(app = ManageFilesApp.class, descriptionKey = "label.uploadFiles", path = "upload",
+        titleKey = "label.uploadFiles")
 @Mapping(module = "manager", path = "/uploadFiles", input = "/uploadFiles.do?method=prepareChooseForUploadFiles&page=0",
         attribute = "chooseForUploadFilesForm", formBean = "chooseForUploadFilesForm", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "error", path = "/manager/uploadFiles/chooseForUploadFiles_error.jsp"),
@@ -47,6 +52,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "firstPage", path = "/manager/uploadFiles/welcomeScreen.jsp") })
 public class UploadFilesAction extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward firstPage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         return mapping.findForward("firstPage");

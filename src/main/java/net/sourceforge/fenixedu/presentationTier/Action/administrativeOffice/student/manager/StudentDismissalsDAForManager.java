@@ -1,9 +1,15 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.manager;
 
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.StudentsApp;
+
+import org.fenixedu.bennu.portal.StrutsFunctionality;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@StrutsFunctionality(app = StudentsApp.class, descriptionKey = "label.student.dismissals", path = "student-dismissals",
+        titleKey = "label.student.dismissals")
 @Mapping(module = "manager", path = "/studentDismissals", attribute = "studentDismissalForm", formBean = "studentDismissalForm",
         scope = "request", parameter = "method")
 @Forwards(value = {

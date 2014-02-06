@@ -5,10 +5,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.messaging.BoardSearchBean;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.messaging.CommunicationApplication.AnnouncementsApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -16,11 +19,14 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@StrutsFunctionality(app = AnnouncementsApp.class, descriptionKey = "messaging.menu.boards.link", path = "boards",
+        titleKey = "messaging.menu.boards.link")
 @Mapping(module = "messaging", path = "/announcements/boards", scope = "session", parameter = "method")
 @Forwards(value = { @Forward(name = "search", path = "/messaging/announcements/searchBoards.jsp", tileProperties = @Tile(
         title = "private.messaging.announcements.announcementboards")) })
 public class BoardsDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward search(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         BoardSearchBean boardSearchBean = getBoardSearchBean(request);

@@ -8,10 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.IrsDeclarationLink;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.person.PersonApplication.PersonalAreaApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -19,6 +22,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
+@StrutsFunctionality(app = PersonalAreaApp.class, descriptionKey = "label.irs.information", path = "irs-declaration",
+        titleKey = "label.irs.information")
 @Mapping(module = "person", path = "/irsDeclaration", scope = "request", parameter = "method")
 @Forwards(value = {
         @Forward(name = "edit.IRSDeclaration.link", path = "/person/editIRSDeclarationLink.jsp", tileProperties = @Tile(
@@ -76,6 +81,7 @@ public class IRSDeclarationAction extends FenixDispatchAction {
         return mapping.findForward("edit.IRSDeclaration.link");
     }
 
+    @EntryPoint
     public ActionForward viewIrsDocumentInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         request.setAttribute("loggedPerson", AccessControl.getPerson());

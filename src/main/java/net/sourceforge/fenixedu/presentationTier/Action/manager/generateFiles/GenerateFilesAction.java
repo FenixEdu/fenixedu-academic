@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.manager.gratuity.Generat
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManageFilesApp;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -37,6 +38,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,6 +51,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author Tânia Pousão
  * 
  */
+@StrutsFunctionality(app = ManageFilesApp.class, descriptionKey = "label.manageFiles", path = "generate",
+        titleKey = "label.manageFiles")
 @Mapping(module = "manager", path = "/generateFiles", input = "/generateFiles.do?method=prepareChooseForGenerateFiles&page=0",
         attribute = "chooseForGenerateFilesForm", formBean = "chooseForGenerateFilesForm", scope = "request",
         parameter = "method")
@@ -60,6 +65,7 @@ public class GenerateFilesAction extends FenixDispatchAction {
 
     private static final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
+    @EntryPoint
     public ActionForward firstPage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         return mapping.findForward("firstPage");

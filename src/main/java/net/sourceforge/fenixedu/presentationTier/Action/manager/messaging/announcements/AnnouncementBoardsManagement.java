@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.MessagesAndNoticesApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -18,6 +19,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -30,6 +33,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  *         Created on Jun 20, 2006,5:02:14 PM
  * 
  */
+@StrutsFunctionality(app = MessagesAndNoticesApp.class, descriptionKey = "title.announcement.boards.management",
+        path = "boards-management", titleKey = "title.announcement.boards.management")
 @Mapping(module = "manager", path = "/announcements/announcementBoardsManagement", scope = "request", parameter = "method")
 @Forwards(value = {
         @Forward(name = "chooseBoardType", path = "/manager/announcements/chooseBoardType.jsp", tileProperties = @Tile(
@@ -96,6 +101,7 @@ public class AnnouncementBoardsManagement extends FenixDispatchAction {
         return mapping.findForward("statistics");
     }
 
+    @EntryPoint
     public ActionForward start(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
