@@ -6,6 +6,8 @@ package net.sourceforge.fenixedu.domain.person;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import org.apache.commons.lang.StringUtils;
+
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -44,5 +46,14 @@ public enum IDDocumentType implements IPresentableEnum {
 
     public String getLocalizedName(final Locale locale) {
         return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(name());
+    }
+
+    public static IDDocumentType parse(final String type, final Locale locale) {
+        for (IDDocumentType documentType : IDDocumentType.values()) {
+            if (StringUtils.equalsIgnoreCase(type, documentType.getLocalizedName(locale))) {
+                return documentType;
+            }
+        }
+        return null;
     }
 }

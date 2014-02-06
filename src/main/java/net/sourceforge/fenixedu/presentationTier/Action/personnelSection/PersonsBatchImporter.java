@@ -11,7 +11,10 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.person.Gender;
+import net.sourceforge.fenixedu.domain.person.GenderHelper;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
+import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -22,6 +25,9 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.Atomic.TxMode;
+
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Sets;
 
@@ -30,6 +36,7 @@ public class PersonsBatchImporter {
     private Workbook workbook;
     private Set<Person> persons;
     private InputStream inputStream;
+    final static Locale PT = new Locale("pt");
 
     public PersonsBatchImporter(InputStream inputStream) {
         this.inputStream = inputStream;
@@ -49,7 +56,7 @@ public class PersonsBatchImporter {
         Preconditions.checkArgument(startFamilyName > 0, "full name is required");
 
         String givenNames = name.substring(0, startFamilyName);
-        String familyNames = name.substring(startFamilyName);
+        String familyNames = name.substring(startFamilyName + 1);
 
         String identificationNumber = getCell(row, "docum_num").getStringCellValue();
         Preconditions.checkNotNull(identificationNumber, "docum_num is required and is empty for row " + row.getRowNum());
@@ -57,17 +64,37 @@ public class PersonsBatchImporter {
         Date dateOfBirth = getCellDate(row, "data_nascimento");
         Preconditions.checkNotNull(dateOfBirth, "data_nascimento is required and is empty for row " + row.getRowNum());
 
-        IDDocumentType idDocumentType = getDocumentType(getCell(row, "docum").getStringCellValue());
+        String idDocumentTypeString = getCell(row, "docum").getStringCellValue();
+        IDDocumentType idDocumentType = IDDocumentType.parse(idDocumentTypeString, PT);
         Preconditions.checkNotNull(idDocumentType, "docum is required and is empty for row " + row.getRowNum());
+
+        String genderString = getCell(row, "sexo").getStringCellValue();
+        Gender gender = parseGender(genderString);
+        Preconditions.checkNotNull(gender, "gender is required and is empty for row " + row.getRowNum());
+
+        String maritialStatusString = getCell(row, "estado_civil").getStringCellValue();
+        MaritalStatus maritialStatus = MaritalStatus.parse(maritialStatusString, PT);
+        Preconditions.checkNotNull(gender, "estado_civil is required and is empty for row " + row.getRowNum());
 
         PersonBean personBean =
                 new PersonBean(name, identificationNumber, idDocumentType, new YearMonthDay(dateOfBirth.getTime()));
         personBean.setGivenNames(givenNames);
         personBean.setFamilyNames(familyNames);
+        personBean.setGender(gender);
+        personBean.setMaritalStatus(maritialStatus);
 
         //TODO - all the remaining fiels
 
         return personBean;
+    }
+
+    private Gender parseGender(String genderValue) {
+        for (Gender gender : Gender.values()) {
+            if (StringUtils.equalsIgnoreCase(GenderHelper.toLocalizedString(gender, PT), genderValue)) {
+                return gender;
+            }
+        }
+        return null;
     }
 
     public Set<PersonBean> createPersonBeans(Sheet sheet) {
@@ -83,6 +110,7 @@ public class PersonsBatchImporter {
         return personsBeans;
     }
 
+    @Atomic(mode = TxMode.WRITE)
     public void createPersons() {
         Set<Person> persons = Sets.newHashSet();
         for (PersonBean personBean : createPersonBeans(getSheet())) {
@@ -116,15 +144,6 @@ public class PersonsBatchImporter {
                 return new SimpleDateFormat("dd/M/yyyy", Locale.getDefault()).parse(cell.getStringCellValue());
             } catch (ParseException e) {
                 e.printStackTrace();
-            }
-        }
-        return null;
-    }
-
-    private static IDDocumentType getDocumentType(String type) {
-        for (IDDocumentType documentType : IDDocumentType.values()) {
-            if (StringUtils.equals(type, documentType.getName()) || StringUtils.equals(type, documentType.getLocalizedName())) {
-                return documentType;
             }
         }
         return null;

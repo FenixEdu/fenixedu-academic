@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.personnelSection;
 
 import java.util.Collections;
+import java.util.HashSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -155,10 +156,17 @@ public class ManagePeople extends FenixDispatchAction {
         final PersonsUploadBean personsUploadBean = getRenderedObject();
         final PersonsBatchImporter batchImporter = new PersonsBatchImporter(personsUploadBean.getInputStream());
 
-        batchImporter.createPersons();
+        request.setAttribute("anyPersonSearchBean", new AnyPersonSearchBean());
+
+        try {
+            batchImporter.createPersons();
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("resultPersons", new HashSet<Person>());
+            return setError(request, mapping, e.getMessage(), "createPerson", null);
+        }
 
         request.setAttribute("resultPersons", batchImporter.getPersons());
-        request.setAttribute("anyPersonSearchBean", new AnyPersonSearchBean());
 
         return mapping.findForward("createPerson");
     }
