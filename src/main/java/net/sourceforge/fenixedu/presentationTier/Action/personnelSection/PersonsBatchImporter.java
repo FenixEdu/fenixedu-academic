@@ -2,17 +2,14 @@ package net.sourceforge.fenixedu.presentationTier.Action.personnelSection;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
+import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.Gender;
-import net.sourceforge.fenixedu.domain.person.GenderHelper;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 
@@ -35,11 +32,9 @@ public class PersonsBatchImporter {
 
     private Workbook workbook;
     private Set<Person> persons;
-    private InputStream inputStream;
     final static Locale PT = new Locale("pt");
 
     public PersonsBatchImporter(InputStream inputStream) {
-        this.inputStream = inputStream;
         try {
             workbook = WorkbookFactory.create(inputStream);
         } catch (InvalidFormatException | IOException e) {
@@ -47,57 +42,178 @@ public class PersonsBatchImporter {
         }
     }
 
-    public PersonBean createPersonBean(Row row) {
+    @Atomic(mode = TxMode.WRITE)
+    public void createPersons() throws Exception {
+        Set<Person> persons = Sets.newHashSet();
+        for (PersonBean personBean : createPersonBeans(workbook.getSheetAt(0))) {
+            persons.add(new Person(personBean));
+        }
+        setPersons(persons);
+    }
 
-        String name = getCell(row, "nome").getStringCellValue();
-        Preconditions.checkNotNull(name, "nome is required and is empty for row " + row.getRowNum());
+    private final static PersonFieldImporter FULL_NAME = new PersonFieldImporter("nome", true) {
 
-        int startFamilyName = name.lastIndexOf(" ");
-        Preconditions.checkArgument(startFamilyName > 0, "full name is required");
+        @Override
+        public void apply(Row row, PersonBean personBean) {
+            String name = getCell(row).getStringCellValue();
+            Preconditions.checkArgument(!StringUtils.isEmpty(name));
+            personBean.setName(name);
+        }
+    };
 
-        String givenNames = name.substring(0, startFamilyName);
-        String familyNames = name.substring(startFamilyName + 1);
+    private final static PersonFieldImporter GIVEN_NAMES = new PersonFieldImporter("nome", true) {
 
-        String identificationNumber = getCell(row, "docum_num").getStringCellValue();
-        Preconditions.checkNotNull(identificationNumber, "docum_num is required and is empty for row " + row.getRowNum());
+        @Override
+        public void apply(Row row, PersonBean personBean) {
+            String name = getCell(row).getStringCellValue();
+            String givenNames = name.substring(0, name.lastIndexOf(" "));
+            Preconditions.checkArgument(!StringUtils.isEmpty(givenNames));
+            personBean.setGivenNames(givenNames);
+        }
+    };
 
-        Date dateOfBirth = getCellDate(row, "data_nascimento");
-        Preconditions.checkNotNull(dateOfBirth, "data_nascimento is required and is empty for row " + row.getRowNum());
+    private final static PersonFieldImporter FAMILY_NAMES = new PersonFieldImporter("nome", true) {
 
-        String idDocumentTypeString = getCell(row, "docum").getStringCellValue();
-        IDDocumentType idDocumentType = IDDocumentType.parse(idDocumentTypeString, PT);
-        Preconditions.checkNotNull(idDocumentType, "docum is required and is empty for row " + row.getRowNum());
+        @Override
+        public void apply(Row row, PersonBean personBean) {
+            String name = getCell(row).getStringCellValue();
+            String familyNames = name.substring(name.lastIndexOf(" ") + 1);
+            Preconditions.checkArgument(!StringUtils.isEmpty(familyNames));
+            personBean.setFamilyNames(familyNames);
+        }
+    };
 
-        String genderString = getCell(row, "sexo").getStringCellValue();
-        Gender gender = parseGender(genderString);
-        Preconditions.checkNotNull(gender, "gender is required and is empty for row " + row.getRowNum());
+    private final static PersonFieldImporter DOCUMENT_ID = new PersonFieldImporter("docum_num", true) {
+        @Override
+        public void apply(Row row, PersonBean personBean) {
+            String documentIdNumber = getCell(row).getStringCellValue();
+            Preconditions.checkArgument(!StringUtils.isEmpty(documentIdNumber));
+            personBean.setDocumentIdNumber(documentIdNumber);
+        }
+    };
 
-        String maritialStatusString = getCell(row, "estado_civil").getStringCellValue();
-        MaritalStatus maritialStatus = MaritalStatus.parse(maritialStatusString, PT);
-        Preconditions.checkNotNull(gender, "estado_civil is required and is empty for row " + row.getRowNum());
+    private final static PersonFieldImporter DATE_OF_BIRTH = new PersonFieldImporter("data_nascimento", true) {
+        @Override
+        public void apply(Row row, PersonBean personBean) {
+            YearMonthDay dateOfBirth = new YearMonthDay(getCellDate(row, columnName));
+            Preconditions.checkNotNull(dateOfBirth);
+            personBean.setDateOfBirth(dateOfBirth);
+        }
+    };
 
-        PersonBean personBean =
-                new PersonBean(name, identificationNumber, idDocumentType, new YearMonthDay(dateOfBirth.getTime()));
-        personBean.setGivenNames(givenNames);
-        personBean.setFamilyNames(familyNames);
-        personBean.setGender(gender);
-        personBean.setMaritalStatus(maritialStatus);
+    private final static PersonFieldImporter DOCUMENT_TYPE = new PersonFieldImporter("docum", true) {
+        @Override
+        public void apply(Row row, PersonBean personBean) {
+            IDDocumentType idDocumentType = IDDocumentType.parse(getCell(row).getStringCellValue(), PT);
+            Preconditions.checkNotNull(idDocumentType);
+            personBean.setIdDocumentType(idDocumentType);
+        }
+    };
 
-        //TODO - all the remaining fiels
+    private final static PersonFieldImporter GENDER = new PersonFieldImporter("sexo", true) {
+        @Override
+        public void apply(Row row, PersonBean personBean) {
+            Gender gender = parseGender(getCell(row).getStringCellValue());
+            Preconditions.checkNotNull(gender);
+            personBean.setGender(gender);
+        }
+    };
+
+    private final static PersonFieldImporter MARITIAL_STATUS = new PersonFieldImporter("estado_civil", true) {
+        @Override
+        public void apply(Row row, PersonBean personBean) {
+            MaritalStatus maritialStatus = MaritalStatus.parse(getCell(row).getStringCellValue(), PT);
+            Preconditions.checkNotNull(maritialStatus);
+            personBean.setMaritalStatus(maritialStatus);
+        }
+    };
+
+    private final static PersonFieldImporter DOCUMENT_EMISSION_LOCATION = new PersonFieldImporter("docum_local_emissao", false) {
+        @Override
+        public void apply(Row row, PersonBean personBean) {
+            personBean.setDocumentIdEmissionLocation(getCell(row).getStringCellValue());
+        }
+    };
+
+    private final static PersonFieldImporter DOCUMENT_EMISSION_DATE = new PersonFieldImporter("docum_data_emissao", false) {
+        @Override
+        public void apply(Row row, PersonBean personBean) {
+            personBean.setDocumentIdEmissionDate(new YearMonthDay(getCellDate(row, columnName)));
+        }
+    };
+
+    private final static PersonFieldImporter DOCUMENT_EXPIRATION_DATE = new PersonFieldImporter("docum_data_valido", false) {
+        @Override
+        public void apply(Row row, PersonBean personBean) {
+            personBean.setDocumentIdExpirationDate(new YearMonthDay(getCellDate(row, columnName)));
+        }
+    };
+
+    private final static PersonFieldImporter FATHER_NAME = new PersonFieldImporter("docum_nome_pai", false) {
+        @Override
+        public void apply(Row row, PersonBean personBean) {
+            personBean.setFatherName(getCell(row).getStringCellValue());
+        }
+    };
+
+    private final static PersonFieldImporter MOTHER_NAME = new PersonFieldImporter("docum_nome_mae", false) {
+        @Override
+        public void apply(Row row, PersonBean personBean) {
+            personBean.setMotherName(getCell(row).getStringCellValue());
+        }
+    };
+
+    private final static PersonFieldImporter NATIONALITY = new PersonFieldImporter("nacionalidade", false) {
+        @Override
+        public void apply(Row row, PersonBean personBean) {
+            String cellValue = getCell(row).getStringCellValue();
+            Country country = null;
+            if (StringUtils.length(cellValue) == 3) {
+                country = Country.readByThreeLetterCode(getCell(row).getStringCellValue());
+            } else if (StringUtils.length(cellValue) == 2) {
+                country = Country.readByThreeLetterCode(getCell(row).getStringCellValue());
+            }
+            personBean.setNationality(country);
+        }
+    };
+
+    private final static PersonFieldImporter PHONE = new PersonFieldImporter("telefone_1", false) {
+        @Override
+        public void apply(Row row, PersonBean personBean) {
+            personBean.setPhone(getCell(row).getStringCellValue());
+        }
+    };
+
+    private final static PersonFieldImporter MOBILE_PHONE = new PersonFieldImporter("telemovel1", false) {
+        @Override
+        public void apply(Row row, PersonBean personBean) {
+            personBean.setMobile(getCell(row).getStringCellValue());
+        }
+    };
+
+    private final static PersonFieldImporter EMAIL = new PersonFieldImporter("e_mail1", false) {
+        @Override
+        public void apply(Row row, PersonBean personBean) {
+            personBean.setEmail(getCell(row).getStringCellValue());
+        }
+    };
+
+    public PersonBean createPersonBean(Row row) throws Exception {
+        final PersonBean personBean = new PersonBean();
+        for (PersonFieldImporter importer : getAllFieldImporters()) {
+            importer.secureApply(row, personBean);
+        }
 
         return personBean;
     }
 
-    private Gender parseGender(String genderValue) {
-        for (Gender gender : Gender.values()) {
-            if (StringUtils.equalsIgnoreCase(GenderHelper.toLocalizedString(gender, PT), genderValue)) {
-                return gender;
-            }
-        }
-        return null;
+    private PersonFieldImporter[] getAllFieldImporters() {
+        return new PersonFieldImporter[] { FULL_NAME, GIVEN_NAMES, FAMILY_NAMES, DOCUMENT_ID, DATE_OF_BIRTH, DOCUMENT_TYPE,
+                GENDER, MARITIAL_STATUS, DOCUMENT_EMISSION_LOCATION, DOCUMENT_EMISSION_DATE, DOCUMENT_EXPIRATION_DATE,
+                FATHER_NAME, MOTHER_NAME, NATIONALITY, PHONE, MOBILE_PHONE, EMAIL };
     }
 
-    public Set<PersonBean> createPersonBeans(Sheet sheet) {
+    public Set<PersonBean> createPersonBeans(Sheet sheet) throws Exception {
         Set<PersonBean> personsBeans = Sets.newHashSet();
         Iterator<Row> iterator = sheet.rowIterator();
         iterator.next();
@@ -110,45 +226,6 @@ public class PersonsBatchImporter {
         return personsBeans;
     }
 
-    @Atomic(mode = TxMode.WRITE)
-    public void createPersons() {
-        Set<Person> persons = Sets.newHashSet();
-        for (PersonBean personBean : createPersonBeans(getSheet())) {
-            persons.add(new Person(personBean));
-        }
-        setPersons(persons);
-    }
-
-    public static boolean hasColumnNamed(Sheet sheet, String columnName) {
-        return getColumnNumber(sheet, columnName) != null;
-    }
-
-    public static Integer getColumnNumber(Sheet sheet, String columnName) {
-        Row firstRow = sheet.getRow(0);
-        Iterator<Cell> iterator = firstRow.cellIterator();
-        while (iterator.hasNext()) {
-            Cell cell = iterator.next();
-            if (StringUtils.equals(cell.getStringCellValue(), columnName)) {
-                return cell.getColumnIndex();
-            }
-        }
-        return null;
-    }
-
-    public static Date getCellDate(Row row, String columnName) {
-        Cell cell = getCell(row, "data_nascimento");
-        if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-            return cell.getDateCellValue();
-        } else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-            try {
-                return new SimpleDateFormat("dd/M/yyyy", Locale.getDefault()).parse(cell.getStringCellValue());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
-
     private boolean isEmptyRow(Row row) {
         for (int c = row.getFirstCellNum(); c <= row.getLastCellNum(); c++) {
             Cell cell = row.getCell(c);
@@ -159,18 +236,6 @@ public class PersonsBatchImporter {
         return true;
     }
 
-    public Workbook getWorkbook() {
-        return workbook;
-    }
-
-    public static Cell getCell(Row row, String columnName) {
-        return row.getCell(getColumnNumber(row.getSheet(), columnName));
-    }
-
-    public Sheet getSheet() {
-        return getWorkbook().getSheetAt(0);
-    }
-
     public Set<Person> getPersons() {
         return persons;
     }
@@ -179,11 +244,4 @@ public class PersonsBatchImporter {
         this.persons = persons;
     }
 
-    public InputStream getInputStream() {
-        return inputStream;
-    }
-
-    public void setInputStream(InputStream inputStream) {
-        this.inputStream = inputStream;
-    }
 }
