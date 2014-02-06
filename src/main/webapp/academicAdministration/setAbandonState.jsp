@@ -11,10 +11,7 @@
 </h2>
 
 <div class="infoop2">
-	Esta funcionalidade vai actualizar o estado da matrícula de todos os alunos sem inscrições nos últimos 2 semestres consecutivos anteriores ao semestre escolhido, para o estado de Abandono.<br/>
-	Esta acção é <strong>irreversível</strong>. Os alunos vão ser avisados por mail que a sua matrícula foi posta em Abandono.<br/>
-	É gerado um ficheiro com o relatório dos alunos que foram postos em Abandono.<br/>
-	Nota: Esta acção só vai ser realiazada para alunos de 1º e 2º ciclos.
+	<bean:message key="message.academicAdministration.abandonState.info" bundle="FENIX_IST_RESOURCES"/>
 </div>
 
 <br/>
@@ -39,12 +36,14 @@
 <br/>	
 <logic:present name="confirm">	
 	<bean:define id="previousExecutionSemester" name="updateAbandonStateBean" property="whenToAbandon.previousExecutionPeriod"/>
+	<bean:define id="previousExecutionSemesterName" name="updateAbandonStateBean" property="whenToAbandon.previousExecutionPeriod.qualifiedName" type="java.lang.String"/>
+	<bean:define id="previousPreviousExecutionSemesterName" name="previousExecutionSemester" property="previousExecutionPeriod.qualifiedName" type="java.lang.String"/>
 	<p class="warning1">
-		<strong>Atenção:</strong> As matrículas dos alunos sem inscrições nos semestres <strong><bean:write name="previousExecutionSemester" property="previousExecutionPeriod.qualifiedName"/></strong> e 
-		 <strong><bean:write name="previousExecutionSemester" property="qualifiedName"/></strong> vão passar ao estado de Abandono.
+		<bean:message key="message.academicAdministration.abandonState.warning" bundle="FENIX_IST_RESOURCES" arg0="<%= previousPreviousExecutionSemesterName %>"
+		 arg1="<%= previousExecutionSemesterName %>"/>
 	</p>
 	<p>
-		Confirma esta operação?
+		<bean:message key="label.operatioConfirmation" bundle="FENIX_IST_RESOURCES"/>
 	</p>
 
 	<fr:form id="confirmUpdate" action="/setAbandonState.do">

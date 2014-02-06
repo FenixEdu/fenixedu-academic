@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.predicates.AndPredicate;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
@@ -33,13 +34,7 @@ import pt.utl.ist.fenix.tools.predicates.Predicate;
 public class UpdateAbandonStateBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private static final String subject = "Matrícula em Abandono";
-    private static final String message = "Caro Aluno,\n\n"
-            + "A sua matrícula %s vai ser colocada com o estado 'Abandono' no %s, "
-            + "pois não foram feitas inscrições durante dois semestres consecutivos (%s e %s)."
-            + "\n\nSendo assim, não vai ser possível efectuar as inscrições directamente no sistema Fénix. "
-            + "Contudo, em qualquer semestre, pode pedir o reingresso junto do Núcleo de Graduação."
-            + "\n\n--\nA Equipa Fénix.\n";
+    private static final String RESOURCE_BUNDLE = "FENIX_IST_RESOURCES";
 
     private ExecutionSemester whenToAbandon;
     private StringBuilder log;
@@ -66,16 +61,22 @@ public class UpdateAbandonStateBean implements Serializable {
                             totalByDegree++;
                         }
                     } catch (Exception e) {
-                        getLog().append("Ocorreu um erro no aluno\t")
+                        getLog().append(
+                                RenderUtils.getFormatedResourceString(RESOURCE_BUNDLE,
+                                        "label.academicAdministration.setAbandonState.report.error")).append("\t")
                                 .append(studentCurricularPlan.getRegistration().getStudent().getNumber()).append("\n");
                     }
                 }
-                getLog().append("Total ").append(degreeCurricularPlan.getName()).append("\t").append(totalByDegree)
-                        .append("\n\n");
+                getLog().append(
+                        RenderUtils.getFormatedResourceString(RESOURCE_BUNDLE,
+                                "label.academicAdministration.setAbandonState.report.degreeTotal")).append(" ")
+                        .append(degreeCurricularPlan.getName()).append("\t").append(totalByDegree).append("\n\n");
                 total += totalByDegree;
             }
         }
-        getLog().append("\nTotal alunos em Abandono\t").append(total);
+        getLog().append("\n")
+                .append(RenderUtils.getFormatedResourceString(RESOURCE_BUNDLE,
+                        "label.academicAdministration.setAbandonState.report.totalStudents")).append("\t").append(total);
     }
 
     @Atomic
@@ -93,7 +94,8 @@ public class UpdateAbandonStateBean implements Serializable {
                     && !hasAnyEnrolmentInPeriodOrPrevious(registration, startChecking)) {
 
                 if (registration.hasStateType(getWhenToAbandon().getPreviousExecutionPeriod(),
-                        RegistrationStateType.EXTERNAL_ABANDON)) {
+                        RegistrationStateType.EXTERNAL_ABANDON)
+                        || registration.hasStateType(getWhenToAbandon(), RegistrationStateType.EXTERNAL_ABANDON)) {
                     return false;
                 }
                 final YearMonthDay now = new YearMonthDay();
@@ -102,7 +104,8 @@ public class UpdateAbandonStateBean implements Serializable {
                                 .getBeginDateYearMonthDay()) ? getWhenToAbandon().getBeginDateYearMonthDay() : now)
                                 .toDateTimeAtMidnight(), RegistrationStateType.EXTERNAL_ABANDON);
 
-                state.setRemarks("Estado colocado automaticamente ao detectar situação de abandono");
+                state.setRemarks(RenderUtils.getFormatedResourceString(RESOURCE_BUNDLE,
+                        "message.academicAdministration.abandonState.observations"));
                 sendEmail(registration);
                 getLog().append(registration.getStudent().getNumber()).append("\t")
                         .append(registration.getLastDegreeCurricularPlan().getName()).append("\n");
@@ -173,14 +176,18 @@ public class UpdateAbandonStateBean implements Serializable {
         recipientList.add(new Recipient(new PersonGroup(person)));
 
         String body = buildMessage(registration);
+        String subject =
+                RenderUtils
+                        .getFormatedResourceString(RESOURCE_BUNDLE, "message.academicAdministration.abandonState.mail.subject");
         new Message(systemSender, systemSender.getConcreteReplyTos(), recipientList, null, null, subject, body,
                 new HashSet<String>());
     }
 
     private String buildMessage(final Registration registration) {
-        return String.format(message, registration.getLastStudentCurricularPlan().getName(), getWhenToAbandon()
-                .getQualifiedName(), getWhenToAbandon().getPreviousExecutionPeriod().getQualifiedName(), getWhenToAbandon()
-                .getPreviousExecutionPeriod().getPreviousExecutionPeriod().getQualifiedName());
+        return RenderUtils.getFormatedResourceString(RESOURCE_BUNDLE, "message.academicAdministration.abandonState.mail.body",
+                registration.getLastStudentCurricularPlan().getName(), getWhenToAbandon().getQualifiedName(), getWhenToAbandon()
+                        .getPreviousExecutionPeriod().getQualifiedName(), getWhenToAbandon().getPreviousExecutionPeriod()
+                        .getPreviousExecutionPeriod().getQualifiedName());
     }
 
     public ExecutionSemester getWhenToAbandon() {
