@@ -53,6 +53,7 @@ public class FenixCurriculum {
     private Integer calculatedAverage;
     private Boolean isFinished;
     private Integer numberOfApprovedCourses;
+    private Integer curricularYear;
     private List<ApprovedCourse> approvedCourses;
 
     public FenixCurriculum() {
@@ -60,7 +61,7 @@ public class FenixCurriculum {
     }
 
     public FenixCurriculum(FenixDegree degree, String start, String end, BigDecimal credits, BigDecimal average,
-            Integer calculatedAverage, Boolean isFinished, List<ApprovedCourse> approvedCourses) {
+            Integer calculatedAverage, Boolean isFinished, Integer curricularYear, List<ApprovedCourse> approvedCourses) {
         super();
         this.degree = degree;
         this.start = start;
@@ -70,6 +71,7 @@ public class FenixCurriculum {
         this.calculatedAverage = calculatedAverage;
         this.isFinished = isFinished;
         this.approvedCourses = approvedCourses;
+        this.curricularYear = curricularYear;
         this.numberOfApprovedCourses = approvedCourses.size();
     }
 
@@ -127,6 +129,14 @@ public class FenixCurriculum {
 
     public void setIsFinished(Boolean isFinished) {
         this.isFinished = isFinished;
+    }
+
+    public Integer getCurrentYear() {
+        return curricularYear;
+    }
+
+    public void setCurrentYear(Integer curricularYear) {
+        this.curricularYear = curricularYear;
     }
 
     public Integer getNumberOfApprovedCourses() {
