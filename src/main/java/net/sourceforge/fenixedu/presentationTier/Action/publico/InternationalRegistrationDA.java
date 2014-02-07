@@ -1,10 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
-import java.util.regex.Pattern;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.PasswordInitializationException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.InitializePassword;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
@@ -30,6 +29,7 @@ public class InternationalRegistrationDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         Person person = readPersonByCandidacyHashCode(request.getParameter("hash"));
+
         if (person != null) {
             request.setAttribute("person", person);
             return mapping.findForward("international-registration");
@@ -60,22 +60,19 @@ public class InternationalRegistrationDA extends FenixDispatchAction {
                     null);
         }
 
-        if (!isValidPassword(registrationForm.getPassword())) {
-            return setError(request, mapping, "internationalRegistration.error.invalidPassword", "international-registration",
+        if (StringUtils.isEmpty(registrationForm.getPassword())) {
+            return setError(request, mapping, "internationalRegistration.error.passwordsDontMatch", "international-registration",
                     null);
         }
 
         try {
             InitializePassword.run(person.getUser(), registrationForm.getPassword());
+        } catch (PasswordInitializationException e) {
+            return setError(request, mapping, e.getMessage(), "international-registration", e);
         } catch (Exception e) {
             return setError(request, mapping, "internationalRegistration.error.registering", "international-registration", e);
         }
         return mapping.findForward("success");
-    }
-
-    private boolean isValidPassword(String password) {
-        final String regEx = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,20})";
-        return Pattern.matches(regEx, password);
     }
 
     private Person readPersonByCandidacyHashCode(String hashCode) {
