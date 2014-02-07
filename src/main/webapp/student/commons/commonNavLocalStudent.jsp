@@ -10,7 +10,6 @@
 	<li><html:link page="/bolonhaTransitionManagement.do?method=prepare" titleKey="label.bolonha"><bean:message key="label.bolonha"/></html:link></li>
 	--%>
 	<li class="navheader"><bean:message key="consult"/></li>
-  	<li><html:link page="/showStudentStatistics.do?method=showStudentStatisticsHome" titleKey="link.title.statistics"><bean:message key="link.student.statistics"/></html:link></li>
   	<li><html:link page="/viewCurriculum.do?method=prepare" titleKey="link.title.curriculum"><bean:message key="link.student.curriculum"/></html:link></li>
 	<logic:notEmpty name="LOGGED_USER_ATTRIBUTE" property="person.phdIndividualProgramProcesses">
 		<li><html:link page="/phdIndividualProgramProcess.do?method=viewProcess"><bean:message key="label.phds" bundle="PHD_RESOURCES"/></html:link></li>
@@ -26,6 +25,7 @@
 	</ul>
 	</li>
 	<li><html:link page="/studentCalendar.faces" titleKey="link.title.calendar"><bean:message key="link.title.calendar"/></html:link></li>
+	<li><html:link page="/showStudentStatistics.do?method=showStudentStatisticsHome" titleKey="link.title.statistics"><bean:message key="link.student.statistics"/></html:link></li>
 	<li><html:link page="/viewTutorInfo.do?method=prepare" titleKey="link.title.tutorInfo"><bean:message key="link.student.tutorInfo"/></html:link></li>
 	<li><html:link page="/administrativeOfficeServicesSection.do" titleKey="administrative.office.services"><bean:message key="administrative.office.services"/></html:link></li>
 	<li><html:link page="/studentDataShareAuthorization.do?method=manageAuthorizations" titleKey="title.student.dataShareAuthorizations"><bean:message key="title.student.dataShareAuthorizations.short"/></html:link></li>
