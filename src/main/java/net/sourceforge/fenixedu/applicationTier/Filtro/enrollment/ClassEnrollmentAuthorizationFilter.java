@@ -115,6 +115,9 @@ public class ClassEnrollmentAuthorizationFilter {
     }
 
     public class CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan extends FenixServiceException {
+        public CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan() {
+            super("error.enrolmentPeriodNotDefined");
+        }
     }
 
     public class InquiriesNotAnswered extends FenixServiceException {
