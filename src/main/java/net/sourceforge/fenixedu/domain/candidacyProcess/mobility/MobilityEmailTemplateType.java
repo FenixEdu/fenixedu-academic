@@ -173,23 +173,30 @@ public enum MobilityEmailTemplateType {
     },
 
     IST_RECEPTION {
+        private static final String REGISTRATION_ACCESS_LINK =
+                "MobilityIndividualApplicationProcess.const.public.registration.access.link";
 
         @Override
         public void sendEmailFor(MobilityEmailTemplate mobilityEmailTemplate, DegreeOfficePublicCandidacyHashCode hashCode) {
-            throw new DomainException("template.meant.for.multiple.recipient.only");
+            String subject = mobilityEmailTemplate.getSubject();
+            String body = mobilityEmailTemplate.getBody();
+
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
+            String link = MessageFormat.format(bundle.getString(REGISTRATION_ACCESS_LINK), hashCode.getValue());
+
+            if (body.contains("[registration_link]")) {
+                body = body.replace("[registration_link]", link);
+            }
+
+            sendEmail(subject, body, hashCode.getEmail());
         }
 
         @Override
         public void sendMultiEmailFor(MobilityEmailTemplate mobilityEmailTemplate,
                 Collection<MobilityIndividualApplicationProcess> processes) {
-            String bccs = "";
-            String subject = mobilityEmailTemplate.getSubject();
-            String body = mobilityEmailTemplate.getBody();
             for (MobilityIndividualApplicationProcess process : processes) {
-                bccs += process.getCandidacyHashCode().getEmail();
-                bccs += ',';
+                this.sendEmailFor(mobilityEmailTemplate, process.getCandidacyHashCode());
             }
-            sendEmail(subject, body, bccs);
         }
 
     };

@@ -312,6 +312,15 @@ public class FenixConfigurationManager {
         @ConfigurationProperty(key = "webServices.PersonManagement.getPersonInformation.username")
         public String getWebServicesPersonManagementGetPersonInformationUsername();
 
+        @ConfigurationProperty(key = "webServices.internationalRegistration.username")
+        public String getWebServicesInternationalRegistrationUsername();
+
+        @ConfigurationProperty(key = "webServices.internationalRegistration.password")
+        public String getWebServicesInternationalRegistrationPassword();
+
+        @ConfigurationProperty(key = "webServices.internationalRegistration.url")
+        public String getWebServicesInternationalRegistrationUrl();
+
         @ConfigurationProperty(key = "year.for.from.enrolments", defaultValue = "2004/2005")
         public String getYearForFromEnrolments();
 
