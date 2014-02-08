@@ -56,7 +56,7 @@ Não é possível a inscrição em qualquer unidade curricular se não estiver g
 
 <p class="mtop05">
 <strong>5. Inscrição em Melhoria de Nota</strong><br/>
-Estas inscrições são realizadas <strong>exclusivamente junto dos Serviços Académicos</strong> de acordo com os prazos constantes no <a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>files/alunos/reg_3ciclo.pdf">Regulamento de 3º Ciclo</a> 
+Estas inscrições são realizadas <strong>exclusivamente junto dos Serviços Académicos</strong> de acordo com os prazos constantes no <a href="http://npgfc.tecnico.ulisboa.pt/files/sites/29/reg_Geral_doutoramentos2.pdf">Regulamento de 3º Ciclo</a> 
 
 </p>
 
@@ -70,12 +70,12 @@ Um aluno em tempo parcial não poderá inscrever-se em unidades curriculares cuj
 </p>
 
 <p class="mtop05">
-<strong>8.</strong> Para qualquer esclarecimento adicional deverá consultar o <a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>files/alunos/reg_3ciclo.pdf">Regulamento de 3º Ciclo</a>.
+<strong>8.</strong> Para qualquer esclarecimento adicional deverá consultar o <a href="http://npgfc.tecnico.ulisboa.pt/files/sites/29/reg_Geral_doutoramentos2.pdf">Regulamento de 3º Ciclo</a>.
 </p>
 
 <p class="mtop05">
 <strong>9.</strong> Para apoio ao processo de inscrições, questões Académicas: 
-<a href="mailto:da@ist.utl.pt">Direcção Académica</a>
+<a href="mailto:da@tecnico.ulisboa.pt">Direcção Académica</a>
 </p>
 
 <p class="mtop05">

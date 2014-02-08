@@ -9,4 +9,11 @@
 		<put name="body" value="/publico/emailValidation.jsp"/>
 	</definition>
 	<definition name="phoneValidation" page="/publico/phoneValidation.jsp"/>
+	<!-- International Registration -->
+	<definition name="international-registration" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/internationalRegistration.jsp"/>
+	</definition>
+	<definition name="success" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/internationalRegistrationSuccess.jsp"/>
+	</definition>
 </tiles-definitions>

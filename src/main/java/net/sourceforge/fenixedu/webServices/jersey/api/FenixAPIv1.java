@@ -47,6 +47,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
+import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationCurriculumBean;
 import net.sourceforge.fenixedu.domain.AdHocEvaluation;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
@@ -258,6 +259,8 @@ public class FenixAPIv1 {
         }
 
         final String name = pib.getName();
+        final String gender = person.getGender().name();
+        final String birthday = person.getDateOfBirthYearMonthDay().toString(formatDay);
         final String username = person.getUsername();
         final String campus = pib.getCampus();
         final String email = pib.getEmail();
@@ -267,8 +270,8 @@ public class FenixAPIv1 {
         List<String> workWebAdresses = pib.getWorkWebAdresses();
         final FenixPhoto photo = getPhoto(person);
 
-        return new FenixPerson(campus, roles, photo, name, username, email, personalEmails, workEmails, personalWebAdresses,
-                workWebAdresses);
+        return new FenixPerson(campus, roles, photo, name, gender, birthday, username, email, personalEmails, workEmails,
+                personalWebAdresses, workWebAdresses);
     }
 
     /**
@@ -534,6 +537,10 @@ public class FenixAPIv1 {
         for (Registration registration : registrationsList) {
             for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
                 String start = studentCurricularPlan.getStartDateYearMonthDay().toString(formatDay);
+
+                final RegistrationCurriculumBean registrationCurriculumBean = new RegistrationCurriculumBean(registration);
+                final Integer curricularYear = registrationCurriculumBean.getCurriculum().getCurricularYear();
+
                 String end = null;
                 if (studentCurricularPlan.getEndDate() != null) {
                     end = studentCurricularPlan.getEndDate().toString(formatDay);
@@ -576,7 +583,7 @@ public class FenixAPIv1 {
 
                 }
                 curriculums.add(new FenixCurriculum(new FenixDegree(studentCurricularPlan.getDegree()), start, end, credits,
-                        average, calculatedAverage, isFinished, courseInfos));
+                        average, calculatedAverage, isFinished, curricularYear, courseInfos));
             }
         }
         return curriculums;

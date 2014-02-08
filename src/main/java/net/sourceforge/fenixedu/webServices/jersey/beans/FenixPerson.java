@@ -194,6 +194,8 @@ public class FenixPerson {
     FenixPhoto photo;
 
     String name;
+    String gender;
+    String birthday;
     String username;
     String email;
 
@@ -202,13 +204,16 @@ public class FenixPerson {
     List<String> webAddresses;
     List<String> workWebAddresses;
 
-    public FenixPerson(String campus, Set<FenixRole> roles, FenixPhoto photo, String name, String username, String email,
-            List<String> personalEmails, List<String> workEmails, List<String> webAddresses, List<String> workWebAddresses) {
+    public FenixPerson(String campus, Set<FenixRole> roles, FenixPhoto photo, String name, String gender, String birthday,
+            String username, String email, List<String> personalEmails, List<String> workEmails, List<String> webAddresses,
+            List<String> workWebAddresses) {
         super();
         this.campus = campus;
         this.roles = roles;
         this.photo = photo;
         this.name = name;
+        this.gender = gender;
+        this.birthday = birthday;
         this.username = username;
         this.email = email;
         this.personalEmails = personalEmails;
@@ -247,6 +252,22 @@ public class FenixPerson {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
     public String getUsername() {
