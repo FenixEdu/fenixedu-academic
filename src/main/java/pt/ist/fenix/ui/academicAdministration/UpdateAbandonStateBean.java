@@ -1,4 +1,4 @@
-package pt.ist.fenix.presentationTier.action.academicAdministration;
+package pt.ist.fenix.ui.academicAdministration;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -64,7 +64,8 @@ public class UpdateAbandonStateBean implements Serializable {
                         getLog().append(
                                 RenderUtils.getFormatedResourceString(RESOURCE_BUNDLE,
                                         "label.academicAdministration.setAbandonState.report.error")).append("\t")
-                                .append(studentCurricularPlan.getRegistration().getStudent().getNumber()).append("\n");
+                                .append(studentCurricularPlan.getRegistration().getStudent().getNumber()).append("\t")
+                                .append(e.getMessage()).append("\n");
                     }
                 }
                 getLog().append(

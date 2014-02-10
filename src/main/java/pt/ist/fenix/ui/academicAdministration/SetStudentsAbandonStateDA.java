@@ -1,4 +1,4 @@
-package pt.ist.fenix.presentationTier.action.academicAdministration;
+package pt.ist.fenix.ui.academicAdministration;
 
 import java.io.IOException;
 
