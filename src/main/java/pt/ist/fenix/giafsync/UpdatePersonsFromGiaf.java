@@ -1,11 +1,13 @@
-package pt.utl.ist.scripts.process.updateData.contracts;
+package pt.ist.fenix.giafsync;
 
+import java.io.PrintWriter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Map;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -21,7 +23,6 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.ContractSituat
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportGiaf;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
@@ -32,12 +33,14 @@ import org.fenixedu.bennu.scheduler.annotation.Task;
 import org.fenixedu.commons.StringNormalizer;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
+import org.slf4j.Logger;
 
-import pt.utl.ist.scripts.process.importData.contracts.giaf.ImportFromGiaf;
+import pt.ist.fenix.giafsync.GiafSync.ImportProcessor;
+import pt.ist.fenix.giafsync.GiafSync.Modification;
 import pt.utl.ist.scripts.process.updateData.fixNames.DBField2Cap;
 
 @Task(englishTitle = "UpdatePersonsFromGiaf")
-public class UpdatePersonsFromGiaf extends ImportFromGiaf {
+public class UpdatePersonsFromGiaf extends ImportProcessor {
 
     private static final String SEPARATOR = " - ";
 
@@ -45,13 +48,9 @@ public class UpdatePersonsFromGiaf extends ImportFromGiaf {
 
     private static final String FEMALE = "F";
 
-    public UpdatePersonsFromGiaf() {
-
-    }
-
     @Override
-    public void process() {
-        getLogger().debug("Start UpdatePersonsFromGiaf");
+    public List<Modification> processChanges(GiafMetadata metadata, PrintWriter log, Logger logger) throws SQLException {
+        List<Modification> modifications = new ArrayList<>();
         try {
             Authenticate.mock(User.findByUsername("ist23932"));
 
@@ -59,163 +58,145 @@ public class UpdatePersonsFromGiaf extends ImportFromGiaf {
             Set<Person> newPersons = new HashSet<Person>();
             Set<Person> editedPersons = new HashSet<Person>();
 
-            try {
-                Map<String, IDDocumentType> documentTypeMap = getDocumentTypeMap();
-                Map<String, MaritalStatus> maritalStatusMap = getMaritalStatusMap();
-                Map<String, Country> countryMap = getCountryMap();
-                Map<Integer, Employee> employeesMap = getEmployeesMap();
+            PersistentSuportGiaf oracleConnection = PersistentSuportGiaf.getInstance();
+            PreparedStatement preparedStatement = oracleConnection.prepareStatement(getQuery());
+            ResultSet result = preparedStatement.executeQuery();
+            while (result.next()) {
+                count++;
+                String personNumberString = result.getString("EMP_NUM");
+                final Person personByNumber = metadata.getPerson(personNumberString, logger);
+                if (personByNumber == null) {
+                    logger.debug("Invalid person with number: " + personNumberString);
+                    notImported++;
+                    continue;
+                }
 
-                PersistentSuportGiaf oracleConnection = PersistentSuportGiaf.getInstance();
-                String query = getQuery();
-                getLogger().debug(query);
-                PreparedStatement preparedStatement = oracleConnection.prepareStatement(query);
-                ResultSet result = preparedStatement.executeQuery();
-                while (result.next()) {
-                    count++;
-                    String personNumberString = result.getString("EMP_NUM");
-                    Person personByNumber = getPerson(employeesMap, personNumberString);
-                    if (personByNumber == null) {
-                        getLogger().info("Invalid person with number: " + personNumberString);
-                        notImported++;
-                        continue;
-                    }
+                String giafName = result.getString("EMP_NOM");
+                String IdDocTypeString = result.getString("emp_bi_tp");
+                IDDocumentType idDocumentType = metadata.documentType(IdDocTypeString);
+                String oldIdDocNumberString = result.getString("emp_bi_num");
+                String idDocNumberString = getValidID(idDocumentType, oldIdDocNumberString);
+                String contributorNumber = result.getString("emp_num_fisc");
 
-                    String giafName = result.getString("EMP_NOM");
-                    String IdDocTypeString = result.getString("emp_bi_tp");
-                    IDDocumentType idDocumentType = documentTypeMap.get(IdDocTypeString);
-                    String oldIdDocNumberString = result.getString("emp_bi_num");
-                    String idDocNumberString = getValidID(idDocumentType, oldIdDocNumberString);
-                    String contributorNumber = result.getString("emp_num_fisc");
+                String countryName = result.getString("nac_dsc");
+                Country nationality =
+                        StringUtils.isEmpty(countryName) ? null : metadata.country(StringNormalizer.normalize(countryName));
+                MaritalStatus maritalStatus = metadata.maritalStatus(result.getString("emp_stcivil"));
+                Gender gender = getGender(result.getString("emp_sex"));
+                String validateDocuments =
+                        validateDocuments(personNumberString, idDocumentType, oldIdDocNumberString, idDocNumberString,
+                                contributorNumber, countryName, nationality, maritalStatus, gender);
+                if (!StringUtils.isEmpty(validateDocuments)) {
+                    logger.debug("---------------------------------\n" + validateDocuments);
+                    notImported++;
+                    continue;
+                }
 
-                    String countryName = result.getString("nac_dsc");
-                    Country nationality = null;
-                    if (!StringUtils.isEmpty(countryName)) {
-                        nationality = countryMap.get(StringNormalizer.normalize(countryName));
-                    }
-                    MaritalStatus maritalStatus = maritalStatusMap.get(result.getString("emp_stcivil"));
-                    Gender gender = getGender(result.getString("emp_sex"));
-                    String validateDocuments =
-                            validateDocuments(personNumberString, idDocumentType, oldIdDocNumberString, idDocNumberString,
-                                    contributorNumber, countryName, nationality, maritalStatus, gender);
-                    if (!StringUtils.isEmpty(validateDocuments)) {
-                        getLogger().debug("---------------------------------\n" + validateDocuments);
-                        notImported++;
-                        continue;
-                    }
+                Person personById = Person.readByDocumentIdNumberAndIdDocumentType(idDocNumberString, idDocumentType);
+                if (personById != null && !personByNumber.equals(personById)) {
+                    logger.debug(personNumberString + "-------------------Confito de pessoas ------------------- "
+                            + personByNumber.getUsername() + " e " + personById.getUsername());
+                    notImported++;
+                    continue;
+                }
+                // String diffs = getDifferences(personById, personNumberString,
+                // idDocumentType, idDocNumberString, giafName,
+                // contributorNumber);
+                // if (!StringUtils.isEmpty(diffs)) {
+                // logger.debug(personNumberString +
+                // "---------------------------------" + diffs);
+                // notImported++;
+                // continue;
+                // }
 
-                    Person personById = Person.readByDocumentIdNumberAndIdDocumentType(idDocNumberString, idDocumentType);
-                    if (personById != null && !personByNumber.equals(personById)) {
-                        getLogger().debug(
-                                personNumberString + "-------------------Confito de pessoas ------------------- "
-                                        + personByNumber.getUsername() + " e " + personById.getUsername());
-                        notImported++;
-                        continue;
-                    }
-                    // String diffs = getDifferences(personById, personNumberString,
-                    // idDocumentType, idDocNumberString, giafName,
-                    // contributorNumber);
-                    // if (!StringUtils.isEmpty(diffs)) {
-                    // getLogger().debug(personNumberString +
-                    // "---------------------------------" + diffs);
-                    // notImported++;
-                    // continue;
-                    // }
-
-                    Party party = Person.readByContributorNumber(contributorNumber);
-                    if (party != null) {
-                        if (party instanceof Person) {
-                            Person person2 = (Person) party;
-                            if (personByNumber == null || personByNumber != person2) {
-                                getLogger().debug(
-                                        "---------------------------------\nJá existe pessoa com o número de contribuinte:"
-                                                + getDifferences(person2, personNumberString, idDocumentType, idDocNumberString,
-                                                        giafName, contributorNumber));
-                                notImported++;
-                                continue;
-                            }
-                        } else {
-                            getLogger().debug(
-                                    "---------------------------------\nJá existe UNIDADE com o número de contribuinte: "
-                                            + contributorNumber + " \n\t Unidade Fénix: " + party.getName()
-                                            + ". Número Mecanográfico: " + personNumberString);
+                Party party = Person.readByContributorNumber(contributorNumber);
+                if (party != null) {
+                    if (party instanceof Person) {
+                        Person person2 = (Person) party;
+                        if (personByNumber == null || personByNumber != person2) {
+                            logger.debug("---------------------------------\nJá existe pessoa com o número de contribuinte:"
+                                    + getDifferences(person2, personNumberString, idDocumentType, idDocNumberString, giafName,
+                                            contributorNumber));
                             notImported++;
                             continue;
                         }
-                    }
-
-                    YearMonthDay idEmissionDate = getLocalDateFromString(result.getString("emp_bi_dt"));
-                    if (canEditPersonInfo(personByNumber, idEmissionDate)) {
-
-                        String prettyPrintName = StringFormatter.prettyPrint(giafName);
-                        if (!personByNumber.getName().equals(prettyPrintName)) {
-                            if (namesCorrectlyPartitioned(personByNumber, prettyPrintName)) {
-                                personByNumber.setName(prettyPrintName);
-                                if (!newPersons.contains(personByNumber)) {
-                                    editedPersons.add(personByNumber);
-                                }
-                            } else {
-                                getLogger().debug(
-                                        "\nNão pode alterar nome (tem nomes partidos). Número Mecanográfico: "
-                                                + personNumberString + " Nome: " + prettyPrintName);
-                            }
-                        }
-
-                        YearMonthDay idExpirationDate = getLocalDateFromString(result.getString("emp_bi_val_dt"));
-                        String idArquive = result.getString("emp_bi_arq");
-                        String fiscalNeighborhood = result.getString("emp_bfiscal");
-
-                        if (!hasEqualPersonalInformation(maritalStatus, gender, idEmissionDate, idExpirationDate, idArquive,
-                                idDocumentType, idDocNumberString, contributorNumber, fiscalNeighborhood, nationality,
-                                personByNumber)) {
-                            setPersonalInformation(maritalStatus, gender, idEmissionDate, idExpirationDate, idArquive,
-                                    idDocumentType, idDocNumberString, contributorNumber, fiscalNeighborhood, nationality,
-                                    personByNumber);
-                            if (!newPersons.contains(personByNumber)) {
-                                editedPersons.add(personByNumber);
-                            }
-                        }
-
-                        YearMonthDay dateOfBirth = getLocalDateFromString(result.getString("emp_nsc_dt"));
-                        String parishOfBirth = StringFormatter.prettyPrint(result.getString("emp_nat_frg"));
-                        String districtOfBirth = StringFormatter.prettyPrint(result.getString("emp_nat_dst"));
-                        String districtSubdivisionOfBirth = StringFormatter.prettyPrint(result.getString("emp_nat_cnc"));
-                        String nameOfFatherString = result.getString("father");
-                        String nameOfFather = nameOfFatherString == null ? null : DBField2Cap.prettyPrint(nameOfFatherString);
-                        String nameOfMotherString = result.getString("mother");
-                        String nameOfMother = nameOfMotherString == null ? null : DBField2Cap.prettyPrint(nameOfMotherString);
-                        if (!hasEqualBirthInformation(dateOfBirth, parishOfBirth, districtOfBirth, districtSubdivisionOfBirth,
-                                nameOfFather, nameOfMother, personByNumber)) {
-                            setBirthInformation(dateOfBirth, parishOfBirth, districtOfBirth, districtSubdivisionOfBirth,
-                                    nameOfFather, nameOfMother, personByNumber);
-                            if (!newPersons.contains(personByNumber)) {
-                                editedPersons.add(personByNumber);
-                            }
-                        }
-
                     } else {
-                        System.out.println("Não actualiza: " + personNumberString + " - " + giafName + " ->é aluno! ");
+                        logger.debug("---------------------------------\nJá existe UNIDADE com o número de contribuinte: "
+                                + contributorNumber + " \n\t Unidade Fénix: " + party.getName() + ". Número Mecanográfico: "
+                                + personNumberString);
+                        notImported++;
+                        continue;
                     }
                 }
-                result.close();
-                preparedStatement.close();
-                oracleConnection.closeConnection();
 
-            } catch (ExcepcaoPersistencia e) {
-                getLogger().debug("ImportPersonsFromGiaf -  ERRO ExcepcaoPersistencia");
-                throw new Error(e);
-            } catch (SQLException e) {
-                getLogger().debug("ImportPersonsFromGiaf -  ERRO SQLException");
-                throw new Error(e);
+                YearMonthDay idEmissionDate = getLocalDateFromString(result.getString("emp_bi_dt"));
+                if (canEditPersonInfo(personByNumber, idEmissionDate)) {
+
+                    final String prettyPrintName = StringFormatter.prettyPrint(giafName);
+                    if (!personByNumber.getName().equals(prettyPrintName)) {
+                        if (namesCorrectlyPartitioned(personByNumber, prettyPrintName)) {
+                            modifications.add(new Modification() {
+                                @Override
+                                public void execute() {
+                                    personByNumber.setName(prettyPrintName);
+                                }
+                            });
+                            if (!newPersons.contains(personByNumber)) {
+                                editedPersons.add(personByNumber);
+                            }
+                        } else {
+                            logger.debug("\nNão pode alterar nome (tem nomes partidos). Número Mecanográfico: "
+                                    + personNumberString + " Nome: " + prettyPrintName);
+                        }
+                    }
+
+                    YearMonthDay idExpirationDate = getLocalDateFromString(result.getString("emp_bi_val_dt"));
+                    String idArquive = result.getString("emp_bi_arq");
+                    String fiscalNeighborhood = result.getString("emp_bfiscal");
+
+                    if (!hasEqualPersonalInformation(maritalStatus, gender, idEmissionDate, idExpirationDate, idArquive,
+                            idDocumentType, idDocNumberString, contributorNumber, fiscalNeighborhood, nationality, personByNumber)) {
+                        modifications.add(setPersonalInformation(maritalStatus, gender, idEmissionDate, idExpirationDate,
+                                idArquive, idDocumentType, idDocNumberString, contributorNumber, fiscalNeighborhood, nationality,
+                                personByNumber));
+                        if (!newPersons.contains(personByNumber)) {
+                            editedPersons.add(personByNumber);
+                        }
+                    }
+
+                    YearMonthDay dateOfBirth = getLocalDateFromString(result.getString("emp_nsc_dt"));
+                    String parishOfBirth = StringFormatter.prettyPrint(result.getString("emp_nat_frg"));
+                    String districtOfBirth = StringFormatter.prettyPrint(result.getString("emp_nat_dst"));
+                    String districtSubdivisionOfBirth = StringFormatter.prettyPrint(result.getString("emp_nat_cnc"));
+                    String nameOfFatherString = result.getString("father");
+                    String nameOfFather = nameOfFatherString == null ? null : DBField2Cap.prettyPrint(nameOfFatherString);
+                    String nameOfMotherString = result.getString("mother");
+                    String nameOfMother = nameOfMotherString == null ? null : DBField2Cap.prettyPrint(nameOfMotherString);
+                    if (!hasEqualBirthInformation(dateOfBirth, parishOfBirth, districtOfBirth, districtSubdivisionOfBirth,
+                            nameOfFather, nameOfMother, personByNumber)) {
+                        modifications.add(setBirthInformation(dateOfBirth, parishOfBirth, districtOfBirth,
+                                districtSubdivisionOfBirth, nameOfFather, nameOfMother, personByNumber));
+                        if (!newPersons.contains(personByNumber)) {
+                            editedPersons.add(personByNumber);
+                        }
+                    }
+
+                } else {
+                    logger.debug("Não actualiza: " + personNumberString + " - " + giafName + " ->é aluno! ");
+                }
             }
-            getLogger().debug("---------------------------------");
-            getLogger().debug("\nTotal no GIAF: " + count);
-            getLogger().debug("\nNão importados: " + notImported);
-            getLogger().debug("\nNovos: " + newPersons.size());
-            getLogger().debug("\nEditados: " + editedPersons.size());
-            getLogger().debug("\nThe end");
+            result.close();
+            preparedStatement.close();
+            oracleConnection.closeConnection();
+            log.println("-- Update Persons --");
+            log.println("Total GIAF: " + count);
+            log.println("Not imported: " + notImported);
+            log.println("New: " + newPersons.size());
+            log.println("Edited: " + editedPersons.size());
         } finally {
             Authenticate.unmock();
         }
+        return modifications;
 
     }
 
@@ -336,10 +317,6 @@ public class UpdatePersonsFromGiaf extends ImportFromGiaf {
         return errors.toString();
     }
 
-    private boolean equalName(String name1, String name2) {
-        return StringNormalizer.normalize(name1).equals(StringNormalizer.normalize(name2));
-    }
-
     private boolean hasEqualPersonalInformation(MaritalStatus maritalStatus, Gender gender, YearMonthDay idEmissionDate,
             YearMonthDay idExpirationDate, String idArquive, IDDocumentType idDocumentType, String idDocNumberString,
             String socialSecurityNumber, String fiscalNeighborhood, Country nationality, Person person) {
@@ -353,18 +330,24 @@ public class UpdatePersonsFromGiaf extends ImportFromGiaf {
                 && Objects.equals(person.getFiscalCode(), fiscalNeighborhood) && Objects.equals(person.getCountry(), nationality);
     }
 
-    private void setPersonalInformation(MaritalStatus maritalStatus, Gender gender, YearMonthDay idEmissionDate,
-            YearMonthDay idExpirationDate, String idArquive, IDDocumentType idDocumentType, String idDocNumberString,
-            String socialSecurityNumber, String fiscalNeighborhood, Country nationality, Person person) {
-        person.setMaritalStatus(maritalStatus);
-        person.setGender(gender);
-        person.setEmissionDateOfDocumentIdYearMonthDay(idEmissionDate);
-        person.setExpirationDateOfDocumentIdYearMonthDay(idExpirationDate);
-        person.setEmissionLocationOfDocumentId(idArquive);
-        person.setIdentification(idDocNumberString, idDocumentType);
-        person.setSocialSecurityNumber(socialSecurityNumber); // contribuinte
-        person.setFiscalCode(fiscalNeighborhood); // bairro fiscal
-        person.setCountry(nationality);
+    private Modification setPersonalInformation(final MaritalStatus maritalStatus, final Gender gender,
+            final YearMonthDay idEmissionDate, final YearMonthDay idExpirationDate, final String idArquive,
+            final IDDocumentType idDocumentType, final String idDocNumberString, final String socialSecurityNumber,
+            final String fiscalNeighborhood, final Country nationality, final Person person) {
+        return new Modification() {
+            @Override
+            public void execute() {
+                person.setMaritalStatus(maritalStatus);
+                person.setGender(gender);
+                person.setEmissionDateOfDocumentIdYearMonthDay(idEmissionDate);
+                person.setExpirationDateOfDocumentIdYearMonthDay(idExpirationDate);
+                person.setEmissionLocationOfDocumentId(idArquive);
+                person.setIdentification(idDocNumberString, idDocumentType);
+                person.setSocialSecurityNumber(socialSecurityNumber); // contribuinte
+                person.setFiscalCode(fiscalNeighborhood); // bairro fiscal
+                person.setCountry(nationality);
+            }
+        };
     }
 
     private boolean hasEqualBirthInformation(YearMonthDay dateOfBirth, String parishOfBirth, String districtOfBirth,
@@ -377,14 +360,20 @@ public class UpdatePersonsFromGiaf extends ImportFromGiaf {
                 && Objects.equals(person.getNameOfMother(), nameOfMother);
     }
 
-    private void setBirthInformation(YearMonthDay dateOfBirth, String parishOfBirth, String districtOfBirth,
-            String districtSubdivisionOfBirth, String nameOfFather, String nameOfMother, Person person) {
-        person.setDateOfBirthYearMonthDay(dateOfBirth);
-        person.setParishOfBirth(parishOfBirth);
-        person.setDistrictOfBirth(districtOfBirth);
-        person.setDistrictSubdivisionOfBirth(districtSubdivisionOfBirth);
-        person.setNameOfFather(nameOfFather);
-        person.setNameOfMother(nameOfMother);
+    private Modification setBirthInformation(final YearMonthDay dateOfBirth, final String parishOfBirth,
+            final String districtOfBirth, final String districtSubdivisionOfBirth, final String nameOfFather,
+            final String nameOfMother, final Person person) {
+        return new Modification() {
+            @Override
+            public void execute() {
+                person.setDateOfBirthYearMonthDay(dateOfBirth);
+                person.setParishOfBirth(parishOfBirth);
+                person.setDistrictOfBirth(districtOfBirth);
+                person.setDistrictSubdivisionOfBirth(districtSubdivisionOfBirth);
+                person.setNameOfFather(nameOfFather);
+                person.setNameOfMother(nameOfMother);
+            }
+        };
     }
 
     private Gender getGender(String gender) {
@@ -424,7 +413,6 @@ public class UpdatePersonsFromGiaf extends ImportFromGiaf {
         return null;
     }
 
-    @Override
     protected String getQuery() {
         StringBuilder query = new StringBuilder();
         query.append("SELECT emp.EMP_NUM, emp.EMP_NOM, info.emp_sex,info.emp_stcivil");
@@ -437,5 +425,4 @@ public class UpdatePersonsFromGiaf extends ImportFromGiaf {
         query.append(" WHERE emp.EMP_NUM = info.EMP_NUM and info.emp_nac=nac.emp_nac");
         return query.toString();
     }
-
 }

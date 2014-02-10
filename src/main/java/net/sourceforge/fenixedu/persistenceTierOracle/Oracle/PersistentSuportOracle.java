@@ -8,10 +8,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentSuportOracle;
-
-public class PersistentSuportOracle implements IPersistentSuportOracle {
+public class PersistentSuportOracle {
 
     private Map<Thread, Connection> connectionsMap = new HashMap<Thread, Connection>();
 
@@ -36,69 +33,41 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
         connectionProperties = new ConnectionProperties(userNamePropertyName, userPassPropertyName, urlPropertyName);
     }
 
-    private void openConnection() throws ExcepcaoPersistencia {
+    private void openConnection() throws SQLException {
         setDatabaseUrl();
-        try {
-            DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-        } catch (SQLException e) {
-            throw new ExcepcaoPersistencia();
-        }
+        DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
     }
 
-    private void closeConnection() throws ExcepcaoPersistencia {
+    private void closeConnection() throws SQLException {
         Connection thisconnection = connectionsMap.get(Thread.currentThread());
-        try {
-            thisconnection.close();
-            connectionsMap.remove(Thread.currentThread());
-        } catch (Exception e) {
-            throw new ExcepcaoPersistencia();
-        }
+        thisconnection.close();
+        connectionsMap.remove(Thread.currentThread());
     }
 
-    @Override
-    public synchronized void startTransaction() throws ExcepcaoPersistencia {
-        try {
-            openConnection();
-            Connection connection = DriverManager.getConnection(getDatabaseUrl());
-            connection.setAutoCommit(false);
-            connectionsMap.put(Thread.currentThread(), connection);
-        } catch (SQLException e) {
-            throw new ExcepcaoPersistencia(e);
-        }
+    public synchronized void startTransaction() throws SQLException {
+        openConnection();
+        Connection connection = DriverManager.getConnection(getDatabaseUrl());
+        connection.setAutoCommit(false);
+        connectionsMap.put(Thread.currentThread(), connection);
     }
 
-    @Override
-    public synchronized void commitTransaction() throws ExcepcaoPersistencia {
+    public synchronized void commitTransaction() throws SQLException {
         Connection thisConnection = connectionsMap.get(Thread.currentThread());
-        try {
-            thisConnection.commit();
-            closeConnection();
-        } catch (SQLException e) {
-            throw new ExcepcaoPersistencia(e);
-        }
+        thisConnection.commit();
+        closeConnection();
     }
 
-    @Override
-    public synchronized void cancelTransaction() throws ExcepcaoPersistencia {
+    public synchronized void cancelTransaction() throws SQLException {
         Connection thisConnection = connectionsMap.get(Thread.currentThread());
-        try {
-            thisConnection.rollback();
-            closeConnection();
-        } catch (SQLException e) {
-            throw new ExcepcaoPersistencia(e);
-        }
+        thisConnection.rollback();
+        closeConnection();
     }
 
-    @Override
-    public synchronized PreparedStatement prepareStatement(String statement) throws ExcepcaoPersistencia {
+    public synchronized PreparedStatement prepareStatement(String statement) throws SQLException {
         Connection thisConnection = connectionsMap.get(Thread.currentThread());
         if (thisConnection == null) {
-            try {
-                openConnection();
-                thisConnection = DriverManager.getConnection(getDatabaseUrl());
-            } catch (java.sql.SQLException e) {
-                throw new ExcepcaoPersistencia(e);
-            }
+            openConnection();
+            thisConnection = DriverManager.getConnection(getDatabaseUrl());
         }
         PreparedStatement sql = null;
         try {
@@ -108,32 +77,19 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
         return sql;
     }
 
-    public synchronized CallableStatement prepareCall(String statement) throws ExcepcaoPersistencia {
+    public synchronized CallableStatement prepareCall(String statement) throws SQLException {
         Connection thisConnection = connectionsMap.get(Thread.currentThread());
         if (thisConnection == null) {
-
-            try {
-                openConnection();
-                thisConnection = DriverManager.getConnection(getDatabaseUrl());
-            } catch (java.sql.SQLException e) {
-                throw new ExcepcaoPersistencia(e);
-            }
+            openConnection();
+            thisConnection = DriverManager.getConnection(getDatabaseUrl());
         }
-        CallableStatement sql = null;
-        try {
-            sql = thisConnection.prepareCall(statement);
-        } catch (java.sql.SQLException e) {
-            throw new ExcepcaoPersistencia(e);
-        } catch (java.lang.NullPointerException e) {
-            throw new ExcepcaoPersistencia(e);
-        }
-        return sql;
+        return thisConnection.prepareCall(statement);
     }
 
-    public String getDatabaseUrl() throws ExcepcaoPersistencia {
+    public String getDatabaseUrl() {
         return null;
     }
 
-    public void setDatabaseUrl() throws ExcepcaoPersistencia {
+    public void setDatabaseUrl() {
     }
 }
