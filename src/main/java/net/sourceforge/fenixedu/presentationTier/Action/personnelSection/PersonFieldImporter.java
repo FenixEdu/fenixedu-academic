@@ -7,21 +7,19 @@ import java.util.Locale;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
-import net.sourceforge.fenixedu.domain.person.Gender;
-import net.sourceforge.fenixedu.domain.person.GenderHelper;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 
 public abstract class PersonFieldImporter {
+    public static final String DATE_FORMAT = "dd/MM/yyyy";
     final String columnName;
     final boolean isMandatory;
     private Map<String, Integer> columnsNumbers;
-    final static Locale PT = new Locale("pt");
 
     public PersonFieldImporter(String columnName, boolean isMandatory) {
         this.columnName = columnName;
@@ -38,22 +36,13 @@ public abstract class PersonFieldImporter {
         return isMandatory;
     }
 
-    public Gender parseGender(String genderValue) {
-        for (Gender gender : Gender.values()) {
-            if (StringUtils.equalsIgnoreCase(GenderHelper.toLocalizedString(gender, PT), genderValue)) {
-                return gender;
-            }
-        }
-        return null;
-    }
-
     public Date getCellDate(Row row, String columnName) {
         Cell cell = getCell(row);
         if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
             return cell.getDateCellValue();
         } else if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
             try {
-                return new SimpleDateFormat("dd/M/yyyy", Locale.getDefault()).parse(cell.getStringCellValue());
+                return new SimpleDateFormat(DATE_FORMAT, Locale.getDefault()).parse(cell.getStringCellValue());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -85,9 +74,8 @@ public abstract class PersonFieldImporter {
     }
 
     public void secureApply(Row row, PersonBean personBean) throws Exception {
-        if (isMandatory && !hasColumn(row)) {
-            throw new Exception("Column named " + getColumnName() + "is mandatory and is missing");
-        }
+        Preconditions.checkState(!isMandatory || isMandatory && hasColumn(row), "Column named " + getColumnName()
+                + "is mandatory and is missing");
         try {
             apply(row, personBean);
         } catch (Exception e) {

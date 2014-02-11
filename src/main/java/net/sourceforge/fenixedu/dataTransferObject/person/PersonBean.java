@@ -237,7 +237,7 @@ public class PersonBean implements Serializable {
         setSocialSecurityNumber(person.getSocialSecurityNumber());
 
         if (person.hasDefaultPhysicalAddress()) {
-            final PhysicadlAddress physicalAddress = person.getDefaultPhysicalAddress();
+            final PhysicalAddress physicalAddress = person.getDefaultPhysicalAddress();
             setAddress(physicalAddress.getAddress());
             setArea(physicalAddress.getArea());
             setAreaCode(physicalAddress.getAreaCode());

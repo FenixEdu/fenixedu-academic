@@ -30,9 +30,12 @@
  */
 package net.sourceforge.fenixedu.domain.person;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
@@ -96,6 +99,32 @@ public enum Gender implements IPresentableEnum {
      */
     public static Gender parseGender(String name) {
         return GenderHelper.parseGender(name);
+    }
+
+    /**
+     * Returns a Gender based on the Localized name of the gender
+     * 
+     * @see GenderHelper#parseGender(String)
+     * 
+     * @param localizedName
+     *            The localized name of the gender
+     * @return A Gender parsed from the localized name or null if none is found
+     */
+    public static Gender parse(String localizedName) {
+        for (Gender gender : values()) {
+            if (StringUtils.equals(gender.getLocalizedName(), localizedName)) {
+                return gender;
+            }
+        }
+        return null;
+    }
+
+    public static List<String> getLocalizedNames() {
+        ArrayList<String> localizedNames = new ArrayList<>();
+        for (Gender gender : Gender.values()) {
+            localizedNames.add(gender.getLocalizedName());
+        }
+        return localizedNames;
     }
 
     @Override

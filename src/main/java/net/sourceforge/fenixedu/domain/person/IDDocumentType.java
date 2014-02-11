@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.domain.person;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -48,12 +50,21 @@ public enum IDDocumentType implements IPresentableEnum {
         return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(name());
     }
 
-    public static IDDocumentType parse(final String type, final Locale locale) {
+    public static IDDocumentType parse(final String type) {
         for (IDDocumentType documentType : IDDocumentType.values()) {
-            if (StringUtils.equalsIgnoreCase(type, documentType.getLocalizedName(locale))) {
+            if (StringUtils.equalsIgnoreCase(type, documentType.getLocalizedName())) {
                 return documentType;
             }
         }
         return null;
     }
+
+    public static List<String> getLocalizedNames() {
+        ArrayList<String> localizedNames = new ArrayList<>();
+        for (IDDocumentType documentType : IDDocumentType.values()) {
+            localizedNames.add(documentType.getLocalizedName());
+        }
+        return localizedNames;
+    }
+
 }

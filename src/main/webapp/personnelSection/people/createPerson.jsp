@@ -1,3 +1,9 @@
+<%@page import="net.sourceforge.fenixedu.domain.person.MaritalStatus"%>
+<%@page import="net.sourceforge.fenixedu.domain.person.Gender"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.Action.personnelSection.PersonFieldImporter"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.Action.personnelSection.PersonImportersContainer"%>
+<%@page import="com.google.common.base.Joiner"%>
+<%@page import="net.sourceforge.fenixedu.domain.person.IDDocumentType"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 
@@ -8,6 +14,8 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
 <h2><bean:message key="create.person.title" bundle="MANAGER_RESOURCES"/></h2>
+
+<p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
 <logic:present role="role(PERSONNEL_SECTION)">
 
@@ -102,8 +110,19 @@
 					
 </logic:present>
 			
-<!-- 			UPLOAD FILES - START -->
 <logic:present name="personsUploadBean">
+	<div class="infoop2">
+		<p><bean:message key="personsBatchImport.rules" bundle="MANAGER_RESOURCES"/><p>
+	
+		<ul>
+			<li><bean:message key="personsBatchImport.rules.mandatoryColumns" arg0="<%= Joiner.on(", ").join(PersonImportersContainer.getMandatoryColumns()) %>" bundle="MANAGER_RESOURCES"/></li>
+			<li><bean:message key="personsBatchImport.rules.dates" arg0="<%= PersonFieldImporter.DATE_FORMAT %>" bundle="MANAGER_RESOURCES"/></li>
+			<li><bean:message key="personsBatchImport.rules.gender" arg0="<%= Joiner.on(", ").join(Gender.getLocalizedNames()) %>" bundle="MANAGER_RESOURCES"/></li>
+			<li><bean:message key="personsBatchImport.rules.maritialStatus" arg0="<%= Joiner.on(", ").join(MaritalStatus.getLocalizedNames()) %>" bundle="MANAGER_RESOURCES"/></li>
+			<li><bean:message key="personsBatchImport.rules.documentType" arg0="<%= Joiner.on(", ").join(IDDocumentType.getLocalizedNames()) %>" bundle="MANAGER_RESOURCES"/></li>
+			<li><bean:message key="personsBatchImport.rules.nationality" bundle="MANAGER_RESOURCES"/></li>
+		</ul>
+	</div>
 	<fr:form action="/personnelManagePeople.do" encoding="multipart/form-data">
 		<html:hidden property="method" value="importPersons"/>
 		
@@ -135,9 +154,5 @@
 	</fr:form>
 </logic:present>
 <logic:notPresent name="personsUploadBean">
-	<html:link action="/personnelManagePeople.do?method=prepareImportPersons">+ Import Persons</html:link>
+	<html:link action="/personnelManagePeople.do?method=prepareImportPersons"><bean:message key="personsBatchImport.label.importPersons" bundle="MANAGER_RESOURCES"/></html:link>
 </logic:notPresent>
-
-<!-- UPLOAD FILES - END -->
-		
-

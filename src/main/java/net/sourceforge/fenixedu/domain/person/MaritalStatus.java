@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.domain.person;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -46,12 +48,20 @@ public enum MaritalStatus implements IPresentableEnum {
         return bundle.getString(this.getClass().getName() + "." + name());
     }
 
-    public static MaritalStatus parse(final String status, final Locale locale) {
+    public static MaritalStatus parse(final String status) {
         for (MaritalStatus maritialStatus : MaritalStatus.values()) {
-            if (StringUtils.equalsIgnoreCase(status, maritialStatus.getLocalizedName(locale))) {
+            if (StringUtils.equalsIgnoreCase(status, maritialStatus.getLocalizedName())) {
                 return maritialStatus;
             }
         }
         return null;
+    }
+
+    public static List<String> getLocalizedNames() {
+        ArrayList<String> localizedNames = new ArrayList<>();
+        for (MaritalStatus maritialStatus : MaritalStatus.values()) {
+            localizedNames.add(maritialStatus.getLocalizedName());
+        }
+        return localizedNames;
     }
 }
