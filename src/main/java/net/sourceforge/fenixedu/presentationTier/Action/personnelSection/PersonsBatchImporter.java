@@ -7,6 +7,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
@@ -37,7 +38,11 @@ public class PersonsBatchImporter {
     public void createPersons() throws Exception {
         Set<Person> persons = Sets.newHashSet();
         for (PersonBean personBean : createPersonBeans(workbook.getSheetAt(0))) {
-            persons.add(new Person(personBean));
+            Person person = new Person(personBean);
+            for (PartyContact contact : person.getPartyContactsSet()) {
+                contact.setValid();
+            }
+            persons.add(person);
         }
         setPersons(persons);
     }
