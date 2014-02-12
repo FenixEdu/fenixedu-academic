@@ -1,0 +1,64 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.fenixedu</groupId>
+        <artifactId>fenix-framework-project</artifactId>
+        <version>1.3.0</version>
+    </parent>
+
+    <groupId>pt.ist</groupId>
+    <artifactId>fenix-parking</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <name>Fenix Parking</name>
+    <url>http://www.fenixedu.org</url>
+    <description>IST Parking Features for FenixEdu</description>
+
+    <scm>
+        <connection>scm:git:git@github.com:cbartol/fenix-parking.git</connection>
+        <developerConnection>scm:git:git@github.com:cbartol/fenix-parking.git</developerConnection>
+        <url>http://fenixedu.org</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork>
+                    <maxmem>2048</maxmem>
+                    <meminitial>1536</meminitial>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>pt.ist</groupId>
+            <artifactId>fenix</artifactId>
+            <version>2.2.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.fenixedu</groupId>
+            <artifactId>bennu-core</artifactId>
+            <version>2.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc14</artifactId>
+            <version>9.0.2.0.0</version>
+        </dependency>
+    </dependencies>
+
+    <repositories>
+        <repository>
+            <id>fenix-ashes-maven-repository</id>
+            <url>https://fenix-ashes.ist.utl.pt/nexus/content/groups/fenix-ashes-maven-repository</url>
+        </repository>
+    </repositories>
+
+</project>
