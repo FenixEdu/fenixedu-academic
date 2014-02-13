@@ -7,6 +7,9 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdRegistryDiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.IRegistryDiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
+
+import org.joda.time.DateTime;
+
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -46,8 +49,7 @@ public class PhdRegistryDiploma extends RegistryDiploma {
         addParameter("fourthParagraph", MessageFormat.format(fourthParagraph, dateWord[0], dateWord[1], dateWord[2]));
 
         String fifthParagraph;
-        if (getUniversity(getDocumentRequest().getRequestDate()) != getUniversity(getDocumentRequest().getConclusionDate()
-                .toDateTimeAtCurrentTime())) {
+        if (getUniversity(new DateTime()) != getUniversity(getDocumentRequest().getConclusionDate().toDateTimeAtCurrentTime())) {
             fifthParagraph = getResourceBundle().getString("label.phd.registryDiploma.phdFifthParagraph.UTL");
         } else {
             fifthParagraph = getResourceBundle().getString("label.phd.registryDiploma.phdFifthParagraph");

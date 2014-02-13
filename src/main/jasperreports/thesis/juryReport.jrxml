@@ -9,6 +9,7 @@
 	<parameter name="studentName" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="thesisTitle" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="juryPresidentName" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="guidanceVowel" class="java.lang.Integer" isForPrompting="false"/>
 	<parameter name="vowel1Name" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="vowel2Name" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="vowel3Name" class="java.lang.String" isForPrompting="false"/>
@@ -51,34 +52,34 @@
 				</textElement>
 				<text><![CDATA[Presidente do Júri]]></text>
 			</staticText>
-			<staticText>
+			<textField>
 				<reportElement x="-1" y="180" width="100" height="20"/>
 				<textElement lineSpacing="Single">
 					<font size="12" pdfFontName="Helvetica"/>
 				</textElement>
-				<text><![CDATA[Vogal]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA["Vogal" + ($P{guidanceVowel}.intValue() == 1 ? " (Orientador)":"")]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement x="-1" y="212" width="100" height="20"/>
 				<textElement lineSpacing="Single">
 					<font size="12" pdfFontName="Helvetica"/>
 				</textElement>
-				<text><![CDATA[Vogal]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA["Vogal" + ($P{guidanceVowel}.intValue() == 2 ? " (Orientador)":"")]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement x="-1" y="246" width="100" height="20"/>
 				<textElement lineSpacing="Single">
 					<font size="12" pdfFontName="Helvetica"/>
 				</textElement>
-				<text><![CDATA[Vogal]]></text>
-			</staticText>
-			<staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA["Vogal" + ($P{guidanceVowel}.intValue() == 3 ? " (Orientador)":"")]]></textFieldExpression>
+			</textField>
+			<textField>
 				<reportElement x="-1" y="280" width="100" height="20"/>
 				<textElement lineSpacing="Single">
 					<font size="12" pdfFontName="Helvetica"/>
 				</textElement>
-				<text><![CDATA[Vogal]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA["Vogal" + ($P{guidanceVowel}.intValue() == 4 ? " (Orientador)":"")]]></textFieldExpression>
+			</textField>
 			<staticText>
 				<reportElement x="-1" y="309" width="94" height="20"/>
 				<textElement lineSpacing="Single">
@@ -281,23 +282,13 @@
 				</textElement>
 				<text><![CDATA[A justificação da classificação nominal atribuída é apresentada em anexo.]]></text>
 			</staticText>
-			<staticText>
+			<textField>
 				<reportElement x="3" y="505" width="407" height="160"/>
 				<textElement lineSpacing="Single">
 					<font size="12" pdfFontName="Helvetica"/>
 				</textElement>
-				<text><![CDATA[O JÚRI:
-
-Presidente do Júri:
-
-Vogal:
-
-Vogal:
-
-Vogal:
-
-Vogal:			]]></text>
-			</staticText>
+				<textFieldExpression class="java.lang.String"><![CDATA["O JÚRI:\n\nPresidente do Júri:\n\nVogal" + ($P{guidanceVowel}.intValue() == 1? " (Orientador)":"") + ":\n\nVogal" + ($P{guidanceVowel}.intValue() == 2? " (Orientador)":"")+":\n\nVogal" + ($P{guidanceVowel}.intValue() == 3? " (Orientador)":"") + ":\n\nVogal" + ($P{guidanceVowel}.intValue() == 4? " (Orientador)":"")+ ":"]]></textFieldExpression>
+			</textField>
 			<line>
 				<reportElement x="146" y="547" width="264" height="1"/>
 			</line>

@@ -21,6 +21,7 @@
 	<parameter name="juryPresidentName" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="juryPresidentCategory" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="juryPresidentAffiliation" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="guidanceVowel" class="java.lang.Integer" isForPrompting="false"/>
 	<parameter name="vowel1Name" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="vowel1Category" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="vowel1Affiliation" class="java.lang.String" isForPrompting="false"/>
@@ -353,7 +354,7 @@
 						<font size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA["Vogais:" + 
-"\nNome: " + $P{vowel1Name} + 
+"\nNome: " + ( $P{guidanceVowel}.intValue() == 1 ? "(Orientador) ":"") + $P{vowel1Name} + 
 "\nCategoria: " + $P{vowel1Category} + 
 "\nAfiliação: " + $P{vowel1Affiliation}]]></textFieldExpression>
 				</textField>
@@ -395,7 +396,7 @@
 					<textElement verticalAlignment="Top" rotation="None" lineSpacing="1_1_2">
 						<font size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA["Nome: " + $P{vowel2Name} + 
+					<textFieldExpression class="java.lang.String"><![CDATA["Nome: " + ( $P{guidanceVowel}.intValue() == 2 ? "(Orientador) ":"") + $P{vowel2Name} + 
 "\nCategoria: " + $P{vowel2Category} + 
 "\nAfiliação: " + $P{vowel2Affiliation}]]></textFieldExpression>
 				</textField>
@@ -437,7 +438,7 @@
 					<textElement verticalAlignment="Top" rotation="None" lineSpacing="1_1_2">
 						<font size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA["Nome: " + $P{vowel4Name} + 
+					<textFieldExpression class="java.lang.String"><![CDATA["Nome: " + ( $P{guidanceVowel}.intValue() == 4 ? "(Orientador) ":"") + $P{vowel4Name} + 
 "\nCategoria: " + $P{vowel4Category} + 
 "\nAfiliação: " + $P{vowel4Affiliation}]]></textFieldExpression>
 				</textField>
@@ -485,7 +486,7 @@
 					<textElement verticalAlignment="Top" rotation="None" lineSpacing="1_1_2">
 						<font size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA["Nome: " + $P{vowel3Name} + 
+					<textFieldExpression class="java.lang.String"><![CDATA["Nome: " + ( $P{guidanceVowel}.intValue() == 3 ? "(Orientador) ":"") + $P{vowel3Name} + 
 "\nCategoria: " + $P{vowel3Category} + 
 "\nAfiliação: " + $P{vowel3Affiliation}]]></textFieldExpression>
 				</textField>

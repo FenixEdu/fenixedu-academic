@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.IRegistryDiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
 
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 public class RegistryDiploma extends AdministrativeOfficeDocument {
@@ -38,7 +39,8 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
         setHeader();
 
         addParameter("institution", getInstitutionName());
-        addParameter("university", getUniversity(getDocumentRequest().getRequestDate()));
+        addParameter("university", getUniversity(getDocumentRequest().getConclusionDate().toDateTimeAtCurrentTime())
+                .getPartyName().getContent(getLanguage()));
 
         setFirstParagraph(request);
         setSecondParagraph(person, request);
@@ -69,8 +71,7 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 
     private void setFifthParagraph() {
         String fifthParagraph;
-        if (getUniversity(getDocumentRequest().getRequestDate()) != getUniversity(getDocumentRequest().getConclusionDate()
-                .toDateTimeAtCurrentTime())) {
+        if (getUniversity(new DateTime()) != getUniversity(getDocumentRequest().getConclusionDate().toDateTimeAtCurrentTime())) {
             fifthParagraph = getResourceBundle().getString("label.phd.registryDiploma.fifthParagraph.UTL.UL");
         } else {
             fifthParagraph = getResourceBundle().getString("label.phd.registryDiploma.fifthParagraph");
@@ -151,7 +152,7 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
     }
 
     protected void setFooter() {
-        final UniversityUnit university = getUniversity(getDocumentRequest().getRequestDate());
+        final UniversityUnit university = getUniversity(new DateTime());
         final String institutionUnitName = getInstitutionName();
         final Person presidentIst = university.getInstitutionsUniversityResponsible(FunctionType.PRESIDENT);
 
