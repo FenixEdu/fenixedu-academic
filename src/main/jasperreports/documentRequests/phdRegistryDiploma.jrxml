@@ -25,6 +25,7 @@
 	<parameter name="rectorName" class="java.lang.String"/>
 	<parameter name="universityName" class="java.lang.String"/>
 	<parameter name="by" class="java.lang.String"/>
+	<parameter name="university" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -115,7 +116,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font fontName="Times New Roman" size="14" pdfFontName="tnr.ttf" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{universityName}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{university}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField-6" positionType="Float" x="0" y="188" width="455" height="31"/>
