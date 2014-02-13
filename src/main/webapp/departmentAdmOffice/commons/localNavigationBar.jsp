@@ -37,11 +37,16 @@
 	</ul>
 	
 	<ul>
+		<li class="navheader">
+			<strong><bean:message key="link.group.teacher.title"/></strong>
+		</li>
+		<li>
+			<a href="http://fenix-ashes.ist.utl.pt/professoresexternos/">
+				<bean:message key="link.teachers.externalTeachers"/>
+			</a>
+		</li>
+		
 		<logic:present role="role(DEPARTMENT_CREDITS_MANAGER)">
-
-			<li class="navheader">
-				<strong><bean:message key="link.group.teacher.title"/></strong>
-			</li>
 
 			<li>
 				<html:link page="/teacherSearchForExecutionCourseAssociation.do?method=searchForm&amp;page=0">
@@ -63,11 +68,7 @@
 					<bean:message key="link.teachers.search"/>
 				</html:link>
 			</li>
-			<li>
-				<a href="http://fenix-ashes.ist.utl.pt/professoresexternos/">
-					<bean:message key="link.teachers.externalTeachers"/>
-				</a>
-			</li>
+			
 
 			<li class="navheader">
 				<strong><bean:message key="label.credits" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></strong>

@@ -245,14 +245,11 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
 
         private void addIfNotUsedInPeriod(SortedSet<DegreeCurricularPlan> possible, DegreeCurricularPlan dcp) {
             boolean found = false;
-            boolean hasAccess = false;
-            for (EnrolmentPeriod period : dcp.getEnrolmentPeriods()) {
-                if (AcademicPredicates.MANAGE_ENROLMENT_PERIODS.evaluate(period.getDegree())) {
-                    hasAccess = true;
-                }
-
+            boolean hasAccess = AcademicPredicates.MANAGE_ENROLMENT_PERIODS.evaluate(dcp.getDegree());
+            for (EnrolmentPeriod period : dcp.getEnrolmentPeriodsSet()) {
                 if (type.is(period) && period.getExecutionPeriod().equals(semester)) {
                     found = true;
+                    break;
                 }
             }
             if (!found && hasAccess) {
