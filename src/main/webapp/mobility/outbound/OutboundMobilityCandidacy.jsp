@@ -123,6 +123,12 @@
 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound.edit.period"/>
 			</a>
 			&nbsp;&nbsp;|&nbsp;&nbsp;
+			<bean:define id="confirmDelete" type="java.lang.String"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.studentDataByExecutionYear.delete.confirmation.message"/></bean:define>
+			<html:link href="<%= request.getContextPath() + "/academicAdministration/outboundMobilityCandidacy.do?method=deletePeriod&candidacyPeriodOid=" + outboundMobilityContextBean.getCandidacyPeriods().first().getExternalId() %>"
+					onclick="<%= "return confirm('" + confirmDelete + "')" %>">
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.delete"/>
+			</html:link>
+			&nbsp;&nbsp;|&nbsp;&nbsp;
 			<a href="#" onclick="$('#EditCandidateOptionsBlock').toggle()">
 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound.edit.candidate.options"/>
 			</a>

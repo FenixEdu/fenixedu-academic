@@ -24,8 +24,10 @@ import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
+import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
@@ -36,6 +38,27 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
     public OutboundMobilityCandidacyPeriod(final ExecutionInterval executionInterval, final DateTime start, final DateTime end) {
         super();
         init(executionInterval, start, end);
+
+        final OutboundMobilityCandidacyPeriod previousPeriod = findPreviousPeriod();
+        for (final OutboundMobilityCandidacyContestGroup group : previousPeriod.getOutboundMobilityCandidacyContestGroupSet()) {
+            if (!group.getExecutionDegreeSet().isEmpty()) {
+                final OutboundMobilityCandidacyContestGroup newGroup =
+                        new OutboundMobilityCandidacyContestGroup(group.getExecutionDegreeSet());
+                for (final OutboundMobilityCandidacyContest contest : group.getOutboundMobilityCandidacyContestSet()) {
+                    final OutboundMobilityCandidacyContest newContest =
+                            new OutboundMobilityCandidacyContest(this, newGroup, contest.getMobilityAgreement(),
+                                    contest.getVacancies());
+                    newGroup.getOutboundMobilityCandidacyContestSet().add(newContest);
+                }
+                newGroup.getMobilityCoordinatorSet().addAll(group.getMobilityCoordinatorSet());
+            }
+        }
+        for (final OutboundMobilityCandidacyContest contest : previousPeriod.getOutboundMobilityCandidacyContestSet()) {
+            contest.getExecutionDegreeSet();
+            contest.getMobilityAgreement();
+            contest.getOutboundMobilityCandidacyContestGroup();
+            contest.getVacancies();
+        }
     }
 
     @Atomic
@@ -374,6 +397,36 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
     @Deprecated
     public boolean hasOptionIntroductoryDestription() {
         return getOptionIntroductoryDestription() != null;
+    }
+
+    private OutboundMobilityCandidacyPeriod findPreviousPeriod() {
+        OutboundMobilityCandidacyPeriod result = null;
+        for (final ExecutionInterval interval : Bennu.getInstance().getExecutionIntervalsSet()) {
+            for (final CandidacyPeriod candidacyPeriod : interval.getCandidacyPeriodsSet()) {
+                if (candidacyPeriod instanceof OutboundMobilityCandidacyPeriod) {
+                    final OutboundMobilityCandidacyPeriod period = (OutboundMobilityCandidacyPeriod) candidacyPeriod;
+                    final YearMonthDay ymd = period.getExecutionInterval().getBeginDateYearMonthDay();
+                    if (ymd.isBefore(getExecutionInterval().getBeginDateYearMonthDay())
+                            && (result == null || result.getExecutionInterval().getBeginDateYearMonthDay().isBefore(ymd))) {
+                        result = period;
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    @Atomic
+    public void delete() {
+        if (!getOutboundMobilityCandidacyContestSet().isEmpty()) {
+            throw new DomainException("cannot.delete.because.still.connected.to.contests");
+        }
+        for (final OutboundMobilityCandidacyPeriodConfirmationOption option : getOutboundMobilityCandidacyPeriodConfirmationOptionSet()) {
+            option.delete();
+        }
+        setExecutionInterval(null);
+        setRootDomainObject(null);
+        deleteDomainObject();
     }
 
 }

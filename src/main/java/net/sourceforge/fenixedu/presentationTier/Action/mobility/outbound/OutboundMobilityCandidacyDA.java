@@ -98,6 +98,15 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         return prepare(mapping, request, outboundMobilityContextBean);
     }
 
+    public ActionForward deletePeriod(final ActionMapping mapping, final ActionForm actionForm,
+            final HttpServletRequest request, final HttpServletResponse response) {
+        final OutboundMobilityCandidacyPeriod candidacyPeriod = getDomainObject(request, "candidacyPeriodOid");
+        candidacyPeriod.delete();
+        final OutboundMobilityContextBean outboundMobilityContextBean = new OutboundMobilityContextBean();
+        RenderUtils.invalidateViewState();
+        return prepare(mapping, request, outboundMobilityContextBean);
+    }
+    
     public ActionForward addCandidateOption(final ActionMapping mapping, final ActionForm actionForm,
             final HttpServletRequest request, final HttpServletResponse response) {
         final OutboundMobilityContextBean outboundMobilityContextBean = getRenderedObject();

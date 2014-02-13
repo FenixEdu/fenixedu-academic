@@ -24,6 +24,8 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.joda.time.DateTime;
 
+import pt.ist.fenixframework.Atomic;
+
 public class OutboundMobilityContextBean implements Serializable {
 
     private ExecutionYear executionYear;
@@ -234,6 +236,7 @@ public class OutboundMobilityContextBean implements Serializable {
         }
     }
 
+    @Atomic
     public void addMobilityCoordinator() {
         if (person != null) {
             for (final OutboundMobilityCandidacyContestGroup mobilityGroup : mobilityGroups) {
