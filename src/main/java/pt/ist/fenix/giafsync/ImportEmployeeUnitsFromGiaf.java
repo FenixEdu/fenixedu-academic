@@ -1,10 +1,12 @@
-package pt.utl.ist.scripts.process.importData.contracts.giaf;
+package pt.ist.fenix.giafsync;
 
+import java.io.PrintWriter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
@@ -15,70 +17,51 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ContractSituation;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportGiaf;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.bennu.scheduler.annotation.Task;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
+import org.slf4j.Logger;
 
-@Task(englishTitle = "ImportEmployeeUnitsFromGiaf")
-public class ImportEmployeeUnitsFromGiaf extends ImportFromGiaf {
-    public ImportEmployeeUnitsFromGiaf() {
+import pt.ist.fenix.giafsync.GiafSync.ImportProcessor;
+import pt.ist.fenix.giafsync.GiafSync.Modification;
 
-    }
-
+class ImportEmployeeUnitsFromGiaf extends ImportProcessor {
     @Override
-    public void process() {
-        getLogger().debug("Start ImportEmployeeUnitsFromGiaf");
-        try {
-            PersistentSuportGiaf oracleConnection = PersistentSuportGiaf.getInstance();
-            Map<Integer, Employee> employeesMap = getEmployeesMap();
-            LocalDate today = new LocalDate();
+    public List<Modification> processChanges(GiafMetadata metadata, PrintWriter log, Logger logger) throws Exception {
+        List<Modification> modifications = new ArrayList<>();
+        PersistentSuportGiaf oracleConnection = PersistentSuportGiaf.getInstance();
+        LocalDate today = new LocalDate();
 
-            String query = getEmployeeWorkingUnitsQuery();
-            getLogger().debug(query);
-            importIt(oracleConnection, employeesMap, today, query, AccountabilityTypeEnum.WORKING_CONTRACT);
+        modifications.addAll(importIt(oracleConnection, metadata, today, getEmployeeWorkingUnitsQuery(),
+                AccountabilityTypeEnum.WORKING_CONTRACT, logger));
 
-            query = getEmployeeMailingUnitsQuery();
-            getLogger().debug(query);
-            importIt(oracleConnection, employeesMap, today, query, AccountabilityTypeEnum.MAILING_CONTRACT);
+        modifications.addAll(importIt(oracleConnection, metadata, today, getEmployeeMailingUnitsQuery(),
+                AccountabilityTypeEnum.MAILING_CONTRACT, logger));
 
-            oracleConnection.closeConnection();
-        } catch (ExcepcaoPersistencia e) {
-            getLogger().info("ImportEmployeeUnitsFromGiaf -  ERRO ExcepcaoPersistencia");
-            throw new Error(e);
-        } catch (SQLException e) {
-            getLogger().info("ImportEmployeeUnitsFromGiaf -  ERRO SQLException");
-            throw new Error(e);
-        }
-        getLogger().debug("The end");
+        oracleConnection.closeConnection();
+        return modifications;
     }
 
-    private void importIt(PersistentSuportGiaf oracleConnection, Map<Integer, Employee> employeesMap, LocalDate today,
-            String query, AccountabilityTypeEnum accountabilityTypeEnum) throws SQLException, ExcepcaoPersistencia {
+    private List<Modification> importIt(PersistentSuportGiaf oracleConnection, GiafMetadata metadata, LocalDate today,
+            String query, AccountabilityTypeEnum accountabilityTypeEnum, Logger logger) throws SQLException {
+        List<Modification> modifications = new ArrayList<>();
+
         PreparedStatement preparedStatement = oracleConnection.prepareStatement(query);
         ResultSet result = preparedStatement.executeQuery();
         while (result.next()) {
-            String numberString = result.getString("emp_num");
-            Integer employeeNumber = null;
-            try {
-                employeeNumber = Integer.parseInt(numberString);
-            } catch (NumberFormatException ex) {
-                getLogger().info(accountabilityTypeEnum.getName() + ". Erro a ler número: " + numberString);
-                continue;
-            }
-            Employee employee = employeesMap.get(employeeNumber);
+            String employeeNumber = result.getString("emp_num");
+            Employee employee = metadata.getEmployee(employeeNumber, logger);
             if (employee == null) {
-                getLogger().info(accountabilityTypeEnum.getName() + ". Não existe funcionário. Número: " + employeeNumber);
+                logger.debug(accountabilityTypeEnum.getName() + ". Não existe funcionário. Número: " + employeeNumber);
                 continue;
             }
             Integer costCenterCode = 0;
             try {
                 costCenterCode = result.getInt("cc");
             } catch (SQLException e) {
-                getLogger().info(accountabilityTypeEnum.getName() + ". CC inválido. Número: " + employeeNumber);
+                logger.debug(accountabilityTypeEnum.getName() + ". CC inválido. Número: " + employeeNumber);
                 continue;
             }
             Unit unit = costCenterCode.intValue() == 0 ? null : Unit.readByCostCenterCode(costCenterCode);
@@ -93,7 +76,7 @@ public class ImportEmployeeUnitsFromGiaf extends ImportFromGiaf {
                 if (employee.getPerson().getPersonProfessionalData() != null) {
                     GiafProfessionalData giafProfessionalDataByGiafPersonIdentification =
                             employee.getPerson().getPersonProfessionalData()
-                                    .getGiafProfessionalDataByGiafPersonIdentification(numberString);
+                                    .getGiafProfessionalDataByGiafPersonIdentification(employeeNumber);
                     ContractSituation contractSituation = giafProfessionalDataByGiafPersonIdentification.getContractSituation();
 
                     if (contractSituation != null) {
@@ -118,73 +101,70 @@ public class ImportEmployeeUnitsFromGiaf extends ImportFromGiaf {
                         if (workingContractOnDate != null) {
                             if (unit != null && endDate == null) {
                                 if (!equalUnitAndCategoryType(workingContractOnDate, unit, isTeacher)) {
-                                    createEmployeeContract(employee, new YearMonthDay(beginDate), null, unit,
-                                            accountabilityTypeEnum, workingContractOnDate, isTeacher);
+                                    modifications.add(createEmployeeContract(employee, new YearMonthDay(beginDate), null, unit,
+                                            accountabilityTypeEnum, workingContractOnDate, isTeacher, logger));
                                 } else if (!workingContractOnDate.getBeginDate().equals(beginDate)
                                         && !StringUtils.isEmpty(ccDateString)) {
-                                    changeEmployeeContractDates(accountabilityTypeEnum, new YearMonthDay(beginDate),
-                                            workingContractOnDate);
+                                    modifications.add(changeEmployeeContractDates(accountabilityTypeEnum, new YearMonthDay(
+                                            beginDate), workingContractOnDate, logger));
                                 } else if (workingContractOnDate.getEndDate() != null && contractSituation != null
                                         && giafProfessionalDataByGiafPersonIdentification.getContractSituationDate() != null) {
-                                    getLogger().info(
-                                            accountabilityTypeEnum.getName() + ". Contrato do Funcionário:" + employeeNumber
-                                                    + " Voltou a abrir na mesma unidade :"
-                                                    + giafProfessionalDataByGiafPersonIdentification.getContractSituationDate());
-                                    createEmployeeContract(employee, new YearMonthDay(
+                                    logger.debug(accountabilityTypeEnum.getName() + ". Contrato do Funcionário:" + employeeNumber
+                                            + " Voltou a abrir na mesma unidade :"
+                                            + giafProfessionalDataByGiafPersonIdentification.getContractSituationDate());
+                                    modifications.add(createEmployeeContract(employee, new YearMonthDay(
                                             giafProfessionalDataByGiafPersonIdentification.getContractSituationDate()), null,
-                                            unit, accountabilityTypeEnum, null, isTeacher);
+                                            unit, accountabilityTypeEnum, null, isTeacher, logger));
                                 } else {
-                                    getLogger().info(
-                                            accountabilityTypeEnum.getName() + ". Não há alterações para o funcionário:"
-                                                    + employeeNumber);
+                                    logger.debug(accountabilityTypeEnum.getName() + ". Não há alterações para o funcionário:"
+                                            + employeeNumber);
                                 }
                             } else if (endDate != null) {
                                 // terminou o contrato corrente
-                                closeCurrentContract(accountabilityTypeEnum, workingContractOnDate,
-                                        new YearMonthDay(endDate.minusDays(1)));
+                                modifications.add(closeCurrentContract(accountabilityTypeEnum, workingContractOnDate,
+                                        new YearMonthDay(endDate.minusDays(1)), logger));
                             }
                         } else {
                             if (unit != null && endDate == null) {
                                 // contrato novo
                                 createEmployeeContract(employee, new YearMonthDay(beginDate), null, unit, accountabilityTypeEnum,
-                                        null, isTeacher);
+                                        null, isTeacher, logger);
 
                             } else {
                                 // já tinha terminado o contrato e já
                                 // terminou
                                 // tb do nosso lado
-                                // getLogger().info(accountabilityTypeEnum.getName()
+                                // logger.debug(accountabilityTypeEnum.getName()
                                 // + ". Contrato terminado na unidade "
                                 // + unit.getName() + " para o funcionário:"
                                 // + employeeNumber + " (não fez nada)");
                             }
                         }
                     } else {
-                        getLogger().info("ERRO... não tem situação no GIAF " + employeeNumber);
+                        logger.debug("ERRO... não tem situação no GIAF " + employeeNumber);
                         Contract currentWorkingContract = employee.getCurrentContractByContractType(accountabilityTypeEnum);
                         if (currentWorkingContract != null) {
                             LocalDate endDate = today.minusDays(1);
-                            closeCurrentContract(accountabilityTypeEnum, currentWorkingContract, new YearMonthDay(endDate));
-                            getLogger().info(
-                                    accountabilityTypeEnum.getName() + ". Não não tem contrato no GIAF, e terminamos no Fénix: "
-                                            + employeeNumber);
+                            closeCurrentContract(accountabilityTypeEnum, currentWorkingContract, new YearMonthDay(endDate),
+                                    logger);
+                            logger.debug(accountabilityTypeEnum.getName()
+                                    + ". Não não tem contrato no GIAF, e terminamos no Fénix: " + employeeNumber);
                         } else {
-                            getLogger().info(
-                                    accountabilityTypeEnum.getName() + ". Não não tem contrato no GIAF, nem no fénix: "
-                                            + employeeNumber);
+                            logger.debug(accountabilityTypeEnum.getName() + ". Não não tem contrato no GIAF, nem no fénix: "
+                                    + employeeNumber);
                         }
                     }
                 } else {
-                    getLogger().info("Não tem employeeProfessionalData. Funcionario: " + employeeNumber);
+                    logger.debug("Não tem employeeProfessionalData. Funcionario: " + employeeNumber);
                 }
             } else {
-                getLogger().info(
-                        accountabilityTypeEnum.getName() + ". Não existe unidade: " + costCenterCode + " para o funcionario: "
-                                + employeeNumber);
+                logger.debug(accountabilityTypeEnum.getName() + ". Não existe unidade: " + costCenterCode
+                        + " para o funcionario: " + employeeNumber);
             }
         }
         result.close();
         preparedStatement.close();
+        return modifications;
     }
 
     private PersonContractSituation getOtherValidPersonContractSituation(
@@ -215,55 +195,59 @@ public class ImportEmployeeUnitsFromGiaf extends ImportFromGiaf {
         return contractToReturn;
     }
 
-    private void changeEmployeeContractDates(AccountabilityTypeEnum accountabilityTypeEnum, YearMonthDay yearMonthDay,
-            Contract currentWorkingContract) {
-        YearMonthDay yearMonthDayMinusOne = yearMonthDay.minusDays(1);
-        for (Contract contract : currentWorkingContract.getEmployee().getContractsByContractType(accountabilityTypeEnum,
-                yearMonthDay, null)) {
-            if (!currentWorkingContract.equals(contract)) {
-                if (contract.getBeginDate().isBefore(yearMonthDay)) {
-                    contract.setEndDate(yearMonthDayMinusOne);
-                    getLogger().info(
-                            accountabilityTypeEnum.getName() + ". Contrato terminado na unidade "
+    private Modification changeEmployeeContractDates(final AccountabilityTypeEnum accountabilityTypeEnum,
+            final YearMonthDay yearMonthDay, final Contract currentWorkingContract, final Logger logger) {
+        return new Modification() {
+            @Override
+            public void execute() {
+                YearMonthDay yearMonthDayMinusOne = yearMonthDay.minusDays(1);
+                for (Contract contract : currentWorkingContract.getEmployee().getContractsByContractType(accountabilityTypeEnum,
+                        yearMonthDay, null)) {
+                    if (!currentWorkingContract.equals(contract)) {
+                        if (contract.getBeginDate().isBefore(yearMonthDay)) {
+                            contract.setEndDate(yearMonthDayMinusOne);
+                            logger.debug(accountabilityTypeEnum.getName() + ". Contrato terminado na unidade "
                                     + currentWorkingContract.getUnit().getCostCenterCode() + " para o funcionário:"
                                     + currentWorkingContract.getEmployee().getEmployeeNumber() + " . Mudou data de fim para :"
                                     + yearMonthDayMinusOne);
-                } else {
-                    contract.delete();
-                    getLogger().info(
-                            accountabilityTypeEnum.getName() + ". APAGOU para a unidade "
+                        } else {
+                            contract.delete();
+                            logger.debug(accountabilityTypeEnum.getName() + ". APAGOU para a unidade "
                                     + currentWorkingContract.getUnit().getCostCenterCode() + " para o funcionário:"
                                     + currentWorkingContract.getEmployee().getEmployeeNumber());
+                        }
+                    }
                 }
-            }
-        }
-        currentWorkingContract.setBeginDate(yearMonthDay);
-        getLogger().info(
-                accountabilityTypeEnum.getName() + " Mudou data de inicio: "
+                currentWorkingContract.setBeginDate(yearMonthDay);
+                logger.debug(accountabilityTypeEnum.getName() + " Mudou data de inicio: "
                         + currentWorkingContract.getUnit().getCostCenterCode() + " para o funcionário:"
                         + currentWorkingContract.getEmployee().getEmployeeNumber() + " . Mudou data de inicio para :"
                         + yearMonthDay);
+            }
+        };
     }
 
-    private void closeCurrentContract(AccountabilityTypeEnum accountabilityTypeEnum, Contract currentWorkingContract,
-            YearMonthDay endDate) {
-        if (currentWorkingContract.getEndDate() != null && currentWorkingContract.getEndDate().isEqual(endDate)) {
-            getLogger().info(
-                    accountabilityTypeEnum.getName() + ". Já está fechado. Não há alterações para o funcionário:"
+    private Modification closeCurrentContract(final AccountabilityTypeEnum accountabilityTypeEnum,
+            final Contract currentWorkingContract, final YearMonthDay endDate, final Logger logger) {
+        return new Modification() {
+            @Override
+            public void execute() {
+                if (currentWorkingContract.getEndDate() != null && currentWorkingContract.getEndDate().isEqual(endDate)) {
+                    logger.debug(accountabilityTypeEnum.getName() + ". Já está fechado. Não há alterações para o funcionário:"
                             + currentWorkingContract.getEmployee().getEmployeeNumber());
-        } else if (currentWorkingContract.getBeginDate().isAfter(endDate)) {
-            getLogger().info(
-                    accountabilityTypeEnum.getName() + ". APAGOU para a unidade "
+                } else if (currentWorkingContract.getBeginDate().isAfter(endDate)) {
+                    logger.debug(accountabilityTypeEnum.getName() + ". APAGOU para a unidade "
                             + currentWorkingContract.getUnit().getCostCenterCode() + " para o funcionário:"
                             + currentWorkingContract.getEmployee().getEmployeeNumber());
-            currentWorkingContract.delete();
-        } else {
-            currentWorkingContract.setEndDate(endDate);
-            getLogger().info(
-                    accountabilityTypeEnum.getName() + ". Contrato terminado na unidade "
+                    currentWorkingContract.delete();
+                } else {
+                    currentWorkingContract.setEndDate(endDate);
+                    logger.debug(accountabilityTypeEnum.getName() + ". Contrato terminado na unidade "
                             + currentWorkingContract.getUnit().getCostCenterCode() + " para o funcionário:"
                             + currentWorkingContract.getEmployee().getEmployeeNumber() + " . Mudou data de fim para :" + endDate);
-        }
+                }
+            }
+        };
     }
 
     private boolean equalUnitAndCategoryType(Contract currentWorkingContract, Unit unit, Boolean isTeacher) {
@@ -278,22 +262,26 @@ public class ImportEmployeeUnitsFromGiaf extends ImportFromGiaf {
         return false;
     }
 
-    private void createEmployeeContract(Employee employee, YearMonthDay begin, YearMonthDay end, Unit unit,
-            AccountabilityTypeEnum accountabilityTypeEnum, Contract currentWorkingContract, Boolean isTeacher) {
-        if (currentWorkingContract != null) {
-            closeCurrentContract(accountabilityTypeEnum, currentWorkingContract, begin.minusDays(1));
-        }
-        if (isTeacher) {
-            getLogger().info(
-                    accountabilityTypeEnum.getName() + ". Novo contrato DOCENTE na unidade " + unit.getName()
+    private Modification createEmployeeContract(final Employee employee, final YearMonthDay begin, final YearMonthDay end,
+            final Unit unit, final AccountabilityTypeEnum accountabilityTypeEnum, final Contract currentWorkingContract,
+            final Boolean isTeacher, final Logger logger) {
+        return new Modification() {
+            @Override
+            public void execute() {
+                if (currentWorkingContract != null) {
+                    closeCurrentContract(accountabilityTypeEnum, currentWorkingContract, begin.minusDays(1), logger);
+                }
+                if (isTeacher) {
+                    logger.debug(accountabilityTypeEnum.getName() + ". Novo contrato DOCENTE na unidade " + unit.getName()
                             + " para o funcionário:" + employee.getEmployeeNumber() + " " + begin + " " + end);
-            new EmployeeContract(employee.getPerson(), begin, end, unit, accountabilityTypeEnum, true);
-        } else {
-            getLogger().info(
-                    accountabilityTypeEnum.getName() + ". Novo contrato FUNCIONARIO ou RESEARCHER na unidade " + unit.getName()
-                            + " para o funcionário:" + employee.getEmployeeNumber() + " " + begin + " " + end);
-            new EmployeeContract(employee.getPerson(), begin, end, unit, accountabilityTypeEnum, false);
-        }
+                    new EmployeeContract(employee.getPerson(), begin, end, unit, accountabilityTypeEnum, true);
+                } else {
+                    logger.debug(accountabilityTypeEnum.getName() + ". Novo contrato FUNCIONARIO ou RESEARCHER na unidade "
+                            + unit.getName() + " para o funcionário:" + employee.getEmployeeNumber() + " " + begin + " " + end);
+                    new EmployeeContract(employee.getPerson(), begin, end, unit, accountabilityTypeEnum, false);
+                }
+            }
+        };
     }
 
     private String getEmployeeWorkingUnitsQuery() {
@@ -304,8 +292,4 @@ public class ImportEmployeeUnitsFromGiaf extends ImportFromGiaf {
         return "SELECT emp.EMP_NUM, emp.emp_sec_serv_ci as cc, null as cc_date FROM SLDEMP03 emp";
     }
 
-    @Override
-    protected String getQuery() {
-        return null;
-    }
 }

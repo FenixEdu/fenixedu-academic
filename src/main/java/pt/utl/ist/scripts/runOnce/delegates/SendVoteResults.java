@@ -140,7 +140,7 @@ public class SendVoteResults extends CronTask {
                 toMe.add("luis.cruz@ist.utl.pt");
                 new Email(fromName, from, null, Collections.EMPTY_LIST, Collections.EMPTY_LIST, toMe, subject, msg);
 
-                System.out.println("Sent: " + emails.size() + " emails for: " + delegateElection.getDegree().getSigla());
+                getLogger().debug("Sent: " + emails.size() + " emails for: " + delegateElection.getDegree().getSigla());
             }
         }
     }

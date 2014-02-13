@@ -217,10 +217,10 @@ public class UpdatePersonRoles extends CronTask {
                             || giafProfessionalDataByCategoryType.getContractSituation().getGiafId().equalsIgnoreCase("47") // aposentação
                     || giafProfessionalDataByCategoryType.getContractSituation().getGiafId().equalsIgnoreCase("34") // jubilado
                     )) {
-                System.out.println("Docente com situação"
-                        + giafProfessionalDataByCategoryType.getContractSituation().getName().getContent() + " "
-                        + giafProfessionalDataByCategoryType.getContractSituation().getGiafId() + " "
-                        + person.getEmployee().getEmployeeNumber());
+                getLogger().debug(
+                        "Docente com situação" + giafProfessionalDataByCategoryType.getContractSituation().getName().getContent()
+                                + " " + giafProfessionalDataByCategoryType.getContractSituation().getGiafId() + " "
+                                + person.getEmployee().getEmployeeNumber());
                 return true;
             }
 

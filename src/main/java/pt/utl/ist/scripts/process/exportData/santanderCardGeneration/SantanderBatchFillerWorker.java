@@ -39,7 +39,6 @@ import org.joda.time.YearMonthDay;
 import org.slf4j.Logger;
 
 import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.Atomic.TxMode;
 
 public class SantanderBatchFillerWorker {
     private static String recordEnd = "*";
@@ -73,8 +72,7 @@ public class SantanderBatchFillerWorker {
             final Set<Object[]> lines = new HashSet<Object[]>();
             final Role personRole = Role.getRoleByRoleType(RoleType.PERSON);
             for (final Person person : personRole.getAssociatedPersonsSet()) {
-                if (person.getIstUsername() != null
-                        && person.namesCorrectlyPartitioned()) {
+                if (person.getIstUsername() != null && person.namesCorrectlyPartitioned()) {
                     generateLine(lines, batch, person);
                 }
             }
@@ -266,7 +264,7 @@ public class SantanderBatchFillerWorker {
     private String getDegreeCode(SantanderBatch batch, Person person) {
         final PhdIndividualProgramProcess process = getPhdProcess(person);
         if (process != null) {
-            System.out.println("phdProcess: " + process.getExternalId());
+            logger.debug("phdProcess: " + process.getExternalId());
             return process.getPhdProgram().getAcronym();
         }
         final Degree degree = getDegree(batch, person);
@@ -505,7 +503,7 @@ public class SantanderBatchFillerWorker {
         if (roleType == RoleType.STUDENT || roleType == RoleType.GRANT_OWNER) {
             final PhdIndividualProgramProcess process = getPhdProcess(person);
             if (process != null) {
-                System.out.println("phdProcess: " + process.getExternalId());
+                logger.debug("phdProcess: " + process.getExternalId());
                 return process.getPhdProgram().getAcronym();
             }
             final Degree degree = //getDegree(person.getStudent());

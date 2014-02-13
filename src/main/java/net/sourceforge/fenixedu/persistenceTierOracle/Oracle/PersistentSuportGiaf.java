@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.FenixIstConfiguration;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class PersistentSuportGiaf {
     private static PersistentSuportGiaf instance = null;
@@ -25,13 +24,13 @@ public class PersistentSuportGiaf {
         return instance;
     }
 
-    private Connection openConnection() throws ExcepcaoPersistencia {
+    private Connection openConnection() throws SQLException {
         if (databaseUrl == null) {
             String DBUserName = FenixIstConfiguration.getConfiguration().dbGiafUser();
             String DBUserPass = FenixIstConfiguration.getConfiguration().dbGiafPass();
             String DBUrl = FenixIstConfiguration.getConfiguration().dbGiafAlias();
             if (DBUserName == null || DBUserPass == null || DBUrl == null) {
-                throw new ExcepcaoPersistencia();
+                throw new Error("Please configure GIAF database connection");
             }
             StringBuilder stringBuffer = new StringBuilder();
             stringBuffer.append("jdbc:oracle:thin:");
@@ -42,86 +41,51 @@ public class PersistentSuportGiaf {
             stringBuffer.append(DBUrl);
             databaseUrl = stringBuffer.toString();
         }
-        try {
-            DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-            Connection connection = DriverManager.getConnection(databaseUrl);
-            connectionsMap.put(Thread.currentThread(), connection);
-            connectionsMap.put(Thread.currentThread(), connection);
-            return connection;
-        } catch (SQLException e) {
-            throw new ExcepcaoPersistencia();
-        }
+        DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+        Connection connection = DriverManager.getConnection(databaseUrl);
+        connectionsMap.put(Thread.currentThread(), connection);
+        return connection;
     }
 
-    public void closeConnection() throws ExcepcaoPersistencia {
+    public void closeConnection() throws SQLException {
         Connection thisconnection = connectionsMap.get(Thread.currentThread());
         if (thisconnection != null) {
-            try {
-                thisconnection.close();
-                connectionsMap.remove(Thread.currentThread());
-            } catch (Exception e) {
-                throw new ExcepcaoPersistencia();
-            }
+            thisconnection.close();
+            connectionsMap.remove(Thread.currentThread());
         }
     }
 
-    public synchronized void startTransaction() throws ExcepcaoPersistencia {
-        try {
-            Connection connection = openConnection();
-            connection.setAutoCommit(false);
-        } catch (SQLException e) {
-            throw new ExcepcaoPersistencia("", e);
-        }
+    public synchronized void startTransaction() throws SQLException {
+        Connection connection = openConnection();
+        connection.setAutoCommit(false);
     }
 
-    public synchronized void commitTransaction() throws ExcepcaoPersistencia {
+    public synchronized void commitTransaction() throws SQLException {
         Connection thisConnection = connectionsMap.get(Thread.currentThread());
-        try {
-            thisConnection.commit();
-            closeConnection();
-        } catch (SQLException e) {
-            throw new ExcepcaoPersistencia(e);
-        }
+        thisConnection.commit();
+        closeConnection();
     }
 
-    public synchronized void cancelTransaction() throws ExcepcaoPersistencia {
+    public synchronized void cancelTransaction() throws SQLException {
         Connection thisConnection = connectionsMap.get(Thread.currentThread());
-        try {
-            thisConnection.rollback();
-            closeConnection();
-        } catch (SQLException e) {
-            throw new ExcepcaoPersistencia(e);
-        }
+        thisConnection.rollback();
+        closeConnection();
     }
 
-    public synchronized PreparedStatement prepareStatement(String statement) throws ExcepcaoPersistencia {
+    public synchronized PreparedStatement prepareStatement(String statement) throws SQLException {
         Connection thisConnection = connectionsMap.get(Thread.currentThread());
         if (thisConnection == null) {
             thisConnection = openConnection();
         }
-        PreparedStatement sql = null;
-        try {
-            sql = thisConnection.prepareStatement(statement);
-        } catch (java.sql.SQLException e) {
-            throw new ExcepcaoPersistencia(e);
-        }
-        return sql;
+        return thisConnection.prepareStatement(statement);
     }
 
-    public synchronized CallableStatement prepareCall(String statement) throws ExcepcaoPersistencia {
+    public synchronized CallableStatement prepareCall(String statement) throws SQLException {
         Connection thisConnection = connectionsMap.get(Thread.currentThread());
         if (thisConnection == null) {
             thisConnection = openConnection();
         }
-        CallableStatement sql = null;
-        try {
-            sql = thisConnection.prepareCall(statement);
-        } catch (java.sql.SQLException e) {
-            throw new ExcepcaoPersistencia(e);
-        } catch (java.lang.NullPointerException e) {
-            throw new ExcepcaoPersistencia(e);
-        }
-        return sql;
+        return thisConnection.prepareCall(statement);
     }
 
 }
