@@ -101,12 +101,17 @@ public abstract class ThesisDocument extends FenixReport {
         vowels.addAll(thesis.getVowels());
 
         Iterator<ThesisEvaluationParticipant> iterator = vowels.iterator();
+        int guidanceVowel = 0;
         for (int i = 1; i <= 4; i++) {
             final String vowelPrefix = "vowel" + i;
 
             if (iterator.hasNext()) {
                 ThesisEvaluationParticipant vowel = iterator.next();
-
+                if (guidanceVowel == 0
+                        && (vowel.getPerson().equals(thesis.getOrientator().getPerson()) || vowel.getPerson().equals(
+                                thesis.getCoorientator().getPerson()))) {
+                    guidanceVowel = i;
+                }
                 addParameter(vowelPrefix + "Name", vowel.getPersonName());
                 addParameter(vowelPrefix + "Category", participantCategoryName(vowel));
                 addParameter(vowelPrefix + "Affiliation", neverNull(vowel.getAffiliation()));
@@ -116,6 +121,7 @@ public abstract class ThesisDocument extends FenixReport {
                 addParameter(vowelPrefix + "Affiliation", EMPTY_STR);
             }
         }
+        addParameter("guidanceVowel", guidanceVowel);
     }
 
     protected String neverNull(String value) {
