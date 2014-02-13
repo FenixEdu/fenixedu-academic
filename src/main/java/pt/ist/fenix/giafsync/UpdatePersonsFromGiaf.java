@@ -39,7 +39,6 @@ import pt.ist.fenix.giafsync.GiafSync.ImportProcessor;
 import pt.ist.fenix.giafsync.GiafSync.Modification;
 import pt.utl.ist.scripts.process.updateData.fixNames.DBField2Cap;
 
-@Task(englishTitle = "UpdatePersonsFromGiaf")
 public class UpdatePersonsFromGiaf extends ImportProcessor {
 
     private static final String SEPARATOR = " - ";
