@@ -6,7 +6,7 @@
 
 <em><bean:message key="label.parking" /></em>
 
-<bean:define id="parkingParty" name="parkingParty" type="net.sourceforge.fenixedu.domain.parking.ParkingParty"/>
+<bean:define id="parkingParty" name="parkingParty" type="org.fenixedu.parking.domain.ParkingParty"/>
 <bean:define id="personID" name="parkingParty" property="party.externalId" />
 
 <h3 class="separator2 mtop2"><bean:message key="label.parkUserInfo"/></h3>

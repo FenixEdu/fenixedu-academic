@@ -1,34 +1,34 @@
-package pt.ist.fenix.domain;
+package org.fenixedu.parking.domain;
 
 /*
  * Enums first
  */
-enum pt.ist.fenix.domain.parking.DocumentDeliveryType                                                         as DocumentDeliveryType;
-enum pt.ist.fenix.domain.parking.NewParkingDocumentType                                                       as NewParkingDocumentType;
-enum pt.ist.fenix.domain.parking.ParkingDocumentState                                                         as ParkingDocumentState;
-enum pt.ist.fenix.domain.parking.ParkingDocumentType                                                          as ParkingDocumentType;
-enum pt.ist.fenix.domain.parking.ParkingRequestState                                                          as ParkingRequestState;
-enum pt.ist.fenix.domain.parking.ParkingRequestType                                                           as ParkingRequestType;
+enum org.fenixedu.parking.domain.DocumentDeliveryType                                                         as DocumentDeliveryType;
+enum org.fenixedu.parking.domain.NewParkingDocumentType                                                       as NewParkingDocumentType;
+enum org.fenixedu.parking.domain.ParkingDocumentState                                                         as ParkingDocumentState;
+enum org.fenixedu.parking.domain.ParkingDocumentType                                                          as ParkingDocumentType;
+enum org.fenixedu.parking.domain.ParkingRequestState                                                          as ParkingRequestState;
+enum org.fenixedu.parking.domain.ParkingRequestType                                                           as ParkingRequestType;
 
 /* 
  * -------------------------------------------------------------------------------------------------
  */
-        class parking.ParkingFile extends .net.sourceforge.fenixedu.domain.File {
+        class ParkingFile extends .net.sourceforge.fenixedu.domain.File {
         }
 
 /* 
  * -------------------------------------------------------------------------------------------------
  */
-    class parking.NewParkingDocument  {
+    class NewParkingDocument  {
         NewParkingDocumentType parkingDocumentType;
     }
 
-    class parking.ParkingGroup  {
+    class ParkingGroup  {
         String groupName;
         MultiLanguageString groupDescription;
     }
 
-    class parking.ParkingParty  {
+    class ParkingParty  {
         Boolean acceptedRegulation;
         Boolean authorized;
         DateTime cardEndDate;
@@ -50,7 +50,7 @@ enum pt.ist.fenix.domain.parking.ParkingRequestType                             
         Integer usedNumber;
     }
     
-    class parking.ParkingPartyHistory  {
+    class ParkingPartyHistory  {
         DateTime cardEndDate;
         DateTime cardStartDate;
         Long cardNumber;
@@ -62,7 +62,7 @@ enum pt.ist.fenix.domain.parking.ParkingRequestType                             
         Boolean onlineRequest;
     }
 
-    class parking.ParkingRequest  {
+    class ParkingRequest  {
         DateTime creationDate;
         DocumentDeliveryType driverLicenseDeliveryType;
         ParkingDocumentState driverLicenseDocumentState;
@@ -84,12 +84,12 @@ enum pt.ist.fenix.domain.parking.ParkingRequestType                             
         ParkingRequestType parkingRequestType;
     }
     
-    class parking.ParkingRequestPeriod  {
+    class ParkingRequestPeriod  {
         DateTime beginDate;
         DateTime endDate;
     }
 
-    class parking.Vehicle  {
+    class Vehicle  {
         DocumentDeliveryType authorizationDeclarationDeliveryType;
         DocumentDeliveryType insuranceDeliveryType;
         DocumentDeliveryType ownerIdDeliveryType;
@@ -108,44 +108,44 @@ class reports.ParkingDataReportFile extends .net.sourceforge.fenixedu.domain.Que
  * -------------------------------------------------------------------------------------------------
  */
 relation ParkingFileNewParkingDocument {
-    parking.ParkingFile playsRole parkingFile;
-    parking.NewParkingDocument playsRole newParkingDocument;
+    ParkingFile playsRole parkingFile;
+    NewParkingDocument playsRole newParkingDocument;
 }
 
 relation ParkingPartyNewParkingDocument {
-    parking.ParkingParty playsRole parkingParty;
-    parking.NewParkingDocument playsRole driverLicenseDocument;
+    ParkingParty playsRole parkingParty;
+    NewParkingDocument playsRole driverLicenseDocument;
 }
 
 relation ParkingPartyParkingGroup {
-    parking.ParkingGroup playsRole parkingGroup;
-    parking.ParkingParty playsRole parkingParties {
+    ParkingGroup playsRole parkingGroup;
+    ParkingParty playsRole parkingParties {
         multiplicity *;
     }
 }
 
 relation ParkingRequestNewParkingDocument {
-    parking.ParkingRequest playsRole parkingRequest;
-    parking.NewParkingDocument playsRole driverLicenseDocument;
+    ParkingRequest playsRole parkingRequest;
+    NewParkingDocument playsRole driverLicenseDocument;
 }
 
 relation ParkingRequestParkingParty {
-    parking.ParkingParty playsRole parkingParty;
-    parking.ParkingRequest playsRole parkingRequests {
+    ParkingParty playsRole parkingParty;
+    ParkingRequest playsRole parkingRequests {
         multiplicity *;
     }
 }
 
 relation PartyParkingHistoryParty {
     .net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole party;
-    parking.ParkingPartyHistory playsRole parkingPartyHistories {
+    ParkingPartyHistory playsRole parkingPartyHistories {
         multiplicity *;
     }
 }
 
 relation ParkingPartyHistoryParkingGroup {
-    parking.ParkingGroup playsRole parkingGroup;
-    parking.ParkingPartyHistory playsRole parkingPartyHistories {
+    ParkingGroup playsRole parkingGroup;
+    ParkingPartyHistory playsRole parkingPartyHistories {
         multiplicity *;
     }
 }
@@ -156,7 +156,7 @@ relation ParkingPartyHistoryParkingGroup {
 
 relation PartyParkingParty {
     .net.sourceforge.fenixedu.domain.organizationalStructure.Party playsRole party;
-    parking.ParkingParty playsRole parkingParty;
+    ParkingParty playsRole parkingParty;
 }
 
 /* 
@@ -164,7 +164,7 @@ relation PartyParkingParty {
  */
 relation RootDomainObjectNewParkingDocument {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    parking.NewParkingDocument playsRole newParkingDocuments {
+    NewParkingDocument playsRole newParkingDocuments {
         multiplicity *;
     }
 }
@@ -174,35 +174,35 @@ relation RootDomainObjectNewParkingDocument {
  */
 relation RootDomainObjectParkingGroup {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    parking.ParkingGroup playsRole parkingGroups {
+    ParkingGroup playsRole parkingGroups {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectParkingParty {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    parking.ParkingParty playsRole parkingParties {
+    ParkingParty playsRole parkingParties {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectParkingPartyHistory {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    parking.ParkingPartyHistory playsRole parkingPartyHistories {
+    ParkingPartyHistory playsRole parkingPartyHistories {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectParkingRequest {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    parking.ParkingRequest playsRole parkingRequests {
+    ParkingRequest playsRole parkingRequests {
         multiplicity *;
     }
 }
 
 relation RootDomainObjectParkingRequestPeriod {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    parking.ParkingRequestPeriod playsRole parkingRequestPeriods {
+    ParkingRequestPeriod playsRole parkingRequestPeriods {
         multiplicity *;
     }
 }
@@ -212,7 +212,7 @@ relation RootDomainObjectParkingRequestPeriod {
  */
 relation RootDomainObjectVehicle {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    parking.Vehicle playsRole vehicles {
+    Vehicle playsRole vehicles {
         multiplicity *;
     }
 }
@@ -221,22 +221,22 @@ relation RootDomainObjectVehicle {
  * -------------------------------------------------------------------------------------------------
  */
 relation VehicleNewParkingDocument {
-    parking.Vehicle playsRole vehicle;
-    parking.NewParkingDocument playsRole newParkingDocuments {
+    Vehicle playsRole vehicle;
+    NewParkingDocument playsRole newParkingDocuments {
         multiplicity *;
     }
 }
 
 relation VehicleParkingParty {
-    parking.ParkingParty playsRole parkingParty;
-    parking.Vehicle playsRole vehicles {
+    ParkingParty playsRole parkingParty;
+    Vehicle playsRole vehicles {
         multiplicity *;
     }
 }
 
 relation VehicleParkingRequest {
-    parking.ParkingRequest playsRole parkingRequest;
-    parking.Vehicle playsRole vehicles {
+    ParkingRequest playsRole parkingRequest;
+    Vehicle playsRole vehicles {
         multiplicity *;
     }
 }

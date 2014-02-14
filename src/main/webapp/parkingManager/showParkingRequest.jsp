@@ -128,7 +128,7 @@ function hideCardValidPeriod(toShow){
 							<html:option value="0">
 								<bean:message key="label.choose"/>
 							</html:option>
-							<logic:iterate id="groupIt" name="groups" type="net.sourceforge.fenixedu.domain.parking.ParkingGroup">
+							<logic:iterate id="groupIt" name="groups" type="org.fenixedu.parking.domain.ParkingGroup">
 								<bean:define id="groupId" name="groupIt" property="externalId"/>					
 								<html:option value="<%=groupId.toString()%>">
 									<bean:write name="groupIt" property="groupName"/>

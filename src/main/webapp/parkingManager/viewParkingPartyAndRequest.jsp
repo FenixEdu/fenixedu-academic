@@ -3,7 +3,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
-<%@page import="net.sourceforge.fenixedu.domain.parking.ParkingDocumentType"%>
+<%@page import="org.fenixedu.parking.domain.ParkingDocumentType"%>
 
 <h3><bean:message key="label.actualState" /></h3>
 <p><fr:view name="parkingParty" schema="view.PersonalInfoAndParkingPartyNotes">
@@ -121,7 +121,7 @@
 
 <!-- PARKING REQUEST -->
 
-<bean:define id="parkingRequest" name="parkingRequest" type="net.sourceforge.fenixedu.domain.parking.ParkingRequest"/>
+<bean:define id="parkingRequest" name="parkingRequest" type="org.fenixedu.parking.domain.ParkingRequest"/>
 <h3><bean:message key="label.request" /></h3>
 <p><fr:view name="parkingRequest" schema="viewRequestPersonInfo">
 		<fr:layout name="tabular">

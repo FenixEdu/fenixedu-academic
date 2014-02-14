@@ -40,7 +40,7 @@
 	<logic:notEmpty name="searchPartyBean" property="party">
 	
 		<logic:notEmpty name="searchPartyBean" property="party.parkingParty">
-			<bean:define id="parkingParty" name="searchPartyBean" property="party.parkingParty" type="net.sourceforge.fenixedu.domain.parking.ParkingParty"/>
+			<bean:define id="parkingParty" name="searchPartyBean" property="party.parkingParty" type="org.fenixedu.parking.domain.ParkingParty"/>
 			<bean:define id="personID" name="parkingParty" property="party.externalId" />
 			
 			<h3 class="separator2 mtop2"><bean:message key="label.parkUserInfo"/></h3>
@@ -258,7 +258,7 @@
 					</td>
 				</logic:iterate>
 				<td class="nowrap" rowspan="<%= numberUnits %>">
-					<bean:define id="searchPartyBean" name="searchPartyBean" type="net.sourceforge.fenixedu.dataTransferObject.parking.SearchPartyBean"/>
+					<bean:define id="searchPartyBean" name="searchPartyBean" type="org.fenixedu.parking.dataTransferObject.parking.SearchParkingPartyBean"/>
 					<bean:define id="url" type="java.lang.String">/parking.do?method=showParkingPartyRequests&amp;partyID=<bean:write name="person" property="externalId"/>&amp;plateNumber=<bean:write name="searchPartyBean" property="carPlateNumber"/>&amp;parkingCardNumber=<bean:write name="searchPartyBean" property="parkingCardNumber"/></bean:define>
 					<html:link page="<%= url %>"><bean:message key="link.viewUser" /></html:link>
 				</td>

@@ -1,7 +1,7 @@
 Fenix IST Parking
 ==================
 
-[Fenix](http://www.github.com/FenixEdu/fenix)'s IST parking feature
+[Fenix](http://www.github.com/FenixEdu/fenix)'s parking module
 
 To install, simply type:
 

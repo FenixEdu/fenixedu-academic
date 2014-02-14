@@ -17,7 +17,7 @@
 	
 <logic:present name="parkingRequestPeriodToEdit">
 	<p class="mbottom025"><strong><bean:message key="label.editPeriod"/></strong></p>
-	<fr:edit id="parkingRequestPeriodToEdit" name="parkingRequestPeriodToEdit" schema="show.parkingRequestPeriod" action="/manageParkingPeriods.do?method=prepareManageRequestsPeriods" type="net.sourceforge.fenixedu.domain.parking.ParkingRequestPeriod">
+	<fr:edit id="parkingRequestPeriodToEdit" name="parkingRequestPeriodToEdit" schema="show.parkingRequestPeriod" action="/manageParkingPeriods.do?method=prepareManageRequestsPeriods" type="org.fenixedu.parking.domain.ParkingRequestPeriod">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop025" />
 			<fr:property name="columnClasses" value=",,tderror1 tdclear" />
@@ -27,7 +27,7 @@
 <logic:notPresent name="parkingRequestPeriodToEdit">
 	<p class="mbottom025"><strong><bean:message key="label.insertNewPeriod"/></strong></p>
 	<fr:form action="/manageParkingPeriods.do?method=prepareManageRequestsPeriods">
-		<fr:create id="aa" schema="show.parkingRequestPeriod" type="net.sourceforge.fenixedu.domain.parking.ParkingRequestPeriod">
+		<fr:create id="aa" schema="show.parkingRequestPeriod" type="org.fenixedu.parking.domain.ParkingRequestPeriod">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thlight thright thmiddle mvert025" />
 				<fr:property name="columnClasses" value=",,tderror1 tdclear" />
