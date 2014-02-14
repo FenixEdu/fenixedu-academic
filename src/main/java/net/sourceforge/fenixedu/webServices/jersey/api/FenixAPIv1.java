@@ -1373,6 +1373,9 @@ public class FenixAPIv1 {
             builder.getComponent(bodyComponent, rightNow, room, null);
             for (Object occupation : bodyComponent.getInfoShowOccupation()) {
                 InfoShowOccupation showOccupation = (InfoShowOccupation) occupation;
+                if (showOccupation.getDiaSemana().getDiaSemana() != rightNow.get(java.util.Calendar.DAY_OF_WEEK)) {
+                    continue;
+                }
 
                 FenixRoomEvent roomEvent = null;
 
