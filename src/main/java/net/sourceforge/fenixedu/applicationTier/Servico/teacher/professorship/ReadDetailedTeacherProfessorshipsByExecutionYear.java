@@ -15,6 +15,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
+import com.google.common.base.Strings;
+
 public class ReadDetailedTeacherProfessorshipsByExecutionYear extends ReadDetailedTeacherProfessorshipsAbstractService {
 
     protected List run(String teacherID, String executionYearID) throws FenixServiceException {
@@ -25,7 +27,7 @@ public class ReadDetailedTeacherProfessorshipsByExecutionYear extends ReadDetail
         }
 
         final ExecutionYear executionYear;
-        if (executionYearID == null) {
+        if (Strings.isNullOrEmpty(executionYearID)) {
             executionYear = ExecutionYear.readCurrentExecutionYear();
         } else {
             executionYear = FenixFramework.getDomainObject(executionYearID);
