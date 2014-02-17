@@ -13,7 +13,6 @@
       </global-forwards>
       <!-- ========== Action Mapping Definitions =============================== -->
       <action-mappings type="org.apache.struts.action.ActionMapping">
-            <!-- <action path="/notAuthorized" forward="df.layout.notAuthorized"></action> -->
       </action-mappings>
       <!-- ========== Controller Configuration ================================ -->
       <controller processorClass="pt.ist.fenixWebFramework.renderers.plugin.SimpleRenderersRequestProcessor"></controller>

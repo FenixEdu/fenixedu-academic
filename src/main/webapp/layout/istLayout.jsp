@@ -73,11 +73,7 @@
 <% } %>
 
 
-<jsp:include page="deployWarning.jsp" flush="true"/>
-
-
 <tiles:insert attribute="page-context" ignore="true"/>
-<jsp:include page="browserUpgradeMessage.jsp" flush="true"/>
 
 <!-- SYMBOLSROW -->
 <!-- h1>IST_LAYOUT &emsp; + &emsp; IST_LAYOUT_CONTENT &emsp; + &emsp; PUBLIC_EXECUTION_COURSE &emsp; + &emsp; PUBLIC_GES_DIS_LAYOUT_2COL &emsp; + &emsp; UNIT_SITE_LAYOUT</h1-->

@@ -42,8 +42,6 @@ overflow: hidden;
 }
 </style>
 
-<jsp:include page="deployWarning.jsp" flush="true"/>
-
 
 <p class="skipnav"><a href="#main">Saltar men&uacute; de navega&ccedil;&atilde;o</a></p>
 <!-- START HEADER -->

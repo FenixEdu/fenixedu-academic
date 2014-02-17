@@ -17,11 +17,9 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Forwards(value = { @Forward(name = "showAnnualTeacherCreditsDocument", path = "/credits/showAnnualTeacherCreditsDocument.jsp",
-        tileProperties = @Tile(head = "/commons/blank.jsp", navGeral = "/commons/blank.jsp", navLocal = "/commons/blank.jsp",
-                bodyContext = "/commons/blank.jsp", extend = "df.layout.blank")) })
+@Forwards(@Forward(name = "showAnnualTeacherCreditsDocument", path = "/credits/showAnnualTeacherCreditsDocument.jsp",
+        useTile = false))
 public abstract class AnnualTeacherCreditsDocumentsDA extends FenixDispatchAction {
 
     public abstract ActionForward getAnnualTeachingCreditsPdf(ActionMapping mapping, ActionForm form, HttpServletRequest request,

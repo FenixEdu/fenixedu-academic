@@ -6028,12 +6028,6 @@ class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionP
             Boolean showWorkTelephone;
         }
 
-        class DeployNotifier  {
-            Boolean notifyUsers;
-            DateTime timeStamp;
-        }   
-        
-        
 class caseHandling.Process  {
     
 }
@@ -16741,12 +16735,6 @@ relation PersonCardGenerationProblem {
                 multiplicity *;
         }
 }
-
-relation DeployNotifierRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    DeployNotifier playsRole deployNotifier; 
-}
-
 
 relation ProcessRootDomainObject {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
