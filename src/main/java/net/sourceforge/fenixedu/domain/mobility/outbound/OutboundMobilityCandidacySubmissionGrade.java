@@ -8,21 +8,22 @@ public class OutboundMobilityCandidacySubmissionGrade extends OutboundMobilityCa
         Comparable<OutboundMobilityCandidacySubmissionGrade> {
 
     public OutboundMobilityCandidacySubmissionGrade(final OutboundMobilityCandidacySubmission submission,
-            final OutboundMobilityCandidacyContestGroup mobilityGroup, final BigDecimal grade) {
+            final OutboundMobilityCandidacyContestGroup mobilityGroup, final BigDecimal grade, final BigDecimal gradeForSerialization) {
         super();
         setRootDomainObject(Bennu.getInstance());
         setOutboundMobilityCandidacySubmission(submission);
         setOutboundMobilityCandidacyContestGroup(mobilityGroup);
-        edit(grade);
+        edit(grade, gradeForSerialization);
     }
 
-    public void edit(final BigDecimal grade) {
+    public void edit(final BigDecimal grade, final BigDecimal gradeForSerialization) {
         setGrade(grade);
+        setGradeForSerialization(gradeForSerialization);
     }
 
     @Override
     public int compareTo(final OutboundMobilityCandidacySubmissionGrade o) {
-        final int g = o.getGrade().compareTo(getGrade());
+        final int g = o.getGradeForSerialization().compareTo(getGradeForSerialization());
         return g == 0 ? getExternalId().compareTo(o.getExternalId()) : g;
     }
 

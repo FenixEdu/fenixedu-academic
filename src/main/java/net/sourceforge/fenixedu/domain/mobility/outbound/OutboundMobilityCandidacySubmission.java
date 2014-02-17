@@ -1,10 +1,19 @@
 package net.sourceforge.fenixedu.domain.mobility.outbound;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.Grade;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 
@@ -37,6 +46,8 @@ public class OutboundMobilityCandidacySubmission extends OutboundMobilityCandida
             }
         }
         new OutboundMobilityCandidacy(contest, this);
+        final OutboundMobilityCandidacyContestGroup mobilityGroup = contest.getOutboundMobilityCandidacyContestGroup();
+        setGrade(mobilityGroup, null);
     }
 
     @Atomic
@@ -52,6 +63,9 @@ public class OutboundMobilityCandidacySubmission extends OutboundMobilityCandida
     }
 
     public void delete() {
+        for (final OutboundMobilityCandidacySubmissionGrade grade : getOutboundMobilityCandidacySubmissionGradeSet()) {
+            grade.delete();
+        }
         setOutboundMobilityCandidacyPeriod(null);
         setRegistration(null);
         setRootDomainObject(null);
@@ -86,15 +100,30 @@ public class OutboundMobilityCandidacySubmission extends OutboundMobilityCandida
         return null;
     }
 
-    @Atomic
-    public void setGrade(final OutboundMobilityCandidacyContestGroup mobilityGroup, final BigDecimal grade) {
+    public BigDecimal getGradeForSerialization(final OutboundMobilityCandidacyContestGroup mobilityGroup) {
         for (final OutboundMobilityCandidacySubmissionGrade submissionGrade : getOutboundMobilityCandidacySubmissionGradeSet()) {
             if (submissionGrade.getOutboundMobilityCandidacyContestGroup() == mobilityGroup) {
-                submissionGrade.edit(grade);
+                return submissionGrade.getGradeForSerialization();
+            }
+        }
+        return null;
+    }
+
+    @Atomic
+    public void setGrade(final OutboundMobilityCandidacyContestGroup mobilityGroup, final BigDecimal grade) {
+        final Calculator calculator = new Calculator(getRegistration().getStudent(), grade);
+        setGrade(mobilityGroup, calculator.grade, calculator.gradeForSerialization);
+    }
+
+    private void setGrade(final OutboundMobilityCandidacyContestGroup mobilityGroup, final BigDecimal grade,
+            final BigDecimal gradeForSerialization) {
+        for (final OutboundMobilityCandidacySubmissionGrade submissionGrade : getOutboundMobilityCandidacySubmissionGradeSet()) {
+            if (submissionGrade.getOutboundMobilityCandidacyContestGroup() == mobilityGroup) {
+                submissionGrade.edit(grade, gradeForSerialization);
                 return;
             }
         }
-        new OutboundMobilityCandidacySubmissionGrade(this, mobilityGroup, grade);
+        new OutboundMobilityCandidacySubmissionGrade(this, mobilityGroup, grade, gradeForSerialization);
     }
 
     public boolean hasConfirmedPlacement() {
@@ -180,6 +209,127 @@ public class OutboundMobilityCandidacySubmission extends OutboundMobilityCandida
     @Deprecated
     public boolean hasOutboundMobilityCandidacyPeriod() {
         return getOutboundMobilityCandidacyPeriod() != null;
+    }
+
+    private final static BigDecimal AVG_FACTOR = new BigDecimal(1000000000000l);
+    private final static BigDecimal ECTS_FACTOR = new BigDecimal(100000000l);
+    private final static BigDecimal PENDING_ECTS_FACTOR = new BigDecimal(10000l);
+
+    public static class Calculator {
+
+        public BigDecimal possibleECTS = BigDecimal.ZERO;
+        public BigDecimal enrolledECTS = BigDecimal.ZERO;
+
+        public BigDecimal completedECTS = BigDecimal.ZERO;
+        public BigDecimal completedECTSCycle1 = BigDecimal.ZERO;
+        public BigDecimal completedECTSCycle2 = BigDecimal.ZERO;
+
+        public BigDecimal factoredGradeSum = BigDecimal.ZERO;
+        public BigDecimal factoredGradeSumCycle1 = BigDecimal.ZERO;
+        public BigDecimal factoredGradeSumCycle2 = BigDecimal.ZERO;
+
+        public BigDecimal factoredECTS = BigDecimal.ZERO;
+        public BigDecimal factoredECTSCycle1 = BigDecimal.ZERO;
+        public BigDecimal factoredECTSCycle2 = BigDecimal.ZERO;
+
+        public BigDecimal grade;
+        public BigDecimal gradeForSerialization;
+
+        public Calculator(final Student student) {
+            this(student, null);
+        }
+
+        private Calculator(final Student student, final BigDecimal grade) {
+            for (final Registration registration : student.getRegistrationsSet()) {
+                possibleECTS = possibleECTS.add(new BigDecimal(registration.getDegree().getEctsCredits()));
+                for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
+                    calculateGrade(null, studentCurricularPlan.getRoot());
+                }
+            }
+
+            if (completedECTSCycle1.doubleValue() >= 120) {
+                final BigDecimal gradeForElimination =
+                        factoredECTS.doubleValue() > 0 ? factoredGradeSum.divide(factoredECTS, 2, RoundingMode.HALF_EVEN) : BigDecimal.ZERO;
+                if (gradeForElimination.doubleValue() >= 12.50) {
+                    final BigDecimal d = factoredECTSCycle1.add(factoredECTSCycle2);
+                    if (d.doubleValue() > 0) {
+                        this.grade =
+                                grade != null ? grade : factoredGradeSumCycle1.add(factoredGradeSumCycle2)
+                                        .divide(d, 2, RoundingMode.HALF_EVEN).multiply(new BigDecimal(5));
+                        gradeForSerialization =
+                                this.grade
+                                        .multiply(AVG_FACTOR)
+                                        .add(completedECTS.multiply(ECTS_FACTOR))
+                                        .add(new BigDecimal(9999).subtract(possibleECTS).add(completedECTS)
+                                                .multiply(PENDING_ECTS_FACTOR))
+                                        .add(completedECTS.divide(enrolledECTS, 4, RoundingMode.HALF_EVEN).multiply(
+                                                new BigDecimal(10000)));
+                        return;
+                    }
+                }
+            }
+            this.grade = BigDecimal.ZERO;
+            gradeForSerialization = BigDecimal.ZERO;
+        }
+
+        private void calculateGrade(final CycleType cycleType, CurriculumModule module) {
+            if (module.isLeaf()) {
+                if (module.isEnrolment()) {
+                    final Enrolment enrolment = (Enrolment) module;
+                    final BigDecimal weigth = enrolment.getWeigthForCurriculum();
+                    enrolledECTS = enrolledECTS.add(weigth);
+                    if (enrolment.isApproved()) {
+                        completedECTS = completedECTS.add(weigth);
+                        if (cycleType == CycleType.FIRST_CYCLE) {
+                            completedECTSCycle1 = completedECTSCycle1.add(weigth);
+                        } else if (cycleType == CycleType.SECOND_CYCLE) {
+                            completedECTSCycle2 = completedECTSCycle2.add(weigth);
+                        }
+
+                        final Grade grade = enrolment.getGrade();
+                        if (grade.isNumeric()) {
+                            final BigDecimal value = grade.getNumericValue();
+                            factoredECTS = factoredECTS.add(weigth);
+                            factoredGradeSum = factoredGradeSum.add(value.multiply(weigth));
+                            if (cycleType == CycleType.FIRST_CYCLE) {
+                                factoredECTSCycle1 = factoredECTSCycle1.add(weigth);
+                                factoredGradeSumCycle1 = factoredGradeSumCycle1.add(value.multiply(weigth));
+                            } else if (cycleType == CycleType.SECOND_CYCLE) {
+                                factoredECTSCycle2 = factoredECTSCycle2.add(weigth);
+                                factoredGradeSumCycle2 = factoredGradeSumCycle2.add(value.multiply(weigth));
+                            }
+                        }
+                    }
+                }
+            } else {
+                final CurriculumGroup group = (CurriculumGroup) module;
+                final CycleType cycleForChild =
+                        group.isCycleCurriculumGroup() ? ((CycleCurriculumGroup) group).getCycleType() : cycleType;
+                for (final CurriculumModule child : group.getCurriculumModulesSet()) {
+                    calculateGrade(cycleForChild, child);
+                }
+            }
+        }
+
+        public BigDecimal getCompletedEctsFirstAndSecondCycle() {
+            return completedECTSCycle1.add(completedECTSCycle2);
+        }
+
+        public BigDecimal getEctsAverage() {
+            final BigDecimal d = factoredECTS;
+            return d.doubleValue() > 0 ? factoredGradeSum.divide(d, 2, RoundingMode.HALF_EVEN) : BigDecimal.ZERO;
+        }
+
+        public BigDecimal getPendingEcts() {
+            BigDecimal result = possibleECTS.subtract(completedECTS);
+            return result.signum() == 1 ? result : BigDecimal.ZERO;
+        }
+
+        public BigDecimal getEctsEverateFirstAndSecondCycle() {
+            final BigDecimal d = factoredECTSCycle1.add(factoredECTSCycle2);
+            return d.doubleValue() > 0 ? factoredGradeSumCycle1.add(factoredGradeSumCycle2).divide(d, 2, RoundingMode.HALF_EVEN) : BigDecimal.ZERO;
+        }
+
     }
 
 }

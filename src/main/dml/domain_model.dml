@@ -8116,6 +8116,7 @@ class mobility.outbound.OutboundMobilityCandidacySubmission  {
 
 class mobility.outbound.OutboundMobilityCandidacySubmissionGrade  {
 	BigDecimal grade;
+	BigDecimal gradeForSerialization;
 }
 
 class mobility.outbound.OutboundMobilityCandidacy  {
