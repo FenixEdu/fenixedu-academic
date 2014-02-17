@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 
+import org.apache.commons.collections.Predicate;
 import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
 
 public class ExternalUniversityUnitAutoCompleteProvider implements AutoCompleteProvider<Unit> {
@@ -16,11 +17,17 @@ public class ExternalUniversityUnitAutoCompleteProvider implements AutoCompleteP
     @Override
     public Collection<Unit> getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
         final List<Unit> result = new ArrayList<Unit>();
-        for (final UnitName unitName : UnitName.findExternalUnit(value, maxCount)) {
-            final Unit unit = unitName.getUnit();
-            if (unit instanceof UniversityUnit) {
-                result.add(unit);
+        final Predicate predicate = new Predicate() {
+            @Override
+            public boolean evaluate(Object arg0) {
+                final UnitName unitName = (UnitName) arg0;
+                final Unit unit = unitName.getUnit();
+                return unit instanceof UniversityUnit;
             }
+        };
+        for (final UnitName unitName : UnitName.findExternalUnit(value, maxCount, predicate)) {
+            final Unit unit = unitName.getUnit();
+            result.add(unit);
         }
         return result;
     }
