@@ -1,0 +1,67 @@
+<div class="row">
+  <script id="ist-bar" data-logout="https://fenix.tecnico.ulisboa.pt/logoff.do" data-login="https://fenix.tecnico.ulisboa.pt/loginPage.jsp" data-fluid="true" data-lang="{{locale.tag}}"  data-next-param="service" src="https://barra.tecnico.ulisboa.pt/site_media/static/js/barra.js"></script>
+</div>
+
+
+<div class="content">
+<header class="row" role="banner">
+  <div class="col-sm-2 logo-container">
+    <img src="{{contextPath}}/api/bennu-portal/configuration/logo" alt="FenixEdu"/>
+  </div>
+  <nav class="col-sm-10" role="navigation">
+    <ul class="nav navbar-bottom nav-pills nav-menu">
+    {% for item in menu %}
+      <li class="{% if item.selected %}active{% endif %}"><a href="{{contextPath}}{{item.fullPath}}">{{item.title | mls}}</a></li>
+    {% endfor %}
+    </ul>
+  </nav>
+</header>
+
+<div class="row">
+  <nav class="col-sm-2" id="context">
+  {% for item in menu %}
+  {% if item.selected %}
+    <ul class="nav nav-pills nav-stacked" menu="{{item.id}}">
+      <li class="navheader"><strong>{{item.title | mls}}</strong></li>
+      {% for child in item.menu %}
+        <li><a href="{{contextPath}}{{child.fullPath}}">{{child.title | mls}}</a></li>
+      {% endfor %}
+    </ul>
+	{% endif %}
+  {% endfor %}
+  </nav>
+  <main class="col-sm-10">
+    <ol class="breadcrumb">
+      <span class="pull-right">
+        {% for loc in locales %}
+          <a class="locale-changer {% if loc.tag == locale.tag %}active{% endif %}" onclick="setLang('{{loc.tag}}')">{{loc.tag}}</a>
+        {% endfor %}
+      </span>
+    </ol>
+    <div id="content">
+    </div>
+  </main>
+</div>
+</div>
+<footer class="row" role="contentinfo" >
+    <div class="col-sm-2">
+      <img src="{{contextPath}}/themes/ashes/img/logo_fenixedu_footer.svg" alt="Powered by FenixEdu">
+    </div>
+    <p class="col-sm-10">
+      <span>{{ applicationCopyright | mls}}</span>
+      <a href="{{contextPath}}/exceptionHandlingAction.do?method=prepareSupportHelp" target="_blank">
+        Support
+      </a>
+    </p>
+</footer>
+
+<script>
+	$("head").append('<link rel="shortcut icon" type="image/x-icon" href="{{contextPath}}/api/bennu-portal/configuration/favicon">');
+</script>
+
+<script src="{{contextPath}}/themes/default/js/bootstrap.min.js"></script>
+
+<script> setLang = function(l) {
+  $.post('{{contextPath}}/api/bennu-core/profile/locale/' + l.replace('_', '-')).always(function() { location.reload(); });
+}
+</script>
