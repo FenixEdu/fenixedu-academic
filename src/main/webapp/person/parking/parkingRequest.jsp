@@ -6,7 +6,6 @@
 <%@ page
 	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
 
-<em><bean:message key="label.person.main.title" /></em>
 <h2><bean:message key="label.parking" bundle="PARKING_RESOURCES" /></h2>
 
 

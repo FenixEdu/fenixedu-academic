@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.ExternalApplication;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.person.PersonApplication.ExternalApplicationsApp;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.JerseyOAuth2Filter;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
@@ -27,6 +28,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.fenixedu.bennu.portal.servlet.PortalLayoutInjector;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -41,6 +45,8 @@ import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.hash.Hashing;
 
+@StrutsFunctionality(app = ExternalApplicationsApp.class, path = "manage-applications",
+        titleKey = "oauthapps.label.manage.applications")
 @Mapping(module = "person", path = "/externalApps")
 @Forwards(value = { @Forward(name = "createApplication", path = "/auth/createApplication.jsp"),
         @Forward(name = "editApplication", path = "/auth/editApplication.jsp"),
@@ -54,6 +60,32 @@ import com.google.common.hash.Hashing;
         @Forward(name = "viewAllAuthorizations", path = "/auth/viewAllAuthorizations.jsp"),
         @Forward(name = "viewAllSessions", path = "/auth/viewAllSessions.jsp") })
 public class ExternalAppsDA extends FenixDispatchAction {
+
+    @StrutsFunctionality(app = ExternalApplicationsApp.class, path = "manage-authorizations", bundle = "ApplicationResources",
+            titleKey = "oauthapps.label.manage.authorizations")
+    @Mapping(path = "/externalAppAuthorizations", module = "person")
+    public static final class ExternalAppAuthorizationDA extends ExternalAppsDA {
+
+        @Override
+        @EntryPoint
+        public ActionForward manageAuthorizations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+                HttpServletResponse response) throws Exception {
+            return super.manageAuthorizations(mapping, actionForm, request, response);
+        }
+    }
+
+    @StrutsFunctionality(app = ExternalApplicationsApp.class, path = "manage-all-authorizations",
+            bundle = "ApplicationResources", titleKey = "oauthapps.label.manage.all.applications", accessGroup = "#managers")
+    @Mapping(path = "/externalAppAuthorizations", module = "person")
+    public static final class ManageAllExternalAppsDA extends ExternalAppsDA {
+
+        @Override
+        @EntryPoint
+        public ActionForward viewAllApplications(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+                HttpServletResponse response) throws Exception {
+            return super.viewAllApplications(mapping, actionForm, request, response);
+        }
+    }
 
     private User getUser() {
         return getLoggedPerson(null).getUser();
@@ -227,6 +259,7 @@ public class ExternalAppsDA extends FenixDispatchAction {
         }
     }
 
+    @EntryPoint
     public ActionForward manageApplications(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
@@ -370,6 +403,7 @@ public class ExternalAppsDA extends FenixDispatchAction {
         request.setAttribute("serviceAgreement", serviceAgreementHtml);
         request.setAttribute("serviceAgreementChecksum", Hashing.md5().newHasher()
                 .putString(serviceAgreementHtml, Charsets.UTF_8).hash().toString());
+        PortalLayoutInjector.skipLayoutOn(request);
         return new ActionForward(null, "/auth/showServiceAgreement.jsp", false, "");
     }
 

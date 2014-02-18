@@ -9,8 +9,6 @@
 	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
 
 
-<em><bean:message key="label.person.main.title" /></em>
-
 <h2 class="mtop15">
 	<bean:message key="oauthapps.label.app.details" bundle="APPLICATION_RESOURCES" />
 </h2>

@@ -6,7 +6,6 @@
 <html:xhtml />
 <bean:define id="partyContactClass" scope="request" name="partyContactClass" />
 
-<em><bean:message key="label.person.main.title" /></em>
 <h2><bean:message key="<%= "label.partyContacts.add" +  partyContactClass %>" /></h2>
 
 <%

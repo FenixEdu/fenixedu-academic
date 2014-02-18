@@ -37,23 +37,16 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "person", path = "/partyContacts", scope = "request", parameter = "method",
-        functionality = VisualizePersonalInfo.class)
-@Forwards(value = {
-        @Forward(name = "visualizePersonalInformation", path = "/person/visualizePersonalInfo.jsp", tileProperties = @Tile(
-                title = "private.personal.dspace.information")),
-        @Forward(name = "editPartyContact", path = "/person/contacts/editPartyContact.jsp", tileProperties = @Tile(
-                title = "private.personal.dspace.information")),
-        @Forward(name = "createPartyContact", path = "/person/contacts/createPartyContact.jsp", tileProperties = @Tile(
-                title = "private.personal.dspace.information")),
-        @Forward(name = "inputValidationCode", path = "/person/contacts/inputValidationCode.jsp", tileProperties = @Tile(
-                title = "private.personal.dspace.information")),
-        @Forward(name = "viewStudentLogChanges", path = "/person/contacts/viewStudentLogChanges.jsp", tileProperties = @Tile(
-                title = "private.personal.dspace.information")) })
+@Mapping(module = "person", path = "/partyContacts", functionality = VisualizePersonalInfo.class)
+@Forwards({ @Forward(name = "visualizePersonalInformation", path = "/person/visualizePersonalInfo.jsp"),
+        @Forward(name = "editPartyContact", path = "/person/contacts/editPartyContact.jsp"),
+        @Forward(name = "createPartyContact", path = "/person/contacts/createPartyContact.jsp"),
+        @Forward(name = "inputValidationCode", path = "/person/contacts/inputValidationCode.jsp"),
+        @Forward(name = "viewStudentLogChanges", path = "/person/contacts/viewStudentLogChanges.jsp") })
 public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
+
     public ActionForward postbackSetPublic(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         PartyContactBean contact = getRenderedObject("edit-contact");

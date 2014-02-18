@@ -15,6 +15,7 @@
 	}
 </style>
 
+<script src="<%= request.getContextPath() + "/javaScript/jquery/jquery.js" %>" type="text/javascript" ></script>
 <script src="<%= request.getContextPath() + "/javaScript/phroper/fabric-1.2.0.all.min.js" %>" type="text/javascript" ></script>
 <script src="<%= request.getContextPath() + "/javaScript/phroper/phroper-1.2.0.min.js" %>" type="text/javascript" ></script>
 
@@ -65,7 +66,6 @@
 	</script>
 </logic:notPresent>
 
-<em><bean:message key="label.person.main.title" /></em>
 <h2><bean:message key="label.person.photo.title" /></h2>
 
 <html:messages id="message" message="true" bundle="MANAGER_RESOURCES">

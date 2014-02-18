@@ -6,22 +6,9 @@
 <html:xhtml/>
 
 <ul>
-
-<h3>From Renderer:</h3>
-
-	<jsp:include page="/commons/functionalities/side-menu.jsp"/>
-
-<h3>Hard-Coded:</h3>
-
 	<li class="navheader"><bean:message key="label.navheader.person"  /></li>
-	<li><html:link page="/visualizePersonalInfo.do" titleKey="link.title.visualizeInformation"  ><bean:message key="label.person.visualizeInformation"  /></html:link></li>
-	<li><html:link page="/changePasswordForward.do" titleKey="link.title.person.changePassword" ><bean:message key="label.person.changePassword"  /></html:link></li>
-	<li><html:link page="/identificationCard.do?method=prepare"><bean:message key="label.identification.card"  bundle="APPLICATION_RESOURCES"/></html:link></li>
-	<li><html:link page="/parking.do?method=prepareParking"><bean:message key="label.parking"  bundle="PARKING_RESOURCES"/></html:link></li>
-	<li><html:link page="/validateEmail.do?method=prepare"><bean:message key="label.validate.email"/></html:link></li>
-	<li><html:link page="/irsDeclaration.do?method=viewIrsDocumentInformation"><bean:message key="label.irs.information" bundle="APPLICATION_RESOURCES"/></html:link></li>
 	<logic:present name="LOGGED_USER_ATTRIBUTE" property="person.openAffiliationEvent">
-	<li><html:link page="/payments.do?method=viewAccount"><bean:message key="label.accounting.person.payments.title" bundle="ACCOUNTING_RESOURCES"/></html:link></li>
+		<li><html:link page="/payments.do?method=viewAccount"><bean:message key="label.accounting.person.payments.title" bundle="ACCOUNTING_RESOURCES"/></html:link></li>
 	</logic:present>
 	
 
@@ -43,7 +30,5 @@
 			<li><html:link  page="/vigilancy/vigilantManagement.do?method=prepareMap"><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.vigilant"/></html:link></li>
 		</logic:notPresent>
 	</logic:notEmpty>
-	
-	<!-- FOR LOAD TESTING -->
-	<html:link styleId="loadTesting" page="/loadTesting.do?method=loadTesting" style="display:none"/>
+
 </ul>
