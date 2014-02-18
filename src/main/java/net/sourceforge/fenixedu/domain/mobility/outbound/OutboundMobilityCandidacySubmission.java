@@ -241,7 +241,9 @@ public class OutboundMobilityCandidacySubmission extends OutboundMobilityCandida
 
         private Calculator(final Student student, final BigDecimal grade) {
             for (final Registration registration : student.getRegistrationsSet()) {
-                possibleECTS = possibleECTS.add(new BigDecimal(registration.getDegree().getEctsCredits()));
+                if (registration.getDegree() != null && registration.getDegree().getEctsCredits() != null) {
+                    possibleECTS = possibleECTS.add(new BigDecimal(registration.getDegree().getEctsCredits()));
+                }
                 for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
                     calculateGrade(null, studentCurricularPlan.getRoot());
                 }
