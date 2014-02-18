@@ -131,6 +131,8 @@ public class PaymentsManagementDispatchAction extends FenixDispatchAction {
             return mapping.findForward("preparePayment");
         }
 
+        //This is here to force the load of the relation to debug a possible bug in FenixFramework
+        paymentsManagementDTO.getPerson().getReceiptsSet().size();
         try {
             final Receipt receipt =
                     CreatePaymentsForEvents.run(getUserView(request).getPerson().getUser(),

@@ -53,8 +53,8 @@ public class ReceiptsManagementDA extends PaymentsManagementDispatchAction {
 
     public static class EditReceiptBean implements Serializable {
         /**
-	 * 
-	 */
+        * 
+        */
         private static final long serialVersionUID = -1140016139503995375L;
 
         private Receipt receipt;
@@ -185,6 +185,8 @@ public class ReceiptsManagementDA extends PaymentsManagementDispatchAction {
         final CreateReceiptBean createReceiptBean =
                 (CreateReceiptBean) RenderUtils.getViewState("createReceiptBeanConfirm").getMetaObject().getObject();
 
+        //This is here to force the load of the relation to debug a possible bug in FenixFramework
+        createReceiptBean.getPerson().getReceiptsSet().size();
         try {
             final Receipt receipt =
                     CreateReceipt.run(getUserView(request).getPerson(), createReceiptBean.getPerson(),
@@ -266,7 +268,7 @@ public class ReceiptsManagementDA extends PaymentsManagementDispatchAction {
             request.setAttribute("person", person);
             return mapping.findForward("showReceipts");
         }
-        if (!person.getReceiptsSet().contains(receipt)) {
+        if (receipt.getPerson() != person) {
             addActionMessage("context", request, "error.payments.person.doesnot.contain.receipt");
             request.setAttribute("person", person);
             return mapping.findForward("showReceipts");
