@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 
@@ -79,13 +80,20 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
 
     public static class ExternalUnitNameLimitedOrderedSet extends UnitNameLimitedOrderedSet {
 
+        private final Predicate predicate;
+
         public ExternalUnitNameLimitedOrderedSet(final int maxElements) {
+            this(maxElements, null);
+        }
+
+        public ExternalUnitNameLimitedOrderedSet(final int maxElements, final Predicate predicate) {
             super(maxElements);
+            this.predicate = predicate;
         }
 
         @Override
         public boolean add(final UnitName unitName) {
-            return unitName.getIsExternalUnit() ? super.add(unitName) : false;
+            return (predicate == null || predicate.evaluate(unitName)) && unitName.getIsExternalUnit() ? super.add(unitName) : false;
         }
     }
 
@@ -264,6 +272,13 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
 
     public static Collection<UnitName> findExternalUnit(final String name, final int size) {
         final ExternalUnitNameLimitedOrderedSet unitNameLimitedOrderedSet = new ExternalUnitNameLimitedOrderedSet(size);
+        find(unitNameLimitedOrderedSet, name, size);
+        return unitNameLimitedOrderedSet;
+    }
+
+    public static Collection<UnitName> findExternalUnit(final String name, final int size, final Predicate predicate) {
+        final ExternalUnitNameLimitedOrderedSet unitNameLimitedOrderedSet =
+                new ExternalUnitNameLimitedOrderedSet(size, predicate);
         find(unitNameLimitedOrderedSet, name, size);
         return unitNameLimitedOrderedSet;
     }

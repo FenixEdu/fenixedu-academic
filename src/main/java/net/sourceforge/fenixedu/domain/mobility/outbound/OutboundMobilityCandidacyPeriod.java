@@ -163,8 +163,8 @@ public class OutboundMobilityCandidacyPeriod extends OutboundMobilityCandidacyPe
                 new TreeSet<OutboundMobilityCandidacySubmission>(new Comparator<OutboundMobilityCandidacySubmission>() {
                     @Override
                     public int compare(OutboundMobilityCandidacySubmission o1, OutboundMobilityCandidacySubmission o2) {
-                        final BigDecimal grade1 = o1.getGrade(mobilityGroup);
-                        final BigDecimal grade2 = o2.getGrade(mobilityGroup);
+                        final BigDecimal grade1 = o1.getGradeForSerialization(mobilityGroup);
+                        final BigDecimal grade2 = o2.getGradeForSerialization(mobilityGroup);
                         if ((grade1 == null && grade2 == null) || (grade1 != null && grade1.equals(grade2))) {
                             return o1.compareTo(o2);
                         }

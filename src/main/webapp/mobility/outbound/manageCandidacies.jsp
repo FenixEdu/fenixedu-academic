@@ -307,9 +307,6 @@
 <% } %>
 
 
-<h3>
-	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.candidacies"/>:
-</h3>
 
 
 <form id="mobilityGradeForm" action="<%= request.getContextPath() + "/academicAdministration/outboundMobilityCandidacy.do?mobilityGroupOid=" + mobilityGroup.getExternalId() %>"
@@ -317,6 +314,10 @@
 	<input type="hidden" name="method" value="editGrade"/>
 	<input type="hidden" name="personOid" value=""/>
 	<input type="hidden" name="executionYearOid" value="<%= outboundMobilityContextBean.getExecutionYear().getExternalId() %>"/>
+
+<h3>
+	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.candidacies.admitted"/>:
+</h3>
 
 <%
 	for (final OutboundMobilityCandidacyPeriod candidacyPeriod : outboundMobilityContextBean.getCandidacyPeriods()) {
@@ -333,9 +334,10 @@
 			</tr>
 <%
     	for (final OutboundMobilityCandidacySubmission candidacySubmission : candidacyPeriod.getSortedSubmissionSet(mobilityGroup)) {
-    	    final Registration registration = candidacySubmission.getRegistration();
-    	    final Person person = registration.getPerson();
-    	        final BigDecimal grade = candidacySubmission.getGrade(mobilityGroup);
+    	    final BigDecimal grade = candidacySubmission.getGrade(mobilityGroup);
+    	    if (grade != null && grade.signum() == 1) {
+    	    	final Registration registration = candidacySubmission.getRegistration();
+    	    	final Person person = registration.getPerson();
 				final String hideGradeID = "hideGrade" + candidacySubmission.getExternalId();
 				final String showGradeID = "showGrade" + candidacySubmission.getExternalId();
 				final String inputGradeID = "inputGrade" + candidacySubmission.getExternalId();
@@ -418,6 +420,120 @@
 					</td>
 				</tr>
 <%
+    	    }
+	    }
+%>
+		</table>
+<%
+	}
+%>
+
+<h3>
+	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.candidacies.not.admitted"/>:
+</h3>
+
+<%
+	for (final OutboundMobilityCandidacyPeriod candidacyPeriod : outboundMobilityContextBean.getCandidacyPeriods()) {
+%>
+
+		<table class="tstyle1 mtop05">
+			<tr>
+				<th></th>
+				<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.username"/></th>
+				<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.name"/></th>
+				<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.degree"/></th>
+				<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.classification"/></th>
+				<th><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound.contests"/></th>
+			</tr>
+<%
+    	for (final OutboundMobilityCandidacySubmission candidacySubmission : candidacyPeriod.getSortedSubmissionSet(mobilityGroup)) {
+			final BigDecimal grade = candidacySubmission.getGrade(mobilityGroup);
+    	    if (grade == null || grade.signum() != 1) {
+    	    	final Registration registration = candidacySubmission.getRegistration();
+    	    	final Person person = registration.getPerson();
+				final String hideGradeID = "hideGrade" + candidacySubmission.getExternalId();
+				final String showGradeID = "showGrade" + candidacySubmission.getExternalId();
+				final String inputGradeID = "inputGrade" + candidacySubmission.getExternalId();
+				final String gradeText = "grade" + candidacySubmission.getExternalId();
+%>
+				<tr>
+					<td>
+						<div><img src="<%= request.getContextPath() +"/publico/retrievePersonalPhoto.do?method=retrievePhotographOnPublicSpace&amp;personId=" + person.getExternalId() %>"  style="padding: 1em 0;" /></div>
+					</td>
+					<td>
+						<a href="#" onclick="<%= "ViewCandidate('" + person.getExternalId() + "');" %>">
+							<%= person.getUsername() %>
+						</a>
+					</td>
+					<td><%= person.getName() %></td>
+					<td><%= registration.getDegree().getSigla() %></td>
+					<td style="text-align: center;">
+						<span id="<%= showGradeID %>">
+							<em id="<%= gradeText %>"><%= grade == null ? "" : grade.toString() %></em>
+							&nbsp;
+							<a href="#" onclick="<%= "ToggleGradeInput('" + showGradeID + "', '" + hideGradeID + "'); $('#" + inputGradeID + "').focus()" %>"
+									style="border-bottom: 0px; float: right;">
+								<img src="<%= request.getContextPath() +"/images/iconEditOn.png" %>" />
+								&nbsp;&nbsp;
+							</a>
+						</span>
+						<span id="<%= hideGradeID %>" style="display: none;">
+							<input id="<%= inputGradeID %>" name="grade" value="<%= grade == null ? "" : grade.toString() %>"
+								onchange="<%= "SaveGrade('" + candidacySubmission.getExternalId() + "', '" + inputGradeID + "', '" + gradeText + "', '" + hideGradeID + "', '" + showGradeID + "');" %>"
+								onkeydown="<%= "EscapeKeyAbort(event, '" + hideGradeID + "', '" + showGradeID + "');" %>"
+								size="5"/>
+						</span>
+					</td>
+					<td>
+						<ul>
+							<%
+								int candidacyCount = 0;
+								for (final OutboundMobilityCandidacy candidacy : candidacySubmission.getSortedOutboundMobilityCandidacySet()) {
+							    	final OutboundMobilityCandidacyContest contest = candidacy.getOutboundMobilityCandidacyContest();
+							    	final MobilityAgreement mobilityAgreement = contest.getMobilityAgreement();
+									final Unit unit = mobilityAgreement.getUniversityUnit();
+							    	final Country country = unit.getCountry();
+							    	String styleString = "";
+							    	if (contest.getOutboundMobilityCandidacyContestGroup() != mobilityGroup) {
+							    	    if (candidacy.getSubmissionFromSelectedCandidacy() != null) {
+								    	    styleString = "color: lime; font-weight: bold; font-size: 150%";
+								    	} else {
+								    	    styleString = "color: grey;";
+								    	}
+							    	} else if (candidacy.getSubmissionFromSelectedCandidacy() != null) {
+							    	    styleString = "color: green; font-weight: bold; font-size: 120%";							    	    
+							    	}
+							    	
+							%>
+								<li <% if (candidacyCount++ > 4) { %> class="<%= "hide" + candidacySubmission.getExternalId() %>" <% } %>>
+									<div style="<%= styleString %>">
+										<%= unit.getPresentationName() %> -
+										<span style="color: gray; font-size: 110%"><%= country.getName() %></span>
+										<%= mobilityAgreement.getMobilityProgram().getRegistrationAgreement().getDescription() %>
+									</div>
+								</li>
+    	    				<%
+    	    					}
+							%>
+						</ul>
+							<%
+    	    					if (candidacyCount > 5) {
+    	    				%>
+    	    						<span style="margin-left: 30px;">
+									<a href="#" onclick="<%= "$('.hide" + candidacySubmission.getExternalId() + "').toggle(); $('.show" + candidacySubmission.getExternalId() + "').toggle();" %>" class="<%= "show" + candidacySubmission.getExternalId() %>">
+										<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.candidacies.show.more.results"/> (<%= candidacyCount %>) &gt;&gt;
+									</a>
+									<a href="#" onclick="<%= "$('.hide" + candidacySubmission.getExternalId() + "').toggle(); $('.show" + candidacySubmission.getExternalId() + "').toggle();" %>" class="<%= "hide" + candidacySubmission.getExternalId() %>">
+										&lt;&lt; <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.candidacies.hide.more.results"/>
+									</a>
+    	    						</span>
+    	    				<%
+    	    					}
+							%>
+					</td>
+				</tr>
+<%
+    	    }
 	    }
 %>
 		</table>

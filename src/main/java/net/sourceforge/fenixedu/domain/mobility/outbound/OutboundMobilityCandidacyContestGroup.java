@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityAgreement;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacySubmission.Calculator;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
@@ -163,41 +164,40 @@ public class OutboundMobilityCandidacyContestGroup extends OutboundMobilityCandi
             for (final OutboundMobilityCandidacy candidacy : contest.getOutboundMobilityCandidacySet()) {
                 final OutboundMobilityCandidacySubmission submission = candidacy.getOutboundMobilityCandidacySubmission();
                 final Registration registration = submission.getRegistration();
+                final Calculator calculator = new Calculator(registration.getStudent());
 
                 if (!processed.contains(registration)) {
                     final Person person = registration.getPerson();
 
                     final Row row = spreadsheetCurricularInfo.addRow();
                     final BigDecimal candidacyGrade = submission.getGrade(this);
-                    final ICurriculum curriculum = registration.getCurriculum();
+//                    final ICurriculum curriculum = registration.getCurriculum();
                     row.setCell(getString("label.username"), person.getUsername());
                     row.setCell(getString("label.name"), person.getName());
                     row.setCell(getString("label.degree"), registration.getDegree().getSigla());
                     row.setCell(getString("label.candidate.classification"),
                             candidacyGrade == null ? "" : candidacyGrade.toString());
-                    row.setCell(getString("label.curricular.year"), curriculum.getCurricularYear());
-                    row.setCell(getString("label.ects.completed.degree"), curriculum.getSumEctsCredits().toString());
-                    row.setCell(getString("label.average.degree"), curriculum.getAverage().toString());
-                    fillCycleDetails(row, CycleType.FIRST_CYCLE, registration, getString("label.ects.completed.cycle.first"),
-                            getString("label.average.cycle.first"));
-                    fillCycleDetails(row, CycleType.SECOND_CYCLE, registration, getString("label.ects.completed.cycle.second"),
-                            getString("label.average.cycle.second"));
+
+                    row.setCell(getString("label.ects.first.cycle"), calculator.completedECTSCycle1.toString());
+                    row.setCell(getString("label.ects.average"), calculator.getEctsAverage().toString());
+                    row.setCell(getString("label.ects.average.first.and.second.cycle"), calculator.getEctsEverateFirstAndSecondCycle().toString());
+                    row.setCell(getString("label.ects.completed"), calculator.completedECTS.toString());
+                    //row.setCell(getString("label.ects.pending"), calculator.getPendingEcts().toString());
+                    row.setCell(getString("label.ects.enrolled"), calculator.enrolledECTS.toString());
+
                     for (final Registration otherRegistration : registration.getStudent().getRegistrationsSet()) {
-                        if (otherRegistration != registration) {
-                            final Row rowOCI = spreadsheetOtherCurricularInfo.addRow();
-                            final ICurriculum curriculumOther = otherRegistration.getCurriculum();
-                            rowOCI.setCell(getString("label.username"), person.getUsername());
-                            rowOCI.setCell(getString("label.name"), person.getName());
-                            rowOCI.setCell(getString("label.degree"), otherRegistration.getDegree().getSigla());
-                            rowOCI.setCell(getString("label.curricular.year"), curriculumOther.getCurricularYear());
-                            rowOCI.setCell(getString("label.ects.completed.degree"), curriculumOther.getSumEctsCredits()
-                                    .toString());
-                            rowOCI.setCell(getString("label.average.degree"), curriculumOther.getAverage().toString());
-                            fillCycleDetails(rowOCI, CycleType.FIRST_CYCLE, otherRegistration,
-                                    getString("label.ects.completed.cycle.first"), getString("label.average.cycle.first"));
-                            fillCycleDetails(rowOCI, CycleType.SECOND_CYCLE, otherRegistration,
-                                    getString("label.ects.completed.cycle.second"), getString("label.average.cycle.second"));
-                        }
+                        final Row rowOCI = spreadsheetOtherCurricularInfo.addRow();
+                        final ICurriculum curriculumOther = otherRegistration.getCurriculum();
+                        rowOCI.setCell(getString("label.username"), person.getUsername());
+                        rowOCI.setCell(getString("label.name"), person.getName());
+                        rowOCI.setCell(getString("label.degree"), otherRegistration.getDegree().getSigla());
+                        rowOCI.setCell(getString("label.curricular.year"), curriculumOther.getCurricularYear());
+                        rowOCI.setCell(getString("label.ects.completed.degree"), curriculumOther.getSumEctsCredits().toString());
+                        rowOCI.setCell(getString("label.average.degree"), curriculumOther.getAverage().toString());
+                        fillCycleDetails(rowOCI, CycleType.FIRST_CYCLE, otherRegistration,
+                                getString("label.ects.completed.cycle.first"), getString("label.average.cycle.first"));
+                        fillCycleDetails(rowOCI, CycleType.SECOND_CYCLE, otherRegistration,
+                                getString("label.ects.completed.cycle.second"), getString("label.average.cycle.second"));
                     }
 
                     for (final OutboundMobilityCandidacy c : submission.getSortedOutboundMobilityCandidacySet()) {

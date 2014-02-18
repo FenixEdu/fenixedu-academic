@@ -170,6 +170,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
         spreadsheet.setHeader("grau habl anterior compl");
         spreadsheet.setHeader("outro grau habl anterior compl");
         spreadsheet.setHeader("país habilitação anterior");
+        spreadsheet.setHeader("país habilitação 12º ano ou equivalente");
         spreadsheet.setHeader("ano de conclusão da habilitação anterior");
         spreadsheet.setHeader("nota da habilitação anterior");
         spreadsheet.setHeader("Nº inscrições no curso preced.");
@@ -298,7 +299,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 
         if (registration != null) {
             // Nº de anos lectivos de inscrição no Curso actual
-            row.setCell(calculateNumberOfEnrolmentYears(registration));
+            row.setCell(calculateNumberOfEnrolmentYears(registration, executionYear));
 
             // Último ano em que esteve inscrito
             row.setCell(registration.getLastEnrolmentExecutionYear() != null ? registration.getLastEnrolmentExecutionYear()
@@ -444,6 +445,10 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
         // País de Habilitação Anterior Completa
         row.setCell(personalInformationBean.getCountryWhereFinishedPreviousCompleteDegree() != null ? personalInformationBean
                 .getCountryWhereFinishedPreviousCompleteDegree().getName() : "");
+
+        // País de Habilitação do 12º ano ou equivalente
+        row.setCell(personalInformationBean.getCountryWhereFinishedHighSchoolLevel() != null ? personalInformationBean
+                .getCountryWhereFinishedHighSchoolLevel().getName() : "");
 
         // Ano de conclusão da habilitação anterior completa
         row.setCell(personalInformationBean.getConclusionYear());
@@ -631,8 +636,8 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
         }
     }
 
-    private int calculateNumberOfEnrolmentYears(Registration registration) {
-        return registration.getEnrolmentsExecutionYears().size();
+    private int calculateNumberOfEnrolmentYears(Registration registration, ExecutionYear executionYear) {
+        return registration.getNumberOfYearsEnrolledUntil(executionYear);
     }
 
 }

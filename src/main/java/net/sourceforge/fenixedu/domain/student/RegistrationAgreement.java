@@ -49,17 +49,37 @@ public enum RegistrationAgreement {
 
     INOV_IST(false, false),
 
-    TECMIC(false, false), IST_UCP(false, false), IST_USP(false, false), CLUSTER(false, false), EUSYSBIO(false, false),
+    TECMIC(false, false),
+    
+    IST_UCP(false, false),
+    
+    IST_USP(false, false),
+    
+    CLUSTER(false, false),
+    
+    EUSYSBIO(false, false),
 
-    IST_ISA(false, false), IST_PHARMACY_FACULTY(false, false),
+    IST_ISA(false, false),
+    
+    IST_PHARMACY_FACULTY(false, false),
 
-    IBERO_SANTANDER(false, false), BRAZIL_SANTANDER(false, false),
+    IBERO_SANTANDER(false, false),
+    
+    BRAZIL_SANTANDER(false, false),
 
-    CHINA_AGREEMENTS(false, false), RUSSIA_AGREEMENTS(false, false),
+    CHINA_AGREEMENTS(false, false),
+    
+    RUSSIA_AGREEMENTS(false, false),
 
-    AFRICA_AGREEMENTS(false, false), BRAZIL_AGREEMENTS(false, false),
+    AFRICA_AGREEMENTS(false, false),
+    
+    BRAZIL_AGREEMENTS(false, false),
 
-    SCIENCE_WITHOUT_BORDERS(false, false), USA_AGREEMENTS(false, true), KIC_INNOENERGY(false, false);
+    SCIENCE_WITHOUT_BORDERS(false, false),
+    
+    USA_AGREEMENTS(false, true),
+    
+    KIC_INNOENERGY(false, false);
 
     private boolean enrolmentByStudentAllowed;
 

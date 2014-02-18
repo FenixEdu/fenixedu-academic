@@ -1189,8 +1189,17 @@ public class Registration extends Registration_Base {
                 result.add(enrolment.getExecutionPeriod().getExecutionYear());
             }
         }
-
         return result;
+    }
+
+    final public int getNumberOfYearsEnrolledUntil(ExecutionYear executionYear) {
+        int count = 0;
+        for (ExecutionYear year : getEnrolmentsExecutionYears()) {
+            if (year.isBeforeOrEquals(executionYear)) {
+                count++;
+            }
+        }
+        return count;
     }
 
     final public SortedSet<ExecutionYear> getSortedEnrolmentsExecutionYears() {
@@ -1279,14 +1288,12 @@ public class Registration extends Registration_Base {
     }
 
     final public Collection<ExecutionSemester> getEnrolmentsExecutionPeriods() {
-        final Collection<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
-
+        final Set<ExecutionSemester> result = new HashSet<ExecutionSemester>();
         for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlansSet()) {
             for (final Enrolment enrolment : studentCurricularPlan.getEnrolmentsSet()) {
                 result.add(enrolment.getExecutionPeriod());
             }
         }
-
         return result;
     }
 

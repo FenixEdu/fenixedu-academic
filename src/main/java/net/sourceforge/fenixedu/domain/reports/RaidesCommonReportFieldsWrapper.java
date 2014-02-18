@@ -6,13 +6,16 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GrantOwnerType;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityAgreement;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacySubmission;
 import net.sourceforge.fenixedu.domain.raides.DegreeDesignation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.StudentStatute;
@@ -97,6 +100,8 @@ public class RaidesCommonReportFieldsWrapper {
         spreadsheet.setHeader("país habilitação 12º ano ou equivalente");
         spreadsheet.setHeader("ano de conclusão da habilitação anterior");
         spreadsheet.setHeader("nota da habilitação anterior");
+        spreadsheet.setHeader("Programa mobilidade");
+        spreadsheet.setHeader("País mobilidade");
         spreadsheet.setHeader("Duração programa mobilidade");
         spreadsheet.setHeader("tipo estabelecimento ensino secundário");
         spreadsheet.setHeader("total ECTS inscritos no ano");
@@ -212,7 +217,7 @@ public class RaidesCommonReportFieldsWrapper {
         }
 
         // Ano Curricular
-        row.setCell(registration.getCurricularYear());
+        row.setCell(registration.getCurricularYear(executionYear));
 
         // Ano de Ingresso no Curso Actual
         row.setCell(sourceRegistration.getStartExecutionYear().getName());
@@ -220,7 +225,7 @@ public class RaidesCommonReportFieldsWrapper {
         // Nº de anos lectivos de inscrição no Curso actual
         int numberOfEnrolmentYears = 0;
         for (Registration current : registrationPath) {
-            numberOfEnrolmentYears += current.getEnrolmentsExecutionYears().size();
+            numberOfEnrolmentYears += current.getNumberOfYearsEnrolledUntil(executionYear);
         }
         row.setCell(numberOfEnrolmentYears);
 
@@ -463,6 +468,28 @@ public class RaidesCommonReportFieldsWrapper {
 
         // Nota de conclusão da habilitação anterior
         row.setCell(personalInformationBean.getConclusionGrade() != null ? personalInformationBean.getConclusionGrade() : "");
+
+        MobilityAgreement mobilityAgreement = null;
+        for (OutboundMobilityCandidacySubmission outboundCandidacySubmission : registration
+                .getOutboundMobilityCandidacySubmissionSet()) {
+            if (outboundCandidacySubmission.getSelectedCandidacy() != null
+                    && outboundCandidacySubmission.getSelectedCandidacy().getSelected()) {
+                ExecutionInterval candidacyInterval =
+                        outboundCandidacySubmission.getOutboundMobilityCandidacyPeriod().getExecutionInterval();
+                //the candidacies are made in the previous year
+                if (executionYear.getPreviousExecutionYear() == candidacyInterval) {
+                    mobilityAgreement =
+                            outboundCandidacySubmission.getSelectedCandidacy().getOutboundMobilityCandidacyContest()
+                                    .getMobilityAgreement();
+                    break;
+                }
+            }
+        }
+        // Programa de mobilidade
+        row.setCell(mobilityAgreement != null ? mobilityAgreement.getMobilityProgram().getName().getContent() : "");
+
+        // País de mobilidade
+        row.setCell(mobilityAgreement != null ? mobilityAgreement.getUniversityUnit().getCountry().getName() : "");
 
         // Duração do programa de mobilidade
         row.setCell(personalInformationBean.getMobilityProgramDuration() != null ? BundleUtil.getEnumName(personalInformationBean
