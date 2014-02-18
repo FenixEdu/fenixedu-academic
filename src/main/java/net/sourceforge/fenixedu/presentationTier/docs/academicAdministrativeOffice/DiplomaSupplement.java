@@ -160,7 +160,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
         final UniversityUnit institutionsUniversityUnit = getUniversity(getDocumentRequest().getRequestDate());
         String degreeDesignation = getDegreeDesignation();
 
-        String graduateTitleNative = getDocumentRequest().getGraduateTitle(getLocale());
+        String graduateTitleNative = getDocumentRequest().getGraduateTitle(getLocale()).split(" ")[0];
 
         addParameter("graduateTitle", degreeDesignation + "\n" + graduateTitleNative);
         addParameter("prevailingScientificArea", getDocumentRequest().getPrevailingScientificArea(getLocale()));
@@ -207,12 +207,6 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
                 applyMessageArguments(getResourceBundle().getString("diploma.supplement.one.five.one"), getEnumerationBundle()
                         .getString(person.getIdDocumentType().getName())));
         addParameter("documentIdNumber", person.getDocumentIdNumber());
-        if (person.getExpirationDateOfDocumentIdYearMonthDay() != null) {
-            addParameter("documentIdExpiration",
-                    person.getExpirationDateOfDocumentIdYearMonthDay().toString(DD_SLASH_MM_SLASH_YYYY, getLocale()));
-        } else {
-            addParameter("documentIdExpiration", EMPTY_STR);
-        }
 
         addParameter("registrationNumber", getDocumentRequest().getRegistrationNumber());
         addParameter("isExemptedFromStudy", getDocumentRequest().isExemptedFromStudy());
