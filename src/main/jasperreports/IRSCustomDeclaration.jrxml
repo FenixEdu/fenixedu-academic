@@ -9,6 +9,7 @@
 	<parameter name="personAddress" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="civilYear" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="gratuityAmount" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="residenceAmount" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="otherAmount" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="totalAmount" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="personAddressArea" class="java.lang.String" isForPrompting="false"/>
@@ -122,7 +123,7 @@
 				<textElement textAlignment="Left" lineSpacing="1_1_2">
 					<font fontName="Courier" size="12" isBold="false" isItalic="false" pdfFontName="Courier"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["- Propinas"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["- Residência"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
 				<reportElement key="textField-32" positionType="Float" x="444" y="152" width="115" height="22"/>
@@ -135,7 +136,7 @@
 				<textElement textAlignment="Right" lineSpacing="1_1_2">
 					<font fontName="Courier" size="12" isBold="false" isItalic="false" pdfFontName="Courier"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["*" + $P{gratuityAmount} + "Eur"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["*" + $P{residenceAmount} + "Eur"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
 				<reportElement key="textField-34" positionType="Float" x="444" y="196" width="115" height="22"/>
@@ -151,7 +152,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA["*" + $P{totalAmount} + "Eur"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-35" x="65" y="2" width="512" height="142"/>
+				<reportElement key="textField-35" x="65" y="2" width="512" height="128"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -188,6 +189,32 @@
 					<font fontName="Courier" size="12" isBold="false" isItalic="false" pdfFontName="Courier"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["*" + $P{otherAmount}+ "Eur"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement key="textField-31" positionType="Float" x="108" y="130" width="336" height="22"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" lineSpacing="1_1_2">
+					<font fontName="Courier" size="12" isBold="false" isItalic="false" pdfFontName="Courier"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["- Propinas"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement key="textField-32" positionType="Float" x="444" y="130" width="115" height="22"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" lineSpacing="1_1_2">
+					<font fontName="Courier" size="12" isBold="false" isItalic="false" pdfFontName="Courier"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["*" + $P{gratuityAmount} + "Eur"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

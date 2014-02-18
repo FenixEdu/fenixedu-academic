@@ -5,6 +5,7 @@ import java.text.MessageFormat;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Event;
+import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.StandaloneEnrolmentGratuityEvent;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
@@ -25,6 +26,8 @@ public class IRSCustomDeclaration extends FenixReport {
 
         private Money otherAmount;
 
+        private Money residenceAmount;
+
         private String personName;
 
         private String personAddress;
@@ -42,6 +45,7 @@ public class IRSCustomDeclaration extends FenixReport {
         public IRSDeclarationDTO() {
             this.gratuityAmount = Money.ZERO;
             this.otherAmount = Money.ZERO;
+            this.residenceAmount = Money.ZERO;
         }
 
         public IRSDeclarationDTO(Integer civilYear) {
@@ -65,6 +69,10 @@ public class IRSCustomDeclaration extends FenixReport {
 
         public void addOtherAmount(final Money amount) {
             this.otherAmount = this.otherAmount.add(amount);
+        }
+
+        public void addResidenceAmount(final Money amount) {
+            this.residenceAmount = this.residenceAmount.add(amount);
         }
 
         public Integer getCivilYear() {
@@ -91,6 +99,10 @@ public class IRSCustomDeclaration extends FenixReport {
         public IRSDeclarationDTO setOtherAmount(Money otherAmount) {
             this.otherAmount = otherAmount;
             return this;
+        }
+
+        public Money getResidenceAmount() {
+            return residenceAmount;
         }
 
         public String getPersonName() {
@@ -156,12 +168,14 @@ public class IRSCustomDeclaration extends FenixReport {
         }
 
         public Money getTotalAmount() {
-            return this.gratuityAmount.add(this.otherAmount);
+            return getGratuityAmount().add(getOtherAmount()).add(getResidenceAmount());
         }
 
         public void addAmount(final Event event, final int civilYear) {
             if (event instanceof GratuityEventWithPaymentPlan || event instanceof StandaloneEnrolmentGratuityEvent) {
                 addGratuityAmount(event.getMaxDeductableAmountForLegalTaxes(civilYear));
+            } else if (event instanceof ResidenceEvent) {
+                addResidenceAmount(event.getMaxDeductableAmountForLegalTaxes(civilYear));
             } else {
                 addOtherAmount(event.getMaxDeductableAmountForLegalTaxes(civilYear));
             }
@@ -197,6 +211,7 @@ public class IRSCustomDeclaration extends FenixReport {
 
         addParameter("date", new LocalDate().toString(DD_SLASH_MM_SLASH_YYYY, getLocale()));
         addParameter("gratuityAmount", this.declaration.getGratuityAmount().toPlainString());
+        addParameter("residenceAmount", this.declaration.getResidenceAmount().toPlainString());
         addParameter("otherAmount", this.declaration.getOtherAmount().toPlainString());
         addParameter("totalAmount", this.declaration.getTotalAmount().toPlainString());
 
@@ -210,7 +225,8 @@ public class IRSCustomDeclaration extends FenixReport {
     @Override
     public String getReportFileName() {
         return MessageFormat.format("IRS-{0}-{1}-{2}", String.valueOf(this.declaration.getCivilYear()), this.declaration
-                .getDocumentIdNumber().replace('/', '-').replace('\\', '-'), new DateTime().toString(YYYYMMMDD, getLocale()));
+                .getDocumentIdNumber().trim().replace('/', '-').replace('\\', '-'),
+                new DateTime().toString(YYYYMMMDD, getLocale()));
 
     }
 }
