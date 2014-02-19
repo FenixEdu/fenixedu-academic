@@ -640,7 +640,7 @@ public class FenixAPIv1 {
                 String endDate = formatDay.print(accountingEventPaymentCode.getEndDate()) + " 23:59";
                 String entity = accountingEventPaymentCode.getEntityCode();
                 String reference = accountingEventPaymentCode.getFormattedCode();
-                String amount = accountingEventPaymentCode.getMaxAmount().getAmountAsString();
+                String amount = accountingEventPaymentCode.getMinAmount().getAmountAsString();
                 notPayed.add(new PendingEvent(description, new FenixPeriod(startDate, endDate), entity, reference, amount));
             }
         }
@@ -1373,6 +1373,9 @@ public class FenixAPIv1 {
             builder.getComponent(bodyComponent, rightNow, room, null);
             for (Object occupation : bodyComponent.getInfoShowOccupation()) {
                 InfoShowOccupation showOccupation = (InfoShowOccupation) occupation;
+                if (showOccupation.getDiaSemana().getDiaSemana() != rightNow.get(java.util.Calendar.DAY_OF_WEEK)) {
+                    continue;
+                }
 
                 FenixRoomEvent roomEvent = null;
 
