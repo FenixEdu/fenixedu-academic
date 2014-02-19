@@ -421,12 +421,12 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
         arg2.doFilter(arg0, arg1);
 
         HttpServletRequest request = (HttpServletRequest) arg0;
-        ResponseWrapper response = (ResponseWrapper) arg1;
 
         if ("doOperation".equals(request.getParameter("method"))
                 && "PRINT_ALL_DOCUMENTS".equals(request.getParameter("operationType"))) {
 
             try {
+                ResponseWrapper response = (ResponseWrapper) arg1;
                 // clean the response html and make a DOM document out of it
                 String responseHtml = clean(response.getContent());
                 DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();

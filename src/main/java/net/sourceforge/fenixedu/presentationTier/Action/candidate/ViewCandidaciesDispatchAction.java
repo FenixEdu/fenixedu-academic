@@ -15,32 +15,31 @@ import net.sourceforge.fenixedu.dataTransferObject.candidacy.CandidacyDocumentUp
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyDocument;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.candidate.CandidateApplication.CandidateCandidaciesApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-@Mapping(module = "candidate", path = "/viewCandidacies", attribute = "candidacyForm", formBean = "candidacyForm",
-        scope = "request", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "uploadDocuments", path = "/candidate/uploadDocuments.jsp", tileProperties = @Tile(
-                title = "private.candidate.applications")),
-        @Forward(name = "viewDetail", path = "/candidate/viewCandidacyDetails.jsp", tileProperties = @Tile(
-                title = "private.candidate.applications")),
-        @Forward(name = "view", path = "/candidate/viewCandidacies.jsp", tileProperties = @Tile(
-                title = "private.candidate.applications")) })
-public class ViewCandidaciesDsipatchAction extends FenixDispatchAction {
+@StrutsFunctionality(app = CandidateCandidaciesApp.class, titleKey = "link.candidacies", path = "view-candidacies")
+@Mapping(module = "candidate", path = "/viewCandidacies", attribute = "candidacyForm", formBean = "candidacyForm")
+@Forwards(value = { @Forward(name = "uploadDocuments", path = "/candidate/uploadDocuments.jsp"),
+        @Forward(name = "viewDetail", path = "/candidate/viewCandidacyDetails.jsp"),
+        @Forward(name = "view", path = "/candidate/viewCandidacies.jsp") })
+public class ViewCandidaciesDispatchAction extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         return mapping.findForward("view");
     }

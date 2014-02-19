@@ -14,21 +14,19 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.StrutsApplication;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(module = "candidate", path = "/index", scope = "session")
-@Forwards(value = {
-        @Forward(name = "showCandidacyDetails", path = "/degreeCandidacyManagement.do?method=showCandidacyDetails",
-                tileProperties = @Tile(title = "private.candidate.applications")),
-        @Forward(name = "fillData", path = "/degreeCandidacyManagement.do?method=doOperation", tileProperties = @Tile(
-                title = "private.candidate.applications")),
-        @Forward(name = "showWelcome", path = "/candidate/index.jsp", tileProperties = @Tile(
-                title = "private.candidate.applications")) })
-public class IndexAction extends FenixAction {
+@StrutsApplication(bundle = "CandidateResources", descriptionKey = "portal.candidate", path = "candidate",
+        titleKey = "portal.candidate", accessGroup = "role(CANDIDATE)")
+@Mapping(module = "candidate", path = "/index")
+@Forwards(value = { @Forward(name = "showCandidacyDetails", path = "/degreeCandidacyManagement.do?method=showCandidacyDetails"),
+        @Forward(name = "fillData", path = "/degreeCandidacyManagement.do?method=doOperation"),
+        @Forward(name = "showWelcome", path = "/candidate/index.jsp") })
+public class CandidateApplication extends FenixAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -50,8 +48,12 @@ public class IndexAction extends FenixAction {
             }
 
         }
-
         return mapping.findForward("showWelcome");
+    }
+
+    @StrutsApplication(bundle = "CandidateResources", path = "candidacies", titleKey = "link.candidacies",
+            accessGroup = "role(CANDIDATE)", hint = "Candidate")
+    public static class CandidateCandidaciesApp {
     }
 
 }

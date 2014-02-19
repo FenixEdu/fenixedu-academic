@@ -36,6 +36,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.workflow.Form;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.candidate.ViewCandidaciesDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
@@ -53,8 +54,23 @@ import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
+@Mapping(path = "/degreeCandidacyManagement", module = "candidate", functionality = ViewCandidaciesDispatchAction.class)
+@Forwards({ @Forward(name = "showWelcome", path = "/candidate/degree/showWelcome.jsp"),
+        @Forward(name = "showCandidacyDetails", path = "/candidate/degree/showCandidacyDetails.jsp"),
+        @Forward(name = "fillData", path = "/candidate/degree/fillData.jsp"),
+        @Forward(name = "showData", path = "/candidate/degree/showData.jsp"),
+        @Forward(name = "showOperationFinished", path = "/candidate/degree/showOperationFinished.jsp"),
+        @Forward(name = "printSchedule", path = "/commons/student/timeTable/classTimeTable.jsp"),
+        @Forward(name = "printRegistrationDeclaration", path = "/candidate/degree/printRegistrationDeclaration.jsp"),
+        @Forward(name = "printSystemAccessData", path = "/candidate/degree/printSystemAccessData.jsp"),
+        @Forward(name = "printUnder23TransportsDeclation", path = "/candidate/degree/printUnder23TransportsDeclaration.jsp"),
+        @Forward(name = "printMeasurementTestDate", path = "/candidate/degree/printMeasurementTestDate.jsp"),
+        @Forward(name = "printAllDocuments", path = "/candidate/degree/printAllDocuments.jsp") })
 public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction {
 
     private static final Logger logger = LoggerFactory.getLogger(DegreeCandidacyManagementDispatchAction.class);
