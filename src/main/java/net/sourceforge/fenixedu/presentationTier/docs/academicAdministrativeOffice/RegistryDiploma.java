@@ -105,7 +105,7 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 
     protected void setFirstParagraph(IRegistryDiplomaRequest request) {
 
-        final UniversityUnit university = getUniversity(request.getRequestDate());
+        final UniversityUnit university = getUniversity(new DateTime());
         String universityName = university.getPartyName().getPreferedContent();
 
         final Person rectorIst = university.getInstitutionsUniversityResponsible(FunctionType.PRINCIPAL);
