@@ -23,6 +23,7 @@
 					<strong>
 						<bean:define id="infoDegree" name="viewClassSchedule" property="infoClass.infoExecutionDegree.infoDegreeCurricularPlan.infoDegree"/>					  
                     	<bean:define id="academicInterval" name="viewClassSchedule" property="infoClass.academicInterval"/>
+                    	<bean:define id="infoClass" name="viewClassSchedule" property="infoClass"></bean:define>
 						<jsp:getProperty name="infoDegree" property="presentationName" />
 						<br/>
 						<jsp:getProperty name="academicInterval" property="pathName"/> 

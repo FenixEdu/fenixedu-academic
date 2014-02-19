@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlot;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContentRenderer;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
@@ -111,5 +112,23 @@ public class SopRoomTimeTableLessonContentRenderer extends LessonSlotContentRend
         }
 
         return strBuffer;
+    }
+
+    @Override
+    public String renderSecondLine(final String context, final LessonSlot lessonSlot) {
+        final StringBuilder builder = new StringBuilder();
+        final InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
+        if (showOccupation instanceof InfoLesson) {
+            final InfoLesson infoLesson = (InfoLesson) showOccupation;
+
+            builder.append("<span>");
+            builder.append(BundleUtil.getStringFromResourceBundle("resources.CandidateResources", "label.weeks"));
+            builder.append(": &nbsp;&nbsp;");
+            builder.append(infoLesson.getOccurrenceWeeksAsString());
+            builder.append("&nbsp;");
+            builder.append("</span>");
+        }
+        builder.append(super.renderSecondLine(context, lessonSlot));
+        return builder.toString();
     }
 }

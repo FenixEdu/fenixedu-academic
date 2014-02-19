@@ -20,7 +20,6 @@
 	<parameter name="nationality" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="documentIdType" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="documentIdNumber" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="documentIdExpiration" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="degreeFilteredName" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="graduateTitle" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="prevailingScientificArea" class="java.lang.String" isForPrompting="false"/>
@@ -126,7 +125,7 @@
 					<textElement textAlignment="Left" lineSpacing="Single">
 						<font fontName="Serif" size="8" isBold="false" isItalic="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 					</textElement>
-					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.one.five") + ":\n      "+ $P{documentIdType} + "/ " + $P{bundle}.getString("diploma.supplement.one.five.two") + ": " + $P{documentIdNumber}+"/ "+$P{bundle}.getString("diploma.supplement.one.five.three") + " "+ $P{documentIdExpiration}]]></textFieldExpression>
+					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.one.five") + ":\n"+ $P{documentIdType} +": " + $P{documentIdNumber}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="false">
 					<reportElement key="textField-15" x="0" y="196" width="366" height="13"/>
@@ -337,9 +336,7 @@
 					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.three.two")]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField-43" x="13" y="446" width="352" height="12">
-						<printWhenExpression><![CDATA[!$P{isForPhd}]]></printWhenExpression>
-					</reportElement>
+					<reportElement key="textField-43" x="13" y="446" width="352" height="12"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>

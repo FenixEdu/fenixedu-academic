@@ -56,7 +56,7 @@
 			</div><br/>
 			<logic:iterate id="giafProfessionalData" name="professionalData" property="giafProfessionalDatas">
 				<fr:view name="giafProfessionalData" schema="view.person.personProfessionalData">
-					<fr:layout name="matrix">
+					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle1 thlight mtop025" />
 						<fr:property name="slot(professionalContractType)" value="professionalContractType"/>
 						<fr:property name="row(professionalContractType)" value="0"/>
@@ -125,7 +125,6 @@
 				</fr:view>
 			</logic:iterate>
 		</logic:present>
-		
 		<logic:present name="situations">
 			<div class="infoop">
 				<strong><bean:message key="label.situations" bundle="CONTRACTS_RESOURCES"/></strong>
