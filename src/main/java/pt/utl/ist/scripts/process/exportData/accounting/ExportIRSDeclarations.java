@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.AcademicEvent;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransactionDetail;
 import net.sourceforge.fenixedu.domain.accounting.Event;
+import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.documents.AnnualIRSDeclarationDocument;
 import net.sourceforge.fenixedu.presentationTier.docs.IRSCustomDeclaration;
@@ -85,17 +86,21 @@ public class ExportIRSDeclarations extends CronTask {
             if (exportIRSDeclaration.getPerson().hasAnnualIRSDocumentFor(YEAR_TO_PROCESS)) {
                 exportIRSDeclaration.getPerson().getAnnualIRSDocumentFor(YEAR_TO_PROCESS).delete();
             }
-            final IRSCustomDeclaration customDeclaration = new IRSCustomDeclaration(exportIRSDeclaration.getDeclarationDTO());
-            addUnitCoordinatorSignature(customDeclaration);
+            try {
+                final IRSCustomDeclaration customDeclaration = new IRSCustomDeclaration(exportIRSDeclaration.getDeclarationDTO());
+                addUnitCoordinatorSignature(customDeclaration);
+                final byte[] report =
+                        ReportsUtils.exportToPdfFileAsByteArray(customDeclaration.getReportTemplateKey(),
+                                customDeclaration.getParameters(),
+                                ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale()),
+                                customDeclaration.getDataSource());
 
-            final byte[] result =
-                    ReportsUtils.exportToPdfFileAsByteArray(customDeclaration.getReportTemplateKey(),
-                            customDeclaration.getParameters(),
-                            ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale()),
-                            customDeclaration.getDataSource());
-
-            new AnnualIRSDeclarationDocument(exportIRSDeclaration.getPerson(), null, customDeclaration.getReportFileName()
-                    + ".pdf", result, YEAR_TO_PROCESS);
+                new AnnualIRSDeclarationDocument(exportIRSDeclaration.getPerson(), null, customDeclaration.getReportFileName()
+                        + ".pdf", report, YEAR_TO_PROCESS);
+            } catch (Exception e) {
+                taskLog("Excepção com a pessoa: " + exportIRSDeclaration.getPerson().getUsername());
+                throw e;
+            }
         }
     }
 
@@ -123,6 +128,9 @@ public class ExportIRSDeclarations extends CronTask {
                     && event.getMaxDeductableAmountForLegalTaxes(YEAR_TO_PROCESS).isPositive()) {
                 return true;
             }
+        } else if (event instanceof ResidenceEvent) {
+            final ResidenceEvent residenceEvent = (ResidenceEvent) event;
+            return event.getMaxDeductableAmountForLegalTaxes(YEAR_TO_PROCESS).isPositive();
         }
         return false;
     }
@@ -131,7 +139,8 @@ public class ExportIRSDeclarations extends CronTask {
         Set<Event> result = new HashSet<Event>();
         for (AccountingTransactionDetail atd : Bennu.getInstance().getAccountingTransactionDetailsSet()) {
             if (atd.getWhenRegistered().getYear() == YEAR_TO_PROCESS && atd.getTransaction() != null) {
-                if (!atd.getEvent().isCancelled() && atd.getEvent() instanceof AcademicEvent) {
+                if (!atd.getEvent().isCancelled()
+                        && (atd.getEvent() instanceof AcademicEvent || atd.getEvent() instanceof ResidenceEvent)) {
                     result.add(atd.getEvent());
                 }
             }
@@ -139,7 +148,7 @@ public class ExportIRSDeclarations extends CronTask {
         return result;
     }
 
-    private void createDeclarationData(Event event, Map<Person, ExportIRSDeclaration> result) {
+    private void createDeclarationData(Event event, Map<Person, ExportIRSDeclaration> result) throws JRException {
 
         ExportIRSDeclaration exportIRSDeclaration = result.get(event.getPerson());
         if (exportIRSDeclaration != null) {
