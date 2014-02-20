@@ -1,11 +1,12 @@
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt"%>
 
-<ft:tilesView definition="definition.sop.examsPage" attributeName="body-inline">
+<f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 
 	<f:loadBundle basename="resources/ResourceAllocationManagerResources" var="bundleSOP"/>
@@ -122,7 +123,7 @@
 							<c:out value=": ${executionCourseWrittenEvaluationAgregationBean.curricularYear} ${bundleSOP['label.year.simple']}"/>
 						</td>
 						<td colspan="2" class="header" style="font-weight: bold">
-							<c:url var="creationURL" value="showExecutionCourses.faces">
+							<c:url var="creationURL" value="#{facesContext.externalContext.requestContextPath}/resourceAllocationManager/writtenEvaluations/showExecutionCourses.faces">
 								<c:param name="academicInterval" value="${SOPEvaluationManagementBackingBean.academicIntervalEscapeFriendly}"/>
 								<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
 								<c:param name="executionCourseID" value="${executionCourseWrittenEvaluationAgregationBean.executionCourse.externalId}"/>
@@ -133,7 +134,7 @@
 							</a>
 						</td>
 						<td colspan="3" class="header">
-							<c:url var="commentURL" value="commentExecutionCourse.faces">
+							<c:url var="commentURL" value="#{facesContext.externalContext.requestContextPath}/resourceAllocationManager/writtenEvaluations/commentExecutionCourse.faces">
 								<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
 								<c:param name="academicInterval" value="${SOPEvaluationManagementBackingBean.academicIntervalEscapeFriendly}"/>
 								<c:param name="executionCourseID" value="${executionCourseWrittenEvaluationAgregationBean.executionCourse.externalId}"/>
@@ -199,7 +200,7 @@
 								</c:if>
 							</td>
 							<td> <!-- links -->
-								<c:url var="editEvaluationURL" value="editWrittenTest.faces">
+								<c:url var="editEvaluationURL" value="#{facesContext.externalContext.requestContextPath}/resourceAllocationManager/writtenEvaluations/editWrittenTest.faces">
 									<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
 									<c:param name="evaluationID" value="${evaluation.externalId}"/>
 									<c:param name="evaluationTypeClassname" value="${evaluation.class.name}"/>
@@ -211,7 +212,7 @@
 									<c:out value="${bundle['label.edit']}"/>
 								</a>
 								<c:out value=" | "/>
-								<c:url var="deleteEvaluationURL" value="deleteWrittenEvaluation.faces">
+								<c:url var="deleteEvaluationURL" value="#{facesContext.externalContext.requestContextPath}/resourceAllocationManager/writtenEvaluations/deleteWrittenEvaluation.faces">
 									<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
 									<c:param name="evaluationID" value="${evaluation.externalId}"/>
 									<c:param name="evaluationTypeClassname" value="${evaluation.class.name}"/>
@@ -243,7 +244,7 @@
 									<c:out value="${executionCourse.sigla} - ${executionCourse.nome}"/>
 								</td>
 								<td>
-									<c:url var="creationURL" value="showExecutionCourses.faces">
+									<c:url var="creationURL" value="#{facesContext.externalContext.requestContextPath}/resourceAllocationManager/writtenEvaluations/showExecutionCourses.faces">
 										<c:param name="academicInterval" value="${SOPEvaluationManagementBackingBean.academicIntervalEscapeFriendly}"/>
 										<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
 										<c:param name="executionCourseID" value="${executionCourse.externalId}"/>										
@@ -254,7 +255,7 @@
 									</a>
 								</td>
 								<td>
-									<c:url var="commentURL" value="commentExecutionCourse.faces">
+									<c:url var="commentURL" value="#{facesContext.externalContext.requestContextPath}/resourceAllocationManager/writtenEvaluations/commentExecutionCourse.faces">
 										<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
 										<c:param name="academicInterval" value="${SOPEvaluationManagementBackingBean.academicIntervalEscapeFriendly}"/>
 										<c:param name="executionCourseID" value="${executionCourse.externalId}"/>							
@@ -279,4 +280,4 @@
 
 	
 
-</ft:tilesView>
+</f:view>

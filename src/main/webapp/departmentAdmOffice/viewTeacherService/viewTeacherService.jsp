@@ -1,12 +1,11 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://java.sun.com/jstl/core"  prefix="c" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
 
-<ft:tilesView definition="departmentAdmOffice.masterPage"
-	attributeName="body-inline">
+<f:view>
 	
 	<f:loadBundle basename="resources/DepartmentMemberResources"
 		var="bundle" />
@@ -47,7 +46,7 @@
 
 	<h:outputText value="<b>#{bundle['label.teacherService.navigateByTeacher']}</b>" escape="false"/>
 	<h:outputText value=" #{bundle['label.teacherService.separator']} " escape="false"/>
-	<h:outputText value="<a href='viewTeacherServiceByCourse.faces?selectedExecutionYearID=#{viewTeacherService.selectedExecutionYearID}'>" escape="false"/>
+	<h:outputText value="#{facesContext.externalContext.requestContextPath}/departmentAdmOffice/viewTeacherService/<a href='viewTeacherServiceByCourse.faces?selectedExecutionYearID=#{viewTeacherService.selectedExecutionYearID}'>" escape="false"/>
 	<h:outputText value="#{bundle['label.teacherService.navigateByCourse']}" escape="false"/>
 	<h:outputText value="</a> <br /> <p />" escape="false"/>
 		
@@ -90,7 +89,7 @@
 					<h:outputText value="<td colspan=8 class='backwhite' style='background-color: #fff;'>" escape="false" />
 						<h:outputText value="<ul>" escape="false" />
 							<fc:dataRepeater value="#{teacher.executionCourseTeacherServiceList}" var="coursesList">
-								<h:outputText value="<li><a href='viewTeacherServiceByCourse.faces?selectedExecutionYearID=#{viewTeacherService.selectedExecutionYearID}##{coursesList.executionCourseExternalId}'>" escape="false"/>
+								<h:outputText value="#{facesContext.externalContext.requestContextPath}/departmentAdmOffice/viewTeacherService/<li><a href='viewTeacherServiceByCourse.faces?selectedExecutionYearID=#{viewTeacherService.selectedExecutionYearID}##{coursesList.executionCourseExternalId}'>" escape="false"/>
 								<h:outputText value="#{coursesList.description} " escape="false" />	
 							 	<h:outputText value="</a></li>" escape="false"/>
 							</fc:dataRepeater>
@@ -115,4 +114,4 @@
 	</h:panelGroup>
 
 	
-</ft:tilesView>
+</f:view>

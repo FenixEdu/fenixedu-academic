@@ -1,9 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
-<ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
+<f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
@@ -71,7 +71,7 @@
 	<h:outputText value="#{bolonhaBundle['nonBasic']}</li>" rendered="#{!CompetenceCourseManagement.competenceCourse.basic}" escape="false"/>
 	<h:outputText value="</ul>" escape="false"/>
 	<h:outputText value="<p class='mtop1'>" escape="false"/>
-	<h:outputLink value="editCompetenceCourse.faces">
+	<h:outputLink value="#{facesContext.externalContext.requestContextPath}/bolonhaManager/competenceCourses/editCompetenceCourse.faces">
 		<h:outputText value="#{bolonhaBundle['edit']}"/>
 		<f:param name="competenceCourseID" value="#{CompetenceCourseManagement.competenceCourse.externalId}"/>
 		<f:param name="action" value="viewccm"/>
@@ -119,7 +119,7 @@
 	<h:outputText value="</li>" escape="false"/>
 	<h:outputText value="</ul>" escape="false"/>
 	<h:outputText value="<p class='mtop1'>" escape="false"/>
-	<h:outputLink value="setCompetenceCourseLoad.faces">
+	<h:outputLink value="#{facesContext.externalContext.requestContextPath}/bolonhaManager/competenceCourses/setCompetenceCourseLoad.faces">
 		<h:outputText value="#{bolonhaBundle['edit']}"/>
 		<f:param name="competenceCourseID" value="#{CompetenceCourseManagement.competenceCourse.externalId}"/>
 		<f:param name="action" value="edit"/>
@@ -149,7 +149,7 @@
 	<h:outputText value="</td></tr>" escape="false"/>
 
 	<h:outputText value="</table><p class='mtop1'>" escape="false"/>
-	<h:outputLink value="setCompetenceCourseAdditionalInformation.faces?competenceCourseID=#{CompetenceCourseManagement.competenceCourse.externalId}&action=edit#portuguese">
+	<h:outputLink value="#{facesContext.externalContext.requestContextPath}/bolonhaManager/competenceCourses/setCompetenceCourseAdditionalInformation.faces?competenceCourseID=#{CompetenceCourseManagement.competenceCourse.externalId}&action=edit#portuguese">
 		<h:outputText value="#{bolonhaBundle['edit']}"/>
 	</h:outputLink>
 	<h:outputText value="</p>" escape="false"/>
@@ -178,7 +178,7 @@
 	<h:outputText value="</td></tr>" escape="false"/>
 
 	<h:outputText value="</table><p class='mtop1'>" escape="false"/>
-	<h:outputLink value="setCompetenceCourseAdditionalInformation.faces?competenceCourseID=#{CompetenceCourseManagement.competenceCourse.externalId}&action=edit#english">
+	<h:outputLink value="#{facesContext.externalContext.requestContextPath}/bolonhaManager/competenceCourses/setCompetenceCourseAdditionalInformation.faces?competenceCourseID=#{CompetenceCourseManagement.competenceCourse.externalId}&action=edit#english">
 		<h:outputText value="#{bolonhaBundle['edit']}"/>
 	</h:outputLink>
 	<h:outputText value="</p></div>" escape="false"/>
@@ -231,7 +231,7 @@
 		</h:panelGroup>
 	</fc:dataRepeater>
 	<h:outputText value="<p>" escape="false"/>
-	<h:outputLink value="setCompetenceCourseBibliographicReference.faces">
+	<h:outputLink value="#{facesContext.externalContext.requestContextPath}/bolonhaManager/competenceCourses/setCompetenceCourseBibliographicReference.faces">
 		<h:outputText value="#{bolonhaBundle['edit']}" />
 		<f:param name="action" value="edit"/>
 		<f:param name="bibliographicReferenceID" value="-1"/>
@@ -250,4 +250,4 @@
 			<h:commandButton alt="#{htmlAltBundle['commandButton.close']}" immediate="true" styleClass="inputbutton" onclick="window.close()" value="#{bolonhaBundle['close']}" />
 		</h:panelGroup>
 	</h:form>
-</ft:tilesView>
+</f:view>

@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryAttendance"%>
 <%@page import="org.fenixedu.bennu.core.security.Authenticate"%>
 <%@page import="org.fenixedu.bennu.core.domain.Bennu"%>

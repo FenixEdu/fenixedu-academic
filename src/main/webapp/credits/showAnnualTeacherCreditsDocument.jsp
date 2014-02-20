@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@page contentType="text/html" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>

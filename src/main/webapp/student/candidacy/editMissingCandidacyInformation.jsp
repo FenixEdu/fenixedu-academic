@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@page import="net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean"%>
 <%@page import="org.joda.time.LocalDate"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>

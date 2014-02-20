@@ -1,9 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
 
-<ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
+<f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<h:outputText value="Hello World :o)"/>
 	<br />
@@ -13,4 +13,4 @@
 	<h:form>
 		<h:commandButton alt="#{htmlAltBundle['commandButton.List.Execution.Periods']}" value="List Execution Periods" action="listExecutionPeriods"/>
 	</h:form>
-</ft:tilesView>
+</f:view>

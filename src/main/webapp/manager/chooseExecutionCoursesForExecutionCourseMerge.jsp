@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>

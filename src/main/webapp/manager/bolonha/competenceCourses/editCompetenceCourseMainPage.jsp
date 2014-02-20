@@ -1,9 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
-<ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
+<f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
@@ -68,7 +68,7 @@
 	<h:outputText value="#{bolonhaBundle['nonBasic']}</li>" rendered="#{!CompetenceCourseManagement.competenceCourse.basic}" escape="false"/>
 	<h:outputText value="</ul>" escape="false"/>
 	<h:outputText value="<p class='mtop1'>" escape="false"/>
-	<h:outputLink value="editCompetenceCourse.faces">
+	<h:outputLink value="#{facesContext.externalContext.requestContextPath}/manager/bolonha/competenceCourses/editCompetenceCourse.faces">
 		<h:outputText value="#{bolonhaBundle['edit']}"/>
 		<f:param name="competenceCourseID" value="#{CompetenceCourseManagement.competenceCourse.externalId}"/>
 		<f:param name="action" value="viewccm"/>
@@ -226,4 +226,4 @@
 			<h:commandButton alt="#{htmlAltBundle['commandButton.close']}" immediate="true" styleClass="inputbutton" onclick="window.close()" value="#{bolonhaBundle['close']}" />
 		</h:panelGroup>
 	</h:form>
-</ft:tilesView>
+</f:view>

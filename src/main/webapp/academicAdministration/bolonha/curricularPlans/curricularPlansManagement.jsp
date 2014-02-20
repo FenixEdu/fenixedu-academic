@@ -1,10 +1,10 @@
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
-<ft:tilesView definition="df.layout.two-column.contents" attributeName="body-inline">
+<f:view>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/ManagerResources" var="managerBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
@@ -144,4 +144,4 @@
 		</fc:dataRepeater>
 	</h:panelGroup>
 
-</ft:tilesView>
+</f:view>

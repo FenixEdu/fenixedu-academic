@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@page import="net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType"%>
 <%@page import="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant"%>
 <%@page import="net.sourceforge.fenixedu.domain.thesis.ThesisFile"%>

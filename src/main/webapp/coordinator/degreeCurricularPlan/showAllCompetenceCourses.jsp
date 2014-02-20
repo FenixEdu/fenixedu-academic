@@ -1,9 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
-<ft:tilesView definition="coordinatorDegreeCurricularPlan" attributeName="body-inline">
+<f:view>
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 
@@ -206,4 +206,4 @@
 		<h:outputText value="<em>#{scouncilBundle['no.curricularPlan.competence.courses']}</em>" escape="false" />
 	</h:panelGroup>
 
-</ft:tilesView>
+</f:view>

@@ -1,9 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
-<ft:tilesView locale="<%=request.getAttribute(org.apache.struts.Globals.LOCALE_KEY).toString()%>" definition="definition.public.department" attributeName="body-inline">
+<f:view>" definition="definition.public.department" attributeName="body-inline">
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 	<f:loadBundle basename="resources/PublicDepartmentResources" var="publicDepartmentBundle"/>
@@ -19,7 +19,7 @@
 			<h:outputText value="#{publicDegreeInfoBundle['structure']}"/>
 		</h:outputLink>
 		&nbsp;&gt;&nbsp;
-		<h:outputLink value="showDepartments.faces">
+		<h:outputLink value="#{facesContext.externalContext.requestContextPath}/publico/department/showDepartments.faces">
 			<h:outputText value="#{publicDepartmentBundle['academic.units']}"/>
 		</h:outputLink>
 		&nbsp;&gt;&nbsp;
@@ -52,4 +52,4 @@
 
 	</h:form>
 
-</ft:tilesView>
+</f:view>

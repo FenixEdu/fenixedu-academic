@@ -1,9 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
-<ft:tilesView definition="scientificCouncil.masterPage" attributeName="body-inline">
+<f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
@@ -31,7 +31,7 @@
 <h:outputText value="<div class='invisible'>" escape="false"/>
 	<h:panelGroup rendered="#{!empty DegreeCurricularPlanManagement.dcp.root.childContexts}">
 		<h:outputText value="<ul class='mtop15'><li>" escape="false"/>
-		<h:outputLink value="viewCurricularPlanStructure.faces" rendered="#{!empty DegreeCurricularPlanManagement.dcp.root.childContexts}">
+		<h:outputLink value="#{facesContext.externalContext.requestContextPath}/scientificCouncil/curricularPlans/viewCurricularPlanStructure.faces" rendered="#{!empty DegreeCurricularPlanManagement.dcp.root.childContexts}">
 			<h:outputFormat value="#{scouncilBundle['view.param']}" escape="false">
 				<f:param value="#{scouncilBundle['curricularPlan.structure']}"/>
 			</h:outputFormat>
@@ -47,7 +47,7 @@
 	<h:outputText value="<p class='mtop15 mbottom0'>" escape="false"/>
 	<h:panelGroup rendered="#{!empty DegreeCurricularPlanManagement.dcp.degreeStructure.childs}">
 		<h:outputText value="#{scouncilBundle['view.structure.organized.by']}: " escape="false"/>
-		<h:outputLink value="viewCurricularPlan.faces" rendered="#{CurricularCourseManagement.organizeBy == 'years'}">
+		<h:outputLink value="#{facesContext.externalContext.requestContextPath}/scientificCouncil/curricularPlans/viewCurricularPlan.faces" rendered="#{CurricularCourseManagement.organizeBy == 'years'}">
 			<h:outputText value="#{scouncilBundle['groups']}" />
 			<f:param name="dcpId" value="#{DegreeCurricularPlanManagement.dcpId}"/>
 			<f:param name="organizeBy" value="groups"/>
@@ -57,7 +57,7 @@
 		</h:outputLink>
 		<h:outputText value="<span class='highlight3'>#{scouncilBundle['groups']}</span>" rendered="#{CurricularCourseManagement.organizeBy == 'groups'}" escape="false"/>
 		<h:outputText value=" , " escape="false"/>
-		<h:outputLink value="viewCurricularPlan.faces" rendered="#{CurricularCourseManagement.organizeBy == 'groups'}">
+		<h:outputLink value="#{facesContext.externalContext.requestContextPath}/scientificCouncil/curricularPlans/viewCurricularPlan.faces" rendered="#{CurricularCourseManagement.organizeBy == 'groups'}">
 			<h:outputText value="#{scouncilBundle['year']}/#{scouncilBundle['semester']}" />
 			<f:param name="dcpId" value="#{DegreeCurricularPlanManagement.dcpId}"/>
 			<f:param name="organizeBy" value="years"/>
@@ -72,7 +72,7 @@
 	<h:outputText value="<p class='mtop05 mbottom0'>" escape="false"/>
 	<h:panelGroup rendered="#{!empty DegreeCurricularPlanManagement.dcp.root.childContexts}">	
 		<h:outputText value="#{scouncilBundle['curricularRules']}: " escape="false"/>
-		<h:outputLink value="viewCurricularPlan.faces" rendered="#{CurricularCourseManagement.showRules == 'false'}">
+		<h:outputLink value="#{facesContext.externalContext.requestContextPath}/scientificCouncil/curricularPlans/viewCurricularPlan.faces" rendered="#{CurricularCourseManagement.showRules == 'false'}">
 			<h:outputText value="#{scouncilBundle['show']}" />
 			<f:param name="dcpId" value="#{DegreeCurricularPlanManagement.dcpId}"/>
 			<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
@@ -82,7 +82,7 @@
 		</h:outputLink>
 		<h:outputText value="<span class='highlight3'>#{scouncilBundle['show']}</span>" rendered="#{CurricularCourseManagement.showRules == 'true'}" escape="false"/>
 		<h:outputText value=" , " escape="false"/>
-		<h:outputLink value="viewCurricularPlan.faces" rendered="#{CurricularCourseManagement.showRules == 'true'}">
+		<h:outputLink value="#{facesContext.externalContext.requestContextPath}/scientificCouncil/curricularPlans/viewCurricularPlan.faces" rendered="#{CurricularCourseManagement.showRules == 'true'}">
 			<h:outputText value="#{scouncilBundle['hide']}" />
 			<f:param name="dcpId" value="#{DegreeCurricularPlanManagement.dcpId}"/>
 			<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
@@ -97,7 +97,7 @@
 	<h:outputText value="<p class='mtop05 mbottom0'>" escape="false"/>
 	<h:panelGroup rendered="#{CurricularCourseManagement.showRules == 'true' && CurricularCourseManagement.organizeBy == 'groups'}">
 		<h:outputText value="#{scouncilBundle['curricularCourses']}: " escape="false"/>
-		<h:outputLink value="viewCurricularPlan.faces" rendered="#{CurricularCourseManagement.hideCourses == 'true'}">
+		<h:outputLink value="#{facesContext.externalContext.requestContextPath}/scientificCouncil/curricularPlans/viewCurricularPlan.faces" rendered="#{CurricularCourseManagement.hideCourses == 'true'}">
 			<h:outputText value="#{scouncilBundle['show']}" />
 			<f:param name="dcpId" value="#{DegreeCurricularPlanManagement.dcpId}"/>
 			<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
@@ -107,7 +107,7 @@
 		</h:outputLink>
 		<h:outputText value="<span class='highlight3'>#{scouncilBundle['show']}</span>" rendered="#{CurricularCourseManagement.hideCourses == 'false'}" escape="false"/>
 		<h:outputText value=" , " escape="false"/>
-		<h:outputLink value="viewCurricularPlan.faces" rendered="#{CurricularCourseManagement.hideCourses == 'false'}">
+		<h:outputLink value="#{facesContext.externalContext.requestContextPath}/scientificCouncil/curricularPlans/viewCurricularPlan.faces" rendered="#{CurricularCourseManagement.hideCourses == 'false'}">
 			<h:outputText value="#{scouncilBundle['hide']}" />
 			<f:param name="dcpId" value="#{DegreeCurricularPlanManagement.dcpId}"/>
 			<f:param name="organizeBy" value="#{CurricularCourseManagement.organizeBy}"/>
@@ -142,4 +142,4 @@
 	</h:form>
 	<h:outputText value="</p>" escape="false"/>
 
-</ft:tilesView>
+</f:view>

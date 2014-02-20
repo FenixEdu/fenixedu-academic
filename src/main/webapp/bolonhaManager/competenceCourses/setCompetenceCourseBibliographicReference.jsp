@@ -1,9 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
-<ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
+<f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
@@ -17,7 +17,7 @@
 		<h:outputText escape="false" value="<input alt='input.competenceCourseID' id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.externalId}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.action' id='action' name='action' type='hidden' value='#{CompetenceCourseManagement.action}'/>"/>
 		<h:outputText value="<ul><li>" escape="false"/>
-	 		<h:outputLink value="setCompetenceCourseBibliographicReference.faces">
+	 		<h:outputLink value="#{facesContext.externalContext.requestContextPath}/bolonhaManager/competenceCourses/setCompetenceCourseBibliographicReference.faces">
 					<h:outputText value="#{bolonhaBundle['createBibliographicReference']}"/>
 					<f:param name="action" value="#{CompetenceCourseManagement.action}"/>
 					<f:param name="competenceCourseID" value="#{CompetenceCourseManagement.competenceCourse.externalId}"/>
@@ -129,7 +129,7 @@
 					<h:outputText value="</li>" escape="false"/>
 
 					<h:outputText value="<li class='mtop05'>" escape="false"/>
-					<h:outputLink value="setCompetenceCourseBibliographicReference.faces">
+					<h:outputLink value="#{facesContext.externalContext.requestContextPath}/bolonhaManager/competenceCourses/setCompetenceCourseBibliographicReference.faces">
 						<h:outputText value="#{bolonhaBundle['edit']}"/>
 						<f:param name="bibliographicReferenceID" value="#{bibliographicReference.order}"/>
 						<f:param name="action" value="#{CompetenceCourseManagement.action}"/>
@@ -187,7 +187,7 @@
 					<h:outputText value="</li>" escape="false"/>
 
 					<h:outputText value="<li class='mtop05'>" escape="false"/>
-					<h:outputLink value="setCompetenceCourseBibliographicReference.faces">
+					<h:outputLink value="#{facesContext.externalContext.requestContextPath}/bolonhaManager/competenceCourses/setCompetenceCourseBibliographicReference.faces">
 						<h:outputText value="#{bolonhaBundle['edit']}"/>
 						<f:param name="bibliographicReferenceID" value="#{bibliographicReference.order}"/>
 						<f:param name="action" value="#{CompetenceCourseManagement.action}"/>
@@ -209,4 +209,4 @@
 			<h:commandButton alt="#{htmlAltBundle['commandButton.back']}" immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['back']}" action="editCompetenceCourseMainPage"/>			
 		</h:panelGroup>
 	</h:form>
-</ft:tilesView>
+</f:view>

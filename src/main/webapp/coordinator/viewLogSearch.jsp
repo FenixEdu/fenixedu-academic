@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@page import="java.util.Map.Entry"%>
 <%@page import="java.util.Map"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>

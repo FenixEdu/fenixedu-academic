@@ -1,8 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
-<ft:tilesView definition="df.coordinator.evaluation-management" attributeName="body-inline">
+<f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 	
@@ -26,4 +26,4 @@
 		  value="#{bundle['label.choose']}" styleClass="inputbutton"/>
 		
 	</h:form>
-</ft:tilesView>
+</f:view>

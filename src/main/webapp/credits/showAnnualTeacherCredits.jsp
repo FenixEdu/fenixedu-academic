@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@page import="net.sourceforge.fenixedu.domain.ExecutionSemester"%>
 <%@page contentType="text/html" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>

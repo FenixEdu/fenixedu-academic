@@ -1,9 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
-<ft:tilesView locale="<%=request.getAttribute(org.apache.struts.Globals.LOCALE_KEY).toString()%>" definition="definition.delegate.two-column" attributeName="body-inline">
+<f:view>" definition="definition.delegate.two-column" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/DelegateResources" var="delegatesBundle"/>
 	<f:loadBundle basename="resources/ApplicationResources" var="bundleApplication"/>
@@ -58,4 +58,4 @@
 			 		editLinkParameters="#{evaluationsForDelegates.calendarLinks}"/>
 		</h:panelGroup> 
 	</h:form>
-</ft:tilesView>
+</f:view>

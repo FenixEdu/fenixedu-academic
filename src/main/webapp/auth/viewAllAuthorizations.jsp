@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app"%>
 <%@ taglib uri="http://jakarta.apache.org/struts/tags-bean" prefix="bean"%>
@@ -46,7 +47,7 @@
    			"oLanguage" : {
    				"sProcessing": "A processar...",
    				"sLengthMenu": "Mostrar _MENU_ registos",
-   				"sZeroRecords": "Não foram encontrados registos",
+   				"sZeroRecords": "Nï¿½o foram encontrados registos",
    				"sInfo": "_START_ - _END_ de _TOTAL_",
    				"sInfoEmpty": "0 - 0 de 0",
    				"sInfoFiltered": "(filtrado de _MAX_ total de registos)",
@@ -55,7 +56,7 @@
    				"sFirst": "Primeiro",
    				"sPrevious": "Anterior",
    				"sNext": "Seguinte",
-   				"sLast": "Último"
+   				"sLast": "ï¿½ltimo"
    			},
     		"aaSorting": [[ 1, "desc" ], [ 0, "asc" ]]	    			
    		}

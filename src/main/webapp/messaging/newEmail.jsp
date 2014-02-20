@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ page language="java" %>
 <%@page import="net.sourceforge.fenixedu.domain.util.email.Sender"%>
 <%@page import="net.sourceforge.fenixedu.domain.person.RoleType"%>

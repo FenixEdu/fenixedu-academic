@@ -1,11 +1,12 @@
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt"%>
 
-<ft:tilesView definition="df.coordinator.evaluation-management" attributeName="body-inline">
+<f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>	
@@ -107,7 +108,7 @@
 								</c:if>
 							</td>
 							<td>
-								<c:url var="editEvaluationURL" value="editWrittenTest.faces">
+								<c:url var="editEvaluationURL" value="#{facesContext.externalContext.requestContextPath}/coordinator/evaluation/editWrittenTest.faces">
 									<c:param name="degreeCurricularPlanID" value="${coordinatorWrittenTestsInformationBackingBean.degreeCurricularPlanID}"/>
 									<c:param name="executionPeriodID" value="${coordinatorWrittenTestsInformationBackingBean.executionPeriodID}"/>
 									<c:param name="curricularYearID" value="${coordinatorWrittenTestsInformationBackingBean.curricularYearID}"/>
@@ -118,7 +119,7 @@
 									<c:out value="${bundle['label.edit']}"/>
 								</a>
 								<c:out value=" | "/>
-								<c:url var="deleteEvaluationURL" value="deleteWrittenTest.faces">
+								<c:url var="deleteEvaluationURL" value="#{facesContext.externalContext.requestContextPath}/coordinator/evaluation/deleteWrittenTest.faces">
 									<c:param name="degreeCurricularPlanID" value="${coordinatorWrittenTestsInformationBackingBean.degreeCurricularPlanID}"/>
 									<c:param name="executionPeriodID" value="${coordinatorWrittenTestsInformationBackingBean.executionPeriodID}"/>
 									<c:param name="curricularYearID" value="${coordinatorWrittenTestsInformationBackingBean.curricularYearID}"/>
@@ -145,7 +146,7 @@
 					<c:forEach items="${coordinatorWrittenTestsInformationBackingBean.executionCoursesWithoutWrittenTests}" var="executionCourse">
 						<tr>
 							<td>
-								<c:url var="evaluationManagementURL" value="createWrittenTest.faces">
+								<c:url var="evaluationManagementURL" value="#{facesContext.externalContext.requestContextPath}/coordinator/evaluation/createWrittenTest.faces">
 									<c:param name="degreeCurricularPlanID" value="${coordinatorWrittenTestsInformationBackingBean.degreeCurricularPlanID}"/>
 									<c:param name="executionPeriodID" value="${coordinatorWrittenTestsInformationBackingBean.executionPeriodID}"/>
 									<c:param name="curricularYearID" value="${coordinatorWrittenTestsInformationBackingBean.curricularYearID}"/>
@@ -163,4 +164,4 @@
 			</f:verbatim>
 		</h:panelGroup>
 	</h:form>
-</ft:tilesView>
+</f:view>

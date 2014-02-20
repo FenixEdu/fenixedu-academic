@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app"%>
 <%@ taglib uri="http://jakarta.apache.org/struts/tags-bean" prefix="bean"%>

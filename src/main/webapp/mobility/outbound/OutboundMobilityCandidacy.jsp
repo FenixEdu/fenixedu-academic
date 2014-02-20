@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriodConfirmationOption"%>
 <%@ page language="java"%>
 <%@page import="net.sourceforge.fenixedu.domain.Person"%>

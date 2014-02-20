@@ -1,9 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
 
-<ft:tilesView definition="df.page.structure" attributeName="body-inline">
+<f:view>
 
 <script type="text/javascript">
 function check(e,v)
@@ -29,4 +29,4 @@ function check(e,v)
 	<h:outputText value="<h2>#{organizationalStructure.instituitionName}</h2>" escape="false"/>
 	<h:outputText value="#{organizationalStructure.units}<br/>" escape="false"/>
 
-</ft:tilesView>
+</f:view>

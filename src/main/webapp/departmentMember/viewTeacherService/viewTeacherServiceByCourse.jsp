@@ -1,14 +1,13 @@
 
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://java.sun.com/jstl/core"  prefix="c" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix"  prefix="fc" %>
 
 
-<ft:tilesView definition="departmentMember.masterPage"
-	attributeName="body-inline">
+<f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 
 	<f:loadBundle basename="resources/DepartmentMemberResources"
@@ -47,7 +46,7 @@
 	</h:form>	
 	
 	
-	<h:outputText value="<p class='mtop15'>Visualizar por: <a href='viewTeacherService.faces?selectedExecutionYearID=#{viewTeacherService.selectedExecutionYearID}'>" escape="false"/>
+	<h:outputText value="#{facesContext.externalContext.requestContextPath}/departmentMember/viewTeacherService/<p class='mtop15'>Visualizar por: <a href='viewTeacherService.faces?selectedExecutionYearID=#{viewTeacherService.selectedExecutionYearID}'>" escape="false"/>
 	<h:outputText value="#{bundle['label.teacherService.navigateByTeacher']}" escape="false"/>		
 	<h:outputText value="</a> " escape="false"/>
 	<h:outputText value=" #{bundle['label.teacherService.separator']} " escape="false"/>
@@ -158,7 +157,7 @@
 					<h:outputText value="<ul class='smalltxt'>" escape="false" />
 						<fc:dataRepeater value="#{course.teacherExecutionCourseServiceList}" var="teacherList">
 						 	<h:panelGroup rendered="#{teacherList.teacherOfDepartment == true}">
-								<h:outputText value="<li><a href='viewTeacherService.faces?selectedExecutionYearID=#{viewTeacherService.selectedExecutionYearID}##{teacherList.teacherExternalId}'>"  escape="false"/>
+								<h:outputText value="#{facesContext.externalContext.requestContextPath}/departmentMember/viewTeacherService/<li><a href='viewTeacherService.faces?selectedExecutionYearID=#{viewTeacherService.selectedExecutionYearID}##{teacherList.teacherExternalId}'>"  escape="false"/>
 								<h:outputText value="#{teacherList.description} " escape="false" />	
 							  	<h:outputText  value="#{bundle['label.teacherService.hours']}" escape="false" />
 							 	<h:outputText value="</a></li>"  escape="false"/>
@@ -178,4 +177,4 @@
 	<h:outputText value="</table>" escape="false" />
 
 
-</ft:tilesView>
+</f:view>

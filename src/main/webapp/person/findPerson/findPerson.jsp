@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@page import="org.apache.commons.lang.StringUtils"%>
 <%@page import="com.google.common.base.Strings"%>
 <%@page import="com.google.common.base.Joiner"%>

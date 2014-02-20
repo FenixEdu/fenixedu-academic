@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@page import="java.util.Map.Entry"%>
 <%@page import="java.util.Map"%>
 <%@page import="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseLogBean"%>

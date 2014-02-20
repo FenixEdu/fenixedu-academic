@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@page import="net.sourceforge.fenixedu.domain.candidacy.util.GenericApplicationRecommendationBean"%>
 <%@page import="net.sourceforge.fenixedu.domain.candidacy.GenericApplicationRecomentation"%>
 <%@page import="org.apache.struts.action.ActionMessages"%>

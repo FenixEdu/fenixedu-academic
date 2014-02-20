@@ -1,9 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
-<ft:tilesView definition="df.layout.two-column.contents" attributeName="body-inline">
+<f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
@@ -42,7 +42,7 @@
 		
 		<h:outputText value="<div class='invisible'>" escape="false"/>
 		<h:outputText value="<ul><li>" escape="false"/>
-		<h:outputLink value="viewCurricularPlanStructure.faces" rendered="#{!empty AcademicAdministrationCurricularCourseManagement.degreeCurricularPlan.root.childContexts}">
+		<h:outputLink value="#{facesContext.externalContext.requestContextPath}/academicAdministration/bolonha/curricularPlans/viewCurricularPlanStructure.faces" rendered="#{!empty AcademicAdministrationCurricularCourseManagement.degreeCurricularPlan.root.childContexts}">
 			<h:outputFormat value="#{bolonhaBundle['view.param']}" escape="false">
 				<f:param value="#{bolonhaBundle['curricularPlan.structure']}"/>
 			</h:outputFormat>
@@ -58,7 +58,7 @@
 		<h:outputText value="<p class='mtop2 mbottom0'>" escape="false"/>
 		<h:panelGroup rendered="#{!empty AcademicAdministrationCurricularCourseManagement.degreeCurricularPlan.degreeStructure.childs}">
 			<h:outputText value="#{bolonhaBundle['view.structure.organized.by']}: " escape="false"/>
-			<h:outputLink value="viewCurricularPlan.faces" rendered="#{AcademicAdministrationCurricularCourseManagement.organizeBy == 'years'}">
+			<h:outputLink value="#{facesContext.externalContext.requestContextPath}/academicAdministration/bolonha/curricularPlans/viewCurricularPlan.faces" rendered="#{AcademicAdministrationCurricularCourseManagement.organizeBy == 'years'}">
 				<h:outputText value="#{bolonhaBundle['groups']}" />
 				<f:param name="degreeCurricularPlanID" value="#{AcademicAdministrationCurricularCourseManagement.degreeCurricularPlanID}"/>
 				<f:param name="executionYearID" value="#{AcademicAdministrationCurricularCourseManagement.executionYearID}"/>
@@ -69,7 +69,7 @@
 			</h:outputLink>
 			<h:outputText value="<span class='highlight3'>#{bolonhaBundle['groups']}</span>" rendered="#{AcademicAdministrationCurricularCourseManagement.organizeBy == 'groups'}" escape="false"/>
 			<h:outputText value=" , " escape="false"/>
-			<h:outputLink value="viewCurricularPlan.faces" rendered="#{AcademicAdministrationCurricularCourseManagement.organizeBy == 'groups'}">
+			<h:outputLink value="#{facesContext.externalContext.requestContextPath}/academicAdministration/bolonha/curricularPlans/viewCurricularPlan.faces" rendered="#{AcademicAdministrationCurricularCourseManagement.organizeBy == 'groups'}">
 				<h:outputText value="#{bolonhaBundle['year']}/#{bolonhaBundle['semester']}" />
 				<f:param name="degreeCurricularPlanID" value="#{AcademicAdministrationCurricularCourseManagement.degreeCurricularPlanID}"/>
 				<f:param name="executionYearID" value="#{AcademicAdministrationCurricularCourseManagement.executionYearID}"/>
@@ -85,7 +85,7 @@
 		<h:outputText value="<p class='mtop05 mbottom0'>" escape="false"/>
 		<h:panelGroup rendered="#{!empty AcademicAdministrationCurricularCourseManagement.degreeCurricularPlan.root.childContexts}">	
 			<h:outputText value="#{bolonhaBundle['curricularRules']}: " escape="false"/>
-			<h:outputLink value="viewCurricularPlan.faces" rendered="#{AcademicAdministrationCurricularCourseManagement.showRules == 'false'}">
+			<h:outputLink value="#{facesContext.externalContext.requestContextPath}/academicAdministration/bolonha/curricularPlans/viewCurricularPlan.faces" rendered="#{AcademicAdministrationCurricularCourseManagement.showRules == 'false'}">
 				<h:outputText value="#{bolonhaBundle['show']}" />
 				<f:param name="degreeCurricularPlanID" value="#{AcademicAdministrationCurricularCourseManagement.degreeCurricularPlanID}"/>
 				<f:param name="executionYearID" value="#{AcademicAdministrationCurricularCourseManagement.executionYearID}"/>
@@ -96,7 +96,7 @@
 			</h:outputLink>
 			<h:outputText value="<span class='highlight3'>#{bolonhaBundle['show']}</span>" rendered="#{AcademicAdministrationCurricularCourseManagement.showRules == 'true'}" escape="false"/>
 			<h:outputText value=" , " escape="false"/>
-			<h:outputLink value="viewCurricularPlan.faces" rendered="#{AcademicAdministrationCurricularCourseManagement.showRules == 'true'}">
+			<h:outputLink value="#{facesContext.externalContext.requestContextPath}/academicAdministration/bolonha/curricularPlans/viewCurricularPlan.faces" rendered="#{AcademicAdministrationCurricularCourseManagement.showRules == 'true'}">
 				<h:outputText value="#{bolonhaBundle['hide']}" />
 				<f:param name="degreeCurricularPlanID" value="#{AcademicAdministrationCurricularCourseManagement.degreeCurricularPlanID}"/>
 				<f:param name="executionYearID" value="#{AcademicAdministrationCurricularCourseManagement.executionYearID}"/>				
@@ -112,7 +112,7 @@
 		<h:outputText value="<p class='mtop05 mbottom0'>" escape="false"/>
 		<h:panelGroup rendered="#{AcademicAdministrationCurricularCourseManagement.showRules == 'true' && AcademicAdministrationCurricularCourseManagement.organizeBy == 'groups'}">
 			<h:outputText value="#{bolonhaBundle['curricularCourses']}: " escape="false"/>
-			<h:outputLink value="viewCurricularPlan.faces" rendered="#{AcademicAdministrationCurricularCourseManagement.hideCourses == 'true'}">
+			<h:outputLink value="#{facesContext.externalContext.requestContextPath}/academicAdministration/bolonha/curricularPlans/viewCurricularPlan.faces" rendered="#{AcademicAdministrationCurricularCourseManagement.hideCourses == 'true'}">
 				<h:outputText value="#{bolonhaBundle['show']}" />
 				<f:param name="degreeCurricularPlanID" value="#{AcademicAdministrationCurricularCourseManagement.degreeCurricularPlanID}"/>
 				<f:param name="executionYearID" value="#{AcademicAdministrationCurricularCourseManagement.executionYearID}"/>
@@ -123,7 +123,7 @@
 			</h:outputLink>
 			<h:outputText value="<span class='highlight3'>#{bolonhaBundle['show']}</span>" rendered="#{AcademicAdministrationCurricularCourseManagement.hideCourses == 'false'}" escape="false"/>
 			<h:outputText value=" , " escape="false"/>
-			<h:outputLink value="viewCurricularPlan.faces" rendered="#{AcademicAdministrationCurricularCourseManagement.hideCourses == 'false'}">
+			<h:outputLink value="#{facesContext.externalContext.requestContextPath}/academicAdministration/bolonha/curricularPlans/viewCurricularPlan.faces" rendered="#{AcademicAdministrationCurricularCourseManagement.hideCourses == 'false'}">
 				<h:outputText value="#{bolonhaBundle['hide']}" />
 				<f:param name="degreeCurricularPlanID" value="#{AcademicAdministrationCurricularCourseManagement.degreeCurricularPlanID}"/>
 				<f:param name="executionYearID" value="#{AcademicAdministrationCurricularCourseManagement.executionYearID}"/>
@@ -158,4 +158,4 @@
 	</h:form>
 	</h:panelGroup>
 
-</ft:tilesView>
+</f:view>

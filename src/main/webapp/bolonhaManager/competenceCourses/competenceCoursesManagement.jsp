@@ -1,9 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
-<ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
+<f:view>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 
@@ -52,7 +52,7 @@
 								<h:outputText value="<table style='width: 100%; background-color: #fff;'><tr>" escape="false"/>
 								<h:outputText value="<td>#{competenceCourseGroupUnit.name}</td> " escape="false"/>
 								<h:outputText value="<td class='aright'>" escape="false"/>
-									<h:outputLink value="createCompetenceCourse.faces">
+									<h:outputLink value="#{facesContext.externalContext.requestContextPath}/bolonhaManager/competenceCourses/createCompetenceCourse.faces">
 										<h:outputFormat value="#{bolonhaBundle['create.param']}" escape="false">
 											<f:param value=" #{bolonhaBundle['course']}"/>
 										</h:outputFormat>								
@@ -74,25 +74,25 @@
 									</h:column>
 
 									<h:column>
-										<h:outputLink value="showCompetenceCourse.faces">
+										<h:outputLink value="#{facesContext.externalContext.requestContextPath}/bolonhaManager/competenceCourses/showCompetenceCourse.faces">
 											<h:outputText value="#{bolonhaBundle['show']}"/>
 											<f:param name="action" value="ccm"/>
 											<f:param name="competenceCourseID" value="#{competenceCourse.externalId}"/>
 										</h:outputLink>
 										<h:panelGroup rendered="#{competenceCourse.curricularStage.name != 'APPROVED'}">
 											<h:outputText value=", "/>
-												<h:outputLink value="editCompetenceCourseMainPage.faces">
+												<h:outputLink value="#{facesContext.externalContext.requestContextPath}/bolonhaManager/competenceCourses/editCompetenceCourseMainPage.faces">
 													<h:outputText value="#{bolonhaBundle['edit']}" />
 													<f:param name="action" value="ccm"/>
 													<f:param name="competenceCourseID" value="#{competenceCourse.externalId}"/>
 												</h:outputLink>
 												<h:outputText value=", "/>
-														<h:outputLink rendered="#{competenceCourse.curricularStage.name != 'APPROVED'}" value="deleteCompetenceCourse.faces">
+														<h:outputLink rendered="#{competenceCourse.curricularStage.name != 'APPROVED'}" value="#{facesContext.externalContext.requestContextPath}/bolonhaManager/competenceCourses/deleteCompetenceCourse.faces">
 												<h:outputText value="#{bolonhaBundle['delete']}" />
 												<f:param name="competenceCourseID" value="#{competenceCourse.externalId}"/>
 											</h:outputLink>
 											<h:outputText value=", "/>
-											<h:outputLink value="setCompetenceCourseBibliographicReference.faces">
+											<h:outputLink value="#{facesContext.externalContext.requestContextPath}/bolonhaManager/competenceCourses/setCompetenceCourseBibliographicReference.faces">
 												<h:outputText value="#{bolonhaBundle['bibliographicReference']}" />
 												<f:param name="action" value="add"/>
 												<f:param name="bibliographicReferenceID" value="-1"/>
@@ -127,4 +127,4 @@
 	
 
 		
-</ft:tilesView>
+</f:view>

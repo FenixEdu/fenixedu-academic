@@ -1,8 +1,8 @@
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 
-<ft:tilesView definition="df.layout.two-column.contents" attributeName="body-inline">
+<f:view>
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<h:form>
 		<h:panelGrid columns="2">
@@ -13,4 +13,4 @@
 		</h:panelGrid>	
 	</h:form>
 	<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
-</ft:tilesView>
+</f:view>
