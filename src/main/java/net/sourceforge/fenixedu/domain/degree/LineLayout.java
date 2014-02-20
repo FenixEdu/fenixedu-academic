@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.domain.cardGeneration;
+package net.sourceforge.fenixedu.domain.degree;
 
 public enum LineLayout {
 
@@ -7,5 +7,4 @@ public enum LineLayout {
     public String getName() {
         return name();
     }
-
 }

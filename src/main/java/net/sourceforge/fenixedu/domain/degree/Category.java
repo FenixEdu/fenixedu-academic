@@ -1,11 +1,9 @@
-package net.sourceforge.fenixedu.domain.cardGeneration;
+package net.sourceforge.fenixedu.domain.degree;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
-
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 public enum Category {
 
@@ -48,10 +46,10 @@ public enum Category {
     private final LineLayout lineLayout;
     private final Set<DegreeType> degreeTypes;
 
-    private Category(final int code, final LineLayout lineLayout, final Set<DegreeType> degreeTyoes) {
+    private Category(final int code, final LineLayout lineLayout, final Set<DegreeType> degreeTypes) {
         this.code = code;
         this.lineLayout = lineLayout;
-        this.degreeTypes = Collections.unmodifiableSortedSet(new TreeSet<DegreeType>(degreeTyoes));
+        this.degreeTypes = Collections.unmodifiableSortedSet(new TreeSet<DegreeType>(degreeTypes));
     }
 
     public String getName() {

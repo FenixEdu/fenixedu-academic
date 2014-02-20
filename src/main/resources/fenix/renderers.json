@@ -88,7 +88,6 @@
     { "name": "resourceAllocationManager", "configFile": "struts-resourceAllocationManager.xml" },
     { "name": "externalSupervision", "configFile": "struts-externalSupervision.xml" },
     { "name": "residenceManagement", "configFile": "struts-residenceManagement.xml" },
-    { "name": "identificationCardManager", "configFile": "struts-identificationCardManager.xml" },
     { "name": "masterDegreeAdministrativeOffice", "configFile": "struts-masterDegreeAdministrativeOffice.xml" },
     { "name": "publico", "configFile": "struts-publico.xml" },
     { "name": "delegate", "configFile": "struts-delegate.xml" },
