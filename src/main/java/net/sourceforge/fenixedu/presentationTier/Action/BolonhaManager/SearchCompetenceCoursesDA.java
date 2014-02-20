@@ -7,21 +7,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
+import net.sourceforge.fenixedu.presentationTier.Action.BolonhaManager.BolonhaManagerApplication.CompetenceCourseManagementApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@StrutsFunctionality(app = CompetenceCourseManagementApp.class, path = "search", titleKey = "navigation.search.competenceCourses")
 @Mapping(module = "bolonhaManager", path = "/competenceCourses/searchCompetenceCourses")
-@Forwards({ @Forward(name = "searchCompetenceCourses", path = "/bolonhaManager/competenceCourses/searchCompetenceCourses.jsp",
-        tileProperties = @Tile(title = "private.bologna.competencecourses.search")) })
+@Forwards({ @Forward(name = "searchCompetenceCourses", path = "/bolonhaManager/competenceCourses/searchCompetenceCourses.jsp") })
 public class SearchCompetenceCoursesDA extends FenixDispatchAction {
 
     public static class SearchCompetenceCourseBean implements Serializable {
@@ -55,6 +57,7 @@ public class SearchCompetenceCoursesDA extends FenixDispatchAction {
         }
     }
 
+    @EntryPoint
     public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         SearchCompetenceCourseBean searchBean = getOrCreateSearchBean(request);
         String searchName = searchBean.getSearchName();

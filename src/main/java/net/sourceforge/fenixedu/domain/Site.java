@@ -138,7 +138,8 @@ public abstract class Site extends Site_Base {
 
     public static final class SiteMapper {
         public static <T extends Site> T getSite(HttpServletRequest request) {
-            throw new UnsupportedOperationException("Not yet implemented");
+//            throw new UnsupportedOperationException("Not yet implemented");
+            return null;
         }
     }
 
