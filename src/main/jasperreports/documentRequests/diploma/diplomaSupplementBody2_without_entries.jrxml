@@ -151,7 +151,7 @@
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial" size="8" isBold="false" isItalic="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+						<font fontName="Serif" size="8" isBold="false" isItalic="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.four.four")]]></textFieldExpression>
 				</textField>
@@ -164,7 +164,7 @@
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial" size="8" isBold="false" isItalic="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+						<font fontName="Serif" size="8" isBold="false" isItalic="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.four.five")]]></textFieldExpression>
 				</textField>
@@ -179,7 +179,7 @@
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial" size="8" isBold="false" isItalic="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+						<font fontName="Serif" size="8" isBold="false" isItalic="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("phd.diploma.supplement.is.exempted.from.study")]]></textFieldExpression>
 				</textField>
@@ -194,7 +194,7 @@
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial" size="8" isBold="false" isItalic="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+						<font fontName="sansserif" size="8" isBold="false" isItalic="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("phd.diploma.supplement.is.exempted.from.study")]]></textFieldExpression>
 				</textField>
@@ -209,7 +209,7 @@
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial" size="8" isBold="false" isItalic="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+						<font fontName="Serif" size="8" isBold="false" isItalic="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.four.six")]]></textFieldExpression>
 				</textField>
@@ -224,7 +224,7 @@
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Justified" lineSpacing="Single">
-						<font fontName="Arial" size="8" isBold="false" isItalic="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+						<font fontName="Serif" size="8" isBold="false" isItalic="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$P{thesisFinalGrade}]]></textFieldExpression>
 				</textField>
