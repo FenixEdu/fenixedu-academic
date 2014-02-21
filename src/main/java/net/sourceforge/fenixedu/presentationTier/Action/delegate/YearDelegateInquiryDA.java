@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.domain.student.YearDelegate;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.delegate.DelegateApplication.DelegateParticipateApp;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.ViewCourseInquiryPublicResults;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.ViewTeacherInquiryPublicResults;
 
@@ -32,30 +33,28 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
+@StrutsFunctionality(app = DelegateParticipateApp.class, path = "inquiry", titleKey = "link.yearDelegateInquiries")
 @Mapping(path = "/delegateInquiry", module = "delegate")
-@Forwards({
-        @Forward(name = "chooseCoursesToAnswer", path = "/delegate/inquiries/chooseCoursesToAnswer.jsp", tileProperties = @Tile(
-                title = "private.delegate.participate.qucdelegateinquiries")),
-        @Forward(name = "inquiry1stPage", path = "/delegate/inquiries/inquiry1stPage.jsp", tileProperties = @Tile(
-                title = "private.delegate.participate.qucdelegateinquiries")),
-        @Forward(name = "delegateInquiry", path = "/delegate/inquiries/delegateInquiry.jsp", tileProperties = @Tile(
-                title = "private.delegate.participate.qucdelegateinquiries")),
-        @Forward(name = "inquiriesClosed", path = "/delegate/inquiries/inquiriesClosed.jsp", tileProperties = @Tile(
-                title = "private.delegate.participate.qucdelegateinquiries")) })
+@Forwards({ @Forward(name = "chooseCoursesToAnswer", path = "/delegate/inquiries/chooseCoursesToAnswer.jsp"),
+        @Forward(name = "inquiry1stPage", path = "/delegate/inquiries/inquiry1stPage.jsp"),
+        @Forward(name = "delegateInquiry", path = "/delegate/inquiries/delegateInquiry.jsp"),
+        @Forward(name = "inquiriesClosed", path = "/delegate/inquiries/inquiriesClosed.jsp") })
 public class YearDelegateInquiryDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward showCoursesToAnswerPage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 

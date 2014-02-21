@@ -29,25 +29,25 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.delegate.DelegateApplication.DelegateMessagingApp;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.EmailsDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
+@StrutsFunctionality(app = DelegateMessagingApp.class, path = "send-email-to-students", titleKey = "link.sendEmailToStudents")
 @Mapping(path = "/sendEmailToDelegateStudents", module = "delegate")
-@Forwards({
-        @Forward(name = "choose-receivers", path = "/delegate/chooseReceivers.jsp", tileProperties = @Tile(
-                title = "private.delegate.communication.sendemailtostudents")),
-        @Forward(name = "choose-student-receivers", path = "/delegate/chooseStudentReceivers.jsp", tileProperties = @Tile(
-                title = "private.delegate.communication.sendemailtostudents")) })
+@Forwards({ @Forward(name = "choose-receivers", path = "/delegate/chooseReceivers.jsp"),
+        @Forward(name = "choose-student-receivers", path = "/delegate/chooseStudentReceivers.jsp") })
 public class SendEmailToDelegateStudents extends FenixDispatchAction {
 
     @SuppressWarnings("unchecked")
@@ -97,6 +97,7 @@ public class SendEmailToDelegateStudents extends FenixDispatchAction {
         return EmailsDA.sendEmail(request, null, recipients.toArray(new Recipient[] {}));
     }
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         RenderUtils.invalidateViewState();

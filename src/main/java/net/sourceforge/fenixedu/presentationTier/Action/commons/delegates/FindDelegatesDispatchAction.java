@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
@@ -44,6 +45,7 @@ public class FindDelegatesDispatchAction extends FenixDispatchAction {
         }
     }
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();

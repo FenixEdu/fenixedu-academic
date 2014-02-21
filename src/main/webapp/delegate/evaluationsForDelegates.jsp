@@ -3,7 +3,11 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
-<f:view>" definition="definition.delegate.two-column" attributeName="body-inline">
+<link href="${pageContext.request.contextPath}/CSS/dotist_calendars.css" rel="stylesheet" media="screen" type="text/css" />
+
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.delegate.DelegateApplication$EvaluationsForDelegatesAction" />
+
+<f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/DelegateResources" var="delegatesBundle"/>
 	<f:loadBundle basename="resources/ApplicationResources" var="bundleApplication"/>
@@ -29,7 +33,6 @@
 						onchange="this.form.submit();">
 					<f:selectItems value="#{evaluationsForDelegates.degreeCurricularPlanSelectItems}"/>
 				</h:selectOneMenu>
-				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 			<h:outputText value="</p>" escape="false"/>
 
 			<h:outputText value="<p>#{delegatesBundle['label.delegates.evaluations.execution.period']}: " escape="false"/>
@@ -37,7 +40,6 @@
 						onchange="this.form.submit();">
 					<f:selectItems value="#{evaluationsForDelegates.executionPeriodSelectItems}"/>
 				</h:selectOneMenu>
-				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 			<h:outputText value="</p>" escape="false"/>
 	
 			<h:outputText value="<p>#{delegatesBundle['label.delegates.evaluations.curricular.year']}: " escape="false"/>
@@ -46,7 +48,6 @@
 					<f:selectItem itemLabel="#{delegatesBundle['label.delegates.evaluations.allCurricularYears']}" itemValue=""/>
 					<f:selectItems value="#{evaluationsForDelegates.curricularYearSelectItems}"/>
 				</h:selectOneMenu>
-				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID3' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 			<h:outputText value="</p>" escape="false"/>
 	
 			<h:outputText value="<br/>" escape="false"/>
