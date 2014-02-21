@@ -39,7 +39,6 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base im
 
     public GratuityWithPaymentPlanPR(DateTime startDate, DateTime endDate, ServiceAgreementTemplate serviceAgreementTemplate) {
         this(EntryType.GRATUITY_FEE, EventType.GRATUITY, startDate, endDate, serviceAgreementTemplate);
-
     }
 
     public GratuityWithPaymentPlanPR(EntryType entryType, EventType eventType, DateTime startDate, DateTime endDate,
@@ -203,6 +202,18 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base im
     @Override
     public Money getDefaultGratuityAmount(ExecutionYear executionYear) {
         return getServiceAgreementTemplate().getDefaultPaymentPlan(executionYear).calculateOriginalTotalAmount();
+    }
+
+    @Override
+    public void delete() {
+        checkIfCanBeDeleted();
+        super.delete();
+    }
+
+    private void checkIfCanBeDeleted() {
+        if (getServiceAgreementTemplate().hasActivePostingRuleFor(EventType.STANDALONE_ENROLMENT_GRATUITY)) {
+            throw new DomainException("error.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR.standalone.cannot.delete");
+        }
     }
 
 }
