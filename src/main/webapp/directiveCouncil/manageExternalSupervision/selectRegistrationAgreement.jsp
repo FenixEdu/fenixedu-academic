@@ -6,7 +6,6 @@
 
 <html:xhtml/>
 
-<em><bean:message bundle="DIRECTIVE_COUNCIL_RESOURCES" key="directiveCouncil"/></em>
 <h2><bean:message bundle="DIRECTIVE_COUNCIL_RESOURCES" key="title.externalSupervisorsManagement"/></h2>
 
 <div class="infoop2"><bean:message bundle="DIRECTIVE_COUNCIL_RESOURCES" key="label.selectRegistrationAgreement.explanation"/></div>

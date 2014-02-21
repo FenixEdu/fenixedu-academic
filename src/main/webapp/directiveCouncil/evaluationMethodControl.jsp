@@ -8,7 +8,6 @@
 
 <logic:present role="role(DIRECTIVE_COUNCIL)">
 
-	<em><bean:message key="DIRECTIVE_COUNCIL" /></em>
 	<h2><bean:message key="label.evaluationMethodControl"/></h2>
 
 	<jsp:include page="./evaluationMethodControlCore.jsp"/>

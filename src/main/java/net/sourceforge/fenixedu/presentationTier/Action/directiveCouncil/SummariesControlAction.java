@@ -47,6 +47,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.bennu.portal.EntryPoint;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
@@ -58,12 +59,13 @@ import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.Pair;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 
-public class SummariesControlAction extends FenixDispatchAction {
+public abstract class SummariesControlAction extends FenixDispatchAction {
 
     private final BigDecimal EMPTY = BigDecimal.ZERO;
     private static final String DEFAULT_MODULE = "pedagogicalCouncil";
     private static final String ENUMERATION_MODULE = "Enumeration";
 
+    @EntryPoint
     public ActionForward prepareSummariesControl(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 

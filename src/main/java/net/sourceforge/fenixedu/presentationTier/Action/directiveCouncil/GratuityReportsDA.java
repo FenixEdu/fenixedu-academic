@@ -15,18 +15,18 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@StrutsFunctionality(app = DirectiveCouncilApplication.class, path = "gratuity-reports",
+        titleKey = "label.directiveCouncil.gratuityReports")
 @Mapping(path = "/gratuityReports", module = "directiveCouncil")
-@Forwards({
-
-@Forward(name = "showReport", path = "/directiveCouncil/gratuityReports/showReport.jsp", tileProperties = @Tile(
-        title = "private.steeringcouncil.reportsfees")) })
+@Forwards(@Forward(name = "showReport", path = "/directiveCouncil/gratuityReports/showReport.jsp"))
 public class GratuityReportsDA extends FenixDispatchAction {
 
     public static class GratuityReportParametersBean implements Serializable {
@@ -91,6 +91,7 @@ public class GratuityReportsDA extends FenixDispatchAction {
 
     }
 
+    @EntryPoint
     public ActionForward showReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 

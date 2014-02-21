@@ -20,12 +20,13 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
-public class EvaluationMethodControlDA extends FenixDispatchAction {
+public abstract class EvaluationMethodControlDA extends FenixDispatchAction {
 
     private abstract static class MethodInvoker {
         public abstract void export(final Spreadsheet spreadsheet, final OutputStream outputStream) throws IOException;
@@ -33,6 +34,7 @@ public class EvaluationMethodControlDA extends FenixDispatchAction {
         public abstract String getExtension();
     }
 
+    @EntryPoint
     public ActionForward search(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final ExecutionCourseWithNoEvaluationMethodSearchBean executionCourseWithNoEvaluationMethodSearchBean =

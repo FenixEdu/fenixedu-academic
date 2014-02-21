@@ -18,16 +18,17 @@ import net.sourceforge.fenixedu.presentationTier.Action.gep.ReportsByDegreeTypeD
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@StrutsFunctionality(app = DirectiveCouncilApplication.class, path = "student-statistics", titleKey = "link.statistics.students")
 @Mapping(path = "/studentStatistics", module = "directiveCouncil")
-@Forwards({ @Forward(name = "show.student.statistics", path = "/directiveCouncil/showStudentStatistics.jsp",
-        tileProperties = @Tile(title = "private.steeringcouncil.studentstatistics")) })
+@Forwards(@Forward(name = "show.student.statistics", path = "/directiveCouncil/showStudentStatistics.jsp"))
 public class StudentStatisticsDA extends FenixDispatchAction {
 
     public static class ContextBean implements Serializable, HasExecutionYear, HasDegreeType {
@@ -109,6 +110,7 @@ public class StudentStatisticsDA extends FenixDispatchAction {
         }
     }
 
+    @EntryPoint
     public ActionForward showStatistics(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         ContextBean contextBean = getRenderedObject();
