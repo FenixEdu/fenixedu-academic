@@ -2,6 +2,14 @@
 <%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
+<style>
+.greyBorderClass {
+background-color: #eee;
+border: 1px solid #909090;
+width: 100%
+}
+</style>
+
 <f:view>
 
 	<f:loadBundle basename="resources/DegreeAdministrativeOfficeResources" var="bundle"/>
@@ -21,10 +29,10 @@
 							</h:panelGroup>										
 							<h:dataTable value="#{year.branches}" var="branch"  styleClass="lightBluecell" >
 								<h:column>									
-									<h:outputText value="#{(!empty branch.name) ? branch.name : bundle['label.commonBranch']} " styleClass="boldFontClass"/>
+									<strong><h:outputText value="#{(!empty branch.name) ? branch.name : bundle['label.commonBranch']} " /></strong>
 									<h:dataTable value="#{branch.semesters}" var="semester" styleClass="solidBorderClass" >
 										<h:column>
-											<h:outputText value="#{bundle['label.semester']}" styleClass="boldFontClass"/><h:outputText value=": " /><h:outputText value="#{semester.semester}" />
+											<strong><h:outputText value="#{bundle['label.semester']}" /></strong><h:outputText value=": " /><h:outputText value="#{semester.semester}" />
 											<h:dataTable value="#{semester.scopes}" var="scope" rowClasses="bgwhite, bluecell" columnClasses=",,,,,,centerClass" styleClass="greyBorderClass" headerClass="grey">
 												<h:column>
 													<f:facet name="header"><h:outputText value="#{bundle['label.curricularCourse']}" /></f:facet>

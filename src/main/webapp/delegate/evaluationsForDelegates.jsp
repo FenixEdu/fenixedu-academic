@@ -3,8 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
-<link href="${pageContext.request.contextPath}/CSS/dotist_calendars.css" rel="stylesheet" media="screen" type="text/css" />
-
 <fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.delegate.DelegateApplication$EvaluationsForDelegatesAction" />
 
 <f:view>

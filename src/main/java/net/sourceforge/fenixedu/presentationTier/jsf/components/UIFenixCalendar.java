@@ -39,6 +39,7 @@ public class UIFenixCalendar extends UIInput {
         }
 
         ResponseWriter writer = context.getResponseWriter();
+
         Calendar[] begins = getDateArgument("begin");
         Calendar[] ends = getDateArgument("end");
 
@@ -118,7 +119,8 @@ public class UIFenixCalendar extends UIInput {
     private void encodeMonthTable(ResponseWriter writer, FacesContext context, String key, Calendar begin, Calendar end)
             throws IOException {
         writer.startElement("table", this);
-        writer.writeAttribute("class", "fenixCalendar", null);
+        writer.writeAttribute("class", "table table-bordered", null);
+        writer.writeAttribute("style", "max-width: 90%", null);
         // writer.writeAttribute("class", "fenixCalendar breakafter", null);
         // writer.writeAttribute("name", getFieldKey(context, key), null);
 
@@ -139,7 +141,8 @@ public class UIFenixCalendar extends UIInput {
         // writer.startElement("tr", this);
         // writer.startElement("td", this);
         writer.startElement("caption", this);
-        writer.writeAttribute("class", "fenixCalendar_monthRow", null);
+        writer.writeAttribute("style", "font-weight: 600; background: #bbb", null);
+        writer.writeAttribute("class", "text-center", null);
         // writer.writeAttribute("colspan", 6, null);
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", locale);
@@ -153,7 +156,6 @@ public class UIFenixCalendar extends UIInput {
 
     private void encodeDaysOfWeek(ResponseWriter writer, Locale locale) throws IOException {
         writer.startElement("tr", this);
-        writer.writeAttribute("class", "fenixCalendar_daysOfWeek", null);
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", locale);
         DateFormatSymbols dfs = sdf.getDateFormatSymbols();
@@ -186,7 +188,7 @@ public class UIFenixCalendar extends UIInput {
 
         for (int beginWeek = begin.get(Calendar.WEEK_OF_MONTH); beginWeek <= end.get(Calendar.WEEK_OF_MONTH); beginWeek++) {
             writer.startElement("tr", this);
-            writer.writeAttribute("class", "fenixCalendar_weekRow", null);
+            writer.writeAttribute("class", "text-right", null);
             for (int beginDayOfWeek = Calendar.MONDAY; beginDayOfWeek <= Calendar.SATURDAY; beginDayOfWeek++) {
 
                 if (iter.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
@@ -195,6 +197,7 @@ public class UIFenixCalendar extends UIInput {
 
                 if (iter.after(end)) {
                     writer.startElement("td", this);
+                    writer.writeAttribute("style", "width: 16.7%", null);
                     appendExtraLines(writer);
                     writer.endElement("td");
                 } else if (iter.get(Calendar.DAY_OF_WEEK) == beginDayOfWeek) {
@@ -202,7 +205,7 @@ public class UIFenixCalendar extends UIInput {
 
                     List<CalendarLink> toDisplay = objectsToDisplayOnThisDay(iter, editLinkParameters);
                     if (toDisplay != null && !toDisplay.isEmpty()) {
-                        writer.writeAttribute("class", "fenixCalendar_dayWithObjectOccurence", null);
+                        writer.writeAttribute("style", "background: #e6e6e6; width: 16.7%", null);
                         encodeDay(writer, createLink, now, iter);
 
                         for (CalendarLink calendarLink : toDisplay) {
@@ -219,7 +222,7 @@ public class UIFenixCalendar extends UIInput {
                             }
                         }
                     } else {
-                        writer.writeAttribute("class", "fenixCalendar_defaultDay", null);
+                        writer.writeAttribute("style", "background: #eee; width: 16.7%", null);
                         encodeDay(writer, createLink, now, iter);
                     }
 

@@ -18,14 +18,10 @@
 <h3><bean:message key="label.student.statistics.percentage.approvals.overtime" bundle="STUDENT_RESOURCES" /></h3>
 <div id="overtime-visualization"></div>
 
-<script type="text/javascript">
-	$.noConflict();
-</script>
-<script type="text/javascript" src="../javaScript/jquery/jquery-1.8.0.min.js"></script>
-<script type="text/javascript" src="../javaScript/sviz/d3.min.js"></script>
-<script type="text/javascript" src="../javaScript/sviz/qtip.min.js"></script>
-<script type="text/javascript" src="../javaScript/sviz/i18next.min.js"></script>
-<script type="text/javascript" src="../javaScript/sviz/sviz.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/javaScript/sviz/d3.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/javaScript/sviz/qtip.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/javaScript/sviz/i18next.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/javaScript/sviz/sviz.min.js"></script>
 
 <script type="text/javascript">
 var data = <bean:write name="progress" filter="false" />;

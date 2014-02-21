@@ -425,9 +425,7 @@ a,input,.symbol {
 
 </style>
 
-<script src="../javaScript/jquery/jquery-1.8.0.min.js"></script>
-
-<script src="../javaScript/jquery/jquery-ui-1.8.23.min.js"></script>
+<script src="${pageContext.request.contextPath}/javaScript/jquery/jquery-ui.js"></script>
 
 <script type="text/javascript">
 
