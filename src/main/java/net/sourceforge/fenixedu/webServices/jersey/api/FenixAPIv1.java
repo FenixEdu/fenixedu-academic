@@ -128,6 +128,7 @@ import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixDegree;
 import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixDegreeExtended;
 import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixDegreeExtended.FenixDegreeInfo;
 import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixDegreeExtended.FenixTeacher;
+import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixDomainModel;
 import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixExecutionCourse;
 import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixPeriod;
 import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixRoomEvent;
@@ -1518,4 +1519,18 @@ public class FenixAPIv1 {
         }
     }
 
+    /**
+     * information about the domain model implemented by this application
+     * 
+     * @summary Representation of the Domain Model
+     * @return domain model
+     */
+    @GET
+    @Produces(JSON_UTF8)
+    @Path("domainModel")
+    @FenixAPIPublic
+    public String domainModel() {
+        return new FenixDomainModel().toJSONString();
+    }
+    
 }
