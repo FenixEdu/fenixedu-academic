@@ -13,4 +13,8 @@
 	<li><html:link page="/manageParkingPeriods.do?method=prepareCardsSearch"><bean:message key="link.parkingCards" /></html:link></li>	
 	<li><html:link page="/exportParkingDB.do?method=prepareExportFile"><bean:message key="link.mergeFiles" /></html:link></li>
 </ul>
+<ul>
+	<li class="navheader">Pessoal</li>
+	<li><html:link page="/personParking.do?method=prepareParking"><bean:message key="label.parking"  bundle="PARKING_RESOURCES"/></html:link></li>
+</ul>
 

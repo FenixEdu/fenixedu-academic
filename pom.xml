@@ -15,6 +15,11 @@
     <url>http://www.fenixedu.org</url>
     <description>IST Parking Features for FenixEdu</description>
 
+    <properties>
+        <jasper.threads>1</jasper.threads>
+        <skipTests>true</skipTests>
+    </properties>
+
     <scm>
         <connection>scm:git:git@github.com:cbartol/fenix-parking.git</connection>
         <developerConnection>scm:git:git@github.com:cbartol/fenix-parking.git</developerConnection>
@@ -31,6 +36,36 @@
                     <fork>true</fork>
                     <maxmem>2048</maxmem>
                     <meminitial>1536</meminitial>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.alexnederlof</groupId>
+                <artifactId>jasperreports-plugin</artifactId>
+                <version>1.5.0</version>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>jasper</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>net.sf.jasperreports</groupId>
+                        <artifactId>jasperreports</artifactId>
+                        <version>3.6.0</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                        <version>1.2.16</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <compiler>net.sourceforge.fenixedu.util.report.FenixJasperCompiler</compiler>
+                    <outputDirectory>${project.build.outputDirectory}/reports</outputDirectory>
+                    <numberOfThreads>${jasper.threads}</numberOfThreads>
                 </configuration>
             </plugin>
         </plugins>
@@ -51,6 +86,17 @@
             <groupId>com.oracle</groupId>
             <artifactId>ojdbc14</artifactId>
             <version>9.0.2.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.jasperreports</groupId>
+            <artifactId>jasperreports</artifactId>
+            <version>3.6.0</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>jdtcore</artifactId>
+                    <groupId>eclipse</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 

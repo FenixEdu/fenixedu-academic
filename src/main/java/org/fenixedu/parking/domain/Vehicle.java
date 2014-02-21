@@ -3,7 +3,7 @@ package org.fenixedu.parking.domain;
 import java.util.ResourceBundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.fenixedu.parking.dataTransferObject.parking.VehicleBean;
+import org.fenixedu.parking.dto.VehicleBean;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 

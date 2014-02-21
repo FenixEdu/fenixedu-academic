@@ -223,7 +223,7 @@
 
 <schema name="create.parkingRequestFactory.submitAs" type="org.fenixedu.parking.domain.ParkingRequest$ParkingRequestFactoryCreator">
 	<slot name="requestAs" key="label.submitAs" bundle="PARKING_RESOURCES" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="org.fenixedu.parking.presentationTier.renderers.providers.parking.ParkingRequestAsProvider" />
+		<property name="providerClass" value="org.fenixedu.parking.ui.renderers.providers.parking.ParkingRequestAsProvider" />
 		<property name="eachLayout" value="this-does-not-exist" />		
 	</slot>
 </schema>
@@ -326,7 +326,7 @@
 
 <schema name="edit.parkingRequestFactory.submitAs" type="org.fenixedu.parking.domain.ParkingRequest$ParkingRequestFactoryEditor">
 	<slot name="requestAs" key="label.submitAs" bundle="PARKING_RESOURCES" layout="menu-select"  validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
-		<property name="providerClass" value="org.fenixedu.parking.presentationTier.renderers.providers.parking.ParkingRequestAsProvider" />	
+		<property name="providerClass" value="org.fenixedu.parking.ui.renderers.providers.parking.ParkingRequestAsProvider" />	
 		<property name="eachLayout" value="this-does-not-exist" />		
 	</slot>
 </schema>
@@ -335,7 +335,7 @@
 	<slot name="limitlessAccessCard" key="label.requestLimitlessAccessCard" bundle="PARKING_RESOURCES" />
 </schema>
 
-<schema name="edit.parkingPartyBean.user" type="org.fenixedu.parking.dataTransferObject.parking.ParkingPartyBean">
+<schema name="edit.parkingPartyBean.user" type="org.fenixedu.parking.dto.ParkingPartyBean">
 	<slot name="cardNumber" key="label.cardNumber">
 		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.LongRangeValidator">
 			<property name="lowerBound" value="0"/>
@@ -343,7 +343,7 @@
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 	<slot name="parkingGroup" key="label.group" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass"	value="org.fenixedu.parking.presentationTier.renderers.providers.choiceType.replacement.single.ParkingGroupProvider"/>
+		<property name="providerClass"	value="org.fenixedu.parking.ui.renderers.providers.choiceType.replacement.single.ParkingGroupProvider"/>
 		<property name="format" value="${groupName}"/>
 	</slot>
 	<slot name="phdNumber" key="label.phdNumber"/>
@@ -358,7 +358,7 @@
 	<slot name="parkingParty" hidden="true" />
 </schema>
 
-<schema name="edit.parkingPartyBean.cardValidPeriod" type="org.fenixedu.parking.dataTransferObject.parking.ParkingPartyBean">
+<schema name="edit.parkingPartyBean.cardValidPeriod" type="org.fenixedu.parking.dto.ParkingPartyBean">
 	<slot name="cardStartDate" key="label.cardStartDate" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator"/>
 	<slot name="cardEndDate" key="label.cardEndDate" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator"/>
 </schema>
@@ -370,7 +370,7 @@
 </schema>
 
 
-<schema name="edit.vehicleBean" type="org.fenixedu.parking.dataTransferObject.parking.VehicleBean">
+<schema name="edit.vehicleBean" type="org.fenixedu.parking.dto.VehicleBean">
 	<slot name="deleteVehicle" key="label.deleteVehicle"/>
 	<slot name="vehicleMake" key="label.vehicleMake"/>
 	<slot name="vehiclePlateNumber" key="label.vehiclePlateNumber"/>	
@@ -403,7 +403,7 @@
 <schema name="input.parkingRequestSearch"
 	type="org.fenixedu.parking.domain.ParkingRequestSearch">
 	<slot name="parkingRequestState" key="label.state" layout="menu-select" >
-		<property name="providerClass" value="org.fenixedu.parking.presentationTier.renderers.providers.choiceType.replacement.single.ParkingRequestStateProvider" />
+		<property name="providerClass" value="org.fenixedu.parking.ui.renderers.providers.choiceType.replacement.single.ParkingRequestStateProvider" />
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>
 	<slot name="partyClassification" key="label.type" layout="menu-select">
@@ -416,7 +416,7 @@
 	<slot name="carPlateNumber" key="label.firstCarPlateNumber" bundle="PARKING_RESOURCES" />
 </schema>
 
-<schema name="search.party.autocomplete" type="org.fenixedu.parking.dataTransferObject.parking.SearchParkingPartyBean" bundle="PARKING_RESOURCES">
+<schema name="search.party.autocomplete" type="org.fenixedu.parking.dto.SearchParkingPartyBean" bundle="PARKING_RESOURCES">
 	<slot name="party" layout="autoComplete" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator" key="label.name">
 		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.SearchUnits"/>
 		<property name="args" value="slot=name,size=20"/>
@@ -432,7 +432,7 @@
 	</slot>
 </schema>
 
-<schema name="search.party" type="org.fenixedu.parking.dataTransferObject.parking.SearchParkingPartyBean" bundle="PARKING_RESOURCES">
+<schema name="search.party" type="org.fenixedu.parking.dto.SearchParkingPartyBean" bundle="PARKING_RESOURCES">
 	<slot name="partyName" key="label.name">
 		<property name="size" value="50"/>
 	</slot>
@@ -454,13 +454,13 @@
 	<setter signature="editParkingRequestPeriod(beginDate,endDate)"/>
 </schema>
 
-<schema name="edit.parkingCardSearch" type="org.fenixedu.parking.dataTransferObject.parking.ParkingCardSearchBean" 
+<schema name="edit.parkingCardSearch" type="org.fenixedu.parking.dto.ParkingCardSearchBean" 
 		bundle="PARKING_RESOURCES">
 	<slot name="parkingCardUserState" key="label.parkingUserState" layout="radio">
 		<property name="classes" value="liinline"/>
 	</slot>
 	<slot name="parkingGroup" key="label.group" layout="menu-select">
-		<property name="providerClass"	value="org.fenixedu.parking.presentationTier.renderers.providers.choiceType.replacement.single.ParkingGroupProvider"/>
+		<property name="providerClass"	value="org.fenixedu.parking.ui.renderers.providers.choiceType.replacement.single.ParkingGroupProvider"/>
 		<property name="format" value="${groupName}"/>
 		<property name="sortBy" value="groupName"/>
 	</slot>
@@ -508,14 +508,14 @@
 	<slot name="party.name" key="label.name" bundle="PARKING_RESOURCES"/>
 </schema>
 
-<schema name="edit.cardsRenewalDate" type="org.fenixedu.parking.dataTransferObject.parking.ParkingCardSearchBean">
+<schema name="edit.cardsRenewalDate" type="org.fenixedu.parking.dto.ParkingCardSearchBean">
 	<slot name="renewalEndDate" key="label.renewalEndDate">
 		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.DateTimeValidator">
 			<property name="required" value="false"/>
 		</validator>
 	</slot>
 	<slot name="newParkingGroup" key="label.changeGroup" layout="menu-select">
-		<property name="providerClass"	value="org.fenixedu.parking.presentationTier.renderers.providers.choiceType.replacement.single.ParkingGroupProvider"/>
+		<property name="providerClass"	value="org.fenixedu.parking.ui.renderers.providers.choiceType.replacement.single.ParkingGroupProvider"/>
 		<property name="format" value="${groupName}"/>
 		<property name="sortBy" value="groupName"/>
 	</slot>		

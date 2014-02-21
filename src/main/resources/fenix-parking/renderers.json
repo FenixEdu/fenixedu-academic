@@ -5,6 +5,6 @@
     ]
   },
   "modules": [
-    { "name": "parkingManager", "configFile": "struts-parkingManager.xml" }
+    { "name": "parkingManager", "configFile": "struts-parking.xml" }
   ]
 }
