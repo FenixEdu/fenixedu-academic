@@ -14,13 +14,13 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class BolonhaManagerApplication extends ForwardAction {
 
     @StrutsApplication(bundle = "BolonhaManagerResources", path = "competence-courses",
-            titleKey = "navigation.competenceCoursesManagement", accessGroup = "role(BOLONHA_MANAGER)")
+            titleKey = "navigation.competenceCoursesManagement", accessGroup = "role(BOLONHA_MANAGER)", hint = "Bolonha Manager")
     public static class CompetenceCourseManagementApp {
 
     }
 
     @StrutsApplication(bundle = "BolonhaManagerResources", path = "curricular-plans",
-            titleKey = "navigation.curricularPlansManagement", accessGroup = "role(BOLONHA_MANAGER)")
+            titleKey = "navigation.curricularPlansManagement", accessGroup = "role(BOLONHA_MANAGER)", hint = "Bolonha Manager")
     public static class CurricularPlansManagementApp {
 
     }

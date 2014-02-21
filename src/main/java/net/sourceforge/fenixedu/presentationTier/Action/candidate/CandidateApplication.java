@@ -21,7 +21,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @StrutsApplication(bundle = "CandidateResources", descriptionKey = "portal.candidate", path = "candidate",
-        titleKey = "portal.candidate", accessGroup = "role(CANDIDATE)")
+        titleKey = "portal.candidate", accessGroup = "role(CANDIDATE)", hint = "Candidate")
 @Mapping(module = "candidate", path = "/index")
 @Forwards(value = { @Forward(name = "showCandidacyDetails", path = "/degreeCandidacyManagement.do?method=showCandidacyDetails"),
         @Forward(name = "fillData", path = "/degreeCandidacyManagement.do?method=doOperation"),

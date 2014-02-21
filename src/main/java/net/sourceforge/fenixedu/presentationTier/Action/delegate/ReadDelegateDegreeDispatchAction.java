@@ -22,7 +22,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @StrutsApplication(bundle = "DelegateResources", path = "delegate", titleKey = "label.delegatesPortal",
-        accessGroup = "role(DELEGATE)")
+        accessGroup = "role(DELEGATE)", hint = "Delegate")
 @Mapping(module = "delegate", path = "/index")
 @Forwards(value = { @Forward(name = "success", path = "/delegate/index.jsp") })
 public class ReadDelegateDegreeDispatchAction extends FenixAction {

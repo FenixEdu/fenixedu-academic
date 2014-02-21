@@ -19,19 +19,19 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 public class DelegateApplication {
 
     @StrutsApplication(bundle = "DelegateResources", path = "consult", titleKey = "label.delegates.consult",
-            accessGroup = "role(DELEGATE)")
+            accessGroup = "role(DELEGATE)", hint = "Delegate")
     public static class DelegateConsultApp {
 
     }
 
     @StrutsApplication(bundle = "DelegateResources", path = "communication", titleKey = "label.delegates.comunication",
-            accessGroup = "role(DELEGATE)")
+            accessGroup = "role(DELEGATE)", hint = "Delegate")
     public static class DelegateMessagingApp {
 
     }
 
     @StrutsApplication(bundle = "DelegateResources", path = "participate", titleKey = "label.participate",
-            accessGroup = "role(DELEGATE)")
+            accessGroup = "role(DELEGATE)", hint = "Delegate")
     public static class DelegateParticipateApp {
 
     }
