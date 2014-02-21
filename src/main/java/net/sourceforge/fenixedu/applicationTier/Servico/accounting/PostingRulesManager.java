@@ -1,15 +1,20 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.accounting;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
+
+import java.math.BigDecimal;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.accounting.gratuity.paymentPlan.GratuityPaymentPlanManager;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.InstallmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.PaymentPlanBean;
+import net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.StandaloneInstallmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateDFAGratuityPostingRuleBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateGratuityPostingRuleBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateSpecializationDegreeGratuityPostingRuleBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateStandaloneEnrolmentGratuityPRBean;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.accounting.PaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByAmountPerEctsPR;
@@ -18,9 +23,13 @@ import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.Gratuity
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.PastDegreeGratuityPR;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.SpecializationDegreeGratuityByAmountPerEctsPR;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR;
+import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -113,6 +122,17 @@ public class PostingRulesManager {
     }
 
     @Atomic
+    static public void deleteDEAPostingRule(final PostingRule postingRule) {
+        check(AcademicPredicates.MANAGE_PAYMENTS);
+
+        for (PaymentPlan paymentPlan : postingRule.getServiceAgreementTemplate().getPaymentPlansSet()) {
+            paymentPlan.delete();
+        }
+
+        deletePostingRule(postingRule);
+    }
+
+    @Atomic
     static public void deletePostingRule(final PostingRule postingRule) {
         check(AcademicPredicates.MANAGE_PAYMENTS);
         postingRule.delete();
@@ -144,4 +164,25 @@ public class PostingRulesManager {
         GratuityPaymentPlanManager.create(paymentPlanBean);
     }
 
+    @Atomic
+    public static void createDEAStandaloneGratuityPostingRule(StandaloneInstallmentBean bean,
+            DegreeCurricularPlan degreeCurricularPlan) {
+        check(AcademicPredicates.MANAGE_PAYMENTS);
+
+        DegreeCurricularPlanServiceAgreementTemplate dcpSAT = degreeCurricularPlan.getServiceAgreementTemplate();
+        if (dcpSAT != null) {
+            YearMonthDay startDate = bean.getStartDate();
+
+            LocalDate startLocalDate = new LocalDate(startDate.getYear(), startDate.getMonthOfYear(), startDate.getDayOfMonth());
+            BigDecimal ectsForYear = bean.getEctsForYear();
+            BigDecimal gratuityFactor = bean.getGratuityFactor();
+            BigDecimal ectsFactor = bean.getEctsFactor();
+
+            new StandaloneEnrolmentGratuityPR(startLocalDate.toDateTimeAtStartOfDay(), null, dcpSAT, ectsForYear, gratuityFactor,
+                    ectsFactor);
+        } else {
+            //TODO: Not sure...
+            throw new DomainException("");
+        }
+    }
 }
