@@ -32,21 +32,6 @@
                   <form-property type="java.lang.String" name="showParticipations"></form-property>
                   <form-property type="java.lang.String" name="showPrizes"></form-property>
             </form-bean>
-            <!-- ================= PARKING REQUEST FORM =================== -->
-            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="parkingForm">
-                  <form-property type="java.lang.String" name="driverLicense"></form-property>
-                  <form-property type="java.lang.String" name="registry1"></form-property>
-                  <form-property type="java.lang.String" name="insurance1"></form-property>
-                  <form-property type="java.lang.String" name="Id1"></form-property>
-                  <form-property type="java.lang.String" name="declaration1"></form-property>
-                  <form-property type="java.lang.String" name="registry2"></form-property>
-                  <form-property type="java.lang.String" name="insurance2"></form-property>
-                  <form-property type="java.lang.String" name="Id2"></form-property>
-                  <form-property type="java.lang.String" name="declaration2"></form-property>
-                  <form-property type="java.lang.Boolean" name="ownVehicle1"></form-property>
-                  <form-property type="java.lang.Boolean" name="ownVehicle2"></form-property>
-                  <form-property type="java.lang.Boolean" name="vehicle2"></form-property>
-            </form-bean>
       </form-beans>
       <!-- ========== Global Exception Definitions ============================== -->
       <global-exceptions>
@@ -74,7 +59,6 @@
       <message-resources null="false" key="DEFAULT" parameter="resources.ApplicationResources"></message-resources>
       <message-resources null="false" key="ENUMERATION_RESOURCES" parameter="resources.EnumerationResources"></message-resources>
       <message-resources null="false" key="HOMEPAGE_RESOURCES" parameter="resources.HomepageResources"></message-resources>
-      <message-resources null="false" key="PARKING_RESOURCES" parameter="resources.ParkingResources"></message-resources>
       <message-resources null="false" key="ACADEMIC_OFFICE_RESOURCES" parameter="resources.AcademicAdminOffice"></message-resources>
       <message-resources null="false" key="CONTENT_RESOURCES" parameter="resources.ContentResources"></message-resources>
       <message-resources null="false" key="FUNCTIONALITY_RESOURCES" parameter="resources.FunctionalityResources"></message-resources>

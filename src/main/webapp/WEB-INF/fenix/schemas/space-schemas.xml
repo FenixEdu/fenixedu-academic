@@ -273,7 +273,7 @@
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />			
 	</slot>
 </schema>
-<schema name="search.external.party.autocomplete" type="net.sourceforge.fenixedu.dataTransferObject.parking.SearchPartyBean" bundle="SPACE_RESOURCES">
+<schema name="search.external.party.autocomplete" type="net.sourceforge.fenixedu.dataTransferObject.SearchPartyBean" bundle="SPACE_RESOURCES">
 	<slot name="party" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.name">
 		<property name="size" value="50"/>
 		<property name="labelField" value="name"/>

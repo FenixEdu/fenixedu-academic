@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.space.DeleteUnitSpaceOccupation;
-import net.sourceforge.fenixedu.dataTransferObject.parking.SearchPartyBean;
+import net.sourceforge.fenixedu.dataTransferObject.SearchPartyBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;

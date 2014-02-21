@@ -207,13 +207,6 @@ public class RolePredicates {
         };
     };
 
-    public static final AccessControlPredicate<Object> PARKING_MANAGER_PREDICATE = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(Object domainObject) {
-            return hasRole(RoleType.PARKING_MANAGER);
-        };
-    };
-
     public static final AccessControlPredicate<Object> PEDAGOGICAL_COUNCIL_PREDICATE = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(Object domainObject) {

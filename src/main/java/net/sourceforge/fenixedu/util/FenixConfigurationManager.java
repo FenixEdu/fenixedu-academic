@@ -64,12 +64,6 @@ public class FenixConfigurationManager {
                 description = "password required to call external email administration", defaultValue = "xPtO!)&#.")
         public String getEmailAdminPassword();
 
-        @ConfigurationProperty(key = "exportParkingData.password")
-        public String getExportParkingDataPassword();
-
-        @ConfigurationProperty(key = "exportParkingData.username")
-        public String getExportParkingDataUsername();
-
         @ConfigurationProperty(key = "externalServices.AEIST.password")
         public String getExternalServicesAEISTPassword();
 
@@ -200,9 +194,6 @@ public class FenixConfigurationManager {
 
         @ConfigurationProperty(key = "nameresolution.password")
         public String getNameResolutionPassword();
-
-        @ConfigurationProperty(key = "parkingCardId.admin.password")
-        public String getParkingCardIdAdminPassword();
 
         @ConfigurationProperty(key = "phd.public.candidacy.submission.link")
         public String getPhdPublicCandidacySubmissionLink();

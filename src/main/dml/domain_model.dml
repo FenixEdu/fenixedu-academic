@@ -115,12 +115,6 @@ enum net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeE
 enum net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType                                                 as FunctionType;
 enum net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum                                                as PartyTypeEnum;
 enum net.sourceforge.fenixedu.domain.organizationalStructure.UnitClassification                                           as UnitClassification;
-enum net.sourceforge.fenixedu.domain.parking.DocumentDeliveryType                                                         as DocumentDeliveryType;
-enum net.sourceforge.fenixedu.domain.parking.NewParkingDocumentType                                                       as NewParkingDocumentType;
-enum net.sourceforge.fenixedu.domain.parking.ParkingDocumentState                                                         as ParkingDocumentState;
-enum net.sourceforge.fenixedu.domain.parking.ParkingDocumentType                                                          as ParkingDocumentType;
-enum net.sourceforge.fenixedu.domain.parking.ParkingRequestState                                                          as ParkingRequestState;
-enum net.sourceforge.fenixedu.domain.parking.ParkingRequestType                                                           as ParkingRequestType;
 enum net.sourceforge.fenixedu.domain.person.Gender                                                                        as Gender;
 enum net.sourceforge.fenixedu.domain.person.IDDocumentType                                                                as IDDocumentType;
 enum net.sourceforge.fenixedu.domain.person.MaritalStatus                                                                 as MaritalStatus;
@@ -1255,9 +1249,6 @@ valueType net.sourceforge.fenixedu.domain.cms.SiteTemplateController as SiteTemp
         }
         
         class candidacy.CandidacySummaryFile extends File {
-        }
-
-        class parking.ParkingFile extends File {
         }
 
         class research.result.ResearchResultDocumentFile extends File {
@@ -4052,85 +4043,6 @@ valueType net.sourceforge.fenixedu.domain.cms.SiteTemplateController as SiteTemp
         String acronym;
     }
 
-    class parking.NewParkingDocument  {
-        NewParkingDocumentType parkingDocumentType;
-    }
-
-    class parking.ParkingGroup  {
-        String groupName;
-        MultiLanguageString groupDescription;
-    }
-
-    class parking.ParkingParty  {
-        Boolean acceptedRegulation;
-        Boolean authorized;
-        DateTime cardEndDate;
-        Long cardNumber;
-        DateTime cardStartDate;
-        DocumentDeliveryType driverLicenseDeliveryType;
-        ParkingDocumentState driverLicenseDocumentState;
-        ParkingDocumentState firstCarDeclarationDocumentState;
-        ParkingDocumentState firstCarInsuranceDocumentState;
-        ParkingDocumentState firstCarOwnerIdDocumentState;
-        ParkingDocumentState firstCarPropertyRegistryDocumentState;
-        Integer phdNumber;
-        ParkingDocumentState secondCarDeclarationDocumentState;
-        ParkingDocumentState secondCarInsuranceDocumentState;
-        ParkingDocumentState secondCarOwnerIdDocumentState;
-        ParkingDocumentState secondCarPropertyRegistryDocumentState;
-        String notes;
-        RoleType requestedAs;
-        Integer usedNumber;
-    }
-    
-    class parking.ParkingPartyHistory  {
-        DateTime cardEndDate;
-        DateTime cardStartDate;
-        Long cardNumber;
-        Integer phdNumber;
-        String notes;
-        RoleType requestedAs;
-        Integer usedNumber;
-        DateTime historyDate;
-        Boolean onlineRequest;
-    }
-
-    class parking.ParkingRequest  {
-        DateTime creationDate;
-        DocumentDeliveryType driverLicenseDeliveryType;
-        ParkingDocumentState driverLicenseDocumentState;
-        String email;
-        ParkingDocumentState firstCarDeclarationDocumentState;
-        ParkingDocumentState firstCarInsuranceDocumentState;
-        ParkingDocumentState firstCarOwnerIdDocumentState;
-        ParkingDocumentState firstCarPropertyRegistryDocumentState;
-        Boolean limitlessAccessCard;
-        String mobile;
-        String note;
-        ParkingRequestState parkingRequestState;
-        String phone;
-        RoleType requestedAs;
-        ParkingDocumentState secondCarDeclarationDocumentState;
-        ParkingDocumentState secondCarInsuranceDocumentState;
-        ParkingDocumentState secondCarOwnerIdDocumentState;
-        ParkingDocumentState secondCarPropertyRegistryDocumentState;
-        ParkingRequestType parkingRequestType;
-    }
-    
-    class parking.ParkingRequestPeriod  {
-        DateTime beginDate;
-        DateTime endDate;
-    }
-
-    class parking.Vehicle  {
-        DocumentDeliveryType authorizationDeclarationDeliveryType;
-        DocumentDeliveryType insuranceDeliveryType;
-        DocumentDeliveryType ownerIdDeliveryType;
-        String plateNumber;
-        DocumentDeliveryType propertyRegistryDeliveryType;
-        String vehicleMake;
-    }
-
     class person.IdDocument  {
         String value;
     }
@@ -6478,9 +6390,6 @@ class QueueJobWithFile extends QueueJob {
 }
 
 class QueueJobResultFile extends documents.GeneratedDocument{}
-
-class reports.ParkingDataReportFile extends QueueJobWithFile {
-}
 
 class reports.GepReportFile extends QueueJobWithFile {
     String type;
@@ -11996,49 +11905,6 @@ relation OtherTypeCreditLineExecutionPeriod {
     ExecutionSemester playsRole executionPeriod;
 }
 
-relation ParkingFileNewParkingDocument {
-    parking.ParkingFile playsRole parkingFile;
-    parking.NewParkingDocument playsRole newParkingDocument;
-}
-
-relation ParkingPartyNewParkingDocument {
-    parking.ParkingParty playsRole parkingParty;
-    parking.NewParkingDocument playsRole driverLicenseDocument;
-}
-
-relation ParkingPartyParkingGroup {
-    parking.ParkingGroup playsRole parkingGroup;
-    parking.ParkingParty playsRole parkingParties {
-        multiplicity *;
-    }
-}
-
-relation ParkingRequestNewParkingDocument {
-    parking.ParkingRequest playsRole parkingRequest;
-    parking.NewParkingDocument playsRole driverLicenseDocument;
-    }
-
-relation ParkingRequestParkingParty {
-    parking.ParkingParty playsRole parkingParty;
-    parking.ParkingRequest playsRole parkingRequests {
-        multiplicity *;
-    }
-}
-
-relation PartyParkingHistoryParty {
-    organizationalStructure.Party playsRole party;
-    parking.ParkingPartyHistory playsRole parkingPartyHistories {
-        multiplicity *;
-    }
-}
-
-relation ParkingPartyHistoryParkingGroup {
-    parking.ParkingGroup playsRole parkingGroup;
-    parking.ParkingPartyHistory playsRole parkingPartyHistories {
-        multiplicity *;
-    }
-}
-
 relation ParticipationParty {
     organizationalStructure.Party playsRole party;
     research.activity.Participation playsRole participations {
@@ -12140,11 +12006,6 @@ relation PartyInterest {
     research.ResearchInterest playsRole researchInterests {
         multiplicity *;
     }
-}
-
-relation PartyParkingParty {
-    organizationalStructure.Party playsRole party;
-    parking.ParkingParty playsRole parkingParty;
 }
 
 relation PartyPartyContact {
@@ -14139,13 +14000,6 @@ relation RootDomainObjectMetadata {
     }
 }
 
-relation RootDomainObjectNewParkingDocument {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    parking.NewParkingDocument playsRole newParkingDocuments {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectNonAffiliatedTeacher {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     NonAffiliatedTeacher playsRole nonAffiliatedTeachers {
@@ -14205,41 +14059,6 @@ relation RootDomainObjectOldPublication {
 relation RootDomainObjectOrientation {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     teacher.Orientation playsRole orientations {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectParkingGroup {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    parking.ParkingGroup playsRole parkingGroups {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectParkingParty {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    parking.ParkingParty playsRole parkingParties {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectParkingPartyHistory {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    parking.ParkingPartyHistory playsRole parkingPartyHistories {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectParkingRequest {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    parking.ParkingRequest playsRole parkingRequests {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectParkingRequestPeriod {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    parking.ParkingRequestPeriod playsRole parkingRequestPeriods {
         multiplicity *;
     }
 }
@@ -15052,13 +14871,6 @@ relation RootDomainObjectUnitSiteLink {
 relation RootDomainObjectUniversity {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     University playsRole universitys {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectVehicle {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    parking.Vehicle playsRole vehicles {
         multiplicity *;
     }
 }
@@ -15994,27 +15806,6 @@ relation UserPrivateKeyUser {
 relation VehicleAllocationRequestor {
     organizationalStructure.Party playsRole requestor;
     resource.VehicleAllocation playsRole vehicleAllocations {
-        multiplicity *;
-    }
-}
-
-relation VehicleNewParkingDocument {
-    parking.Vehicle playsRole vehicle;
-    parking.NewParkingDocument playsRole newParkingDocuments {
-        multiplicity *;
-    }
-}
-
-relation VehicleParkingParty {
-    parking.ParkingParty playsRole parkingParty;
-    parking.Vehicle playsRole vehicles {
-        multiplicity *;
-    }
-}
-
-relation VehicleParkingRequest {
-    parking.ParkingRequest playsRole parkingRequest;
-    parking.Vehicle playsRole vehicles {
         multiplicity *;
     }
 }

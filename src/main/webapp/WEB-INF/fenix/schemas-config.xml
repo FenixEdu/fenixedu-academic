@@ -17,7 +17,6 @@
 	<!ENTITY serviceRequests SYSTEM "schemas/serviceRequests-schemas.xml">
     <!ENTITY degreeAdminOffice SYSTEM "schemas/degreeAdministrativeOffice-schemas.xml">    
     <!ENTITY executionCourse SYSTEM "schemas/executionCourse-schemas.xml"> 
-    <!ENTITY parking SYSTEM "schemas/parking-schemas.xml"> 
 	<!ENTITY vigilancy SYSTEM "schemas/vigilancy-schemas.xml">
 	<!ENTITY academicAdminOffice SYSTEM "schemas/academicAdminOffice-schemas.xml">	
 	<!ENTITY tsdProcess SYSTEM "schemas/teacherServiceDistribution-schemas.xml">
@@ -737,7 +736,6 @@
 	&serviceRequests;
     &degreeAdminOffice;
     &executionCourse;
-    &parking;
 	&vigilancy;
 	&academicAdminOffice;
 	&tsdProcess;

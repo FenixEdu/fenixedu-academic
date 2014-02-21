@@ -1247,9 +1247,6 @@ public class Person extends Person_Base {
         if (getPersonalPhotoEvenIfRejected() != null) {
             getPersonalPhotoEvenIfRejected().delete();
         }
-        if (hasParkingParty()) {
-            getParkingParty().delete();
-        }
         if (hasAssociatedPersonAccount()) {
             getAssociatedPersonAccount().delete();
         }
@@ -1307,16 +1304,9 @@ public class Person extends Person_Base {
                 && !hasAnyAssociatedQualifications() && !hasAnyAssociatedAlteredCurriculums() && !hasAnyEnrolmentEvaluations()
                 && !hasAnyExportGroupingSenders() && !hasAnyResponsabilityTransactions() && !hasAnyMasterDegreeCandidates()
                 && !hasAnyGuides() && !hasEmployee() && !hasTeacher() && !hasAnyPayedGuides() && !hasAnyPayedReceipts()
-                && !hasParking() && !hasAnyResearchInterests() && !hasAnyProjectParticipations() && !hasAnyParticipations()
+                && !hasAnyResearchInterests() && !hasAnyProjectParticipations() && !hasAnyParticipations()
                 && !hasAnyPersonFunctions() && (!hasHomepage() || getHomepage().isDeletable())
                 && !hasAnyInternalParticipants() && !hasAnyCreatedQualifications() && !hasAnyCreateJobs();
-    }
-
-    private boolean hasParking() {
-        if (hasParkingParty()) {
-            return getParkingParty().hasAnyVehicles();
-        }
-        return false;
     }
 
     public ExternalContract getExternalContract() {

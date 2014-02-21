@@ -1835,21 +1835,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.parking.ParkingPartyHistory> getParkingPartyHistories() {
-        return getParkingPartyHistoriesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyParkingPartyHistories() {
-        return !getParkingPartyHistoriesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasParkingParty() {
-        return getParkingParty() != null;
-    }
-
-    @Deprecated
     public boolean hasPartyType() {
         return getPartyType() != null;
     }

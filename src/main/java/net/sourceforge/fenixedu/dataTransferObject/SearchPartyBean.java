@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.dataTransferObject.parking;
+package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.io.Serializable;
 
@@ -10,19 +10,13 @@ public class SearchPartyBean implements Serializable {
 
     private String partyName;
 
-    private String carPlateNumber;
-
-    private Long parkingCardNumber;
-
     public SearchPartyBean() {
 
     }
 
-    public SearchPartyBean(Party party, String carPlateNumber, Long parkingCardNumber) {
+    public SearchPartyBean(Party party) {
         setParty(party);
         setPartyName(party.getName());
-        setCarPlateNumber(carPlateNumber);
-        setParkingCardNumber(parkingCardNumber);
     }
 
     public Party getParty() {
@@ -44,21 +38,4 @@ public class SearchPartyBean implements Serializable {
     public void setPartyName(String partyName) {
         this.partyName = partyName;
     }
-
-    public String getCarPlateNumber() {
-        return carPlateNumber;
-    }
-
-    public void setCarPlateNumber(String carPlateNumber) {
-        this.carPlateNumber = carPlateNumber;
-    }
-
-    public Long getParkingCardNumber() {
-        return parkingCardNumber;
-    }
-
-    public void setParkingCardNumber(Long parkingCardNumber) {
-        this.parkingCardNumber = parkingCardNumber;
-    }
-
 }
