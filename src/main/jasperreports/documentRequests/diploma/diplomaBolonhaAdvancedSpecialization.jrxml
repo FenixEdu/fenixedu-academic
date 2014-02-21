@@ -110,7 +110,7 @@
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="14" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
+						<font fontName="Quadraat-Regular" size="14" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA["em " + $P{conclusionDate} + ", com a qualificação final de " + $P{finalAverageDescription} + " Valores (" + $P{finalAverageQualified} + ")."]]></textFieldExpression>
 				</textField>
@@ -124,7 +124,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement lineSpacing="1_1_2">
-						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="12" isBold="false" isItalic="true" isPdfEmbedded ="true"/>
+						<font fontName="Quadraat-Regular" size="12" isBold="false" isItalic="true" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("label.phd.finalization.certificate.city") + ", " + $P{day}]]></textFieldExpression>
 				</textField>
@@ -142,7 +142,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement lineSpacing="1_1_2">
-						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="12" isBold="false" isItalic="true" isPdfEmbedded ="true"/>
+						<font fontName="Quadraat-Regular" size="12" isBold="false" isItalic="true" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("label.phd.institution.president")]]></textFieldExpression>
 				</textField>
