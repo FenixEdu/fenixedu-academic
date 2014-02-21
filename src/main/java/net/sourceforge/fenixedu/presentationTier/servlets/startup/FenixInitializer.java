@@ -31,6 +31,7 @@ import net.sourceforge.fenixedu.webServices.jersey.api.FenixJerseyAPIConfig;
 import org.apache.commons.fileupload.FileUpload;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.domain.User.UserPresentationStrategy;
 import org.fenixedu.bennu.core.domain.exceptions.BennuCoreDomainException;
 import org.fenixedu.bennu.core.domain.groups.DynamicGroup;
 import org.fenixedu.bennu.core.domain.groups.Group;
@@ -86,8 +87,31 @@ public class FenixInitializer implements ServletContextListener {
 
         initializeFenixAPI();
         initializeBennuManagersGroup();
+        registerPresentationStrategy();
 
         logger.info("Fenix initialized successfully");
+    }
+
+    private void registerPresentationStrategy() {
+        User.registerUserPresentationStrategy(new UserPresentationStrategy() {
+            @Override
+            public String shortPresent(User user) {
+                if (user.getPerson() != null) {
+                    return user.getPerson().getNickname();
+                } else {
+                    return user.getUsername();
+                }
+            }
+
+            @Override
+            public String present(User user) {
+                if (user.getPerson() != null) {
+                    return user.getPerson().getNickname();
+                } else {
+                    return user.getUsername();
+                }
+            }
+        });
     }
 
     private static void initializeBennuManagersGroup() {
