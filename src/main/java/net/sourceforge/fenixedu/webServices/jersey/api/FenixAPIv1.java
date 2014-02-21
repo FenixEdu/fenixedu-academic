@@ -1374,6 +1374,9 @@ public class FenixAPIv1 {
             builder.getComponent(bodyComponent, rightNow, room, null);
             for (Object occupation : bodyComponent.getInfoShowOccupation()) {
                 InfoShowOccupation showOccupation = (InfoShowOccupation) occupation;
+                DateTime date = new DateTime(rightNow);
+                DateTime newDate = date.withDayOfWeek(showOccupation.getDiaSemana().getDiaSemanaInDayOfWeekJodaFormat());
+                String day = newDate.toString("dd/MM/yyyy");
 
                 FenixRoomEvent roomEvent = null;
 
@@ -1385,11 +1388,13 @@ public class FenixAPIv1 {
                     String end = dataFormatHour.format(lesson.getFim().getTime());
                     String weekday = lesson.getDiaSemana().getDiaSemanaString();
 
+                    FenixPeriod period = new FenixPeriod(day + " " + start, day + " " + end);
+
                     String info = lesson.getInfoShift().getShiftTypesCodePrettyPrint();
 
                     FenixCourse course = new FenixCourse(infoExecutionCourse.getExecutionCourse());
 
-                    roomEvent = new FenixRoomEvent.LessonEvent(start, end, weekday, info, course);
+                    roomEvent = new FenixRoomEvent.LessonEvent(start, end, weekday, day, period, info, course);
 
                 } else if (showOccupation instanceof InfoWrittenEvaluation) {
                     InfoWrittenEvaluation infoWrittenEvaluation = (InfoWrittenEvaluation) showOccupation;
@@ -1410,9 +1415,14 @@ public class FenixAPIv1 {
                         start = infoExam.getBeginningHour();
                         end = infoExam.getEndHour();
                         weekday = infoWrittenEvaluation.getDiaSemana().getDiaSemanaString();
+
+                        FenixPeriod period = new FenixPeriod(day + " " + start, day + " " + end);
+
                         Integer season = infoExam.getSeason().getSeason();
 
-                        roomEvent = new FenixRoomEvent.WrittenEvaluationEvent.ExamEvent(start, end, weekday, courses, season);
+                        roomEvent =
+                                new FenixRoomEvent.WrittenEvaluationEvent.ExamEvent(start, end, weekday, day, period, courses,
+                                        season);
 
                     } else if (infoWrittenEvaluation instanceof InfoWrittenTest) {
                         InfoWrittenTest infoWrittenTest = (InfoWrittenTest) infoWrittenEvaluation;
@@ -1421,8 +1431,11 @@ public class FenixAPIv1 {
                         end = dataFormatHour.format(infoWrittenTest.getFim().getTime());
                         weekday = infoWrittenTest.getDiaSemana().getDiaSemanaString();
 
+                        FenixPeriod period = new FenixPeriod(day + " " + start, day + " " + end);
+
                         roomEvent =
-                                new FenixRoomEvent.WrittenEvaluationEvent.TestEvent(start, end, weekday, courses, description);
+                                new FenixRoomEvent.WrittenEvaluationEvent.TestEvent(start, end, weekday, day, period, courses,
+                                        description);
                     }
 
                 } else if (showOccupation instanceof InfoGenericEvent) {
@@ -1433,8 +1446,9 @@ public class FenixAPIv1 {
                     String start = dataFormatHour.format(infoGenericEvent.getInicio().getTime());
                     String end = dataFormatHour.format(infoGenericEvent.getFim().getTime());
                     String weekday = infoGenericEvent.getDiaSemana().getDiaSemanaString();
+                    FenixPeriod period = new FenixPeriod(day + " " + start, day + " " + end);
 
-                    roomEvent = new FenixRoomEvent.GenericEvent(start, end, weekday, description, title);
+                    roomEvent = new FenixRoomEvent.GenericEvent(start, end, weekday, day, period, description, title);
                 }
 
                 if (roomEvent != null) {
