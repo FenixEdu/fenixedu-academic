@@ -1,27 +1,14 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.teachersManagement;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerPeopleApp;
 
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import org.apache.struts.actions.ForwardAction;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-import org.fenixedu.bennu.portal.EntryPoint;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-/**
- * @author Fernanda Quitério 4/Dez/2003
- * 
- */
-public class TeachersManagementAction extends FenixDispatchAction {
-    @EntryPoint
-    public ActionForward firstPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
-        return mapping.findForward("firstPage");
-    }
+@StrutsFunctionality(app = ManagerPeopleApp.class, path = "teachers-management", titleKey = "label.manager.teachersManagement")
+@Mapping(module = "manager", path = "/teachersManagement", parameter = "/manager/teachersManagement/welcomeScreen.jsp")
+public class TeachersManagementAction extends ForwardAction {
 
-    public ActionForward mainPage(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-        return mapping.findForward("mainPage");
-    }
 }

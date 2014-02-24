@@ -4,6 +4,8 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications$ManagementFunctionsPage" />
+
 <f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 
@@ -57,7 +59,6 @@
 						<fc:selectOneMenu disabled="#{managerFunctionsManagementBackingBean.disabledVar == 1}" onchange="this.form.submit();" value="#{managerFunctionsManagementBackingBean.executionPeriod}">
 							<f:selectItems value="#{managerFunctionsManagementBackingBean.executionPeriods}"/>
 						</fc:selectOneMenu>
-						<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 					<h:outputText value="</td>" escape="false"/>
 				<h:outputText value="</tr>" escape="false"/>
 	
@@ -68,7 +69,6 @@
 										  value="#{managerFunctionsManagementBackingBean.duration}">
 							<f:selectItems value="#{managerFunctionsManagementBackingBean.durationList}" />
 						</h:selectOneRadio>
-						<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 					<h:outputText value="</td>" escape="false"/>
 				<h:outputText value="</tr>" escape="false"/>
 

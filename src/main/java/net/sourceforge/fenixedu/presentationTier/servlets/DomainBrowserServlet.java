@@ -1,32 +1,32 @@
-/* 
+/*
  * ################################################################
- * 
- * FenixEdu: The Java(TM) Object-Oriented Framework for University 
+ *
+ * FenixEdu: The Java(TM) Object-Oriented Framework for University
  *       Academic Applications
- * 
+ *
  * Copyright (C) 2002-2003 IST/Technical University of Lisbon
  * Contact: suporte@dot.ist.utl.pt
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or any later version.
- *  
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
  * USA
- *  
+ *
  *  Initial developer(s):               The Fenix Team
  *                               http://fenix-ashes.ist.utl.pt/
  *
  *  Contributor(s): José Pedro Pereira - Educare S.A. - http://www.linkare.com
- * 
+ *
  * ################################################################
  */
 package net.sourceforge.fenixedu.presentationTier.servlets;
@@ -68,18 +68,12 @@ public class DomainBrowserServlet extends HttpServlet {
 
     private static final Logger logger = LoggerFactory.getLogger(DomainBrowserServlet.class);
 
-    private static DomainModel domainModel;
+    private static DomainModel domainModel = FenixFramework.getDomainModel();
     private static HashMap<DomainClass, String> domainClassesDescAttr = new HashMap<DomainClass, String>();
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-
-        try {
-            domainModel = FenixFramework.getDomainModel();
-        } catch (Exception e) {
-            domainModel = null;
-        }
     }
 
     @Override
@@ -91,33 +85,27 @@ public class DomainBrowserServlet extends HttpServlet {
 
         String path = req.getPathInfo();
         try {
-            if ("/listAll".equals(path)) {
-                renderListAll(out, RequestParams.parse(req, "domainClass"));
-            } else if ("/showObj".equals(path)) {
-                renderDomainObject(out, RequestParams.parse(req, "OID"));
+            if ("/showObj".equals(path)) {
+                renderDomainObject(out, req.getParameter("OID"));
             } else if ("/listRole".equals(path)) {
                 renderDomainObjectRole(out, RequestParams.parse(req, "OID", "role"));
             } else {
-                renderMainIndex(out);
+                renderDomainObject(out, null);
             }
-        } catch (MissingObjectException moe) {
+        } catch (MissingObjectException | NumberFormatException e) {
             out.println("<P>No such object</P>");
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            throw new Error("Error: " + e.getMessage());
+            throw new ServletException("Error: " + e.getMessage(), e);
         }
 
         out.println("</BODY>\n");
         out.close();
     }
 
-    protected void renderDomainObject(PrintWriter out, RequestParams params) throws IOException, Exception {
-        if (params == null) {
-            renderMainIndex(out);
-            return;
-        }
+    private void renderDomainObject(PrintWriter out, String oid) throws IOException, Exception {
 
-        DomainObject domObj = FenixFramework.getDomainObject(params.oid);
+        DomainObject domObj = oid == null ? FenixFramework.getDomainRoot() : FenixFramework.getDomainObject(oid);
         DomainClass domClass = getDomainClass(domObj);
 
         out.println("<H1>");
@@ -161,26 +149,13 @@ public class DomainBrowserServlet extends HttpServlet {
                 if (roleValue == null) {
                     out.println("null collection");
                 } else {
-                    Collection col = (Collection) roleValue;
-                    int colSize = -1;
-
-                    if (params.showColSize) {
-                        try {
-                            colSize = col.size();
-                        } catch (Exception e) {
-                            // ignore it
-                        }
-                    }
-
-                    out.println("<a href=\"listRole?OID=");
-                    out.println(domObj.getExternalId());
-                    out.println("&role=");
-                    out.println(role.getName());
-                    out.println("\">");
-                    out.println(role.getType().getFullName());
-                    out.println("[");
-                    out.println(colSize == -1 ? "?" : colSize);
-                    out.println("]</a>");
+                    out.print("<a href=\"listRole?OID=");
+                    out.print(domObj.getExternalId());
+                    out.print("&role=");
+                    out.print(role.getName());
+                    out.print("\">");
+                    out.print(role.getType().getFullName());
+                    out.print("[]</a>");
                 }
             }
 
@@ -193,9 +168,8 @@ public class DomainBrowserServlet extends HttpServlet {
         return (attrName.startsWith("key") && (domClass.findRoleSlot(firstCharToLower(attrName.substring(3))) != null));
     }
 
-    protected void renderDomainObjectRole(PrintWriter out, RequestParams params) throws IOException, Exception {
+    private void renderDomainObjectRole(PrintWriter out, RequestParams params) throws IOException, Exception {
         if (params == null) {
-            renderMainIndex(out);
             return;
         }
 
@@ -211,21 +185,7 @@ public class DomainBrowserServlet extends HttpServlet {
         renderCollection(out, insts, params);
     }
 
-    protected void renderListAll(PrintWriter out, RequestParams params) throws IOException, Exception {
-        if (params == null) {
-            renderMainIndex(out);
-            return;
-        }
-
-        out.println("<H1>");
-        out.println(params.classFullName);
-        out.println(" Entities</H1>\n");
-
-        Collection insts = Collections.singleton(FenixFramework.getDomainRoot());
-        renderCollection(out, insts, params);
-    }
-
-    protected void renderCollection(PrintWriter out, Collection insts, RequestParams params) throws IOException, Exception {
+    private void renderCollection(PrintWriter out, Collection insts, RequestParams params) throws IOException, Exception {
         if (insts == null) {
             out.println("<P>Null collection</P>");
             return;
@@ -279,7 +239,7 @@ public class DomainBrowserServlet extends HttpServlet {
         out.println("</UL>\n");
     }
 
-    protected void renderObjectId(PrintWriter out, DomainObject domObj) throws IOException {
+    private void renderObjectId(PrintWriter out, DomainObject domObj) throws IOException {
         out.println("<a href=\"showObj?OID=");
         out.println(domObj.getExternalId());
         out.println("\">");
@@ -287,21 +247,16 @@ public class DomainBrowserServlet extends HttpServlet {
         out.println("</a>");
     }
 
-    protected String getObjectDescription(DomainObject domObj) {
-        String description = getSpecializedDescription(domObj);
-
-        if (description == null) {
-            String descAttribute = getDescAttribute(getDomainClass(domObj));
-            description = getAttributeValue(domObj, descAttribute).toString();
-        }
-        return description;
+    private String getObjectDescription(DomainObject domObj) {
+        Object value = getAttributeValue(domObj, getDescAttribute(getDomainClass(domObj)));
+        return value == null ? domObj.getExternalId() : value.toString();
     }
 
-    protected DomainClass getDomainClass(DomainObject obj) {
+    private DomainClass getDomainClass(DomainObject obj) {
         return domainModel.findClass(obj.getClass().getName());
     }
 
-    protected String getDescAttribute(DomainClass domClass) {
+    private String getDescAttribute(DomainClass domClass) {
         String descAttribute = domainClassesDescAttr.get(domClass);
         if (descAttribute == null) {
             descAttribute = guessDescAttribute(domClass);
@@ -310,7 +265,7 @@ public class DomainBrowserServlet extends HttpServlet {
         return descAttribute;
     }
 
-    protected String guessDescAttribute(DomainClass domClass) {
+    private String guessDescAttribute(DomainClass domClass) {
         String descAttr = "externalId";
 
         for (String attr : getAllAttrs(domClass)) {
@@ -323,7 +278,7 @@ public class DomainBrowserServlet extends HttpServlet {
         return descAttr;
     }
 
-    protected Object getAttributeValue(Object obj, String attr) {
+    private Object getAttributeValue(DomainObject obj, String attr) {
         try {
             Method reader = obj.getClass().getMethod("get" + capitalize(attr));
             return reader.invoke(obj);
@@ -332,58 +287,9 @@ public class DomainBrowserServlet extends HttpServlet {
         }
     }
 
-    protected void renderMainIndex(PrintWriter out) throws IOException {
-        out.println("<H1>All Entities</H1>\n");
-
-        if (domainModel != null) {
-            out.println("<UL>\n");
-            for (DomainClass domClass : getAllDomainClasses()) {
-                out.println("<LI><a href=\"/uml/");
-                out.println(domClass.getFullName());
-                out.println(".html\">UML</a> <a href=\"");
-                out.println("listAll?domainClass=");
-                out.println(domClass.getFullName());
-                out.println("\">");
-                out.println(domClass.getName());
-                out.println("</a></LI>\n");
-            }
-            out.println("</UL>\n");
-        } else {
-            out.println("<P>There are none...</P>\n");
-        }
-    }
-
-    protected void checkDomain(PrintWriter out) throws Exception {
-        out.println("<img src=\"http://i3.kym-cdn.com/photos/images/original/000/232/114/e39.png\" />");
-    }
-
-    protected void renderWrongRelation(PrintWriter out, DomainObject obj, Role role) throws Exception {
-        logger.info("wrong relation");
-        out.println("<LI>");
-        renderObjectId(out, obj);
-        out.println("</LI>\n");
-    }
-
-    private boolean checkInverseRelation(DomainObject source, DomainObject target, Role role) {
-        Role inverseRole = null;
-        for (Role otherRole : role.getRelation().getRoles()) {
-            if (otherRole != role) {
-                inverseRole = otherRole;
-                break;
-            }
-        }
-
-        Object inverseRoleValue = getAttributeValue(target, inverseRole.getName());
-        if (inverseRole.getMultiplicityUpper() == 1) {
-            return (source == getDomainObject(inverseRoleValue));
-        } else {
-            return ((Collection) inverseRoleValue).contains(source);
-        }
-    }
-
     private static HashMap<DomainClass, List<String>> domainClassesAttributes = new HashMap<DomainClass, List<String>>();
 
-    protected synchronized List<String> getAllAttrs(DomainClass domClass) {
+    private synchronized List<String> getAllAttrs(DomainClass domClass) {
         List<String> attrs = domainClassesAttributes.get(domClass);
         if (attrs == null) {
             attrs = new ArrayList<String>();
@@ -412,7 +318,7 @@ public class DomainBrowserServlet extends HttpServlet {
         }
     };
 
-    protected List<Role> getAllRoles(DomainClass domClass) {
+    private List<Role> getAllRoles(DomainClass domClass) {
         List<Role> roles = domainClassesRoles.get(domClass);
         if (roles == null) {
             roles = new ArrayList<Role>();
@@ -435,25 +341,7 @@ public class DomainBrowserServlet extends HttpServlet {
         return roles;
     }
 
-    private static List<DomainClass> allDomainClasses = null;
-
-    protected List<DomainClass> getAllDomainClasses() {
-        if (allDomainClasses == null) {
-            allDomainClasses = new ArrayList<DomainClass>();
-            for (Iterator iter = domainModel.getClasses(); iter.hasNext();) {
-                allDomainClasses.add((DomainClass) iter.next());
-            }
-            Collections.sort(allDomainClasses, new Comparator<DomainClass>() {
-                @Override
-                public int compare(DomainClass dc1, DomainClass dc2) {
-                    return dc1.getName().compareTo(dc2.getName());
-                }
-            });
-        }
-        return allDomainClasses;
-    }
-
-    protected String capitalize(String str) {
+    private String capitalize(String str) {
         if ((str == null) || Character.isUpperCase(str.charAt(0))) {
             return str;
         } else {
@@ -461,11 +349,11 @@ public class DomainBrowserServlet extends HttpServlet {
         }
     }
 
-    protected String firstCharToLower(String str) {
+    private String firstCharToLower(String str) {
         return Character.toLowerCase(str.charAt(0)) + str.substring(1);
     }
 
-    protected DomainObject getDomainObject(Object obj) {
+    private DomainObject getDomainObject(Object obj) {
         return (DomainObject) obj;
     }
 
@@ -581,44 +469,4 @@ public class DomainBrowserServlet extends HttpServlet {
         }
     }
 
-    static class SpecializedMethod {
-        Method method = null;
-    }
-
-    private static HashMap<Class, SpecializedMethod> specializedMethods = new HashMap<Class, SpecializedMethod>();
-
-    protected static String getSpecializedDescription(Object obj) {
-        Method m = findSpecializedMethod(obj.getClass());
-        if (m != null) {
-            try {
-                return (String) m.invoke(null, obj);
-            } catch (Exception e) {
-                // ignore errors on the method
-            }
-        }
-        return null;
-    }
-
-    protected synchronized static Method findSpecializedMethod(Class objClass) {
-        SpecializedMethod sm = specializedMethods.get(objClass);
-
-        if (sm == null) {
-            sm = new SpecializedMethod();
-            specializedMethods.put(objClass, sm);
-
-            while (objClass != null) {
-                try {
-                    Method m = DomainObjectsExternalDescriptions.class.getMethod("getShortDescription", objClass);
-                    sm.method = m;
-                    // finish the loop because we found it already...
-                    break;
-                } catch (Exception e) {
-                    // not found the method, so continue the loop
-                }
-                objClass = objClass.getSuperclass();
-            }
-        }
-
-        return sm.method;
-    }
 }

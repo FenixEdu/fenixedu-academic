@@ -1178,17 +1178,6 @@ text-decoration: none;
 border-bottom: 1px solid #ddd;
 }
 
-
-input.btn{
-color:#005;
-font-family:'trebuchet ms',helvetica,sans-serif;
-font-size:74%;
-font-weight:normal;
-background-color:#eaeaea;
-border:1px solid;
-}
-
-
 td.noborder {
 border: none;
 }

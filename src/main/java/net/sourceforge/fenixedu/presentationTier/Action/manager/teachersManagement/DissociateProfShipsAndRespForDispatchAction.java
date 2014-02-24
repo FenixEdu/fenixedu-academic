@@ -23,10 +23,21 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * @author Fernanda Quitério 16/Dez/2003
  * 
  */
+@Mapping(module = "manager", path = "/dissociateProfShipsAndRespFor",
+        input = "/dissociateProfShipsAndRespFor.do?method=prepareDissociateEC&page=0", formBean = "teacherManagementForm",
+        functionality = TeachersManagementAction.class)
+@Forwards(value = {
+        @Forward(name = "prepareDissociateEC", path = "/manager/teachersManagement/prepareDissociateEC.jsp"),
+        @Forward(name = "prepareDissociateECShowProfShipsAndRespFor",
+                path = "/manager/teachersManagement/prepareDissociateECShowProfShipsAndRespFor.jsp") })
 public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAction {
     public ActionForward prepareDissociateEC(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {

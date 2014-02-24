@@ -14,17 +14,21 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(module = "operator", path = "/pendingPhotos", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "list", path = "/operator/photo/listPending.jsp", tileProperties = @Tile(
-        title = "private.operator.photos")) })
+@StrutsFunctionality(app = OperatorApplication.class, path = "pending-photos", titleKey = "link.operator.photo.pending",
+        bundle = "ManagerResources")
+@Mapping(module = "operator", path = "/pendingPhotos")
+@Forwards(@Forward(name = "list", path = "/operator/photo/listPending.jsp"))
 public class PendingPhotosAction extends FenixDispatchAction {
+
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         List<Photograph> pending = new ArrayList<Photograph>();

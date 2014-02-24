@@ -48,7 +48,7 @@
 					<fr:property name="moduleRelative" value="false" />
 					<fr:property name="contextRelative" value="true" />
 			    	<fr:property name="imageFormat"
-							value="/person/retrievePersonalPhoto.do?method=retrievePendingByID&amp;photoCode=\${externalId}" />
+							value="/person/retrievePersonalPhoto.do?method=retrievePendingByID&amp;photoCode=${externalId}" />
 		    	</fr:slot>
 				<fr:slot name="submission" key="label.date">
 					<fr:property name="classes" value="nobullet noindent"/>   

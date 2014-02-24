@@ -1425,10 +1425,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         Partial date;
     }
 
-    class StrikeDay  {
-        LocalDate date;
-    }
-
     class InsuranceValue  {
         BigDecimal annualValueBigDecimal;
         YearMonthDay endDateYearMonthDay;
@@ -18922,13 +18918,6 @@ relation PersonPersonIdentificationDocumentExtraInfo {
 relation PersonIdentificationDocumentExtraInfoRootDomainObject {
 	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     PersonIdentificationDocumentExtraInfo playsRole personIdentificationDocumentExtraInfo {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectStrikeDay {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    StrikeDay playsRole strikeDay {
         multiplicity *;
     }
 }

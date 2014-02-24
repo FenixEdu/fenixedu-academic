@@ -8,7 +8,6 @@
 
 <logic:present role="role(MANAGER)">
 
-<em>Entidades Externas para Bolsas</em>
 <h2>Adicionar Entidades</h2>
 
 		<fr:form action="/externalScholarshipProvider.do?method=add">

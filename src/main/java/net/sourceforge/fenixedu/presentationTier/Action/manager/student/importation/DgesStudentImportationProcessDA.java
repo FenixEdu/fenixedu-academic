@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.student.importation.DgesStudentImportatio
 import net.sourceforge.fenixedu.domain.student.importation.ExportDegreeCandidaciesByDegreeForPasswordGeneration;
 import net.sourceforge.fenixedu.domain.student.importation.ExportExistingStudentsFromImportationProcess;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.StudentsApp;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerStudentsApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -32,8 +32,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@StrutsFunctionality(app = StudentsApp.class, descriptionKey = "label.course.specialSeasonEnrolments",
-        path = "special-season", titleKey = "label.course.specialSeasonEnrolments")
+@StrutsFunctionality(app = ManagerStudentsApp.class, path = "dges-student-importation",
+        titleKey = "title.dges.student.importation")
 @Mapping(path = "/dgesStudentImportationProcess", module = "manager")
 @Forwards({
         @Forward(name = "list", path = "/manager/student/importation/list.jsp"),

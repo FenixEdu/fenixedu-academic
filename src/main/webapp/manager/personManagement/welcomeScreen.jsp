@@ -4,7 +4,7 @@
 
 <table>
 	<tr>
-		<td class="infoop">
+		<td class="well">
 			<bean:message bundle="MANAGER_RESOURCES" key="label.manager.personManagement.welcome"/>		
 		</td>
 	</tr>

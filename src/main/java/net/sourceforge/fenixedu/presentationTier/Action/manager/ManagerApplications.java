@@ -1,68 +1,92 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import net.sourceforge.fenixedu.presentationTier.Action.commons.FacesEntryPoint;
+
+import org.apache.struts.actions.ForwardAction;
 import org.fenixedu.bennu.portal.StrutsApplication;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
-public class ManagerApplications {
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-    @StrutsApplication(descriptionKey = "title.messages.and.notices", path = "messages-notices",
-            titleKey = "title.messages.and.notices", bundle = "ManagerResources", accessGroup = "role(MANAGER)", hint = "Manager")
-    public static class MessagesAndNoticesApp {
+@StrutsApplication(bundle = "ManagerResources", path = "manager", titleKey = "MANAGER", hint = "Manager",
+        accessGroup = "#managers")
+@Mapping(path = "/index", module = "manager", parameter = "/manager/welcomScreen.jsp")
+public class ManagerApplications extends ForwardAction {
 
+    private static final String HINT = "Manager";
+    private static final String ACCESS_GROUP = "#managers";
+    private static final String BUNDLE = "ManagerResources";
+
+    @StrutsApplication(bundle = BUNDLE, path = "system-management", titleKey = "title.system", accessGroup = ACCESS_GROUP,
+            hint = HINT)
+    public static class ManagerSystemManagementApp {
     }
 
-    @StrutsApplication(descriptionKey = "title.manager.organizationalStructureManagement", path = "org-nstructure-management",
-            titleKey = "title.manager.organizationalStructureManagement", bundle = "ManagerResources",
-            accessGroup = "role(MANAGER)", hint = "Manager")
-    public static class OrganizationalStructureManagementApp {
-
+    @StrutsApplication(bundle = BUNDLE, path = "bolonha-transition", titleKey = "title.bolonha.transition",
+            accessGroup = ACCESS_GROUP, hint = HINT)
+    public static class ManagerBolonhaTransitionApp {
     }
 
-    @StrutsApplication(descriptionKey = "title.teaching.structure", path = "teaching-structure",
-            titleKey = "title.teaching.structure", bundle = "ManagerResources", accessGroup = "role(MANAGER)", hint = "Manager")
-    public static class TeachingStructureApp {
-
+    @StrutsApplication(path = "messages-notices", titleKey = "title.messages.and.notices", bundle = BUNDLE,
+            accessGroup = ACCESS_GROUP, hint = HINT)
+    public static class ManagerMessagesAndNoticesApp {
     }
 
-    @StrutsApplication(descriptionKey = "title.executions", path = "executions", titleKey = "title.executions",
-            bundle = "ManagerResources", accessGroup = "role(MANAGER)", hint = "Manager")
-    public static class ExecutionsManagementApp {
-
+    @StrutsApplication(path = "organizational-structure", titleKey = "title.manager.organizationalStructureManagement",
+            bundle = BUNDLE, accessGroup = ACCESS_GROUP, hint = HINT)
+    public static class ManagerOrganizationalStructureApp {
     }
 
-    @StrutsApplication(descriptionKey = "title.people", path = "people-management", titleKey = "title.people",
-            bundle = "ManagerResources", accessGroup = "role(MANAGER)", hint = "Manager")
-    public static class PeopleManagementApp {
-
+    @StrutsApplication(path = "executions", titleKey = "title.executions", bundle = BUNDLE, accessGroup = ACCESS_GROUP,
+            hint = HINT)
+    public static class ManagerExecutionsApp {
     }
 
-    @StrutsApplication(descriptionKey = "label.manageFiles", path = "manage-files", titleKey = "label.manageFiles",
-            bundle = "ManagerResources", accessGroup = "role(MANAGER)", hint = "Manager")
-    public static class ManageFilesApp {
-
+    @StrutsApplication(path = "people-management", titleKey = "title.people", bundle = BUNDLE,
+            accessGroup = "(role(OPERATOR) | #managers)", hint = HINT)
+    public static class ManagerPeopleApp {
     }
 
-    @StrutsApplication(descriptionKey = "label.manageFinance", path = "manage-finance", titleKey = "label.manageFinance",
-            bundle = "ManagerResources", accessGroup = "role(MANAGER)", hint = "Manager")
-    public static class ManageFinanceApp {
-
+    @StrutsApplication(path = "payments", titleKey = "title.payments", bundle = BUNDLE, accessGroup = ACCESS_GROUP, hint = HINT)
+    public static class ManagerPaymentsApp {
     }
 
-    @StrutsApplication(descriptionKey = "title.support", path = "support", titleKey = "title.support",
-            bundle = "ManagerResources", accessGroup = "role(MANAGER)", hint = "Manager")
-    public static class SupportManagementApp {
-
+    @StrutsApplication(path = "students", titleKey = "label.students", bundle = "AcademicAdminOffice",
+            accessGroup = ACCESS_GROUP, hint = HINT)
+    public static class ManagerStudentsApp {
     }
 
-    @StrutsApplication(descriptionKey = "label.students", path = "students", titleKey = "label.students",
-            bundle = "AcademicAdminOffice", accessGroup = "role(MANAGER)", hint = "Manager")
-    public static class StudentsApp {
+    // Sub applications
 
+    @StrutsApplication(path = "person-management", titleKey = "label.manager.personManagement", bundle = BUNDLE,
+            accessGroup = "(role(OPERATOR) | #managers)", hint = HINT)
+    @Mapping(path = "/personManagementApp", module = "manager", parameter = "/manager/personManagement/welcomeScreen.jsp")
+    public static class ManagerPersonManagementApp extends ForwardAction {
     }
 
-    @StrutsApplication(descriptionKey = "label.access.control.persistent.groups.management", path = "access-control",
-            titleKey = "label.access.control.persistent.groups.management", bundle = "ManagerResources",
-            accessGroup = "role(MANAGER)", hint = "Manager")
-    public static class AccessControlApp {
+    // Faces Entry Points
 
+    @StrutsFunctionality(app = ManagerPaymentsApp.class, path = "update-gratuity-situations",
+            titleKey = "title.gratuity.situations")
+    @Mapping(path = "/gratuity/updateGratuitySituations", module = "manager")
+    public static class UpdateGratuitySituations extends FacesEntryPoint {
+    }
+
+    @StrutsFunctionality(app = ManagerPersonManagementApp.class, path = "management-functions",
+            titleKey = "link.functions.management")
+    @Mapping(path = "/functionsManagement/personSearchForFunctionsManagement", module = "manager")
+    public static class ManagementFunctionsPage extends FacesEntryPoint {
+    }
+
+    @StrutsFunctionality(app = ManagerOrganizationalStructureApp.class, path = "manage",
+            titleKey = "link.manager.organizationalStructureManagement")
+    @Mapping(path = "/organizationalStructureManagament/listAllUnits", module = "manager")
+    public static class OrganizationalStructurePage extends FacesEntryPoint {
+    }
+
+    @StrutsFunctionality(app = ManagerExecutionsApp.class, path = "create-execution-degree",
+            titleKey = "label.manager.createExecutionDegrees")
+    @Mapping(path = "/degree/chooseDegreeType", module = "manager")
+    public static class CreateExecutionDegree extends FacesEntryPoint {
     }
 }

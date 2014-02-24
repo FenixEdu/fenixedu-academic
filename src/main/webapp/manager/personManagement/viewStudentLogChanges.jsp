@@ -6,7 +6,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@page import="net.sourceforge.fenixedu.domain.person.RoleType"%><html:xhtml />
 
-<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="link.executionCourse.log" bundle="APPLICATION_RESOURCES"/></h2>
 
 <logic:empty name="logsList">

@@ -2,6 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications$UpdateGratuitySituations" />
+
 <f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<h:form>

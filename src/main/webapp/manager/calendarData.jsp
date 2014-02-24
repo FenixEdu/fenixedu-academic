@@ -4,10 +4,9 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<p><em>Administra&ccedil;&atilde;o</em></p>
 <h2>Depura&ccedil;&atilde;o de Calendarios</h2>
 <bean:define id="user" name="user"></bean:define>
-<form action="/manager/calendarDebug.do?method=show" method="post">
+<form action="${pageContext.request.contextPath}/manager/calendarDebug.do?method=show" method="post">
 	<logic:present name="user">
 		<input type="text" name="user"  id="user" value="<%= user %>"/>
 	</logic:present>

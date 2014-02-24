@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.log.CurriculumLineLog;
 import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.StudentsApp;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerStudentsApp;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
 
 import org.apache.struts.action.ActionForm;
@@ -37,8 +37,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@StrutsFunctionality(app = StudentsApp.class, descriptionKey = "label.curriculum.line.logs", path = "curriculum-logs",
-        titleKey = "label.curriculum.line.logs")
+@StrutsFunctionality(app = ManagerStudentsApp.class, path = "curriculum-logs", titleKey = "title.curriculum.line.logs")
 @Mapping(path = "/curriculumLineLogs", module = "manager")
 @Forwards({ @Forward(name = "searchCurriculumLineLogs", path = "/manager/viewCurriculumLineLogs.jsp"),
         @Forward(name = "viewCurriculumLineLogStatistics", path = "/manager/viewCurriculumLineLogStatistics.jsp") })

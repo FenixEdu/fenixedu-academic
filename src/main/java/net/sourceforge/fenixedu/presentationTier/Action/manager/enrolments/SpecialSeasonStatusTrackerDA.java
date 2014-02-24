@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.StudentsApp;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerStudentsApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -31,8 +31,8 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-@StrutsFunctionality(app = StudentsApp.class, descriptionKey = "label.dges.student.import", path = "dges-student-import",
-        titleKey = "label.dges.student.import")
+@StrutsFunctionality(app = ManagerStudentsApp.class, path = "special-season-enrolments",
+        titleKey = "label.course.specialSeasonEnrolments")
 @Mapping(path = "/specialSeason/specialSeasonStatusTracker", module = "manager")
 @Forwards({ @Forward(name = "selectCourse", path = "/manager/specialSeason/selectCourse.jsp"),
         @Forward(name = "listStudents", path = "/manager/specialSeason/listStudents.jsp") })

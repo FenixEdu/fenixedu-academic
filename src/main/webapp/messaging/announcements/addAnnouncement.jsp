@@ -1,4 +1,3 @@
-<%@ page isELIgnored="true"%>
 <%@ page language="java" %>
 
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
@@ -9,7 +8,6 @@
 <html:xhtml/>
 
 
-<em><bean:message key="label.manageChannels" bundle="MESSAGING_RESOURCES"/></em>
 <h2><bean:message bundle="MESSAGING_RESOURCES" key="messaging.annoucenment.add.label"/></h2>
 
 <jsp:include flush="true" page="/messaging/context.jsp"/>
@@ -20,8 +18,7 @@
 <bean:define id="announcementBoardId" name="announcementBoard" property="externalId"/>
 <bean:define id="announcementBoard" name="announcementBoard"/>
 
-<bean:define id="method" name="returnMethod" />
-<bean:define id="action"><%= "method=" + method + "&amp;announcementBoardId=" + announcementBoardId + "&amp;" + extraParameters %></bean:define>
+<bean:define id="action">method=${returnMethod ? returnMethod : 'viewAnnouncements'}&announcementBoardId=${announcementBoardId}&${extraParameters}</bean:define>
            
 <fr:form action="<%=  contextPrefix + action %>">
 
@@ -82,7 +79,7 @@
 			</fr:create>
 		</td>
 	</tr>
-	<logic:notEmpty name="announcementBoard" property="files">
+	<logic:notEmpty name="announcementBoard" property="fileContentSet">
 		<tr>
 		<th>
 			<bean:message key="label.insertFiles" bundle="MESSAGING_RESOURCES"/>:
@@ -312,7 +309,7 @@
 		</td>	
 	</tr>
 	
-	<logic:notEmpty name="announcementBoard" property="files">
+	<logic:notEmpty name="announcementBoard" property="fileContentSet">
 		<tr>
 		<th>
 			<bean:message key="label.define.image" bundle="MESSAGING_RESOURCES"/>:

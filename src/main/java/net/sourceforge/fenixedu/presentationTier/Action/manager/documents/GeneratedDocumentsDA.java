@@ -15,11 +15,14 @@ import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.documents.GeneratedDocument;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerSystemManagementApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.io.domain.GenericFile;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -29,9 +32,13 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
 /**
  * @author Pedro Santos (pmrsa)
  */
+@StrutsFunctionality(app = ManagerSystemManagementApp.class, path = "generated-documents",
+        titleKey = "documents.management.title")
 @Mapping(path = "/generatedDocuments", module = "manager")
-@Forwards({ @Forward(name = "search", path = "/manager/documents/generatedDocuments.jsp") })
+@Forwards(@Forward(name = "search", path = "/manager/documents/generatedDocuments.jsp"))
 public class GeneratedDocumentsDA extends FenixDispatchAction {
+
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         request.setAttribute("searchBean", new DocumentSearchBean());

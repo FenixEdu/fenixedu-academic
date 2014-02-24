@@ -51,9 +51,15 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
-
-        Partial begin = CalendarEntryBean.getPartialFromYearMonthDay(currentExecutionYear.getBeginDateYearMonthDay());
-        Partial end = CalendarEntryBean.getPartialFromYearMonthDay(currentExecutionYear.getEndDateYearMonthDay());
+        Partial begin;
+        Partial end;
+        if (currentExecutionYear != null) {
+            begin = CalendarEntryBean.getPartialFromYearMonthDay(currentExecutionYear.getBeginDateYearMonthDay());
+            end = CalendarEntryBean.getPartialFromYearMonthDay(currentExecutionYear.getEndDateYearMonthDay());
+        } else {
+            begin = CalendarEntryBean.getPartialFromYearMonthDay(new YearMonthDay());
+            end = CalendarEntryBean.getPartialFromYearMonthDay(new YearMonthDay().plusMonths(3));
+        }
 
         CalendarEntryBean bean = CalendarEntryBean.createAcademicCalendarBean(begin, end);
         request.setAttribute("parentEntryBean", bean);

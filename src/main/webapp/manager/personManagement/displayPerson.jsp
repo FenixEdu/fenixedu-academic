@@ -58,9 +58,9 @@ function check(e,v){
 
 <h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.findPerson" /></h2>
 
-<logic:notPresent name="personListFinded">
+<logic:empty name="personListFinded">
 	<p><span class="errors"><bean:message bundle="MANAGER_RESOURCES" key="error.manager.implossible.findPerson" /></span></p>
-</logic:notPresent>
+</logic:empty>
 
 <logic:notEmpty name="personListFinded">
 	

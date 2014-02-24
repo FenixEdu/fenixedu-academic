@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
-import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.MessagesAndNoticesApp;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerMessagesAndNoticesApp;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.AnnouncementManagement;
 
 import org.apache.struts.action.ActionForm;
@@ -29,11 +29,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author Gonçalo Luiz
  */
 
-@StrutsFunctionality(app = MessagesAndNoticesApp.class, descriptionKey = "title.notices", path = "manage-notices",
-        titleKey = "title.notices")
+@StrutsFunctionality(app = ManagerMessagesAndNoticesApp.class, path = "manage-notices", titleKey = "title.notices")
 @Mapping(module = "manager", path = "/manageAdvisories", input = "/manageAdvisories.do?method=prepare&page=0",
-        attribute = "advisoryForm", formBean = "advisoryForm", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "uploadFile", path = "/messaging/announcements/uploadFileToBoard.jsp"),
+        formBean = "advisoryForm")
+@Forwards({ @Forward(name = "uploadFile", path = "/messaging/announcements/uploadFileToBoard.jsp"),
         @Forward(name = "edit", path = "/messaging/announcements/editAnnouncement.jsp"),
         @Forward(name = "listAnnouncements", path = "/messaging/announcements/listBoardAnnouncements.jsp"),
         @Forward(name = "add", path = "/messaging/announcements/addAnnouncement.jsp"),

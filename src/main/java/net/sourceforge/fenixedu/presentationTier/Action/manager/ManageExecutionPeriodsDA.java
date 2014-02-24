@@ -4,26 +4,26 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriods;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.AlterExecutionPeriodState;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ExecutionsManagementApp;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerExecutionsApp;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
 
@@ -35,27 +35,17 @@ import pt.ist.fenixframework.FenixFramework;
 /**
  * @author Luis Crus & Sara Ribeiro
  */
-@StrutsFunctionality(app = ExecutionsManagementApp.class, descriptionKey = "title.execution.periods",
-        path = "manage-periods", titleKey = "title.execution.periods")
-@Mapping(module = "operator", path = "/manageExecutionPeriods", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "Manage", path = "/manager/manageExecutionPeriods_bd.jsp"),
+@StrutsFunctionality(app = ManagerExecutionsApp.class, path = "manage-periods", titleKey = "title.execution.periods")
+@Mapping(module = "manager", path = "/manageExecutionPeriods")
+@Forwards({ @Forward(name = "Manage", path = "/manager/manageExecutionPeriods_bd.jsp"),
         @Forward(name = "EditExecutionPeriod", path = "/manager/editExecutionPeriodDates.jsp") })
 public class ManageExecutionPeriodsDA extends FenixDispatchAction {
 
     @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-
-        List infoExecutionPeriods = ReadExecutionPeriods.run();
-
-        if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
-
-            Collections.sort(infoExecutionPeriods);
-
-            if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty()) {
-                request.setAttribute(PresentationConstants.LIST_EXECUTION_PERIODS, infoExecutionPeriods);
-            }
-
-        }
+        List<ExecutionSemester> periods = new ArrayList<>(Bennu.getInstance().getExecutionPeriodsSet());
+        Collections.sort(periods);
+        request.setAttribute("periods", periods);
         return mapping.findForward("Manage");
     }
 

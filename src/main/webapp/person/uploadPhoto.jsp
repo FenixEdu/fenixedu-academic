@@ -13,6 +13,10 @@
 		width: 500px;
 		margin-left: 10px;
 	}
+	#upload-button {
+		left: 155px !important;
+		top: 420px !important;
+	}
 </style>
 
 <script src="<%= request.getContextPath() + "/javaScript/jquery/jquery.js" %>" type="text/javascript" ></script>

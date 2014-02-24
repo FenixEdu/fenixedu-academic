@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.personnelSection;
 
 import net.sourceforge.fenixedu.presentationTier.Action.manager.QualificationDA;
-import net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction;
+import net.sourceforge.fenixedu.presentationTier.Action.personnelSection.PersonManagementAction;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;

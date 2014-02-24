@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -47,6 +48,7 @@ public class EquivalencyPlanDA extends FenixDispatchAction {
         return super.execute(mapping, actionForm, request, response);
     }
 
+    @EntryPoint
     public ActionForward showPlan(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         return mapping.findForward("showPlan");

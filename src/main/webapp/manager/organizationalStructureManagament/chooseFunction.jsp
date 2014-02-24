@@ -4,6 +4,8 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications$OrganizationalStructurePage" />
+
 <f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ManagerResources" var="bundle"/>
@@ -17,12 +19,12 @@
 										
 		<h:outputText value="<h2>#{bundle['title.chooseFunction']}</h2><br/>" escape="false" />		
 		
-		<h:panelGrid styleClass="infoselected" columns="2">
+		<span class="alert alert-info">
 			<h:outputText value="<b>#{bundle['message.name']}</b>" escape="false"/>		
-			<h:outputText value="#{organizationalStructureBackingBean.chooseUnit.name}" escape="false"/>												
-		</h:panelGrid>
+			<h:outputText value="#{organizationalStructureBackingBean.chooseUnit.name}" escape="false"/>
+		</span>
 		
-		<h:outputText value="<br/>" escape="false" />		
+		<h:outputText value="<br/><br/><br/>" escape="false" />		
 		
 		<h:outputText styleClass="error" rendered="#{!empty organizationalStructureBackingBean.errorMessage}"
 				value="#{bundle[organizationalStructureBackingBean.errorMessage]}<br/>" escape="false"/>

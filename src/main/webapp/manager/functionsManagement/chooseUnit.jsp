@@ -3,6 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications$ManagementFunctionsPage" />
+
 <f:view>
 	<script language="JavaScript">
 		function check(e,v)

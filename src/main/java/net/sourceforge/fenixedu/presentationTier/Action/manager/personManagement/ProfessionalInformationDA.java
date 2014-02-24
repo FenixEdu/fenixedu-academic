@@ -32,7 +32,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(path = "/professionalInformation", module = "manager")
+@Mapping(path = "/professionalInformation", module = "manager", functionality = FindPersonAction.class)
 @Forwards({ @Forward(name = "showProfessionalInformation",
         path = "/manager/personManagement/contracts/showProfessionalInformation.jsp") })
 public class ProfessionalInformationDA extends FenixDispatchAction {

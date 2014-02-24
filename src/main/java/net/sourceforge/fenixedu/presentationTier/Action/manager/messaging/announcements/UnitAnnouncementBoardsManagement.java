@@ -34,6 +34,9 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -42,6 +45,19 @@ import pt.ist.fenixframework.FenixFramework;
  *         Created on Jun 26, 2006,3:07:21 PM
  * 
  */
+@Mapping(path = "/announcements/manageUnitAnnouncementBoard", module = "manager",
+        formBeanClass = UnitAnnouncementBoardsManagementForm.class, functionality = AnnouncementBoardsManagement.class)
+@Forwards({
+        @Forward(name = "chooseUnit", path = "/manager/announcements/chooseUnit.jsp"),
+        @Forward(name = "createBoard", path = "/messaging/announcements/createUnitAnnouncementBoard.jsp"),
+        @Forward(name = "add", path = "/messaging/announcements/addAnnouncement.jsp"),
+        @Forward(name = "listAnnouncementBoards", path = "/messaging/announcements/listAnnouncementBoards.jsp"),
+        @Forward(name = "listAnnouncements", path = "/messaging/announcements/listBoardAnnouncements.jsp"),
+        @Forward(name = "editAnnouncementBoard", path = "/messaging/announcements/editUnitAnnouncementBoard.jsp"),
+        @Forward(name = "editAnnouncementBoardApprovers",
+                path = "/messaging/announcements/editUnitAnnouncementBoardApprovers.jsp"),
+        @Forward(name = "edit", path = "/messaging/announcements/editAnnouncement.jsp"),
+        @Forward(name = "viewAnnouncement", path = "/messaging/announcements/viewAnnouncement.jsp") })
 public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
 
     public ActionForward showTree(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

@@ -20,9 +20,6 @@
 		<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeType" property="degreeType" onchange="this.form.method.value='readDegreeCurricularPlans';this.form.submit();" >
 			<html:options collection="degreeTypes" property="value" labelProperty="label" /> 
 		</html:select>
-		<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-			<bean:message key="button.submit"/>
-		</html:submit>
 	</p>
 	
 	<logic:notEmpty name="degreeCurricularPlans">
@@ -30,9 +27,6 @@
 		<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeCurricularPlanID" property="degreeCurricularPlanID" onchange="this.form.method.value='readExecutionDegrees';this.form.submit();">
 			<html:options collection="degreeCurricularPlans" property="value" labelProperty="label" /> 
 		</html:select>
-		<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-			<bean:message key="button.submit"/>
-		</html:submit>
 		</p>
 	</logic:notEmpty>
 	
@@ -43,7 +37,7 @@
 <br/>
 <logic:notEmpty name="executionDegrees">
 
-		<table cellpadding='0' border='0'>
+		<table cellpadding='0' border='0' class="table table-bordered">
 			<tr>
 				<td class="listClasses-header"></td>
 				<th class='listClasses-header'> <bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionDegree.executionYear"/> </th>
@@ -200,7 +194,7 @@
 						<html:link module="/manager" action="/executionDegreesManagement.do?method=prepareEditExecutionDegree" paramId="executionDegreeID" paramName="executionDegree" paramProperty="externalId">
 							<bean:message bundle="MANAGER_RESOURCES" key="link.edit"/>
 						</html:link>
-						, <br/>
+						<br/>
 						<html:link module="/manager" action="/executionDegreesManagement.do?method=readCoordinators" paramId="executionDegreeID" paramName="executionDegree" paramProperty="externalId">
 							<bean:message bundle="MANAGER_RESOURCES" key="label.manager.edit.executionDegree.coordinators" />
 						</html:link>

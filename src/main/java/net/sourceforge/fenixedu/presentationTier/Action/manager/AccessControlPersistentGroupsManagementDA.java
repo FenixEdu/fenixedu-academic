@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.manager.RemovePersistent
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.AccessControlApp;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerSystemManagementApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -22,13 +22,13 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@StrutsFunctionality(app = AccessControlApp.class, descriptionKey = "label.access.control.persistent.groups.management",
-        path = "groups-management", titleKey = "label.access.control.persistent.groups.management")
-@Mapping(module = "manager", path = "/accessControlPersistentGroupsManagement", scope = "request", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "prepareCreateNewPersistentGroup", path = "/manager/persistentGroups/createNewPersistentGroup.jsp"),
+@StrutsFunctionality(app = ManagerSystemManagementApp.class, path = "groups-management",
+        titleKey = "label.access.control.persistent.groups.management")
+@Mapping(module = "manager", path = "/accessControlPersistentGroupsManagement")
+@Forwards({ @Forward(name = "prepareCreateNewPersistentGroup", path = "/manager/persistentGroups/createNewPersistentGroup.jsp"),
         @Forward(name = "seeAllPersistentGroups", path = "/manager/persistentGroups/seeAllPersistentGroups.jsp") })
 public class AccessControlPersistentGroupsManagementDA extends FenixDispatchAction {
+
     @EntryPoint
     public ActionForward listAllGroups(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {

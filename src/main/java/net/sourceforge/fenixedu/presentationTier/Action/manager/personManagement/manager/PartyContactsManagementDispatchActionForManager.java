@@ -8,6 +8,8 @@ import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactValidation;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactValidationState;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.FindPersonAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PartyContactsManagementDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -18,12 +20,11 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "manager", path = "/partyContacts", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "visualizePersonalInformation", path = "/manager/personManagement/viewPerson.jsp"),
+@Mapping(module = "manager", path = "/partyContacts", functionality = FindPersonAction.class)
+@Forwards({ @Forward(name = "visualizePersonalInformation", path = "/manager/personManagement/viewPerson.jsp"),
         @Forward(name = "editPartyContact", path = "/manager/personManagement/contacts/editPartyContact.jsp"),
         @Forward(name = "createPartyContact", path = "/manager/personManagement/contacts/createPartyContact.jsp") })
-public class PartyContactsManagementDispatchActionForManager extends
-        net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PartyContactsManagementDispatchAction {
+public class PartyContactsManagementDispatchActionForManager extends PartyContactsManagementDispatchAction {
 
     @Override
     protected Party getParty(HttpServletRequest request) {

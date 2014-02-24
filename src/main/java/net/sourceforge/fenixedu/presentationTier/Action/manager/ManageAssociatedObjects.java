@@ -19,11 +19,14 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTyp
 import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerSystemManagementApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -32,6 +35,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 
+@StrutsFunctionality(app = ManagerSystemManagementApp.class, path = "manage-associated-objects",
+        titleKey = "title.manage.associated.objects")
 @Mapping(path = "/manageAssociatedObjects", module = "manager")
 @Forwards({ @Forward(name = "show", path = "/manager/listAssociatedObjects.jsp"),
         @Forward(name = "list", path = "/manager/listAssociatedObjects.jsp"),
@@ -169,6 +174,7 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
         }
     }
 
+    @EntryPoint
     public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Set<Department> departments = Bennu.getInstance().getDepartmentsSet();

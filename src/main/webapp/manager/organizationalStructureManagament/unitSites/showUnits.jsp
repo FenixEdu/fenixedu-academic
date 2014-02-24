@@ -5,6 +5,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <html:xhtml/>
 
+<jsp:include page="/commons/renderers/treeRendererHeader.jsp" />
+
 <h2><bean:message key="title.unitSite.manage.sites" bundle="MANAGER_RESOURCES"/></h2>
 
 <logic:messagesPresent message="true">

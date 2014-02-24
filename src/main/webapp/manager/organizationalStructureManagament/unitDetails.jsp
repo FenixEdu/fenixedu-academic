@@ -4,6 +4,8 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications$OrganizationalStructurePage" />
+
 <f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	
@@ -19,7 +21,7 @@
 		
 		<h:outputText value="<h2>#{bundle['title.unitDetails']}</h2>" escape="false" />
 								
-		<h:outputText value="<div class='warning0'><strong>#{bundle['label.attention']}:</strong><br/>#{bundle['label.root.units.note']}</div>" escape="false"/>
+		<h:outputText value="<div class='alert alert-warning'><strong>#{bundle['label.attention']}:</strong><br/>#{bundle['label.root.units.note']}</div>" escape="false"/>
 						
 		<h:selectBooleanCheckbox value="#{organizationalStructureBackingBean.institutionUnit}" onclick="this.form.submit()"/>
 		<h:outputText value="<b>#{bundle['label.rootInstitution']}</b>" escape="false" />&nbsp;&nbsp;										
@@ -32,7 +34,7 @@
 			
 		<h:outputText value="<br/><br/>" escape="false" />
 				
-		<h:dataTable value="#{organizationalStructureBackingBean.unit}" var="unit"
+		<h:dataTable value="#{organizationalStructureBackingBean.unit}" styleClass="table table-bordered" var="unit"
 			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty organizationalStructureBackingBean.unit}">
 			<h:column>
 				<f:facet name="header">
@@ -140,7 +142,7 @@
 		</fc:selectOneMenu>		
 		<h:outputText value="<br/><br/>" escape="false"/>		
 			
-		<h:dataTable value="#{organizationalStructureBackingBean.allSubUnits}" var="unit"
+		<h:dataTable value="#{organizationalStructureBackingBean.allSubUnits}" styleClass="table table-bordered table-condensed" var="unit"
 			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty organizationalStructureBackingBean.allSubUnits}">
 			<h:column>	
 				<f:facet name="header">
@@ -238,7 +240,7 @@
 		</fc:selectOneMenu>		
 		<h:outputText value="<br/><br/>" escape="false"/>
 		
-		<h:dataTable value="#{organizationalStructureBackingBean.allNonInherentFunctions}" var="function"
+		<h:dataTable value="#{organizationalStructureBackingBean.allNonInherentFunctions}" styleClass="table table-condensed table-bordered" var="function"
 			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty organizationalStructureBackingBean.allNonInherentFunctions}">
 			<h:column>
 				<f:facet name="header">
@@ -299,7 +301,7 @@
 				
 		<h:outputText value="<br/><h3>#{bundle['title.inherentFunctions']}</h3>" escape="false" />				
 		
-		<h:dataTable value="#{organizationalStructureBackingBean.allInherentFunctions}" var="function"
+		<h:dataTable value="#{organizationalStructureBackingBean.allInherentFunctions}" styleClass="table table-condensed table-bordered" var="function"
 			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty organizationalStructureBackingBean.allInherentFunctions}">
 			<h:column>
 				<f:facet name="header">

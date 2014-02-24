@@ -42,7 +42,7 @@
 
 <html:form action="/chooseDegreesForExecutionCourseMerge.do?method=chooseDegreesAndExecutionPeriod" styleId="submitForm">
 	<fr:edit id="degreeBean" name="degreeBean">
-		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.manager.MergeExecutionCourseDispatchionAction$DegreesMergeBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.executionCourseManagement.MergeExecutionCourseDA$DegreesMergeBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 			<fr:slot name="academicInterval" layout="menu-select" key="label.mergedegrees.academicinterval" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		        <fr:property name="providerClass"
 		            value="net.sourceforge.fenixedu.presentationTier.renderers.providers.AcademicIntervalProvider" />

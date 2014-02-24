@@ -15,10 +15,13 @@ import net.sourceforge.fenixedu.dataTransferObject.photographs.PhotographFilterB
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerPeopleApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -28,6 +31,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 /**
  * @author Pedro Santos (pmrsa)
  */
+@StrutsFunctionality(app = ManagerPeopleApp.class, path = "photo-history", titleKey = "label.operator.photo.title")
 @Mapping(path = "/photographs/history", module = "manager")
 @Forwards({ @Forward(name = "history", path = "/manager/photographs/photographHistory.jsp") })
 public class PhotographHistoryDA extends FenixDispatchAction {
@@ -75,6 +79,7 @@ public class PhotographHistoryDA extends FenixDispatchAction {
         }
     }
 
+    @EntryPoint
     public ActionForward history(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         request.setAttribute("filter", new PhotographFilterBean());

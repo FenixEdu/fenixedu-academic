@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PartyContactsManagementDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction;
+import net.sourceforge.fenixedu.presentationTier.Action.personnelSection.PersonManagementAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
