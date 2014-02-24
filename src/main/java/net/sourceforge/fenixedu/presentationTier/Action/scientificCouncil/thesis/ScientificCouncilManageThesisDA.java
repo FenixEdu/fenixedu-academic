@@ -55,39 +55,26 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
+// @StrutsFunctionality(app = ScientificDisserationsApp.class, path = "list-old", titleKey = "navigation.list.jury.proposals")
 @Mapping(path = "/scientificCouncilManageThesis", module = "scientificCouncil")
-@Forwards({
-        @Forward(name = "list-thesis", path = "/scientificCouncil/thesis/listThesis.jsp", tileProperties = @Tile(
-                title = "private.scientificcouncil.dissertations")),
-        @Forward(name = "review-proposal", path = "/scientificCouncil/thesis/reviewProposal.jsp", tileProperties = @Tile(
-                title = "private.scientificcouncil.dissertations")),
-        @Forward(name = "review-thesis", path = "/scientificCouncil/thesis/reviewThesis.jsp", tileProperties = @Tile(
-                title = "private.scientificcouncil.dissertations")),
-        @Forward(name = "view-thesis", path = "/scientificCouncil/thesis/viewThesis.jsp", tileProperties = @Tile(
-                title = "private.scientificcouncil.dissertations")),
-        @Forward(name = "list-scientific-comission", path = "/scientificCouncil/thesis/listScientificComission.jsp",
-                tileProperties = @Tile(title = "private.scientificcouncil.dissertations")),
-        @Forward(name = "list-thesis-creation-periods", path = "/scientificCouncil/thesis/listThesisCreationPeriods.jsp",
-                tileProperties = @Tile(title = "private.scientificcouncil.dissertations")),
-        @Forward(name = "viewOperationsThesis", path = "/student/thesis/viewOperationsThesis.jsp", tileProperties = @Tile(
-                title = "private.scientificcouncil.dissertations")),
-        @Forward(name = "showDissertationsInfo", path = "/scientificCouncil/thesis/showDissertationsInfo.jsp",
-                tileProperties = @Tile(title = "private.scientificcouncil.dissertations")),
-        @Forward(name = "editParticipant", path = "/scientificCouncil/thesis/editParticipant.jsp", tileProperties = @Tile(
-                title = "private.scientificcouncil.dissertations")),
-        @Forward(name = "select-person", path = "/scientificCouncil/thesis/selectPerson.jsp", tileProperties = @Tile(
-                title = "private.scientificcouncil.dissertations")),
-        @Forward(name = "change-information-with-docs", path = "/scientificCouncil/thesis/changeInformationWithDocs.jsp",
-                tileProperties = @Tile(title = "private.scientificcouncil.dissertations")),
-        @Forward(name = "search-student", path = "/scientificCouncil/thesis/searchStudent.jsp", tileProperties = @Tile(
-                title = "private.scientificcouncil.dissertations")) })
+@Forwards({ @Forward(name = "list-thesis", path = "/scientificCouncil/thesis/listThesis.jsp"),
+        @Forward(name = "review-proposal", path = "/scientificCouncil/thesis/reviewProposal.jsp"),
+        @Forward(name = "review-thesis", path = "/scientificCouncil/thesis/reviewThesis.jsp"),
+        @Forward(name = "view-thesis", path = "/scientificCouncil/thesis/viewThesis.jsp"),
+        @Forward(name = "list-scientific-comission", path = "/scientificCouncil/thesis/listScientificComission.jsp"),
+        @Forward(name = "list-thesis-creation-periods", path = "/scientificCouncil/thesis/listThesisCreationPeriods.jsp"),
+        @Forward(name = "viewOperationsThesis", path = "/student/thesis/viewOperationsThesis.jsp"),
+        @Forward(name = "showDissertationsInfo", path = "/scientificCouncil/thesis/showDissertationsInfo.jsp"),
+        @Forward(name = "editParticipant", path = "/scientificCouncil/thesis/editParticipant.jsp"),
+        @Forward(name = "select-person", path = "/scientificCouncil/thesis/selectPerson.jsp"),
+        @Forward(name = "change-information-with-docs", path = "/scientificCouncil/thesis/changeInformationWithDocs.jsp"),
+        @Forward(name = "search-student", path = "/scientificCouncil/thesis/searchStudent.jsp") })
 public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 
     @Override

@@ -15,7 +15,6 @@
 
 <jsp:include page="styles.jsp"/>
 
-<em><bean:message key="scientificCouncil"/></em>
 <h2><bean:message key="title.scientificCouncil.thesis" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h2>
 
 

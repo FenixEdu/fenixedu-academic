@@ -19,8 +19,6 @@
 
 <jsp:include page="styles.jsp"/>
 
-<em><bean:message key="scientificCouncil"/></em>
-
 <bean:define id="thesis" name="thesis" type="net.sourceforge.fenixedu.domain.thesis.Thesis"/>
 <%
 	final Enrolment enrolment = thesis.getEnrolment();

@@ -159,15 +159,6 @@
 				<arg0 key="label.property.support-lesson-place" />
 			</field>
     	</form>
-    	<!-- ================================================================ -->    	
-    	<form name="otherTypeCreditLineForm">
-			<field property="reason" depends="required" page="1">
-				<arg0 key="label.otherTypeCreditLine.reason"/>
-			</field>
-			<field property="credits" depends="required,double" page="1">
-				<arg0 key="label.otherTypeCreditLine.credits"/>
-			</field>
-    	</form>
 	</formset>
 </form-validation>
 

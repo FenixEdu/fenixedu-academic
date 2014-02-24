@@ -22,17 +22,17 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.EntryPoint;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 
-@Forwards(value = { @Forward(name = "manageUnitCredits", path = "/credits/creditsPool/manageUnitCredits.jsp",
-        tileProperties = @Tile(title = "private.department.coursestypes")) })
+@Forwards(@Forward(name = "manageUnitCredits", path = "/credits/creditsPool/manageUnitCredits.jsp"))
 public class ManageDepartmentCreditsPool extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepareManageUnitCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws NumberFormatException, FenixServiceException {
         DepartmentCreditsBean departmentCreditsBean = getDepartmentCreditsBean();

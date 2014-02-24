@@ -7,7 +7,6 @@
 <html:xhtml/>
 
 
-<em><bean:message key="scientificCouncil" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>
 <h2><bean:message key="accessCoordination" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h2>
 <p class="mvert05"><strong><fr:view	name="degreeCurricularPlan" property="name"/></strong> - <fr:view	name="degreeCurricularPlan" property="degree.name" /></p>
 

@@ -21,8 +21,6 @@
 
 <jsp:include page="styles.jsp"/>
 
-<em><bean:message key="scientificCouncil"/></em>
-
 <h2 class="separator2">
 	<bean:write name="person" property="name"/>
 	<span class="color777" style="font-weight:normal;">(

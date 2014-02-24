@@ -36,6 +36,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.ScientificCouncilApplication.ScientificCreditsApp;
 import net.sourceforge.fenixedu.util.NumberUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -45,9 +46,12 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.apache.struts.action.ExceptionHandler;
 import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,7 +60,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.spreadsheet.Formula;
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
@@ -70,25 +73,20 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
  * @author Ricardo Rodrigues
  * 
  */
-
-@Mapping(module = "scientificCouncil", path = "/creditsReport", attribute = "creditsReportForm", formBean = "creditsReportForm",
-        scope = "request", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "showCreditsReport", path = "/scientificCouncil/credits/showTeachersCreditsReport.jsp",
-                tileProperties = @Tile(title = "private.scientificcouncil.credits.report")),
-        @Forward(name = "showDepartmentCreditsReport", path = "/scientificCouncil/credits/showDepartmentGlobalCreditsReport.jsp",
-                tileProperties = @Tile(title = "private.scientificcouncil.credits.report")),
-        @Forward(name = "prepare", path = "/scientificCouncil/credits/selectReportParameters.jsp", tileProperties = @Tile(
-                title = "private.scientificcouncil.credits.report")) })
-@Exceptions(
-        value = { @ExceptionHandling(
-                type = net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits.ViewTeacherCreditsReportDispatchAction.InvalidPeriodException.class,
-                key = "error.credits.chooseExecutionPeriods", handler = org.apache.struts.action.ExceptionHandler.class,
-                path = "/creditsReport.do?method=prepare", scope = "request") })
+@StrutsFunctionality(app = ScientificCreditsApp.class, path = "view-report", titleKey = "link.credits.viewReport")
+@Mapping(module = "scientificCouncil", path = "/creditsReport", formBean = "creditsReportForm")
+@Forwards({
+        @Forward(name = "showCreditsReport", path = "/scientificCouncil/credits/showTeachersCreditsReport.jsp"),
+        @Forward(name = "showDepartmentCreditsReport", path = "/scientificCouncil/credits/showDepartmentGlobalCreditsReport.jsp"),
+        @Forward(name = "prepare", path = "/scientificCouncil/credits/selectReportParameters.jsp") })
+@Exceptions(@ExceptionHandling(type = ViewTeacherCreditsReportDispatchAction.InvalidPeriodException.class,
+        key = "error.credits.chooseExecutionPeriods", handler = ExceptionHandler.class,
+        path = "/creditsReport.do?method=prepare", scope = "request"))
 public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction {
 
     private static final Logger logger = LoggerFactory.getLogger(ViewTeacherCreditsReportDispatchAction.class);
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixServiceException {
 

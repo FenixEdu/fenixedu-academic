@@ -19,11 +19,11 @@
 		</li>
 	</logic:equal>
 	<li>
-		<a href="#" onclick="switchDisplay('instructions');"><bean:message key="label.instructions" bundle="RESEARCHER_RESOURCES"/></a>
+		<a href="#" data-toggle="collapse" data-target="#instructions"><bean:message key="label.instructions" bundle="RESEARCHER_RESOURCES"/></a>
 	</li>
 </ul>
 
-<div id="instructions" class="switchNone">
+<div id="instructions" class="collapse">
 <div class="infoop2 mbottom1 mtop05">
 <p class="mtop0"><strong><bean:message key="label.tagCloud" bundle="RESEARCHER_RESOURCES"/>:</strong> <bean:message key="label.tagCloud.explanation" bundle="RESEARCHER_RESOURCES"/></p>
 <table>
@@ -119,7 +119,3 @@ pageNumberAttributeName="filePage" numberOfPagesAttributeName="numberOfPages"/>
 	</p>
 </logic:empty>
 
-
-<script type="text/javascript" language="javascript">
-switchGlobal();
-</script>

@@ -9,8 +9,6 @@
 
 <jsp:include page="teacherCreditsStyles.jsp"/>
 
-
-<em><bean:message key="label.teacherService.credits"/></em>
 <h3><bean:message key="link.teacherCreditsSheet.view" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
 
 <logic:present name="teacherBean">

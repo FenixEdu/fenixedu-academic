@@ -7,7 +7,6 @@
 
 <logic:present role="role(SCIENTIFIC_COUNCIL)">
 
-	<em><bean:message key="title.teaching"/></em>
 	<h2><bean:message key="link.define.periods"/></h2>
 
 	<p><span class="error"><!-- Error messages go here --><html:errors /></span></p>	

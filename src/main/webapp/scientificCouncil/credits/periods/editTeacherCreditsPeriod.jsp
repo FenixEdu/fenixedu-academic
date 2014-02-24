@@ -7,7 +7,6 @@
 
 <logic:present role="role(SCIENTIFIC_COUNCIL)">
 
-	<em><bean:message key="title.teaching"/></em>
 	<h2><bean:message key="label.edit.credits.period"/></h2>
 
 	<p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
@@ -34,8 +33,8 @@
 		<bean:define id="URL">/defineCreditsPeriods.do?executionPeriodId=<bean:write name="teacherCreditsBean" property="executionPeriod.externalId"/></bean:define>
 		
 		<fr:form action="<%= URL %>">
-			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" name="creditsPeriodForm" value="editPeriod"/>	
-		
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" name="creditsPeriodForm" value="editPeriod"/> 
+
 			<fr:edit id="teacherCreditsBeanID" name="teacherCreditsBean" schema="<%= schemaName %>"	>				
 				<fr:layout>
 					<fr:property name="classes" value="tstyle5 thlight thright thmiddle mtop05"/>

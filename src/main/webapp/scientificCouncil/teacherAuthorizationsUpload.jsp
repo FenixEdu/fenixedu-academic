@@ -9,7 +9,6 @@
 <%@ page import="net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory"%>
 <html:xhtml/>
 
-<em><bean:message key="scientificCouncil" /></em>
 <h2><bean:message key="label.upload.authorizations" /></h2>
 
 <logic:present name="error">
