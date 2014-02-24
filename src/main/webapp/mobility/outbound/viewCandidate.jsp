@@ -189,8 +189,6 @@
 </table>
 
 
-
-
 <h3 class="separator2">
 	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.candidacies"/>
 </h3>
@@ -207,7 +205,7 @@
 				<%
 					for (final OutboundMobilityCandidacySubmission submission : registration.getOutboundMobilityCandidacySubmissionSet()) {
 					    final OutboundMobilityCandidacyPeriod candidacyPeriod = submission.getOutboundMobilityCandidacyPeriod();
-					    final int candidacyCount = submission.getOutboundMobilityCandidacyCount();
+					    final int candidacyCount = submission.getOutboundMobilityCandidacyContestGroupSet().size();
 					    final int spanner = candidacyCount + 1;
 				%>
 						<h3>
