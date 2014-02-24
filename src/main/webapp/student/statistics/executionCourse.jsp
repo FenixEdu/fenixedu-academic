@@ -8,7 +8,7 @@
 
 <html:xhtml/>
 
-<link href="../javaScript/sviz/sviz.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/javaScript/sviz/sviz.css" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript">
 	$.noConflict();

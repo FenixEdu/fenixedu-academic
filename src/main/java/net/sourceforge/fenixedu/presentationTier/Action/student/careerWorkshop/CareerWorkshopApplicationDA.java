@@ -14,29 +14,29 @@ import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopSessions;
 import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopThemes;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentParticipateApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
+@StrutsFunctionality(app = StudentParticipateApp.class, path = "career-workshops", titleKey = "link.title.careerWorkshop")
 @Mapping(path = "/careerWorkshopApplication", module = "student")
-@Forwards({
-        @Forward(name = "careerWorkshop", path = "/student/careerWorkshop/careerWorkshop.jsp", tileProperties = @Tile(
-                title = "private.student.participate.istcareerworkshops")),
-        @Forward(name = "careerWorkshopApplicationForm", path = "/student/careerWorkshop/careerWorkshopApplicationForm.jsp",
-                tileProperties = @Tile(title = "private.student.participate.istcareerworkshops")),
-        @Forward(name = "careerWorkshopConfirmationForm", path = "/student/careerWorkshop/careerWorkshopConfirmationForm.jsp",
-                tileProperties = @Tile(title = "private.student.participate.istcareerworkshops")) })
+@Forwards({ @Forward(name = "careerWorkshop", path = "/student/careerWorkshop/careerWorkshop.jsp"),
+        @Forward(name = "careerWorkshopApplicationForm", path = "/student/careerWorkshop/careerWorkshopApplicationForm.jsp"),
+        @Forward(name = "careerWorkshopConfirmationForm", path = "/student/careerWorkshop/careerWorkshopConfirmationForm.jsp") })
 public class CareerWorkshopApplicationDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 

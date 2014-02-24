@@ -17,8 +17,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@StrutsFunctionality(app = StudentViewApp.class, descriptionKey = "title.student.dataShareAuthorizations.short",
-        path = "data-share", titleKey = "title.student.dataShareAuthorizations")
+@StrutsFunctionality(app = StudentViewApp.class, descriptionKey = "title.student.dataShareAuthorizations", path = "data-share",
+        titleKey = "title.student.dataShareAuthorizations.short")
 @Mapping(path = "/studentDataShareAuthorization", module = "student")
 @Forwards({
         @Forward(name = "authorizations", path = "/student/dataShareAuthorization/manageAuthorizations.jsp",

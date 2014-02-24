@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -57,9 +56,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.FileUtils;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
+
+import com.google.common.io.ByteStreams;
 
 // @StrutsFunctionality(app = ScientificDisserationsApp.class, path = "list-old", titleKey = "navigation.list.jury.proposals")
 @Mapping(path = "/scientificCouncilManageThesis", module = "scientificCouncil")
@@ -426,17 +426,9 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
         RenderUtils.invalidateViewState();
 
         if (bean != null && bean.getFile() != null) {
-            File temporaryFile = null;
-
-            try {
-                temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
-                CreateThesisDissertationFile.runCreateThesisDissertationFile(getThesis(request), temporaryFile,
-                        bean.getSimpleFileName(), bean.getTitle(), bean.getSubTitle(), bean.getLanguage());
-            } finally {
-                if (temporaryFile != null) {
-                    temporaryFile.delete();
-                }
-            }
+            byte[] bytes = ByteStreams.toByteArray(bean.getFile());
+            CreateThesisDissertationFile.runCreateThesisDissertationFile(getThesis(request), bytes, bean.getSimpleFileName(),
+                    bean.getTitle(), bean.getSubTitle(), bean.getLanguage());
         }
 
         return viewThesis(mapping, actionForm, request, response);
@@ -448,17 +440,9 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
         RenderUtils.invalidateViewState();
 
         if (bean != null && bean.getFile() != null) {
-            File temporaryFile = null;
-
-            try {
-                temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
-                CreateThesisAbstractFile.runCreateThesisAbstractFile(getThesis(request), temporaryFile, bean.getSimpleFileName(),
-                        bean.getTitle(), bean.getSubTitle(), bean.getLanguage());
-            } finally {
-                if (temporaryFile != null) {
-                    temporaryFile.delete();
-                }
-            }
+            byte[] bytes = ByteStreams.toByteArray(bean.getFile());
+            CreateThesisAbstractFile.runCreateThesisAbstractFile(getThesis(request), bytes, bean.getSimpleFileName(),
+                    bean.getTitle(), bean.getSubTitle(), bean.getLanguage());
         }
 
         return viewThesis(mapping, actionForm, request, response);

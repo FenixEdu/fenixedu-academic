@@ -7,7 +7,7 @@
 <%@ page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
 <html:xhtml/>
 
-<link href="../javaScript/sviz/sviz.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/javaScript/sviz/sviz.css" rel="stylesheet" type="text/css" />
 
 <h2><bean:message key="label.student.statistics.global.view" bundle="STUDENT_RESOURCES" /></h2>
 

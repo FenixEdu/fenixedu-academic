@@ -115,6 +115,8 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends FenixDispatchAc
 
     public ActionForward start(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+        generateToken(request);
+        saveToken(request);
         return prepareShiftEnrollment(mapping, form, request, response);
     }
 

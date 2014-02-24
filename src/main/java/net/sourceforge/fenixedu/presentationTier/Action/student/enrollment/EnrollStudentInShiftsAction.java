@@ -26,10 +26,11 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "student", path = "/enrollStudentInShifts",
-        input = "/studentShiftEnrollmentManagerLoockup.do?method=Escolher Turnos&page=0",
-        attribute = "studentShiftEnrollmentForm", formBean = "studentShiftEnrollmentForm", scope = "request", validate = false)
-@Forwards(value = { @Forward(name = "enrollmentConfirmation",
-        path = "/studentShiftEnrollmentManagerLoockup.do?method=Escolher Turnos") })
+        input = "/studentShiftEnrollmentManagerLookup.do?method=proceedToShiftEnrolment",
+        formBean = "studentShiftEnrollmentForm", validate = false,
+        functionality = ShiftStudentEnrollmentManagerDispatchAction.class)
+@Forwards(@Forward(name = "enrollmentConfirmation",
+        path = "/student/studentShiftEnrollmentManagerLookup.do?method=proceedToShiftEnrolment"))
 public class EnrollStudentInShiftsAction extends FenixAction {
 
     private static final Logger logger = LoggerFactory.getLogger(EnrollStudentInShiftsAction.class);

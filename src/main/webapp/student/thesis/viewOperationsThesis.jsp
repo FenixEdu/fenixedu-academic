@@ -4,8 +4,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-
-<em><bean:message key="label.thesis.Dissertation" bundle="STUDENT_RESOURCES"/></em>
 <h2><bean:message key="label.thesis.operation.title" bundle="STUDENT_RESOURCES"/></h2>
 
 <logic:present name="thesis"> 

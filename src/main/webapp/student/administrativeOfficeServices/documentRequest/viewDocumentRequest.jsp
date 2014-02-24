@@ -5,7 +5,6 @@
 
 <html:xhtml/>
 
-<em><bean:message key="administrative.office.services"/></em>
 <h2><bean:message key="documents.requirement.consult"/></h2>
 
 <logic:messagesPresent message="true">
@@ -36,7 +35,7 @@
 	</fr:view>
 </logic:present>
 
-<html:form action="/documentRequest.do?method=viewDocumentRequests">
+<html:form action="/viewDocumentRequests.do?method=viewDocumentRequests">
 	<p>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.registrationId" property="registrationId"/>
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.back" /></html:submit>

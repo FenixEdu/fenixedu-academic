@@ -5,7 +5,6 @@
 
 <html:xhtml/>
 
-<em><bean:message key="title.student.portalTitle"/></em>
 <h2><bean:message key="title.student.thesis.edit.keywords"/></h2>
 
 <html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">

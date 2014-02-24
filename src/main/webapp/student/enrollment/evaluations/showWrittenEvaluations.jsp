@@ -3,10 +3,11 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication$ShowStudentEvaluations" />
+
 <f:view>
 	<f:loadBundle basename="resources/StudentResources" var="bundle"/>	
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
-	<h:outputText value="<em>#{bundle['title.student.portalTitle']}</em>" escape="false" />
 	<h:outputText value="<h2>#{bundle['link.exams.enrolment']}</h2>" escape="false"
 	  rendered="#{manageEvaluationsForStudent.evaluationTypeString == 'net.sourceforge.fenixedu.domain.Exam'}"/>
 	<h:outputText value="<h2>#{bundle['link.writtenTests.enrolment']}</h2>" escape="false"

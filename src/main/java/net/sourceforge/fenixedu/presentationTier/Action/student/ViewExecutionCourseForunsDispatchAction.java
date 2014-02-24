@@ -10,15 +10,17 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.ForunsManagement;
+import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentParticipateApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * 
@@ -26,18 +28,15 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  * @author pcma
  * 
  */
-@Mapping(module = "student", path = "/viewExecutionCourseForuns", scope = "request", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "viewForum", path = "/commons/forums/viewForum.jsp", tileProperties = @Tile(
-                bodyContext = "/student/forums/context.jsp", title = "private.student.participate.forumsofcourses")),
-        @Forward(name = "viewThread", path = "/commons/forums/viewThread.jsp", tileProperties = @Tile(
-                bodyContext = "/student/forums/context.jsp", title = "private.student.participate.forumsofcourses")),
-        @Forward(name = "createThreadAndMessage", path = "/commons/forums/createThreadAndMessage.jsp", tileProperties = @Tile(
-                bodyContext = "/student/forums/context.jsp", title = "private.student.participate.forumsofcourses")),
-        @Forward(name = "viewForuns", path = "/student/forums/viewExecutionCourseForuns.jsp", tileProperties = @Tile(
-                title = "private.student.participate.forumsofcourses")) })
+@StrutsFunctionality(app = StudentParticipateApp.class, path = "forums", titleKey = "link.viewExecutionCourseForuns")
+@Mapping(module = "student", path = "/viewExecutionCourseForuns")
+@Forwards({ @Forward(name = "viewForum", path = "/commons/forums/viewForum.jsp"),
+        @Forward(name = "viewThread", path = "/commons/forums/viewThread.jsp"),
+        @Forward(name = "createThreadAndMessage", path = "/commons/forums/createThreadAndMessage.jsp"),
+        @Forward(name = "viewForuns", path = "/student/forums/viewExecutionCourseForuns.jsp") })
 public class ViewExecutionCourseForunsDispatchAction extends ForunsManagement {
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException, FenixServiceException {
 

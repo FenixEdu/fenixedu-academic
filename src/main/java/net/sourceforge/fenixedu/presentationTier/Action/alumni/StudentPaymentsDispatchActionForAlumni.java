@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.alumni;
 
 import net.sourceforge.fenixedu.presentationTier.Action.alumni.AlumniApplication.AlumniAcademicServicesApp;
-import net.sourceforge.fenixedu.presentationTier.Action.student.payments.StudentPaymentsDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.student.administrativeOfficeServices.StudentPaymentsDispatchAction;
 
 import org.fenixedu.bennu.portal.StrutsFunctionality;
 

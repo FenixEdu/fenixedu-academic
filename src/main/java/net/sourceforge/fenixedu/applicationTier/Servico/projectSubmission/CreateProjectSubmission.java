@@ -2,8 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.projectSubmission;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -34,23 +32,12 @@ public class CreateProjectSubmission {
     }
 
     @Atomic
-    public static void run(java.io.File uploadFile, String filename, Attends attends, Project project, StudentGroup studentGroup,
+    public static void run(byte[] bytes, String filename, Attends attends, Project project, StudentGroup studentGroup,
             Person person) throws FenixServiceException, IOException {
         check(RolePredicates.STUDENT_PREDICATE);
 
-//	checkPermissions(attends, person);
         final Group permittedGroup = createPermittedGroup(attends, studentGroup, project);
-        InputStream inputStream = null;
-        try {
-            inputStream = new FileInputStream(uploadFile);
-            createProjectSubmission(inputStream, filename, attends, project, studentGroup, permittedGroup);
-        } catch (FileNotFoundException e) {
-            new FenixServiceException(e.getMessage());
-        } finally {
-            if (inputStream != null) {
-                inputStream.close();
-            }
-        }
+        createProjectSubmission(bytes, filename, attends, project, studentGroup, permittedGroup);
     }
 
     private static Group createPermittedGroup(final Attends attends, final StudentGroup studentGroup, final Project project) {
@@ -73,16 +60,15 @@ public class CreateProjectSubmission {
         }
     }
 
-    private static ProjectSubmission createProjectSubmission(InputStream inputStream, String filename, Attends attends,
-            Project project, StudentGroup studentGroup, final Group permittedGroup) throws FenixServiceException {
+    private static ProjectSubmission createProjectSubmission(byte[] bytes, String filename, Attends attends, Project project,
+            StudentGroup studentGroup, final Group permittedGroup) throws FenixServiceException {
 
-        final byte[] bs = read(inputStream);
-        final ProjectSubmissionFile projectSubmissionFile = new ProjectSubmissionFile(filename, filename, bs, permittedGroup);
+        final ProjectSubmissionFile projectSubmissionFile = new ProjectSubmissionFile(filename, filename, bytes, permittedGroup);
 
         final ProjectSubmission projectSubmission = new ProjectSubmission(project, studentGroup, attends, projectSubmissionFile);
 
         new ProjectSubmissionLog(projectSubmission.getSubmissionDateTime(), filename, projectSubmissionFile.getContentType(),
-                projectSubmissionFile.getChecksum(), projectSubmissionFile.getChecksumAlgorithm(), bs.length, studentGroup,
+                projectSubmissionFile.getChecksum(), projectSubmissionFile.getChecksumAlgorithm(), bytes.length, studentGroup,
                 attends, project);
 
         return projectSubmission;

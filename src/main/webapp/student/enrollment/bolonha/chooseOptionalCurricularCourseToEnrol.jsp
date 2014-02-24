@@ -4,7 +4,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<em><bean:message bundle="STUDENT_RESOURCES"  key="title.student.portalTitle" /></em>
 <h2><bean:message key="label.enrollment.optional.course" bundle="STUDENT_RESOURCES" /></h2>
 
 <fr:form action="/bolonhaStudentEnrollment.do">

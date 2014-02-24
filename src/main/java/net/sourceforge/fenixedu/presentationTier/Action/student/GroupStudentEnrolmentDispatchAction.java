@@ -34,12 +34,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author asnr and scpo
  * 
  */
-@Mapping(module = "student", path = "/groupStudentEnrolment", attribute = "enroledExecutionCoursesForm",
-        formBean = "enroledExecutionCoursesForm", scope = "request", parameter = "method")
+@Mapping(module = "student", path = "/groupStudentEnrolment", formBean = "enroledExecutionCoursesForm",
+        functionality = ViewEnroledExecutionCoursesAction.class)
 @Forwards(value = { @Forward(name = "sucess", path = "/student/viewGroupStudentEnrolment_bd.jsp"),
-        @Forward(name = "insucess", path = "/viewEnroledExecutionCourses.do?method=prepare"),
-        @Forward(name = "viewStudentGroupInformation", path = "/viewStudentGroupInformation.do"),
-        @Forward(name = "viewShiftsAndGroups", path = "/viewShiftsAndGroups.do") })
+        @Forward(name = "insucess", path = "/student/viewEnroledExecutionCourses.do?method=prepare"),
+        @Forward(name = "viewStudentGroupInformation", path = "/student/viewStudentGroupInformation.do"),
+        @Forward(name = "viewShiftsAndGroups", path = "/student/viewShiftsAndGroups.do") })
 public class GroupStudentEnrolmentDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareEnrolment(ActionMapping mapping, ActionForm form, HttpServletRequest request,

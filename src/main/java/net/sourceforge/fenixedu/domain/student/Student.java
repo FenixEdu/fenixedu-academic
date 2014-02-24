@@ -1822,17 +1822,6 @@ public class Student extends Student_Base {
         registrations.addAll(otherRegistrations);
     }
 
-    public boolean isEligibleForCareerWorkshopApplication() {
-        /*
-         * RULE TO FILTER 2nd CYCLE STUDENTS ONLY - Prior to Sep2012 for (Registration registration : getActiveRegistrations()) {
-         * 
-         * if (isMasterDegreeOnly(registration)) return true;
-         * 
-         * if (isIntegratedMasterDegree(registration)) { if (isEnroledOnSecondCycle(registration)) { return true; } } } return false;
-         */
-        return true;
-    }
-
     private boolean isEnroledOnSecondCycle(Registration registration) {
         if (registration.getLastStudentCurricularPlan().getSecondCycle() == null) {
             return false;

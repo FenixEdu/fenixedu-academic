@@ -133,7 +133,8 @@ public abstract class Site extends Site_Base {
     }
 
     public String getReversePath() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        // throw new UnsupportedOperationException("Not yet implemented");
+        return "http://fenixedu.org";
     }
 
     public static final class SiteMapper {

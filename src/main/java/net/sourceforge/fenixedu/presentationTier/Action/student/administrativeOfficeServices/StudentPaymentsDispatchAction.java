@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.student.payments;
+package net.sourceforge.fenixedu.presentationTier.Action.student.administrativeOfficeServices;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,16 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+@StrutsFunctionality(app = StudentAcademicOfficeServices.class, path = "payments", titleKey = "link.title.payments")
+@Mapping(module = "student", path = "/payments")
+@Forwards({ @Forward(name = "showEvents", path = "/student/administrativeOfficeServices/payments/showStudentEvents.jsp"),
+        @Forward(name = "showEventDetails", path = "/student/administrativeOfficeServices/payments/showEventDetails.jsp") })
 public class StudentPaymentsDispatchAction extends FenixDispatchAction {
 
     @EntryPoint

@@ -4,8 +4,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
 <bean:define id="registrationId" name="registrationId" />
-<em><bean:message key="title.student.portalTitle"
-	bundle="STUDENT_RESOURCES" /></em>
 
 <h2><bean:message key="label.title.calendar"
 	bundle="MESSAGING_RESOURCES" /></h2>

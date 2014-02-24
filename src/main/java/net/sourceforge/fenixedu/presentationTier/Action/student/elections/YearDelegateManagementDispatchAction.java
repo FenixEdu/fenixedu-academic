@@ -24,23 +24,27 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentParticipateApp;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(module = "student", path = "/yearDelegateManagement", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "showYearDelegateManagement", path = "/student/elections/yearDelegateManagement.jsp",
-        tileProperties = @Tile(title = "private.student.participate.electionofyeardelegate")) })
+@StrutsFunctionality(app = StudentParticipateApp.class, path = "year-delegate-management",
+        titleKey = "link.student.yearDelegateElections")
+@Mapping(module = "student", path = "/yearDelegateManagement")
+@Forwards(@Forward(name = "showYearDelegateManagement", path = "/student/elections/yearDelegateManagement.jsp"))
 public class YearDelegateManagementDispatchAction extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
@@ -66,7 +70,7 @@ public class YearDelegateManagementDispatchAction extends FenixDispatchAction {
         }
 
         if (currentPeriod != null && currentPeriod.isVotingPeriod()) {
-            if (((DelegateElectionVotingPeriod) currentPeriod).getVotingStudents().contains(person.getStudent())) {
+            if (((DelegateElectionVotingPeriod) currentPeriod).getVotingStudentsSet().contains(person.getStudent())) {
                 // aluno ja votou: pode apenas verificar em quem votou e alterar
                 // voto?
                 request.setAttribute("votedYearDelegate", yearDelegateElection);
@@ -109,7 +113,7 @@ public class YearDelegateManagementDispatchAction extends FenixDispatchAction {
 
     private YearDelegateElection getPersonYearDelegateElection(Student student) {
         ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-        for (DelegateElection delegateElection : student.getElectionsWithStudentCandidacies()) {
+        for (DelegateElection delegateElection : student.getElectionsWithStudentCandidaciesSet()) {
             if (delegateElection instanceof YearDelegateElection) {
                 YearDelegateElection yearDelegateElection = (YearDelegateElection) delegateElection;
                 if (yearDelegateElection.getExecutionYear() == executionYear) {

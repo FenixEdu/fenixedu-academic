@@ -11,21 +11,27 @@ import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandida
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentParticipateApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(module = "student", path = "/erasmusOutboundManagement", scope = "request", parameter = "method")
+@StrutsFunctionality(app = StudentParticipateApp.class, path = "outbound-mobility",
+        titleKey = "link.title.student.mobility.outbound")
+@Mapping(module = "student", path = "/erasmusOutboundManagement")
 @Forwards(value = { @Forward(name = "erasmusOutboundManagement", path = "/student/erasmusOutboundManagement.jsp",
         tileProperties = @Tile(title = "private.student.erasmusOutboundManagement")) })
 public class ErasmusOutboundManagement extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepare(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
             final HttpServletResponse response) throws FenixActionException, FenixServiceException {
         final Student student = getUserView(request).getPerson().getStudent();

@@ -25,12 +25,14 @@ import org.apache.commons.io.IOUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
 
 public abstract class QUCAuditorDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward showAuditProcesses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 

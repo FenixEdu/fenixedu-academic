@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis;
 
-import java.io.File;
 import java.io.Serializable;
 import java.util.SortedSet;
 
@@ -40,7 +39,8 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.utl.ist.fenix.tools.util.FileUtils;
+
+import com.google.common.io.ByteStreams;
 
 @StrutsFunctionality(app = ScientificDisserationsApp.class, path = "list", titleKey = "navigation.list.jury.proposals")
 @Mapping(path = "/manageSecondCycleThesis", module = "scientificCouncil")
@@ -291,21 +291,13 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
         RenderUtils.invalidateViewState();
 
         if (bean != null && bean.getFile() != null) {
-            File temporaryFile = null;
-
-            try {
-                temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
-                if (dissertationFile) {
-                    CreateThesisDissertationFile.runCreateThesisDissertationFile(thesis, temporaryFile, bean.getSimpleFileName(),
-                            bean.getTitle(), bean.getSubTitle(), bean.getLanguage());
-                } else {
-                    CreateThesisAbstractFile.runCreateThesisAbstractFile(thesis, temporaryFile, bean.getSimpleFileName(),
-                            bean.getTitle(), bean.getSubTitle(), bean.getLanguage());
-                }
-            } finally {
-                if (temporaryFile != null) {
-                    temporaryFile.delete();
-                }
+            byte[] bytes = ByteStreams.toByteArray(bean.getFile());
+            if (dissertationFile) {
+                CreateThesisDissertationFile.runCreateThesisDissertationFile(thesis, bytes, bean.getSimpleFileName(),
+                        bean.getTitle(), bean.getSubTitle(), bean.getLanguage());
+            } else {
+                CreateThesisAbstractFile.runCreateThesisAbstractFile(thesis, bytes, bean.getSimpleFileName(), bean.getTitle(),
+                        bean.getSubTitle(), bean.getLanguage());
             }
         }
 

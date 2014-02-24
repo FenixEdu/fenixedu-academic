@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.student.prices;
+package net.sourceforge.fenixedu.presentationTier.Action.student.administrativeOfficeServices;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,17 +14,25 @@ import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.phd.debts.ExternalScholarshipPhdGratuityContribuitionPR;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
-public class StudentPricesDispatchAction extends FenixDispatchAction {
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-    @EntryPoint
-    public ActionForward viewPrices(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+@StrutsFunctionality(app = StudentAcademicOfficeServices.class, path = "prices", titleKey = "label.prices")
+@Mapping(module = "student", path = "/prices")
+@Forwards(@Forward(name = "viewPrices", path = "/student/administrativeOfficeServices/prices/viewPrices.jsp"))
+public class StudentPricesAction extends FenixAction {
+
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 
         request.setAttribute("postingRulesByAdminOfficeType", getPostingRulesByAdminOfficeType());
@@ -34,7 +42,7 @@ public class StudentPricesDispatchAction extends FenixDispatchAction {
     }
 
     private PostingRule getInsurancePR() {
-        return rootDomainObject.getInstitutionUnit().getUnitServiceAgreementTemplate()
+        return Bennu.getInstance().getInstitutionUnit().getUnitServiceAgreementTemplate()
                 .findPostingRuleByEventType(EventType.INSURANCE);
     }
 

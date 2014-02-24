@@ -7,7 +7,6 @@
 
 <html:xhtml />
 
-<em><bean:message key="title.student.portalTitle"/></em>
 <h2><bean:message key="label.student.tutorship.tutorshipInfoTitle" bundle="APPLICATION_RESOURCES"/></h2>
 
 <!-- AVISOS E ERROS -->

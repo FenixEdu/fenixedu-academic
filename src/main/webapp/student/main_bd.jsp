@@ -5,18 +5,16 @@
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
 <html:xhtml/>
 
-<head>
-	<link rel="stylesheet"  href="<%= request.getContextPath() %>/CSS/main_bd.css">
-</head>
+<style>
+table tr.disabled td { color: #bbb; }
+table tr.disabled td span.success0 { color: #555; background: #e5e5e5; }
+</style>
 
-<p>
-	<img src="<%= request.getContextPath() %>/images/portalEst-id.gif" alt="<bean:message key="portalEst-id" bundle="IMAGE_RESOURCES" />" />
-</p>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
-<div class="photo" align="center">
-	<img src="<%= request.getContextPath() %>/images/student_photo1.jpg" alt="<bean:message key="student_photo1" bundle="IMAGE_RESOURCES" />" width="150" height="100" />
-	<img src="<%= request.getContextPath() %>/images/student_photo2.jpg" alt="<bean:message key="student_photo2" bundle="IMAGE_RESOURCES" />" width="150" height="100" />
-	<img src="<%= request.getContextPath() %>/images/student_photo3.jpg" alt="<bean:message key="student_photo3" bundle="IMAGE_RESOURCES" />" width="150" height="100" />
+<div class="photo" align="center" style="margin-bottom: 15px">
+	<img src="${pageContext.request.contextPath}/images/student_photo1.jpg" alt="<bean:message key="student_photo1" bundle="IMAGE_RESOURCES" />" width="185" height="123" />
+	<img src="${pageContext.request.contextPath}/images/student_photo2.jpg" alt="<bean:message key="student_photo2" bundle="IMAGE_RESOURCES" />" width="185" height="123" />
+	<img src="${pageContext.request.contextPath}/images/student_photo3.jpg" alt="<bean:message key="student_photo3" bundle="IMAGE_RESOURCES" />" width="185" height="123" />
 </div>
 <p>
 	<bean:message key="message.info.student" />
@@ -39,7 +37,6 @@
 		</logic:iterate>
 	</div>
 </logic:notEmpty>
-
 
 <logic:notEmpty name="studentPortalBeans">
 	<logic:iterate id="studentPortalBean" name="studentPortalBeans">
@@ -75,14 +72,14 @@
 			</tr>
 			<logic:notEmpty name="executionCoursesAnnouncement" property="evaluationAnnouncements">
 				<logic:iterate id="evaluationAnnouncement" name="executionCoursesAnnouncement" property="evaluationAnnouncements">
-					<!-- Várias condições para:
+					<%-- Várias condições para:
 							Testes/Exames: 	disabled, se já foram realizados
 											warning, se está a decorrer o seu prazo de inscrição
 											normal, se ainda estão para decorrer
 											
 							Agrupamentos:	normal, se está inscrito
 											disabled, se não está inscrito e o periodo de inscrição expirou
-					 -->
+					 --%>
 					 
 				<tr class="<bean:write name="evaluationAnnouncement" property="status"/>">
 				

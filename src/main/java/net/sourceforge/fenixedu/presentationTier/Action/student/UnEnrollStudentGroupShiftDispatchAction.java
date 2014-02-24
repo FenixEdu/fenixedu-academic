@@ -33,12 +33,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author joaosa and rmalo
  * 
  */
-@Mapping(module = "student", path = "/unEnrollStudentGroupShift", attribute = "groupEnrolmentForm",
-        formBean = "groupEnrolmentForm", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "insucess", path = "/viewEnroledExecutionCourses.do?method=prepare"),
-        @Forward(name = "viewStudentGroupInformation", path = "/viewStudentGroupInformation.do"),
-        @Forward(name = "viewShiftsAndGroups", path = "/viewShiftsAndGroups.do"),
-        @Forward(name = "viewExecutionCourseProjects", path = "/viewExecutionCourseProjects.do") })
+@Mapping(module = "student", path = "/unEnrollStudentGroupShift", formBean = "groupEnrolmentForm",
+        functionality = ViewEnroledExecutionCoursesAction.class)
+@Forwards(value = { @Forward(name = "insucess", path = "/student/viewEnroledExecutionCourses.do?method=prepare"),
+        @Forward(name = "viewStudentGroupInformation", path = "/student/viewStudentGroupInformation.do"),
+        @Forward(name = "viewShiftsAndGroups", path = "/student/viewShiftsAndGroups.do"),
+        @Forward(name = "viewExecutionCourseProjects", path = "/student/viewExecutionCourseProjects.do") })
 public class UnEnrollStudentGroupShiftDispatchAction extends FenixDispatchAction {
 
     public ActionForward unEnrollStudentGroupShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -46,7 +46,6 @@ public class UnEnrollStudentGroupShiftDispatchAction extends FenixDispatchAction
 
         User userView = getUserView(request);
         String studentGroupCodeString = request.getParameter("studentGroupCode");
-        String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
 
         try {
             UnEnrollGroupShift.run(studentGroupCodeString, studentGroupCodeString, userView.getUsername());

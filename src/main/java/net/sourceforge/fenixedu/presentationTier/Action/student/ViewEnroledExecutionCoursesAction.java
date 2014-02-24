@@ -10,24 +10,25 @@ import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadEnroledExecu
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentEnrollApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(module = "student", path = "/viewEnroledExecutionCourses", attribute = "enroledExecutionCoursesForm",
-        formBean = "enroledExecutionCoursesForm", scope = "request", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "showEnroledExecutionCourses", path = "/student/viewEnroledExecutionCourses_bd.jsp",
-                tileProperties = @Tile(title = "private.student.subscribe.groups")),
+@StrutsFunctionality(app = StudentEnrollApp.class, path = "groups", titleKey = "link.groupEnrolment")
+@Mapping(module = "student", path = "/viewEnroledExecutionCourses")
+@Forwards({ @Forward(name = "showEnroledExecutionCourses", path = "/student/viewEnroledExecutionCourses_bd.jsp"),
         @Forward(name = "showActiveRegistrations", path = "/student/viewActiveRegistrations.jsp") })
 public class ViewEnroledExecutionCoursesAction extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
 

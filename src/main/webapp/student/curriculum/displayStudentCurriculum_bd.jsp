@@ -237,7 +237,7 @@
 <script type="text/javascript">
 	var data = <bean:write name="registrationApprovalRateJSON" filter="false" />;
 	SViz.init({ lang: "<%= Language.getLanguage() %>", localesBasePath: "../javaScript/sviz" });
-	var chart = SViz.loadViz("showApprovalRate", data, "#graph", {classic:true, width:650, blockWidth:50, blockPadding:7, barWidth:0.85, margin:{left:0}, titleclass:'h1'});
+	var chart = SViz.loadViz("showApprovalRate", data, "#graph", {classic:true, width:650, blockWidth:50, blockPadding:7, barWidth:0.85, margin:{left:0}, titleclass:'h4'});
 </script>
 
 </logic:notEmpty>

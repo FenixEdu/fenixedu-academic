@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.thesis;
 
-import java.io.File;
 import java.io.IOException;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.student.thesis.ScientificCouncilOrStudentThesisAuthorizationFilter;
@@ -30,7 +29,7 @@ public class CreateThesisAbstractFile extends CreateThesisFile {
 
     @Override
     protected void updateThesis(Thesis thesis, ThesisFile file, String title, String subTitle, Language language,
-            String fileName, File fileToUpload) throws FenixServiceException, IOException {
+            String fileName, byte[] bytes) throws FenixServiceException, IOException {
         thesis.setExtendedAbstract(file);
     }
 
@@ -39,9 +38,9 @@ public class CreateThesisAbstractFile extends CreateThesisFile {
     private static final CreateThesisAbstractFile serviceInstance = new CreateThesisAbstractFile();
 
     @Atomic
-    public static ThesisFile runCreateThesisAbstractFile(Thesis thesis, File fileToUpload, String fileName, String title,
+    public static ThesisFile runCreateThesisAbstractFile(Thesis thesis, byte[] bytes, String fileName, String title,
             String subTitle, Language language) throws FenixServiceException, IOException {
         ScientificCouncilOrStudentThesisAuthorizationFilter.instance.execute(thesis);
-        return serviceInstance.run(thesis, fileToUpload, fileName, title, subTitle, language);
+        return serviceInstance.run(thesis, bytes, fileName, title, subTitle, language);
     }
 }

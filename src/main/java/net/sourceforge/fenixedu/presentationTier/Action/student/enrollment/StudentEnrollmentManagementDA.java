@@ -22,36 +22,32 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEn
 import net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolmentPreConditions.EnrolmentPreConditionResult;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentEnrollApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(module = "student", path = "/studentEnrollmentManagement", attribute = "studentEnrollmentManagmentForm",
-        formBean = "studentEnrollmentManagmentForm", scope = "request", parameter = "method")
+@StrutsFunctionality(app = StudentEnrollApp.class, path = "courses", titleKey = "link.student.enrollment")
+@Mapping(module = "student", path = "/studentEnrollmentManagement")
 @Forwards(value = {
-        @Forward(name = "notAuthorized", path = "/student/notAuthorized_bd.jsp", tileProperties = @Tile(
-                title = "private.student.subscribe.courses")),
-        @Forward(name = "chooseRegistration", path = "/student/enrollment/chooseRegistration.jsp", tileProperties = @Tile(
-                title = "private.student.subscribe.courses")),
+        @Forward(name = "notAuthorized", path = "/student/notAuthorized_bd.jsp"),
+        @Forward(name = "chooseRegistration", path = "/student/enrollment/chooseRegistration.jsp"),
         @Forward(name = "choosePersonalDataAuthorizationChoice",
-                path = "/student/enrollment/choosePersonalDataAuthorizationChoice.jsp", tileProperties = @Tile(
-                        title = "private.student.subscribe.courses")),
-        @Forward(name = "proceedToEnrolment", path = "/bolonhaStudentEnrollment.do?method=showWelcome", tileProperties = @Tile(
-                title = "private.student.subscribe.courses")),
-        @Forward(name = "showAffinityToEnrol", path = "/student/enrollment/bolonha/showAffinityToEnrol.jsp",
-                tileProperties = @Tile(title = "private.student.subscribe.courses")),
-        @Forward(name = "selectAffinityToEnrol", path = "/student/enrollment/bolonha/selectAffinityToEnrol.jsp",
-                tileProperties = @Tile(title = "private.student.subscribe.courses")),
-        @Forward(name = "enrollmentCannotProceed", path = "/student/enrollment/bolonha/enrollmentCannotProceed.jsp",
-                tileProperties = @Tile(title = "private.student.subscribe.courses")) })
+                path = "/student/enrollment/choosePersonalDataAuthorizationChoice.jsp"),
+        @Forward(name = "proceedToEnrolment", path = "/student/bolonhaStudentEnrollment.do?method=showWelcome"),
+        @Forward(name = "showAffinityToEnrol", path = "/student/enrollment/bolonha/showAffinityToEnrol.jsp"),
+        @Forward(name = "selectAffinityToEnrol", path = "/student/enrollment/bolonha/selectAffinityToEnrol.jsp"),
+        @Forward(name = "enrollmentCannotProceed", path = "/student/enrollment/bolonha/enrollmentCannotProceed.jsp") })
 public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
         final Student student = getLoggedStudent(request);
@@ -81,7 +77,7 @@ public class StudentEnrollmentManagementDA extends FenixDispatchAction {
     private List<Registration> getRegistrationsToChooseSecondCycle(final Student student) {
         final List<Registration> result = new ArrayList<Registration>();
 
-        for (final Registration registration : student.getRegistrations()) {
+        for (final Registration registration : student.getRegistrationsSet()) {
 
             if (!registration.isBolonha() || !registration.isConcluded()) {
                 continue;

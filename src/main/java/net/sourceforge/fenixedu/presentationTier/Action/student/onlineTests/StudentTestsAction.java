@@ -43,6 +43,7 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentSubmitApp;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 import net.sourceforge.fenixedu.util.tests.CardinalityType;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
@@ -59,41 +60,38 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.util.Base64;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Susana Fernandes
  */
+@StrutsFunctionality(app = StudentSubmitApp.class, path = "tests", titleKey = "link.tests")
 @Mapping(module = "student", path = "/studentTests", input = "/studentTests.do?method=prepareToDoTest",
-        attribute = "studentTestForm", formBean = "studentTestForm", scope = "request", validate = false, parameter = "method")
-@Forwards(value = {
-        @Forward(name = "testsFirstPage", path = "/student/onlineTests/testsFirstPage_bd.jsp", tileProperties = @Tile(
-                title = "private.student.submit.worksheets")),
+        formBean = "studentTestForm", validate = false)
+@Forwards({
+        @Forward(name = "testsFirstPage", path = "/student/onlineTests/testsFirstPage_bd.jsp"),
         @Forward(name = "viewStudentExecutionCoursesWithTests",
-                path = "/student/onlineTests/viewStudentExecutionCoursesWithTests_bd.jsp", tileProperties = @Tile(
-                        title = "private.student.submit.worksheets")),
-        @Forward(name = "testError", path = "/student/onlineTests/testError_bd.jsp", tileProperties = @Tile(
-                title = "private.student.submit.worksheets")),
-        @Forward(name = "studentFeedback", path = "show-Student-Test-Feedback", tileProperties = @Tile(
-                title = "private.student.submit.worksheets")),
-        @Forward(name = "showTestCorrection", path = "show-Test-Correction", tileProperties = @Tile(
-                title = "private.student.submit.worksheets")),
-        @Forward(name = "doTest", path = "do-Test", tileProperties = @Tile(title = "private.student.submit.worksheets")),
-        @Forward(name = "giveUpQuestion", path = "/student/onlineTests/giveUpQuestion.jsp", tileProperties = @Tile(
-                title = "private.student.submit.worksheets")) })
+                path = "/student/onlineTests/viewStudentExecutionCoursesWithTests_bd.jsp"),
+        @Forward(name = "testError", path = "/student/onlineTests/testError_bd.jsp"),
+        @Forward(name = "studentFeedback", path = "/student/onlineTests/showStudentTestFeedback_bd.jsp"),
+        @Forward(name = "showTestCorrection", path = "/student/onlineTests/showTestCorrection_bd.jsp"),
+        @Forward(name = "doTest", path = "/student/onlineTests/doTest_bd.jsp"),
+        @Forward(name = "giveUpQuestion", path = "/student/onlineTests/giveUpQuestion.jsp") })
 public class StudentTestsAction extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward viewStudentExecutionCoursesWithTests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final User userView = getUserView(request);
         final Student student = userView.getPerson().getStudent();
         RegistrationSelectExecutionYearBean registrationSelectExecutionYearBean =
-                new RegistrationSelectExecutionYearBean(student.getRegistrations().iterator().next());
+                new RegistrationSelectExecutionYearBean(student.getRegistrationsSet().iterator().next());
         ExecutionYear executionYear = getRenderedObject();
 
         if (executionYear == null) {

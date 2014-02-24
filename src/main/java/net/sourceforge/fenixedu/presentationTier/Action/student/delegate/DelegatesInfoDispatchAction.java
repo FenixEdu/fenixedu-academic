@@ -32,13 +32,10 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@StrutsFunctionality(app = StudentViewApp.class, descriptionKey = "link.student.delegatesInfo", path = "delegates-info",
-        titleKey = "link.title.delegatesInfo")
-@Mapping(module = "student", path = "/delegatesInfo", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "showDegreeDelegates", path = "/student/delegates/showDelegates.jsp", tileProperties = @Tile(
-        title = "private.student.view.delegates")) })
+@StrutsFunctionality(app = StudentViewApp.class, path = "delegates-info", titleKey = "link.student.delegatesInfo")
+@Mapping(module = "student", path = "/delegatesInfo")
+@Forwards(@Forward(name = "showDegreeDelegates", path = "/student/delegates/showDelegates.jsp"))
 public class DelegatesInfoDispatchAction extends FenixDispatchAction {
     @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -81,7 +78,7 @@ public class DelegatesInfoDispatchAction extends FenixDispatchAction {
         boolean updated = false;
         Degree first = null;
 
-        for (ExecutionDegree executionDegree : bean.getExecutionYear().getExecutionDegrees()) {
+        for (ExecutionDegree executionDegree : bean.getExecutionYear().getExecutionDegreesSet()) {
             if (executionDegree.getDegreeType().equals(bean.getDegreeType())) {
                 if (!updated) {
                     first = executionDegree.getDegree();
@@ -99,9 +96,9 @@ public class DelegatesInfoDispatchAction extends FenixDispatchAction {
 
     private void updateBeanDegreeType(DelegateSearchBean bean) {
         boolean updated = false;
-        DegreeType first = bean.getExecutionYear().getExecutionDegrees().iterator().next().getDegreeType();
+        DegreeType first = bean.getExecutionYear().getExecutionDegreesSet().iterator().next().getDegreeType();
 
-        for (ExecutionDegree executionDegree : bean.getExecutionYear().getExecutionDegrees()) {
+        for (ExecutionDegree executionDegree : bean.getExecutionYear().getExecutionDegreesSet()) {
             if (executionDegree.getDegreeType().getGraduateTitle().split(" ")[0].equals(bean.getDegreeType().getGraduateTitle()
                     .split(" ")[0])) {
                 bean.setDegreeType(executionDegree.getDegreeType());
@@ -142,11 +139,6 @@ public class DelegatesInfoDispatchAction extends FenixDispatchAction {
     /*
      * AUXILIARY METHODS
      */
-
-    private Degree getDefaultDegreeGivenDegreeType(DegreeType degreeType) {
-        List<Degree> degrees = Degree.readAllByDegreeType(degreeType);
-        return degrees.iterator().next();
-    }
 
     /* Delegates from given degree (not year delegates) */
     private DelegateSearchBean getDelegateSearchBean(DelegateSearchBean bean, FunctionType functionType) {

@@ -118,7 +118,7 @@ public class ContentLinkTag extends BodyTagSupport {
     }
 
     protected void writeEndTag() throws IOException {
-        write("</a>");
+        // write("</a>");
     }
 
     protected void write(final String text) throws IOException {

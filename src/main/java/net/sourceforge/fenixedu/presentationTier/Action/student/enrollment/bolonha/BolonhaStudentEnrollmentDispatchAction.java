@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolmentPreConditions;
 import net.sourceforge.fenixedu.domain.studentCurriculum.StudentCurricularPlanEnrolmentPreConditions.EnrolmentPreConditionResult;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.student.enrollment.bolonha.AbstractBolonhaStudentEnrollmentDA;
+import net.sourceforge.fenixedu.presentationTier.Action.student.enrollment.StudentEnrollmentManagementDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -17,16 +18,21 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Forwards({
-        @Forward(name = "showEnrollmentInstructions", path = "/student/enrollment/bolonha/showEnrollmentInstructions.jsp",
-                tileProperties = @Tile(title = "private.student.subscribe.groups")),
-
-        @Forward(name = "enrollmentCannotProceed", path = "/student/enrollment/bolonha/enrollmentCannotProceed.jsp",
-                tileProperties = @Tile(title = "private.student.subscribe.groups"))
-
-})
+@Mapping(module = "student", path = "/bolonhaStudentEnrollment", functionality = StudentEnrollmentManagementDA.class)
+@Forwards(value = {
+        @Forward(name = "notAuthorized", path = "/student/notAuthorized_bd.jsp"),
+        @Forward(name = "chooseOptionalCurricularCourseToEnrol",
+                path = "/student/enrollment/bolonha/chooseOptionalCurricularCourseToEnrol.jsp"),
+        @Forward(name = "showDegreeModulesToEnrol", path = "/student/enrollment/bolonha/showDegreeModulesToEnrol.jsp"),
+        @Forward(name = "showEnrollmentInstructions", path = "/student/enrollment/bolonha/showEnrollmentInstructions.jsp"),
+        @Forward(name = "chooseCycleCourseGroupToEnrol", path = "/student/enrollment/bolonha/chooseCycleCourseGroupToEnrol.jsp"),
+        @Forward(name = "welcome", path = "/student/enrollment/welcome.jsp"),
+        @Forward(name = "enrollmentCannotProceed", path = "/student/enrollment/bolonha/enrollmentCannotProceed.jsp"),
+        @Forward(name = "welcome-dea-degree", path = "/student/phdStudentEnrolment.do?method=showWelcome"),
+        @Forward(name = "showEnrollmentInstructions", path = "/student/enrollment/bolonha/showEnrollmentInstructions.jsp"),
+        @Forward(name = "enrollmentCannotProceed", path = "/student/enrollment/bolonha/enrollmentCannotProceed.jsp") })
 public class BolonhaStudentEnrollmentDispatchAction extends AbstractBolonhaStudentEnrollmentDA {
 
     public ActionForward showWelcome(ActionMapping mapping, ActionForm form, HttpServletRequest request,

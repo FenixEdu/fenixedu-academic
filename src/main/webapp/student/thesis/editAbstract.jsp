@@ -5,7 +5,6 @@
 
 <html:xhtml/>
 
-<em><bean:message key="title.student.portalTitle"/></em>
 <h2><bean:message key="title.student.thesis.edit.abstract"/></h2>
 
 <div class="infoop2">

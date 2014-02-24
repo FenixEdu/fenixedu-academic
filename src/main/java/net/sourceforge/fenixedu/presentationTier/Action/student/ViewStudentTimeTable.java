@@ -34,11 +34,10 @@ import pt.ist.fenixframework.FenixFramework;
  * @author zenida
  * 
  */
-@StrutsFunctionality(app = StudentViewApp.class, descriptionKey = "link.my.timetable", path = "time-table",
-        titleKey = "link.title.timetable")
-@Mapping(module = "student", path = "/studentTimeTable", input = "/studentTimeTable.do?page=0",
-        attribute = "studentTimeTableForm", formBean = "studentTimeTableForm", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "showTimeTable", path = "df.timeTable.show"),
+@StrutsFunctionality(app = StudentViewApp.class, path = "time-table", titleKey = "link.my.timetable")
+@Mapping(module = "student", path = "/studentTimeTable", input = "/studentTimeTable.do?method=prepare",
+        formBean = "studentTimeTableForm")
+@Forwards(value = { @Forward(name = "showTimeTable", path = "/commons/student/timeTable/classTimeTable.jsp"),
         @Forward(name = "chooseRegistration", path = "/student/timeTable/chooseRegistration.jsp") })
 public class ViewStudentTimeTable extends FenixDispatchAction {
 

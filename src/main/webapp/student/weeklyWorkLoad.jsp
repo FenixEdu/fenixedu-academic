@@ -6,7 +6,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %> 
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<em><bean:message key="title.student.portalTitle"/></em>
 <h2><bean:message key="link.weekly.work.load"/></h2>
 
 <div class="infoop2">
@@ -46,9 +45,6 @@
 		</html:select>
 	</logic:equal>
 --%>
-	<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-		<bean:message key="button.submit"/>
-	</html:submit>
 </html:form>
 
 <p><!-- Error messages go here --><html:errors/></p>

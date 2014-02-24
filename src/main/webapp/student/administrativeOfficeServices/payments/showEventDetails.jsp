@@ -5,7 +5,6 @@
 
 <html:xhtml/>
 
-<em><bean:message key="administrative.office.services" bundle="STUDENT_RESOURCES"/></em>
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.eventDetails" /></h2>
 
 <%--
@@ -60,9 +59,7 @@
 	</fr:view>
 </logic:notEmpty>
 
-<html:form action="/payments.do?method=showEvents">
-	<p class="mtop1">
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.back"/></html:submit>
-	</p>
-</html:form>
+<html:link page="/payments.do?method=showEvents">
+	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.back"/>
+</html:link>
 

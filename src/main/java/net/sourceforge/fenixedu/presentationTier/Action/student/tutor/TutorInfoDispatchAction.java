@@ -27,13 +27,10 @@ import org.fenixedu.bennu.portal.StrutsFunctionality;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@StrutsFunctionality(app = StudentViewApp.class, descriptionKey = "link.student.tutorInfo", path = "tutor-info",
-        titleKey = "link.title.tutorInfo")
-@Mapping(module = "student", path = "/viewTutorInfo", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "ShowStudentTutorInfo", path = "/student/tutor/showStudentTutorInfo.jsp",
-        tileProperties = @Tile(title = "private.student.view.tutoring")) })
+@StrutsFunctionality(app = StudentViewApp.class, path = "tutor-info", titleKey = "link.student.tutorInfo")
+@Mapping(module = "student", path = "/viewTutorInfo")
+@Forwards(@Forward(name = "ShowStudentTutorInfo", path = "/student/tutor/showStudentTutorInfo.jsp"))
 public class TutorInfoDispatchAction extends FenixDispatchAction {
 
     @EntryPoint
@@ -43,12 +40,12 @@ public class TutorInfoDispatchAction extends FenixDispatchAction {
         final Person person = getLoggedPerson(request);
         List<Tutorship> pastTutors = new ArrayList<Tutorship>();
 
-        Collection<Registration> registrations = person.getStudent().getRegistrations();
+        Collection<Registration> registrations = person.getStudent().getRegistrationsSet();
 
         for (Registration registration : registrations) {
-            Collection<StudentCurricularPlan> studentCurricularPlans = registration.getStudentCurricularPlans();
+            Collection<StudentCurricularPlan> studentCurricularPlans = registration.getStudentCurricularPlansSet();
             for (StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
-                for (Tutorship tutorship : studentCurricularPlan.getTutorships()) {
+                for (Tutorship tutorship : studentCurricularPlan.getTutorshipsSet()) {
                     if (tutorship.isActive()) {
                         request.setAttribute("actualTutor", tutorship);
                         request.setAttribute("personID", tutorship.getTeacher().getPerson().getExternalId());
@@ -66,7 +63,7 @@ public class TutorInfoDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) {
 
         final Person person = getLoggedPerson(request);
-        final Collection<Registration> registrations = person.getStudent().getRegistrations();
+        final Collection<Registration> registrations = person.getStudent().getRegistrationsSet();
 
         List<ExecutionPeriodStatisticsBean> studentStatistics = getStudentStatistics(registrations);
 
@@ -85,7 +82,7 @@ public class TutorInfoDispatchAction extends FenixDispatchAction {
                 new HashMap<ExecutionSemester, ExecutionPeriodStatisticsBean>();
 
         for (Registration registration : registrations) {
-            for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlans()) {
+            for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
                 for (ExecutionSemester executionSemester : studentCurricularPlan.getEnrolmentsExecutionPeriods()) {
                     if (enrolmentsByExecutionPeriod.containsKey(executionSemester)) {
                         ExecutionPeriodStatisticsBean executionPeriodStatisticsBean =

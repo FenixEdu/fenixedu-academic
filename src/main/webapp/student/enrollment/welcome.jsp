@@ -12,19 +12,17 @@
 	request.setAttribute("executionSemester", executionSemester);
 %>
 
-<em>Portal do Estudante</em>
-
 <logic:present name="executionSemester" property="enrolmentInstructions">
 	<bean:write name="executionSemester" property="enrolmentInstructions.instructions" filter="false"/>
 </logic:present>
 
 <bean:define id="registrationOid" name="registration" property="externalId" />
 
-<html:form action="<%= "/bolonhaStudentEnrollment.do?method=prepare&registrationOid=" + registrationOid.toString() %>">
+<fr:form action="/bolonhaStudentEnrollment.do?method=prepare&registrationOid=${registrationOid}">
 	<p class="mtop15">
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message  key="label.continue" bundle="APPLICATION_RESOURCES"/></html:submit>
 	</p>
-</html:form>
+</fr:form>
 
 
 </logic:present>

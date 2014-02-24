@@ -23,11 +23,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/editMissingCandidacyInformation", module = "student")
-@Forwards({
-
-@Forward(name = "editMissingPersonalInformation", path = "candidacy.edit.missing.candidacy.information")
-
-})
+@Forwards(@Forward(name = "editMissingPersonalInformation", path = "/student/candidacy/editMissingCandidacyInformation.jsp"))
 public class EditMissingCandidacyInformationDA extends FenixDispatchAction {
 
     public static class ConclusionGradeRegexpValidator extends RegexpValidator {

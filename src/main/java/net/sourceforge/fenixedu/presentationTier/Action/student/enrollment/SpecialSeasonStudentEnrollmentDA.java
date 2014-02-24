@@ -14,27 +14,28 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.bolonha.AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA;
+import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentEnrollApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
+@StrutsFunctionality(app = StudentEnrollApp.class, path = "special-season", titleKey = "link.specialSeason.enrolment")
 @Mapping(path = "/enrollment/evaluations/specialSeason", module = "student")
 @Forwards({
-        @Forward(name = "showDegreeModulesToEnrol", path = "/student/enrollment/evaluations/specialSeasonShowDegreeModules.jsp",
-                tileProperties = @Tile(title = "private.student.subscribe.specialseason")),
-        @Forward(name = "showPickSCPAndSemester", path = "/student/enrollment/evaluations/specialSeasonPickSCPAndSemester.jsp",
-                tileProperties = @Tile(title = "private.student.subscribe.specialseason")),
-        @Forward(name = "showStudentEnrollmentMenu", path = "/student/enrollment/evaluations/specialSeason.jsp",
-                tileProperties = @Tile(title = "private.student.subscribe.specialseason")) })
+        @Forward(name = "showDegreeModulesToEnrol", path = "/student/enrollment/evaluations/specialSeasonShowDegreeModules.jsp"),
+        @Forward(name = "showPickSCPAndSemester", path = "/student/enrollment/evaluations/specialSeasonPickSCPAndSemester.jsp"),
+        @Forward(name = "showStudentEnrollmentMenu", path = "/student/enrollment/evaluations/specialSeason.jsp") })
 public class SpecialSeasonStudentEnrollmentDA extends AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA {
 
+    @EntryPoint
     public ActionForward entryPoint(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         final Student student = getLoggedStudent(request);
@@ -116,7 +117,7 @@ public class SpecialSeasonStudentEnrollmentDA extends AcademicAdminOfficeSpecial
     private final List<StudentCurricularPlan> generateSCPList(final Student student) {
         final List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
 
-        for (final Registration registration : student.getRegistrations()) {
+        for (final Registration registration : student.getRegistrationsSet()) {
             if (registration.isActive() || registration.hasAnyEnrolmentsIn(ExecutionYear.readCurrentExecutionYear())) {
                 result.add(registration.getLastStudentCurricularPlan());
             }

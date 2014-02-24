@@ -7,7 +7,6 @@
 
 <logic:present role="role(STUDENT)">
 	
-	<em><bean:message key="title.student.portalTitle" bundle="STUDENT_RESOURCES" /></em>
 	<h2><bean:message key="label.title.seniorInfo"/></h2>
 
 	<bean:define id="senior" name="senior" type="net.sourceforge.fenixedu.domain.student.Senior"/>
