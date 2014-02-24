@@ -270,8 +270,17 @@ public class OutboundMobilityCandidacySubmission extends OutboundMobilityCandida
                     }
                 }
             }
-            this.grade = BigDecimal.ZERO;
-            gradeForSerialization = BigDecimal.ZERO;
+            if (grade != null) {
+                this.grade = grade;
+                gradeForSerialization =
+                        this.grade
+                                .multiply(AVG_FACTOR)
+                                .add(completedECTS.multiply(ECTS_FACTOR))
+                                .add(new BigDecimal(9999).subtract(possibleECTS).add(completedECTS).multiply(PENDING_ECTS_FACTOR));
+            } else {
+                this.grade = BigDecimal.ZERO;
+                gradeForSerialization = BigDecimal.ZERO;
+            }
         }
 
         private void calculateGrade(final CycleType cycleType, CurriculumModule module) {

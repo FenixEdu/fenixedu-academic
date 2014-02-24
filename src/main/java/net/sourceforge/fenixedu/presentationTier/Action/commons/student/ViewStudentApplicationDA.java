@@ -76,6 +76,9 @@ public class ViewStudentApplicationDA extends FenixDispatchAction {
             if (candidacyRegistration != null) {
                 final Student student = candidacyRegistration.getStudent();
                 if (student !=  null) {
+                    if (student.getPerson() == person) {
+                        return true;
+                    }
                     for (final Registration registration : student.getRegistrationsSet()) {
                         for (final OutboundMobilityCandidacySubmission submission : registration.getOutboundMobilityCandidacySubmissionSet()) {
                             for (final OutboundMobilityCandidacy candidacy : submission.getOutboundMobilityCandidacySet()) {
