@@ -34,20 +34,17 @@ public class SeparateSecondCycle extends CronTask {
                 if (studentCurricularPlan.isActive() && canSeparate(studentCurricularPlan)) {
 
                     if (studentAlreadyHasNewRegistration(studentCurricularPlan) && canRepeateSeparate(studentCurricularPlan)) {
-
                         getLogger()
                                 .info("1 - Repeating separate for: "
                                         + studentCurricularPlan.getRegistration().getStudent().getNumber());
 
                         separateByStudentNumberProcedure(studentCurricularPlan.getRegistration().getStudent(),
                                 studentCurricularPlan.getDegreeCurricularPlan());
-
                     } else {
 
                         getLogger().info(
                                 "Separating Student: " + studentCurricularPlan.getRegistration().getStudent().getNumber());
                         separateStudentProcedure(studentCurricularPlan);
-
                     }
 
                 } else if (studentCurricularPlan.hasRegistration() && studentCurricularPlan.getRegistration().isConcluded()) {
@@ -58,7 +55,6 @@ public class SeparateSecondCycle extends CronTask {
                                         + studentCurricularPlan.getRegistration().getStudent().getNumber());
                         separateByStudentNumberProcedure(studentCurricularPlan.getRegistration().getStudent(),
                                 studentCurricularPlan.getDegreeCurricularPlan());
-
                     }
                 }
             }
@@ -112,7 +108,6 @@ public class SeparateSecondCycle extends CronTask {
             new SeparationCyclesManagement().separateSecondCycle(studentCurricularPlan);
         } catch (final Exception e) {
             getLogger().error("Separating students with rules", e);
-            throw e;
         }
     }
 
@@ -123,7 +118,6 @@ public class SeparateSecondCycle extends CronTask {
             new SeparateByStudentNumber().separateSecondCycle(registration.getLastStudentCurricularPlan());
         } catch (final Exception e) {
             getLogger().error("Repeating separate student", e);
-            throw e;
         }
     }
 

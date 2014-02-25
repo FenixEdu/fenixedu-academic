@@ -76,6 +76,13 @@
 		<html:link target="_blank" page="<%=url%>">
 			<bean:message key="link.registration.viewCurriculum" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		</html:link>
+
+		<% if (registration.getIndividualCandidacy() != null) { %>
+		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+		<html:link target="_blank" page="<%= "/registration.do?method=viewApplication&amp;registrationID=" + registration.getExternalId() %>">
+			<bean:message key="label.application.view" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+		</html:link>
+		<% } %>
 	</p>
 
 <%-- Choose Student Curricular Plan form --%>

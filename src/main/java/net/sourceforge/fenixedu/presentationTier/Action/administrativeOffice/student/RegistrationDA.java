@@ -57,7 +57,9 @@ import pt.ist.fenixframework.FenixFramework;
         @Forward(name = "viewAttends", path = "/academicAdminOffice/student/registration/viewAttends.jsp"),
         @Forward(name = "addAttends", path = "/academicAdminOffice/student/registration/addAttends.jsp"),
         @Forward(name = "showRegimes", path = "/academicAdminOffice/student/registration/showRegimes.jsp"),
-        @Forward(name = "createRegime", path = "/academicAdminOffice/student/registration/createRegime.jsp") })
+        @Forward(name = "createRegime", path = "/academicAdminOffice/student/registration/createRegime.jsp"),
+        @Forward(name = "view-application", path = "/academicAdminOffice/student/registration/application.jsp")
+})
 public class RegistrationDA extends StudentRegistrationDA {
 
     public ActionForward prepareViewRegistrationCurriculum(ActionMapping mapping, ActionForm actionForm,
@@ -366,4 +368,14 @@ public class RegistrationDA extends StudentRegistrationDA {
     private RegistrationRegime getRegistrationRegime(HttpServletRequest request) {
         return getDomainObject(request, "registrationRegimeId");
     }
+
+    public ActionForward viewApplication(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) {
+
+        final Registration registration = getAndSetRegistration(request);
+        request.setAttribute("registration", registration);
+
+        return mapping.findForward("view-application");
+    }
+
 }
