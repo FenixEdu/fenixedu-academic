@@ -13,12 +13,15 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.externalSupervision.ExternalSupervisionApplication.ExternalSupervisionConsultApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -29,10 +32,12 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
+@StrutsFunctionality(app = ExternalSupervisionConsultApp.class, path = "year", titleKey = "label.selectDegree.executionYear")
 @Mapping(path = "/viewYear", module = "externalSupervision")
 @Forwards({ @Forward(name = "selectYear", path = "/externalSupervision/consult/selectYear.jsp") })
 public class ExternalSupervisorViewYearDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward beginTaskFlow(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         final User userView = Authenticate.getUser();

@@ -6,7 +6,6 @@
 
 <html:xhtml/>
 
-<em><bean:message bundle="EXTERNAL_SUPERVISION_RESOURCES" key="externalSupervision"/></em>
 <h2><bean:message bundle="EXTERNAL_SUPERVISION_RESOURCES" key="title.section.viewByYear"/></h2>
 
 <fr:form id="searchForm" action="/viewYear.do?method=showStudents">

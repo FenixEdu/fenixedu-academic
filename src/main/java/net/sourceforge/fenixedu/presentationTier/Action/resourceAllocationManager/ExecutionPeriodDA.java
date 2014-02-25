@@ -163,7 +163,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
         final ExecutionSemester executionSemester = getDomainObject(request, "executionSemesterId");
 
         request.setAttribute("registration", registration);
-        return ViewStudentTimeTable.forwardToShowTimeTable(registration, mapping, request, executionSemester);
+        return new ViewStudentTimeTable().forwardToShowTimeTable(registration, mapping, request, executionSemester);
     }
 
     public ActionForward toggleFirstYearShiftsCapacity(ActionMapping mapping, ActionForm form, HttpServletRequest request,

@@ -6,7 +6,6 @@
 
 <html:xhtml/>
 
-<em><bean:message bundle="EXTERNAL_SUPERVISION_RESOURCES" key="externalSupervision"/></em>
 <h2><bean:message bundle="EXTERNAL_SUPERVISION_RESOURCES" key="title.section.viewByDegree"/></h2>
 
 <fr:form action="/viewDegree.do?method=showStudents">

@@ -19,7 +19,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(path = "/viewCurriculum", module = "externalSupervision", formBean = "studentCurricularPlanAndEnrollmentsSelectionForm")
+@Mapping(path = "/viewCurriculum", module = "externalSupervision", formBean = "studentCurricularPlanAndEnrollmentsSelectionForm",
+        functionality = ExternalSupervisorViewStudentDA.class)
 @Forwards({ @Forward(name = "chooseRegistration", path = "/externalSupervision/consult/chooseRegistration.jsp"),
         @Forward(name = "ShowStudentCurriculum", path = "/externalSupervision/consult/showStudentCurriculum.jsp") })
 public class ShowStudentCurriculum extends CurriculumDispatchAction {

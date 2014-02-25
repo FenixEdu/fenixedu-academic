@@ -9,7 +9,7 @@
 
 <html:xhtml/>
 
-<em><bean:message bundle="EXTERNAL_SUPERVISION_RESOURCES" key="externalSupervision"/></em>
+<link href="${pageContext.request.contextPath}/CSS/dotist_timetables.css" rel="stylesheet" type="text/css" />
 <h2><bean:message bundle="EXTERNAL_SUPERVISION_RESOURCES" key="title.showTimetable.viewTimetable"/></h2>
 
 <p>

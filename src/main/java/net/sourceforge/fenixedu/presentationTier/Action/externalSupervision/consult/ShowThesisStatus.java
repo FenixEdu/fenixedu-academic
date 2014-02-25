@@ -23,7 +23,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(path = "/viewDissertation", module = "externalSupervision")
+@Mapping(path = "/viewDissertation", module = "externalSupervision", functionality = ExternalSupervisorViewStudentDA.class)
 @Forwards({ @Forward(name = "chooseDissertation", path = "/externalSupervision/consult/chooseDissertation.jsp"),
         @Forward(name = "view-thesis", path = "/externalSupervision/consult/showDissertation.jsp") })
 public class ShowThesisStatus extends ScientificCouncilManageThesisDA {

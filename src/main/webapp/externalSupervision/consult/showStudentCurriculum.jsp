@@ -11,7 +11,6 @@
 
 <html:xhtml/>
 
-<em><bean:message key="externalSupervision" bundle="EXTERNAL_SUPERVISION_RESOURCES"/></em>
 <h2><bean:message key="message.student.curriculum" bundle="STUDENT_RESOURCES" /></h2>
 
 <bean:define id="registration" name="registration" type="net.sourceforge.fenixedu.domain.student.Registration"/>
@@ -78,9 +77,6 @@
 				<html:select bundle="HTMLALT_RESOURCES" property="studentCPID" onchange='this.form.submit();'> 
 					<html:options collection="scpsLabelValueBeanList" property="value" labelProperty="label" />
 				</html:select>
-				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-					<bean:message key="button.submit"/>
-				</html:submit>
 			</td>
 		</tr>
 		<tr>
@@ -99,9 +95,6 @@
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.enrolmentStateType" property="select" onchange='this.form.submit();' >
 					<html:options collection="enrolmentStateTypes" property="value" labelProperty="label"/>
 				</html:select>
-				<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-					<bean:message key="button.submit"/>
-				</html:submit>
 			</td>
 		</tr>
 		<tr>

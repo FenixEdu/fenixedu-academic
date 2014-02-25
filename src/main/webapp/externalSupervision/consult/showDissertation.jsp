@@ -11,7 +11,6 @@
 
 <html:xhtml/>
 
-<em><bean:message bundle="EXTERNAL_SUPERVISION_RESOURCES" key="externalSupervision"/></em>
 <h2><bean:message bundle="EXTERNAL_SUPERVISION_RESOURCES" key="title.showDissertation.viewThesis"/></h2>
 
 <bean:define id="personExternalId" name="student" property="person"/>
