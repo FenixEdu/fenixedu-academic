@@ -23,17 +23,10 @@ public class ResourceAllocationRole extends ResourceAllocationRole_Base {
 
     private static RoleType ROLE_TYPE = RoleType.RESOURCE_ALLOCATION_MANAGER;
 
-    private ResourceAllocationRole() {
+    public ResourceAllocationRole() {
         super();
-    }
-
-    public ResourceAllocationRole(final String portalSubApplication, final String page, final String pageNameProperty) {
-        this();
         checkIfAlreadyExistsRole();
         setRoleType(ROLE_TYPE);
-        setPortalSubApplication(portalSubApplication);
-        setPage(page);
-        setPageNameProperty(pageNameProperty);
         setRootDomainObject(Bennu.getInstance());
     }
 

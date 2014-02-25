@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.PendingRequest;
 import net.sourceforge.fenixedu.domain.PendingRequestParameter;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.inquiries.RegentInquiryTemplate;
@@ -352,11 +351,6 @@ public abstract class BaseAuthenticationAction extends FenixAction {
         return new ActionForward("/respondToAlumniInquiriesQuestion.do?method=showQuestion");
     }
 
-    private ActionForward handleSessionCreationAndForwardToTeacherInquiriesResponseQuestion(HttpServletRequest request,
-            User userView, HttpSession session) {
-        return new ActionForward("/respondToInquiriesQuestion.do?method=showTeacherQuestion");
-    }
-
     private ActionForward handleSessionCreationAndForwardToQucInquiriesResponseQuestion(HttpServletRequest request,
             User userView, HttpSession session) {
         return new ActionForward("/respondToInquiriesQuestion.do?method=showQuestion");
@@ -421,34 +415,6 @@ public abstract class BaseAuthenticationAction extends FenixAction {
             }
         }
         actionForward.setPath("/redirect.do?pendingRequest=" + pendingRequest);
-        return actionForward;
-    }
-
-    /**
-     * @param userRoles
-     * @return
-     */
-    private int getNumberOfSubApplications(final Collection<RoleType> roleTypes) {
-        final Set<String> subApplications = new HashSet<String>();
-        for (final RoleType roleType : roleTypes) {
-            final Role role = Role.getRoleByRoleType(roleType);
-            final String subApplication = role.getPortalSubApplication();
-            if (!subApplications.contains(subApplication) && !subApplication.equals("/teacher")) {
-                subApplications.add(subApplication);
-            }
-        }
-        return subApplications.size();
-    }
-
-    /**
-     * @param infoRole
-     * @return
-     */
-    private ActionForward buildRoleForward(Role infoRole) {
-        ActionForward actionForward = new ActionForward();
-        actionForward.setContextRelative(false);
-        actionForward.setRedirect(false);
-        actionForward.setPath("/dotIstPortal.do?prefix=" + infoRole.getPortalSubApplication() + "&page=" + infoRole.getPage());
         return actionForward;
     }
 

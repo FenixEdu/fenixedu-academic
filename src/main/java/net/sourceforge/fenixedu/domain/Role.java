@@ -17,13 +17,12 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
-import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 /**
  * @author jpvl
  */
-public class Role extends Role_Base implements Comparable {
+public class Role extends Role_Base implements Comparable<Role> {
 
     static final protected Comparator<Role> COMPARATOR_BY_ROLE_TYPE = new Comparator<Role>() {
         @Override
@@ -66,17 +65,19 @@ public class Role extends Role_Base implements Comparable {
         super();
     }
 
-    public Role(final RoleType roleType, final String portalSubApplication, final String page, final String pageNameProperty) {
+    public Role(final RoleType roleType) {
         this();
         setRootDomainObject(Bennu.getInstance());
         setRoleType(roleType);
-        setPortalSubApplication(portalSubApplication);
-        setPage(page);
-        setPageNameProperty(pageNameProperty);
     }
 
     @Override
-    public void setRoleType(RoleType roleType) {
+    public RoleType getRoleType() {
+        return super.getRoleType();
+    }
+
+    @Override
+    protected void setRoleType(RoleType roleType) {
         if (roleType == null || roleType.equals(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
             throw new DomainException("error.Role.empty.role.type");
         }
@@ -88,34 +89,6 @@ public class Role extends Role_Base implements Comparable {
     }
 
     @Override
-    public void setPortalSubApplication(String portalSubApplication) {
-        if (StringUtils.isEmpty(portalSubApplication)) {
-            throw new DomainException("error.Role.empty.portal.sub.application");
-        }
-        super.setPortalSubApplication(portalSubApplication);
-    }
-
-    @Override
-    public void setPage(String page) {
-        if (StringUtils.isEmpty(page)) {
-            throw new DomainException("error.Role.empty.page");
-        }
-        super.setPage(page);
-    }
-
-    @Override
-    public void setPageNameProperty(String pageNameProperty) {
-        if (StringUtils.isEmpty(pageNameProperty)) {
-            throw new DomainException("error.Role.empty.pageNameProperty");
-        }
-        super.setPageNameProperty(pageNameProperty);
-    }
-
-    @Override
-    public int compareTo(Object o) {
-        return (o instanceof Role) ? compareTo((Role) o) : -1;
-    }
-
     public int compareTo(Role role) {
         return (role != null) ? getRoleType().compareTo(role.getRoleType()) : -1;
     }
@@ -140,11 +113,6 @@ public class Role extends Role_Base implements Comparable {
     }
 
     @Deprecated
-    public boolean hasAnyAssociatedPersons() {
-        return !getAssociatedPersonsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.RoleOperationLog> getRoleOperationLog() {
         return getRoleOperationLogSet();
     }
@@ -152,31 +120,6 @@ public class Role extends Role_Base implements Comparable {
     @Deprecated
     public boolean hasAnyRoleOperationLog() {
         return !getRoleOperationLogSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasBennu() {
-        return getRootDomainObject() != null;
-    }
-
-    @Deprecated
-    public boolean hasPage() {
-        return getPage() != null;
-    }
-
-    @Deprecated
-    public boolean hasRoleType() {
-        return getRoleType() != null;
-    }
-
-    @Deprecated
-    public boolean hasPortalSubApplication() {
-        return getPortalSubApplication() != null;
-    }
-
-    @Deprecated
-    public boolean hasPageNameProperty() {
-        return getPageNameProperty() != null;
     }
 
 }

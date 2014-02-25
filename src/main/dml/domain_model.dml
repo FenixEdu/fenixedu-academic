@@ -1690,11 +1690,8 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
     }
     
     class Role  {
-        String page;
-        String pageNameProperty;
-        String portalSubApplication;
-        RoleType roleType;
-    } 
+        protected RoleType roleType;
+    }
     
     class RoleOperationLog  {
     	String istUsername;
