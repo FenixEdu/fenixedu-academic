@@ -26,7 +26,6 @@
       "EnumerationResources",
       "EquivalenceResources",
       "ExternalSupervisionResources",
-      "FacultyAdmOfficeResources",
       "FunctionalityResources",
       "GEPResources",
       "GlobalResources",
@@ -106,7 +105,6 @@
     { "name": "messaging", "configFile": "struts-messaging.xml" },
     { "name": "internationalRelatOffice", "configFile": "struts-internationalRelatOffice.xml" },
     { "name": "pedagogicalCouncil", "configFile": "struts-pedagogicalCouncil.xml" },
-    { "name": "facultyAdmOffice", "configFile": "struts-facultyAdmOffice.xml" },
     { "name": "student", "configFile": "struts-student.xml" }
   ],
   "exceptionHandlers": [

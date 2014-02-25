@@ -40,7 +40,6 @@
     <!ENTITY pedagogicalCouncilSchemas SYSTEM "schemas/pedagogicalCouncil-schemas.xml">
     <!ENTITY delegatesSchemas SYSTEM "schemas/delegates-schemas.xml">
     <!ENTITY cardGeneration SYSTEM "schemas/cardGeneration-schemas.xml">
-    <!--ENTITY facultyAdmOffice SYSTEM "facultyAdmOffice-schemas.xml"-->
 	<!ENTITY caseHandlingSchemas SYSTEM "schemas/caseHandling-schemas.xml">
 	<!ENTITY residenceManagement SYSTEM "schemas/residenceManagement-schemas.xml">
     <!ENTITY support SYSTEM "schemas/support-schemas.xml">

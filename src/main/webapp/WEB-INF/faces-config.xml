@@ -187,12 +187,6 @@
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
-		<description>FacultyFunctionsManagementBackingBean</description>
-		<managed-bean-name>facultyAdmOfficeFunctionsManagementBackingBean</managed-bean-name>
-		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.facultyAdmOffice.FacultyAdmOfficeFunctionsManagement</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>	
-	<managed-bean>
 		<description>ScientificCouncilFunctionsManagementBackingBean</description>
 		<managed-bean-name>scientificCouncilFunctionsManagementBackingBean</managed-bean-name>
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.scientificCouncil.ScientificCouncilFunctionsManagementBackingBean</managed-bean-class>
@@ -1300,84 +1294,6 @@
 		<navigation-case>
 			<from-outcome>success</from-outcome>
 			<to-view-id>/manager/functionsManagement/listPersonFunctions.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule> 		
-	
-	<!-- FacultyAdmOffice -->
-	
-	<navigation-rule>
-		<from-view-id>/facultyAdmOffice/functionsManagement/chooseFunction.jsp</from-view-id>
- 		<navigation-case>
-			<from-outcome>confirmation</from-outcome>
-			<to-view-id>/facultyAdmOffice/functionsManagement/confirmation.jsp</to-view-id>
-		</navigation-case>
-		<navigation-case>
-			<from-outcome>alterUnit</from-outcome>
-			<to-view-id>/facultyAdmOffice/functionsManagement/chooseUnit.jsp</to-view-id>
-		</navigation-case>
-		<navigation-case>
-			<from-outcome>cancel</from-outcome>
-			<to-view-id>/facultyAdmOffice/functionsManagement/listPersonFunctions.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-		
-	<navigation-rule>
-		<from-view-id>/facultyAdmOffice/functionsManagement/chooseUnit.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>backToList</from-outcome>
-			<to-view-id>/facultyAdmOffice/functionsManagement/listPersonFunctions.jsp</to-view-id>
-		</navigation-case>	
-	</navigation-rule>
-		
-	<navigation-rule>
-		<from-view-id>/facultyAdmOffice/functionsManagement/listPersonFunctions.jsp</from-view-id>
- 		<navigation-case>
-			<from-outcome>prepareEditFunction</from-outcome>
-			<to-view-id>/facultyAdmOffice/functionsManagement/editFunction.jsp</to-view-id>
-		</navigation-case>
-		<navigation-case>
-			<from-outcome>chooseNewPerson</from-outcome>
-			<to-view-id>/facultyAdmOffice/functionsManagement/personSearchForFunctionsManagement.jsp</to-view-id>
-		</navigation-case>
-		<navigation-case>
-			<from-outcome>associateNewFunction</from-outcome>
-			<to-view-id>/facultyAdmOffice/functionsManagement/chooseUnit.jsp</to-view-id>
-		</navigation-case>
-		<navigation-case>
-			<from-outcome>deletePersonFunction</from-outcome>
-			<to-view-id>/facultyAdmOffice/functionsManagement/deletePersonFunction.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule> 	
-	
-	<navigation-rule>
-		<from-view-id>/facultyAdmOffice/functionsManagement/deletePersonFunction.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>success</from-outcome>
-			<to-view-id>/facultyAdmOffice/functionsManagement/listPersonFunctions.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule> 	
-	
-	<navigation-rule>
-		<from-view-id>/facultyAdmOffice/functionsManagement/editFunction.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>alterFunction</from-outcome>
-			<to-view-id>/facultyAdmOffice/functionsManagement/listPersonFunctions.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule> 	
-	
-	<navigation-rule>
-		<from-view-id>/facultyAdmOffice/functionsManagement/confirmation.jsp</from-view-id>
- 		<navigation-case>
-			<from-outcome>alterUnit</from-outcome>
-			<to-view-id>/facultyAdmOffice/functionsManagement/chooseUnit.jsp</to-view-id>
-		</navigation-case>
-		<navigation-case>
-			<from-outcome>alterFunction</from-outcome>
-			<to-view-id>/facultyAdmOffice/functionsManagement/chooseFunction.jsp</to-view-id>
-		</navigation-case>
-		<navigation-case>
-			<from-outcome>success</from-outcome>
-			<to-view-id>/facultyAdmOffice/functionsManagement/listPersonFunctions.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule> 		
 	
