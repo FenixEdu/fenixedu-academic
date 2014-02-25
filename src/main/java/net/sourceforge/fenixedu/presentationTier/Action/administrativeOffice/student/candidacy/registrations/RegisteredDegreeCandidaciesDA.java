@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -28,6 +29,7 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
         path = "/academicAdminOffice/student/candidacies/registration/viewRegisteredDegreeCandidacies.jsp") })
 public class RegisteredDegreeCandidaciesDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
         RegisteredDegreeCandidaciesSelectionBean registeredDegreeCandidaciesSelectionBean =

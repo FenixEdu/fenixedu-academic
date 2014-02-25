@@ -32,7 +32,6 @@
 
 <%-- candidacy process of current year --%>
 <logic:notEmpty name="process">
-	<em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
 	<h2><bean:write name="process" property="displayName" /> </h2>
 
 	<bean:define id="processId" name="process" property="externalId" />

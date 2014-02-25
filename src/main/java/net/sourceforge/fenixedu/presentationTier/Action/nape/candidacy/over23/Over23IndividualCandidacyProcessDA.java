@@ -5,7 +5,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/caseHandlingOver23IndividualCandidacyProcess", module = "nape",
-        formBeanClass = Over23IndividualCandidacyProcessDA.CandidacyForm.class)
+        formBeanClass = Over23IndividualCandidacyProcessDA.CandidacyForm.class, functionality = Over23CandidacyProcessDA.class)
 @Forwards({ @Forward(name = "intro", path = "/nape/candidacy/mainCandidacyProcess.jsp"),
         @Forward(name = "list-allowed-activities", path = "/nape/candidacy/over23/listIndividualCandidacyActivities.jsp") })
 public class Over23IndividualCandidacyProcessDA extends
