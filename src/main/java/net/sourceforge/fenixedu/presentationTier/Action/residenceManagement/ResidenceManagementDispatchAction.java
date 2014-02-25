@@ -36,21 +36,16 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(path = "/residenceManagement", module = "residenceManagement")
-@Forwards({
-        @Forward(name = "importData", path = "/residenceManagement/importData.jsp", tileProperties = @Tile(
-                title = "private.housingmanagement.debtmanagement")),
+@Mapping(path = "/residenceManagement", module = "residenceManagement",
+        functionality = ResidenceEventManagementDispatchAction.class)
+@Forwards({ @Forward(name = "importData", path = "/residenceManagement/importData.jsp"),
         @Forward(name = "yearConfiguration", path = "residenceManagement-yearConfiguration"),
-        @Forward(name = "editPaymentLimitDay", path = "/residenceManagement/editPaymentLimitDay.jsp", tileProperties = @Tile(
-                title = "private.housingmanagement.debtmanagement")),
-        @Forward(name = "importCurrentDebt", path = "/residenceManagement/importCurrentDebts.jsp", tileProperties = @Tile(
-                title = "private.housingmanagement.debtmanagement")),
-        @Forward(name = "editRoomValues", path = "/residenceManagement/editRoomValues.jsp", tileProperties = @Tile(
-                title = "private.housingmanagement.debtmanagement")),
+        @Forward(name = "editPaymentLimitDay", path = "/residenceManagement/editPaymentLimitDay.jsp"),
+        @Forward(name = "importCurrentDebt", path = "/residenceManagement/importCurrentDebts.jsp"),
+        @Forward(name = "editRoomValues", path = "/residenceManagement/editRoomValues.jsp"),
         @Forward(name = "missingPayments", path = "/residenceManagement/missingPayment.jsp") })
 public class ResidenceManagementDispatchAction extends FenixDispatchAction {
 
@@ -58,7 +53,7 @@ public class ResidenceManagementDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
         List<ResidenceEvent> results = new ArrayList<ResidenceEvent>();
         for (ResidenceMonth month : rootDomainObject.getResidenceMonths0Set()) {
-            for (ResidenceEvent residenceEvent : month.getEvents()) {
+            for (ResidenceEvent residenceEvent : month.getEventsSet()) {
                 if (residenceEvent.isInDebt()) {
                     results.add(residenceEvent);
                 }

@@ -13,16 +13,17 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.Atomic;
 
+@StrutsFunctionality(app = ResidenceManagerApplication.class, path = "role-management", titleKey = "title.role.management")
 @Mapping(path = "/residenceRoleManagement", module = "residenceManagement")
-@Forwards({ @Forward(name = "residenceRoleManagement", path = "/residenceManagement/residenceRoleManagement.jsp",
-        tileProperties = @Tile(title = "private.housingmanagement.rolemanagement")) })
+@Forwards(@Forward(name = "residenceRoleManagement", path = "/residenceManagement/residenceRoleManagement.jsp"))
 public class ResidenceRoleManagementDA extends FenixDispatchAction {
 
     public ActionForward addResidenceRoleManagemenToPerson(ActionMapping mapping, ActionForm actionForm,
@@ -51,10 +52,11 @@ public class ResidenceRoleManagementDA extends FenixDispatchAction {
         person.removePersonRoles(role);
     }
 
+    @EntryPoint
     public ActionForward residencePersonsManagement(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         Role role = getResidenceRoleManagement();
-        request.setAttribute("persons", role.getAssociatedPersons());
+        request.setAttribute("persons", role.getAssociatedPersonsSet());
         request.setAttribute("residenceRoleManagement", getResidenceRoleManagementBean());
         return mapping.findForward("residenceRoleManagement");
     }

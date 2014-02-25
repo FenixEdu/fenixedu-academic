@@ -4,7 +4,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<em><bean:message key="label.residenceManagement" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/></em>
 <h2><bean:message key="title.paymentLimitDay" bundle="RESIDENCE_MANAGEMENT_RESOURCES"/></h2>
 
 <bean:define id="monthOID" name="residenceMonth" property="OID"/>

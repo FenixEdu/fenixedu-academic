@@ -24,24 +24,24 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
+@StrutsFunctionality(app = ResidenceManagerApplication.class, path = "event-management", titleKey = "title.event.management")
 @Mapping(path = "/residenceEventManagement", module = "residenceManagement")
-@Forwards({
-        @Forward(name = "manageResidenceEvents", path = "/residenceManagement/eventsManagement.jsp", tileProperties = @Tile(
-                title = "private.housingmanagement.debtmanagement")),
-        @Forward(name = "viewPersonResidenceEvents", path = "/residenceManagement/viewPersonResidenceEvents.jsp",
-                tileProperties = @Tile(title = "private.housingmanagement.debtmanagement")),
+@Forwards({ @Forward(name = "manageResidenceEvents", path = "/residenceManagement/eventsManagement.jsp"),
+        @Forward(name = "viewPersonResidenceEvents", path = "/residenceManagement/viewPersonResidenceEvents.jsp"),
         @Forward(name = "insertPayingDate", path = "/residenceManagement/insertPayingDate.jsp") })
 public class ResidenceEventManagementDispatchAction extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward manageResidenceEvents(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 
@@ -66,7 +66,7 @@ public class ResidenceEventManagementDispatchAction extends FenixDispatchAction 
             HttpServletResponse response) throws Exception {
 
         ResidenceMonth month = getResidenceMonth(request);
-        CreateResidencePaymentCodes.run(month.getEvents());
+        CreateResidencePaymentCodes.run(month.getEventsSet());
 
         return manageResidenceEvents(mapping, actionForm, request, response);
     }

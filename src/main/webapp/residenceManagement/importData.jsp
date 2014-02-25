@@ -7,7 +7,6 @@
 
 <html:xhtml />
 
-<em><bean:message key="label.residenceManagement" bundle="RESIDENCE_MANAGEMENT_RESOURCES" /></em>
 <h2><bean:message key="label.import.debt" bundle="RESIDENCE_MANAGEMENT_RESOURCES" /></h2>
 
 <bean:define id="monthOID" name="importFileBean" property="residenceMonth.OID"/>
