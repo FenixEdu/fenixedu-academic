@@ -97,7 +97,6 @@
     { "name": "rectorate", "configFile": "struts-rectorate.xml" },
     { "name": "alumni", "configFile": "struts-alumni.xml" },
     { "name": "departmentAdmOffice", "configFile": "struts-departmentAdmOffice.xml" },
-    { "name": "credits", "configFile": "struts-credits.xml" },
     { "name": "coordinator", "configFile": "struts-coordinator.xml" },
     { "name": "examCoordination", "configFile": "struts-examCoordination.xml" },
     { "name": "library", "configFile": "struts-library.xml" },
