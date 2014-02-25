@@ -20,17 +20,21 @@ import net.sourceforge.fenixedu.presentationTier.Action.commons.zip.ZipUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
+@StrutsFunctionality(app = RectorateApplication.class, path = "incoming-batches", titleKey = "title.rectorateSubmission.received")
 @Mapping(path = "/rectorateIncomingBatches", module = "rectorate")
 @Forwards({ @Forward(name = "index", path = "/rectorate/incomingBatches.jsp"),
         @Forward(name = "viewBatch", path = "/rectorate/showBatch.jsp") })
 public class RectorateIncomingBatchesDispatchAction extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward index(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         Set<RectorateSubmissionBatch> batches = new HashSet<RectorateSubmissionBatch>();
