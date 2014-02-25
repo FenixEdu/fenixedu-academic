@@ -103,6 +103,15 @@ public class FenixConfigurationManager {
         @ConfigurationProperty(key = "fenix.api.news.rss.url")
         public String getFenixApiNewsRSSUrl();
 
+        @ConfigurationProperty(key = "fenix.api.canteen.url")
+        public String getFenixApiCanteenUrl();
+
+        @ConfigurationProperty(key = "fenix.api.canteen.user")
+        public String getFenixApiCanteenUser();
+
+        @ConfigurationProperty(key = "fenix.api.canteen.secret")
+        public String getFenixApiCanteenSecret();
+
         @ConfigurationProperty(key = "file.download.url.local.content",
                 defaultValue = "http://localhost:8080/fenix/downloadFile/")
         public String getFileDownloadUrlLocalContent();
