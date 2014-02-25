@@ -34,12 +34,15 @@ import net.sourceforge.fenixedu.domain.util.email.EmailBean;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.publicRelationsOffice.PublicRelationsApplication.PublicRelationsAlumniApp;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
@@ -56,6 +59,7 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonPrimitive;
 
+@StrutsFunctionality(app = PublicRelationsAlumniApp.class, path = "search", titleKey = "link.search.alumni")
 @Mapping(path = "/alumni", module = "publicRelations")
 @Forwards({ @Forward(name = "alumni.showAlumniStatistics", path = "/gep/alumni/alumniStatistics.jsp"),
         @Forward(name = "alumni.showAlumniDetails", path = "/gep/alumni/alumniDetails.jsp") })
@@ -63,6 +67,17 @@ public class AlumniInformationAction extends FenixDispatchAction {
 
     private static final String GABINETE_ESTUDOS_PLANEAMENTO = "Gabinete de Estudos e Planeamento";
     private final static String NOT_AVAILABLE = "n/a";
+
+    @StrutsFunctionality(app = PublicRelationsAlumniApp.class, path = "statistics", titleKey = "title.statistics")
+    @Mapping(path = "/alumniStatistics", module = "publicRelations")
+    public static class AlumniStatisticsAction extends AlumniInformationAction {
+        @Override
+        @EntryPoint
+        public ActionForward showAlumniStatistics(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+                HttpServletResponse response) {
+            return super.showAlumniStatistics(mapping, actionForm, request, response);
+        }
+    }
 
     public ActionForward showAlumniStatistics(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
@@ -335,6 +350,7 @@ public class AlumniInformationAction extends FenixDispatchAction {
         return showAlumniStatistics(mapping, actionForm, request, response);
     }
 
+    @EntryPoint
     public ActionForward searchAlumni(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 

@@ -17,12 +17,15 @@ import org.apache.commons.collections.Predicate;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
+@StrutsFunctionality(app = PublicRelationsApplication.class, path = "student-listings", titleKey = "title.student.reports")
 @Mapping(path = "/studentReports", module = "publicRelations")
 @Forwards({ @Forward(name = "search", path = "/publicRelations/reports/studentReports.jsp"),
         @Forward(name = "viewPublicRelationsReports", path = "/publicRelations/reports/viewPublicRelationsReports.jsp") })
@@ -32,6 +35,7 @@ public class StudentReportsDA extends FenixDispatchAction {
         return QueueJob.getLastJobsForClassOrSubClass(PublicRelationsStudentListQueueJob.class, 5);
     }
 
+    @EntryPoint
     public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         StudentReportPredicate studentReportPredicate = getRenderedObject();
