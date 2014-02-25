@@ -1,11 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -13,8 +7,6 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.PendingRequest;
-import net.sourceforge.fenixedu.domain.PendingRequestParameter;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson;
 import net.sourceforge.fenixedu.domain.inquiries.RegentInquiryTemplate;
@@ -24,21 +16,17 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.teacher.ReductionService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
-import net.sourceforge.fenixedu.presentationTier.Action.commons.LoginRedirectAction;
-import net.sourceforge.fenixedu.util.HostAccessControl;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
-import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.exceptions.AuthorizationException;
 
 import pt.ist.fenixWebFramework.renderers.components.HtmlLink;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
-import pt.ist.fenixframework.FenixFramework;
 
 public abstract class BaseAuthenticationAction extends FenixAction {
 
@@ -55,12 +43,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 
             final HttpSession httpSession = request.getSession(false);
 
-            String pendingRequest = request.getParameter("pendingRequest");
-            if (pendingRequest != null && pendingRequest.length() > 0 && !pendingRequest.equals("null")
-                    && FenixFramework.getDomainObject(pendingRequest) != null
-                    && isValidChecksumForUser((PendingRequest) FenixFramework.getDomainObject(pendingRequest), httpSession)) {
-                return handleSessionRestoreAndGetForward(request, form, userView, httpSession);
-            } else if (hasMissingTeacherService(userView)) {
+            if (hasMissingTeacherService(userView)) {
                 return handleSessionCreationAndForwardToTeachingService(request, userView, httpSession);
             } else if (hasPendingTeachingReductionService(userView)) {
                 return handleSessionCreationAndForwardToPendingTeachingReductionService(request, userView, httpSession);
@@ -329,56 +312,4 @@ public abstract class BaseAuthenticationAction extends FenixAction {
         return new ActionForward("/respondToCoordinationExecutionDegreeReportsQuestion.do?method=showQuestion");
     }
 
-    private boolean isValidChecksumForUser(final PendingRequest pendingRequest, HttpSession session) {
-        try {
-            String url = pendingRequest.getUrl();
-
-            for (PendingRequestParameter pendingRequestParameter : pendingRequest.getPendingRequestParameter()) {
-                if (!pendingRequestParameter.getAttribute()) {
-                    url =
-                            LoginRedirectAction.addToUrl(url, pendingRequestParameter.getParameterKey(),
-                                    pendingRequestParameter.getParameterValue());
-                }
-            }
-
-            final String requestChecksumParameter = pendingRequest.getRequestChecksumParameter();
-
-            if (url.contains("/external/") && requestChecksumParameter == null) { //TODO: check if it is necessary
-                return true;
-            }
-            return GenericChecksumRewriter.calculateChecksum(url, session).equals(requestChecksumParameter);
-        } catch (Exception ex) {
-            return false;
-        }
-    }
-
-    private ActionForward handleSessionRestoreAndGetForward(HttpServletRequest request, ActionForm form, User userView,
-            final HttpSession session) {
-        final ActionForward actionForward = new ActionForward();
-        actionForward.setContextRelative(false);
-        actionForward.setRedirect(true);
-        // Set request attributes
-
-        String pendingRequest = request.getParameter("pendingRequest");
-        if (pendingRequest == null) {
-            pendingRequest = (String) request.getAttribute("pendingRequest");
-            if (pendingRequest == null) {
-                final DynaActionForm authenticationForm = (DynaActionForm) form;
-                pendingRequest = (String) authenticationForm.get("pendingRequest");
-            }
-        }
-        actionForward.setPath("/redirect.do?pendingRequest=" + pendingRequest);
-        return actionForward;
-    }
-
-    public static String getRemoteHostName(HttpServletRequest request) {
-        String remoteHostName;
-        final String remoteAddress = HostAccessControl.getRemoteAddress(request);
-        try {
-            remoteHostName = InetAddress.getByName(remoteAddress).getHostName();
-        } catch (UnknownHostException e) {
-            remoteHostName = remoteAddress;
-        }
-        return remoteHostName;
-    }
 }

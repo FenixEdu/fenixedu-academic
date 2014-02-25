@@ -13,7 +13,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.presentationTier.Action.utils.RequestUtils;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.fenixedu.bennu.core.security.Authenticate;
@@ -25,11 +24,7 @@ public class CASFilter implements Filter {
     protected void redirectToCAS(final CasConfig casConfig, final HttpServletRequest request, final HttpServletResponse response)
             throws IOException, ServletException {
         if (Authenticate.getUser() == null) {
-            String pendingRequest = request.getParameter("pendingRequest");
-            if (pendingRequest == null) {
-                pendingRequest = (String) request.getAttribute("pendingRequest");
-            }
-            final String service = encodeUrl(RequestUtils.generateRedirectLink(casConfig.getCasServiceUrl(), pendingRequest));
+            final String service = encodeUrl(casConfig.getCasServiceUrl());
             String casLoginUrl = casConfig.getCasLoginUrl(service);
             if (FenixConfigurationManager.isBarraAsAuthenticationBroker()) {
                 casLoginUrl = FenixConfigurationManager.getConfiguration().barraLoginUrl() + "?next=" + casLoginUrl;

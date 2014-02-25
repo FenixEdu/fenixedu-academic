@@ -7059,19 +7059,6 @@ class phd.log.PhdLogEntry  {
 
 /* End of Phd Module */
 
-class PendingRequest {
-    DateTime generationDate;
-    String url;
-    Boolean post;
-    String buildVersion;
-}
-
-class PendingRequestParameter {
-    Boolean attribute;
-    String parameterKey;
-    String parameterValue;
-}
-
 class candidacy.MeasurementTest  {
     EntryPhase entryPhase;
     
@@ -17895,27 +17882,6 @@ relation ExtraCurricularActivityType {
     }
     student.curriculum.ExtraCurricularActivityType playsRole type {
         multiplicity 1..1;
-    }
-}
-
-relation PendingRequestRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    PendingRequest playsRole pendingRequest {
-        multiplicity *;
-    }
-}
-
-relation PendingRequestParameterRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    PendingRequestParameter playsRole pendingRequestParameter {
-        multiplicity *;
-    }
-}
-
-relation PendingRequestParams {
-    PendingRequest playsRole pendingRequest;
-    PendingRequestParameter playsRole pendingRequestParameter {
-        multiplicity *;
     }
 }
 

@@ -48,8 +48,6 @@
 						<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.username" property="username" styleId="username" /></td>
 					</tr>
 
-					<html:hidden property="pendingRequest" value="<%=request.getParameter("pendingRequest")%>" />
-
 					<tr>
 						<td><html:password bundle="HTMLALT_RESOURCES" altKey="password.password" property="password" redisplay="false" styleId="password" /></td>
 					</tr>

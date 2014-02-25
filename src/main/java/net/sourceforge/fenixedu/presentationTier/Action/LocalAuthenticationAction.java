@@ -22,15 +22,6 @@ public class LocalAuthenticationAction extends BaseAuthenticationAction {
 
         private String username;
         private String password;
-        private String pendingRequest;
-
-        public String getPendingRequest() {
-            return pendingRequest;
-        }
-
-        public void setPendingRequest(String pendingRequest) {
-            this.pendingRequest = pendingRequest;
-        }
 
         public String getUsername() {
             return username;

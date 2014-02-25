@@ -261,12 +261,6 @@ public class FenixConfigurationManager {
         @ConfigurationProperty(key = "startYearForCredits", defaultValue = "2002/2003")
         public String getStartYearForCredits();
 
-        @ConfigurationProperty(
-                key = "store.pending.request",
-                description = "indicates if pending request should be stored in database to recover current session after new login",
-                defaultValue = "true")
-        public Boolean getStorePendingRequest();
-
         @ConfigurationProperty(key = "tsdProcess.chart.height", defaultValue = "480")
         public String getTSDProcessChartHeight();
 
