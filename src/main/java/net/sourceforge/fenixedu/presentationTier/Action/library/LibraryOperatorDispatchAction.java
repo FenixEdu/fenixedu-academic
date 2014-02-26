@@ -3,16 +3,10 @@ package net.sourceforge.fenixedu.presentationTier.Action.library;
 import java.awt.Color;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Set;
-import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.LibraryCardSystem;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.space.RoomSubdivision;
 import net.sourceforge.fenixedu.domain.space.RoomSubdivisionInformation;
 import net.sourceforge.fenixedu.domain.space.Space;
@@ -23,7 +17,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.bennu.core.domain.Bennu;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
@@ -94,15 +87,6 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
         request.setAttribute("attendance", attendance);
         request.setAttribute("pageNumber", pageNumber);
         request.setAttribute("numberOfPages", attendance.getNumberOfPages());
-        return mapping.findForward("libraryOperator");
-    }
-
-    public ActionForward generateCardNumber(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) {
-        LibraryAttendance attendance = getAttendanceFromRequest(request, "person.edit.libraryCardNumber");
-        RenderUtils.invalidateViewState();
-        attendance.generateCardNumber();
-        request.setAttribute("attendance", attendance);
         return mapping.findForward("libraryOperator");
     }
 
@@ -263,92 +247,6 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
                 setCapacity(room, 1);
             }
         }
-    }
-
-    public ActionForward prepareAddOrRemoveOperators(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) {
-        LibraryHigherCleranceGroupManagementBean bean = new LibraryHigherCleranceGroupManagementBean();
-        bean.setHigherClearenceGroup(getHigherClearenceGroup());
-        request.setAttribute("higherCleranceGroupManagementBean", bean);
-        return mapping.findForward("libraryAddOrRemoveOperators");
-    }
-
-    public ActionForward viewOperator(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) {
-        LibraryHigherCleranceGroupManagementBean bean = new LibraryHigherCleranceGroupManagementBean();
-        bean.setHigherClearenceGroup(getHigherClearenceGroup());
-        bean.setOperator(getPersonFromRequest(request));
-        request.setAttribute("higherCleranceGroupManagementBean", bean);
-        return mapping.findForward("libraryAddOrRemoveOperators");
-    }
-
-    private Group getHigherClearenceGroup() {
-        LibraryCardSystem libraryCardSystem = Bennu.getInstance().getLibraryCardSystem();
-        return libraryCardSystem.getHigherClearenceGroup();
-    }
-
-    private Person getPersonFromRequest(HttpServletRequest request) {
-        String istUsername = request.getParameter("istUsername");
-        return Person.readPersonByUsername(istUsername);
-    }
-
-    private Set<Person> getSetFromFixedSetGroupWithout(Group g, Person toRemove) {
-        Set<Person> ret = new TreeSet<Person>();
-
-        for (Person p : g.getElements()) {
-            ret.add(p);
-        }
-
-        if (ret.contains(toRemove)) {
-            ret.remove(toRemove);
-        }
-        return ret;
-    }
-
-    @Atomic
-    public ActionForward addOperator(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) {
-        LibraryCardSystem libraryCardSystem = Bennu.getInstance().getLibraryCardSystem();
-        Person operator = getPersonFromRequest(request);
-
-        Set<Person> newGroup = getSetFromFixedSetGroupWithout(getHigherClearenceGroup(), operator);
-        newGroup.add(operator);
-        libraryCardSystem.setHigherClearenceGroup(new FixedSetGroup(newGroup));
-
-        LibraryHigherCleranceGroupManagementBean bean = new LibraryHigherCleranceGroupManagementBean();
-        bean.setHigherClearenceGroup(libraryCardSystem.getHigherClearenceGroup());
-        bean.setOperator(operator);
-
-        RenderUtils.invalidateViewState();
-        request.setAttribute("higherCleranceGroupManagementBean", bean);
-        return mapping.findForward("libraryAddOrRemoveOperators");
-    }
-
-    @Atomic
-    public ActionForward removeOperator(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) {
-        LibraryCardSystem libraryCardSystem = Bennu.getInstance().getLibraryCardSystem();
-        Person operator = getPersonFromRequest(request);
-
-        Set<Person> newGroup = getSetFromFixedSetGroupWithout(getHigherClearenceGroup(), operator);
-        libraryCardSystem.setHigherClearenceGroup(new FixedSetGroup(newGroup));
-
-        LibraryHigherCleranceGroupManagementBean bean = new LibraryHigherCleranceGroupManagementBean();
-        bean.setHigherClearenceGroup(libraryCardSystem.getHigherClearenceGroup());
-        bean.setOperator(operator);
-
-        RenderUtils.invalidateViewState();
-        request.setAttribute("higherCleranceGroupManagementBean", bean);
-        return mapping.findForward("libraryAddOrRemoveOperators");
-    }
-
-    public ActionForward searchOperator(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) {
-        LibraryHigherCleranceGroupManagementBean bean = getRenderedObject("search.operator");
-        RenderUtils.invalidateViewState();
-        bean.search();
-        request.setAttribute("higherCleranceGroupManagementBean", bean);
-        return mapping.findForward("libraryAddOrRemoveOperators");
     }
 
 }

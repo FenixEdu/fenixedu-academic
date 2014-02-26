@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.Re
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationFromUniqueCardDTO;
-import net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardDTO;
 import net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
@@ -85,7 +84,6 @@ import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
 import net.sourceforge.fenixedu.domain.inquiries.RegentInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.domain.inquiries.TeacherInquiryTemplate;
-import net.sourceforge.fenixedu.domain.library.LibraryCard;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.domain.messaging.ForumSubscription;
@@ -1317,8 +1315,8 @@ public class Person extends Person_Base {
                 && !hasAnyGuides() && !hasEmployee() && !hasTeacher() && !hasAnyPayedGuides() && !hasAnyPayedReceipts()
                 && !hasParking() && !hasAnyResearchInterests() && !hasAnyProjectParticipations() && !hasAnyParticipations()
                 && !hasAnyBoards() && !hasAnyPersonFunctions() && (!hasHomepage() || getHomepage().isDeletable())
-                && !hasLibraryCard() && !hasAnyCardGenerationEntries() && !hasAnyInternalParticipants()
-                && !hasAnyCreatedQualifications() && !hasAnyCreateJobs();
+                && !hasAnyCardGenerationEntries() && !hasAnyInternalParticipants() && !hasAnyCreatedQualifications()
+                && !hasAnyCreateJobs();
     }
 
     private boolean hasParking() {
@@ -4070,15 +4068,6 @@ public class Person extends Person_Base {
         return roleOperationLogList;
     }
 
-    public static Person readPersonByLibraryCardNumber(final String cardNumber) {
-        for (final LibraryCard card : Bennu.getInstance().getLibraryCardsSet()) {
-            if (card.getCardNumber() != null && card.getCardNumber().equals(cardNumber)) {
-                return card.getPerson();
-            }
-        }
-        return null;
-    }
-
     public boolean hasQucGlobalCommentsMadeBy(final Person person, final ExecutionSemester executionSemester,
             final ResultPersonCategory personCategory) {
         final InquiryGlobalComment globalComment = getInquiryGlobalComment(executionSemester);
@@ -4105,20 +4094,6 @@ public class Person extends Person_Base {
     public static Person findByUsername(final String username) {
         final User user = User.findByUsername(username);
         return user == null ? null : user.getPerson();
-    }
-
-    public String getLibraryCardNumber() {
-        if (getLibraryCard() != null) {
-            return getLibraryCard().getCardNumber();
-        }
-        return null;
-    }
-
-    public void setLibraryCardNumber(final String number) {
-        if (getLibraryCard() == null) {
-            new LibraryCard(new LibraryCardDTO(this, getPartyClassification()));
-        }
-        getLibraryCard().setCardNumber(number);
     }
 
     public String getIdentificationDocumentExtraDigitValue() {
@@ -5924,11 +5899,6 @@ public class Person extends Person_Base {
     @Deprecated
     public boolean hasDistrictSubdivisionOfBirth() {
         return getDistrictSubdivisionOfBirth() != null;
-    }
-
-    @Deprecated
-    public boolean hasLibraryCard() {
-        return getLibraryCard() != null;
     }
 
     @Deprecated

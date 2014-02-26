@@ -53,16 +53,6 @@
 	</service>
 	
 	<service>
-		<name>LibraryManagement</name>
-		<namespace>LibraryManagement</namespace>
-		<serviceClass>net.sourceforge.fenixedu.webServices.ILibraryManagement
-		</serviceClass>
-		<implementationClass>
-			net.sourceforge.fenixedu.webServices.LibraryManagement
-		</implementationClass>
-	</service>
-
-	<service>
 		<name>PaymentManagement</name>
 		<namespace>PaymentManagement</namespace>
 		<serviceClass>net.sourceforge.fenixedu.webServices.IPaymentManagement

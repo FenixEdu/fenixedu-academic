@@ -159,9 +159,6 @@
 							</fr:slot>
 							<fr:slot name="person.name" key="label.person.name" />
 							<fr:slot name="person.istUsername" key="label.person.istUsername" />
-							<logic:present name="attendance" property="personLibraryCardNumber">
-								<fr:slot name="personLibraryCardNumber" key="label.person.libraryCardNumber" />
-							</logic:present>
 							<fr:slot name="person.emailForSendingEmails" layout="null-as-label" key="label.card.person.email" />
 							<fr:slot name="person.mobile" key="label.person.mobile" />
 							
@@ -209,17 +206,6 @@
 							<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05" />
 						</fr:layout>
 					</fr:view>
-					<bean:define id="userHasHigherClerance" value="<%= "" + Bennu.getInstance().getLibraryCardSystem().getHigherClearenceGroup().allows(Authenticate.getUser()) %>" />
-					<logic:equal name="userHasHigherClerance" value="true">
-						<logic:notPresent name="attendance" property="personLibraryCardNumber">
-							<bean:define id="personIstUsername" name="attendance" property="person.istUsername" />
-							<p>
-								<html:link action="<%= "/libraryOperator.do?method=generateCardNumber&personIstUsername=" + personIstUsername + "&libraryId=" + libraryId %>" onclick="return confirm('Tem a certeza que pretende gerar um código Millenium para esta pessoa? A operação não é reversível.');">
-									<bean:message key="button.generateLibraryNumber" bundle="LIBRARY_RESOURCES" />
-								</html:link>
-							</p>
-						</logic:notPresent>
-					</logic:equal>
 
 					<logic:present name="attendance" property="personAttendance">
 						<fr:form action="/libraryOperator.do?method=exitPlace">

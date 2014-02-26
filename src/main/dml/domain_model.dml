@@ -1335,9 +1335,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
             class documents.AnnualIRSDeclarationDocument extends documents.GeneratedDocument {
                 Integer year;
             }
-    class documents.LibraryMissingCardsDocument extends documents.GeneratedDocument;
-    class documents.LibraryMissingLettersDocument extends documents.GeneratedDocument;
-    
     
         class FileContent extends File {
         	EducationalResourceType resourceType;
@@ -1996,11 +1993,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         class accounting.accountingTransactions.InstallmentAccountingTransaction extends accounting.AccountingTransaction {
         }
 
-
-	class LibraryCardSystem{
-		Group higherClearenceGroup;
-		Integer milleniumCodeCounter;
-	}
 
     class accounting.CreditNote  {
         Integer number;
@@ -6258,20 +6250,6 @@ class personnelSection.contracts.Absence  {
     Boolean isSabaticalOrEquivalent (REQUIRED);
 }
 
-class library.LibraryCard  {
-    String userName;
-    String unitName;    
-    String cardNumber;
-    PartyClassification partyClassification;
-    Integer pin;
-    YearMonthDay validUntil;
-    DateTime cardEmitionDate;
-    DateTime letterGenerationDate;
-}
-
-class library.LibraryDocument  {
-}
-
 class elections.DelegateElection  {
     Boolean sentResultsToCandidates;
 }
@@ -10397,41 +10375,6 @@ relation DocumentRequestDocuments {
     documents.DocumentRequestGeneratedDocument playsRole document {
         multiplicity *;
     }
-}
-
-relation LibraryMissingCardsDocuments { 
-  library.LibraryCard playsRole source {
-    multiplicity *;
-  }
-  documents.LibraryMissingCardsDocument playsRole document {
-    multiplicity *;
-  }
-}
-
-relation LibraryMissingLettersDocuments { 
-  library.LibraryCard playsRole source {
-    multiplicity *;
-  }
-  documents.LibraryMissingLettersDocument playsRole letters {
-    multiplicity *;
-  }
-}
-
-relation RootDomainObjectLibraryDocument { 
-  library.LibraryDocument playsRole libraryDocument {
-    multiplicity *;
-  }
-  .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-}
-
-relation LibraryDocumentLibraryMissingCardsDocument { 
-  library.LibraryDocument playsRole libraryDocument;
-  documents.LibraryMissingCardsDocument playsRole cardDocument;
-}
-
-relation LibraryDocumentLibraryMissingLettersDocument { 
-  library.LibraryDocument playsRole libraryDocument;
-  documents.LibraryMissingLettersDocument playsRole letterDocument;
 }
 
 relation BlueprintBlueprintFile {
@@ -17574,20 +17517,6 @@ relation PersonGrantOwnerEquivalentCountry {
 }
 
 
-relation LibraryCardRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    library.LibraryCard playsRole libraryCards{
-        multiplicity *;
-    }
-}
-
-relation LibraryCardPerson {
-    Person playsRole person {
-        multiplicity 1..1;
-    }
-    library.LibraryCard playsRole libraryCard;
-}
-
 relation DelegateElectionDegree {
     elections.DelegateElection playsRole delegateElections {
         multiplicity *;
@@ -20164,11 +20093,6 @@ relation PhdIndividualProgramProcessPhdIndiPhdGratuityEvent {
     phd.debts.PhdGratuityEvent playsRole phdGratuityEvents {
         multiplicity *;
     }
-}
-
-relation LibraryCardSystemRootDomainObject {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	LibraryCardSystem playsRole libraryCardSystem;
 }
 
 relation InstitutionAffiliationEventIntitution {

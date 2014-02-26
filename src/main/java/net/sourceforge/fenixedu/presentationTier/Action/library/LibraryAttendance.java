@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
 
 import org.apache.commons.lang.StringUtils;
-import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.renderers.DataProvider;
@@ -83,8 +82,6 @@ public class LibraryAttendance implements Serializable {
     private Collection<Person> matches;
 
     private int numberOfPages;
-
-    private String personLibraryCardNumber;
 
     private Space selectedSpace;
 
@@ -179,11 +176,9 @@ public class LibraryAttendance implements Serializable {
         alumniRegistration = null;
         phdProcess = null;
         invitation = null;
-        setPersonLibraryCardNumber(null);
         setSelectedSpace(null);
         setPersonAttendance(null);
         if (person != null) {
-            setPersonLibraryCardNumber(person.getLibraryCardNumber());
             Set<Space> spaces = new HashSet<Space>();
             spaces.add(library);
             spaces.addAll(library.getActiveContainedSpaces());
@@ -285,14 +280,6 @@ public class LibraryAttendance implements Serializable {
         return alumniRegistration;
     }
 
-    public String getPersonLibraryCardNumber() {
-        return personLibraryCardNumber;
-    }
-
-    public void setPersonLibraryCardNumber(String personLibraryCardNumber) {
-        this.personLibraryCardNumber = personLibraryCardNumber;
-    }
-
     public Space getSelectedSpace() {
         return selectedSpace;
     }
@@ -325,11 +312,7 @@ public class LibraryAttendance implements Serializable {
     public void search() {
         this.matches = null;
         if (!StringUtils.isEmpty(getPersonId())) {
-            if (getPersonId().startsWith("ist")) {
-                setPerson(Person.readPersonByUsername(getPersonId()));
-            } else {
-                setPerson(Person.readPersonByLibraryCardNumber(getPersonId()));
-            }
+            setPerson(Person.readPersonByUsername(getPersonId()));
         } else {
             setPerson(null);
         }
@@ -354,12 +337,6 @@ public class LibraryAttendance implements Serializable {
             this.matches = result.getPage(pageNumber);
         }
 
-    }
-
-    @Atomic
-    public void generateCardNumber() {
-        getPerson().setLibraryCardNumber(Bennu.getInstance().getLibraryCardSystem().generateNewMilleniumCode());
-        setPersonLibraryCardNumber(getPerson().getLibraryCardNumber());
     }
 
     @Atomic
