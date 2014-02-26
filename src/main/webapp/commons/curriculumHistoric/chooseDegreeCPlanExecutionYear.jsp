@@ -5,7 +5,6 @@
 
 <html:xhtml/>
 
-<em><bean:message key="label.curriculumHistoric" bundle="CURRICULUM_HISTORIC_RESOURCES"/></em>
 <h2><bean:message key="title.student.marksSheetConsult"/></h2>
 
 <logic:messagesPresent message="true">

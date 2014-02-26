@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.gep;
+package net.sourceforge.fenixedu.presentationTier.Action.publicRelationsOffice;
 
 import java.io.OutputStream;
 import java.util.ArrayList;

@@ -12,10 +12,13 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.ResultsFileBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.gep.GepApplication.GepInquiriesApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,20 +26,20 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 /**
  * @author - Ricardo Rodrigues (ricardo.rodrigues@ist.utl.pt)
  * 
  */
+@StrutsFunctionality(app = GepInquiriesApp.class, path = "upload-results", titleKey = "link.inquiries.uploadResults")
 @Mapping(path = "/uploadInquiriesResults", module = "gep")
-@Forwards({ @Forward(name = "prepareUploadPage", path = "/gep/inquiries/uploadInquiriesResults.jsp", tileProperties = @Tile(
-        title = "private.gep.surveys.importresults")) })
+@Forwards(@Forward(name = "prepareUploadPage", path = "/gep/inquiries/uploadInquiriesResults.jsp"))
 public class UploadInquiriesResultsDA extends FenixDispatchAction {
 
     private static final Logger logger = LoggerFactory.getLogger(UploadInquiriesResultsDA.class);
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         request.setAttribute("uploadFileBean", new ResultsFileBean());

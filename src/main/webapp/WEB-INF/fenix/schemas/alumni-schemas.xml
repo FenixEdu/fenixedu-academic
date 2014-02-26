@@ -108,7 +108,7 @@
 		</slot>		
 	</schema>
 
-	<schema name="alumni.gep.search.result" type="net.sourceforge.fenixedu.presentationTier.Action.gep.AlumniInformationAction$AlumniSearchResultItemBean" bundle="ALUMNI_RESOURCES">
+	<schema name="alumni.gep.search.result" type="net.sourceforge.fenixedu.presentationTier.Action.publicRelationsOffice.AlumniInformationAction$AlumniSearchResultItemBean" bundle="ALUMNI_RESOURCES">
 		<slot name="name" key="list.column.name" />
 		<slot name="degree" key="list.column.degree" />
 		<slot name="startYear" key="list.column.year" />

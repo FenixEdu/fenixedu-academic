@@ -14,8 +14,6 @@
 
 <logic:present role="role(MANAGER)">
 
-<em><bean:message key="title.personal.ingression.data.viewer.unit.name" bundle="GEP_RESOURCES" /></em>
-
 <h2><bean:message key="title.personal.ingression.data.viewer.student.raides.data.view" bundle="GEP_RESOURCES" /></h2>
 
 <strong><bean:message key="label.personal.ingression.data.viewer.student.data" bundle="GEP_RESOURCES" /></strong>

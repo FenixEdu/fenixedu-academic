@@ -1,10 +1,11 @@
-package net.sourceforge.fenixedu.presentationTier.Action.commons.ects;
+package net.sourceforge.fenixedu.presentationTier.Action.gep.ects;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -40,32 +41,37 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.commons.ects.EctsTableFilter;
+import net.sourceforge.fenixedu.presentationTier.Action.commons.ects.EctsTableLevel;
+import net.sourceforge.fenixedu.presentationTier.Action.commons.ects.EctsTableType;
+import net.sourceforge.fenixedu.presentationTier.Action.gep.GepApplication.GepPortalApp;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
 import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
 import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
+@StrutsFunctionality(app = GepPortalApp.class, path = "ects-tables", titleKey = "link.ects.management")
 @Mapping(path = "/manageEctsComparabilityTables", module = "gep")
-@Forwards({ @Forward(name = "index", path = "/gep/ects/comparabilityTableIndex.jsp", tileProperties = @Tile(
-        title = "private.gep.gepportal.ectstables")) })
+@Forwards(@Forward(name = "index", path = "/gep/ects/comparabilityTableIndex.jsp"))
 public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAction {
     private static final String SEPARATOR = "\\t";
 
-    private static final ResourceBundle BUNDLE = ResourceBundle.getBundle("resources.GEPResources", Language.getLocale());
+    private static final ResourceBundle BUNDLE = ResourceBundle.getBundle("resources.GEPResources", Locale.getDefault());
 
+    @EntryPoint
     public ActionForward index(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         EctsTableFilter filter = readFilter(request);
