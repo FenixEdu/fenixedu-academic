@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PartyContactsManagementDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -13,19 +15,13 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "personnelSection", path = "/partyContacts", scope = "request", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "visualizePersonalInformation", path = "/personnelSection/people/viewPerson.jsp", tileProperties = @Tile(
-                title = "private.staffarea.interfacegiaf.interfacegiaf.searchpeople")),
-        @Forward(name = "editPartyContact", path = "/manager/personManagement/contacts/editPartyContact.jsp",
-                tileProperties = @Tile(title = "private.staffarea.interfacegiaf.interfacegiaf.searchpeople")),
-        @Forward(name = "createPartyContact", path = "/manager/personManagement/contacts/createPartyContact.jsp",
-                tileProperties = @Tile(title = "private.staffarea.interfacegiaf.interfacegiaf.searchpeople")) })
-public class PartyContactsManagementDispatchActionForPersonnelSection extends
-        net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PartyContactsManagementDispatchAction {
+@Mapping(module = "personnelSection", path = "/partyContacts", functionality = PersonManagementAction.class)
+@Forwards({ @Forward(name = "visualizePersonalInformation", path = "/personnelSection/people/viewPerson.jsp"),
+        @Forward(name = "editPartyContact", path = "/manager/personManagement/contacts/editPartyContact.jsp"),
+        @Forward(name = "createPartyContact", path = "/manager/personManagement/contacts/createPartyContact.jsp") })
+public class PartyContactsManagementDispatchActionForPersonnelSection extends PartyContactsManagementDispatchAction {
 
     @Override
     public ActionForward forwardToInputValidationCode(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

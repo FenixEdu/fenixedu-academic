@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.personnelSection.PersonnelSectionApplication;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionError;
@@ -35,15 +36,14 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
@@ -51,13 +51,11 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
  * @author T�nia Pous�o
  * 
  */
-@Mapping(module = "personnelSection", path = "/findPerson", input = "findPerson", attribute = "findPersonForm",
-        formBean = "findPersonForm", scope = "request", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "viewPerson", path = "/personnelSection/people/viewPerson.jsp"),
+@StrutsFunctionality(app = PersonnelSectionApplication.class, path = "find-person", titleKey = "link.manage.people.search")
+@Mapping(module = "personnelSection", path = "/findPerson", input = "findPerson", formBean = "findPersonForm")
+@Forwards(value = { @Forward(name = "viewPerson", path = "/personnelSection/people/viewPerson.jsp"),
         @Forward(name = "displayPerson", path = "/manager/personManagement/displayPerson.jsp"),
-        @Forward(name = "findPerson", path = "/manager/personManagement/findPerson.jsp", tileProperties = @Tile(
-                title = "private.staffarea.interfacegiaf.interfacegiaf.searchpeople")) })
+        @Forward(name = "findPerson", path = "/manager/personManagement/findPerson.jsp") })
 public class PersonManagementAction extends FenixDispatchAction {
 
     public ActionForward firstPage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -81,6 +79,7 @@ public class PersonManagementAction extends FenixDispatchAction {
         return uri.substring(contextPathLength, i);
     }
 
+    @EntryPoint
     public ActionForward prepareFindPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final String modulePrefix = getModulePrefix(mapping, request);
@@ -91,8 +90,6 @@ public class PersonManagementAction extends FenixDispatchAction {
     public ActionForward findPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         ActionErrors errors = new ActionErrors();
-
-        User userView = Authenticate.getUser();
 
         DynaActionForm findPersonForm = (DynaActionForm) actionForm;
         String name = null;
@@ -185,7 +182,6 @@ public class PersonManagementAction extends FenixDispatchAction {
 
         SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 
-        User userView = Authenticate.getUser();
         CollectionPager<Person> result = SearchPerson.runSearchPerson(searchParameters, predicate);
 
         request.setAttribute("resultPersons", result.getCollection());

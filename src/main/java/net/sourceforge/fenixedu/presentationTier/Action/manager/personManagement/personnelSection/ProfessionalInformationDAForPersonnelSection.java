@@ -1,14 +1,13 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.personnelSection;
 
+import net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.ProfessionalInformationDA;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(module = "personnelSection", path = "/professionalInformation", scope = "request", parameter = "method")
+@Mapping(module = "personnelSection", path = "/professionalInformation", functionality = PersonManagementAction.class)
 @Forwards(value = { @Forward(name = "showProfessionalInformation",
-        path = "/manager/personManagement/contracts/showProfessionalInformation.jsp", tileProperties = @Tile(
-                title = "private.staffarea.interfacegiaf.interfacegiaf.searchpeople")) })
-public class ProfessionalInformationDAForPersonnelSection extends
-        net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.ProfessionalInformationDA {
+        path = "/manager/personManagement/contracts/showProfessionalInformation.jsp") })
+public class ProfessionalInformationDAForPersonnelSection extends ProfessionalInformationDA {
 }
