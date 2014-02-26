@@ -1,57 +1,30 @@
 package net.sourceforge.fenixedu.presentationTier.Action.library;
 
-import java.awt.Color;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.space.RoomSubdivision;
-import net.sourceforge.fenixedu.domain.space.RoomSubdivisionInformation;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.SpaceAttendances;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartUtilities;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.AxisLocation;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.NumberAxis3D;
-import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.renderer.CategoryItemRenderer;
-import org.jfree.data.DefaultCategoryDataset;
-import org.joda.time.YearMonthDay;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
+@StrutsFunctionality(app = LibraryApplication.class, path = "operator", titleKey = "label.library.operator")
 @Mapping(path = "/libraryOperator", module = "library")
-@Forwards({
-        @Forward(name = "libraryOperator", path = "/library/operator/libraryOperator.jsp", tileProperties = @Tile(
-                title = "private.library.libraryoperator")),
-        @Forward(name = "libraryUpdateCapacityAndLockers", path = "/library/operator/libraryUpdateCapacityAndLockers.jsp",
-                tileProperties = @Tile(title = "private.library.updatecapacityandlockers")),
-        @Forward(name = "libraryAddOrRemoveOperators", path = "/library/operator/libraryAddOrRemoveOperators.jsp",
-                tileProperties = @Tile(title = "private.library.addorremoveoperators")) })
+@Forwards(@Forward(name = "libraryOperator", path = "/library/operator/libraryOperator.jsp"))
 public class LibraryOperatorDispatchAction extends FenixDispatchAction {
 
-    private static final Logger logger = LoggerFactory.getLogger(LibraryOperatorDispatchAction.class);
-
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         request.setAttribute("attendance", new LibraryAttendance());
@@ -113,51 +86,6 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
         return mapping.findForward("libraryOperator");
     }
 
-    public ActionForward createAreaXYChart(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) {
-        Space library = getDomainObject(request, "library");
-
-        int occupation = library.currentAttendaceCount();
-
-        final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        dataset.addValue(occupation, "Alunos", "Ocupação");
-
-        final JFreeChart chart =
-                ChartFactory.createBarChart3D(null, null, "Value", dataset, PlotOrientation.HORIZONTAL, false, false, false);
-
-        chart.setBackgroundPaint(Color.WHITE);
-
-        final CategoryPlot plot = chart.getCategoryPlot();
-        plot.setRangeAxisLocation(AxisLocation.TOP_OR_RIGHT);
-
-        final CategoryItemRenderer renderer1 = plot.getRenderer();
-
-        if (occupation >= library.getSpaceInformation().getCapacity()) {
-            renderer1.setSeriesPaint(0, Color.RED);
-        } else {
-            renderer1.setSeriesPaint(0, new Color(0xA0, 0xCF, 0xEC));
-        }
-
-        final ValueAxis axis = new NumberAxis3D("");
-        axis.setRange(0, library.getSpaceInformation().getCapacity());
-        plot.setRangeAxis(axis);
-
-        NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
-        rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        try {
-            ChartUtilities.writeChartAsPNG(out, chart, 550, 35 + 40 * dataset.getColumnCount());
-            response.setContentType("image/png");
-            response.getOutputStream().write(out.toByteArray());
-            response.getOutputStream().close();
-        } catch (IOException e) {
-            logger.error(e.getMessage(), e);
-        }
-
-        return null;
-    }
-
     private LibraryAttendance getAttendanceFromRequest(HttpServletRequest request, String renderId) {
         LibraryAttendance attendance = getRenderedObject(renderId);
         if (attendance == null) {
@@ -173,80 +101,6 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
             }
         }
         return attendance;
-    }
-
-    public ActionForward prepareUpdateCapacityAndLockers(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) {
-        request.setAttribute("libraryInformation", new LibraryInformation());
-        return mapping.findForward("libraryUpdateCapacityAndLockers");
-    }
-
-    public ActionForward selectLibraryToUpdate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) {
-        LibraryInformation libraryInformation = getRenderedObject("libraryInformation");
-
-        Space library = libraryInformation.getLibrary();
-
-        if (library != null) {
-            libraryInformation.setCapacity(library.getSpaceInformation().getCapacity());
-            libraryInformation.setLockers(library.getActiveContainedSpacesCount());
-        }
-
-        RenderUtils.invalidateViewState();
-        request.setAttribute("libraryInformation", libraryInformation);
-        return mapping.findForward("libraryUpdateCapacityAndLockers");
-    }
-
-    @Atomic
-    public ActionForward updateCapacityAndLockers(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) {
-        LibraryInformation libraryInformation = getRenderedObject("libraryUpdate");
-
-        Space library = libraryInformation.getLibrary();
-        setCapacity(library, libraryInformation.getCapacity());
-        setLockers(library, libraryInformation.getLockers(), new YearMonthDay());
-
-        libraryInformation.setCapacity(libraryInformation.getLibrary().getSpaceInformation().getCapacity());
-        libraryInformation.setLockers(libraryInformation.getLibrary().getActiveContainedSpacesCount());
-
-        request.setAttribute("libraryInformation", libraryInformation);
-        return mapping.findForward("libraryUpdateCapacityAndLockers");
-    }
-
-    public ActionForward handleInvalidCapacityOrLockers(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) {
-        LibraryInformation libraryInformation = getRenderedObject("libraryUpdate");
-        request.setAttribute("libraryInformation", libraryInformation);
-        request.setAttribute("libraryUpdate", libraryInformation);
-        return mapping.findForward("libraryUpdateCapacityAndLockers");
-    }
-
-    private void setCapacity(Space library, int capacity) {
-        library.getSpaceInformation().setCapacity(capacity);
-    }
-
-    private void setLockers(Space library, int lockers, YearMonthDay today) {
-        int highestLocker = 0;
-        for (Space space : library.getActiveContainedSpaces()) {
-            RoomSubdivisionInformation info = (RoomSubdivisionInformation) space.getSpaceInformation();
-            int lockerNumber = Integer.parseInt(info.getIdentification());
-            if (lockerNumber > lockers) {
-                space.getMostRecentSpaceInformation().setValidUntil(today);
-            } else {
-                setCapacity(space, 1);
-            }
-            if (lockerNumber > highestLocker) {
-                highestLocker = lockerNumber;
-            }
-        }
-        if (highestLocker < lockers) {
-            for (int i = highestLocker + 1; i <= lockers; i++) {
-                RoomSubdivision room =
-                        new RoomSubdivision(library, StringUtils.leftPad(Integer.toString(i), String.valueOf(lockers).length(),
-                                '0'), today, null);
-                setCapacity(room, 1);
-            }
-        }
     }
 
 }

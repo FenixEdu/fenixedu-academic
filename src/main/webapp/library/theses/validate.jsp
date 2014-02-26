@@ -39,7 +39,7 @@
 	</logic:empty>
 
 	<logic:notEqual name="thesisState" value="ARCHIVE">
-		<div class="mtop05 mbottom15"><html:form
+		<div class="mtop05 mbottom15"><fr:form
 			action="<%="/theses/validate.do?thesisID=" + thesisId + request.getAttribute("searchArgs") %>">
 			<html:hidden property="method" value="" />
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"
@@ -64,7 +64,7 @@
                     <bean:message key="thesis.validation.button.pending" />
                 </html:submit>
             </logic:equal>
-		</html:form></div>
+		</fr:form></div>
 	</logic:notEqual>
 
 	<logic:equal name="thesisState" value="ARCHIVE">

@@ -1,4 +1,3 @@
-<%@ page isELIgnored="true"%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryAttendance"%>
 <%@page import="org.fenixedu.bennu.core.security.Authenticate"%>
 <%@page import="org.fenixedu.bennu.core.domain.Bennu"%>
@@ -26,14 +25,14 @@
 	}
 </script>
 
-<table>
+<table style="width: 90%">
 	<tr>
 		<td style="vertical-align: bottom;"><fr:form action="/libraryOperator.do?method=selectLibrary">
 				<fr:edit id="attendance" name="attendance">
 					<fr:schema bundle="LIBRARY_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryAttendance">
 						<fr:slot name="library" key="label.library" layout="menu-select-postback" required="true">
 							<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.library.LibraryProvider" />
-							<fr:property name="format" value="Biblioteca ${spaceBuilding.nameWithCampus}" />
+							<fr:property name="format" value="Biblioteca \${spaceBuilding.nameWithCampus}" />
 							<fr:property name="destination" value="postback" />
 						</fr:slot>
 					</fr:schema>
@@ -48,15 +47,16 @@
 		<td>
 			<div style="float: right; margin-left: 10px; margin-top: 15px;">
 				<logic:present name="attendance" property="library">
-					<html:img align="middle" action="/libraryOperator.do?method=createAreaXYChart" paramId="library" paramName="attendance" paramProperty="library.externalId" />
+					<bean:message key="label.library.ocupation" />: ${attendance.library.currentAttendaceCount()} / ${attendance.library.spaceInformation.capacity}
 				</logic:present>
-			</div></td>
+			</div>
+		</td>
 </table>
 
 <logic:present name="attendance" property="library">
 
 	<bean:define id="libraryId" name="attendance" property="library.externalId" />
-	<table>
+	<table style="width: 90%">
 		<tr>
 			<td style="vertical-align: top;">
 				<h3 class="mtop2"><bean:message key="label.find.person" bundle="LIBRARY_RESOURCES" /></h3>
@@ -156,7 +156,7 @@
 								<fr:property name="useParent" value="true" />
 								<fr:property name="moduleRelative" value="false" />
 								<fr:property name="contextRelative" value="true" />
-								<fr:property name="imageFormat" value="/person/retrievePersonalPhoto.do?method=retrieveByUUID&amp;uuid=${person.istUsername}" />
+								<fr:property name="imageFormat" value="/person/retrievePersonalPhoto.do?method=retrieveByUUID&amp;uuid=\${person.istUsername}" />
 							</fr:slot>
 							<fr:slot name="person.name" key="label.person.name" />
 							<fr:slot name="person.istUsername" key="label.person.istUsername" />
@@ -167,9 +167,9 @@
 								<logic:iterate id="giafProfessionalDataSet" name="attendance" property="giafProfessionalDataSet" indexId="i">
 									<bean:define id="labelId" name="giafProfessionalDataSet" property="professionalCategory.categoryType"/>
 									<fr:slot name="<%="giafProfessionalDataSet["+ i+"]"%>" key="<%=labelId.toString() %>" bundle="ENUMERATION_RESOURCES">
-										<fr:property name="format" value="${contractSituation.name}" />
+										<fr:property name="format" value="\${contractSituation.name}" />
 										<logic:notEmpty name="giafProfessionalDataSet" property="personProfessionalData.person.workingPlaceUnitForAnyRoleType">
-											<fr:property name="format" value="${contractSituation.name} <br/> ${personProfessionalData.person.workingPlaceUnitForAnyRoleType.presentationName}" />
+											<fr:property name="format" value="\${contractSituation.name} <br/> \${personProfessionalData.person.workingPlaceUnitForAnyRoleType.presentationName}" />
 											<fr:property name="escaped" value="false" />
 										</logic:notEmpty>
 									</fr:slot>
@@ -238,7 +238,7 @@
 													<fr:slot name="selectedSpace" key="label.person.place" layout="menu-select">
 														<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryAttendance$PlaceProvider" />
 														<fr:property name="sortBy" value="spaceInformation.presentationName" />
-														<fr:property name="format" value="${spaceInformation.presentationName}" />
+														<fr:property name="format" value="\${spaceInformation.presentationName}" />
 														<fr:property name="defaultText" value="label.space.libraryResourceNone" />
 														<fr:property name="bundle" value="LIBRARY_RESOURCES" />
 														<fr:property name="key" value="true" />

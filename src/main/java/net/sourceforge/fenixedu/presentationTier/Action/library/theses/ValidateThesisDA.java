@@ -20,9 +20,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(module = "library", path = "/theses/validate", attribute = "none", formBean = "none", scope = "session",
-        parameter = "method")
-@Forwards(value = { @Forward(name = "view", path = "/library/theses/validate.jsp") })
+@Mapping(module = "library", path = "/theses/validate", functionality = SearchThesesDA.class)
+@Forwards(@Forward(name = "view", path = "/library/theses/validate.jsp"))
 public class ValidateThesisDA extends ThesisLibraryDA {
 
     protected Thesis getThesis(HttpServletRequest request) {
@@ -36,7 +35,7 @@ public class ValidateThesisDA extends ThesisLibraryDA {
         String state = null;
         String year = null;
         if (request.getParameter("text") != null) {
-            text = URLEncoder.encode(request.getParameter("text"));
+            text = URLEncoder.encode(request.getParameter("text"), "UTF-8");
         }
         if (request.getParameter("state") != null) {
             state = request.getParameter("state");
