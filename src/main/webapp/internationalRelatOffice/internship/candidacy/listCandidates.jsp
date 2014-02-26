@@ -6,6 +6,10 @@
 
 <%@page import="org.apache.struts.action.ActionMessages"%><html:xhtml />
 
+<script type="text/javascript" src="${pageContext.request.contextPath}/javaScript/jquery/jquery.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/javaScript/jquery/jquery-ui.js"></script>
+<link href="${pageContext.request.contextPath}/CSS/jqTheme/ui.all.css" rel="stylesheet">
+
 <h2><bean:message key="label.internationalrelations.internship.candidacy.title"
 	bundle="INTERNATIONAL_RELATIONS_OFFICE" /></h2>
 

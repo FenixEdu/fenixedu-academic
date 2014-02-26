@@ -12,8 +12,6 @@
 
 <bean:define id="processName" name="processName" />
 
-<em><bean:message key="label.mobility.applications" bundle="APPLICATION_RESOURCES"/></em>
-
 <h2><bean:message key="title.application.name.mobility" bundle="CANDIDATE_RESOURCES" /></h2>
 
 <%-- no candidacy process --%>

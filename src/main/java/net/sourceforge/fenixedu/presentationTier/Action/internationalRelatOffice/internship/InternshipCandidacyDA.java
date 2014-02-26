@@ -16,11 +16,14 @@ import net.sourceforge.fenixedu.domain.internship.DuplicateInternshipCandidacy;
 import net.sourceforge.fenixedu.domain.internship.InternshipCandidacy;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.internationalRelatOffice.InternationalRelationsApplication.InternRelationsInternshipApp;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
@@ -37,6 +40,7 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 /**
  * @author Pedro Santos (pmrsa)
  */
+@StrutsFunctionality(app = InternRelationsInternshipApp.class, path = "candidates", titleKey = "title.candidates")
 @Mapping(path = "/internship/internshipCandidacy", module = "internationalRelatOffice")
 @Forwards({ @Forward(name = "candidates", path = "/internationalRelatOffice/internship/candidacy/listCandidates.jsp"),
         @Forward(name = "view", path = "/internationalRelatOffice/internship/candidacy/viewCandidate.jsp"),
@@ -61,6 +65,7 @@ public class InternshipCandidacyDA extends FenixDispatchAction {
             "Telemóvel", "e-mail", "1º Preferência", "2º Preferência", "3º Preferência", "Inglês", "Francês", "Espanhol",
             "Alemão", "Candidatura Prévia" };
 
+    @EntryPoint
     public ActionForward prepareCandidates(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         CandidateSearchBean search = new CandidateSearchBean();
