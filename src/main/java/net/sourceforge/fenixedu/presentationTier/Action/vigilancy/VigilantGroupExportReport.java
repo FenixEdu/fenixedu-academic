@@ -22,7 +22,7 @@ import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
-@Mapping(module = "examCoordination", path = "/vigilancy/exportReport", scope = "request", parameter = "method")
+@Mapping(module = "examCoordination", path = "/vigilancy/exportReport", functionality = VigilantGroupManagement.class)
 public class VigilantGroupExportReport extends VigilantGroupManagement {
 
     public ActionForward exportGroupReportAsXLS(ActionMapping mapping, ActionForm form, HttpServletRequest request,

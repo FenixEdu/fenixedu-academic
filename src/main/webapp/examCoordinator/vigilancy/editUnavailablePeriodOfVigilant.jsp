@@ -5,7 +5,6 @@
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="date"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.vigilant"/></em>
 <h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.editUnavailablePeriod"/></h2>
 
 <logic:messagesPresent message="true">

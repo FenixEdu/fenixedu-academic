@@ -8,7 +8,6 @@
 <bean:define id="showVigilants" value="<%= request.getParameter("showVigilants") != null ? request.getParameter("showVigilants") : "false" %>"/>
 <bean:define id="groupId" name="vigilantGroup" property="externalId"/>
 
-<em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinator"/></em>
 <h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.GroupReport"/></h2>
 
 <strong><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.vigilantGroup"/></strong>: <fr:view name="vigilantGroup" property="name"/>
