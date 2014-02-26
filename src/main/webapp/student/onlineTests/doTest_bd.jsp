@@ -3,7 +3,6 @@
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>	
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
-<%@ taglib uri="http://struts.apache.org/tags-form" prefix="form" %>
 
 <%
 response.setHeader("Cache-Control","no-cache");

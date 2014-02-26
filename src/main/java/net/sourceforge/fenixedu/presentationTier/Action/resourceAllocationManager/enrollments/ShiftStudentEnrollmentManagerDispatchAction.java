@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.presentationTier.Action.commons.TransactionalDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.util.ExecutionDegreesFormat;
 
@@ -65,7 +65,7 @@ import pt.ist.fenixframework.FenixFramework;
                         key = "error.message.OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan",
                         handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
                         scope = "request") })
-public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDispatchAction {
+public class ShiftStudentEnrollmentManagerDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -115,8 +115,6 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 
     public ActionForward start(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-
-        super.createToken(request);
         return prepareShiftEnrollment(mapping, form, request, response);
     }
 

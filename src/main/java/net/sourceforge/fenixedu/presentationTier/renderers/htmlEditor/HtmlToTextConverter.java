@@ -14,6 +14,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.tidy.Tidy;
 
+import pt.ist.fenixWebFramework.rendererExtensions.htmlEditor.EmoticonMap;
 import pt.ist.fenixWebFramework.renderers.components.converters.ConversionException;
 
 import com.tecnick.htmlutils.htmlentities.HTMLEntities;
@@ -30,7 +31,7 @@ public class HtmlToTextConverter extends TidyConverter {
 
     private static final String DEFAULT_INDENT = "    ";
 
-    private StringBuilder buffer;
+    private final StringBuilder buffer;
     private int pos;
 
     private boolean wrap;

@@ -4,9 +4,6 @@
       <data-sources></data-sources>
       <!-- ========== Form Bean Definitions ================================== -->
       <form-beans type="org.apache.struts.action.ActionFormBean">
-            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="voidForm">
-                  <form-property type="java.lang.Integer" name="voidProperty"></form-property>
-            </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="homepageForm">
                   <form-property type="java.lang.Integer" name="page"></form-property>
                   <form-property type="java.lang.String" name="activated"></form-property>

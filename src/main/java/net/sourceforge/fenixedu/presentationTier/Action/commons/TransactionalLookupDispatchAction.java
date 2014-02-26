@@ -13,7 +13,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.actions.LookupDispatchAction;
-import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
@@ -25,36 +24,7 @@ import org.fenixedu.bennu.core.security.Authenticate;
 
 public abstract class TransactionalLookupDispatchAction extends LookupDispatchAction {
 
-    protected static final Bennu rootDomainObject = Bennu.getInstance();
-
     private static final String ACTION_MESSAGES_REQUEST_KEY = "FENIX_ACTION_MESSAGES";
-
-    /**
-     * Creates a token and saves it on request
-     * 
-     * @param request
-     */
-    protected void createToken(HttpServletRequest request) {
-        generateToken(request);
-        saveToken(request);
-    }
-
-    /**
-     * If the token is valid it creates a new token
-     * 
-     * @see #createToken(HttpServletRequest) Otherwise it resets the form and
-     *      throws a <code> FenixTransactionException </code>
-     * @param request
-     * @param form
-     * @param mapping
-     * @param errorMessageKey
-     * @throws FenixTransactionException
-     *             when the token is invalid.
-     */
-    protected void validateToken(HttpServletRequest request, ActionForm form, ActionMapping mapping, String errorMessageKey)
-            throws FenixTransactionException {
-        validateToken(request, form, mapping, errorMessageKey, true);
-    }
 
     /**
      * If the token is valid it creates a new token
@@ -70,16 +40,15 @@ public abstract class TransactionalLookupDispatchAction extends LookupDispatchAc
      * @throws FenixTransactionException
      *             when the token is invalid.
      */
-    protected void validateToken(HttpServletRequest request, ActionForm form, ActionMapping mapping, String errorMessageKey,
-            boolean renewToken) throws FenixTransactionException {
+    protected void validateToken(HttpServletRequest request, ActionForm form, ActionMapping mapping, String errorMessageKey)
+            throws FenixTransactionException {
 
         if (!isTokenValid(request)) {
             form.reset(mapping, request);
             throw new FenixTransactionException(errorMessageKey);
         }
-        if (renewToken) {
-            createToken(request);
-        }
+        generateToken(request);
+        saveToken(request);
 
     }
 
@@ -105,10 +74,6 @@ public abstract class TransactionalLookupDispatchAction extends LookupDispatchAc
 
     protected ActionMessages getActionMessages(HttpServletRequest request) {
         return (ActionMessages) request.getAttribute(ACTION_MESSAGES_REQUEST_KEY);
-    }
-
-    protected boolean hasActionMessage(HttpServletRequest request) {
-        return !this.getActionMessages(request).isEmpty();
     }
 
     protected void addActionMessage(HttpServletRequest request, String key, String... args) {

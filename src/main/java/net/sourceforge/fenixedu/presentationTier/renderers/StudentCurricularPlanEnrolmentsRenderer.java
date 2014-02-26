@@ -16,11 +16,11 @@ import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
-import net.sourceforge.fenixedu.presentationTier.renderers.controllers.CopyCheckBoxValuesController;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DegreeModuleToEnrolKeyConverter;
 
 import org.apache.commons.beanutils.BeanComparator;
 
+import pt.ist.fenixWebFramework.rendererExtensions.controllers.CopyCheckBoxValuesController;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyArrayConverter;
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
@@ -417,7 +417,7 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 
     public static class CurriculumModuleComparator implements Comparator<CurriculumModuleBean> {
 
-        private ExecutionSemester executionSemester;
+        private final ExecutionSemester executionSemester;
 
         public CurriculumModuleComparator(ExecutionSemester executionSemester) {
             this.executionSemester = executionSemester;

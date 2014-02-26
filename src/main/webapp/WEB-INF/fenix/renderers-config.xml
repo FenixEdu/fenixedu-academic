@@ -271,10 +271,6 @@ Documentation:
     	<property name="nullLabel" value="-"/>
     </renderer>
 
-    <renderer type="org.fenixedu.bennu.portal.domain.MenuFunctionality" layout="side-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.MenuRenderer"/>
-    <renderer type="org.fenixedu.bennu.portal.domain.MenuFunctionality" layout="top-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.TopLevelMenuRenderer"/>
-	<renderer type="org.fenixedu.bennu.portal.domain.MenuFunctionality" layout="bread-crumbs" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.ContextBreadCrumRenderer"/>
-
 	<!--@ File displayed as an html picture -->
     <renderer type="net.sourceforge.fenixedu.domain.File"
               class="net.sourceforge.fenixedu.presentationTier.renderers.FileAsPictureRenderer"

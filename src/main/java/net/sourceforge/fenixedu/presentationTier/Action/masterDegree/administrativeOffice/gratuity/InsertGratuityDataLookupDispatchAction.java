@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPaymentPhase;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixLookupDispatchAction;
 import net.sourceforge.fenixedu.util.Data;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -28,6 +27,7 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.actions.LookupDispatchAction;
 import org.apache.struts.validator.DynaValidatorForm;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
@@ -51,7 +51,7 @@ import pt.ist.fenixframework.FenixFramework;
                 title = "teste53")),
         @Forward(name = "cancel", path = "/insertGratuityDataDA.do?method=prepareInsertChooseExecutionYear&page=0",
                 tileProperties = @Tile(title = "teste54")) })
-public class InsertGratuityDataLookupDispatchAction extends FenixLookupDispatchAction {
+public class InsertGratuityDataLookupDispatchAction extends LookupDispatchAction {
 
     public ActionForward addPhase(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         ActionErrors errors = new ActionErrors();

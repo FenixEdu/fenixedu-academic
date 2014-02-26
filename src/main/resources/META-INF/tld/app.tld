@@ -87,349 +87,35 @@
   </tag>
 
   <tag>
+ 
+     <name>generateNewExamsMap</name>
+     <tagclass>net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.RenderExamsMapTag</tagclass>
+     <bodycontent>empty</bodycontent>
+     
+     <info>
+         Generates a schedule of exams in a calender sort of format.
+     </info>
+ 
+     <attribute>
+       <name>name</name>
+       <required>true</required>
+       <rtexprvalue>true</rtexprvalue>
+     </attribute>
+ 
+     <attribute>
+       <name>user</name>
+       <required>true</required>
+       <rtexprvalue>true</rtexprvalue>
+     </attribute>
+     
+     <attribute>
+       <name>mapType</name>
+       <required>true</required>
+       <rtexprvalue>true</rtexprvalue>
+     </attribute>
+ 
+   </tag>
 
-    <name>generateExamsMap</name>
-    <tagclass>net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMap.RenderExamsMapTag</tagclass>
-    <bodycontent>empty</bodycontent>
-    
-    <info>
-        Generates a schedule of exams in a calender sort of format.
-    </info>
-
-    <attribute>
-      <name>name</name>
-      <required>true</required>
-      <rtexprvalue>true</rtexprvalue>
-    </attribute>
-
-    <attribute>
-    	<name>user</name>
-    	<required>true</required>
-    	<rtexprvalue>true</rtexprvalue>
-    </attribute>
-
-  </tag>
-  <tag>
-
-    <name>generateNewExamsMap</name>
-    <tagclass>net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.RenderExamsMapTag</tagclass>
-    <bodycontent>empty</bodycontent>
-    
-    <info>
-        Generates a schedule of exams in a calender sort of format.
-    </info>
-
-    <attribute>
-      <name>name</name>
-      <required>true</required>
-      <rtexprvalue>true</rtexprvalue>
-    </attribute>
-
-    <attribute>
-    	<name>user</name>
-    	<required>true</required>
-    	<rtexprvalue>true</rtexprvalue>
-    </attribute>
-    
-    <attribute>
-    	<name>mapType</name>
-    	<required>true</required>
-    	<rtexprvalue>true</rtexprvalue>
-    </attribute>
-
-  </tag>
-
-<tag>
-<name>link</name>
-<tagclass>actions.LinkTag</tagclass>
-<attribute>
-<name>accesskey</name>
-<required>false</required>
-<rtexprvalue>true</rtexprvalue>
-</attribute>
-<attribute>
-<name>anchor</name>
-<required>false</required>
-<rtexprvalue>true</rtexprvalue>
-</attribute>
-<attribute>
-<name>forward</name>
-<required>false</required>
-<rtexprvalue>true</rtexprvalue>
-</attribute>
-<attribute>
-<name>href</name>
-<required>false</required>
-<rtexprvalue>true</rtexprvalue>
-</attribute>
-<attribute>
-<name>linkName</name>
-<required>false</required>
-<rtexprvalue>true</rtexprvalue>
-</attribute>
-<attribute>
-<name>name</name>
-<required>false</required>
-<rtexprvalue>true</rtexprvalue>
-</attribute>
-<attribute>
-<name>onblur</name>
-<required>false</required>
-<rtexprvalue>true</rtexprvalue>
-</attribute>
-<attribute>
-<name>onclick</name>
-<required>false</required>
-<rtexprvalue>true</rtexprvalue>
-</attribute>
-<attribute>
-<name>ondblclick</name>
-<required>false</required>
-<rtexprvalue>true</rtexprvalue>
-</attribute>
-<attribute>
-<name>onfocus</name>
-<required>false</required>
-<rtexprvalue>true</rtexprvalue>
-</attribute>
-<attribute>
-<name>onkeydown</name>
-<required>false</required>
-<rtexprvalue>true</rtexprvalue>
-</attribute>
-<attribute>
-<name>onkeypress</name>
-<required>false</required>
-<rtexprvalue>true</rtexprvalue>
-</attribute>
-<attribute>
-<name>onkeyup</name>
-<required>false</required>
-<rtexprvalue>true</rtexprvalue>
-</attribute>
-<attribute>
-<name>onmousedown</name>
-<required>false</required>
-<rtexprvalue>true</rtexprvalue>
-</attribute>
-<attribute>
-<name>onmousemove</name>
-<required>false</required>
-<rtexprvalue>true</rtexprvalue>
-</attribute>
-<attribute>
-<name>onmouseout</name>
-<required>false</required>
-<rtexprvalue>true</rtexprvalue>
-</attribute>
-<attribute>
-<name>onmouseover</name>
-<required>false</required>
-<rtexprvalue>true</rtexprvalue>
-</attribute>
-<attribute>
-<name>onmouseup</name>
-<required>false</required>
-<rtexprvalue>true</rtexprvalue>
-</attribute>
-<attribute>
-<name>page</name>
-<required>false</required>
-<rtexprvalue>true</rtexprvalue>
-</attribute>
-<attribute>
-<name>paramId</name>
-<required>false</required>
-<rtexprvalue>true</rtexprvalue>
-</attribute>
-<attribute>
-<name>paramName</name>
-<required>false</required>
-<rtexprvalue>true</rtexprvalue>
-</attribute>
-<attribute>
-<name>paramProperty</name>
-<required>false</required>
-<rtexprvalue>true</rtexprvalue>
-</attribute>
-<attribute>
-<name>paramScope</name>
-<required>false</required>
-<rtexprvalue>true</rtexprvalue>
-</attribute>
-<attribute>
-<name>property</name>
-<required>false</required>
-<rtexprvalue>true</rtexprvalue>
-</attribute>
-<attribute>
-<name>scope</name>
-<required>false</required>
-<rtexprvalue>true</rtexprvalue>
-</attribute>
-<attribute>
-<name>style</name>
-<required>false</required>
-<rtexprvalue>true</rtexprvalue>
-</attribute>
-<attribute>
-<name>styleClass</name>
-<required>false</required>
-<rtexprvalue>true</rtexprvalue>
-</attribute>
-<attribute>
-<name>styleId</name>
-<required>false</required>
-<rtexprvalue>true</rtexprvalue>
-</attribute>
-<attribute>
-<name>tabindex</name>
-<required>false</required>
-<rtexprvalue>true</rtexprvalue>
-</attribute>
-<attribute>
-<name>target</name>
-<required>false</required>
-<rtexprvalue>true</rtexprvalue>
-</attribute>
-<attribute>
-<name>title</name>
-<required>false</required>
-<rtexprvalue>true</rtexprvalue>
-</attribute>
-<attribute>
-<name>transaction</name>
-<required>false</required>
-<rtexprvalue>true</rtexprvalue>
-</attribute>
-</tag>
-
-  <!-- OptionsTag: Tânia & Fernanda da Assiduidade -->
-  <tag>
-  
-    <name>options</name>
-    <tagclass>net.sourceforge.fenixedu.presentationTier.TagLib.assiduousness.OptionsTag</tagclass>
-    <bodycontent>empty</bodycontent>
-
-    <attribute>
-      <name>collection</name>
-      <required>false</required>
-      <rtexprvalue>true</rtexprvalue>
-    </attribute>
-
-    <attribute>
-      <name>labelName</name>
-      <required>false</required>
-      <rtexprvalue>true</rtexprvalue>
-    </attribute>
-
-    <attribute>
-      <name>labelProperty</name>
-      <required>false</required>
-      <rtexprvalue>true</rtexprvalue>
-    </attribute>
-
-    <attribute>
-      <name>name</name>
-      <required>false</required>
-      <rtexprvalue>true</rtexprvalue>
-    </attribute>
-
-    <attribute>
-      <name>property</name>
-      <required>false</required>
-      <rtexprvalue>true</rtexprvalue>
-    </attribute>
-
-    <attribute>
-      <name>style</name>
-      <required>false</required>
-      <rtexprvalue>true</rtexprvalue>
-    </attribute>
-
-    <attribute>
-      <name>styleClass</name>
-      <required>false</required>
-      <rtexprvalue>true</rtexprvalue>
-    </attribute>
-  
-  </tag>
-  
-  <!-- MessageTag: Tânia & Fernanda da Assiduidade -->
-  <tag>
-  
-    <name>message</name>
-    <tagclass>net.sourceforge.fenixedu.presentationTier.TagLib.assiduousness.MessageTag</tagclass>
-    <bodycontent>empty</bodycontent>
-
-    <attribute>
-      <name>arg0</name>
-      <required>false</required>
-      <rtexprvalue>true</rtexprvalue>
-    </attribute>
-
-    <attribute>
-      <name>arg1</name>
-      <required>false</required>
-      <rtexprvalue>true</rtexprvalue>
-    </attribute>
-
-    <attribute>
-      <name>arg2</name>
-      <required>false</required>
-      <rtexprvalue>true</rtexprvalue>
-    </attribute>
-
-    <attribute>
-      <name>arg3</name>
-      <required>false</required>
-      <rtexprvalue>true</rtexprvalue>
-    </attribute>
-
-    <attribute>
-      <name>arg4</name>
-      <required>false</required>
-      <rtexprvalue>true</rtexprvalue>
-    </attribute>
-
-    <attribute>
-      <name>bundle</name>
-      <required>false</required>
-      <rtexprvalue>true</rtexprvalue>
-    </attribute>
-
-    <attribute>
-      <name>key</name>
-      <required>true</required>
-      <rtexprvalue>true</rtexprvalue>
-    </attribute>
-
-    <attribute>
-      <name>locale</name>
-      <required>false</required>
-      <rtexprvalue>true</rtexprvalue>
-    </attribute>
-  
-  </tag>
-
-
-	
-	
-	<!-- Date Tag: formats a calendar into something of the format DD/mm/yyyy ! João Mota -->
-  <tag>
-  
-    <name>date</name>
-    <tagclass>net.sourceforge.fenixedu.presentationTier.TagLib.commons.DateTag</tagclass>
-    <bodycontent>empty</bodycontent>
-
-    <attribute>
-      <name>calendar</name>
-      <required>true</required>
-      <rtexprvalue>true</rtexprvalue>
-    </attribute>
-
-  </tag>  
-  
   <!-- Label formatter tag -->
   <tag>
   
@@ -535,35 +221,6 @@
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
     </attribute>
-  </tag>  
-
-  <tag>
-      <name>defineContentPath</name>
-      <tagclass>net.sourceforge.fenixedu.presentationTier.TagLib.content.DefineContentPathTag</tagclass>
-      <bodycontent>empty</bodycontent>
-      <info>
-          Places the application relative url to the specified content in the specified variable in the specified scope.
-      </info>
-      <attribute>
-          <name>id</name>
-          <required>true</required>
-          <rtexprvalue>true</rtexprvalue>
-      </attribute>
-      <attribute>
-          <name>name</name>
-          <required>true</required>
-          <rtexprvalue>true</rtexprvalue>
-      </attribute>
-      <attribute>
-          <name>property</name>
-          <required>false</required>
-          <rtexprvalue>true</rtexprvalue>
-      </attribute>
-      <attribute>
-          <name>toScope</name>
-          <required>false</required>
-          <rtexprvalue>true</rtexprvalue>
-      </attribute>
   </tag>
 
   <tag>
