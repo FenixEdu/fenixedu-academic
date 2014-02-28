@@ -635,9 +635,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         if (xmlZipFile == null || xmlZipFile.getSize() == 0) {
             error(request, "FileNotExist", "error.nullXmlZipFile");
             return mapping.findForward("addExerciseVariation");
-        } else if (!(xmlZipFile.getContentType().equals("application/x-zip-compressed")
-                || xmlZipFile.getContentType().equals("text/xml") || xmlZipFile.getContentType().equals("application/xml") || (xmlZipFile
-                    .getContentType().equals("application/zip")))) {
+        } else if (!(validFileFormat(xmlZipFile.getContentType(), xmlZipFileName))) {
             error(request, "FileNotExist", "error.badXmlZipFile");
             return mapping.findForward("addExerciseVariation");
         }
@@ -694,9 +692,7 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         if (xmlZipFile == null || xmlZipFile.getFileData() == null || xmlZipFile.getFileData().length == 0) {
             error(request, "FileNotExist", "error.nullXmlZipFile");
             return mapping.findForward("insertNewExercise");
-        } else if (!(xmlZipFile.getContentType().equals("application/x-zip-compressed")
-                || xmlZipFile.getContentType().equals("text/xml") || xmlZipFile.getContentType().equals("application/xml") || (xmlZipFile
-                    .getContentType().equals("application/zip")))) {
+        } else if (!(validFileFormat(xmlZipFile.getContentType(), xmlZipFileName))) {
             error(request, "FileNotExist", "error.badXmlZipFile");
             return mapping.findForward("insertNewExercise");
         }
@@ -922,5 +918,23 @@ public class ExercisesManagementAction extends FenixDispatchAction {
         ActionErrors actionErrors = new ActionErrors();
         actionErrors.add(errorProperty, new ActionError(error));
         saveErrors(request, actionErrors);
+    }
+
+    private boolean validFileFormat(String contentType, String fileExtension) {
+        //XML file
+        if (contentType.equals("text/xml") || contentType.equals("application/xml")) {
+            return true;
+        }
+        //Zip file
+        if (contentType.equals("application/zip") || contentType.equals("application/x-zip")
+                || contentType.equals("application/x-zip-compressed") || contentType.equals("multipart/x-zip")) {
+            return true;
+        }
+        //Zip file. Sometimes browser dont recognize the zip format and send like unknown application
+        if (contentType.equals("application/octet-stream") || contentType.equals("application/x-compress")
+                || contentType.equals("application/x-compressed")) {
+            return fileExtension.endsWith(".zip");
+        }
+        return false;
     }
 }
