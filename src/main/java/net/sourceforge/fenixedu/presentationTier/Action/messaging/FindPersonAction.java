@@ -1,120 +1,45 @@
-/*
- * Created on 22/Dez/2003
- *
- */
-package net.sourceforge.fenixedu.presentationTier.Action.person;
-
-import java.util.List;
+package net.sourceforge.fenixedu.presentationTier.Action.messaging;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.degree.ReadAllDegreesByType;
-import net.sourceforge.fenixedu.applicationTier.Servico.department.ReadAllDepartments;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.messaging.MessagingApplication.MessagingSearchApp;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
-/**
- * @author T�nia Pous�o
- * 
- */
+@StrutsFunctionality(app = MessagingSearchApp.class, path = "find-person", titleKey = "label.person.findPerson")
+@Forwards(@Forward(name = "findPerson", path = "/messaging/findPerson.jsp"))
+@Mapping(path = "/findPerson", module = "messaging")
 public class FindPersonAction extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepareFindPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         FindPersonBean bean = new FindPersonBean();
         request.setAttribute("bean", bean);
-        return mapping.findForward("findPerson");
-    }
-
-    public ActionForward preparePerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        DynaActionForm findPersonForm = (DynaActionForm) actionForm;
-
-        String roleType = null;
-        String degreeType = null;
-
-        if (request.getParameter("roleType") != null && request.getParameter("roleType").length() > 0) {
-            roleType = request.getParameter("roleType");
-
-        } else if (findPersonForm.get("roleType") != null) {
-            roleType = (String) findPersonForm.get("roleType");
-        }
-        if (request.getParameter("degreeType") != null && request.getParameter("degreeType").length() > 0) {
-            degreeType = request.getParameter("degreeType");
-
-        } else if (findPersonForm.get("degreeType") != null) {
-            degreeType = (String) findPersonForm.get("degreeType");
-        }
-
-        if (roleType != null && roleType.length() != 0) {
-            if (roleType.equals(RoleType.EMPLOYEE.getName()) || roleType.equals(RoleType.TEACHER.getName())) {
-                if (roleType.equals(RoleType.TEACHER.getName())) {
-                    List<InfoDepartment> departments = ReadAllDepartments.run();
-                    request.setAttribute("departments", departments);
-                }
-            }
-
-            if (roleType.equals(RoleType.STUDENT.getName())) {
-
-                if (degreeType != null && degreeType.length() != 0) {
-
-                    List<InfoDegree> nonMasterDegree = ReadAllDegreesByType.run(degreeType);
-
-                    request.setAttribute("nonMasterDegree", nonMasterDegree);
-                    request.setAttribute("degreeType", true);
-
-                }
-                findPersonForm.set("degreeType", degreeType);
-                request.setAttribute("degreeType", degreeType);
-            }
-
-            findPersonForm.set("roleType", roleType);
-            request.setAttribute("roleType", roleType);
-
-        }
-        String name = null;
-        if (request.getParameter("name") != null && request.getParameter("name").length() > 0) {
-            name = request.getParameter("name");
-        } else if (findPersonForm.get("name") != null) {
-            name = (String) findPersonForm.get("name");
-        }
-        if (name != null && name.length() > 0) {
-            findPersonForm.set("name", name);
-        }
-
-        Boolean viewPhoto = null;
-
-        if (request.getParameter("viewPhoto") != null && request.getParameter("viewPhoto").length() > 0) {
-            viewPhoto = getCheckBoxValue(request.getParameter("viewPhoto"));
-
-        } else if (findPersonForm.get("viewPhoto") != null) {
-            viewPhoto = getCheckBoxValue((String) findPersonForm.get("viewPhoto"));
-        }
-        findPersonForm.set("viewPhoto", viewPhoto.toString());
-        request.setAttribute("viewPhoto", viewPhoto);
-
         return mapping.findForward("findPerson");
     }
 
@@ -158,16 +83,16 @@ public class FindPersonAction extends FenixDispatchAction {
 
         SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 
-        CollectionPager result = SearchPerson.runSearchPerson(searchParameters, predicate);
+        CollectionPager<Person> result = SearchPerson.runSearchPerson(searchParameters, predicate);
 
         if (result == null) {
             addErrorMessage(request, "impossibleFindPerson", "error.manager.implossible.findPerson");
-            return preparePerson(mapping, actionForm, request, response);
+            return mapping.findForward("findPerson");
         }
 
         if (result.getCollection().isEmpty()) {
             addErrorMessage(request, "impossibleFindPerson", "error.manager.implossible.findPerson");
-            return preparePerson(mapping, actionForm, request, response);
+            return mapping.findForward("findPerson");
         }
 
         final String pageNumberString = request.getParameter("pageNumber");
@@ -228,12 +153,10 @@ public class FindPersonAction extends FenixDispatchAction {
     }
 
     private Boolean getCheckBoxValue(String value) {
-
         if (value != null && (value.equals("true") || value.equals("yes") || value.equals("on"))) {
             return Boolean.TRUE;
         }
         return Boolean.FALSE;
-
     }
 
     public ActionForward postback(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

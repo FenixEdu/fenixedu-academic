@@ -8,7 +8,6 @@
 
 <html:xhtml/>
 
-<em><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.portal"/></em>
 <h2><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.news.title"/></h2>
 
 <jsp:include flush="true" page="/messaging/context.jsp"/>

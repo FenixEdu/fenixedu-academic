@@ -4,6 +4,8 @@
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.messaging.MessagingApplication$OrganizationalStructurePage" />
+
 <f:view>
 
 <f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
@@ -61,9 +63,6 @@
 			<h:outputText value="</td>" escape="false"/>
 		<h:outputText value="</tr>" escape="false"/>
 	<h:outputText value="</table>" escape="false"/>
-
-
-	<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>	
 
 	<h:outputText value="<p>" escape="false"/>
 		<h:outputLink value="#{displayEvaluationsToEnrol.contextPath}/messaging/organizationalStructure/structurePage.faces">

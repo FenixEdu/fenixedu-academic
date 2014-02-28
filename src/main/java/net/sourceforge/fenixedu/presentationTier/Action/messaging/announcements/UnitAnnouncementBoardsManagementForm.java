@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.domain.UnitBoardPermittedGroupType;
 
+import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.validator.ValidatorForm;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
@@ -17,7 +17,7 @@ import org.apache.struts.validator.ValidatorForm;
  *         Created on Jun 26, 2006,6:23:35 PM
  * 
  */
-public class UnitAnnouncementBoardsManagementForm extends ValidatorForm {
+public class UnitAnnouncementBoardsManagementForm extends ActionForm {
     private static final long serialVersionUID = 5861718840827152423L;
 
     private String name;

@@ -7,7 +7,6 @@
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="date"%>
 <html:xhtml/>
 
-<em><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.portal"/></em>
 <h2><bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.board.announcements"/></h2>
 
 <jsp:include flush="true" page="/messaging/context.jsp"/>

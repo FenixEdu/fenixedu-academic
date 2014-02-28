@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.messaging;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoardAccessLevel;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoardAccessType;
 
-import org.apache.struts.validator.ValidatorForm;
+import org.apache.struts.action.ActionForm;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
@@ -15,7 +15,7 @@ import org.apache.struts.validator.ValidatorForm;
  *         Created on Jul 4, 2006,3:41:09 PM
  * 
  */
-public class AnnouncementsStartPageForm extends ValidatorForm {
+public class AnnouncementsStartPageForm extends ActionForm {
 
     private static final long serialVersionUID = -1164357680230910679L;
 

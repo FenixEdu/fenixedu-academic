@@ -2,6 +2,7 @@
 <%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.messaging.MessagingApplication$OrganizationalStructurePage" />
 
 <f:view>
 
@@ -25,7 +26,6 @@ function check(e,v)
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 	<f:loadBundle basename="resources/DegreeAdministrativeOfficeResources" var="bundleDegreeAdministrativeOffice"/>
 
-	<h:outputText value="<em>#{bundle['label.orgUnit']}</em>" escape="false"/>	
 	<h:outputText value="<h2>#{organizationalStructure.instituitionName}</h2>" escape="false"/>
 	<h:outputText value="#{organizationalStructure.units}<br/>" escape="false"/>
 

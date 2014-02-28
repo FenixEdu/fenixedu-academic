@@ -1,4 +1,3 @@
-<%@ page isELIgnored="true"%>
 <%@page import="org.apache.commons.lang.StringUtils"%>
 <%@page import="com.google.common.base.Strings"%>
 <%@page import="com.google.common.base.Joiner"%>
@@ -13,53 +12,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <html:xhtml />
 <%@ page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
-<script type="text/javascript">
-function getElementsByClass(searchClass,node,tag) {
-	var classElements = new Array();
-	if ( node == null )
-		node = document;
-	if ( tag == null )
-		tag = '*';
-	var els = node.getElementsByTagName(tag);
-	var elsLen = els.length;
-	var pattern = new RegExp("(^|\\s)"+searchClass+"(\\s|$)");
-	for (i = 0, j = 0; i < elsLen; i++) {
-		if ( pattern.test(els[i].className) ) {
-			classElements[j] = els[i];
-			j++;
-		}
-	}
-	return classElements;
-}
-
-function switchDisplay(){
-	var a = getElementsByClass("switchNone", null, null);
-	for (i = 0; i < a.length; i++) {
-		a[i].className = "dnone";	
-	}
-	
-	var a = getElementsByClass("switchInline", null, null);
-	for (i = 0; i < a.length; i++) {
-		a[i].className = "dinline";	
-	}
-}
-
-function check(e,v){
-	if (e.className == "dnone")
-  	{
-	  e.className = "dblock";
-	  v.value = "-";
-	}
-	else {
-	  e.className = "dnone";
-  	  v.value = "+";
-	}
-}
-</script>
-<em><bean:message
-		key="label.executionCourseManagement.menu.communication" /> </em>
 <h2>
 	<bean:message key="label.person.findPerson" />
 </h2>
@@ -68,7 +21,7 @@ function check(e,v){
 <fr:edit id="searchForm" name="bean"
 	action="/findPerson.do?method=findPerson">
 	<fr:schema bundle="APPLICATION_RESOURCES"
-		type="net.sourceforge.fenixedu.presentationTier.Action.person.FindPersonBean">
+		type="net.sourceforge.fenixedu.presentationTier.Action.messaging.FindPersonBean">
 
 		<fr:slot name="roleType" layout="menu-postback" key="label.type">
 			<fr:property name="includedValues"
@@ -91,7 +44,7 @@ function check(e,v){
 						<fr:destination name="postback"
 							path="/findPerson.do?method=postback" />
 						<fr:property name="destination" value="postback" />
-						<fr:property name="format" value="${presentationName}" />
+						<fr:property name="format" value="\${presentationName}" />
 					</fr:slot>
 				</logic:present>
 			</logic:equal>
@@ -134,27 +87,17 @@ function check(e,v){
 	<logic:notEqual name="totalFindedPersons" value="1">
 		<p>
 			<b><bean:message key="label.manager.numberFindedPersons"
-					arg0="<%= pageContext.findAttribute("totalFindedPersons").toString() %>" />
+					arg0="${totalFindedPersons}" />
 			</b>
 		</p>
 	</logic:notEqual>
 	<logic:equal name="totalFindedPersons" value="1">
 		<p>
 			<b><bean:message key="label.manager.findedOnePersons"
-					arg0="<%= pageContext.findAttribute("totalFindedPersons").toString() %>" />
+					arg0="${totalFindedPersons}" />
 			</b>
 		</p>
 	</logic:equal>
-	
-	<%-- <bean:define id="degreeId" value="" type="java.lang.String"/>
-	<logic:present name="bean" property="degree">
-		<bean:define id="degreeId" name="bean" property="degree.externalId" type="java.lang.String"/>	
-	</logic:present>
-	<bean:define id="departmentId" value="" type="java.lang.String"/>
-	<logic:present name="bean" property="department">
-		<bean:define id="departmentId" name="bean" property="department.externalId" type="java.lang.String"/>	
-	</logic:present> --%>
-
 	
 	 <bean:define id="url">/messaging/findPerson.do?method=findPerson&amp;name=<bean:write
 			name="name" />&amp;roleType=<bean:write name="roleType" />&amp;degreeId=<bean:write
@@ -197,13 +140,10 @@ function check(e,v){
 					<td width="30%" style="text-align: right;"><bean:define
 							id="aa" value="<%= "aa" + personIndex %>" /> <bean:define
 							id="id" value="<%= "id" + (personIndex.intValue() + 40)  %>" />
-						<!--  <td width="30%" style="text-align: right;">--> <bean:define
+						<bean:define
 							id="aa" value="<%= "aa" + personIndex %>" /> <bean:define
-							id="id" value="<%= "id" + (personIndex.intValue() + 40) %>" /> <span
-						class="switchInline"> <input alt="input.input"
-							type="button" value="+"
-							id="<%=pageContext.findAttribute("id").toString()%>"
-							onClick="check(document.getElementById('<%=pageContext.findAttribute("aa").toString()%>'),document.getElementById('<%=pageContext.findAttribute("id").toString()%>'));return false;" />
+							id="id" value="<%= "id" + (personIndex.intValue() + 40) %>" /> 
+							<span> <button type="button" alt="input.input" type="button" value="+" data-toggle="collapse" data-target="#collapse${personID}">+</button>
 					</span> <!-- </td>--></td>
 				</tr>
 			</table>
@@ -240,8 +180,7 @@ function check(e,v){
 				</tr>
 			</table>
 
-			<div id="<%=pageContext.findAttribute("aa").toString()%>"
-				class="switchNone">
+			<div id="collapse${personID}" class="collapse">
 				<table class="ppdetails">
 
 					<logic:present name="personalInfo" property="employee">
@@ -303,16 +242,6 @@ function check(e,v){
 							</tr>
 						</logic:notEmpty>
 					</logic:notEmpty>
-					<%-- 
-					<logic:notEmpty name="personalInfo" property="employee" >
-						<logic:notEmpty  name="personalInfo" property="employee.category" >
-							<tr>
-								<td class="ppleft2"><bean:message key="label.employee.category" />:</td>
-								<td class="ppright"><bean:write name="personalInfo" property="employee.category.name.content"/></td>
-							</tr>
-						</logic:notEmpty>
-					</logic:notEmpty>
-					--%>
 					<fr:view name="personalInfo" property="webAddresses">
 						<fr:layout name="contact-table">
 							<fr:property name="types" value="WORK" />
@@ -378,8 +307,3 @@ function check(e,v){
 	</logic:notEqual>
 
 </logic:present>
-
-
-<script type="text/javascript">
-	switchDisplay();
-</script>

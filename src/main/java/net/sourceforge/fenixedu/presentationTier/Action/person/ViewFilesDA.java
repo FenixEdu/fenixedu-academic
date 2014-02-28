@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.UnitFunctionalities;
-import net.sourceforge.fenixedu.presentationTier.Action.messaging.CommunicationApplication.FilesApp;
+import net.sourceforge.fenixedu.presentationTier.Action.messaging.MessagingApplication.MessagingFilesApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -30,23 +30,24 @@ import org.fenixedu.bennu.portal.StrutsFunctionality;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
-@StrutsFunctionality(app = FilesApp.class, descriptionKey = "label.files.view", path = "view-files",
-        titleKey = "label.files.view")
-@Mapping(module = "messaging", path = "/viewFiles", scope = "request", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "uploadFile", path = "/commons/unitFiles/uploadFile.jsp", tileProperties = @Tile(
-                head = "/messaging/files/context.jsp")),
-        @Forward(name = "manageFiles", path = "/commons/unitFiles/manageFiles.jsp", tileProperties = @Tile(
-                head = "/messaging/files/context.jsp")),
-        @Forward(name = "showSources", path = "/messaging/files/showSources.jsp", tileProperties = @Tile(
-                head = "/commons/renderers/treeRendererHeader.jsp", title = "private.messaging.files")),
-        @Forward(name = "editFile", path = "/commons/unitFiles/editFile.jsp", tileProperties = @Tile(
-                head = "/messaging/files/context.jsp")) })
+@StrutsFunctionality(app = MessagingFilesApp.class, path = "view", titleKey = "label.files.view")
+@Mapping(module = "messaging", path = "/viewFiles")
+@Forwards(value = { @Forward(name = "uploadFile", path = "/commons/unitFiles/uploadFile.jsp"),
+        @Forward(name = "manageFiles", path = "/commons/unitFiles/manageFiles.jsp"),
+        @Forward(name = "showSources", path = "/messaging/files/showSources.jsp"),
+        @Forward(name = "editFile", path = "/commons/unitFiles/editFile.jsp") })
 public class ViewFilesDA extends UnitFunctionalities {
+
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        request.setAttribute("functionalityAction", "viewFiles");
+        request.setAttribute("module", "messaging");
+        return super.execute(mapping, form, request, response);
+    }
 
     @EntryPoint
     public ActionForward showSources(ActionMapping mapping, ActionForm form, HttpServletRequest request,

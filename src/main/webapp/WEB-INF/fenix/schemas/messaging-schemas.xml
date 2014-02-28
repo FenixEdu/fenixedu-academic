@@ -337,6 +337,3 @@
 	<slot name="failedMailsCount" key="net.sourceforge.fenixedu.domain.util.email.Message.failedMailsCount"/>
 </schema>
 
-<schema bundle="MESSAGING_RESOURCES" name="find.person" type="net.sourceforge.fenixedu.presentationTier.Action.person.FindPersonBean">
-	
-</schema>

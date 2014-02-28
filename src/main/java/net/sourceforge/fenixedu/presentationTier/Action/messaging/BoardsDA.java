@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.messaging.BoardSearchBean;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.messaging.CommunicationApplication.AnnouncementsApp;
+import net.sourceforge.fenixedu.presentationTier.Action.messaging.MessagingApplication.MessagingAnnouncementsApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -17,13 +17,10 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@StrutsFunctionality(app = AnnouncementsApp.class, descriptionKey = "messaging.menu.boards.link", path = "boards",
-        titleKey = "messaging.menu.boards.link")
-@Mapping(module = "messaging", path = "/announcements/boards", scope = "session", parameter = "method")
-@Forwards(value = { @Forward(name = "search", path = "/messaging/announcements/searchBoards.jsp", tileProperties = @Tile(
-        title = "private.messaging.announcements.announcementboards")) })
+@StrutsFunctionality(app = MessagingAnnouncementsApp.class, path = "boards", titleKey = "messaging.menu.boards.link")
+@Mapping(module = "messaging", path = "/announcements/boards")
+@Forwards(@Forward(name = "search", path = "/messaging/announcements/searchBoards.jsp"))
 public class BoardsDA extends FenixDispatchAction {
 
     @EntryPoint

@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.person;
+package net.sourceforge.fenixedu.presentationTier.Action.messaging;
 
 import java.io.Serializable;
 
@@ -8,12 +8,14 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 public class FindPersonBean implements Serializable {
-    RoleType roleType;
-    DegreeType degreeType;
-    Degree degree;
-    Department department;
-    String name;
-    Boolean viewPhoto;
+    private static final long serialVersionUID = -7868952167229025567L;
+
+    private RoleType roleType;
+    private DegreeType degreeType;
+    private Degree degree;
+    private Department department;
+    private String name;
+    private Boolean viewPhoto;
 
     public FindPersonBean() {
 

@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoardAccessLevel;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoardAccessType;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
-import net.sourceforge.fenixedu.presentationTier.Action.messaging.CommunicationApplication.AnnouncementsApp;
+import net.sourceforge.fenixedu.presentationTier.Action.messaging.MessagingApplication.MessagingAnnouncementsApp;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -36,7 +36,6 @@ import org.joda.time.DateTime;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 /**
@@ -45,21 +44,17 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
  *         Created on Jul 4, 2006,3:26:38 PM
  * 
  */
-@StrutsFunctionality(app = AnnouncementsApp.class, descriptionKey = "messaging.menu.news.link", path = "announcements",
-        titleKey = "messaging.menu.news.link")
-@Mapping(module = "messaging", path = "/announcements/announcementsStartPageHandler", attribute = "announcementsStartPageForm",
-        formBean = "announcementsStartPageForm", scope = "request", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "viewAnnouncement", path = "/messaging/announcements/viewAnnouncement.jsp"),
+@StrutsFunctionality(app = MessagingAnnouncementsApp.class, path = "news", titleKey = "messaging.menu.news.link")
+@Mapping(module = "messaging", path = "/announcements/announcementsStartPageHandler",
+        formBeanClass = AnnouncementsStartPageForm.class)
+@Forwards({ @Forward(name = "viewAnnouncement", path = "/messaging/announcements/viewAnnouncement.jsp"),
         @Forward(name = "uploadFile", path = "/messaging/announcements/uploadFileToBoard.jsp"),
         @Forward(name = "boardListingWithCriteria", path = "/messaging/announcements/boardListingWithCriteria.jsp"),
-        @Forward(name = "news", path = "/messaging/announcements/news.jsp", tileProperties = @Tile(
-                title = "private.messaging.announcements.news")),
+        @Forward(name = "news", path = "/messaging/announcements/news.jsp"),
         @Forward(name = "edit", path = "/messaging/announcements/editAnnouncement.jsp"),
         @Forward(name = "listAnnouncements", path = "/messaging/announcements/listBoardAnnouncements.jsp"),
         @Forward(name = "add", path = "/messaging/announcements/addAnnouncement.jsp"),
-        @Forward(name = "startPage", path = "/messaging/announcements/startPage.jsp", tileProperties = @Tile(
-                title = "private.messaging.announcements.bookmarks")),
+        @Forward(name = "startPage", path = "/messaging/announcements/startPage.jsp"),
         @Forward(name = "editFile", path = "/messaging/announcements/editFileInBoard.jsp"),
         @Forward(name = "listAnnouncementBoards", path = "/messaging/announcements/listAnnouncementBoards.jsp") })
 public class AnnouncementsStartPageHandler extends AnnouncementManagement {
@@ -89,8 +84,20 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
         return mapping.findForward("startPage");
     }
 
+    @StrutsFunctionality(app = MessagingAnnouncementsApp.class, path = "favourites", titleKey = "messaging.menu.favourites.link")
+    @Mapping(path = "/manageFavoriteBoards", module = "messaging")
+    public static class ManageFavoriteBoardsDA extends AnnouncementsStartPageHandler {
+        @Override
+        @EntryPoint
+        public ActionForward start(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+                HttpServletResponse response) throws Exception {
+            return super.start(mapping, actionForm, request, response);
+        }
+    }
+
     private List<AnnouncementBoard> getSortedBookmarkedBoards(final HttpServletRequest request) {
-        final List<AnnouncementBoard> result = new ArrayList<AnnouncementBoard>(getLoggedPerson(request).getBookmarkedBoards());
+        final List<AnnouncementBoard> result =
+                new ArrayList<AnnouncementBoard>(getLoggedPerson(request).getBookmarkedBoardsSet());
         Collections.sort(result, AnnouncementBoard.BY_NAME);
         return result;
     }
@@ -191,7 +198,7 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
 
     private void getBookmarkedAnnouncements(HttpServletRequest request,
             final AnnouncementPresentationBean announcementPresentationBean) {
-        for (final AnnouncementBoard board : getLoggedPerson(request).getBookmarkedBoards()) {
+        for (final AnnouncementBoard board : getLoggedPerson(request).getBookmarkedBoardsSet()) {
             addBoardAnnouncements(request, board, announcementPresentationBean);
         }
     }
