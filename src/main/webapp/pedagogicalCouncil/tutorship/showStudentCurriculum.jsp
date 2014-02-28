@@ -12,17 +12,16 @@
 
 <!-- showStudentCurriculum.jsp -->
 
-<em><bean:message key="pedagogical.council" bundle="PEDAGOGICAL_COUNCIL" /></em>
 <h2><bean:message key="title.tutorship.student.curriculum" bundle="PEDAGOGICAL_COUNCIL" /></h2>
 
-<fr:form action="/studentTutorship.do?method=showStudentCurriculum">
+<fr:form action="/studentTutorshipCurriculum.do?method=showStudentCurriculum">
 	<fr:edit id="filterForm" name="tutorateBean" schema="tutorship.student.number">
 		<fr:edit id="tutorateBean" name="tutorateBean" visible="false" />
 		<fr:layout>
 			<fr:property name="classes" value="tstyle5 thnowrap_print thlight thleft mtop0"/>
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
-		<fr:destination name="invalid" path="/studentTutorship.do?method=prepareStudentCurriculum" />
+		<fr:destination name="invalid" path="/studentTutorshipCurriculum.do?method=prepareStudentCurriculum" />
 	</fr:edit>
 	<html:submit>
 		<bean:message key="label.submit" bundle="PEDAGOGICAL_COUNCIL" />

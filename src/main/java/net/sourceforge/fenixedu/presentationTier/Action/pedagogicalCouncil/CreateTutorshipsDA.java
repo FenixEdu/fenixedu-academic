@@ -17,10 +17,13 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.tutor.TutorManagementDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.PedagogicalCouncilApp.TutorshipApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -33,12 +36,15 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author jaime created on Aug 3, 2010
  */
 
+@StrutsFunctionality(app = TutorshipApp.class, path = "create-tutorships", titleKey = "link.tutorship.create",
+        bundle = "ApplicationResources")
 @Mapping(path = "/createTutorships", module = "pedagogicalCouncil")
-@Forwards({ @Forward(name = "prepareCreate", path = "/pedagogicalCouncil/tutorship/createTutorships.jsp") })
+@Forwards(@Forward(name = "prepareCreate", path = "/pedagogicalCouncil/tutorship/createTutorships.jsp"))
 public class CreateTutorshipsDA extends TutorManagementDispatchAction {
 
     private static int TUTORSHIP_DURATION = 2;
 
+    @EntryPoint
     public ActionForward prepareCreation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         request.setAttribute("tutorateBean", new ContextTutorshipCreationBean());
@@ -56,7 +62,7 @@ public class CreateTutorshipsDA extends TutorManagementDispatchAction {
             List<Person> students = new ArrayList<Person>();
 
             Shift shift = bean.getShift();
-            for (Registration registration : shift.getStudents()) {
+            for (Registration registration : shift.getStudentsSet()) {
                 if (validForListing(registration, bean.getExecutionDegree())) {
                     students.add(registration.getPerson());
                 }
@@ -84,7 +90,7 @@ public class CreateTutorshipsDA extends TutorManagementDispatchAction {
 
         if (student.hasActiveRegistrationFor(executionDegree.getDegree())) {
             if (registration.getActiveTutorship() == null) {
-                for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlans()) {
+                for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
                     if (studentCurricularPlan.getTutorshipsSet().size() == 0) {
                         return true;
                     }

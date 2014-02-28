@@ -64,7 +64,7 @@ public class FindDelegatesDispatchAction extends FenixDispatchAction {
             bean.setExecutionYear(currentExecutionYear);
             request.setAttribute("searchByDegreeBean", bean);
         } else {
-            addActionMessage(request, "error.delegates.searchDelegates.noSearchMethodSpecified");
+            request.setAttribute("searchByNameBean", bean);
         }
 
         request.setAttribute("currentExecutionYear", currentExecutionYear);

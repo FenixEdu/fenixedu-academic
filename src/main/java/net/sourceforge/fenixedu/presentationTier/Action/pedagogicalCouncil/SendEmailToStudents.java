@@ -15,27 +15,29 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PedagogicalCounci
 import net.sourceforge.fenixedu.domain.util.email.EmailBean;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.PedagogicalCouncilApp.PedagogicalCommunicationApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.MessageResources;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "pedagogicalCouncil", path = "/sendEmailToStudents", scope = "request", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "showDegrees", path = "/pedagogicalCouncil/sendEmailToStudents.jsp", tileProperties = @Tile(
-                title = "private.pedagogiccouncil.communication.sendemailtostudents")),
-        @Forward(name = "sendEmail", path = "/messaging/emails.do?method=newEmail", tileProperties = @Tile(
-                title = "private.pedagogiccouncil.communication.sendemailtostudents"), contextRelative = true) })
+@StrutsFunctionality(app = PedagogicalCommunicationApp.class, path = "send-email-to-students",
+        titleKey = "link.sendEmailToStudents", bundle = "PedagogicalCouncilResources")
+@Mapping(module = "pedagogicalCouncil", path = "/sendEmailToStudents")
+@Forwards({ @Forward(name = "showDegrees", path = "/pedagogicalCouncil/sendEmailToStudents.jsp"),
+        @Forward(name = "sendEmail", path = "/messaging/emails.do?method=newEmail") })
 public class SendEmailToStudents extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
@@ -98,7 +100,7 @@ public class SendEmailToStudents extends FenixDispatchAction {
         Recipient recipient = Recipient.newInstance(message, studentsByDegreeAndCurricularYear);
         EmailBean bean = new EmailBean();
         bean.setRecipients(Collections.singletonList(recipient));
-        bean.setSender(PedagogicalCouncilUnit.getPedagogicalCouncilUnit().getUnitBasedSender().iterator().next());
+        bean.setSender(PedagogicalCouncilUnit.getPedagogicalCouncilUnit().getUnitBasedSenderSet().iterator().next());
 
         request.setAttribute("emailBean", bean);
 

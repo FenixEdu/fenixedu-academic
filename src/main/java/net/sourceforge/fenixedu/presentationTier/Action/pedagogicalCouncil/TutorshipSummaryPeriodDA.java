@@ -13,14 +13,10 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(path = "/tutorshipSummaryPeriod", module = "pedagogicalCouncil")
-@Forwards({
-        @Forward(name = "createPeriod", path = "/pedagogicalCouncil/tutorship/createPeriod.jsp", tileProperties = @Tile(
-                title = "private.pedagogiccouncil.tutoring.formtutor")),
-        @Forward(name = "confirmMessagePeriod", path = "/pedagogicalCouncil/tutorship/confirmCreatePeriod.jsp",
-                tileProperties = @Tile(title = "private.pedagogiccouncil.tutoring.formtutor")) })
+@Mapping(path = "/tutorshipSummaryPeriod", module = "pedagogicalCouncil", functionality = TutorshipSummaryDA.class)
+@Forwards({ @Forward(name = "createPeriod", path = "/pedagogicalCouncil/tutorship/createPeriod.jsp"),
+        @Forward(name = "confirmMessagePeriod", path = "/pedagogicalCouncil/tutorship/confirmCreatePeriod.jsp") })
 public class TutorshipSummaryPeriodDA extends FenixDispatchAction {
 
     public ActionForward prepareCreate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

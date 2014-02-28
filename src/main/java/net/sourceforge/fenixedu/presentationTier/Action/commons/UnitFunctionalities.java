@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.research.researchUnit.Un
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -188,6 +189,7 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
         return mapping.findForward("manageFiles");
     }
 
+    @EntryPoint
     public ActionForward manageFiles(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 

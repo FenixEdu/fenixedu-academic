@@ -3,13 +3,14 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.PedagogicalCouncilApp$PedagogicalCompetenceCoursesManagement" />
+
 <f:view>
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 
 	<fc:dataRepeater rendered="#{!empty CompetenceCourseManagement.departmentCompetenceCourses}" value="#{CompetenceCourseManagement.departmentCompetenceCourses}" var="competenceCourse">
 
-		<h:outputText value="<em>#{scouncilBundle['competenceCourse']}</em>" escape="false" />
 		<h:outputText value="<h2>#{competenceCourse.name}</h2>" escape="false"/>
 
 		<h:outputText value="<ul class='nobullet padding1 indent0 mtop3'>" escape="false"/>

@@ -3,12 +3,13 @@
 <%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.PedagogicalCouncilApp$PedagogicalCompetenceCoursesManagement" />
+
 <f:view>
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 	<f:loadBundle basename="resources/PedagogicalCouncilResources" var="pcouncilBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 
-		<h:outputText value="<em>#{pcouncilBundle['pedagogical.council']}</em>" escape="false"/>
 		<h:outputText value="<h2>#{pcouncilBundle['competenceCoursesManagement']}</h2>" escape="false"/>
 
 		<h:form>
@@ -20,7 +21,6 @@
 			<fc:selectOneMenu value="#{CompetenceCourseManagement.selectedDepartmentUnitID}" onchange="submit()">
 				<f:selectItems value="#{CurricularCourseManagement.departmentUnits}"/>
 			</fc:selectOneMenu>
-			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 		</h:panelGrid>
 
 <%--

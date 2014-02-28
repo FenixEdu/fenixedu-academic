@@ -6,8 +6,6 @@
 <%@ page import="java.util.List" %>
 
 
-
-<em><bean:message key="pedagogical.council" bundle="PEDAGOGICAL_COUNCIL" /></em>
 <h2><bean:message key="title.tutorship.create" bundle="PEDAGOGICAL_COUNCIL" /></h2>
 
 

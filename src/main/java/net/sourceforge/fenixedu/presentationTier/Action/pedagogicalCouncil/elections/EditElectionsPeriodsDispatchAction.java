@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.elect
 import net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.ElectionPeriodBean;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
+import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.PedagogicalCouncilApp.PedagogicalDelegateElectionsEntryPoint;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -24,14 +25,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "pedagogicalCouncil", path = "/editElectionsPeriods", scope = "request", parameter = "method")
+@Mapping(module = "pedagogicalCouncil", path = "/editElectionsPeriods",
+        functionality = PedagogicalDelegateElectionsEntryPoint.class)
 @Forwards(value = {
         @Forward(name = "createEditVotingPeriods", path = "/pedagogicalCouncil/elections/createEditVotingPeriods.jsp"),
         @Forward(name = "createEditCandidacyPeriods", path = "/pedagogicalCouncil/elections/createEditCandidacyPeriods.jsp") })
 public class EditElectionsPeriodsDispatchAction extends ElectionsPeriodsManagementDispatchAction {
-
-    private static final String ELECTIONS_PACKAGE =
-            "net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.elections";
 
     private ActionForward prepareEditYearDelegateElectionPeriod(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response, DelegateElection election, YearMonthDay startDate,

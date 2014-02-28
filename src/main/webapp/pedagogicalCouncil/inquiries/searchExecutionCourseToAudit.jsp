@@ -5,7 +5,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <html:xhtml />
 
-<em><bean:message key="pedagogical.council" bundle="PEDAGOGICAL_COUNCIL"/></em>
 <h2><bean:message key="title.inquiry.quc.auditProcesses" bundle="INQUIRIES_RESOURCES"/></h2>
 
 <bean:define id="executionSemester" name="executionCourseSearchBean" property="executionPeriod"/>

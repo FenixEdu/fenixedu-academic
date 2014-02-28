@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
+import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.PedagogicalCouncilApp.PedagogicalDelegateElectionsEntryPoint;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -24,13 +25,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "pedagogicalCouncil", path = "/createElectionsPeriods", scope = "request", parameter = "method")
+@Mapping(module = "pedagogicalCouncil", path = "/createElectionsPeriods",
+        functionality = PedagogicalDelegateElectionsEntryPoint.class)
 @Forwards(value = {
         @Forward(name = "createEditVotingPeriods", path = "/pedagogicalCouncil/elections/createEditVotingPeriods.jsp"),
         @Forward(name = "createEditCandidacyPeriods", path = "/pedagogicalCouncil/elections/createEditCandidacyPeriods.jsp") })
 public class CreateElectionsPeriodsDispatchAction extends ElectionsPeriodsManagementDispatchAction {
-    private static final String ELECTIONS_PACKAGE =
-            "net.sourceforge.fenixedu.applicationTier.Servico.pedagogicalCouncil.elections";
 
     /*
      * Prepare create single election period (voting or candidacy period)

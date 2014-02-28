@@ -48,7 +48,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(path = "/viewTutorship", module = "pedagogicalCouncil")
+@Mapping(path = "/viewTutorship", module = "pedagogicalCouncil", functionality = ViewTutorsDA.class)
 @Forwards({ @Forward(name = "viewTutorship", path = "/pedagogicalCouncil/tutorship/viewTutorship.jsp"),
         @Forward(name = "prepareCreateNewTutorship", path = "/pedagogicalCouncil/tutorship/createNewTutorship.jsp") })
 public class ViewTutorshipDA extends FenixDispatchAction {

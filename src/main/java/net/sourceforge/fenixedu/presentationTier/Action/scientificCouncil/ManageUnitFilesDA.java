@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.Scient
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -35,12 +34,6 @@ public class ManageUnitFilesDA extends UnitFunctionalities {
         request.setAttribute("module", "scientificCouncil");
         request.setAttribute("functionalityAction", "scientificCouncilFiles");
         return super.execute(mapping, form, request, response);
-    }
-
-    @EntryPoint
-    public ActionForward entryPoint(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        return manageFiles(mapping, form, request, response);
     }
 
     @Override

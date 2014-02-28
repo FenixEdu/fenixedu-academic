@@ -10,7 +10,6 @@
 <bean:define id="degreeOID" name="electionPeriodBean" property="degree.externalId" />
 <bean:define id="electionOID" name="electionPeriodBean" property="election.externalId" />
 
-<em><bean:message key="pedagogical.council" bundle="PEDAGOGICAL_COUNCIL" /></em>
 <h2><bean:message key="label.showCandidates" bundle="PEDAGOGICAL_COUNCIL" /></h2>
 	
 <p class="mtop1 mbottom1"><b><bean:message key="label.currentExecutionYear" bundle="PEDAGOGICAL_COUNCIL" />:</b>

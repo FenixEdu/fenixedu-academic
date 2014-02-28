@@ -13,23 +13,25 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.DepartmentExecutionSemester;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.presentationTier.Action.departmentMember.ViewQUCResultsDA;
+import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.PedagogicalCouncilApp.PedagogicalControlApp;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
+@StrutsFunctionality(app = PedagogicalControlApp.class, path = "view-quc-results", titleKey = "link.inquiry.results.version2",
+        bundle = "InquiriesResources")
 @Mapping(path = "/viewQucResults", module = "pedagogicalCouncil")
-@Forwards({
-        @Forward(name = "chooseDepartment", path = "/pedagogicalCouncil/inquiries/chooseDepartment.jsp", tileProperties = @Tile(
-                title = "private.pedagogiccouncil.control.qucresults2")),
+@Forwards({ @Forward(name = "chooseDepartment", path = "/pedagogicalCouncil/inquiries/chooseDepartment.jsp"),
         @Forward(name = "viewResumeResults", path = "/departmentMember/quc/viewResumeResults.jsp"),
         @Forward(name = "viewCompetenceResults", path = "/departmentMember/quc/viewCompetenceResults.jsp"),
         @Forward(name = "viewTeachersResults", path = "/departmentMember/quc/viewTeachersResults.jsp"),
@@ -37,6 +39,7 @@ import pt.ist.fenixframework.FenixFramework;
         @Forward(name = "departmentTeacherView", path = "/departmentMember/quc/departmentTeacherView.jsp") })
 public class ViewQUCResultsPedagogicalCouncilDA extends ViewQUCResultsDA {
 
+    @EntryPoint
     public ActionForward chooseDepartment(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
