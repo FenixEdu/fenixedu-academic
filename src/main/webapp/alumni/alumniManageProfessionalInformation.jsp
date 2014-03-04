@@ -6,7 +6,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
 <!-- alumniManageProfessionalInformation.jsp -->
-<em><bean:message key="label.portal.alumni" bundle="ALUMNI_RESOURCES" /></em>
 <h2>
 	<bean:message key="label.create.professional.information" bundle="ALUMNI_RESOURCES" />
 </h2>

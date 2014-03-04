@@ -9,28 +9,29 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniSearchBean;
 import net.sourceforge.fenixedu.domain.Alumni;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.presentationTier.Action.alumni.AlumniApplication.AlumniAcademicPathApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(module = "alumni", path = "/searchAlumni", scope = "request", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "viewAlumniDetails", path = "/alumni/viewAlumniDetails.jsp", tileProperties = @Tile(
-                title = "private.alumni.academicpath.searchalumni")),
-        @Forward(name = "showAlumniList", path = "/alumni/showAlumniList.jsp", tileProperties = @Tile(
-                title = "private.alumni.academicpath.searchalumni")) })
+@StrutsFunctionality(app = AlumniAcademicPathApp.class, path = "search-alumni", titleKey = "link.search.alumni")
+@Mapping(module = "alumni", path = "/searchAlumni")
+@Forwards({ @Forward(name = "viewAlumniDetails", path = "/alumni/viewAlumniDetails.jsp"),
+        @Forward(name = "showAlumniList", path = "/alumni/showAlumniList.jsp") })
 public class AlumniSearchDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward showAlumniList(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 

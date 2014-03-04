@@ -19,9 +19,11 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
 
 public class StudentPricesDispatchAction extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward viewPrices(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 

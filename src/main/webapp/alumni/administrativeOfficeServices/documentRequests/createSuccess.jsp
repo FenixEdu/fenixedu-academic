@@ -4,7 +4,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="e" %>
 
-<em><bean:message key="administrative.office.services" bundle="STUDENT_RESOURCES"/></em>
 <h2><bean:message key="documents.requirement" bundle="STUDENT_RESOURCES"/></h2>
 
 <logic:messagesPresent message="true">

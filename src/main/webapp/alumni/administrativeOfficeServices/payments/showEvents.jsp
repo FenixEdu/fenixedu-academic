@@ -7,7 +7,6 @@
 
 <!-- alumni/administrativeOffice/Services/payments/showEvents.jsp -->
 
-<em><bean:message key="administrative.office.services" bundle="STUDENT_RESOURCES"/></em>
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments" /></h2>
 
 <fr:view name="person" schema="person.view-with-name-and-idDocumentType-and-documentIdNumber">

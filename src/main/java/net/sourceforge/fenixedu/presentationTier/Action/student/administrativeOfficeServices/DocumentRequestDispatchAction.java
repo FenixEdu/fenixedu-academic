@@ -19,15 +19,17 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.portal.EntryPoint;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
 
 public class DocumentRequestDispatchAction extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward chooseRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        request.setAttribute("registrations", getLoggedPerson(request).getStudent().getRegistrations());
+        request.setAttribute("registrations", getLoggedPerson(request).getStudent().getRegistrationsSet());
 
         return mapping.findForward("chooseRegistration");
     }
@@ -60,7 +62,7 @@ public class DocumentRequestDispatchAction extends FenixDispatchAction {
 
         final List<AcademicServiceRequest> result = new ArrayList<AcademicServiceRequest>();
         for (final Registration registration : getLoggedPerson(request).getStudent().getRegistrationsSet()) {
-            result.addAll(registration.getAcademicServiceRequests());
+            result.addAll(registration.getAcademicServiceRequestsSet());
         }
         return result;
     }

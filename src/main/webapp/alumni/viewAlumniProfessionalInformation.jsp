@@ -7,7 +7,6 @@
 
 <!-- viewAlumniProfessionalInformation.jsp -->
 
-<em><bean:message key="label.portal.alumni" bundle="ALUMNI_RESOURCES" /></em>
 <h2><bean:message key="link.professional.information" bundle="ALUMNI_RESOURCES" /></h2>
 
 <html:messages id="message" message="true" bundle="ALUMNI_RESOURCES">

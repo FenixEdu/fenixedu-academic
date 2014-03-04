@@ -12,25 +12,24 @@ import net.sourceforge.fenixedu.domain.EducationArea;
 import net.sourceforge.fenixedu.domain.Formation;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.presentationTier.Action.alumni.AlumniApplication.AlumniFormationApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(module = "alumni", path = "/formation", scope = "request", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "alumniCreateFormation", path = "/alumni/alumniManageFormation.jsp", tileProperties = @Tile(
-                title = "private.alumni.trainingandeducation.training")),
-        @Forward(name = "alumniEditFormation", path = "/alumni/alumniManageFormation.jsp", tileProperties = @Tile(
-                title = "private.alumni.trainingandeducation.training")),
-        @Forward(name = "viewAlumniQualifications", path = "/alumni/viewAlumniQualifications.jsp", tileProperties = @Tile(
-                title = "private.alumni.trainingandeducation.training")) })
+@StrutsFunctionality(app = AlumniFormationApp.class, path = "formation", titleKey = "link.graduate.education")
+@Mapping(module = "alumni", path = "/formation")
+@Forwards({ @Forward(name = "alumniCreateFormation", path = "/alumni/alumniManageFormation.jsp"),
+        @Forward(name = "alumniEditFormation", path = "/alumni/alumniManageFormation.jsp"),
+        @Forward(name = "viewAlumniQualifications", path = "/alumni/viewAlumniQualifications.jsp") })
 public class AlumniFormationManagementDA extends AlumniEntityManagementDA {
 
     public ActionForward initFormationManagement(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -40,6 +39,7 @@ public class AlumniFormationManagementDA extends AlumniEntityManagementDA {
         return mapping.findForward("viewAlumniQualifications");
     }
 
+    @EntryPoint
     public ActionForward innerFormationManagement(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
