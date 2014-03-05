@@ -2359,16 +2359,6 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency> getCourseEquivalencies() {
-        return getCourseEquivalenciesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCourseEquivalencies() {
-        return !getCourseEquivalenciesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.CandidateEnrolment> getCandidateEnrolments() {
         return getCandidateEnrolmentsSet();
     }
@@ -2386,16 +2376,6 @@ public class CurricularCourse extends CurricularCourse_Base {
     @Deprecated
     public boolean hasAnyStudentsInquiryRegistries() {
         return !getStudentsInquiryRegistriesSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy> getAssociatedCandidancies() {
-        return getAssociatedCandidanciesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAssociatedCandidancies() {
-        return !getAssociatedCandidanciesSet().isEmpty();
     }
 
     @Deprecated

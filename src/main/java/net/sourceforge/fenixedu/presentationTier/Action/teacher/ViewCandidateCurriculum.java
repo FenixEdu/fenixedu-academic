@@ -5,7 +5,7 @@
  * Created at Feb 1, 2004 , 3:57:28 PM
  *  
  */
-package net.sourceforge.fenixedu.presentationTier.Action.Seminaries;
+package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
 import java.text.DecimalFormat;
 import java.util.Iterator;

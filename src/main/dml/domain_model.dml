@@ -1733,47 +1733,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         SecretaryEnrolmentStudentReason reasonType;
     }
 
-    class Seminaries.CaseStudy  {
-        String code;
-        String description;
-        String name;
-    }
-
-    class Seminaries.CaseStudyChoice  {
-        Integer preferenceOrder;
-    }
-
-    class Seminaries.CourseEquivalency  {
-    }
-
-    class Seminaries.Modality  {
-        String description;
-        String name;
-    }
-
-    class Seminaries.Seminary  {
-        Integer allowedCandidaciesPerStudent;
-        String description;
-        YearMonthDay enrollmentBeginYearMonthDay;
-        YearMonthDay enrollmentEndYearMonthDay;
-        HourMinuteSecond enrollmentTimeBeginHourMinuteSecond;
-        HourMinuteSecond enrollmentTimeEndHourMinuteSecond;
-        Boolean hasCaseStudy;
-        Boolean hasTheme;
-        String name;
-    }
-
-    class Seminaries.SeminaryCandidacy  {
-        Boolean approved;
-        String motivation;
-    }
-
-    class Seminaries.Theme  {
-        String description;
-        String name;
-        String shortName;
-    }
-
     class Shift  {      
         Integer lotacao;
         String nome;
@@ -3210,42 +3169,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
             class functionalities.ExpressionGroupAvailability extends functionalities.GroupAvailability {
                 String expression;
             }
-
-    class gaugingTests.physics.GaugingTestResult  {
-        String cfString;
-        Integer correct;
-        String p1;
-        String p10;
-        String p11;
-        String p12;
-        String p13;
-        String p14;
-        String p15;
-        String p16;
-        String p17;
-        String p18;
-        String p19;
-        String p2;
-        String p20;
-        String p21;
-        String p22;
-        String p23;
-        String p24;
-        String p25;
-        String p26;
-        String p27;
-        String p28;
-        String p3;
-        String p4;
-        String p5;
-        String p6;
-        String p7;
-        String p8;
-        String p9;
-        Integer test;
-        Integer unanswered;
-        Integer wrong;
-    }
 
     class gesdis.CourseHistoric  {
         Integer approved;
@@ -10403,30 +10326,9 @@ relation CandidacyCandidacyDocument {
     }
 }
 
-relation CandidacyCaseStudyChoice {
-    Seminaries.SeminaryCandidacy playsRole candidacy;
-    Seminaries.CaseStudyChoice playsRole caseStudyChoices {
-        multiplicity *;
-    }
-}
-
-relation CandidacyCurricularCourse {
-    Seminaries.SeminaryCandidacy playsRole associatedCandidancies {
-        multiplicity *;
-    }
-    CurricularCourse playsRole curricularCourse;
-}
-
 relation CandidacyDocumentCandidacyDocumentFile {
     candidacy.CandidacyDocument playsRole candidacyDocument;
     candidacy.CandidacyDocumentFile playsRole file;
-}
-
-relation CandidacyModality {
-    Seminaries.SeminaryCandidacy playsRole associatedModalities {
-        multiplicity *;
-    }
-    Seminaries.Modality playsRole modality;
 }
 
 relation CandidacyRootDomainObject {
@@ -10448,13 +10350,6 @@ relation CandidacySituationPerson {
     candidacy.CandidacySituation playsRole candidacySituations {
         multiplicity *;
     }
-}
-
-relation CandidacyStudent {
-    Seminaries.SeminaryCandidacy playsRole associatedCandidancies {
-        multiplicity *;
-    }
-    student.Registration playsRole student;
 }
 
 relation CandidateEnrolmentCurricularCourse {
@@ -10493,13 +10388,6 @@ relation CareerTeacherTemp {
     }
     Teacher playsRole teacher {
        multiplicity 0..1;
-    }
-}
-
-relation CaseStudyCaseStudyChoice {
-    Seminaries.CaseStudy playsRole caseStudy;
-    Seminaries.CaseStudyChoice playsRole seminaryCandidacies {
-        multiplicity *;
     }
 }
 
@@ -10734,15 +10622,6 @@ relation CorrectorAtomicQuestion {
     tests.NewAtomicQuestion playsRole atomicQuestion;
 }
 
-relation CourseEquivalencyTheme {
-    Seminaries.CourseEquivalency playsRole courseEquivalencies {
-        multiplicity *;
-    }
-    Seminaries.Theme playsRole themes {
-        multiplicity *;
-    }
-}
-
 relation CourseGroupContext {
     degreeStructure.CourseGroup playsRole parentCourseGroup;
     degreeStructure.Context playsRole childContexts {
@@ -10804,13 +10683,6 @@ relation CurricularCourseCompetenceCourse {
         multiplicity *;
     }
     CompetenceCourse playsRole competenceCourse;
-}
-
-relation CurricularCourseCourseEquivalency {
-    Seminaries.CourseEquivalency playsRole courseEquivalencies {
-        multiplicity *;
-    }
-    CurricularCourse playsRole curricularCourse;
 }
 
 relation CurricularCourseCurricularCourseEquivalence {
@@ -11936,11 +11808,6 @@ relation FunctionParentInherentFunction {
     organizationalStructure.Function playsRole parentInherentFunction;
 }
 
-relation GaugingTestResultStudent {
-    gaugingTests.physics.GaugingTestResult playsRole associatedGaugingTestResult;
-    student.Registration playsRole student;
-}
-
 relation GenericEventGenericEventSpaceOccupation {
     GenericEvent playsRole genericEvent;
     space.GenericEventSpaceOccupation playsRole genericEventSpaceOccupations {
@@ -12555,13 +12422,6 @@ relation MetadataFromExecutionCourse {
         multiplicity *;
     }
     ExecutionCourse playsRole executionCourse;
-}
-
-relation ModalityCourseEquivalency {
-    Seminaries.CourseEquivalency playsRole courseEquivalencies {
-        multiplicity *;
-    }
-    Seminaries.Modality playsRole modality;
 }
 
 relation ModelRestrictionModelGroup {
@@ -14083,13 +13943,6 @@ relation RootDomainObjectBranch {
     }
 }
 
-relation RootDomainObjectCandidacy {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    Seminaries.SeminaryCandidacy playsRole candidacys {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectCandidacyDocument {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     candidacy.CandidacyDocument playsRole candidacyDocument {
@@ -14121,20 +13974,6 @@ relation RootDomainObjectCandidateSituation {
 relation RootDomainObjectCareer {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     teacher.Career playsRole careers {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectCaseStudy {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    Seminaries.CaseStudy playsRole caseStudys {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectCaseStudyChoice {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    Seminaries.CaseStudyChoice playsRole caseStudyChoices {
         multiplicity *;
     }
 }
@@ -14205,13 +14044,6 @@ relation RootDomainObjectCostCenter {
 relation RootDomainObjectCountry {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Country playsRole countrys {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectCourseEquivalency {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    Seminaries.CourseEquivalency playsRole courseEquivalencys {
         multiplicity *;
     }
 }
@@ -14695,13 +14527,6 @@ relation RootDomainObjectFunctionalityPrinters {
     }
 }
 
-relation RootDomainObjectGaugingTestResult {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    gaugingTests.physics.GaugingTestResult playsRole gaugingTestResults {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectGeneralClassProperty {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     classProperties.GeneralClassProperty playsRole generalClassPropertys {
@@ -14948,13 +14773,6 @@ relation RootDomainObjectMasterDegreeThesisDataVersion {
 relation RootDomainObjectMetadata {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     onlineTests.Metadata playsRole metadatas {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectModality {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    Seminaries.Modality playsRole modalitys {
         multiplicity *;
     }
 }
@@ -15498,13 +15316,6 @@ relation RootDomainObjectSecretaryEnrolmentStudent {
     }
 }
 
-relation RootDomainObjectSeminary {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    Seminaries.Seminary playsRole seminarys {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectSenior {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     student.Senior playsRole seniors {
@@ -15767,13 +15578,6 @@ relation RootDomainObjectTestQuestion {
 relation RootDomainObjectTestScope {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     onlineTests.TestScope playsRole testScopes {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectTheme {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    Seminaries.Theme playsRole themes {
         multiplicity *;
     }
 }
@@ -16084,20 +15888,6 @@ relation SectionTestElement {
         multiplicity *;
     }
     tests.NewSection playsRole section;
-}
-
-relation SeminaryCandidacy {
-    Seminaries.Seminary playsRole seminary;
-    Seminaries.SeminaryCandidacy playsRole candidacies {
-        multiplicity *;
-    }
-}
-
-relation SeminaryCourseEquivalency {
-    Seminaries.Seminary playsRole seminary;
-    Seminaries.CourseEquivalency playsRole equivalencies {
-        multiplicity *;
-    }
 }
 
 relation SendProposal {
@@ -16712,20 +16502,6 @@ relation TestScope {
 relation TestScopeExecutionCourse {
     onlineTests.TestScope playsRole testScope;
     ExecutionCourse playsRole executionCourse;
-}
-
-relation ThemeCandidacy {
-    Seminaries.Theme playsRole theme;
-    Seminaries.SeminaryCandidacy playsRole associatedCandidacies {
-        multiplicity *;
-    }
-}
-
-relation ThemeCaseStudy {
-    Seminaries.Theme playsRole seminaryTheme;
-    Seminaries.CaseStudy playsRole caseStudies {
-        multiplicity *;
-    }
 }
 
 relation ThesisDegree {

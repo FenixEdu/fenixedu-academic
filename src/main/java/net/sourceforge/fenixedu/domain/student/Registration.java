@@ -4327,16 +4327,6 @@ public class Registration extends Registration_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy> getAssociatedCandidancies() {
-        return getAssociatedCandidanciesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAssociatedCandidancies() {
-        return !getAssociatedCandidanciesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction> getInsuranceTransactions() {
         return getInsuranceTransactionsSet();
     }
@@ -4474,11 +4464,6 @@ public class Registration extends Registration_Base {
     @Deprecated
     public boolean hasExternalRegistrationData() {
         return getExternalRegistrationData() != null;
-    }
-
-    @Deprecated
-    public boolean hasAssociatedGaugingTestResult() {
-        return getAssociatedGaugingTestResult() != null;
     }
 
     @Deprecated

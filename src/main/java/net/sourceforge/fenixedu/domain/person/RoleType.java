@@ -65,6 +65,7 @@ public enum RoleType implements IPresentableEnum {
 
     OPERATOR("Operator"),
 
+    @Deprecated
     SEMINARIES_COORDINATOR("Seminaries Coordination"),
 
     WEBSITE_MANAGER("Website Management"),

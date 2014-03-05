@@ -3,7 +3,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.ManagerOrSeminariesCoordinatorFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.OperatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -41,17 +40,8 @@ public class ReadCurricularCourse {
     @Atomic
     public static InfoCurricularCourse runReadCurricularCourse(String externalId) throws FenixServiceException,
             NotAuthorizedException {
-        try {
-            ManagerOrSeminariesCoordinatorFilter.instance.execute(externalId);
-            return serviceInstance.run(externalId);
-        } catch (NotAuthorizedException ex1) {
-            try {
-                OperatorAuthorizationFilter.instance.execute();
-                return serviceInstance.run(externalId);
-            } catch (NotAuthorizedException ex2) {
-                throw ex2;
-            }
-        }
+        OperatorAuthorizationFilter.instance.execute();
+        return serviceInstance.run(externalId);
     }
 
 }

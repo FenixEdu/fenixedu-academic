@@ -264,13 +264,6 @@ public class RolePredicates {
         };
     };
 
-    public static final AccessControlPredicate<Object> SEMINARIES_COORDINATOR_PREDICATE = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(Object domainObject) {
-            return hasRole(RoleType.SEMINARIES_COORDINATOR);
-        };
-    };
-
     public static final AccessControlPredicate<Object> SPACE_MANAGER_PREDICATE = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(Object domainObject) {

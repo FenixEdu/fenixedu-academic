@@ -1454,7 +1454,6 @@ public class Person extends Person_Base {
                 break;
 
             case DIRECTIVE_COUNCIL:
-            case SEMINARIES_COORDINATOR:
             case COORDINATOR:
             case DEGREE_ADMINISTRATIVE_OFFICE:
             case DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER:
@@ -1507,7 +1506,6 @@ public class Person extends Person_Base {
                 break;
 
             case EMPLOYEE:
-                removeRoleIfPresent(person, RoleType.SEMINARIES_COORDINATOR);
                 if (!person.hasAnyParticipations()) {
                     removeRoleIfPresent(person, RoleType.RESEARCHER);
                 }
