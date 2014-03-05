@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.webServices.jersey.api;
 
+import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
@@ -24,21 +25,25 @@ public class FenixAPICanteen {
     public static String get() {
 
         if (StringUtils.isEmpty(canteenInfo) || oldInformation()) {
-            Response response =
-                    HTTP_CLIENT.target(FenixConfigurationManager.getConfiguration().getFenixApiCanteenUrl())
-                            .request(MediaType.APPLICATION_JSON).header("Authorization", getServiceAuth()).get();
+            String canteenUrl = FenixConfigurationManager.getConfiguration().getFenixApiCanteenUrl();
+            try {
+                Response response =
+                        HTTP_CLIENT.target(canteenUrl).request(MediaType.APPLICATION_JSON)
+                                .header("Authorization", getServiceAuth()).get();
 
-            if (response.getStatus() == 200) {
-                canteenInfo = response.readEntity(String.class);
-                day = new DateTime();
-
-                return canteenInfo;
-            } else {
+                if (response.getStatus() == 200) {
+                    canteenInfo = response.readEntity(String.class);
+                    day = new DateTime();
+                    return canteenInfo;
+                } else {
+                    return new JsonObject().toString();
+                }
+            } catch (ProcessingException e) {
                 return new JsonObject().toString();
             }
-        } else {
-            return canteenInfo;
         }
+
+        return canteenInfo;
     }
 
     private static Boolean oldInformation() {
