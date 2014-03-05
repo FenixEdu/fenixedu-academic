@@ -12,18 +12,23 @@ import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.Acad
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminListingsApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 
+@StrutsFunctionality(app = AcademicAdminListingsApp.class, path = "registered-degree-candidacies",
+        titleKey = "label.registeredDegreeCandidacies.first.time.list",
+        accessGroup = "academic(MANAGE_REGISTERED_DEGREE_CANDIDACIES)")
 @Mapping(path = "/registeredDegreeCandidacies", module = "academicAdministration")
 @Forwards({ @Forward(name = "viewRegisteredDegreeCandidacies",
         path = "/academicAdminOffice/student/candidacies/registration/viewRegisteredDegreeCandidacies.jsp") })

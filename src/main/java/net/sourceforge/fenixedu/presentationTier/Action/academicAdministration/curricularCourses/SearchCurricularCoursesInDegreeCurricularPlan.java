@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.CurricularPlansManagement;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -19,7 +20,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/searchCurricularCourses", module = "academicAdministration")
+@Mapping(path = "/searchCurricularCourses", module = "academicAdministration", functionality = CurricularPlansManagement.class)
 @Forwards({ @Forward(name = "searchCurricularCourses",
         path = "/academicAdministration/bolonha/curricularCourses/search/searchCurricularCourses.jsp") })
 public class SearchCurricularCoursesInDegreeCurricularPlan extends FenixDispatchAction {

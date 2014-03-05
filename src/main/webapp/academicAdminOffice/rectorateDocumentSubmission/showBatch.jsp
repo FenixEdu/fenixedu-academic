@@ -5,7 +5,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <html:xhtml />
 
-<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
 <h2>
 	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="title.rectorateSubmission" />
 </h2>

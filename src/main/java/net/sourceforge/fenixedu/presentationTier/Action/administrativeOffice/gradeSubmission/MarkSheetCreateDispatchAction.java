@@ -30,13 +30,15 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/createMarkSheet", module = "academicAdministration", formBean = "markSheetManagementForm",
-        input = "/academicAdminOffice/gradeSubmission/createMarkSheetStep1.jsp")
-@Forwards({ @Forward(name = "createMarkSheetStep1", path = "/academicAdminOffice/gradeSubmission/createMarkSheetStep1.jsp"),
-        @Forward(name = "createMarkSheetStep2", path = "/academicAdminOffice/gradeSubmission/createMarkSheetStep2.jsp"),
-        @Forward(name = "searchMarkSheetFilled", path = "/markSheetManagement.do?method=prepareSearchMarkSheetFilled"),
-        @Forward(name = "rectifyMarkSheetStep1", path = "/academicAdminOffice/gradeSubmission/rectifyMarkSheetStep1.jsp"),
-        @Forward(name = "rectifyMarkSheetStep2", path = "/academicAdminOffice/gradeSubmission/rectifyMarkSheetStep2.jsp"),
-        @Forward(name = "viewMarkSheet", path = "/academicAdminOffice/gradeSubmission/viewMarkSheet.jsp") })
+        input = "/gradeSubmission/createMarkSheetStep1.jsp", functionality = MarkSheetSearchDispatchAction.class)
+@Forwards({
+        @Forward(name = "createMarkSheetStep1", path = "/academicAdministration/gradeSubmission/createMarkSheetStep1.jsp"),
+        @Forward(name = "createMarkSheetStep2", path = "/academicAdministration/gradeSubmission/createMarkSheetStep2.jsp"),
+        @Forward(name = "searchMarkSheetFilled",
+                path = "/academicAdministration/markSheetManagement.do?method=prepareSearchMarkSheetFilled"),
+        @Forward(name = "rectifyMarkSheetStep1", path = "/academicAdministration/gradeSubmission/rectifyMarkSheetStep1.jsp"),
+        @Forward(name = "rectifyMarkSheetStep2", path = "/academicAdministration/gradeSubmission/rectifyMarkSheetStep2.jsp"),
+        @Forward(name = "viewMarkSheet", path = "/academicAdministration/gradeSubmission/viewMarkSheet.jsp") })
 public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
 
     public ActionForward prepareCreateMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

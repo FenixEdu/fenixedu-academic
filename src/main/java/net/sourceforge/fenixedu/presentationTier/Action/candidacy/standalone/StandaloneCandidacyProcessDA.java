@@ -20,12 +20,14 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneCan
 import net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.StandaloneCandidacyPeriod;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminCandidaciesApp;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -34,19 +36,18 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
+@StrutsFunctionality(app = AcademicAdminCandidaciesApp.class, path = "standalone", titleKey = "label.candidacy.standalone",
+        accessGroup = "(academic(MANAGE_CANDIDACY_PROCESSES) | academic(MANAGE_INDIVIDUAL_CANDIDACIES))",
+        bundle = "ApplicationResources")
 @Mapping(path = "/caseHandlingStandaloneCandidacyProcess", module = "academicAdministration",
         formBeanClass = StandaloneCandidacyProcessDA.StandaloneCandidacyProcessForm.class)
-@Forwards({
-
-@Forward(name = "intro", path = "/candidacy/standalone/mainCandidacyProcess.jsp"),
+@Forwards({ @Forward(name = "intro", path = "/candidacy/standalone/mainCandidacyProcess.jsp"),
         @Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp"),
         @Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp"),
         @Forward(name = "send-to-coordinator", path = "/candidacy/sendToCoordinator.jsp"),
         @Forward(name = "view-candidacy-results", path = "/candidacy/standalone/viewCandidacyResults.jsp"),
         @Forward(name = "insert-candidacy-results", path = "/candidacy/standalone/introduceCandidacyResults.jsp"),
-        @Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp")
-
-})
+        @Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp") })
 public class StandaloneCandidacyProcessDA extends CandidacyProcessDA {
 
     static public class StandaloneCandidacyProcessForm extends CandidacyProcessForm {

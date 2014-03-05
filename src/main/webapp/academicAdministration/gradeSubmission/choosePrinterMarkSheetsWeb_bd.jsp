@@ -7,7 +7,6 @@
 
 <bean:define id="markSheets" name="totalMarkSheetsCount"/>
 
-<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.print.web.markSheets"/></h2>
 
 

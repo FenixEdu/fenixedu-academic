@@ -26,7 +26,7 @@ import pt.ist.fenixframework.FenixFramework;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-@Mapping(path = "/studentStatutes", module = "academicAdministration")
+@Mapping(path = "/studentStatutes", module = "academicAdministration", functionality = SearchForStudentsDA.class)
 @Forwards({ @Forward(name = "manageStatutes", path = "/academicAdminOffice/manageStatutes.jsp") })
 public class StudentStatutesDA extends FenixDispatchAction {
 

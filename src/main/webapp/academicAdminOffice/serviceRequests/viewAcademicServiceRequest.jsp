@@ -12,7 +12,6 @@
 
 <bean:define id="academicServiceRequest" name="academicServiceRequest" type="net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest"/>
 
-<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2 class="mbottom1"><bean:write name="academicServiceRequest" property="description"/></h2>
 
 <html:messages id="messages" message="true">

@@ -24,12 +24,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-@Mapping(path = "/addNewStudentCurricularPlan", module = "academicAdministration")
+@Mapping(path = "/addNewStudentCurricularPlan", module = "academicAdministration", functionality = SearchForStudentsDA.class)
 @Forwards({
         @Forward(name = "showCreateNewStudentCurricularPlan", path = "/academicAdminOffice/createStudentCurricularPlan.jsp"),
-        @Forward(name = "viewRegistrationDetails", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp")
-
-})
+        @Forward(name = "viewRegistrationDetails", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp") })
 public class StudentCurricularPlanDA extends FenixDispatchAction {
 
     public ActionForward prepareCreateSCP(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

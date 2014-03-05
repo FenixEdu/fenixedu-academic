@@ -38,14 +38,13 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/studentDismissals", module = "academicAdministration", formBean = "studentDismissalForm")
+@Mapping(path = "/studentDismissals", module = "academicAdministration", formBean = "studentDismissalForm",
+        functionality = SearchForStudentsDA.class)
 @Forwards({ @Forward(name = "manage", path = "/academicAdminOffice/dismissal/managementDismissals.jsp"),
         @Forward(name = "chooseEquivalents", path = "/academicAdminOffice/dismissal/chooseEquivalents.jsp"),
-        @Forward(name = "visualizeRegistration", path = "/student.do?method=visualizeRegistration"),
+        @Forward(name = "visualizeRegistration", path = "/academicAdministration/student.do?method=visualizeRegistration"),
         @Forward(name = "chooseDismissalEnrolments", path = "/academicAdminOffice/dismissal/chooseDismissalEnrolments.jsp"),
-        @Forward(name = "confirmCreateDismissals", path = "/academicAdminOffice/dismissal/confirmCreateDismissals.jsp")
-
-})
+        @Forward(name = "confirmCreateDismissals", path = "/academicAdminOffice/dismissal/confirmCreateDismissals.jsp") })
 public class StudentDismissalsDA extends FenixDispatchAction {
 
     private StudentCurricularPlan getSCP(final HttpServletRequest request) {

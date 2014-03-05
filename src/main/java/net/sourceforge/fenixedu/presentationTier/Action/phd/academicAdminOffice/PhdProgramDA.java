@@ -20,7 +20,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/phdProgram", module = "academicAdministration")
+@Mapping(path = "/phdProgram", module = "academicAdministration", functionality = PhdIndividualProgramProcessDA.class)
 @Forwards({
         @Forward(name = "listPhdProgramForPeriods",
                 path = "/phd/academicAdminOffice/periods/phdProgram/listPhdProgramForPeriods.jsp"),

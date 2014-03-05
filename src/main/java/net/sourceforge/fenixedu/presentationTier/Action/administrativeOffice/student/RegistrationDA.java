@@ -43,7 +43,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(path = "/registration", module = "academicAdministration")
+@Mapping(path = "/registration", module = "academicAdministration", functionality = SearchForStudentsDA.class)
 @Forwards({
         @Forward(name = "chooseCycleForViewRegistrationCurriculum",
                 path = "/academicAdminOffice/student/registration/chooseCycleForViewRegistrationCurriculum.jsp"),

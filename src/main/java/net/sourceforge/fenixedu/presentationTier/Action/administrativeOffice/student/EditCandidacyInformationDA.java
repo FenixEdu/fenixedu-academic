@@ -27,11 +27,11 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.DomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-@Mapping(path = "/editCandidacyInformation", module = "academicAdministration")
+@Mapping(path = "/editCandidacyInformation", module = "academicAdministration", functionality = SearchForStudentsDA.class)
 @Forwards({
         @Forward(name = "editCandidacyInformation",
                 path = "/academicAdminOffice/student/registration/editCandidacyInformation.jsp"),
-        @Forward(name = "visualizeStudent", path = "/student.do?method=visualizeStudent") })
+        @Forward(name = "visualizeStudent", path = "/academicAdministration/student.do?method=visualizeStudent") })
 public class EditCandidacyInformationDA extends FenixDispatchAction {
 
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,

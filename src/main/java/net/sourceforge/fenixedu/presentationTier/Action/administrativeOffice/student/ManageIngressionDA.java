@@ -25,7 +25,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * 
  */
 
-@Mapping(path = "/manageIngression", module = "academicAdministration", formBeanClass = FenixActionForm.class)
+@Mapping(path = "/manageIngression", module = "academicAdministration", formBeanClass = FenixActionForm.class,
+        functionality = SearchForStudentsDA.class)
 @Forwards({ @Forward(name = "showEditIngression", path = "/academicAdminOffice/manageIngression.jsp") })
 public class ManageIngressionDA extends FenixDispatchAction {
 

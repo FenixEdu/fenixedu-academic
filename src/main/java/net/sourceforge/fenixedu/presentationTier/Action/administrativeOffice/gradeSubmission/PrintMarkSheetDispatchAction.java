@@ -38,13 +38,15 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/printMarkSheet", module = "academicAdministration", formBean = "printMarkSheetForm",
-        input = "/printMarkSheet.do?method=choosePrinterMarkSheet&amp;page=0")
+        input = "/printMarkSheet.do?method=choosePrinterMarkSheet&amp;page=0",
+        functionality = MarkSheetSearchDispatchAction.class)
 @Forwards({
-        @Forward(name = "choosePrinterMarkSheet", path = "/academicAdminOffice/gradeSubmission/choosePrinterMarkSheet_bd.jsp"),
+        @Forward(name = "choosePrinterMarkSheet", path = "/academicAdministration/gradeSubmission/choosePrinterMarkSheet_bd.jsp"),
         @Forward(name = "choosePrinterMarkSheetsWeb",
-                path = "/academicAdminOffice/gradeSubmission/choosePrinterMarkSheetsWeb_bd.jsp"),
-        @Forward(name = "searchMarkSheetFilled", path = "/markSheetManagement.do?method=prepareSearchMarkSheetFilled"),
-        @Forward(name = "searchMarkSheet", path = "/markSheetManagement.do?method=prepareSearchMarkSheet") })
+                path = "/academicAdministration/gradeSubmission/choosePrinterMarkSheetsWeb_bd.jsp"),
+        @Forward(name = "searchMarkSheetFilled",
+                path = "/academicAdministration/markSheetManagement.do?method=prepareSearchMarkSheetFilled"),
+        @Forward(name = "searchMarkSheet", path = "/academicAdministration/markSheetManagement.do?method=prepareSearchMarkSheet") })
 public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
 
     public ActionForward searchMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

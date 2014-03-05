@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartySocialSecurityNumber;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.SearchForStudentsDA;
 import net.sourceforge.fenixedu.presentationTier.docs.accounting.ReceiptDocument;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
@@ -40,14 +41,15 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/receipts", module = "academicAdministration", formBeanClass = FenixActionForm.class)
+@Mapping(path = "/receipts", module = "academicAdministration", formBeanClass = FenixActionForm.class,
+        functionality = SearchForStudentsDA.class)
 @Forwards({
         @Forward(name = "showReceipts", path = "/academicAdminOffice/payments/receipts/showReceipts.jsp"),
         @Forward(name = "showReceipt", path = "/academicAdminOffice/payments/receipts/showReceipt.jsp"),
         @Forward(name = "showPaymentsWithoutReceipt",
                 path = "/academicAdminOffice/payments/receipts/showPaymentsWithoutReceipt.jsp"),
         @Forward(name = "confirmCreateReceipt", path = "/academicAdminOffice/payments/receipts/confirmCreateReceipt.jsp"),
-        @Forward(name = "showOperations", path = "/payments.do?method=showOperations"),
+        @Forward(name = "showOperations", path = "/academicAdministration/payments.do?method=showOperations"),
         @Forward(name = "editReceipt", path = "/academicAdminOffice/payments/receipts/editReceipt.jsp") })
 public class ReceiptsManagementDA extends PaymentsManagementDispatchAction {
 

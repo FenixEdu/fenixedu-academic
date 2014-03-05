@@ -169,7 +169,7 @@
 	    	}
 	    });
 		*/
-		var togglePreset = '<%= request.getAttribute("togglePreset") %>' !== 'null' ? '<%= request.getAttribute("togglePreset") %>' : 'bachelor';
+		var togglePreset = '<%= request.getAttribute("togglePreset") %>' !== 'null' ? '<%= request.getAttribute("togglePreset") %>' : '';
 		$('#'+togglePreset+'Tables').toggle();
 		$('#'+togglePreset+'TogglerIcon').attr('state','expanded');
 		$('#'+togglePreset+'TogglerIcon').attr('src',"<%=request.getContextPath() + "/images/toggle_minus10.gif"%>");
@@ -178,16 +178,13 @@
 
 <style>
 	.helper {
-		position: fixed;
-		top: 300px;
-		left: 850px;
-		width: 375px;
 		border: 1px solid #9B9B9B;
 		border-radius: 10px;
 		background-color: #F9F9F9;
 		-moz-box-shadow: 0 0 3px 3px #AAA;
 		-webkit-box-shadow: 0 0 3px 3px #AAA;
 		box-shadow: 0 0 3px 3px #AAA;
+		width: 350px;
 	}
 	
 	.helperTitle {
@@ -227,8 +224,7 @@
 	}
 	
 	.degreeEntryActionsCell {
-		width: 120px;
-		
+		width: 150px;	
 	}
 	
 	.selectedOffice {
@@ -259,28 +255,16 @@
 	.headerTitle {
 		cursor: pointer;	
 	}
-	
-	.degreeJurisdictionsTitle {
-		padding-top: 40px;
-	}
 </style>
 
 <bean:define id="alamedaEid" name="alamedaOffice" property="externalId"/>
 <bean:define id="tagusEid" name="tagusOffice" property="externalId"/>
 <bean:define id="posgradEid" name="posgradOffice" property="externalId"/>
 
-<h2 class="degreeJurisdictionsTitle"><bean:message key="label.degreeJurisdiction.title" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
+<h2><bean:message key="label.degreeJurisdiction.title" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
 
-<div class="helper">
-	<p class="helperTitle">Secretarias Acad&eacute;micas</p>
-	<ul class="helperList">
-		<li class="helperItem"><img class="helperIcons" src="<%=request.getContextPath() + "/images/alamedaButton_disabled.png"%>" /><span class="helperCaption"><bean:write name="alamedaOffice" property="unit.name" /></span></li>
-		<li class="helperItem"><img class="helperIcons" src="<%=request.getContextPath() + "/images/tagusButton_disabled.png"%>" /><span class="helperCaption"><bean:write name="tagusOffice" property="unit.name" /></span></li>
-		<li class="helperItem"><img class="helperIcons" src="<%=request.getContextPath() + "/images/posgradButton_disabled.png"%>" /><span class="helperCaption"><bean:write name="posgradOffice" property="unit.name" /></span></li>
-	</ul>
-</div>
-
-<h3 class="degreeOfficeHeaders"><img id="bachelorTogglerIcon" state="collapsed" class="expcol" src="<%=request.getContextPath() + "/images/toggle_plus10.gif"%>" /><span id="bachelorTogglerLabel" class="headerTitle"><bean:message key="label.degreeJurisdiction.bachelors" bundle="ACADEMIC_OFFICE_RESOURCES" /></span></h3>
+<div class="col-lg-7">
+<h4 class="degreeOfficeHeaders"><img id="bachelorTogglerIcon" state="collapsed" class="expcol" src="<%=request.getContextPath() + "/images/toggle_plus10.gif"%>" /><span id="bachelorTogglerLabel" class="headerTitle"><bean:message key="label.degreeJurisdiction.bachelors" bundle="ACADEMIC_OFFICE_RESOURCES" /></span></h4>
 <div id="bachelorTables"><table class="tstyle1 thleft degreeOfficeTables">
 	<tr>
 		<th><bean:message key="label.degreeJurisdiction.degreeName" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
@@ -325,7 +309,7 @@
 </table></div>
 
 
-<h3 class="degreeOfficeHeaders"><img id="masterTogglerIcon" state="collapsed" class="expcol" src="<%=request.getContextPath() + "/images/toggle_plus10.gif"%>" /><span id="masterTogglerLabel" class="headerTitle"><bean:message key="label.degreeJurisdiction.masters" bundle="ACADEMIC_OFFICE_RESOURCES" /></span></h3>
+<h4 class="degreeOfficeHeaders"><img id="masterTogglerIcon" state="collapsed" class="expcol" src="<%=request.getContextPath() + "/images/toggle_plus10.gif"%>" /><span id="masterTogglerLabel" class="headerTitle"><bean:message key="label.degreeJurisdiction.masters" bundle="ACADEMIC_OFFICE_RESOURCES" /></span></h4>
 <div id="masterTables"><table class="tstyle1 thleft degreeOfficeTables">
 	<tr>
 		<th><bean:message key="label.degreeJurisdiction.degreeName" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
@@ -370,7 +354,7 @@
 </table></div>
 
 
-<h3 class="degreeOfficeHeaders"><img id="integratedMasterTogglerIcon" state="collapsed" class="expcol" src="<%=request.getContextPath() + "/images/toggle_plus10.gif"%>" /><span id="integratedMasterTogglerLabel" class="headerTitle"><bean:message key="label.degreeJurisdiction.integratedMasters" bundle="ACADEMIC_OFFICE_RESOURCES" /></span></h3>
+<h4 class="degreeOfficeHeaders"><img id="integratedMasterTogglerIcon" state="collapsed" class="expcol" src="<%=request.getContextPath() + "/images/toggle_plus10.gif"%>" /><span id="integratedMasterTogglerLabel" class="headerTitle"><bean:message key="label.degreeJurisdiction.integratedMasters" bundle="ACADEMIC_OFFICE_RESOURCES" /></span></h4>
 <div id="integratedMasterTables"><table class="tstyle1 thleft degreeOfficeTables">
 	<tr>
 		<th><bean:message key="label.degreeJurisdiction.degreeName" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
@@ -415,7 +399,7 @@
 </table></div>
 
 
-<h3 class="degreeOfficeHeaders"><img id="phdTogglerIcon" state="collapsed" class="expcol" src="<%=request.getContextPath() + "/images/toggle_plus10.gif"%>" /><span id="phdTogglerLabel" class="headerTitle"><bean:message key="label.degreeJurisdiction.phds" bundle="ACADEMIC_OFFICE_RESOURCES" /></span></h3>
+<h4 class="degreeOfficeHeaders"><img id="phdTogglerIcon" state="collapsed" class="expcol" src="<%=request.getContextPath() + "/images/toggle_plus10.gif"%>" /><span id="phdTogglerLabel" class="headerTitle"><bean:message key="label.degreeJurisdiction.phds" bundle="ACADEMIC_OFFICE_RESOURCES" /></span></h4>
 <div id="phdTables"><table class="tstyle1 thleft degreeOfficeTables">
 	<tr>
 		<th><bean:message key="label.degreeJurisdiction.degreeNameDea" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
@@ -500,7 +484,7 @@
 </table></div>
 
 
-<h3 class="degreeOfficeHeaders"><img id="dfaTogglerIcon" state="collapsed" class="expcol" src="<%=request.getContextPath() + "/images/toggle_plus10.gif"%>" /><span id="dfaTogglerLabel" class="headerTitle"><bean:message key="label.degreeJurisdiction.dfas" bundle="ACADEMIC_OFFICE_RESOURCES" /></span></h3>
+<h4 class="degreeOfficeHeaders"><img id="dfaTogglerIcon" state="collapsed" class="expcol" src="<%=request.getContextPath() + "/images/toggle_plus10.gif"%>" /><span id="dfaTogglerLabel" class="headerTitle"><bean:message key="label.degreeJurisdiction.dfas" bundle="ACADEMIC_OFFICE_RESOURCES" /></span></h4>
 <div id="dfaTables"><table class="tstyle1 thleft degreeOfficeTables">
 	<tr>
 		<th><bean:message key="label.degreeJurisdiction.degreeName" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
@@ -545,7 +529,7 @@
 </table></div>
 
 
-<h3 class="degreeOfficeHeaders"><img id="specTogglerIcon" state="collapsed" class="expcol" src="<%=request.getContextPath() + "/images/toggle_plus10.gif"%>" /><span id="specTogglerLabel" class="headerTitle"><bean:message key="label.degreeJurisdiction.otherDegrees" bundle="ACADEMIC_OFFICE_RESOURCES" /></span></h3>
+<h4 class="degreeOfficeHeaders"><img id="specTogglerIcon" state="collapsed" class="expcol" src="<%=request.getContextPath() + "/images/toggle_plus10.gif"%>" /><span id="specTogglerLabel" class="headerTitle"><bean:message key="label.degreeJurisdiction.otherDegrees" bundle="ACADEMIC_OFFICE_RESOURCES" /></span></h4>
 <div id="specTables"><table class="tstyle1 thleft degreeOfficeTables">
 	<tr>
 		<th><bean:message key="label.degreeJurisdiction.degreeName" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
@@ -590,7 +574,7 @@
 </table></div>
 
 
-<h3 class="degreeOfficeHeaders"><img id="preBolognaTogglerIcon" state="collapsed" class="expcol" src="<%=request.getContextPath() + "/images/toggle_plus10.gif"%>" /><span id="preBolognaTogglerLabel" class="headerTitle"><bean:message key="label.degreeJurisdiction.preBologna" bundle="ACADEMIC_OFFICE_RESOURCES" /></span></h3>
+<h4 class="degreeOfficeHeaders"><img id="preBolognaTogglerIcon" state="collapsed" class="expcol" src="<%=request.getContextPath() + "/images/toggle_plus10.gif"%>" /><span id="preBolognaTogglerLabel" class="headerTitle"><bean:message key="label.degreeJurisdiction.preBologna" bundle="ACADEMIC_OFFICE_RESOURCES" /></span></h4>
 <div id="preBolognaTables"><table class="tstyle1 thleft degreeOfficeTables">
 	<tr>
 		<th><bean:message key="label.degreeJurisdiction.degreeName" bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
@@ -634,3 +618,15 @@
 	</logic:iterate>
 </table></div>
 
+</div>
+
+<div class="col-lg-4">
+	<div class="helper" data-spy="affix">
+		<p class="helperTitle">Secretarias Acad&eacute;micas</p>
+		<ul class="helperList">
+			<li class="helperItem"><img class="helperIcons" src="<%=request.getContextPath() + "/images/alamedaButton_disabled.png"%>" /><span class="helperCaption"><bean:write name="alamedaOffice" property="unit.name" /></span></li>
+			<li class="helperItem"><img class="helperIcons" src="<%=request.getContextPath() + "/images/tagusButton_disabled.png"%>" /><span class="helperCaption"><bean:write name="tagusOffice" property="unit.name" /></span></li>
+			<li class="helperItem"><img class="helperIcons" src="<%=request.getContextPath() + "/images/posgradButton_disabled.png"%>" /><span class="helperCaption"><bean:write name="posgradOffice" property="unit.name" /></span></li>
+		</ul>
+	</div>
+</div>

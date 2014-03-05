@@ -4,9 +4,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-
-<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.createOldMarkSheet"/></h2>
+<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.createMarkSheet"/></h2>
 
 <p class="breadcumbs"><span><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.createMarkSheet.step.one"/></span> &gt; <span class="actual"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.createMarkSheet.step.two"/></span></p>
 
@@ -36,7 +34,7 @@
 	</ul>
 </fr:hasMessages>
 
-<fr:form action="/oldCreateMarkSheet.do">
+<fr:form action="/createMarkSheet.do">
 
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="markSheetManagementForm" property="method" value="createMarkSheetStepTwo" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.epID" name="markSheetManagementForm" property="epID" />
@@ -60,7 +58,7 @@
 	        <fr:property name="columnClasses" value="listClasses,,"/>
 			<fr:property name="sortBy" value="enrolment.studentCurricularPlan.student.number"/>
 		</fr:layout>
-		<fr:destination name="invalid" path="/oldCreateMarkSheet.do?method=createMarkSheetStepTwoInvalid"/>
+		<fr:destination name="invalid" path="/createMarkSheet.do?method=createMarkSheetStepTwoInvalid"/>
 	</fr:edit>
 
 	<logic:notEmpty name="edit" property="impossibleEnrolmentEvaluationBeans">
@@ -73,7 +71,7 @@
 		        <fr:property name="columnClasses" value="listClasses,,"/>
 				<fr:property name="sortBy" value="enrolment.studentCurricularPlan.student.number"/>
 			</fr:layout>
-		<fr:destination name="invalid" path="/oldCreateMarkSheet.do?method=createMarkSheetStepTwoInvalid"/>
+		<fr:destination name="invalid" path="/createMarkSheet.do?method=createMarkSheetStepTwoInvalid"/>
 	</fr:edit>
 	<br/>
 	</logic:notEmpty>

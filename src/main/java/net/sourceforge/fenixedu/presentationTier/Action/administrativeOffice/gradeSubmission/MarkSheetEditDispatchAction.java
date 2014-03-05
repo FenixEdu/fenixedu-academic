@@ -29,12 +29,11 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/editMarkSheet", module = "academicAdministration", formBean = "markSheetManagementForm",
-        input = "/markSheetManagement.do?method=prepareSearchMarkSheet")
-@Forwards({ @Forward(name = "editMarkSheet", path = "/academicAdminOffice/gradeSubmission/editMarkSheet.jsp"),
-        @Forward(name = "searchMarkSheetFilled", path = "/markSheetManagement.do?method=prepareSearchMarkSheetFilled") })
-// @Forward(name = "editArchiveInformation", path =
-// "/academicAdminOffice/gradeSubmission/editMarkSheetArchiveInformation.jsp")
-// })
+        input = "/markSheetManagement.do?method=prepareSearchMarkSheet", functionality = MarkSheetSearchDispatchAction.class)
+@Forwards({
+        @Forward(name = "editMarkSheet", path = "/academicAdministration/gradeSubmission/editMarkSheet.jsp"),
+        @Forward(name = "searchMarkSheetFilled",
+                path = "/academicAdministration/markSheetManagement.do?method=prepareSearchMarkSheetFilled") })
 public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
 
     public ActionForward prepareEditMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

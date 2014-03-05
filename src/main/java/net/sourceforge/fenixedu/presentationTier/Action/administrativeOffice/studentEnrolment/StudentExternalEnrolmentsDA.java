@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
+import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.SearchForStudentsDA;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -35,17 +36,16 @@ import org.apache.struts.action.DynaActionForm;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(path = "/studentExternalEnrolments", module = "academicAdministration", formBean = "studentExternalEnrolmentsForm")
+@Mapping(path = "/studentExternalEnrolments", module = "academicAdministration", formBean = "studentExternalEnrolmentsForm",
+        functionality = SearchForStudentsDA.class)
 @Forwards({
         @Forward(name = "manageExternalEnrolments",
                 path = "/academicAdminOffice/student/enrollment/bolonha/manageExternalEnrolments.jsp"),
         @Forward(name = "prepareEditExternalEnrolment",
                 path = "/academicAdminOffice/student/enrollment/bolonha/editExternalEnrolment.jsp"),
-        @Forward(name = "chooseExternalUnit", path = "/academicAdminOffice/student/enrollment/bolonha/chooseExternalUnit.jsp",
-                tileProperties = @Tile(head = "/commons/renderers/treeRendererHeader.jsp")),
+        @Forward(name = "chooseExternalUnit", path = "/academicAdminOffice/student/enrollment/bolonha/chooseExternalUnit.jsp"),
         @Forward(name = "chooseExternalCurricularCourses",
                 path = "/academicAdminOffice/student/enrollment/bolonha/chooseExternalCurricularCourses.jsp"),
         @Forward(name = "createExternalEnrolments",

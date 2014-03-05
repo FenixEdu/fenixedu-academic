@@ -27,12 +27,15 @@ import net.sourceforge.fenixedu.domain.util.email.PersonSender;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminCandidaciesApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
@@ -41,14 +44,17 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 
+@StrutsFunctionality(app = AcademicAdminCandidaciesApp.class, path = "outbound-mobility", titleKey = "label.mobility.outbound",
+        accessGroup = "academic(MANAGE_MOBILITY_OUTBOUND)")
 @Mapping(path = "/outboundMobilityCandidacy", module = "academicAdministration")
 @Forwards({ @Forward(name = "prepare", path = "/mobility/outbound/OutboundMobilityCandidacy.jsp"),
         @Forward(name = "viewContest", path = "/mobility/outbound/viewContest.jsp"),
         @Forward(name = "manageCandidacies", path = "/mobility/outbound/manageCandidacies.jsp"),
         @Forward(name = "viewCandidate", path = "/mobility/outbound/viewCandidate.jsp"),
-        @Forward(name = "sendEmail", path = "/messaging/emails.do?method=newEmail", contextRelative = true) })
+        @Forward(name = "sendEmail", path = "/messaging/emails.do?method=newEmail") })
 public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepare(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
             final HttpServletResponse response) {
         OutboundMobilityContextBean outboundMobilityContextBean = getRenderedObject();

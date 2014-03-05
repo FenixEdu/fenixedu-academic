@@ -24,7 +24,9 @@ import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.Acad
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminEquivalencesApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -34,6 +36,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
@@ -42,18 +46,19 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
+@StrutsFunctionality(app = AcademicAdminEquivalencesApp.class, path = "curricular-course-equivalences",
+        titleKey = "label.studentDismissal.equivalences", accessGroup = "academic(MANAGE_EQUIVALENCES)")
 @Mapping(module = "academicAdministration", path = "/curricularCourseEquivalencies",
-        input = "/curricularCourseEquivalencies.do?method=prepare&page=0", attribute = "curricularCourseEquivalenciesForm",
-        formBean = "curricularCourseEquivalenciesForm", scope = "request", parameter = "method")
-@Forwards(value = {
+        input = "/curricularCourseEquivalencies.do?method=prepare&page=0", formBean = "curricularCourseEquivalenciesForm")
+@Forwards({
         @Forward(name = "showEquivalencies", path = "/academicAdministration/equivalences/curricularCourseEquivalencies.jsp"),
         @Forward(name = "showCreateEquivalencyForm",
                 path = "/academicAdministration/equivalences/createCurricularCourseEquivalencies.jsp") })
-@Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.domain.exceptions.DomainException.class,
-        key = "error.exists.curricular.course.equivalency",
-        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
+@Exceptions(value = { @ExceptionHandling(type = DomainException.class, key = "error.exists.curricular.course.equivalency",
+        handler = FenixErrorExceptionHandler.class, scope = "request") })
 public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         final User userView = Authenticate.getUser();

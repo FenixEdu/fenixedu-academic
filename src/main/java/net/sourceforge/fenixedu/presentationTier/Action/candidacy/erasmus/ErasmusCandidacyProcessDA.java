@@ -20,12 +20,14 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.institutionalRelations.academic.Program;
 import net.sourceforge.fenixedu.domain.period.MobilityApplicationPeriod;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminCandidaciesApp;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
@@ -40,6 +42,8 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 
+@StrutsFunctionality(app = AcademicAdminCandidaciesApp.class, path = "mobility", titleKey = "label.application.mobility",
+        accessGroup = "(academic(MANAGE_CANDIDACY_PROCESSES) | academic(MANAGE_INDIVIDUAL_CANDIDACIES))")
 @Mapping(path = "/caseHandlingMobilityApplicationProcess", module = "academicAdministration",
         formBeanClass = ErasmusCandidacyProcessDA.ErasmusCandidacyProcessForm.class)
 @Forwards({

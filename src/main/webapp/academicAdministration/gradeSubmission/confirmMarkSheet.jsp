@@ -6,7 +6,6 @@
 
 <%@page import="net.sourceforge.fenixedu.util.FenixDigestUtils"%>
 
-<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.confirmMarkSheet"/></h2>
 
 <fr:view name="markSheet" schema="degreeAdministrativeOffice.markSheet.view">

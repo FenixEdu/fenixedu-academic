@@ -1,23 +1,41 @@
 package net.sourceforge.fenixedu.presentationTier.Action.accounting.reports;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.accounting.report.events.EventReportQueueJob;
 import net.sourceforge.fenixedu.domain.accounting.report.events.EventReportQueueJobBean;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminPaymentsApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-public abstract class EventReportsDA extends FenixDispatchAction {
+@StrutsFunctionality(app = AcademicAdminPaymentsApp.class, path = "event-reports", titleKey = "title.event.reports",
+        accessGroup = "academic(MANAGE_EVENT_REPORTS)")
+@Mapping(path = "/eventReports", module = "academicAdministration")
+@Forwards({ @Forward(name = "listReports", path = "/academicAdminOffice/accounting/reports/events/listReports.jsp"),
+        @Forward(name = "createReportRequest", path = "/academicAdminOffice/accounting/reports/events/createReportRequest.jsp"),
+        @Forward(name = "viewRequest", path = "/academicAdminOffice/accounting/reports/events/viewRequest.jsp") })
+public class EventReportsDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward listReports(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
             final HttpServletResponse response) {
         List<EventReportQueueJob> doneJobs = readDoneReports();
@@ -29,9 +47,22 @@ public abstract class EventReportsDA extends FenixDispatchAction {
         return mapping.findForward("listReports");
     }
 
-    protected abstract List<EventReportQueueJob> readPendingOrCancelledJobs();
+    protected List<EventReportQueueJob> readPendingOrCancelledJobs() {
+        return EventReportQueueJob.readPendingOrCancelledJobs(getOffices());
+    }
 
-    protected abstract List<EventReportQueueJob> readDoneReports();
+    protected List<EventReportQueueJob> readDoneReports() {
+        return EventReportQueueJob.readDoneReports(getOffices());
+    }
+
+    protected EventReportQueueJobBean createEventReportQueueJobBean() {
+        return EventReportQueueJobBean.createBeanForAdministrativeOffice();
+    }
+
+    private Set<AdministrativeOffice> getOffices() {
+        return AcademicAuthorizationGroup.getOfficesForOperation(AccessControl.getPerson(),
+                AcademicOperationType.MANAGE_EVENT_REPORTS);
+    }
 
     public ActionForward prepareCreateReportRequest(final ActionMapping mapping, final ActionForm form,
             final HttpServletRequest request, final HttpServletResponse response) {
@@ -41,8 +72,6 @@ public abstract class EventReportsDA extends FenixDispatchAction {
 
         return mapping.findForward("createReportRequest");
     }
-
-    protected abstract EventReportQueueJobBean createEventReportQueueJobBean();
 
     public ActionForward createReportRequest(final ActionMapping mapping, final ActionForm form,
             final HttpServletRequest request, final HttpServletResponse response) {

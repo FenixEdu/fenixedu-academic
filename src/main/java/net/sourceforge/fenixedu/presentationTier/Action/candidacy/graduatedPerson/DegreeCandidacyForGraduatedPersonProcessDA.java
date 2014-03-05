@@ -21,11 +21,13 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCa
 import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonProcess;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.DegreeCandidacyForGraduatedPersonCandidacyPeriod;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminCandidaciesApp;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -38,6 +40,10 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 
+@StrutsFunctionality(app = AcademicAdminCandidaciesApp.class, path = "degree-candidacy-for-graduated-person",
+        titleKey = "label.candidacy.graduatedPerson",
+        accessGroup = "(academic(MANAGE_CANDIDACY_PROCESSES) | academic(MANAGE_INDIVIDUAL_CANDIDACIES))",
+        bundle = "ApplicationResources")
 @Mapping(path = "/caseHandlingDegreeCandidacyForGraduatedPersonProcess", module = "academicAdministration",
         formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
 @Forwards({ @Forward(name = "intro", path = "/candidacy/mainCandidacyProcess.jsp"),
@@ -48,9 +54,7 @@ import com.google.common.base.Predicates;
         @Forward(name = "view-candidacy-results", path = "/candidacy/graduatedPerson/viewCandidacyResults.jsp"),
         @Forward(name = "introduce-candidacy-results", path = "/candidacy/graduatedPerson/introduceCandidacyResults.jsp"),
         @Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp"),
-        @Forward(name = "prepare-select-available-degrees", path = "/candidacy/selectAvailableDegrees.jsp")
-
-})
+        @Forward(name = "prepare-select-available-degrees", path = "/candidacy/selectAvailableDegrees.jsp") })
 public class DegreeCandidacyForGraduatedPersonProcessDA extends CandidacyProcessDA {
 
     @Override

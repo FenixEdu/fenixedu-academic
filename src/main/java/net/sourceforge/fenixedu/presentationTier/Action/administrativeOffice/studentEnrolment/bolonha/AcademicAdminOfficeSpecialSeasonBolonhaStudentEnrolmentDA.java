@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.C
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.StudentStatute;
+import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.SearchForStudentsDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -28,7 +29,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/specialSeasonBolonhaStudentEnrollment", module = "academicAdministration",
-        formBean = "bolonhaStudentEnrollmentForm")
+        formBean = "bolonhaStudentEnrollmentForm", functionality = SearchForStudentsDA.class)
 @Forwards({
         @Forward(name = "showDegreeModulesToEnrol",
                 path = "/academicAdminOffice/student/enrollment/bolonha/showDegreeModulesToEnrol.jsp"),
@@ -68,7 +69,7 @@ public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends A
     }
 
     protected boolean hasAnyAdministrativeOfficeFeeAndInsuranceInDebt(final Student student, final ExecutionYear executionYear) {
-        for (final Event event : student.getPerson().getEvents()) {
+        for (final Event event : student.getPerson().getEventsSet()) {
 
             if (event instanceof AnnualEvent) {
                 final AnnualEvent annualEvent = (AnnualEvent) event;
@@ -86,9 +87,9 @@ public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends A
     }
 
     protected boolean hasAnyGratuityDebt(final Student student, final ExecutionYear executionYear) {
-        for (final Registration registration : student.getRegistrations()) {
+        for (final Registration registration : student.getRegistrationsSet()) {
             for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
-                for (final GratuityEvent gratuityEvent : studentCurricularPlan.getGratuityEvents()) {
+                for (final GratuityEvent gratuityEvent : studentCurricularPlan.getGratuityEventsSet()) {
                     if (gratuityEvent.getExecutionYear().isBeforeOrEquals(executionYear) && gratuityEvent.isInDebt()) {
                         return true;
                     }
@@ -131,7 +132,7 @@ public class AcademicAdminOfficeSpecialSeasonBolonhaStudentEnrolmentDA extends A
     }
 
     protected boolean hasStatute(Student student, ExecutionSemester executionSemester, Registration registration) {
-        Collection<StudentStatute> statutes = student.getStudentStatutes();
+        Collection<StudentStatute> statutes = student.getStudentStatutesSet();
         for (StudentStatute statute : statutes) {
             if (!statute.getStatuteType().isSpecialSeasonGranted() && !statute.hasSeniorStatuteForRegistration(registration)) {
                 continue;

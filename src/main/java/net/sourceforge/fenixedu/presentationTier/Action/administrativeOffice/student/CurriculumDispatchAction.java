@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.commons.student;
+package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -63,11 +63,10 @@ import com.google.gson.JsonPrimitive;
  * @author André Fernandes / João Brito
  */
 @Mapping(path = "/viewStudentCurriculum", module = "academicAdministration",
-        formBean = "studentCurricularPlanAndEnrollmentsSelectionForm")
+        formBean = "studentCurricularPlanAndEnrollmentsSelectionForm", functionality = SearchForStudentsDA.class)
 @Forwards({ @Forward(name = "ShowStudentCurriculum", path = "/student/curriculum/displayStudentCurriculum_bd.jsp"),
-        @Forward(name = "ShowStudentCurricularPlans", path = "df.page.showStudentCurricularPlans"),
-        @Forward(name = "ShowStudentCurriculumForCoordinator", path = "df.page.showStudentCurriculumForCoordinator"),
-        @Forward(name = "NotAuthorized", path = "df.page.notAuthorized") })
+        @Forward(name = "ShowStudentCurriculumForCoordinator", path = "/student/curriculum/displayStudentCurriculum_bd.jsp"),
+        @Forward(name = "NotAuthorized", path = "/student/notAuthorized_bd.jsp") })
 public class CurriculumDispatchAction extends FenixDispatchAction {
 
     private static final Logger logger = LoggerFactory.getLogger(CurriculumDispatchAction.class);
@@ -121,7 +120,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
     private List<Registration> getValidRegistrations(Student loggedStudent) {
         List<Registration> result = new ArrayList<Registration>();
 
-        for (Registration registration : loggedStudent.getRegistrations()) {
+        for (Registration registration : loggedStudent.getRegistrationsSet()) {
             if (!registration.isCanceled()) {
                 result.add(registration);
             }
@@ -153,7 +152,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
                 DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanId);
                 registration = student.readRegistrationByDegreeCurricularPlan(degreeCurricularPlan);
             } else {
-                final Collection<Registration> registrations = student.getRegistrations();
+                final Collection<Registration> registrations = student.getRegistrationsSet();
                 if (!registrations.isEmpty()) {
                     registration = registrations.iterator().next();
                 }
@@ -207,7 +206,7 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
             actionForm.set("studentCPID", studentCPID);
         }
         request.setAttribute("selectedStudentCurricularPlans", getSelectedStudentCurricularPlans(registration, studentCPID));
-        request.setAttribute("scpsLabelValueBeanList", getSCPsLabelValueBeanList(registration.getStudentCurricularPlans()));
+        request.setAttribute("scpsLabelValueBeanList", getSCPsLabelValueBeanList(registration.getStudentCurricularPlansSet()));
 
         if (StringUtils.isEmpty(actionForm.getString("viewType"))) {
             actionForm.set("viewType", ViewType.ALL.name());
@@ -261,7 +260,8 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
         String result = request.getParameter("studentCPID");
         if (result == null) {
             result = (String) request.getAttribute("studentCPID");
-        } else if (result == null) {
+        }
+        if (result == null) {
             result = (String) actionForm.get("studentCPID");
         }
 

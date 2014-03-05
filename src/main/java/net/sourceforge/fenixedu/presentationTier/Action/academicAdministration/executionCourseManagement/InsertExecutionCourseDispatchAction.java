@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminExecutionsApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -33,14 +34,18 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "academicAdministration", path = "/insertExecutionCourse", attribute = "insertExecutionCourseForm",
-        formBean = "insertExecutionCourseForm", scope = "request", parameter = "method")
+@StrutsFunctionality(app = AcademicAdminExecutionsApp.class, path = "insert-execution-course",
+        titleKey = "label.manager.executionCourseManagement.insert.executionCourse",
+        accessGroup = "academic(MANAGE_EXECUTION_COURSES)")
+@Mapping(module = "academicAdministration", path = "/insertExecutionCourse", formBean = "insertExecutionCourseForm")
 @Forwards({
         @Forward(name = "firstPage", path = "/academicAdministration/executionCourseManagement/welcomeScreen.jsp"),
         @Forward(name = "insertExecutionCourse",
@@ -51,6 +56,7 @@ public class InsertExecutionCourseDispatchAction extends FenixDispatchAction {
         return prepareInsertExecutionCourse(mapping, form, request, response);
     }
 
+    @EntryPoint
     public ActionForward prepareInsertExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 

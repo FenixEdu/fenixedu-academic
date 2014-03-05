@@ -29,8 +29,11 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/caseHandlingStandaloneIndividualCandidacyProcess", module = "academicAdministration",
-        formBeanClass = StandaloneIndividualCandidacyProcessDA.StandaloneIndividualCandidacyForm.class)
-@Forwards({ @Forward(name = "intro", path = "/caseHandlingStandaloneCandidacyProcess.do?method=listProcessAllowedActivities"),
+        formBeanClass = StandaloneIndividualCandidacyProcessDA.StandaloneIndividualCandidacyForm.class,
+        functionality = StandaloneCandidacyProcessDA.class)
+@Forwards({
+        @Forward(name = "intro",
+                path = "/academicAdministration/caseHandlingStandaloneCandidacyProcess.do?method=listProcessAllowedActivities"),
         @Forward(name = "list-allowed-activities", path = "/candidacy/listIndividualCandidacyActivities.jsp"),
         @Forward(name = "prepare-create-new-process", path = "/candidacy/selectPersonForCandidacy.jsp"),
         @Forward(name = "fill-personal-information", path = "/candidacy/fillPersonalInformation.jsp"),
@@ -43,9 +46,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "cancel-candidacy", path = "/candidacy/cancelCandidacy.jsp"),
         @Forward(name = "create-registration", path = "/candidacy/createRegistration.jsp"),
         @Forward(name = "select-person-for-bind-with-candidacy", path = "/candidacy/selectPersonForBind.jsp"),
-        @Forward(name = "edit-personal-information-for-bind", path = "/candidacy/editPersonalInformationForCandidacyBind.jsp")
-
-})
+        @Forward(name = "edit-personal-information-for-bind", path = "/candidacy/editPersonalInformationForCandidacyBind.jsp") })
 public class StandaloneIndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
 
     static public class StandaloneIndividualCandidacyForm extends FenixActionForm {

@@ -32,17 +32,21 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 @Mapping(path = "/rectifyOldMarkSheet", module = "academicAdministration", formBean = "markSheetManagementForm",
-        input = "/academicAdminOffice/gradeSubmission/oldMarkSheets/rectifyMarkSheetStep1.jsp")
+        input = "/gradeSubmission/oldMarkSheets/rectifyMarkSheetStep1.jsp",
+        functionality = OldMarkSheetSearchDispatchAction.class)
 @Forwards({
         @Forward(name = "rectifyMarkSheetStep1",
-                path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/rectifyMarkSheetStep1.jsp"),
+                path = "/academicAdministration/gradeSubmission/oldMarkSheets/rectifyMarkSheetStep1.jsp"),
         @Forward(name = "rectifyMarkSheetStep2",
-                path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/rectifyMarkSheetStep2.jsp"),
-        @Forward(name = "searchMarkSheet", path = "/oldMarkSheetManagement.do?method=prepareSearchMarkSheet"),
-        @Forward(name = "searchMarkSheetFilled", path = "/oldMarkSheetManagement.do?method=prepareSearchMarkSheetFilled"),
-        @Forward(name = "showRectificationHistoric", path = "/academicAdminOffice/gradeSubmission/showRectificationHistoric.jsp"),
+                path = "/academicAdministration/gradeSubmission/oldMarkSheets/rectifyMarkSheetStep2.jsp"),
+        @Forward(name = "searchMarkSheet",
+                path = "/academicAdministration/oldMarkSheetManagement.do?method=prepareSearchMarkSheet"),
+        @Forward(name = "searchMarkSheetFilled",
+                path = "/academicAdministration/oldMarkSheetManagement.do?method=prepareSearchMarkSheetFilled"),
+        @Forward(name = "showRectificationHistoric",
+                path = "/academicAdministration/gradeSubmission/showRectificationHistoric.jsp"),
         @Forward(name = "rectifyMarkSheetStepOneByEvaluation",
-                path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/rectifyOldMarkSheetEvaluation.jsp") })
+                path = "/academicAdministration/gradeSubmission/oldMarkSheets/rectifyOldMarkSheetEvaluation.jsp") })
 public class OldMarkSheetRectifyDispatchAction extends OldMarkSheetCreateDispatchAction {
 
     @Override

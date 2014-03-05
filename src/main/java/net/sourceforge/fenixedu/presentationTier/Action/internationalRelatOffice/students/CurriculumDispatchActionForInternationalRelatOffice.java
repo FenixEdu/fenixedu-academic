@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.internationalRelatOffice.students;
 
-import net.sourceforge.fenixedu.presentationTier.Action.commons.student.CurriculumDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.CurriculumDispatchAction;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;

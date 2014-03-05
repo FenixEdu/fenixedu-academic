@@ -32,6 +32,7 @@ import net.sourceforge.fenixedu.domain.ReingressionPeriod;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.enrolmentPeriods.EnrolmentPeriodType;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminExecutionsApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -39,10 +40,14 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
@@ -50,6 +55,16 @@ import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
 
+@StrutsFunctionality(app = AcademicAdminExecutionsApp.class, path = "manage-enrolment-periods",
+        titleKey = "title.manage.enrolement.period", accessGroup = "academic(MANAGE_ENROLMENT_PERIODS)")
+@Mapping(module = "academicAdministration", path = "/manageEnrolementPeriods",
+        input = "/manageEnrolementPeriods.do?method=prepare&page=0", formBean = "enrolementPeriodsForm")
+@Forwards({
+        @Forward(name = "editEnrolmentInstructions",
+                path = "/academicAdministration/enrolmentPeriodManagement/editEnrolmentInstructions.jsp"),
+        @Forward(name = "showEnrolementPeriods", path = "/academicAdministration/enrolmentPeriodManagement/enrolementPeriods.jsp"),
+        @Forward(name = "createPeriod", path = "/academicAdministration/enrolmentPeriodManagement/createPeriod.jsp"),
+        @Forward(name = "changePeriodValues", path = "/academicAdministration/enrolmentPeriodManagement/changePeriodValues.jsp") })
 public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
 
     static List<Class<? extends EnrolmentPeriod>> VALID_ENROLMENT_PERIODS = Arrays.<Class<? extends EnrolmentPeriod>> asList(

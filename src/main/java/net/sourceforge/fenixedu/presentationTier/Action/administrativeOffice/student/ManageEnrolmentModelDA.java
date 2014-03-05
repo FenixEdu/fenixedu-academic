@@ -29,7 +29,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-@Mapping(path = "/manageEnrolmentModel", module = "academicAdministration")
+@Mapping(path = "/manageEnrolmentModel", module = "academicAdministration", functionality = SearchForStudentsDA.class)
 @Forwards({ @Forward(name = "showManageEnrolmentModel", path = "/academicAdminOffice/manageEnrolmentModel.jsp") })
 public class ManageEnrolmentModelDA extends FenixDispatchAction {
 

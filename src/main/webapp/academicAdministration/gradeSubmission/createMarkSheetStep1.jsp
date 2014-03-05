@@ -4,8 +4,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.createOldMarkSheet"/></h2>
+<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.createMarkSheet"/></h2>
 
 <p class="breadcumbs"><span class="actual"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.createMarkSheet.step.one"/></span> &gt; <span><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.createMarkSheet.step.two"/></span></p>
 
@@ -22,11 +21,11 @@
 <fr:edit id="edit"
 		 name="edit"
 		 type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementCreateBean"
-		 schema="oldMarkSheet.create.step.one"
-		 action='<%= "/oldCreateMarkSheet.do?method=createMarkSheetStepOne" + urlPath %>'>
-	<fr:destination name="postBack" path="/oldCreateMarkSheet.do?method=prepareSearchMarkSheetPostBack"/>
-	<fr:destination name="invalid" path="/oldCreateMarkSheet.do?method=prepareSearchMarkSheetInvalid"/>
-	<fr:destination name="cancel" path='<%= "/oldCreateMarkSheet.do?method=backSearchMarkSheet" + urlPath %>'/>
+		 schema="markSheet.create.step.one"
+		 action='<%= "/createMarkSheet.do?method=createMarkSheetStepOne" + urlPath %>'>
+	<fr:destination name="postBack" path="/createMarkSheet.do?method=prepareSearchMarkSheetPostBack"/>
+	<fr:destination name="invalid" path="/createMarkSheet.do?method=prepareSearchMarkSheetInvalid"/>
+	<fr:destination name="cancel" path='<%= "/createMarkSheet.do?method=backSearchMarkSheet" + urlPath %>'/>
 	<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle5 thright thlight ulnomargin"/>
 	        <fr:property name="columnClasses" value=",,tdclear tderror1"/>

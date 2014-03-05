@@ -29,7 +29,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-@Mapping(path = "/manageRegistrationState", module = "academicAdministration")
+@Mapping(path = "/manageRegistrationState", module = "academicAdministration", functionality = SearchForStudentsDA.class)
 @Forwards({
         @Forward(name = "showRegistrationStates", path = "/academicAdminOffice/student/registration/manageRegistrationState.jsp"),
         @Forward(name = "deleteActualInfoConfirm",

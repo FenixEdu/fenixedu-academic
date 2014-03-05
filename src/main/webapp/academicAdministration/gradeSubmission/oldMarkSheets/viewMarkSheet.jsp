@@ -6,7 +6,6 @@
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt"%>
 
 <%@ page import="net.sourceforge.fenixedu.util.FenixDigestUtils"%>
-<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.viewMarkSheet"/></h2>
 <logic:messagesPresent message="true">
 	<ul>
@@ -16,7 +15,7 @@
 	</ul>
 </logic:messagesPresent>
 
-<html:form action="/markSheetManagement.do">
+<html:form action="/oldMarkSheetManagement.do">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="choosePrinter"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.epID" property="epID" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.dID" property="dID" />
@@ -65,7 +64,7 @@
 				</td>
 				<td>
 					<% if(enrolmentEvaluation.getEnrolmentEvaluationState() == net.sourceforge.fenixedu.util.EnrolmentEvaluationState.RECTIFIED_OBJ) { %>
-						<html:link action='<%= "/markSheetManagement.do?method=prepareViewRectificationMarkSheet" + url %>' paramId="evaluationID" paramName="enrolmentEvaluation" paramProperty="externalId">
+						<html:link action='<%= "/oldMarkSheetManagement.do?method=prepareViewRectificationMarkSheet" + url %>' paramId="evaluationID" paramName="enrolmentEvaluation" paramProperty="externalId">
 							<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.rectified"/>
 						</html:link>
 					<% } %>

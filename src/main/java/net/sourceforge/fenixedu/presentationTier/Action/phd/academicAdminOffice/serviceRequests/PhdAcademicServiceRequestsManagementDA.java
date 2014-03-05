@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceReq
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestCreateBean;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdDA;
+import net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice.PhdIndividualProgramProcessDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -23,7 +24,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/phdAcademicServiceRequestManagement", module = "academicAdministration")
+@Mapping(path = "/phdAcademicServiceRequestManagement", module = "academicAdministration",
+        functionality = PhdIndividualProgramProcessDA.class)
 @Forwards({
         @Forward(name = "prepareCreateNewRequest", path = "/phd/academicAdminOffice/serviceRequests/prepareCreateNewRequest.jsp"),
         @Forward(name = "viewPhdAcademicServiceRequestsHistoric",

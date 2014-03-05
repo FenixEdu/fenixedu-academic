@@ -5,6 +5,10 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
+<script type="text/javascript" src="<%= request.getContextPath() %>/javaScript/drag-drop-folder-tree/js/ajax.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/javaScript/drag-drop-folder-tree/js/drag-drop-folder-tree.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/javaScript/drag-drop-folder-tree/js/tree-renderer.js"></script>
+
 <html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<p>
 		<span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>

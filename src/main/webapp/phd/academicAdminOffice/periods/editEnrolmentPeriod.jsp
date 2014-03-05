@@ -12,7 +12,7 @@
 <%-- ### End of Title ### --%>
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
-<html:link action="/phdIndividualProgramProcess.do?method=manageEnrolmentPeriods">
+<html:link action="/managePhdEnrolmentPeriods.do?method=manageEnrolmentPeriods">
 	<bean:message bundle="PHD_RESOURCES" key="label.back"/>
 </html:link>
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
@@ -22,7 +22,7 @@
 <%--  ### End of Error Messages  ### --%>
 
 
-<fr:edit id="enrolmentPeriod" name="enrolmentPeriod" action="/phdIndividualProgramProcess.do?method=manageEnrolmentPeriods">
+<fr:edit id="enrolmentPeriod" name="enrolmentPeriod" action="/managePhdEnrolmentPeriods.do?method=manageEnrolmentPeriods">
 
 	<fr:schema bundle="PHD_RESOURCES" type="<%= EnrolmentPeriod.class.getName() %>">
 		<fr:slot name="startDate" />

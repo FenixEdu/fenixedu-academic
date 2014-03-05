@@ -25,18 +25,16 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/studentInternalSubstitutions", module = "academicAdministration", formBean = "studentDismissalForm")
+@Mapping(path = "/studentInternalSubstitutions", module = "academicAdministration", formBean = "studentDismissalForm",
+        functionality = SearchForStudentsDA.class)
 @Forwards({
-
         @Forward(name = "manage", path = "/academicAdminOffice/dismissal/managementDismissals.jsp"),
         @Forward(name = "chooseDismissalEnrolments",
                 path = "/academicAdminOffice/dismissal/chooseInternalSubstitutionEnrolments.jsp"),
         @Forward(name = "chooseEquivalents", path = "/academicAdminOffice/dismissal/chooseInternalSubstitutionEquivalents.jsp"),
         @Forward(name = "confirmCreateDismissals", path = "/academicAdminOffice/dismissal/confirmCreateInternalSubstitution.jsp"),
         @Forward(name = "chooseNotNeedToEnrol",
-                path = "/academicAdminOffice/dismissal/chooseInternalSubstitutionNotNeedToEnrol.jsp")
-
-})
+                path = "/academicAdminOffice/dismissal/chooseInternalSubstitutionNotNeedToEnrol.jsp") })
 public class StudentInternalSubstitutionsDA extends StudentDismissalsDA {
 
     /**

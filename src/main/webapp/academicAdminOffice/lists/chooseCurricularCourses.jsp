@@ -6,7 +6,6 @@
 <%@page import="net.sourceforge.fenixedu.domain.ExecutionYear"%>
 <html:xhtml />
 
-<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
 <h2>
 	<bean:message key="label.studentsListByCurricularCourse" bundle="ACADEMIC_OFFICE_RESOURCES" />
 </h2>

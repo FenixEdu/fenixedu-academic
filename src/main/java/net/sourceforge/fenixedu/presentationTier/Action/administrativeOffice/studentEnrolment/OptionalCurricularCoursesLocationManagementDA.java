@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.EnrollmentDomainException;
+import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.SearchForStudentsDA;
 import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.studentEnrolment.OptionalCurricularCoursesLocationManagementDA.OptionalCurricularCoursesLocationForm;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
@@ -29,14 +30,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/optionalCurricularCoursesLocation", module = "academicAdministration",
-        formBeanClass = OptionalCurricularCoursesLocationForm.class)
+        formBeanClass = OptionalCurricularCoursesLocationForm.class, functionality = SearchForStudentsDA.class)
 @Forwards({
         @Forward(name = "showEnrolments", path = "/academicAdminOffice/curriculum/enrolments/location/showEnrolments.jsp"),
         @Forward(name = "chooseNewDestination",
                 path = "/academicAdminOffice/curriculum/enrolments/location/chooseNewDestination.jsp"),
-        @Forward(name = "backToStudentEnrolments", path = "/studentEnrolments.do?method=prepare")
-
-})
+        @Forward(name = "backToStudentEnrolments", path = "/academicAdministration/studentEnrolments.do?method=prepare") })
 public class OptionalCurricularCoursesLocationManagementDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

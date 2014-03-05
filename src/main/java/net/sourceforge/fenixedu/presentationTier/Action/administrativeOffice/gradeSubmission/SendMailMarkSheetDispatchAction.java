@@ -32,8 +32,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/markSheetSendMail", module = "academicAdministration", formBean = "markSheetSendMailForm",
-        input = "/academicAdminOffice/gradeSubmission/searchSendMail.jsp")
-@Forwards({ @Forward(name = "searchSendMail", path = "/academicAdminOffice/gradeSubmission/searchSendMail.jsp") })
+        input = "/gradeSubmission/searchSendMail.jsp", functionality = MarkSheetSearchDispatchAction.class)
+@Forwards({ @Forward(name = "searchSendMail", path = "/academicAdministration/gradeSubmission/searchSendMail.jsp") })
 public class SendMailMarkSheetDispatchAction extends MarkSheetDispatchAction {
 
     public ActionForward prepareSearchSendMail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

@@ -6,7 +6,6 @@
 <%@ page import="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType"%>
 <html:xhtml />
 
-<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
 <h2>
 	<bean:message key="label.requestListByDegree" bundle="ACADEMIC_OFFICE_RESOURCES" />
 </h2>

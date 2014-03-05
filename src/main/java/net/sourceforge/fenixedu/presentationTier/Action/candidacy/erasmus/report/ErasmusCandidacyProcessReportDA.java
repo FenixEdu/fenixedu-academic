@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.reports.ErasmusCandidacyProcessReport;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusCandidacyProcessDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -15,7 +16,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/erasmusCandidacyProcessReport", module = "academicAdministration")
+@Mapping(path = "/erasmusCandidacyProcessReport", module = "academicAdministration",
+        functionality = ErasmusCandidacyProcessDA.class)
 @Forwards({ @Forward(name = "list", path = "/candidacy/erasmus/reports/list.jsp") })
 public class ErasmusCandidacyProcessReportDA extends FenixDispatchAction {
 

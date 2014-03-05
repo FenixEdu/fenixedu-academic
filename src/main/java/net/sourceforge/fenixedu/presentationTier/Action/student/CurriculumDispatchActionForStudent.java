@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.student;
 
-import net.sourceforge.fenixedu.presentationTier.Action.commons.student.CurriculumDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.CurriculumDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentViewApp;
 
 import org.fenixedu.bennu.portal.StrutsFunctionality;

@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.CurricularPlansManagement;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -14,7 +15,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/viewAllCurriculumLinesOfCurricularCourse", module = "academicAdministration")
+@Mapping(path = "/viewAllCurriculumLinesOfCurricularCourse", module = "academicAdministration",
+        functionality = CurricularPlansManagement.class)
 @Forwards({ @Forward(name = "viewCurriculumLinesOfCurricularCourse",
         path = "/academicAdministration/bolonha/enrolments/information/viewCurriculumLinesOfCurricularCourse.jsp") })
 public class ViewAllCurriculumLinesOfCurricularCourseDA extends FenixDispatchAction {

@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProc
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess.RevertToWaitingForComissionConstitution;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessStateBean;
+import net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice.PhdIndividualProgramProcessDA;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.seminar.CommonPublicPresentationSeminarDA;
 
 import org.apache.struts.action.ActionForm;
@@ -23,26 +24,16 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/publicPresentationSeminarProcess", module = "academicAdministration")
-@Forwards({
-
-@Forward(name = "submitComission", path = "/phd/seminar/academicAdminOffice/submitComission.jsp"),
-
-@Forward(name = "validateComission", path = "/phd/seminar/academicAdminOffice/validateComission.jsp"),
-
-@Forward(name = "schedulePresentationDate", path = "/phd/seminar/academicAdminOffice/schedulePresentationDate.jsp"),
-
-@Forward(name = "uploadReport", path = "/phd/seminar/academicAdminOffice/uploadReport.jsp"),
-
-@Forward(name = "validateReport", path = "/phd/seminar/academicAdminOffice/validateReport.jsp"),
-
-@Forward(name = "manageStates", path = "/phd/seminar/academicAdminOffice/manageStates.jsp"),
-
-@Forward(name = "editProcessAttributes", path = "/phd/seminar/academicAdminOffice/editProcessAttributes.jsp"),
-
-@Forward(name = "editPhdProcessState", path = "/phd/seminar/academicAdminOffice/editState.jsp")
-
-})
+@Mapping(path = "/publicPresentationSeminarProcess", module = "academicAdministration",
+        functionality = PhdIndividualProgramProcessDA.class)
+@Forwards({ @Forward(name = "submitComission", path = "/phd/seminar/academicAdminOffice/submitComission.jsp"),
+        @Forward(name = "validateComission", path = "/phd/seminar/academicAdminOffice/validateComission.jsp"),
+        @Forward(name = "schedulePresentationDate", path = "/phd/seminar/academicAdminOffice/schedulePresentationDate.jsp"),
+        @Forward(name = "uploadReport", path = "/phd/seminar/academicAdminOffice/uploadReport.jsp"),
+        @Forward(name = "validateReport", path = "/phd/seminar/academicAdminOffice/validateReport.jsp"),
+        @Forward(name = "manageStates", path = "/phd/seminar/academicAdminOffice/manageStates.jsp"),
+        @Forward(name = "editProcessAttributes", path = "/phd/seminar/academicAdminOffice/editProcessAttributes.jsp"),
+        @Forward(name = "editPhdProcessState", path = "/phd/seminar/academicAdminOffice/editState.jsp") })
 public class PublicPresentationSeminarProcessDA extends CommonPublicPresentationSeminarDA {
 
     public ActionForward revertToWaitingForComissionConstitution(ActionMapping mapping, ActionForm form,

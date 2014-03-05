@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminInstitutionsApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -37,12 +38,16 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@StrutsFunctionality(app = AcademicAdminInstitutionsApp.class, path = "external-units", titleKey = "label.externalUnits",
+        accessGroup = "academic(MANAGE_EXTERNAL_UNITS)")
 @Mapping(path = "/externalUnits", module = "academicAdministration", formBean = "externalUnitsForm")
 @Forwards({
         @Forward(name = "searchExternalUnits", path = "/academicAdminOffice/externalUnits/searchExternalUnit.jsp"),
@@ -64,6 +69,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "prepareEditExternalEnrolment", path = "/academicAdminOffice/externalUnits/editExternalEnrolment.jsp") })
 public class ExternalUnitsDispatchAction extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepareSearch(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         request.setAttribute("searchBean", new ExternalUnitsSearchBean());

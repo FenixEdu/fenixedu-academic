@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarRootEntry;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminCalendarsApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagram;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
@@ -21,6 +22,8 @@ import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.DateTime;
 import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
@@ -31,9 +34,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
+@StrutsFunctionality(app = AcademicAdminCalendarsApp.class, path = "manage", titleKey = "title.academic.calendars.management",
+        accessGroup = "academic(MANAGE_ACADEMIC_CALENDARS)")
 @Mapping(module = "academicAdministration", path = "/academicCalendarsManagement", input = "/index.do",
-        attribute = "academicCalendarsManagementForm", formBean = "academicCalendarsManagementForm", scope = "request",
-        parameter = "method")
+        formBean = "academicCalendarsManagementForm")
 @Forwards(
         value = {
                 @Forward(name = "viewAcademicCalendar",
@@ -57,6 +61,7 @@ public class AcademicCalendarsManagementDA extends FenixDispatchAction {
         return mapping.findForward("prepareCreateCalendarEntry");
     }
 
+    @EntryPoint
     public ActionForward prepareChooseCalendar(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 

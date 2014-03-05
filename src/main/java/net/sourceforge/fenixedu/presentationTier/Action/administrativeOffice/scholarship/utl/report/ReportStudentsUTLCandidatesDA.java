@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminScholarshipsApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -16,20 +17,23 @@ import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@StrutsFunctionality(app = AcademicAdminScholarshipsApp.class, path = "report-students-utl",
+        titleKey = "label.academicAdminOffice.scholarship.utl.report", accessGroup = "academic(REPORT_STUDENTS_UTL_CANDIDATES)")
 @Mapping(path = "/reportStudentsUTLCandidates", module = "academicAdministration")
-@Forwards({
-
-@Forward(name = "prepare", path = "/academicAdminOffice/scholarship/utl/report/prepare.jsp"),
+@Forwards({ @Forward(name = "prepare", path = "/academicAdminOffice/scholarship/utl/report/prepare.jsp"),
         @Forward(name = "showReport", path = "/academicAdminOffice/scholarship/utl/report/showReport.jsp"),
         @Forward(name = "viewDetails", path = "/academicAdminOffice/scholarship/utl/report/viewDetails.jsp"),
         @Forward(name = "prepareForOneStudent", path = "/academicAdminOffice/scholarship/utl/report/prepareForOneStudent.jsp") })
 public class ReportStudentsUTLCandidatesDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         ReportStudentsUTLCandidatesBean bean = new ReportStudentsUTLCandidatesBean();
         request.setAttribute("bean", bean);
