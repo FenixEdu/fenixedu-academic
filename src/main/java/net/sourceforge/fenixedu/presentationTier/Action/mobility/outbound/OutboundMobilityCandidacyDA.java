@@ -98,15 +98,15 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         return prepare(mapping, request, outboundMobilityContextBean);
     }
 
-    public ActionForward deletePeriod(final ActionMapping mapping, final ActionForm actionForm,
-            final HttpServletRequest request, final HttpServletResponse response) {
+    public ActionForward deletePeriod(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+            final HttpServletResponse response) {
         final OutboundMobilityCandidacyPeriod candidacyPeriod = getDomainObject(request, "candidacyPeriodOid");
         candidacyPeriod.delete();
         final OutboundMobilityContextBean outboundMobilityContextBean = new OutboundMobilityContextBean();
         RenderUtils.invalidateViewState();
         return prepare(mapping, request, outboundMobilityContextBean);
     }
-    
+
     public ActionForward addCandidateOption(final ActionMapping mapping, final ActionForm actionForm,
             final HttpServletRequest request, final HttpServletResponse response) {
         final OutboundMobilityContextBean outboundMobilityContextBean = getRenderedObject();
@@ -206,7 +206,14 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
     public ActionForward manageCandidacies(final ActionMapping mapping, final ActionForm actionForm,
             final HttpServletRequest request, final HttpServletResponse response) {
         final OutboundMobilityContextBean outboundMobilityContextBean = getRenderedObject();
+
+        //There's no mobility groups
+        if (outboundMobilityContextBean.getMobilityGroups().size() == 0) {
+            return prepare(mapping, request, outboundMobilityContextBean);
+        }
+
         request.setAttribute("outboundMobilityContextBean", outboundMobilityContextBean);
+
         return mapping.findForward("manageCandidacies");
     }
 
