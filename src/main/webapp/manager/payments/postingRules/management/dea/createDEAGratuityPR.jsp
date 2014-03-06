@@ -5,8 +5,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<!-- createPaymentPlan.jsp -->
-
 <h2><bean:message
 	key="label.payments.postingRules.createDEAGratuityPR"
 	bundle="MANAGER_RESOURCES" /></h2>
