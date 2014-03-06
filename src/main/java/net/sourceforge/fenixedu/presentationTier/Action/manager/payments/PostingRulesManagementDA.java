@@ -277,10 +277,9 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
 
     public ActionForward deleteDegreeCurricularPlanPostingRule(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixServiceException {
-        PostingRule postingRule = getPostingRule(request);
 
         try {
-            PostingRulesManager.deletePostingRule(postingRule);
+            PostingRulesManager.deletePostingRule(getPostingRule(request));
         } catch (DomainException e) {
             addActionMessage(request, e.getKey(), e.getArgs());
         }
@@ -822,17 +821,13 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
 
         InstallmentBean installment = getInstallment();
 
-        StandaloneInstallmentBean standaloneInstallment = null;
+        StandaloneInstallmentBean standaloneInstallment = (StandaloneInstallmentBean) installment;
 
-        if (installment instanceof StandaloneInstallmentBean) {
-            standaloneInstallment = (StandaloneInstallmentBean) installment;
+        if (!installment.hasRequiredInformation()) {
+            addActionMessage("installment", request,
+                    "label.payments.postingRules.paymentPlan.information.to.create.installment.is.all.required");
 
-            if (!installment.hasRequiredInformation()) {
-                addActionMessage("installment", request,
-                        "label.payments.postingRules.paymentPlan.information.to.create.installment.is.all.required");
-
-                return createDEAGratuityPRInvalid(mapping, form, request, response);
-            }
+            return createDEAGratuityPRInvalid(mapping, form, request, response);
         }
 
         try {
