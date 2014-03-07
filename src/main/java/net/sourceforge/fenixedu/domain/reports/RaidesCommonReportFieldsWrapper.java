@@ -470,6 +470,8 @@ public class RaidesCommonReportFieldsWrapper {
         row.setCell(personalInformationBean.getConclusionGrade() != null ? personalInformationBean.getConclusionGrade() : "");
 
         MobilityAgreement mobilityAgreement = null;
+        ExecutionInterval chosenCandidacyInterval = null;
+        //getting the last mobility program done
         for (OutboundMobilityCandidacySubmission outboundCandidacySubmission : registration
                 .getOutboundMobilityCandidacySubmissionSet()) {
             if (outboundCandidacySubmission.getSelectedCandidacy() != null
@@ -477,11 +479,16 @@ public class RaidesCommonReportFieldsWrapper {
                 ExecutionInterval candidacyInterval =
                         outboundCandidacySubmission.getOutboundMobilityCandidacyPeriod().getExecutionInterval();
                 //the candidacies are made in the previous year
-                if (executionYear.getPreviousExecutionYear() == candidacyInterval) {
+                if (candidacyInterval.getAcademicInterval().isBefore(executionYear.getAcademicInterval())) {
+                    if (mobilityAgreement != null) {
+                        if (!candidacyInterval.getAcademicInterval().isAfter(chosenCandidacyInterval.getAcademicInterval())) {
+                            continue;
+                        }
+                    }
                     mobilityAgreement =
                             outboundCandidacySubmission.getSelectedCandidacy().getOutboundMobilityCandidacyContest()
                                     .getMobilityAgreement();
-                    break;
+                    chosenCandidacyInterval = candidacyInterval;
                 }
             }
         }
