@@ -45,18 +45,18 @@ public class GiafSync extends CronTask {
 
         PrintWriter logWriter = getTaskLogWriter();
         new UpdatePersonsFromGiaf().process(metadata, logWriter, logger);
-        new ImportPersonProfessionalData().processChanges(metadata, logWriter, logger);
-        new ImportPersonContractSituationsFromGiaf().processChanges(metadata, logWriter, logger);
-        new ImportPersonProfessionalCategoriesFromGiaf().processChanges(metadata, logWriter, logger);
-        new ImportPersonProfessionalContractsFromGiaf().processChanges(metadata, logWriter, logger);
-        new ImportPersonProfessionalRegimesFromGiaf().processChanges(metadata, logWriter, logger);
-        new ImportPersonProfessionalRelationsFromGiaf().processChanges(metadata, logWriter, logger);
-        new ImportPersonFunctionsAccumulationsFromGiaf().processChanges(metadata, logWriter, logger);
-        new ImportPersonSabbaticalsFromGiaf().processChanges(metadata, logWriter, logger);
-        new ImportPersonServiceExemptionsFromGiaf().processChanges(metadata, logWriter, logger);
-        new ImportPersonGrantOwnerEquivalentFromGiaf().processChanges(metadata, logWriter, logger);
-        new ImportPersonAbsencesFromGiaf().processChanges(metadata, logWriter, logger);
-        new ImportEmployeeUnitsFromGiaf().processChanges(metadata, logWriter, logger);
+        new ImportPersonProfessionalData().process(metadata, logWriter, logger);
+        new ImportPersonContractSituationsFromGiaf().process(metadata, logWriter, logger);
+        new ImportPersonProfessionalCategoriesFromGiaf().process(metadata, logWriter, logger);
+        new ImportPersonProfessionalContractsFromGiaf().process(metadata, logWriter, logger);
+        new ImportPersonProfessionalRegimesFromGiaf().process(metadata, logWriter, logger);
+        new ImportPersonProfessionalRelationsFromGiaf().process(metadata, logWriter, logger);
+        new ImportPersonFunctionsAccumulationsFromGiaf().process(metadata, logWriter, logger);
+        new ImportPersonSabbaticalsFromGiaf().process(metadata, logWriter, logger);
+        new ImportPersonServiceExemptionsFromGiaf().process(metadata, logWriter, logger);
+        new ImportPersonGrantOwnerEquivalentFromGiaf().process(metadata, logWriter, logger);
+        new ImportPersonAbsencesFromGiaf().process(metadata, logWriter, logger);
+        new ImportEmployeeUnitsFromGiaf().process(metadata, logWriter, logger);
     }
 
     @Atomic(mode = TxMode.WRITE)
