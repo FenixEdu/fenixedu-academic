@@ -857,6 +857,14 @@ public class FenixAPIv1 {
 
     @GET
     @Produces(JSON_UTF8)
+    @Path("canteen")
+    @FenixAPIPublic
+    public String canteen() {
+        return FenixAPICanteen.get();
+    }
+
+    @GET
+    @Produces(JSON_UTF8)
     @Path("degrees/all")
     @FenixAPIPublic
     public Set<FenixDegree> degreesAll() {
@@ -1546,5 +1554,5 @@ public class FenixAPIv1 {
     public String domainModel() {
         return new FenixDomainModel().toJSONString();
     }
-    
+
 }
