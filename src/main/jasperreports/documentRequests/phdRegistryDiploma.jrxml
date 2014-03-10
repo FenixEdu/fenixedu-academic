@@ -112,14 +112,18 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{thesisTitle}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-6" positionType="Float" x="0" y="218" width="455" height="30"/>
+				<reportElement key="textField-6" positionType="Float" x="0" y="218" width="455" height="30" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[!$P{university}.isEmpty()]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font fontName="Times New Roman" size="14" pdfFontName="tnr.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{university}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-6" positionType="Float" x="0" y="188" width="455" height="31"/>
+				<reportElement key="textField-6" positionType="Float" x="0" y="188" width="455" height="31" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[!$P{by}.isEmpty()]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font fontName="Times New Roman" size="12" pdfFontName="tnr.ttf" isPdfEmbedded="true"/>
 				</textElement>

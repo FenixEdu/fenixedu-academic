@@ -51,15 +51,15 @@ public class PhdRegistryDiploma extends RegistryDiploma {
         String fifthParagraph;
         if (getUniversity(new DateTime()) != getUniversity(getDocumentRequest().getConclusionDate().toDateTimeAtCurrentTime())) {
             fifthParagraph = getResourceBundle().getString("label.phd.registryDiploma.phdFifthParagraph.UTL");
+            addParameter("by", getResourceBundle().getString("label.by.university"));
         } else {
             fifthParagraph = getResourceBundle().getString("label.phd.registryDiploma.phdFifthParagraph");
+            addParameter("university", "");
+            addParameter("by", "");
         }
 
         addParameter("fifthParagraph", MessageFormat.format(fifthParagraph, getDocumentRequest().getFinalAverage(getLocale())));
-        addParameter("by", getResourceBundle().getString("label.by.university"));
-
         setFooter();
-
     }
 
     @Override

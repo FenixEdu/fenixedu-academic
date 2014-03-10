@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOff
 
 import java.text.MessageFormat;
 
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
@@ -36,19 +37,22 @@ public class PhdDiploma extends AdministrativeOfficeDocument {
         String universityName = university.getPartyName().getPreferedContent();
 
         PhdDiplomaRequest diplomaRequest = getDocumentRequest();
-        String phdProgram = getResourceBundle().getString("label.phd.diploma.pdhProgram");
+        String phdProgramConclusion = getResourceBundle().getString("label.phd.diploma.pdhProgramConclusion");
+        ExecutionYear conclusionYear = ExecutionYear.readByDateTime(diplomaRequest.getConclusionDate());
         String phdProgramDescription =
-                getDocumentRequest().getPhdIndividualProgramProcess().getPhdProgram().getDegree().getNameI18N()
+                getDocumentRequest().getPhdIndividualProgramProcess().getPhdProgram().getDegree().getNameI18N(conclusionYear)
                         .getContent(getLanguage());
+        String phdConclusionDate = getResourceBundle().getString("label.phd.diploma.pdhConclusionDate");
 
+        addParameter("conclusionMessage", phdProgramConclusion);
+        addParameter("phdProgram", phdProgramDescription);
         addParameter(
-                "phdProgram",
-                MessageFormat.format(phdProgram, phdProgramDescription,
-                        diplomaRequest.getConclusionDate().toString(getDatePattern(), getLocale())));
+                "conclusionDate",
+                MessageFormat.format(phdConclusionDate, diplomaRequest.getConclusionDate()
+                        .toString(getDatePattern(), getLocale()).toLowerCase()));
 
         addParameter("documentNumber", getResourceBundle().getString("label.diploma.documentNumber"));
         addParameter("registryCode", diplomaRequest.hasRegistryCode() ? diplomaRequest.getRegistryCode().getCode() : null);
-        addParameter("conclusionDate", diplomaRequest.getConclusionDate().toString(getDatePattern(), getLocale()));
         addParameter("institutionName", Bennu.getInstance().getInstitutionUnit().getName());
         addParameter("day", MessageFormat.format(getResourceBundle().getString("label.diploma.university.actualDate"),
                 universityName, getFormatedCurrentDate()));
@@ -75,7 +79,7 @@ public class PhdDiploma extends AdministrativeOfficeDocument {
     }
 
     private String getFormatedCurrentDate() {
-        return new LocalDate().toString(getDatePattern(), getLocale());
+        return new LocalDate().toString(getDatePattern(), getLocale()).toLowerCase();
     }
 
     private String getDatePattern() {
