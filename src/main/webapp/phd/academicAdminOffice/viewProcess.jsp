@@ -14,7 +14,6 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditPhdParticipant"  %>
 <%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DissociateRegistration" %>
 
-<bean:define id="program" name="process" property="phdProgram" type="net.sourceforge.fenixedu.domain.phd.PhdProgram" />
 
 <%-- ### Title #### --%>
 <h2><bean:message key="label.phd.viewProcess" bundle="PHD_RESOURCES" /></h2>
@@ -152,13 +151,16 @@
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.accounting.events.create"/>
 				</html:link>
 			</li>
-			<academic:allowed operation="MANAGE_STUDENT_PAYMENTS" program="<%= program %>">
-			<li>
-				<html:link action="/payments.do?method=showOperations" target="_blank" paramId="personId" paramName="process" paramProperty="person.externalId">
-					<bean:message bundle="PHD_RESOURCES" key="label.phd.payments"/>
-				</html:link>
-			</li>
-			</academic:allowed>
+			<logic:present name="process" property="phdProgram">
+				<bean:define id="program" name="process" property="phdProgram" type="net.sourceforge.fenixedu.domain.phd.PhdProgram" />
+				<academic:allowed operation="MANAGE_STUDENT_PAYMENTS" program="<%= program %>">
+					<li>
+						<html:link action="/payments.do?method=showOperations" target="_blank" paramId="personId" paramName="process" paramProperty="person.externalId">
+							<bean:message bundle="PHD_RESOURCES" key="label.phd.payments"/>
+						</html:link>
+					</li>
+				</academic:allowed>
+			</logic:present>
 			<li>
 				<html:link action="/fctDebts.do?method=viewDebtsForProcess" target="_blank" paramId="processId" paramName="process" paramProperty="externalId">
 					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.scolarships.fct" />
@@ -268,6 +270,9 @@
 <jsp:include page="viewCandidacyProcess.jsp" />
 
 <%-- Academic Service Requests --%>
-<academic:allowed operation="SERVICE_REQUESTS" program="<%= program %>">
-<jsp:include page="viewAcademicServiceRequests.jsp" />
-</academic:allowed>
+<logic:present name="process" property="phdProgram">
+	<bean:define id="program" name="process" property="phdProgram" type="net.sourceforge.fenixedu.domain.phd.PhdProgram" />
+	<academic:allowed operation="SERVICE_REQUESTS" program="<%= program %>">
+		<jsp:include page="viewAcademicServiceRequests.jsp" />
+	</academic:allowed>
+</logic:present>

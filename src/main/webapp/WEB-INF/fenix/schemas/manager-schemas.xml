@@ -94,6 +94,12 @@
 	<slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 	</slot>		
+	<slot name="givenNames" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+	</slot>
+	<slot name="familyNames">
+		<property name="size" value="50"/>
+	</slot>		
     <slot name="gender" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
     <slot name="socialSecurityNumber"/>
     <slot name="profession"/>

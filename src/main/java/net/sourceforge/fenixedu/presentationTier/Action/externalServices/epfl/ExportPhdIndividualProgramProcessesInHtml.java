@@ -50,7 +50,7 @@ public class ExportPhdIndividualProgramProcessesInHtml {
     private static final Logger logger = LoggerFactory.getLogger(ExportPhdIndividualProgramProcessesInHtml.class);
 
     // TODO: IST-<Collaboration>: collaboration must be added as argument
-    static final private String APPLICATION_NAME = "Application to the IST-EPFL Joint Doctoral Initiative";
+    static final private String APPLICATION_NAME = "Application to FCT Doctoral Programmes";
     static final private String APPLICATION_PREFIX_LINK = "";
 
     static byte[] exportPresentationPage() throws IOException {

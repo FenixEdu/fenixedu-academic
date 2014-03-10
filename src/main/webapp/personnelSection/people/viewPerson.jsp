@@ -598,6 +598,7 @@
 			<fr:layout name="tabular">
 				<fr:property name="classes"
 					value="tstyle2 thleft thlight mtop15 thwhite" />
+				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 			</fr:layout>
 		</fr:edit>
 

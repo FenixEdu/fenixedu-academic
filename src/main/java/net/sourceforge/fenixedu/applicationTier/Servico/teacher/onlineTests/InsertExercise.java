@@ -141,8 +141,7 @@ public class InsertExercise {
     private Collection<List<LabelValueBean>> getListOfExercisesList(UploadedFile xmlZipFile) {
         Map<String, List<LabelValueBean>> xmlListMap = new HashMap<String, List<LabelValueBean>>();
         try {
-            if (xmlZipFile.getContentType().equals("application/x-zip-compressed")
-                    || xmlZipFile.getContentType().equals("application/zip")) {
+            if (validFileFormat(xmlZipFile.getContentType(), xmlZipFile.getName())) {
                 xmlListMap = readFromZip(xmlListMap, xmlZipFile.getInputStream(), "");
             } else {
                 List<LabelValueBean> xmlList = new ArrayList<LabelValueBean>();
@@ -161,6 +160,20 @@ public class InsertExercise {
         }
 
         return xmlListMap.values();
+    }
+
+    private boolean validFileFormat(String contentType, String fileExtension) {
+        //Zip file
+        if (contentType.equals("application/zip") || contentType.equals("application/x-zip")
+                || contentType.equals("application/x-zip-compressed") || contentType.equals("multipart/x-zip")) {
+            return true;
+        }
+        //Zip file. Sometimes browser dont recognize the zip format and send like unknown application
+        if (contentType.equals("application/octet-stream") || contentType.equals("application/x-compress")
+                || contentType.equals("application/x-compressed")) {
+            return fileExtension.endsWith(".zip");
+        }
+        return false;
     }
 
     private Map<String, List<LabelValueBean>> readFromZip(Map<String, List<LabelValueBean>> xmlListMap,

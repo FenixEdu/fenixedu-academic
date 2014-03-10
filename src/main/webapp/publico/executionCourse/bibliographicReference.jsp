@@ -7,7 +7,9 @@
 
 <bean:define id="competenceCoursesInformations" name="executionCourse" property="competenceCoursesInformations"/>
 
-<h2>Bibliografia</h2>
+<h2>
+	<bean:message key="title.bibliography"/>
+</h2>
 
 
 <logic:equal name="executionCourse" property="hasAnyMainBibliographicReference" value="true">

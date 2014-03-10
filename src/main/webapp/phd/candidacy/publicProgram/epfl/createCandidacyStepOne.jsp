@@ -8,7 +8,7 @@
 <%-- ### Title #### --%>
 <div class="breadcumbs">
 	<a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
-	<a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>en/about-IST/global-cooperation/IST-EPFL/">IST-EPFL</a> &gt;
+	<a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>en/education/fct-phd-programmes/">FCT Doctoral Programmes</a> &gt;
 	<bean:message key="title.submit.application" bundle="CANDIDATE_RESOURCES"/>
 </div>
 
@@ -146,8 +146,8 @@
 		</fieldset>
 		</div>
 		
-		<p>Note: all the information required for the application process will be shared by both <a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> and <a href="http://www.epfl.ch/">EPFL</a>.</p>
-		
+		<p>Note: all the information required for the application process will be shared by all the institutional partners of the doctoral programme.</p>
+
 		<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.continue"/></html:submit></p>
 	</fr:form>
 </logic:present>
