@@ -7,6 +7,9 @@
 
 
 <logic:present role="role(COORDINATOR)">
+
+	<jsp:include page="/coordinator/context.jsp" />
+
 	<h2><bean:message key="label.curricularPlan"
 		bundle="APPLICATION_RESOURCES" /> - <bean:write name="registration" property="lastStudentCurricularPlan.degreeCurricularPlan.presentationName"/></h2>
 		

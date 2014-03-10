@@ -7,6 +7,7 @@
 
 <html:xhtml/>
 
+<jsp:include page="/coordinator/context.jsp" />
 
 <bean:define id="processName" name="processName" />
 <bean:define id="parentProcessId" name="parentProcess" property="externalId" />
@@ -16,7 +17,6 @@
 <bean:define id="degreeCurricularPlanID" name="infoDegreeCurricularPlan" property="externalId" type="java.lang.String"/>
 
 
-<em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
 <logic:notEmpty name="process">
 	<h2><bean:write name="process" property="displayName" /> </h2>
 </logic:notEmpty>

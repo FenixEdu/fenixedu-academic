@@ -6,9 +6,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt" %>
 <%@ page import="java.lang.Math" %>
-<strong><jsp:include page="../context.jsp"/></strong>
-<br />
-<br />
+
+<jsp:include page="/coordinator/context.jsp" />
 
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
 <logic:present name="<%= PresentationConstants.LIST_INFOEXECUTIONCOURSE %>" scope="request">

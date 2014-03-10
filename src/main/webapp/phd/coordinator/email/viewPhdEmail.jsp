@@ -7,7 +7,6 @@
 <logic:present role="role(COORDINATOR)">
 
 <%-- ### Title #### --%>
-<em><bean:message  key="label.phd.coordinator.breadcrumb" bundle="PHD_RESOURCES"/></em>
 <h2><bean:message key="label.phd.manage.emails.view" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 

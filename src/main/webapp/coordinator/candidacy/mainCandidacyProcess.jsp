@@ -5,6 +5,8 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA.HideCancelledCandidaciesBean" %>
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <html:xhtml/>
 
 <bean:define id="processName" name="processName" />
@@ -33,7 +35,6 @@
 
 <%-- candidacy process of current year --%>
 <logic:notEmpty name="process">
-	<em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
 	<h2><bean:write name="process" property="displayName" /> </h2>
 
 	<bean:define id="processId" name="process" property="externalId" />

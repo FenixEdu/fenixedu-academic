@@ -7,6 +7,8 @@
  <%@ page import="java.util.List" %>
 <%@ page import="net.sourceforge.fenixedu.domain.curriculum.EnrollmentState" %>
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <h2><bean:message key="link.coordinator.studentListByCourse.title" /></h2>
 
 <logic:present name="jspTitle">
@@ -19,7 +21,7 @@
 	
   <bean:define id="enrolmentList" name="enrolment_list" scope="request" />
   <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
-  <bean:define id="link">/studentCurriculum.do?method=getCurriculumForCoordinator<%= "&" %>page=0<%= "&" %>studentCPID=</bean:define>
+  <bean:define id="link">/viewStudentCurriculum.do?method=getCurriculumForCoordinator<%= "&" %>page=0<%= "&" %>studentCPID=</bean:define>
 	<p>
 		<strong>
 			<%= ((List) enrolmentList).size()%> <bean:message key="label.masterDegree.administrativeOffice.studentsFound"/>

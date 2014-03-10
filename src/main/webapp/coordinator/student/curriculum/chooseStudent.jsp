@@ -6,6 +6,9 @@
 
 
 <logic:present role="role(COORDINATOR)">
+
+	<jsp:include page="/coordinator/context.jsp" />
+
 	<h2><bean:message key="title.student.curriculum" /></h2>
 
 	<ul class="nobullet list6">

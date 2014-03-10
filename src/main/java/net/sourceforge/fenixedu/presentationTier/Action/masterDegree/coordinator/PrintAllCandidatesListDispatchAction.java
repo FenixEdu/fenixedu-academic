@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadDegreeCa
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.util.PrintAllCandidatesFilter;
 import net.sourceforge.fenixedu.util.PrintAllCandidatesFilterType;
@@ -21,6 +22,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.portal.servlet.PortalLayoutInjector;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -29,13 +31,13 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 /**
  * @author Ricardo Clerigo
  * @author Telmo Nabais
- * 
+ *
  */
 
 @Mapping(path = "/printAllCandidatesList", module = "coordinator", input = "/candidate/indexCandidate.jsp",
-        attribute = "printAllCandidatesForm", formBean = "printAllCandidatesForm")
-@Forwards(value = { @Forward(name = "Prepare", path = "/printAllCandidatesList.jsp"),
-        @Forward(name = "PrintList", path = "/candidateListTemplate.jsp") })
+        formBean = "printAllCandidatesForm", functionality = DegreeCoordinatorIndex.class)
+@Forwards({ @Forward(name = "Prepare", path = "/coordinator/printAllCandidatesList_bd.jsp"),
+        @Forward(name = "PrintList", path = "/coordinator/candidateListTemplate.jsp") })
 public class PrintAllCandidatesListDispatchAction extends FenixDispatchAction {
 
     // request parameters
@@ -77,7 +79,7 @@ public class PrintAllCandidatesListDispatchAction extends FenixDispatchAction {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        CoordinatedDegreeInfo.setCoordinatorContext(request);
+        DegreeCoordinatorIndex.setCoordinatorContext(request);
         return super.execute(mapping, actionForm, request, response);
     }
 
@@ -163,6 +165,7 @@ public class PrintAllCandidatesListDispatchAction extends FenixDispatchAction {
     /** Prepara a folha que imprime a lista de todos os candidatos */
     public ActionForward printAllCandidatesList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
+        PortalLayoutInjector.skipLayoutOn(request);
 
         PrintAllCandidatesFilter filterBy = PrintAllCandidatesFilter.INVALID_FILTER;
         String filterValue = null;

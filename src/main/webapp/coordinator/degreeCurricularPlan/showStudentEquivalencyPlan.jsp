@@ -5,6 +5,8 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <html:xhtml/>
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <h2><bean:message key="title.student.equivalency.plan"/></h2>
 
 <logic:present name="degreeCurricularPlan">

@@ -1,0 +1,1 @@
+<jsp:include page="/student/curriculum/viewCurricularPlans_bd.jsp" />

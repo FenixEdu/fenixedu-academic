@@ -8,6 +8,8 @@
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
 <html:xhtml />
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <style>
 
 div.progress-container {

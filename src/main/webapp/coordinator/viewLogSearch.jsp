@@ -10,6 +10,8 @@
 <html:xhtml/>
 <!-- aqui comeca o viewLogSearch -->
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <h2> 
 	<bean:message key= "log.coordinator.title"/>
 	<logic:present name="executionCourse">
@@ -49,7 +51,7 @@
 		</h3>
 		<bean:define id="bean" name="searchBean" property="searchElementsAsParameters"/>
 			<cp:collectionPages
-				url="<%="/searchDLog.do?method=prepare&amp;degreeCurricularPlanID=" + request.getParameter("degreeCurricularPlanID") + bean %>" 
+				url="<%="/coordinator/searchDLog.do?method=prepare&amp;degreeCurricularPlanID=" + request.getParameter("degreeCurricularPlanID") + bean %>" 
 				pageNumberAttributeName="pageNumber"
 				numberOfPagesAttributeName="numberOfPages"/>
 

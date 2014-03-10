@@ -7,13 +7,13 @@
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree" %>
 <html:xhtml/>
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <bean:define id="processName" name="processName" />
 
 <h2><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></h2>
 
-<bean:define id="infoExecutionDegree" name="<%=PresentationConstants.MASTER_DEGREE%>" type="InfoExecutionDegree" />
-<bean:define id="infoDegreeCurricularPlan" name="infoExecutionDegree" property="infoDegreeCurricularPlan" />
-<bean:define id="degreeCurricularPlanID" name="infoDegreeCurricularPlan" property="externalId" type="java.lang.String"/>
+<bean:define id="degreeCurricularPlanID" name="master_degree" property="degreeCurricularPlan.externalId" type="java.lang.String"/>
 
 <%-- no candidacy process --%>
 <logic:empty name="process">

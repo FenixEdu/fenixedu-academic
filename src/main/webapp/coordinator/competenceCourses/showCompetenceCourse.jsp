@@ -3,7 +3,13 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
-<f:view>" definition="coordinatorCompetenceCourses" attributeName="body-inline">
+<%
+	net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex.setCoordinatorContext(request);
+%>
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex" />
+<jsp:include page="/coordinator/context.jsp" />
+
+<f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
@@ -30,7 +36,7 @@
 		<h:outputText value="<ul class='mtop0 mbottom3'>" escape="false"/>
 		<fc:dataRepeater value="#{CompetenceCourseManagement.competenceCourse.associatedCurricularCourses}" var="curricularCourse">			
 			<h:outputText value="<li>" escape="false"/>
-			<h:outputLink value="../degreeCurricularPlan/viewCurricularPlan.faces" target="_blank">
+			<h:outputLink value="#{CompetenceCourseManagement.request.contextPath}/coordinator/degreeCurricularPlan/viewCurricularPlan.faces" target="_blank">
 				<h:outputText value="#{curricularCourse.parentDegreeCurricularPlan.name}" escape="false"/>
 				<f:param name="action" value="close"/>
 				<f:param name="organizeBy" value="groups"/>
@@ -39,7 +45,7 @@
 				<f:param name="degreeCurricularPlanID" value="#{curricularCourse.parentDegreeCurricularPlan.externalId}"/>
 			</h:outputLink>
 			<h:outputText value=" > "/>
-			<h:outputLink value="../degreeCurricularPlan/viewCurricularCourse.faces" target="_blank">
+			<h:outputLink value="#{CompetenceCourseManagement.request.contextPath}/coordinator/degreeCurricularPlan/viewCurricularCourse.faces" target="_blank">
 				<h:outputText value="#{curricularCourse.name}" escape="false"/>
 				<f:param name="action" value="close"/>
 				<f:param name="curricularCourseID" value="#{curricularCourse.externalId}"/>

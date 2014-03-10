@@ -240,8 +240,6 @@ public abstract class PresentationConstants {
 
     public static final String MASTER_DEGREE_CANDIDATES_AMMOUNT = "master_degree_candidates_ammount";
 
-    public static final String MASTER_DEGREE_CANDIDATE_AMMOUNT = "master_degree_candidate_ammount";
-
     public static final String DECLARATION_LIST = "declaration_list";
 
     public static final String INFO_STUDENT_CURRICULAR_PLAN = "info_student_curricular_plan";

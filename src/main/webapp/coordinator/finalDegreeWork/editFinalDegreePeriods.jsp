@@ -7,6 +7,8 @@
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
 <bean:define id="executionDegreeOID" name="executionDegree" property="externalId" type="String"/>
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <h2>
 	<bean:message key="title.finalDegreeWorkProposal"/>
 </h2>	

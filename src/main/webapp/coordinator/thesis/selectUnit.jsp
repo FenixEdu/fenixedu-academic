@@ -6,6 +6,8 @@
 
 <html:xhtml/>
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <bean:define id="target" name="bean" property="targetType"/>
 <bean:define id="dcpId" name="degreeCurricularPlan" property="externalId"/>
 <bean:define id="executionYearId" name="executionYearId"/>

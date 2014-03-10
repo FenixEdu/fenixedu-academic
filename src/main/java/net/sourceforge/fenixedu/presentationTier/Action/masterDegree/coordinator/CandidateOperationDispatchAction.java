@@ -11,8 +11,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.can
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.coordinator.ReadDegreeCandidates;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
+import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -26,18 +28,18 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/candidateOperation", module = "coordinator", input = "/candidate/indexCandidate.jsp")
-@Forwards(value = { @Forward(name = "ViewList", path = "/candidate/selectCandidateFromList.jsp"),
-        @Forward(name = "ActionReady", path = "/candidate/visualizeCandidate.jsp") })
+@Mapping(path = "/candidateOperation", module = "coordinator", input = "/candidate/indexCandidate.jsp",
+        functionality = DegreeCoordinatorIndex.class)
+@Forwards({ @Forward(name = "ViewList", path = "/coordinator/candidate/selectCandidateFromList_bd.jsp"),
+        @Forward(name = "ActionReady", path = "/coordinator/candidate/visualizeCandidate_bd.jsp") })
 @Exceptions(value = { @ExceptionHandling(key = "resources.Action.exceptions.NonExistingActionException",
-        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
-        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class) })
+        handler = FenixErrorExceptionHandler.class, type = NonExistingActionException.class) })
 public class CandidateOperationDispatchAction extends FenixDispatchAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        CoordinatedDegreeInfo.setCoordinatorContext(request);
+        DegreeCoordinatorIndex.setCoordinatorContext(request);
         return super.execute(mapping, actionForm, request, response);
     }
 
@@ -46,8 +48,6 @@ public class CandidateOperationDispatchAction extends FenixDispatchAction {
 
     public ActionForward getCandidates(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-
-        User userView = getUserView(request);
 
         String degreeCurricularPlanId = request.getParameter("degreeCurricularPlanID");
 
@@ -87,7 +87,7 @@ public class CandidateOperationDispatchAction extends FenixDispatchAction {
     }
 
     /**
-     * 
+     *
      * @author Ricardo Clerigo & Telmo Nabais
      * @param candidateID
      * @param userView

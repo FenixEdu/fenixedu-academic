@@ -8,6 +8,8 @@
 
 <html:xhtml/>
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" />
 
 

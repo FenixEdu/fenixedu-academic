@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidac
 import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcessBean;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdDocumentsZip;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.CommonPhdCandidacyDA;
+import net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator.PhdIndividualProgramProcessDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -36,18 +37,12 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(path = "/phdCandidacyFeedbackRequest", module = "coordinator")
-@Forwards(tileProperties = @Tile(navLocal = "/coordinator/localNavigationBar.jsp"), value = {
-
-        @Forward(name = "manageFeedbackRequest", path = "/phd/candidacy/coordinator/feedbackRequest/manageFeedbackRequest.jsp",
-                tileProperties = @Tile(title = "private.coordinator.phdprocess")),
-
+@Mapping(path = "/phdCandidacyFeedbackRequest", module = "coordinator", functionality = PhdIndividualProgramProcessDA.class)
+@Forwards({
+        @Forward(name = "manageFeedbackRequest", path = "/phd/candidacy/coordinator/feedbackRequest/manageFeedbackRequest.jsp"),
         @Forward(name = "uploadCandidacyFeedback",
-                path = "/phd/candidacy/coordinator/feedbackRequest/uploadCandidacyFeedback.jsp")
-
-})
+                path = "/phd/candidacy/coordinator/feedbackRequest/uploadCandidacyFeedback.jsp") })
 public class PhdCandidacyFeedbackRequestDA extends CommonPhdCandidacyDA {
 
     public ActionForward manageFeedbackRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

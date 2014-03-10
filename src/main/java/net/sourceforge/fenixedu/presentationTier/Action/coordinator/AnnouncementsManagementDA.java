@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.AnnouncementManagement;
 
 import org.apache.struts.action.ActionForm;
@@ -22,14 +21,24 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(path = "/announcements/manageUnitAnnouncementBoard", module = "coordinator")
-@Forwards(value = { @Forward(name = "listAnnouncements", path = "coordinator-announcements-list-announcements") })
+@Mapping(path = "/announcementsManagement", module = "coordinator", functionality = DegreeCoordinatorIndex.class)
+@Forwards({
+        @Forward(name = "noBoards", path = "/coordinator/degreeSite/announcements/noBoards.jsp"),
+        @Forward(name = "viewAnnouncementsRedirect",
+                path = "/coordinator/announcementsManagement.do?method=viewAnnouncements&tabularVersion=true"),
+        @Forward(name = "listAnnouncementBoards", path = "/messaging/announcements/listAnnouncementBoards.jsp"),
+        @Forward(name = "listAnnouncements", path = "/messaging/announcements/listBoardAnnouncements.jsp"),
+        @Forward(name = "add", path = "/messaging/announcements/addAnnouncement.jsp"),
+        @Forward(name = "viewAnnouncement", path = "/messaging/announcements/viewAnnouncement.jsp"),
+        @Forward(name = "edit", path = "/messaging/announcements/editAnnouncement.jsp"),
+        @Forward(name = "uploadFile", path = "/messaging/announcements/uploadFileToBoard.jsp"),
+        @Forward(name = "editFile", path = "/messaging/announcements/editFileInBoard.jsp") })
 public class AnnouncementsManagementDA extends AnnouncementManagement {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        CoordinatedDegreeInfo.setCoordinatorContext(request);
+        DegreeCoordinatorIndex.setCoordinatorContext(request);
         final String degreeCurricularPlanOID = (String) request.getAttribute("degreeCurricularPlanID");
         final DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanOID);
         if (degreeCurricularPlan != null) {

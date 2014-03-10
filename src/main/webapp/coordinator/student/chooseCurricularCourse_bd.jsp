@@ -3,6 +3,9 @@
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+
+<jsp:include page="/coordinator/context.jsp" />
+
 <h2><bean:message key="title.studentListByCourse" /></h2>
 
 <p>

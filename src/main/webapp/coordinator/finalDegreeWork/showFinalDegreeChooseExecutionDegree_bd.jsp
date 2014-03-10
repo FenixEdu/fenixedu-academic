@@ -6,6 +6,8 @@
 
 <bean:define id="degreeCurricularPlanOID" name="degreeCurricularPlanID"/>
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <h2><bean:message key="label.coordinator.thesis"/></h2>
 
 <p>

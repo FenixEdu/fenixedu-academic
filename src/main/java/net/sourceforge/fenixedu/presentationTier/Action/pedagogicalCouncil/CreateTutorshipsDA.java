@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.presentationTier.Action.coordinator.tutor.TutorManagementDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.PedagogicalCouncilApp.TutorshipApp;
 
 import org.apache.struts.action.ActionForm;
@@ -32,7 +31,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 /**
  * Class CreateTutorshipsDA.java
- * 
+ *
  * @author jaime created on Aug 3, 2010
  */
 
@@ -80,7 +79,7 @@ public class CreateTutorshipsDA extends TutorManagementDispatchAction {
     /**
      * Select people which have registrations in the choosen Degree and have
      * never had a Tutor assigned
-     * 
+     *
      * @param registration
      * @param executionDegree
      * @return

@@ -7,6 +7,9 @@
 
 
 <logic:present role="role(COORDINATOR)">
+
+	<jsp:include page="/coordinator/context.jsp" />
+
 	<h2><bean:message key="label.transition.bolonha.registrationsInTransition"
 		bundle="STUDENT_RESOURCES" /></h2>
 

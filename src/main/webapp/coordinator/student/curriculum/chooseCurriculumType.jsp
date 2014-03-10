@@ -4,6 +4,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <h2><bean:message key="title.student.curriculum" /></h2>
 
 <span class="error0"><!-- Error messages go here --><html:errors /></span>
@@ -21,7 +23,7 @@
 	<ul>
 		<li>
 			<html:link
-				action="<%="/viewCurriculum.do?method=prepareReadByStudentNumber&studentNumber=" + studentNumber.toString() + "&degreeCurricularPlanID=" + degreeCurricularPlanId.toString() + "&executionDegreeId=" + executionDegreeId.toString()%>">
+				action="<%="/viewStudentCurriculum.do?method=prepareReadByStudentNumber&studentNumber=" + studentNumber.toString() + "&degreeCurricularPlanID=" + degreeCurricularPlanId.toString() + "&executionDegreeId=" + executionDegreeId.toString()%>">
 				<bean:message key="label.preBolonha" bundle="APPLICATION_RESOURCES" />
 			</html:link>
 		</li>

@@ -5,6 +5,8 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/collection-pager" prefix="cp"%>
 <html:xhtml/>
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
 <bean:define id="executionDegreeOID" name="executionDegreeOID" scope="request" />
 <bean:define id="confirmDelete">return confirm('<bean:message key="message.confirm.delete"/>')</bean:define>

@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.CoordinatorApplication.CoordinatorPhdApp;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.academicAdminOffice.PhdProgramCandidacyProcessDA;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
 
@@ -29,33 +30,28 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
+@StrutsFunctionality(app = CoordinatorPhdApp.class, path = "ist-epfl", titleKey = "label.phd.ist.epfl.collaboration.type",
+        accessGroup = "nobody")
 @Mapping(path = "/candidacies/phdProgramCandidacyProcess", module = "coordinator")
-@Forwards(tileProperties = @Tile(navLocal = "/coordinator/localNavigationBar.jsp"), value = {
-
-@Forward(name = "listProcesses", path = "/phd/coordinator/publicProgram/listProcesses.jsp"),
-
-@Forward(name = "viewProcess", path = "/phd/coordinator/publicProgram/viewProcess.jsp"),
-
-@Forward(name = "viewCandidacyRefereeLetter", path = "/phd/coordinator/publicProgram/viewCandidacyRefereeLetter.jsp"),
-
-@Forward(name = "manageFocusAreas", path = "/phd/coordinator/publicProgram/manageFocusAreas.jsp"),
-
-@Forward(name = "manageThesisSubjects", path = "/phd/coordinator/publicProgram/manageThesisSubjects.jsp"),
-
-@Forward(name = "editThesisSubject", path = "/phd/coordinator/publicProgram/editThesisSubject.jsp")
-
-})
+@Forwards({ @Forward(name = "listProcesses", path = "/phd/coordinator/publicProgram/listProcesses.jsp"),
+        @Forward(name = "viewProcess", path = "/phd/coordinator/publicProgram/viewProcess.jsp"),
+        @Forward(name = "viewCandidacyRefereeLetter", path = "/phd/coordinator/publicProgram/viewCandidacyRefereeLetter.jsp"),
+        @Forward(name = "manageFocusAreas", path = "/phd/coordinator/publicProgram/manageFocusAreas.jsp"),
+        @Forward(name = "manageThesisSubjects", path = "/phd/coordinator/publicProgram/manageThesisSubjects.jsp"),
+        @Forward(name = "editThesisSubject", path = "/phd/coordinator/publicProgram/editThesisSubject.jsp") })
 public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
 
+    @EntryPoint
     public ActionForward listProcesses(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 

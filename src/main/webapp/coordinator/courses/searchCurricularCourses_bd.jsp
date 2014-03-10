@@ -6,6 +6,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt" %>
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <h2><bean:message key="label.manager.executionCourses"/></h2>
 
 <p>

@@ -5,6 +5,8 @@
 
 <html:xhtml/>
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <bean:define id="degreeCurricularPlanId" name="degreeCurricularPlan" property="externalId"/>
 <bean:define id="executionDegreeId" name="executionDegreeId"/>
 
@@ -21,10 +23,6 @@
             </fr:layout>
             <fr:destination name="chooseExecutionDegree" path="<%= "/scientificCommissionTeamDA.do?method=manage&degreeCurricularPlanID=" + degreeCurricularPlanId %>"/>
         </fr:edit>
-        
-        <html:submit styleClass="switchNone">
-            <bean:message key="button.submit"/>
-        </html:submit>
     </fr:form>
 </div>
 
@@ -107,7 +105,3 @@
 
     </logic:present>
 </logic:present>
-
-<script type="text/javascript">
-    switchGlobal();
-</script>

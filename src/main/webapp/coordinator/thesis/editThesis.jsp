@@ -10,6 +10,8 @@
 
 <html:xhtml/>
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <h2><bean:message key="title.coordinator.thesis.proposal" bundle="APPLICATION_RESOURCES"/></h2>
 
 <ul>

@@ -18,6 +18,8 @@
 
 <html:xhtml />
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath()%>/CSS/gwt/xviews/executionYear.css">
 

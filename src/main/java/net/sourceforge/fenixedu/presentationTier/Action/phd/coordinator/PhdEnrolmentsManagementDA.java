@@ -18,46 +18,44 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.phd.ManageEnrolmentsBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.CoordinatorApplication.CoordinatorPhdApp;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
 import net.sourceforge.fenixedu.presentationTier.renderers.degreeStructure.DegreeCurricularPlanRendererConfig;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
 import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
 import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
 
+@StrutsFunctionality(app = CoordinatorPhdApp.class, path = "enrolments-management",
+        titleKey = "label.externalUnits.externalEnrolments", bundle = "AcademicAdminOffice")
 @Mapping(path = "/phdEnrolmentsManagement", module = "coordinator")
-@Forwards(tileProperties = @Tile(navLocal = "/coordinator/localNavigationBar.jsp"), value = {
-
-        @Forward(name = "showPhdProgram", path = "/phd/coordinator/enrolments/showPhdProgram.jsp", tileProperties = @Tile(
-                title = "private.coordinator.subscriptions")),
-
-        @Forward(name = "showEnrolments", path = "/phd/coordinator/enrolments/showEnrolments.jsp")
-
-})
+@Forwards({ @Forward(name = "showPhdProgram", path = "/phd/coordinator/enrolments/showPhdProgram.jsp"),
+        @Forward(name = "showEnrolments", path = "/phd/coordinator/enrolments/showEnrolments.jsp") })
 public class PhdEnrolmentsManagementDA extends PhdProcessDA {
 
     private Set<PhdProgram> getManagedPhdPrograms(HttpServletRequest request) {
         final Set<PhdProgram> result = new HashSet<PhdProgram>();
         final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
-        for (final Coordinator coordinator : getLoggedPerson(request).getCoordinators()) {
+        for (final Coordinator coordinator : getLoggedPerson(request).getCoordinatorsSet()) {
             if (coordinator.getExecutionDegree().getDegree().hasPhdProgram()
                     && coordinator.getExecutionDegree().getExecutionYear() == currentExecutionYear) {
                 result.add(coordinator.getExecutionDegree().getDegree().getPhdProgram());
             }
         }
-
         return result;
     }
 
+    @EntryPoint
     public ActionForward showPhdProgram(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 

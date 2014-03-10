@@ -7,6 +7,8 @@
 <%@ page import="net.sourceforge.fenixedu.domain.Person" %>
 <%@ page import="pt.ist.fenixframework.FenixFramework" %>
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" type="String" scope="request" />
 <bean:define id="executionDegreeOID" name="executionDegreeOID" type="String" scope="request" />
 

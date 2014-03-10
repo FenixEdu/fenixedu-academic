@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate.ReadExecutionDegreeByDegreeCurricularPlanID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
 import org.apache.struts.action.ActionForm;
@@ -18,11 +19,10 @@ import org.slf4j.LoggerFactory;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(module = "coordinator", path = "/prepareCandidateApproval", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "ExecutionDegreeChosen",
-        path = "/displayListToSelectCandidates.do?method=prepareSelectCandidates", tileProperties = @Tile(title = "teste81")) })
+@Mapping(module = "coordinator", path = "/prepareCandidateApproval", functionality = DegreeCoordinatorIndex.class)
+@Forwards(@Forward(name = "ExecutionDegreeChosen",
+        path = "/coordinator/displayListToSelectCandidates.do?method=prepareSelectCandidates"))
 public class PrepareCandidateApprovalDispatchAction extends FenixDispatchAction {
 
     private static final Logger logger = LoggerFactory.getLogger(PrepareCandidateApprovalDispatchAction.class);
@@ -30,7 +30,7 @@ public class PrepareCandidateApprovalDispatchAction extends FenixDispatchAction 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        CoordinatedDegreeInfo.setCoordinatorContext(request);
+        DegreeCoordinatorIndex.setCoordinatorContext(request);
         return super.execute(mapping, actionForm, request, response);
     }
 

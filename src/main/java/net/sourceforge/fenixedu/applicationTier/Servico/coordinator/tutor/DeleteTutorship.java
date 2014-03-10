@@ -3,8 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator.tutor;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.BolonhaOrLEECCoordinatorAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TutorshipAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -49,14 +47,8 @@ public class DeleteTutorship extends TutorshipManagement {
     @Atomic
     public static List<TutorshipErrorBean> runDeleteTutorship(String executionDegreeID, List<Tutorship> tutorsToDelete)
             throws NotAuthorizedException {
-        try {
-            TutorshipAuthorizationFilter.instance.execute();
-            return serviceInstance.run(executionDegreeID, tutorsToDelete);
-        } catch (NotAuthorizedException ex1) {
-            CoordinatorAuthorizationFilter.instance.execute();
-            BolonhaOrLEECCoordinatorAuthorizationFilter.instance.execute(executionDegreeID);
-            return serviceInstance.run(executionDegreeID, tutorsToDelete);
-        }
+        TutorshipAuthorizationFilter.instance.execute();
+        return serviceInstance.run(executionDegreeID, tutorsToDelete);
     }
 
 }

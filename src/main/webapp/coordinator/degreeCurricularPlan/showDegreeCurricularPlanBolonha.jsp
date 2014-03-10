@@ -3,7 +3,13 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
-<f:view>" definition="coordinatorDegreeCurricularPlan" attributeName="body-inline">
+<%
+	net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex.setCoordinatorContext(request);
+%>
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex" />
+<jsp:include page="/coordinator/context.jsp" />
+
+<f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ApplicationResources" var="applicationBundle"/>
 	<f:loadBundle basename="resources/PublicDegreeInformation" var="publicDegreeInfoBundle"/>
@@ -30,7 +36,6 @@
 					<h:selectOneMenu value="#{CurricularCourseManagement.executionYearID}" onchange="this.form.submit();">
 						<f:selectItems value="#{CurricularCourseManagement.executionYearItems}" />
 					</h:selectOneMenu>
-					<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 					<h:outputText value="</p>" escape="false"/>
 					<h:panelGroup rendered="#{!empty CurricularCourseManagement.degreeCurricularPlan.degreeStructure.childs}">
 						<h:outputText value="<p>#{bolonhaBundle['view.structure.organized.by']}: " escape="false"/>
@@ -121,7 +126,7 @@
 					showRules="<%=request.getParameter("showRules")%>"
 					hideCourses="<%=request.getParameter("hideCourses")%>"
 					executionYear="#{CurricularCourseManagement.executionYear}"
-					module="/coordinator"/>
+					module="/coordinator/degreeCurricularPlan"/>
 			</h:panelGroup>
 	
 		</h:panelGroup>

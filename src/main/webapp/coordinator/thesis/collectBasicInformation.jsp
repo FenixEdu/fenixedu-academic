@@ -9,6 +9,8 @@
 
 <html:xhtml/>
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <h2><bean:message key="title.coordinator.thesis.create"/></h2>
 
 <div class="infoop2">

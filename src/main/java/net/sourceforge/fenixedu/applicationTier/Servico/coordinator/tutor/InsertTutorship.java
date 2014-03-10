@@ -3,8 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator.tutor;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.BolonhaOrLEECCoordinatorAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TutorshipAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -88,29 +86,10 @@ public class InsertTutorship extends TutorshipManagement {
     private static final InsertTutorship serviceInstance = new InsertTutorship();
 
     @Atomic
-    public static void runInsertTutorship(String executionDegreeID, TutorshipManagementBean bean) throws FenixServiceException,
-            NotAuthorizedException {
-        try {
-            TutorshipAuthorizationFilter.instance.execute();
-            serviceInstance.run(executionDegreeID, bean);
-        } catch (NotAuthorizedException ex1) {
-            CoordinatorAuthorizationFilter.instance.execute();
-            BolonhaOrLEECCoordinatorAuthorizationFilter.instance.execute(executionDegreeID);
-            serviceInstance.run(executionDegreeID, bean);
-        }
-    }
-
-    @Atomic
     public static List<TutorshipErrorBean> runInsertTutorship(String executionDegreeID, StudentsByEntryYearBean bean)
             throws FenixServiceException, NotAuthorizedException {
-        try {
-            TutorshipAuthorizationFilter.instance.execute();
-            return serviceInstance.run(executionDegreeID, bean);
-        } catch (NotAuthorizedException ex1) {
-            CoordinatorAuthorizationFilter.instance.execute();
-            BolonhaOrLEECCoordinatorAuthorizationFilter.instance.execute(executionDegreeID);
-            return serviceInstance.run(executionDegreeID, bean);
-        }
+        TutorshipAuthorizationFilter.instance.execute();
+        return serviceInstance.run(executionDegreeID, bean);
     }
 
 }

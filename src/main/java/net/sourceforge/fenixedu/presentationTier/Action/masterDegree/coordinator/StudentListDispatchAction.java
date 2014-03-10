@@ -12,8 +12,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.ReadCurricularCoursesByDegree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
+import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -32,17 +34,20 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-@Mapping(path = "/listStudentsForCoordinator", module = "coordinator", input = "/student/indexStudent.jsp")
-@Forwards(value = { @Forward(name = "PrepareSuccess", path = "df.page.displayStudentListByDegree") })
-@Exceptions(value = { @ExceptionHandling(key = "resources.Action.exceptions.NonExistingActionException",
-        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
-        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class) })
+@Mapping(path = "/listStudentsForCoordinator", module = "coordinator", input = "/student/indexStudent.jsp",
+        functionality = DegreeCoordinatorIndex.class)
+@Forwards({ @Forward(name = "PrepareSuccess", path = "/coordinator/student/displayStudentListByDegree_bd.jsp"),
+        @Forward(name = "ViewList", path = "/coordinator/candidate/selectCandidateFromList_bd.jsp"),
+        @Forward(name = "ActionReady", path = "/coordinator/candidate/visualizeCandidate_bd.jsp"),
+        @Forward(name = "ShowCourseList", path = "/coordinator/student/chooseCurricularCourse_bd.jsp") })
+@Exceptions(@ExceptionHandling(key = "resources.Action.exceptions.NonExistingActionException",
+        handler = FenixErrorExceptionHandler.class, type = NonExistingActionException.class))
 public class StudentListDispatchAction extends FenixDispatchAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        CoordinatedDegreeInfo.setCoordinatorContext(request);
+        DegreeCoordinatorIndex.setCoordinatorContext(request);
         return super.execute(mapping, actionForm, request, response);
     }
 

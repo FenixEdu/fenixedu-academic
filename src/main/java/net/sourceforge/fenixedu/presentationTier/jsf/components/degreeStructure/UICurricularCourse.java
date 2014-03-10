@@ -96,8 +96,8 @@ public class UICurricularCourse extends UIDegreeModule {
         if (linkable) {
             writer.startElement("a", this);
             if (this.curricularCourse.isBolonhaDegree()) {
-                encodeLinkHref("viewCurricularCourse.faces", "&curricularCourseID=" + this.curricularCourse.getExternalId(),
-                        false);
+                encodeLinkHref(module + "/viewCurricularCourse.faces",
+                        "&curricularCourseID=" + this.curricularCourse.getExternalId(), false);
             } else {
                 encodeNonBolonhaLinkHref();
             }
@@ -113,7 +113,7 @@ public class UICurricularCourse extends UIDegreeModule {
     private void encodeNonBolonhaLinkHref() throws IOException {
 
         final StringBuilder href = new StringBuilder();
-        href.append("showCourseSite.do?method=showCurricularCourseSite");
+        href.append(module + "/showCourseSite.do?method=showCurricularCourseSite");
 
         href.append("&curricularCourseID=").append(this.curricularCourse.getExternalId());
         href.append("&degreeID=").append(this.curricularCourse.getDegree().getExternalId());
@@ -287,11 +287,11 @@ public class UICurricularCourse extends UIDegreeModule {
         writer.writeAttribute("align", "right", null);
         writer.writeAttribute("style", "width: 9em;", null);
         if (loggedPersonCanManageDegreeCurricularPlans()) {
-            encodeLink("editCurricularCourse.faces", "&contextID=" + this.previousContext.getExternalId()
+            encodeLink(module + "/editCurricularCourse.faces", "&contextID=" + this.previousContext.getExternalId()
                     + "&curricularCourseID=" + this.curricularCourse.getExternalId(), false, "edit");
             // if (this.executionYear == null) {
             writer.append(" , ");
-            encodeLink("deleteCurricularCourseContext.faces", "&contextID=" + this.previousContext.getExternalId()
+            encodeLink(module + "/deleteCurricularCourseContext.faces", "&contextID=" + this.previousContext.getExternalId()
                     + "&curricularCourseID=" + this.curricularCourse.getExternalId(), false, "delete");
             // }
         }

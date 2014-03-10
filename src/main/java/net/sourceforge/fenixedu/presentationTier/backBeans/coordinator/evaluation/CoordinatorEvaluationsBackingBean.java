@@ -34,7 +34,7 @@ import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
 import net.sourceforge.fenixedu.util.EvaluationType;
@@ -95,7 +95,7 @@ public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
     private Evaluation evaluation;
 
     public String getDegreeCurricularPlanID() {
-        CoordinatedDegreeInfo.setCoordinatorContext(getRequest());
+        DegreeCoordinatorIndex.setCoordinatorContext(getRequest());
         return (degreeCurricularPlanID == null) ? degreeCurricularPlanID = getAndHoldStringParameter("degreeCurricularPlanID") : degreeCurricularPlanID;
     }
 

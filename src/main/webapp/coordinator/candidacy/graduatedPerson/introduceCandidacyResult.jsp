@@ -4,7 +4,8 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <html:xhtml/>
 
-<em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
+<jsp:include page="/coordinator/context.jsp" />
+
 <h2><bean:write name="process" property="displayName" /></h2>
 
 <html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">

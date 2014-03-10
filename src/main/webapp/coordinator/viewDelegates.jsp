@@ -5,6 +5,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <h2><bean:message key="label.delegatesManagement" bundle="PEDAGOGICAL_COUNCIL" /></h2>
 
 <logic:present name="currentExecutionYear">

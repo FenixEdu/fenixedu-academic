@@ -11,6 +11,8 @@
 
 <html:xhtml/>
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <h2><bean:message key="title.coordinator.thesis.editParticipant"/></h2>
 
 <h3>

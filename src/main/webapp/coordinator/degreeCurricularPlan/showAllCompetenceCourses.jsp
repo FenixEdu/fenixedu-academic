@@ -3,13 +3,18 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
+<%
+	net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex.setCoordinatorContext(request);
+%>
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex" />
+<jsp:include page="/coordinator/context.jsp" />
+
 <f:view>
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 
 	<fc:dataRepeater rendered="#{!empty CurricularCourseManagement.degreeCurricularPlanCompetenceCourses}" value="#{CurricularCourseManagement.degreeCurricularPlanCompetenceCourses}" var="competenceCourse">
 
-		<h:outputText value="<em>#{scouncilBundle['competenceCourse']}</em>" escape="false" />
 		<h:outputText value="<h2>#{competenceCourse.name} " escape="false"/>
 		<h:outputText rendered="#{!empty competenceCourse.acronym}" value="(#{competenceCourse.acronym})" escape="false"/>
 		<h:outputText value="</h2>" escape="false"/>		

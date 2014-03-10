@@ -4,12 +4,13 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <html:xhtml/>
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <bean:define id="processName" name="processName" />
 <bean:define id="parentProcessId" name="parentProcess" property="externalId" />
 <bean:define id="individualCandidacyProcess" name="process"/>
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID"/>
 <bean:define id="candidacy" name="individualCandidacyProcess" property="candidacy" />
-<em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
 <logic:notEmpty name="process">
 	<h2><bean:write name="process" property="displayName" /> </h2>
 </logic:notEmpty>

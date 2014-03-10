@@ -4,6 +4,8 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <html:xhtml />
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <style>
  
 /*

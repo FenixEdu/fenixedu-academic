@@ -1,5 +1,6 @@
 <%@ page language="java" %>
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %><%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app"%>
 <%@ page import="net.sourceforge.fenixedu.domain.ExecutionDegree" %>
@@ -13,11 +14,8 @@
 <logic:present name="executionDegrees">
 	<logic:iterate id="executionDegree" name="executionDegrees" type="net.sourceforge.fenixedu.domain.ExecutionDegree">
 		<p>
-			<app:defineContentPath id="contextPathForUrl" name="executionDegree" property="degreeCurricularPlan.degree.site" toScope="request"/>
-			<bean:define id="contextPathForUrl" name="contextPathForUrl" type="java.lang.String"/>
 
 			<bean:define id="executionDegreeID" name="executionDegree" property="externalId" />
-			
 			
 			<html:link href="<%= request.getContextPath() + "/publico/showDegreeSite.do?method=showDescription&amp;executionDegreeID=" + executionDegreeID %>" target="_blank">
 				<bean:message key="link.coordinator.degreeSite.viewSite" />&nbsp;<bean:message key="label.of" />&nbsp;<bean:write name="executionDegree" property="executionYear.year"/>

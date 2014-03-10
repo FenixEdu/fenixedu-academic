@@ -43,8 +43,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 
@@ -106,7 +106,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public String getDegreeCurricularPlanID() {
-        CoordinatedDegreeInfo.setCoordinatorContext(getRequest());
+        DegreeCoordinatorIndex.setCoordinatorContext(getRequest());
         return getAndHoldStringParameter("degreeCurricularPlanID");
     }
 

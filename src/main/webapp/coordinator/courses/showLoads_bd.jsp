@@ -7,6 +7,8 @@
 <%@page import="net.sourceforge.fenixedu.domain.ShiftType"%>
 <html:xhtml/>
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <logic:present name="infoExecutionCourse">
 
 	<bean:define id="executionCourse" name="infoExecutionCourse" property="executionCourse" type="net.sourceforge.fenixedu.domain.ExecutionCourse" toScope="request"/>

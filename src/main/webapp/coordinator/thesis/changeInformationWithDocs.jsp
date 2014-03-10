@@ -10,6 +10,8 @@
 
 <html:xhtml/>
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <h2><bean:message key="title.coordinator.thesis.edit"/></h2>
 
 <p class="mtop15 mbottom05">

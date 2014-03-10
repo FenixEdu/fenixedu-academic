@@ -10,6 +10,8 @@
 
 <html:xhtml/>
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <bean:define id="target" name="bean" property="targetType"/>
 <bean:define id="internal" name="bean" property="internal"/>
 

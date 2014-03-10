@@ -1,12 +1,15 @@
 <%@ page language="java" %>
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %><html:xhtml/>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <h2><bean:message key="title.addCoordinator"/></h2>
 
-<html:form action="/addCoordinator">
+<html:form action="/viewCoordinationTeam">
 
 <p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 	

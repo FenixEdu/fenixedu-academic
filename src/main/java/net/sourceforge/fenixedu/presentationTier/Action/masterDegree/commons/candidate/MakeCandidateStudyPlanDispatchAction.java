@@ -28,12 +28,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoChoiceMadeActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NotAuthorizedActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.util.SituationName;
 
@@ -57,8 +57,8 @@ import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
- * 
- * 
+ *
+ *
  */
 @Mapping(path = "/displayCourseListToStudyPlan", module = "masterDegreeAdministrativeOffice",
         input = "/candidate/displayListOfCoursesToChoose.jsp", attribute = "chooseCourseListForm",
@@ -70,10 +70,17 @@ import pt.ist.fenixframework.FenixFramework;
         type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoChoiceMadeActionException.class) })
 public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
 
+    @Mapping(path = "/displayCandidateListToMakeStudyPlan", module = "coordinator",
+            input = "/candidate/displayCandidateListToMakeStudyPlan.jsp", formBean = "chooseSecondMasterDegreeForm",
+            functionality = DegreeCoordinatorIndex.class)
+    @Forwards({ @Forward(name = "PrepareSuccess", path = "/candidate/displayCandidateListToMakeStudyPlan.jsp") })
+    public static class DisplayCandidateListToMakeStudyPlanDA extends MakeCandidateStudyPlanDispatchAction {
+    }
+
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        CoordinatedDegreeInfo.setCoordinatorContext(request);
+        DegreeCoordinatorIndex.setCoordinatorContext(request);
         return super.execute(mapping, actionForm, request, response);
     }
 
