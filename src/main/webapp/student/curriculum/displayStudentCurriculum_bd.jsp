@@ -25,7 +25,7 @@
 <p><span class="error0"><!-- Error messages go here --><html:errors /></span></p>
 
 <%-- Foto --%>
-<div style="float: right;" class="printhidden">
+<div style="float: right;">
 	<bean:define id="personID" name="registration" property="student.person.externalId"/>
 	<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
 </div>
