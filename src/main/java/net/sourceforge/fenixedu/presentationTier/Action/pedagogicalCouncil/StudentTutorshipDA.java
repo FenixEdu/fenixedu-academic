@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.TutorshipSummary;
 import net.sourceforge.fenixedu.domain.TutorshipSummaryRelation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.presentationTier.Action.commons.student.CurriculumDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.tutorship.StudentsPerformanceGridDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -168,6 +169,8 @@ public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
         } else {
             request.setAttribute("registration", registration);
         }
+
+        CurriculumDispatchAction.computeCurricularInfo(request, registration);
 
         return mapping.findForward("showStudentCurriculum");
     }

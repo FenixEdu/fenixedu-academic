@@ -17,7 +17,7 @@
 <script type="text/javascript" src="../javaScript/sviz/d3.min.js"></script>
 <script type="text/javascript" src="../javaScript/sviz/qtip.min.js"></script>
 <script type="text/javascript" src="../javaScript/sviz/i18next.min.js"></script>
-<script type="text/javascript" src="../javaScript/sviz/sviz.js"></script>
+<script type="text/javascript" src="../javaScript/sviz/sviz.min.js"></script>
 
 <h2><bean:write name="executionCourse" property="name" /> (<bean:write name="executionCourse" property="executionYear.name" />)</h2>
 

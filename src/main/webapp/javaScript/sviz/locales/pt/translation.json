@@ -46,6 +46,12 @@
     "required-ects": "ECTS necessários",
     "ects-of": "ECTS de"
   },
+  "approval-rate": {
+    "title": "Cadeiras Inscritas/Aprovadas",
+    "axis-label": "Nº de Cadeiras",
+    "legend-enroled": "Nº de Cadeiras Inscritas",
+    "legend-approved": "Nº de Cadeiras Aprovadas"
+  },
   "bubbles": {
     "approved": "Aprovados"
   }

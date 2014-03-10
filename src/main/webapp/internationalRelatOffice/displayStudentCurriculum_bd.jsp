@@ -7,6 +7,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="e" %>
 <%@page import="net.sourceforge.fenixedu.domain.degree.DegreeType"%>
 <%@page import="org.apache.struts.util.LabelValueBean"%>
+<%@ page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
 
 <html:xhtml/>
 
@@ -225,10 +226,21 @@
 
 <div class="cboth"></div>
 
-<div class="mtop15">
-	<bean:define id="graph" type="java.lang.String"><%= request.getContextPath() %>/student/viewCurriculumGraph.do?method=createAreaXYChart&registrationOID=<%= registration.getExternalId() %></bean:define>
-	<html:img align="middle" src="<%= graph %>"/>
-</div>
+<link href="../javaScript/sviz/sviz.css" rel="stylesheet" media="screen" type="text/css" />
 
+<script type="text/javascript">	$.noConflict(); </script>
+<script type="text/javascript" src="../javaScript/jquery/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="../javaScript/sviz/d3.min.js"></script>
+<script type="text/javascript" src="../javaScript/sviz/qtip.min.js"></script>
+<script type="text/javascript" src="../javaScript/sviz/i18next.min.js"></script>
+<script type="text/javascript" src="../javaScript/sviz/sviz.min.js"></script>
+
+<div id="graph" style="margin-top: 20px; margin-bottom: 10px"></div>
+
+<script type="text/javascript">
+	var data = <bean:write name="registrationApprovalRateJSON" filter="false" />;
+	SViz.init({ lang: "<%= Language.getLanguage() %>", localesBasePath: "../javaScript/sviz" });
+	var chart = SViz.loadViz("showApprovalRate", data, "#graph", {classic:true, width:650, blockWidth:50, blockPadding:7, barWidth:0.85, margin:{left:0}, titleclass:'h1'});
+</script>
 </logic:notEmpty>
 </html:form>
