@@ -2,7 +2,9 @@ package net.sourceforge.fenixedu.domain.phd;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
@@ -28,6 +30,7 @@ public class PhdProgramFocusArea extends PhdProgramFocusArea_Base {
         super();
         setRootDomainObject(Bennu.getInstance());
         setWhenCreated(new DateTime());
+        setActive(Boolean.TRUE);
     }
 
     public PhdProgramFocusArea(final MultiLanguageString name) {
@@ -143,6 +146,16 @@ public class PhdProgramFocusArea extends PhdProgramFocusArea_Base {
     @Deprecated
     public boolean hasWhenCreated() {
         return getWhenCreated() != null;
+    }
+
+    public static Set<PhdProgramFocusArea> getActivePhdProgramFocusAreas() {
+    	final Set<PhdProgramFocusArea> result = new HashSet<PhdProgramFocusArea>();
+    	for (final PhdProgramFocusArea area : Bennu.getInstance().getPhdProgramFocusAreasSet()) {
+    		if (area.getActive() != null && area.getActive().booleanValue()) {
+    			result.add(area);
+    		}
+    	}
+    	return result;
     }
 
 }

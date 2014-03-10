@@ -114,7 +114,8 @@ public class EPFLPhdCandidacyPeriod extends EPFLPhdCandidacyPeriod_Base {
         final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", locale);
 
         return String.format(bundle.getString("message.phd.epfl.email.body.referee"), EPFLPhdCandidacyProcessProperties
-                .getConfiguration().getPublicCandidacyRefereeFormLink(), referee.getValue());
+                .getConfiguration().getPublicCandidacyRefereeFormLink(), referee.getValue(), referee
+                .getPhdProgramCandidacyProcess().getIndividualProgramProcess().getPhdProgramFocusArea().getName().getContent());
     }
 
     @Override

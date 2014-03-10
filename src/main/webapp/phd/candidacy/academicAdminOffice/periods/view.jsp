@@ -42,17 +42,31 @@
 </logic:empty>
 
 <logic:notEmpty name="phdCandidacyPeriod" property="phdProgramCandidacyProcesses" >
-<fr:view name="phdCandidacyPeriod" property="phdProgramCandidacyProcesses">
-	<fr:schema type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess" bundle="PHD_RESOURCES">
-		<fr:slot name="processNumber" key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.phdIndividualProcessNumber" />
-		<fr:slot name="person.name" key="label.net.sourceforge.fenixedu.dataTransferObject.person.PersonBean.name"/>
-		<fr:slot name="individualProgramProcess.phdProgram.name" key="label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriodBean.phdProgram" />
-		<fr:slot name="candidacyDate" />
-	</fr:schema>
-	
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle2 thlight mtop15 thleft" />	
-		<fr:link name="view" link="/phdIndividualProgramProcess.do?method=viewProcess&processId=${individualProgramProcess.externalId}" label="label.view,PHD_RESOURCES"/>
-	</fr:layout>
-</fr:view>
+	<table class="tstyle2 thlight mtop15 thleft">
+		<tr>
+			<td><bean:message bundle="PHD_RESOURCES" key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.phdIndividualProcessNumber"/></td>
+			<td><bean:message bundle="PHD_RESOURCES" key="label.net.sourceforge.fenixedu.dataTransferObject.person.PersonBean.name"/></td>
+			<td><bean:message bundle="PHD_RESOURCES" key="label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriodBean.phdProgram"/></td>
+			<td><bean:message bundle="PHD_RESOURCES" key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.candidacyDate"/></td>
+			<td></td>
+		</tr>
+		<logic:iterate id="process" name="phdCandidacyPeriod" property="phdProgramCandidacyProcesses"
+				type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess">
+			<tr>
+				<td><bean:write name="process" property="processNumber"/></td>
+				<td><bean:write name="process" property="person.name"/></td>
+				<td>
+					<logic:present name="process" property="individualProgramProcess.phdProgram">
+						<bean:write name="process" property="individualProgramProcess.phdProgram.name"/>
+					</logic:present>
+				</td>
+				<td><bean:write name="process" property="candidacyDate"/></td>
+				<td>
+					<html:link action="<%= "/phdIndividualProgramProcess.do?method=viewProcess&processId=" + process.getIndividualProgramProcess().getExternalId() %>">
+						<bean:message bundle="PHD_RESOURCES" key="label.view"/>
+					</html:link>
+				</td>
+			</tr>
+		</logic:iterate>
+	</table>
 </logic:notEmpty>

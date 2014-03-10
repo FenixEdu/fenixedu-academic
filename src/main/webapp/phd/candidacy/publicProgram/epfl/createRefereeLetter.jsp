@@ -1,3 +1,4 @@
+<%@page import="org.fenixedu.bennu.core.domain.Bennu"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -8,7 +9,7 @@
 <%-- ### Title #### --%>
 <div class="breadcumbs">
 	<a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
-	<a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>en/about-IST/global-cooperation/IST-EPFL/">IST-EPFL</a> &gt;
+	<a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>en/education/fct-phd-programmes/">FCT Doctoral Programmes</a> &gt;
 	<bean:message key="title.submit.application" bundle="CANDIDATE_RESOURCES"/>
 </div>
 
@@ -32,13 +33,13 @@
 	<logic:empty name="createRefereeLetterBean" property="focusArea"> -- </logic:empty>
 </p>
 
-<p>You have been indicated as a referee on behalf of a prospective student applying to the IST-EPFL Joint Doctoral Initiative. We would appreciate your personal evaluation concerning the applicant's intellectual ability, aptitude in research or professional skill.</p>
+<p>You have been indicated as a referee on behalf of a prospective student applying to a FCT Doctoral Programme. We would appreciate your personal evaluation concerning the applicant's intellectual ability, aptitude in research or professional skill.</p>
 
 <ul>
 	<li>For the recommendation to be complete this form has to be fully filled out and an additional letter has to be attached, commenting on the applicant's character, the quality of previous work and the promise of productive scholarship.</li>
 	<li>If the applicant's first language is not English, please evaluate her / his proficiency to read, write and speak English.</li>
 	<li>If you have any reason to believe that the applicant should not be considered, please give your reasons.</li>
-	<li>If you know of other students who have entered <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> or EPFL from your institution, a comparison will be especially valuable.</li>
+	<li>If you know of other students who have entered institutions in <%= Bennu.getInstance().getInstitutionUnit().getCountry().getName() %> from your institution, a comparison will be especially valuable.</li>
 </ul>
 
 <p>Please feel free to add information about your own educational and professional background if you feel that such information will enhance our understanding of your evaluation.</p>
@@ -103,9 +104,9 @@
 		</fieldset>
 		
 		<p>
-			Once you have submitted the recommendation, you will no longer be able to modify it. Thank you for the time and effort you have taken in responding to this request. We greatly appreciate your opinion on this application. If you have any questions or require further information, please contact the EPFL doctoral program at <%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>en/about-IST/global-cooperation/IST-EPFL.
+			Once you have submitted the recommendation, you will no longer be able to modify it. Thank you for the time and effort you have taken in responding to this request. We greatly appreciate your opinion on this application. If you have any questions or require further information, please contact the doctoral program at fct-doctoral-programmes@ist.utl.pt
 		</p>
-		
+
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>
 	</fr:form>
 </div>

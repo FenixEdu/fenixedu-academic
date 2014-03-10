@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.phd;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Set;
 
@@ -11,6 +13,7 @@ import net.sourceforge.fenixedu.domain.accessControl.PhdProcessGuidingsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -58,14 +61,17 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
         super.setUploader(uploader);
         super.setDocumentAccepted(true);
 
-        final Group roleGroup = new AcademicAuthorizationGroup(AcademicOperationType.MANAGE_PHD_PROCESSES);
+        final Collection<IGroup> groups = new ArrayList<IGroup>();
+        groups.add(new AcademicAuthorizationGroup(AcademicOperationType.MANAGE_PHD_PROCESSES));
 
         final PhdIndividualProgramProcess individualProgramProcess = process.getIndividualProgramProcess();
         final PhdProgram phdProgram = individualProgramProcess.getPhdProgram();
-        final Group coordinatorGroup = new CurrentDegreeCoordinatorsGroup(phdProgram.getDegree());
-        final Group guidingsGroup = new PhdProcessGuidingsGroup(individualProgramProcess);
+        if (phdProgram != null) {
+        	groups.add(new CurrentDegreeCoordinatorsGroup(phdProgram.getDegree()));
+        }
+        groups.add(new PhdProcessGuidingsGroup(individualProgramProcess));
 
-        final Group group = new GroupUnion(roleGroup, coordinatorGroup, guidingsGroup);
+        final Group group = new GroupUnion(groups);
         super.init(filename, filename, content, group);
     }
 

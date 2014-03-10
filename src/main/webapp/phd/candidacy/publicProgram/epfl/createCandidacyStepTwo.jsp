@@ -8,7 +8,7 @@
 <%-- ### Title #### --%>
 <div class="breadcumbs">
 	<a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;
-	<a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>en/about-IST/global-cooperation/IST-EPFL/">IST-EPFL</a> &gt;
+	<a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>en/education/fct-phd-programmes/">FCT Doctoral Programmes</a> &gt;
 	<bean:message key="title.submit.application" bundle="CANDIDATE_RESOURCES"/>
 </div>
 
@@ -55,8 +55,6 @@
 		</fr:edit>
 		
 		<logic:notEmpty name="candidacyBean" property="thesisSubjectBeans">
-		<logic:present name="candidacyBean" property="program">
-		<logic:present name="candidacyBean" property="externalPhdProgram">
 		
 		<h3 class="mtop3"><bean:message key="title.phd.thesis.subject.ranking" bundle="PHD_RESOURCES" /></h3>
 		<p class="mtop1"><em><bean:message key="message.phd.thesis.subject.rank" bundle="PHD_RESOURCES" />:</em></p>
@@ -99,8 +97,6 @@
 				</tr>
 			</logic:iterate>
 		</table>
-		</logic:present>
-		</logic:present>
 		</logic:notEmpty>
 		
 	</fieldset>

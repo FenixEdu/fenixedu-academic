@@ -7261,6 +7261,7 @@ class phd.ExternalPhdProgram  {
 class phd.PhdProgramFocusArea  {
     DateTime whenCreated;
     MultiLanguageString name;
+    Boolean active;
 }
 
 class phd.ThesisSubject  {
