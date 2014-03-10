@@ -698,7 +698,11 @@ public class Unit extends Unit_Base {
         return !getSubUnits().isEmpty();
     }
 
-    public Collection<Unit> getParentByOrganizationalStructureAccountabilityType() {
+    public Collection<Unit> getCurrentParentByOrganizationalStructureAccountabilityType() {
+        return (Collection<Unit>) getCurrentParentParties(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE, Unit.class);
+    }
+
+    public Collection<Unit> getParentUnitsByOrganizationalStructureAccountabilityType() {
         return (Collection<Unit>) getParentParties(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE, Unit.class);
     }
 
@@ -812,10 +816,6 @@ public class Unit extends Unit_Base {
     public static Unit readByCostCenterCode(Integer costCenterCode) {
         final UnitCostCenterCode unitCostCenterCode = UnitCostCenterCode.find(costCenterCode);
         return unitCostCenterCode == null ? null : unitCostCenterCode.getUnit();
-    }
-
-    public Collection<Unit> getParentUnitsByOrganizationalStructureAccountabilityType() {
-        return (Collection<Unit>) getParentParties(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE, Unit.class);
     }
 
     public static Unit createNewUnit(MultiLanguageString unitName, String unitNameCard, Integer costCenterCode, String acronym,
