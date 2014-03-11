@@ -13,7 +13,6 @@
 	<f:loadBundle basename="resources/EnumerationResources"
 		var="bundleEnumeration" />
 
-	<h:outputText value="<em>#{bundle['label.departmentMember']}</em>" escape="false" />
 	<h:outputText value="<h2>#{bundle['label.teacherService.title']}</h2>" escape="false"/>
 	<h:outputText value="<h3>#{viewTeacherService.departmentName}</h3>" escape="false"/>
 	

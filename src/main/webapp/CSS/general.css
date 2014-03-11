@@ -2200,7 +2200,7 @@ padding-right: 0.5em;
 line-height: 2.5em;
 }
 
-ul.tcloud li a { border: none !important; }
+ul.tcloud li a { border: none !important; text-decoration: none; }
 
 
 ul.tcloud li a span {

@@ -8,10 +8,13 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.departmentMember.DepartmentMemberApp.DepartmentMemberAccompanimentApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -20,7 +23,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "departmentMember", path = "/teacherExpectationAutoAvaliation", scope = "request", parameter = "method")
+@StrutsFunctionality(app = DepartmentMemberAccompanimentApp.class, path = "expectation-auto-evaluation",
+        titleKey = "label.autoEvaluation")
+@Mapping(module = "departmentMember", path = "/teacherExpectationAutoAvaliation")
 @Forwards(value = {
         @Forward(name = "editAutoEvaluation",
                 path = "/departmentMember/expectationManagement/editTeachersExpectationAutoEvaluation.jsp"),
@@ -39,6 +44,7 @@ public class AutoEvaluationTeacherExpectationAction extends FenixDispatchAction 
         return mapping.findForward("editAutoEvaluation");
     }
 
+    @EntryPoint
     public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 

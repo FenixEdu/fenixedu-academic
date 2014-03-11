@@ -20,11 +20,14 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.studentCurriculum.BranchCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.departmentMember.DepartmentMemberApp.DepartmentMemberDepartmentApp;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -34,12 +37,14 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
+@StrutsFunctionality(app = DepartmentMemberDepartmentApp.class, path = "courses", titleKey = "link.departmentCourses")
 @Mapping(path = "/departmentCourses", module = "departmentMember")
 @Forwards({ @Forward(name = "viewDegreeCourses", path = "/departmentMember/courseStatistics/viewDegreeCourses.jsp"),
         @Forward(name = "viewCompetenceCourses", path = "/departmentMember/courseStatistics/viewCompetenceCourses.jsp"),
         @Forward(name = "viewExecutionCourses", path = "/departmentMember/courseStatistics/viewExecutionCourses.jsp") })
 public class DepartmentCourseDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepareListCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
         CourseStatisticsBean bean = getRenderedObject("courseStatisticsBean");

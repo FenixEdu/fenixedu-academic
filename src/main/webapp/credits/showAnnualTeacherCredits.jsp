@@ -8,7 +8,6 @@
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
 <html:xhtml/>
 
-<em><bean:message key="label.teacherService.credits"/></em>
 <jsp:include page="teacherCreditsStyles.jsp"/>
 
 <logic:present name="annualTeachingCreditsBean">

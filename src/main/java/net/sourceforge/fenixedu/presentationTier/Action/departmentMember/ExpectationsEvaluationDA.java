@@ -14,10 +14,13 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.departmentMember.DepartmentMemberApp.DepartmentMemberAccompanimentApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -26,17 +29,17 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "departmentMember", path = "/evaluateExpectations", scope = "request", parameter = "method")
-@Forwards(
-        value = {
-                @Forward(name = "chooseTeacher",
-                        path = "/departmentMember/expectationManagement/listTeachersToEvaluateExpectation.jsp"),
-                @Forward(name = "seeTeacherPersonalExpectations",
-                        path = "/departmentMember/expectationManagement/seeTeacherPersonalExpectationsToEvaluate.jsp"),
-                @Forward(name = "prepareEditEvaluation",
-                        path = "/departmentMember/expectationManagement/editExpectationEvaluation.jsp") })
+@StrutsFunctionality(app = DepartmentMemberAccompanimentApp.class, path = "evaluate-expectations",
+        titleKey = "label.evaluate.expectations")
+@Mapping(module = "departmentMember", path = "/evaluateExpectations")
+@Forwards({
+        @Forward(name = "chooseTeacher", path = "/departmentMember/expectationManagement/listTeachersToEvaluateExpectation.jsp"),
+        @Forward(name = "seeTeacherPersonalExpectations",
+                path = "/departmentMember/expectationManagement/seeTeacherPersonalExpectationsToEvaluate.jsp"),
+        @Forward(name = "prepareEditEvaluation", path = "/departmentMember/expectationManagement/editExpectationEvaluation.jsp") })
 public class ExpectationsEvaluationDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward chooseTeacher(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 

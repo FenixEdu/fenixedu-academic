@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.departmentMember.DepartmentMemberApp.DepartmentMemberAccompanimentApp;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
 import org.apache.struts.action.ActionForm;
@@ -21,6 +22,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -29,7 +32,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "departmentMember", path = "/personalExpectationManagement", scope = "request", parameter = "method")
+@StrutsFunctionality(app = DepartmentMemberAccompanimentApp.class, path = "personal-expectations",
+        titleKey = "link.personalExpectationsManagement")
+@Mapping(module = "departmentMember", path = "/personalExpectationManagement")
 @Forwards(value = {
         @Forward(name = "manageResearchAndDevelopmentExpectations",
                 path = "/departmentMember/expectationManagement/researchAndDevelopmentExpectationsManagement.jsp"),
@@ -43,6 +48,7 @@ import pt.ist.fenixframework.FenixFramework;
                 path = "/departmentMember/expectationManagement/universityServicesExpectationsManagement.jsp") })
 public class PersonalExpectationManagement extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward viewTeacherPersonalExpectations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 

@@ -5,7 +5,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/auditResult", module = "departmentMember")
+@Mapping(path = "/auditResult", module = "departmentMember", functionality = QUCTeacherAuditorDA.class)
 @Forwards({ @Forward(name = "viewProcessDetails", path = "/pedagogicalCouncil/inquiries/viewProcessDetailsNoAction.jsp") })
 public class ViewQucAuditProcessDepartmentDA extends ViewQucAuditProcessDA {
 

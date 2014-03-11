@@ -1,4 +1,3 @@
-<%@ page isELIgnored="true"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -6,7 +5,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/collection-pager" prefix="cp" %>
 
-<h2><bean:message key="label.manageFiles" bundle="RESEARCHER_RESOURCES"/></h2>
+<h2><bean:message key="label.manageFiles" bundle="RESEARCHER_RESOURCES"/> <span class="small">${unit.name}</span></h2>
 
 <bean:define id="unitID" name="unit" property="externalId"/>
 <bean:define id="actionName" name="functionalityAction"/>
@@ -16,6 +15,11 @@
 	<logic:equal name="unit" property="currentUserAllowedToUploadFiles" value="true">
 		<li>
 			<html:link page="<%= "/" + actionName + ".do?method=prepareFileUpload&unitId=" + unitID %>"><bean:message key="label.addFile" bundle="RESEARCHER_RESOURCES"/></html:link>
+		</li>
+	</logic:equal>
+	<logic:equal name="unit" property="currentUserAbleToDefineGroups" value="true">
+		<li>
+			<html:link page="<%= "/" + actionName + ".do?method=configureGroups&unitId=" + unitID %>"><bean:message key="label.manageAccessGroups" bundle="RESEARCHER_RESOURCES"/></html:link>
 		</li>
 	</logic:equal>
 	<li>
@@ -75,7 +79,7 @@
 		<fr:view name="files" schema="show.unit.files">
 			<fr:layout name="tabular-sortable">
 				<fr:property name="classes" value="tstyle2 thlight thnowrap"/>
-				<fr:property name="columnClasses" value="bold nowrap,smalltxt,smalltxt width100px acenter nowrap,,smalltxt,smalltxt color888 nowrap,nowrap"/>				
+				<fr:property name="columnClasses" value="bold,smalltxt,smalltxt width100px acenter nowrap,,smalltxt,smalltxt color888 nowrap,nowrap"/>				
 				<fr:property name="visibleIf(delete)" value="editableByCurrentUser"/>
 				<fr:property name="order(delete)" value="2"/>
 				<fr:property name="key(delete)" value="label.delete" />

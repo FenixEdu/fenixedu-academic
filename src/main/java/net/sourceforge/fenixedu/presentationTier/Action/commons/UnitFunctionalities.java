@@ -54,7 +54,7 @@ public abstract class UnitFunctionalities extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         Unit unit = getUnit(request);
-        request.setAttribute("groups", unit.getPersistentGroups());
+        request.setAttribute("groups", unit.getPersistentGroupsSet());
 
         return mapping.findForward("managePersistedGroups");
     }

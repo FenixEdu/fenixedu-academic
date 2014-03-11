@@ -7,7 +7,6 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 
-<em><bean:message key="message.evaluationElements" bundle="APPLICATION_RESOURCES"/></em>
 <h2><bean:message key="link.projects" bundle="APPLICATION_RESOURCES"/></h2>
 <bean:define name="coursesProjects" id="coursesProjectsMap" type="java.util.Map" scope="request"/>
 
@@ -42,7 +41,7 @@
 			</logic:notEmpty>
 			<p>
 			<bean:define id="viewProjectURL">
-				<%= request.getContextPath() + "/departmentMember/departmentFunctionalities.do?method=viewLastProjectSubmissionForEachGroup&amp;executionCourseID=" + courseID + "&amp;projectOID=" + projectOID %>
+				<%= request.getContextPath() + "/departmentMember/projectSubmissionsManagement.do?method=viewLastProjectSubmissionForEachGroup&amp;executionCourseID=" + courseID + "&amp;projectOID=" + projectOID %>
 			</bean:define>
 			<html:link href="<%=viewProjectURL%>"> 
 				<bean:message key="link.teacher.executionCourseManagement.evaluation.project.viewProjectSubmissions" bundle="APPLICATION_RESOURCES"/>

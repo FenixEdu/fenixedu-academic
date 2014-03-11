@@ -43,6 +43,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.portal.EntryPoint;
 
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
@@ -52,6 +53,7 @@ import pt.ist.fenixframework.FenixFramework;
 
 public abstract class ViewQUCResultsDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward resumeResults(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 

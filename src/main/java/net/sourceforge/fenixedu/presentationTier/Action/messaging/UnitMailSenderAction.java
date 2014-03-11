@@ -10,12 +10,10 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixframework.FenixFramework;
-
 public class UnitMailSenderAction extends FenixDispatchAction {
 
     public Unit getUnit(HttpServletRequest request) {
-        return FenixFramework.getDomainObject(request.getParameter("unitExternalId"));
+        return getDomainObject(request, "unitId");
     }
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

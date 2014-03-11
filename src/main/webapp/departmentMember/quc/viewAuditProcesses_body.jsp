@@ -6,7 +6,7 @@
 <html:xhtml/>
 
 <p class="mvert15">
-	<fr:form>
+	<fr:form action="/qucAudit.do?method=showAuditProcesses">
 		<fr:edit id="executionSemesterBean" name="executionSemesterBean">
 			<fr:schema bundle="INQUIRIES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.VariantBean">
 				<fr:slot name="domainObject" key="label.inquiries.semester" layout="menu-select-postback">

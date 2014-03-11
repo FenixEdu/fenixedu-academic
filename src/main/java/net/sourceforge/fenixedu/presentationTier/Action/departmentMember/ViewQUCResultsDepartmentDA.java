@@ -7,16 +7,19 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.DepartmentTeacherDe
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.DepartmentUCResultsBean;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.presentationTier.Action.departmentMember.DepartmentMemberApp.DepartmentMemberPresidentApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@StrutsFunctionality(app = DepartmentMemberPresidentApp.class, path = "quc-results", titleKey = "title.department.quc.results")
 @Mapping(path = "/viewQucResults", module = "departmentMember")
 @Forwards({ @Forward(name = "viewResumeResults", path = "/departmentMember/quc/viewResumeResults.jsp"),
         @Forward(name = "viewCompetenceResults", path = "/departmentMember/quc/viewCompetenceResults.jsp"),
