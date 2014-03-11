@@ -31,15 +31,12 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
-import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -216,27 +213,6 @@ public class Department extends Department_Base {
         final int begin = this.getRealName().indexOf("(");
         final int end = this.getRealName().indexOf(")");
         return this.getRealName().substring(begin + 1, end);
-    }
-
-    @SuppressWarnings("unchecked")
-    public List<TSDProcess> getTSDProcessesByExecutionPeriods(final Collection<ExecutionSemester> executionPeriodList) {
-        return (List<TSDProcess>) CollectionUtils.select(getTSDProcesses(), new Predicate() {
-            @Override
-            public boolean evaluate(Object arg0) {
-                TSDProcess tsdProcess = (TSDProcess) arg0;
-                return !CollectionUtils.intersection(tsdProcess.getExecutionPeriods(), executionPeriodList).isEmpty();
-            }
-        });
-    }
-
-    public List<TSDProcess> getTSDProcessesByExecutionPeriod(final ExecutionSemester executionSemester) {
-        List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
-        executionPeriodList.add(executionSemester);
-        return getTSDProcessesByExecutionPeriods(executionPeriodList);
-    }
-
-    public List<TSDProcess> getTSDProcessesByExecutionYear(final ExecutionYear executionYear) {
-        return getTSDProcessesByExecutionPeriods(executionYear.getExecutionPeriods());
     }
 
     public List<VigilantGroup> getVigilantGroupsForGivenExecutionYear(ExecutionYear executionYear) {
@@ -512,16 +488,6 @@ public class Department extends Department_Base {
     @Deprecated
     public boolean hasAnyDepartmentCreditsPools() {
         return !getDepartmentCreditsPoolsSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess> getTSDProcesses() {
-        return getTSDProcessesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTSDProcesses() {
-        return !getTSDProcessesSet().isEmpty();
     }
 
     @Deprecated

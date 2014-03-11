@@ -1325,16 +1325,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCompetenceCourse> getTSDCompetenceCourses() {
-        return getTSDCompetenceCoursesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTSDCompetenceCourses() {
-        return !getTSDCompetenceCoursesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourse> getAssociatedCurricularCourses() {
         return getAssociatedCurricularCoursesSet();
     }

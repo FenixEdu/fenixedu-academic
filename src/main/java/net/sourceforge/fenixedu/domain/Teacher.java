@@ -1655,16 +1655,6 @@ public class Teacher extends Teacher_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDRealTeacher> getTSDRealTeachers() {
-        return getTSDRealTeachersSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTSDRealTeachers() {
-        return !getTSDRealTeachersSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.research.result.ResultTeacher> getTeacherResults() {
         return getTeacherResultsSet();
     }

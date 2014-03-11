@@ -128,7 +128,6 @@ import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
 import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
-import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
@@ -2937,43 +2936,6 @@ public class Person extends Person_Base {
         return proposals;
     }
 
-    @Override
-    public Set<TSDProcess> getTSDProcessesSet() {
-        final Department department = hasTeacher() ? getTeacher().getCurrentWorkingDepartment() : null;
-        return department == null ? Collections.<TSDProcess> emptySet() : new HashSet<TSDProcess>(CollectionUtils.select(
-                department.getTSDProcesses(), new Predicate() {
-                    @Override
-                    public boolean evaluate(final Object arg0) {
-                        final TSDProcess tsd = (TSDProcess) arg0;
-                        return tsd.hasAnyPermission(Person.this);
-                    }
-                }));
-    }
-
-    public List<TSDProcess> getTSDProcesses(final ExecutionSemester period) {
-        final Department department = hasTeacher() ? getTeacher().getCurrentWorkingDepartment() : null;
-        return department == null ? Collections.EMPTY_LIST : (List<TSDProcess>) CollectionUtils.select(
-                department.getTSDProcessesByExecutionPeriod(period), new Predicate() {
-                    @Override
-                    public boolean evaluate(final Object arg0) {
-                        final TSDProcess tsd = (TSDProcess) arg0;
-                        return tsd.hasAnyPermission(Person.this);
-                    }
-                });
-    }
-
-    public List<TSDProcess> getTSDProcesses(final ExecutionYear year) {
-        final Department department = hasTeacher() ? getTeacher().getCurrentWorkingDepartment() : null;
-        return department == null ? Collections.EMPTY_LIST : (List<TSDProcess>) CollectionUtils.select(
-                department.getTSDProcessesByExecutionYear(year), new Predicate() {
-                    @Override
-                    public boolean evaluate(final Object arg0) {
-                        final TSDProcess tsd = (TSDProcess) arg0;
-                        return tsd.hasAnyPermission(Person.this);
-                    }
-                });
-    }
-
     public List<ResearchUnit> getWorkingResearchUnits() {
         final List<ResearchUnit> units = new ArrayList<ResearchUnit>();
         final Collection<? extends Accountability> parentAccountabilities =
@@ -4992,16 +4954,6 @@ public class Person extends Person_Base {
     @Deprecated
     public boolean hasAnyTeacherCredits() {
         return !getTeacherCreditsSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess> getTSDProcesses() {
-        return getTSDProcessesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTSDProcesses() {
-        return !getTSDProcessesSet().isEmpty();
     }
 
     @Deprecated

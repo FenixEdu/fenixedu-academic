@@ -2134,16 +2134,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDVirtualCourseGroup> getTSDVirtualCourseGroups() {
-        return getTSDVirtualCourseGroupsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTSDVirtualCourseGroups() {
-        return !getTSDVirtualCourseGroupsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.DegreeContext> getDegreeContexts() {
         return getDegreeContextsSet();
     }

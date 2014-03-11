@@ -2429,16 +2429,6 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularCourse> getTSDCurricularCourses() {
-        return getTSDCurricularCoursesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTSDCurricularCourses() {
-        return !getTSDCurricularCoursesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Curriculum> getAssociatedCurriculums() {
         return getAssociatedCurriculumsSet();
     }

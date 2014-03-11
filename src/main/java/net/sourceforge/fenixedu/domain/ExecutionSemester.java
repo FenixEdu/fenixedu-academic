@@ -895,16 +895,6 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse> getTSDCourses() {
-        return getTSDCoursesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTSDCourses() {
-        return !getTSDCoursesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.TeacherService> getTeacherServices() {
         return getTeacherServicesSet();
     }
@@ -1182,16 +1172,6 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     @Deprecated
     public boolean hasAnyTutorshipSummaries() {
         return !getTutorshipSummariesSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess> getTSDProcesses() {
-        return getTSDProcessesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTSDProcesses() {
-        return !getTSDProcessesSet().isEmpty();
     }
 
     @Deprecated
