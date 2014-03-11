@@ -3,7 +3,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.commons.student;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +16,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
+import net.sourceforge.fenixedu.dataTransferObject.student.ExecutionPeriodStatisticsBean;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -47,6 +51,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -217,6 +225,8 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
             actionForm.set("organizedBy", organizedBy);
         }
 
+        computeCurricularInfo(request, registration);
+
         if (StringUtils.isEmpty(request.getParameter("degreeCurricularPlanID"))) {
             return mapping.findForward("ShowStudentCurriculum");
         } else {
@@ -256,9 +266,9 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
         return result;
     }
 
-    private List<StudentCurricularPlan> getSortedStudentCurricularPlans(final Registration registration) {
+    private static List<StudentCurricularPlan> getSortedStudentCurricularPlans(final Registration registration) {
         final List<StudentCurricularPlan> result = new ArrayList<StudentCurricularPlan>();
-        result.addAll(registration.getStudentCurricularPlans());
+        result.addAll(registration.getStudentCurricularPlansSet());
         Collections.sort(result, new BeanComparator("startDateYearMonthDay"));
 
         return result;
@@ -359,4 +369,51 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
         return executionDegreeIdString;
     }
 
+    public static JsonObject computeCurricularInfo(HttpServletRequest request, Registration registration) {
+
+        /* Make a 'studentStatistics' Array of ExecutionPeriodStatisticsBean that has info on # enrolments, etc */
+        List<ExecutionPeriodStatisticsBean> studentStatistics = new ArrayList<ExecutionPeriodStatisticsBean>();
+
+        Map<ExecutionSemester, ExecutionPeriodStatisticsBean> enrolmentsByExecutionPeriod =
+                new HashMap<ExecutionSemester, ExecutionPeriodStatisticsBean>();
+
+        for (StudentCurricularPlan studentCurricularPlan : getSortedStudentCurricularPlans(registration)) {
+            for (ExecutionSemester executionSemester : studentCurricularPlan.getEnrolmentsExecutionPeriods()) {
+                if (enrolmentsByExecutionPeriod.containsKey(executionSemester)) {
+                    ExecutionPeriodStatisticsBean executionPeriodStatisticsBean =
+                            enrolmentsByExecutionPeriod.get(executionSemester);
+                    executionPeriodStatisticsBean.addEnrolmentsWithinExecutionPeriod(studentCurricularPlan
+                            .getEnrolmentsByExecutionPeriod(executionSemester));
+                    enrolmentsByExecutionPeriod.put(executionSemester, executionPeriodStatisticsBean);
+                } else {
+                    ExecutionPeriodStatisticsBean executionPeriodStatisticsBean =
+                            new ExecutionPeriodStatisticsBean(executionSemester);
+                    executionPeriodStatisticsBean.addEnrolmentsWithinExecutionPeriod(studentCurricularPlan
+                            .getEnrolmentsByExecutionPeriod(executionSemester));
+                    enrolmentsByExecutionPeriod.put(executionSemester, executionPeriodStatisticsBean);
+                }
+            }
+        }
+        studentStatistics.addAll(enrolmentsByExecutionPeriod.values());
+        Collections.sort(studentStatistics, new BeanComparator("executionPeriod"));
+
+        /* Put all the info in the required JSON format */
+        JsonObject curricularInfoJSONObject = new JsonObject();
+
+        JsonArray periodsJSONArray = new JsonArray();
+        for (ExecutionPeriodStatisticsBean executionPeriodStatisticsBean : studentStatistics) {
+            JsonArray jsonArray = new JsonArray();
+            jsonArray.add(new JsonPrimitive(executionPeriodStatisticsBean.getExecutionPeriod().getExecutionYear().getYear()
+                    + " - " + executionPeriodStatisticsBean.getExecutionPeriod().getSemester().toString() + "º sem"));
+            jsonArray.add(new JsonPrimitive(executionPeriodStatisticsBean.getTotalEnrolmentsNumber()));
+            jsonArray.add(new JsonPrimitive(executionPeriodStatisticsBean.getApprovedEnrolmentsNumber()));
+            periodsJSONArray.add(jsonArray);
+        }
+        curricularInfoJSONObject.add("periods", periodsJSONArray);
+
+        /* Serve the JSON object */
+        request.setAttribute("registrationApprovalRateJSON", curricularInfoJSONObject);
+
+        return curricularInfoJSONObject;
+    }
 }

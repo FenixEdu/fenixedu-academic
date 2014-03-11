@@ -25,7 +25,7 @@
 <script type="text/javascript" src="../javaScript/sviz/d3.min.js"></script>
 <script type="text/javascript" src="../javaScript/sviz/qtip.min.js"></script>
 <script type="text/javascript" src="../javaScript/sviz/i18next.min.js"></script>
-<script type="text/javascript" src="../javaScript/sviz/sviz.js"></script>
+<script type="text/javascript" src="../javaScript/sviz/sviz.min.js"></script>
 
 <script type="text/javascript">
 var data = <bean:write name="progress" filter="false" />;

@@ -46,6 +46,12 @@
     "required-ects": "required ECTS",
     "ects-of": "ECTS of"
   },
+  "approval-rate": {
+    "title": "Subjects Enroled/Approved",
+    "axis-label": "No. of Subjects",
+    "legend-enroled": "No. of Enroled Subjects",
+    "legend-approved": "No. of Approved Subjects"
+  },
   "bubbles": {
     "approved": "Approved"
   }
