@@ -200,13 +200,6 @@ public class RolePredicates {
                 };
             };
 
-    public static final AccessControlPredicate<Object> MASTER_DEGREE_CANDIDATE_PREDICATE = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(Object domainObject) {
-            return hasRole(RoleType.MASTER_DEGREE_CANDIDATE);
-        };
-    };
-
     public static final AccessControlPredicate<Object> OPERATOR_PREDICATE = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(Object domainObject) {

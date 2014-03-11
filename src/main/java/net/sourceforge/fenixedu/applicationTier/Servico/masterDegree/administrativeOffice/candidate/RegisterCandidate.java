@@ -31,7 +31,6 @@ import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import net.sourceforge.fenixedu.util.SituationName;
@@ -54,9 +53,6 @@ public class RegisterCandidate {
         Person person = masterDegreeCandidate.getPerson();
 
         checkCandidateSituation(masterDegreeCandidate.getActiveCandidateSituation());
-
-        // remove master degree candidate role
-        person.removeRoleByType(RoleType.MASTER_DEGREE_CANDIDATE);
 
         // check if old student number is free
         checkOldStudentNumber(studentNumber, person);

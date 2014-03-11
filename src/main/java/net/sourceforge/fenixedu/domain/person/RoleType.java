@@ -25,6 +25,7 @@ public enum RoleType implements IPresentableEnum {
 
     RESOURCE_MANAGER("Resource Management"),
 
+    @Deprecated
     MASTER_DEGREE_CANDIDATE("Master Degree Candidate"),
 
     /**
@@ -173,7 +174,6 @@ public enum RoleType implements IPresentableEnum {
         rolesImportance.add(RoleType.GRANT_OWNER);
         rolesImportance.add(RoleType.ALUMNI);
         rolesImportance.add(RoleType.CANDIDATE);
-        rolesImportance.add(RoleType.MASTER_DEGREE_CANDIDATE);
         rolesImportance.add(RoleType.MESSAGING);
         rolesImportance.add(RoleType.PERSON);
         rolesImportance.add(RoleType.EXAM_COORDINATOR);
