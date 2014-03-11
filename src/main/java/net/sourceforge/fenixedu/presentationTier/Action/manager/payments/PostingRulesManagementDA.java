@@ -833,9 +833,15 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
         try {
             PostingRulesManager.createDEAStandaloneGratuityPostingRule(standaloneInstallment, degreeCurricularPlan);
         } catch (DomainException e) {
+            PaymentPlanBean paymentPlanEditor = new PaymentPlanBean(ExecutionYear.readCurrentExecutionYear());
+            request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
+            request.setAttribute("paymentPlanEditor", paymentPlanEditor);
+            request.setAttribute("installmentEditor", installment);
+
             addActionMessage(request, e.getKey(), e.getArgs());
 
-            return createDEAGratuityPRInvalid(mapping, form, request, response);
+            //return createDEAGratuityPRInvalid(mapping, form, request, response);
+            return mapping.findForward("createDEAGratuityPR");
         }
 
         return showPostGraduationDegreeCurricularPlanPostingRules(mapping, form, request, response);

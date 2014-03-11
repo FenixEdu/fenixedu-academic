@@ -181,8 +181,7 @@ public class PostingRulesManager {
             new StandaloneEnrolmentGratuityPR(startLocalDate.toDateTimeAtStartOfDay(), null, dcpSAT, ectsForYear, gratuityFactor,
                     ectsFactor);
         } else {
-            //TODO: Not sure...
-            throw new DomainException("");
+            throw new DomainException("StandaloneEnrolmentGratuityPR.DegreeCurricularPlanServiceAgreementTemplate.cannot.be.null");
         }
     }
 }
