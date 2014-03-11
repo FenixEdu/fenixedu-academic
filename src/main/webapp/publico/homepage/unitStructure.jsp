@@ -35,10 +35,10 @@
 		<br/>
 	</logic:empty>
 			
-	<logic:iterate id="parentUnit" name="initialCurrentUnit" property="parentByOrganizationalStructureAccountabilityType">
-		<logic:notEmpty name="parentUnit" property="parentByOrganizationalStructureAccountabilityType">
-			<logic:iterate id="grandParentUnit" name="parentUnit" property="parentByOrganizationalStructureAccountabilityType">
-				<logic:notEmpty name="grandParentUnit" property="parentByOrganizationalStructureAccountabilityType">
+	<logic:iterate id="parentUnit" name="initialCurrentUnit" property="currentParentByOrganizationalStructureAccountabilityType">
+		<logic:notEmpty name="parentUnit" property="currentParentByOrganizationalStructureAccountabilityType">
+			<logic:iterate id="grandParentUnit" name="parentUnit" property="currentParentByOrganizationalStructureAccountabilityType">
+				<logic:notEmpty name="grandParentUnit" property="currentParentByOrganizationalStructureAccountabilityType">
 					<bean:define id="currentUnit" name="parentUnit" toScope="request"/>
 					<jsp:include page="unitStructure.jsp"/>
 				</logic:notEmpty>

@@ -566,13 +566,10 @@
 		<property name="format" value="${name}" />
         <property name="sortBy" value="name"/>
 	</slot>
-	<slot name="program" layout="menu-select-postback">
+	<slot name="program" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram.PhdProgramsProviderForPublicCandidacy" />
 		<property name="format" value="${name}" />
 		<property name="sortBy" value="name" /> 
-		<property name="defaultText" value="label.not.applicable.or.chosen.by.thesis" />
-		<property name="key" value="true"/>
-		<property name="bundle" value="PHD_RESOURCES"/>
 	</slot>
 	<slot name="externalPhdProgram" layout="menu-select-postback" key="label.epfl.phd.program">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram.ExternalPhdProgramsProviderForPublicCandidacies" />
@@ -866,13 +863,10 @@
 		<property name="format" value="${name}" />
         <property name="sortBy" value="name"/>
 	</slot>
-	<slot name="phdProgram" layout="menu-select-postback">
+	<slot name="phdProgram" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram.PhdProgramsProviderForPublicCandidacy" />
 		<property name="format" value="${name}" />
 		<property name="sortBy" value="name" /> 
-		<property name="defaultText" value="label.not.applicable.or.chosen.by.thesis" />
-		<property name="key" value="true"/>
-		<property name="bundle" value="PHD_RESOURCES"/>
 	</slot>
 	<slot name="externalPhdProgram" layout="menu-select-postback" key="label.epfl.phd.program">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram.ExternalPhdProgramsProviderForPublicCandidacies" />

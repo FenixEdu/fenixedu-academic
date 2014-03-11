@@ -80,7 +80,7 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
     }
 
     private boolean hasCurricularPeriodOrderFor(final Context context) {
-        return context.containsSemester(getCurricularPeriodOrder())
+        return context != null && context.containsSemester(getCurricularPeriodOrder())
                 && context.getCurricularPeriod().getAcademicPeriod().equals(AcademicPeriod.SEMESTER);
     }
 

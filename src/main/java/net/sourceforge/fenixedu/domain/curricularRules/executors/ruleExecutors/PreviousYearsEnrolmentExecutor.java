@@ -143,6 +143,10 @@ public class PreviousYearsEnrolmentExecutor extends CurricularRuleExecutor {
                     continue;
                 }
 
+                if (degreeModuleToEvaluate.getContext() == null) {
+                    throw new DomainException("error.degreeModuleToEvaluate.has.invalid.context",
+                            degreeModuleToEvaluate.getName(), degreeModuleToEvaluate.getExecutionPeriod().getQualifiedName());
+                }
                 if (hasCurricularCoursesToEnrolInPreviousYears(curricularCoursesToEnrolByYear, degreeModuleToEvaluate
                         .getContext().getCurricularYear())) {
 
