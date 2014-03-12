@@ -771,6 +771,8 @@ public class Thesis extends Thesis_Base {
             setState(ThesisState.EVALUATED);
 
             updateMarkSheet();
+
+            setDocumentsAvailableAfter(new DateTime().plusMonths(6));
         } else {
             throw new DomainException("thesis.already.evaluated");
         }

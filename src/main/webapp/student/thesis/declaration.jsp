@@ -54,7 +54,8 @@
     dissertação para obtenção do <strong>Grau de Mestre em <%= degree %></strong> com o
     título <strong><%= title %></strong>, autorizo o <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%> a inserir,
     em formato pdf, a versão final desta dissertação e o seu resumo alargado na sua
-    <fr:edit id="visibility" name="bean" slot="visibility"/>
+    <strong><fr:view name="bean" property="visibility"/></strong>
+    <%--<fr:edit id="visibility" name="bean" slot="visibility"/> --%>
     , possibilitando assim o seu conhecimento a todos os que
     possam aceder àquele meio, com a ressalva de que estes não possam, sem a minha
     expressa autorização, reproduzir, por qualquer meio, o texto daquela minha
