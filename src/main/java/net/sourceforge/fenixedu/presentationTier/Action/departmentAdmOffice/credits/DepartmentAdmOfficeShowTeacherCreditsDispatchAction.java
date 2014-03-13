@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ShowTeacherCreditsDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.credits.departmentAdmOffice.DepartmentAdmOfficeViewTeacherCreditsDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -28,10 +29,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "departmentAdmOffice", path = "/showFullTeacherCreditsSheet", attribute = "teacherSearchForm",
-        formBean = "teacherSearchForm", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "show-teacher-credits", path = "show-teacher-credits"),
-        @Forward(name = "teacher-not-found", path = "/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&page=0") })
+@Mapping(module = "departmentAdmOffice", path = "/showFullTeacherCreditsSheet", formBean = "teacherSearchForm",
+        functionality = DepartmentAdmOfficeViewTeacherCreditsDA.class)
+@Forwards(value = {
+        @Forward(name = "show-teacher-credits", path = "/departmentAdmOffice/credits/showTeacherCredits.jsp"),
+        @Forward(name = "teacher-not-found",
+                path = "/departmentAdmOffice/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&page=0") })
 public class DepartmentAdmOfficeShowTeacherCreditsDispatchAction extends ShowTeacherCreditsDispatchAction {
 
     public ActionForward showTeacherCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,

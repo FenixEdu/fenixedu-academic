@@ -7,11 +7,14 @@ package net.sourceforge.fenixedu.presentationTier.Action.teacher.professorship;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorizedServiceDeleteException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteProfessorship.ExistingAssociatedCredits;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.RemoveProfessorshipWithPerson;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.TeacherSearchForExecutionCourseAssociation;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -19,6 +22,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
+import org.apache.struts.action.ExceptionHandler;
 
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
@@ -31,20 +35,14 @@ import pt.ist.fenixframework.FenixFramework;
  * @author jpvl
  */
 @Mapping(module = "departmentAdmOffice", path = "/removeProfessorship", input = "/showTeacherProfessorshipsForManagement.do",
-        attribute = "teacherExecutionCourseForm", formBean = "teacherExecutionCourseForm", scope = "request", validate = false,
-        parameter = "method")
-@Forwards(value = { @Forward(name = "successfull-delete", path = "/showTeacherProfessorshipsForManagement.do") })
-@Exceptions(
-        value = {
-                @ExceptionHandling(
-                        type = net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorizedServiceDeleteException.class,
-                        key = "message.professorship.isResponsibleFor",
-                        handler = org.apache.struts.action.ExceptionHandler.class,
-                        path = "/showTeacherProfessorshipsForManagement.do", scope = "request"),
-                @ExceptionHandling(
-                        type = net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteProfessorship.ExistingAssociatedCredits.class,
-                        key = "message.existing.associatedCredits", handler = org.apache.struts.action.ExceptionHandler.class,
-                        path = "/showTeacherProfessorshipsForManagement.do", scope = "request") })
+        formBean = "teacherExecutionCourseForm", validate = false,
+        functionality = TeacherSearchForExecutionCourseAssociation.class)
+@Forwards({ @Forward(name = "successfull-delete", path = "/departmentAdmOffice/showTeacherProfessorshipsForManagement.do") })
+@Exceptions(value = {
+        @ExceptionHandling(type = notAuthorizedServiceDeleteException.class, key = "message.professorship.isResponsibleFor",
+                handler = ExceptionHandler.class, path = "/showTeacherProfessorshipsForManagement.do", scope = "request"),
+        @ExceptionHandling(type = ExistingAssociatedCredits.class, key = "message.existing.associatedCredits",
+                handler = ExceptionHandler.class, path = "/showTeacherProfessorshipsForManagement.do", scope = "request") })
 public class RemoveProfessorshipAction extends FenixDispatchAction {
 
     @Override

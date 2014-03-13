@@ -5,7 +5,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <html:xhtml/>
 
-<em><bean:message key="label.departmentAdmOffice"/></em>
 <logic:notEmpty name="period">
 	<h2><bean:message key="label.editTeacherExpectationAutoEvaluationPeriodManagement.title"/></h2>
 </logic:notEmpty>

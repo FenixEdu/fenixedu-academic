@@ -16,29 +16,26 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ViewTeacherCreditsDA;
+import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.DepartmentAdmOfficeApp.DepartmentAdmOfficeCreditsApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "departmentAdmOffice", path = "/credits", scope = "request", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "selectTeacher", path = "/credits/selectTeacher.jsp", tileProperties = @Tile(
-                title = "private.administrationofcreditsofdepartmentteachers.credits.credits")),
-        @Forward(name = "showTeacherCredits", path = "/credits/showTeacherCredits.jsp", tileProperties = @Tile(
-                title = "private.administrationofcreditsofdepartmentteachers.credits.credits")),
-        @Forward(name = "showPastTeacherCredits", path = "/credits/showPastTeacherCredits.jsp", tileProperties = @Tile(
-                title = "private.administrationofcreditsofdepartmentteachers.credits.credits")),
-        @Forward(name = "showAnnualTeacherCredits", path = "/credits/showAnnualTeacherCredits.jsp", tileProperties = @Tile(
-                title = "private.administrationofcreditsofdepartmentteachers.credits.credits")) })
+@StrutsFunctionality(app = DepartmentAdmOfficeCreditsApp.class, path = "credits", titleKey = "label.credits")
+@Mapping(module = "departmentAdmOffice", path = "/credits")
+@Forwards({ @Forward(name = "selectTeacher", path = "/credits/selectTeacher.jsp"),
+        @Forward(name = "showTeacherCredits", path = "/credits/showTeacherCredits.jsp"),
+        @Forward(name = "showPastTeacherCredits", path = "/credits/showPastTeacherCredits.jsp"),
+        @Forward(name = "showAnnualTeacherCredits", path = "/credits/showAnnualTeacherCredits.jsp") })
 public class DepartmentAdmOfficeViewTeacherCreditsDA extends ViewTeacherCreditsDA {
     @Override
     public ActionForward viewAnnualTeachingCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -64,7 +61,7 @@ public class DepartmentAdmOfficeViewTeacherCreditsDA extends ViewTeacherCreditsD
     private boolean isTeacherOfManageableDepartments(Teacher teacher) {
         User userView = Authenticate.getUser();
         ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
-        Collection<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
+        Collection<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCreditsSet();
         List<Unit> workingPlacesByPeriod =
                 teacher.getWorkingPlacesByPeriod(executionSemester.getBeginDateYearMonthDay(),
                         executionSemester.getEndDateYearMonthDay());

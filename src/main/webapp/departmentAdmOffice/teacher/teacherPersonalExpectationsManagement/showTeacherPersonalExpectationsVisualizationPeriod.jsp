@@ -6,7 +6,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <html:xhtml/>
 
-<em><bean:message key="label.departmentAdmOffice"/></em>
 <h2><bean:message key="label.defineTeacherPersonalExpectationsVisualizationPeriod"/></h2>
 
 <logic:present role="role(DEPARTMENT_ADMINISTRATIVE_OFFICE)">
@@ -33,9 +32,6 @@
 					<fr:destination name="postback" path="/teacherPersonalExpectationsVisualizationPeriod.do?method=showPeriodWithSelectedYear"/>
 				</fr:layout>
 			</fr:edit>
-			<html:submit styleClass="switchNone">
-				<bean:message key="label.next"/>
-			</html:submit>
 			</div>
 		</fr:form>
 			
@@ -68,10 +64,6 @@
 				</ul>
 			</logic:empty>
 		</logic:notEmpty>
-		
-		<script type="text/javascript" language="javascript">
-			switchGlobal();
-		</script>
 		
 	</logic:notEmpty>
 	

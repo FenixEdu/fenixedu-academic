@@ -11,16 +11,19 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUni
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.UnitFunctionalities;
+import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.DepartmentAdmOfficeApp.DepartmentAdmOfficeMessagingApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@StrutsFunctionality(app = DepartmentAdmOfficeMessagingApp.class, path = "manage-files", titleKey = "label.manageFiles")
 @Mapping(module = "departmentAdmOffice", path = "/departmentFunctionalities")
 @Forwards({ @Forward(name = "uploadFile", path = "/commons/unitFiles/uploadFile.jsp"),
         @Forward(name = "manageFiles", path = "/commons/unitFiles/manageFiles.jsp"),

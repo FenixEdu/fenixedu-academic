@@ -10,24 +10,28 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
+import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.DepartmentAdmOfficeApp.DepartmentAdmOfficeTeachersApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
-@Mapping(module = "departmentAdmOffice", path = "/searchTeachers", scope = "request", parameter = "method")
-public class SearchTeachersDA extends FenixDispatchAction {
+@StrutsFunctionality(app = DepartmentAdmOfficeTeachersApp.class, path = "search", titleKey = "link.teachers.search")
+@Mapping(module = "departmentAdmOffice", path = "/searchTeachers")
+public class SearchTeachersDA extends FenixAction {
 
     private Department getDepartment(final HttpServletRequest request) {
         return getUserView(request).getPerson().getEmployee().getCurrentDepartmentWorkingPlace();
     }
 
-    public ActionForward download(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         response.setContentType("text/plain");
         response.setHeader("Content-disposition", "attachment; filename=teachers.xls");
@@ -39,7 +43,7 @@ public class SearchTeachersDA extends FenixDispatchAction {
             final Person person = teacher.getPerson();
 
             final Row row = spreadsheet.addRow();
-            row.setCell(teacher.getPerson().getIstUsername());
+            row.setCell(teacher.getPerson().getUsername());
             row.setCell(person.getName());
             row.setCell(person.getEmail());
         }

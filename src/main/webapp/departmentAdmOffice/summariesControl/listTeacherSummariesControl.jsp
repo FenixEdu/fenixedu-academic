@@ -8,7 +8,6 @@
 
 <logic:present role="role(DEPARTMENT_ADMINISTRATIVE_OFFICE)">
 
-	<em><bean:message key="DEPARTMENT_ADMINISTRATIVE_OFFICE" bundle="APPLICATION_RESOURCES"/></em>
 	<h2><bean:message key="link.summaries.control" bundle="APPLICATION_RESOURCES"/></h2>
 		
 	<jsp:include page="/directiveCouncil/summariesControl/listTeachersSummariesControlCore.jsp"/>

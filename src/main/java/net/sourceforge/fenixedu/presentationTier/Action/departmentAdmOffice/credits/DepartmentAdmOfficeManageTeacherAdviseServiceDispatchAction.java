@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ManageTeacherAdviseServiceDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.credits.departmentAdmOffice.DepartmentAdmOfficeViewTeacherCreditsDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -36,12 +37,15 @@ import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "departmentAdmOffice", path = "/teacherAdviseServiceManagement",
         input = "/teacherAdviseServiceManagement.do?method=showTeacherAdvises&page=0",
-        attribute = "teacherDegreeFinalProjectStudentForm", formBean = "teacherDegreeFinalProjectStudentForm", scope = "request",
-        parameter = "method")
-@Forwards(value = { @Forward(name = "list-teacher-advise-services", path = "list-teacher-advise-services"),
-        @Forward(name = "successfull-delete", path = "/teacherAdviseServiceManagement.do?method=showTeacherAdvises&page=0"),
-        @Forward(name = "successfull-edit", path = "/teacherAdviseServiceManagement.do?method=showTeacherAdvises&page=0"),
-        @Forward(name = "teacher-not-found", path = "/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&page=0") })
+        formBean = "teacherDegreeFinalProjectStudentForm", functionality = DepartmentAdmOfficeViewTeacherCreditsDA.class)
+@Forwards(value = {
+        @Forward(name = "list-teacher-advise-services", path = "/credits/adviseServices/showTeacherAdviseServices.jsp"),
+        @Forward(name = "successfull-delete",
+                path = "/departmentAdmOffice/teacherAdviseServiceManagement.do?method=showTeacherAdvises&page=0"),
+        @Forward(name = "successfull-edit",
+                path = "/departmentAdmOffice/teacherAdviseServiceManagement.do?method=showTeacherAdvises&page=0"),
+        @Forward(name = "teacher-not-found",
+                path = "/departmentAdmOffice/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&page=0") })
 @Exceptions(
         value = {
                 @ExceptionHandling(

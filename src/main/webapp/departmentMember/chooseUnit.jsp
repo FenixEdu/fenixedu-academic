@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 
-<h3><bean:message key="label.select.unit"></bean:message></h3>
+<h3><bean:message key="label.select.unit" bundle="DEPARTMENT_MEMBER_RESOURCES"></bean:message></h3>
 <br />
 
 <ul>

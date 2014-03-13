@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.DepartmentAdmOfficeApp.DefineExpectationPeriods;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -20,16 +21,15 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "departmentAdmOffice", path = "/teacherPersonalExpectationsDefinitionPeriod", scope = "request",
-        parameter = "method")
-@Forwards(
-        value = {
-                @Forward(
-                        name = "showDefinitionPeriod",
-                        path = "/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/showTeacherPersonalExpectationsDefinitionPeriod.jsp"),
-                @Forward(
-                        name = "editDefinitionPeriod",
-                        path = "/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/editTeacherPersonalExpectationsDefinitionPeriod.jsp") })
+@Mapping(module = "departmentAdmOffice", path = "/teacherPersonalExpectationsDefinitionPeriod",
+        functionality = DefineExpectationPeriods.class)
+@Forwards({
+        @Forward(
+                name = "showDefinitionPeriod",
+                path = "/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/showTeacherPersonalExpectationsDefinitionPeriod.jsp"),
+        @Forward(
+                name = "editDefinitionPeriod",
+                path = "/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/editTeacherPersonalExpectationsDefinitionPeriod.jsp") })
 public class TeacherPersonalExpectationsDefinitionPeriodDA extends FenixDispatchAction {
 
     public ActionForward showPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,

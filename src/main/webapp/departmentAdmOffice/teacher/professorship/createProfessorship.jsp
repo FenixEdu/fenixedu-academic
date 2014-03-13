@@ -37,9 +37,6 @@
 	<logic:present name="notAuth" >
 	<span class="error"><bean:message bundle="HTMLALT_RESOURCES" key="label.not.auth.for.execution.semester" /></span >
 	</logic:present>
-	<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-		<bean:message key="button.submit"/>
-	</html:submit>
 	
 	<logic:present name="executionDegrees">
 		<h2>
@@ -49,9 +46,6 @@
 			<option></option>
 			<html:options collection="executionDegrees" labelProperty="label" property="value"/>
 		</html:select>
-		<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-			<bean:message key="button.submit"/>
-		</html:submit>
 	</logic:present>
 	
 	<logic:present name="executionCourses">

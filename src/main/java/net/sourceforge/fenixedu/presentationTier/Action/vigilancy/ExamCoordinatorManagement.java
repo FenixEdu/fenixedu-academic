@@ -12,35 +12,30 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.DepartmentAdmOfficeApp.DepartmentAdmOfficeExamsApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "departmentAdmOffice", path = "/vigilancy/examCoordinatorManagement", scope = "request", parameter = "method")
-@Forwards(
-        value = {
-                @Forward(
-                        name = "prepareExamCoordinator",
-                        path = "/departmentAdmOffice/vigilancy/manageExamCoordinator.jsp",
-                        tileProperties = @Tile(
-                                title = "private.administrationofcreditsofdepartmentteachers.examcoordination.managementcoordinatorsexams")),
-                @Forward(
-                        name = "editExamCoordinator",
-                        path = "/departmentAdmOffice/vigilancy/editExamCoordinator.jsp",
-                        tileProperties = @Tile(
-                                title = "private.administrationofcreditsofdepartmentteachers.examcoordination.managementcoordinatorsexams")) })
+@StrutsFunctionality(app = DepartmentAdmOfficeExamsApp.class, path = "manage-coordinators",
+        titleKey = "label.vigilancy.manageExamCoordinator")
+@Mapping(module = "departmentAdmOffice", path = "/vigilancy/examCoordinatorManagement")
+@Forwards({ @Forward(name = "prepareExamCoordinator", path = "/departmentAdmOffice/vigilancy/manageExamCoordinator.jsp"),
+        @Forward(name = "editExamCoordinator", path = "/departmentAdmOffice/vigilancy/editExamCoordinator.jsp") })
 public class ExamCoordinatorManagement extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepareExamCoordinator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 

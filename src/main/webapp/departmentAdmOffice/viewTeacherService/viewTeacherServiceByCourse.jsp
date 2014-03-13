@@ -6,7 +6,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core"  prefix="c" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix"  prefix="fc" %>
 
-
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.DepartmentAdmOfficeApp$ViewTeacherService" />
 
 <f:view>
 	
@@ -14,33 +14,28 @@
 		var="bundle" />
 	<f:loadBundle basename="resources/EnumerationResources"
 		var="bundleEnumeration" />
-			
-	<h:outputText value="<i>#{bundle['label.teacherService.title']}</i><p /><p />" escape="false"/>
-	
+				
 	<h:outputText value="<h2>#{viewTeacherService.departmentName}</h2> <p />" escape="false"/>
 	
 	<h:form>
 		<h:panelGrid columns="1" styleClass="search">
-			<h:panelGrid columns="3" styleClass="search">
+			<h:panelGrid columns="2" styleClass="search">
 				<h:outputText value="#{bundle['label.common.executionYear']}&nbsp;" escape="false" styleClass="aright" />
 				<fc:selectOneMenu value="#{viewTeacherService.selectedExecutionYearID}"
 					onchange="this.form.submit();">
 					<f:selectItems binding="#{viewTeacherService.executionYearItems}"/>
 				</fc:selectOneMenu>
-				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 			 	<h:outputText value="#{bundle['label.common.courseSemester']}&nbsp;" escape="false" styleClass="aright" />
 				<fc:selectOneMenu value="#{viewTeacherService.selectedExecutionPeriodID}"
 					onchange="this.form.submit();">
 					<f:selectItems binding="#{viewTeacherService.executionPeriodsItems}"/>
 				</fc:selectOneMenu>
-				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 			</h:panelGrid>
 			<h:panelGrid columns="2" styleClass="search" width="100%">
 				<h:selectManyCheckbox value="#{viewTeacherService.selectedViewOptions}" layout="pageDirection"
 					onchange="this.form.submit();">
 					<f:selectItems binding="#{viewTeacherService.viewOptionsItems}"/>
 				</h:selectManyCheckbox>
-				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID3' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 			</h:panelGrid>
 		</h:panelGrid>
 		
@@ -56,7 +51,7 @@
 	
 	<h:outputText value="<br/>" escape="false" />
 	
-	<h:outputText value="#{facesContext.externalContext.requestContextPath}/departmentAdmOffice/viewTeacherService/<a href='viewTeacherService.faces?selectedExecutionYearID=#{viewTeacherService.selectedExecutionYearID}'>" escape="false"/>
+	<h:outputText value="<a href='#{facesContext.externalContext.requestContextPath}/departmentAdmOffice/viewTeacherService/viewTeacherService.faces?selectedExecutionYearID=#{viewTeacherService.selectedExecutionYearID}'>" escape="false"/>
 	<h:outputText value="#{bundle['label.teacherService.navigateByTeacher']}" escape="false"/>		
 	<h:outputText value="</a>"  escape="false"/>
 	<h:outputText value=" #{bundle['label.teacherService.separator']} " escape="false"/>
@@ -166,7 +161,7 @@
 					<h:outputText value="<ul>" escape="false" />
 						<fc:dataRepeater value="#{course.teacherExecutionCourseServiceList}" var="teacherList">
 						 	<h:panelGroup rendered="#{teacherList.teacherOfDepartment == true}">
-								<h:outputText value="#{facesContext.externalContext.requestContextPath}/departmentAdmOffice/viewTeacherService/<li><a href='viewTeacherService.faces?selectedExecutionYearID=#{viewTeacherService.selectedExecutionYearID}##{teacherList.teacherExternalId}'>"  escape="false"/>
+								<h:outputText value="<li><a href='#{facesContext.externalContext.requestContextPath}/departmentAdmOffice/viewTeacherService/viewTeacherService.faces?selectedExecutionYearID=#{viewTeacherService.selectedExecutionYearID}##{teacherList.teacherExternalId}'>"  escape="false"/>
 								<h:outputText value="#{teacherList.description} " escape="false" />	
 							 	<h:outputText value="</a></li>"  escape="false"/>
 						 	</h:panelGroup>

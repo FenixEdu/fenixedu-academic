@@ -8,7 +8,6 @@
 <html:xhtml/>
 
 <style media="all">
-<jsp:include page="../CSS/transitional.css"/>
 
 body {
 font-family: Verdana, Arial, Helvetica, sans-serif;

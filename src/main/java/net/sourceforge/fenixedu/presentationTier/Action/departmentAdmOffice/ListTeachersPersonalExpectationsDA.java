@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.departmentMember.DepartmentMemberApp.DepartmentMemberAccompanimentApp;
+import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.DepartmentAdmOfficeApp.DepartmentAdmOfficeExpectationsApp;
 import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
 
 import org.apache.struts.action.ActionForm;
@@ -38,8 +38,8 @@ import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
-@StrutsFunctionality(app = DepartmentMemberAccompanimentApp.class, path = "list-teachers-personal-expectations",
-        titleKey = "label.see.teachers.personal.expectations")
+@StrutsFunctionality(app = DepartmentAdmOfficeExpectationsApp.class, path = "list-teachers-personal-expectations",
+        titleKey = "link.see.teachers.personal.expectations")
 @Mapping(module = "departmentAdmOffice", path = "/listTeachersPersonalExpectations")
 @Forwards({
         @Forward(name = "seeTeacherPersonalExpectationsByYear",
