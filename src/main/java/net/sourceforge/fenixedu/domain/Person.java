@@ -43,7 +43,6 @@ import net.sourceforge.fenixedu.domain.accounting.ServiceAgreement;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent;
-import net.sourceforge.fenixedu.domain.accounting.events.InstitutionAffiliationEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.PastAdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
@@ -1458,7 +1457,6 @@ public class Person extends Person_Base {
             case DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER:
             case MASTER_DEGREE_ADMINISTRATIVE_OFFICE:
             case DEPARTMENT_CREDITS_MANAGER:
-            case TREASURY:
             case CREDITS_MANAGER:
             case EXAM_COORDINATOR:
             case DEPARTMENT_ADMINISTRATIVE_OFFICE:
@@ -2043,15 +2041,6 @@ public class Person extends Person_Base {
         }
 
         return result;
-    }
-
-    public InstitutionAffiliationEvent getOpenAffiliationEvent() {
-        for (final Event event : getEventsByEventType(EventType.INSTITUTION_AFFILIATION)) {
-            if (event.isOpen()) {
-                return (InstitutionAffiliationEvent) event;
-            }
-        }
-        return null;
     }
 
     public Set<AccountingTransaction> getPaymentTransactions(final EventType... type) {
@@ -4117,12 +4106,6 @@ public class Person extends Person_Base {
     @Atomic
     public void setNumberOfValidationRequests(final Integer numberOfValidationRequests) {
         super.setNumberOfValidationRequests(numberOfValidationRequests);
-    }
-
-    @Atomic
-    public String generatePaymentTicket() {
-        final InstitutionAffiliationEvent event = getOpenAffiliationEvent();
-        return event == null ? StringUtils.EMPTY : event.generatePaymentTicket();
     }
 
     public boolean getCanValidateContacts() {

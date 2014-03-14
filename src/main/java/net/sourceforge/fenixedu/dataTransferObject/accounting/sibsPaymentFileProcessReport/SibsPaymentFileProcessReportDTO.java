@@ -5,7 +5,6 @@ import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
-import net.sourceforge.fenixedu.domain.accounting.events.InstitutionAffiliationEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeCandidacyForGraduatedPersonEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeChangeIndividualCandidacyEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeTransferIndividualCandidacyEvent;
@@ -324,8 +323,6 @@ public class SibsPaymentFileProcessReportDTO {
             addStandaloneEnrolmentGratuityEventAmount(detailLine.getAmount());
         } else if (event instanceof Over23IndividualCandidacyEvent) {
             addOver23IndividualCandidacyEventAmount(detailLine.getAmount());
-        } else if (event instanceof InstitutionAffiliationEvent) {
-            addInstitutionAffiliationEventAmount(detailLine.getAmount());
         } else if (event instanceof PhdProgramCandidacyEvent) {
             addPhdProgramCandidacyEventAmount(detailLine.getAmount());
         } else {

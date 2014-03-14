@@ -63,7 +63,6 @@
       "TeacherCreditsSheetResources",
       "TestsResources",
       "TitlesResources",
-      "TreasuryResources",
       "VigilancyResources",
       "WebsiteManagerResources"
     ],
@@ -75,7 +74,6 @@
     { "name": "parkingManager", "configFile": "struts-parkingManager.xml" },
     { "name": "academicAdministration", "configFile": "struts-academicAdministration.xml" },
     { "name": "external", "configFile": "struts-external.xml" },
-    { "name": "microPayments", "configFile": "struts-microPayments.xml" },
     { "name": "nape", "configFile": "struts-nape.xml" },
     { "name": "directiveCouncil", "configFile": "struts-directiveCouncil.xml" },
     { "name": "manager", "configFile": "struts-manager.xml" },
@@ -104,7 +102,6 @@
     { "name": "credits", "configFile": "struts-credits.xml" },
     { "name": "coordinator", "configFile": "struts-coordinator.xml" },
     { "name": "examCoordination", "configFile": "struts-examCoordination.xml" },
-    { "name": "treasury", "configFile": "struts-treasury.xml" },
     { "name": "library", "configFile": "struts-library.xml" },
     { "name": "gep", "configFile": "struts-gep.xml" },
     { "name": "messaging", "configFile": "struts-messaging.xml" },

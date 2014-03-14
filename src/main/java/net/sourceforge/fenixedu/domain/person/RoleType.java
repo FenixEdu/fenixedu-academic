@@ -33,6 +33,7 @@ public enum RoleType implements IPresentableEnum {
      */
     MASTER_DEGREE_ADMINISTRATIVE_OFFICE("Master Degree Administrative Office"),
 
+    @Deprecated
     TREASURY("Treasury"),
 
     COORDINATOR("Coordinator"),

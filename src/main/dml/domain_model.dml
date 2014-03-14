@@ -1986,20 +1986,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
             String room;
         }
 
-        class accounting.events.InstitutionAffiliationEvent extends accounting.Event {
-        	DateTime acceptedTermsAndConditions;
-        }
-
-			class accounting.events.InstitutionAffiliationEventTicket  {
-				String ticket;
-				DateTime generated;
-				DateTime consumed;
-			}
-
-        class accounting.events.MicroPaymentEvent extends accounting.Event {
-        	Money amount;
-        }
-        
         class accounting.events.AnnualEvent extends accounting.AcademicEvent {
         }
 
@@ -2539,10 +2525,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
             class accounting.postingRules.ResidencePR extends accounting.postingRules.GenericSingleEntryTypePR {
                 Money penaltyPerDay;
             }
-            
-            class accounting.postingRules.InstitutionAccountCreditPR extends accounting.postingRules.GenericSingleEntryTypePR;
-
-            class accounting.postingRules.MicroPaymentPR extends accounting.postingRules.GenericSingleEntryTypePR;
             
     class accounting.Receipt  {
         Integer number;
@@ -19574,33 +19556,6 @@ relation PhdIndividualProgramProcessPhdIndiPhdGratuityEvent {
     }
 }
 
-relation InstitutionAffiliationEventIntitution {
-	organizationalStructure.Unit playsRole institution {
-		multiplicity 1..1;
-	}
-	accounting.events.InstitutionAffiliationEvent playsRole affiliationEvent {
-		multiplicity *;
-	}
-}
-
-relation InstitutionAffiliationOpenEvents {
-	organizationalStructure.Unit playsRole institutionWhereOpen {
-		multiplicity 0..1;
-	}
-	accounting.events.InstitutionAffiliationEvent playsRole openAffiliationEvent {
-		multiplicity *;
-	}
-}
-
-relation MicroPaymentEventIntitutionAffiliation {
-	accounting.events.InstitutionAffiliationEvent playsRole affiliationEvent {
-		multiplicity 1..1;
-	}
-	accounting.events.MicroPaymentEvent playsRole microPaymentEvent {
-		multiplicity *;
-	}
-}
-
 relation RootDomainObjectPhdGratuityPriceQuirk {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     phd.debts.PhdGratuityPriceQuirk playsRole phdGratuityPriceQuirks {
@@ -19634,16 +19589,6 @@ relation ExternalScholarshipProviderRootDomainObject {
 	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectExternalScholarshipProvider;
 }
 
-relation MicroPaymentEventDestinationUnit {
-	organizationalStructure.Unit playsRole destinationUnit {
-		multiplicity 1..1;
-	}
-	accounting.events.MicroPaymentEvent playsRole microPaymentEvent {
-		multiplicity *;
-	}
-}
-
-
 relation PersonPersonIdentificationDocumentExtraInfo {
 	Person playsRole person {
 		multiplicity 1..1;
@@ -19656,27 +19601,6 @@ relation PersonPersonIdentificationDocumentExtraInfo {
 relation PersonIdentificationDocumentExtraInfoRootDomainObject {
 	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     PersonIdentificationDocumentExtraInfo playsRole personIdentificationDocumentExtraInfo {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectInstitutionAffiliationEventTicket {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    accounting.events.InstitutionAffiliationEventTicket playsRole institutionAffiliationEventTicket {
-        multiplicity *;
-    }
-}
-
-relation InstitutionAffiliationEventInstitutionAffiliationEventTicket {
-	accounting.events.InstitutionAffiliationEvent playsRole institutionAffiliationEvent;
-    accounting.events.InstitutionAffiliationEventTicket playsRole generatedTicket {
-        multiplicity *;
-    }
-}
-
-relation EventInstitutionAffiliationEventTicket {
-	accounting.Event playsRole consumerEvent;
-    accounting.events.InstitutionAffiliationEventTicket playsRole consumedTicket {
         multiplicity *;
     }
 }

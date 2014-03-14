@@ -285,13 +285,6 @@ public class RolePredicates {
         };
     };
 
-    public static final AccessControlPredicate<Object> TREASURY_PREDICATE = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(Object domainObject) {
-            return hasRole(RoleType.TREASURY);
-        };
-    };
-
     public static final AccessControlPredicate<Object> WEBSITE_MANAGER_PREDICATE = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(Object domainObject) {
