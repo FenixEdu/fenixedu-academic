@@ -206,7 +206,7 @@
 
 <div class="cboth"></div>
 
-<link href="../javaScript/sviz/sviz.css" rel="stylesheet" media="screen" type="text/css" />
+<link href="../javaScript/sviz/sviz.css" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript">	$.noConflict(); </script>
 <script type="text/javascript" src="../javaScript/jquery/jquery-1.8.0.min.js"></script>
