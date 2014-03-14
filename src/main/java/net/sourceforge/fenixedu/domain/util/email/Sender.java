@@ -8,7 +8,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
-import net.sourceforge.fenixedu.domain.Instalation;
+import net.sourceforge.fenixedu.domain.Installation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -64,7 +64,7 @@ public class Sender extends Sender_Base {
     }
 
     public static String getNoreplyMail() {
-        return Instalation.getInstance().getInstituitionalEmailAddress("noreply");
+        return Installation.getInstance().getInstituitionalEmailAddress("noreply");
     }
 
     public static boolean hasAvailableSender() {

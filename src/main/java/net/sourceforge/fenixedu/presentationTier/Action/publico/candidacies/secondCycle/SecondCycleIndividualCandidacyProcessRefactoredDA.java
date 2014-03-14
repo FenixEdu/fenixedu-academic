@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.Instalation;
+import net.sourceforge.fenixedu.domain.Installation;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
@@ -333,13 +333,13 @@ public class SecondCycleIndividualCandidacyProcessRefactoredDA extends Refactore
     @Override
     protected String getCandidacyInformationLinkDefaultLanguage() {
         String message = getStringFromDefaultBundle("link.candidacy.information.default.secondCycle");
-        return MessageFormat.format(message, Instalation.getInstance().getInstituitionURL());
+        return MessageFormat.format(message, Installation.getInstance().getInstituitionURL());
     }
 
     @Override
     protected String getCandidacyInformationLinkEnglish() {
         String message = getStringFromDefaultBundle("link.candidacy.information.english.secondCycle");
-        return MessageFormat.format(message, Instalation.getInstance().getInstituitionURL());
+        return MessageFormat.format(message, Installation.getInstance().getInstituitionURL());
     }
 
 }

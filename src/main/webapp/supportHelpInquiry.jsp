@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<%@page import="net.sourceforge.fenixedu.domain.Instalation"%>
+<%@page import="net.sourceforge.fenixedu.domain.Installation"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
@@ -99,7 +99,7 @@ ul {
 		</logic:present>
 
 		<logic:notPresent name="exceptionInfo">
-			<p><bean:message key="support.contact.welcome" arg0="<%=Instalation.getInstance().getInstituitionURL() %>" bundle="APPLICATION_RESOURCES" /> <bean:message key="label.allFieldsRequired" bundle="APPLICATION_RESOURCES" /></p>
+			<p><bean:message key="support.contact.welcome" arg0="<%=Installation.getInstance().getInstituitionURL() %>" bundle="APPLICATION_RESOURCES" /> <bean:message key="label.allFieldsRequired" bundle="APPLICATION_RESOURCES" /></p>
 		</logic:notPresent>
 	</div>
 

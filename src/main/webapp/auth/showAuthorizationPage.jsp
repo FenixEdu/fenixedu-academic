@@ -17,7 +17,7 @@
 	</head>
 	<body>
 	<div id="logoist">
-		<h1><a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>"><%= net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent() %></a></h1>
+		<h1><a href="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>"><%= net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent() %></a></h1>
 	</div>
 		<div class="auth-request-wrapper">
 			<div class="auth-app-details">

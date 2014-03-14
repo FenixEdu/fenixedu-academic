@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CompetenceCourseType;
 import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
@@ -131,7 +132,9 @@ import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.Season;
 
+import org.fenixedu.bennu.core.bootstrap.AdminUserBootstrapper.AdminUserSection;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.portal.domain.PortalBootstrapper.PortalSection;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.YearMonthDay;
@@ -140,7 +143,7 @@ import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
-import pt.utl.ist.codeGenerator.database.Installer.InstallationProcess;
+import pt.utl.ist.codeGenerator.database.FenixBootstrapper.SchoolSetupSection;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -319,11 +322,13 @@ public class CreateTestData {
     static AdministrativeOffice administrativeOffice;
 
     public static class CreateOrganizationalStructure {
-        public void doIt(InstallationProcess process) {
-            final CountryUnit countryUnit = getCountryUnit(process.country.getName());
+        public void doIt(PortalSection portalSection, SchoolSetupSection schoolSetupSection) {
+            final CountryUnit countryUnit = getCountryUnit(Country.readDefault().getName());
             final UniversityUnit universityUnit =
-                    createUniversityUnit(countryUnit, process.universityName, process.universityAcronym);
-            final SchoolUnit institutionUnit = createSchoolUnit(universityUnit, process.schoolName, process.schoolAcronym);
+                    createUniversityUnit(countryUnit, schoolSetupSection.getUniversityName(),
+                            schoolSetupSection.getUniversityAcronym());
+            final SchoolUnit institutionUnit =
+                    createSchoolUnit(universityUnit, portalSection.getOrganizationName(), schoolSetupSection.getSchoolAcronym());
             getRootDomainObject().setInstitutionUnit(institutionUnit);
             final AggregateUnit serviceUnits = createAggregateUnit(institutionUnit, "Services");
             //createServiceUnits(serviceUnits);
@@ -444,7 +449,7 @@ public class CreateTestData {
     }
 
     public static class CreateDegrees {
-        public void doIt(InstallationProcess process) {
+        public void doIt(AdminUserSection adminSection) {
             Language.setLocale(Language.getDefaultLocale());
 
             final Unit unit = findUnitByName("Degrees");
@@ -455,7 +460,7 @@ public class CreateTestData {
                         createDegreeInfo(degree);
                         associateToDepartment(degree);
 
-                        final DegreeCurricularPlan degreeCurricularPlan = createDegreeCurricularPlan(degree, process);
+                        final DegreeCurricularPlan degreeCurricularPlan = createDegreeCurricularPlan(degree, adminSection);
 
                         createExecutionDegrees(degreeCurricularPlan, getCampus());
                         degree.setAdministrativeOffice(administrativeOffice);
@@ -485,10 +490,11 @@ public class CreateTestData {
                     degreeType.getGradeScale());
         }
 
-        private DegreeCurricularPlan createDegreeCurricularPlan(final Degree degree, InstallationProcess process) {
+        private DegreeCurricularPlan createDegreeCurricularPlan(final Degree degree, AdminUserSection adminSection) {
 
+            Person person = Person.findByUsername(adminSection.getAdminUsername());
             final DegreeCurricularPlan degreeCurricularPlan =
-                    degree.createBolonhaDegreeCurricularPlan(degree.getSigla(), GradeScale.TYPE20, process.person);
+                    degree.createBolonhaDegreeCurricularPlan(degree.getSigla(), GradeScale.TYPE20, person);
 
             degreeCurricularPlan.setCurricularStage(CurricularStage.APPROVED);
             degreeCurricularPlan.setDescription("Bla bla bla. Desc. do plano curricular do curso. Bla bla bla");
@@ -1146,8 +1152,8 @@ public class CreateTestData {
         return null;
     }
 
-    private static void createDegrees(InstallationProcess process) {
-        final Person person = process.person;
+    private static void createDegrees(AdminUserSection adminSection) {
+        final Person person = Person.findByUsername(adminSection.getAdminUsername());
 
         final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
         final Campus campus = Space.getAllCampus().iterator().next();

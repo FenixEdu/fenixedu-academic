@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.Instalation;
+import net.sourceforge.fenixedu.domain.Installation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
@@ -70,7 +70,7 @@ public class ChangeStudentsShift {
 
         Recipient recipient = new Recipient(groupName, new FixedSetGroup(recievers));
         Sender sender = Bennu.getInstance().getSystemSender();
-        String gopEmailAddress = Instalation.getInstance().getInstituitionalEmailAddress("gop");
+        String gopEmailAddress = Installation.getInstance().getInstituitionalEmailAddress("gop");
         new Message(sender, new ConcreteReplyTo(gopEmailAddress).asCollection(), recipient.asCollection(), subject, message, "");
     }
 

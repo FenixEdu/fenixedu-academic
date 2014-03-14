@@ -12,6 +12,10 @@ set @newOid = (select OID from ROLE where ROLE_TYPE = 'RESOURCE_ALLOCATION_MANAG
 update `GROUP` set OID_ROLE = (select @newOid) where OID_ROLE = (select @oldOid);
 update PERSON_ROLE set OID_ROLE = (select @newOid) where OID_ROLE = (select @oldOid);
 update ROLE_OPERATION_LOG set OID_ROLE = (select @newOid) where OID_ROLE = (select @oldOid);
+
+update FF$DOMAIN_CLASS_INFO set DOMAIN_CLASS_NAME = 'net.sourceforge.fenixedu.domain.Installation' where DOMAIN_CLASS_NAME = 'net.sourceforge.fenixedu.domain.Instalation';
+RENAME TABLE INSTALATION to INSTALLATION;
+alter table BENNU change OID_INSTALATION OID_INSTALLATION bigint unsigned;
 ```
 
 TEMPORARY: For the IST Database, run `delete from PERSON_ROLE where OID_ROLE = 2899102924804;`

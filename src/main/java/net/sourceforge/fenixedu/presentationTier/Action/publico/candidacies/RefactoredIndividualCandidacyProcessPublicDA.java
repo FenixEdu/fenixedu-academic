@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.Instalation;
+import net.sourceforge.fenixedu.domain.Installation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -644,7 +644,7 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
         Locale locale = Language.getLocale();
         String countryCode = readCountryCode(locale);
 
-        String institutionalURL = Instalation.getInstance().getInstituitionURL();
+        String institutionalURL = Installation.getInstance().getInstituitionURL();
         if ("PT".equals(countryCode)) {
             return redirect(institutionalURL + "pt/candidatos/candidaturas/", request);
         }

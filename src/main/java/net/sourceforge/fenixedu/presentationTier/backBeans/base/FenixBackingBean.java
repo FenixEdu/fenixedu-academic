@@ -9,7 +9,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.Instalation;
+import net.sourceforge.fenixedu.domain.Installation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.UIViewState;
 
@@ -229,12 +229,8 @@ public class FenixBackingBean {
         return GenericChecksumRewriter.NO_CHECKSUM_PREFIX;
     }
 
-    public String getInstalationUrl() {
-        return Instalation.getInstance() == null ? "" : Instalation.getInstance().getInstalationDomain();
-    }
-
     public String getInstitutionUrl() {
-        return Instalation.getInstance() == null ? "" : Instalation.getInstance().getInstituitionURL();
+        return Installation.getInstance() == null ? "" : Installation.getInstance().getInstituitionURL();
     }
 
     public String getInstitutionAcronym() {

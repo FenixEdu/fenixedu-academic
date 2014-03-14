@@ -7607,11 +7607,9 @@ class AppUserSession {
 class AppUserAuthorization {
 }
 
-class Instalation {
+class Installation {
 	String instituitionURL;
 	String instituitionEmailDomain;
-	String instalationName;
-	String instalationDomain;
 }
 
 class accessControl.FenixPersistentGroup extends .org.fenixedu.bennu.core.domain.groups.CustomGroup;
@@ -7713,11 +7711,11 @@ class accessControl.PersistentMembersLinkGroup extends accessControl.FenixPersis
  * 
  */
 
-relation BennuInstalation {
+relation BennuInstallation {
 	.org.fenixedu.bennu.core.domain.Bennu playsRole bennu {
 		multiplicity 1..1;
 	}
-	Instalation playsRole instalation {
+	Installation playsRole installation {
 		multiplicity 0..1;
 	}
 }

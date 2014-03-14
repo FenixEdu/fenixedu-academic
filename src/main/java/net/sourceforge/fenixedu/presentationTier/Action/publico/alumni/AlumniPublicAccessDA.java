@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.dataTransferObject.alumni.publicAccess.AlumniPas
 import net.sourceforge.fenixedu.dataTransferObject.alumni.publicAccess.AlumniPublicAccessBean;
 import net.sourceforge.fenixedu.domain.Alumni;
 import net.sourceforge.fenixedu.domain.AlumniRequestType;
-import net.sourceforge.fenixedu.domain.Instalation;
+import net.sourceforge.fenixedu.domain.Installation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -158,7 +158,7 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
         } catch (DomainException e) {
             if ("error.no.registrations".equals(e.getKey())) {
                 request.setAttribute("showReportError", "true");
-                String alumniEmail = Instalation.getInstance().getInstituitionalEmailAddress("alumni");
+                String alumniEmail = Installation.getInstance().getInstituitionalEmailAddress("alumni");
                 request.setAttribute("errorMessage", getResources(request).getMessage(e.getKey(), e.getArgs(), alumniEmail));
             } else if ("error.no.concluded.registrations".equals(e.getKey()) || "error.person.no.student".equals(e.getKey())) {
                 request.setAttribute("showReportError", "true");
@@ -211,7 +211,7 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
         try {
             if (!request.getServerName().equals("localhost")) {
                 email = new EMail("mail.adm", "erro@dot.ist.utl.pt");
-                String aluminiEmailAddress = Instalation.getInstance().getInstituitionalEmailAddress("alumni");
+                String aluminiEmailAddress = Installation.getInstance().getInstituitionalEmailAddress("alumni");
                 email.send(aluminiEmailAddress, "Erro Registo Alumni", mailBody.toString());
             }
         } catch (Throwable t) {

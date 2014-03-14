@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Instalation;
+import net.sourceforge.fenixedu.domain.Installation;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
@@ -349,13 +349,13 @@ public class DegreeTransferIndividualCandidacyProcessRefactoredDA extends Refact
     @Override
     protected String getCandidacyInformationLinkDefaultLanguage() {
         String message = getStringFromDefaultBundle("link.candidacy.information.default.degreeTransfer");
-        return MessageFormat.format(message, Instalation.getInstance().getInstituitionURL());
+        return MessageFormat.format(message, Installation.getInstance().getInstituitionURL());
     }
 
     @Override
     protected String getCandidacyInformationLinkEnglish() {
         String message = getStringFromDefaultBundle("link.candidacy.information.english.degreeTransfer");
-        return MessageFormat.format(message, Instalation.getInstance().getInstituitionURL());
+        return MessageFormat.format(message, Installation.getInstance().getInstituitionURL());
     }
 
 }

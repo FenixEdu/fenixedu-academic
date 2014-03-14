@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
-<%@page import="net.sourceforge.fenixedu.domain.Instalation"%>
+<%@page import="org.fenixedu.bennu.portal.domain.PortalConfiguration"%>
 <%@page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
 <%@page import="org.fenixedu.bennu.core.security.Authenticate"%>
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
@@ -59,10 +59,10 @@
 <div id="navtop">
 	<h1 class="applicationName">
 		<% if (FenixConfigurationManager.isBarraAsAuthenticationBroker()) { %>
-			<%=Instalation.getInstance().getInstalationName() %><span class="applicationName-subtle"><bean:message key="application.name.subtle" bundle="GLOBAL_RESOURCES" /></span>
+			<%=PortalConfiguration.getInstance().getApplicationTitle().getContent() %><span class="applicationName-subtle"><bean:message key="application.name.subtle" bundle="GLOBAL_RESOURCES" /></span>
 		<% } %>
 		<% if (!FenixConfigurationManager.isBarraAsAuthenticationBroker()) { %>
-			<img alt="<%=Instalation.getInstance().getInstalationName() %>" src="<bean:message key="fenix.logo.location" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>"/>
+			<img alt="<%=PortalConfiguration.getInstance().getApplicationTitle().getContent() %>" src="<bean:message key="fenix.logo.location" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>"/>
 		<% } %>
 	</h1>
 	<tiles:insert attribute="navGeral" />

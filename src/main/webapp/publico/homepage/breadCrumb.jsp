@@ -13,10 +13,10 @@
     <logic:present name="homepage" property="person.employee.currentDepartmentWorkingPlace">
         <logic:present name="homepage" property="person.teacher">
             <bean:define id="institutionUrl" type="java.lang.String">
-                <%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>
+                <%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>
             </bean:define>
             <bean:define id="institutionUrlStructure" type="java.lang.String">
-                <%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %><bean:message key="link.institution.structure" bundle="GLOBAL_RESOURCES"/>
+                <%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %><bean:message key="link.institution.structure" bundle="GLOBAL_RESOURCES"/>
             </bean:define>
             <bean:define id="departmentUnitID" type="java.lang.String">
                 <bean:write name="homepage" property="person.employee.currentDepartmentWorkingPlace.departmentUnit.externalId"/>
