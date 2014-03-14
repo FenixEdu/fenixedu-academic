@@ -148,7 +148,6 @@ enum net.sourceforge.fenixedu.domain.student.RegistrationRegimeType             
 enum net.sourceforge.fenixedu.domain.student.StudentStatuteType                                                           as StudentStatuteType;
 enum net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization                                                 as Specialization;
 enum net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState                                     as StudentCurricularPlanState;
-enum net.sourceforge.fenixedu.domain.system.WhenToSendEmail                                                               as WhenToSendEmail;
 enum net.sourceforge.fenixedu.domain.teacher.AdviseType                                                                   as AdviseType;
 enum net.sourceforge.fenixedu.domain.teacher.CategoryType                                                                 as CategoryType;
 enum net.sourceforge.fenixedu.domain.teacher.WishesTutor                                                                  as WishesTutor;
@@ -5275,45 +5274,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         YearMonthDay evaluationDate;
         Grade grade (REQUIRED);
         degreeStructure.RegimeType regime;
-    }
-
-    class support.FAQEntry  {
-        String answer;
-        String question;
-    }
-
-    class support.FAQSection  {
-        String sectionName;
-    }
-
-    class support.GlossaryEntry  {
-        String definition;
-        String term;
-    }
-
-    class system.CronRegistry  {
-        DateTime buildVersion;
-    }
-
-    class system.CronScriptInvocation  {
-        DateTime endTime;
-        String log;
-        String serverID;
-        DateTime startTime;
-        Boolean successful;
-    }
-
-    class system.CronScriptState  {
-        Integer absoluteExecutionOrder;
-        Boolean active;
-        ByteArray context;
-        String cronScriptClassname;
-        String emails;
-        Period invocationPeriod;
-        Boolean isCurrentlyRunning;
-        DateTime registrationDate;
-        WhenToSendEmail whenToSendEmail;
-        Boolean runNow;
     }
 
     class teacher.Advise  {
@@ -10548,13 +10508,6 @@ relation CreditsDismissalNoEnrolCurricularCourses {
 
 
 
-relation CronScriptStateCronScriptInvocation {
-    system.CronScriptState playsRole cronScriptState;
-    system.CronScriptInvocation playsRole cronScriptInvocations {
-        multiplicity *;
-    }
-}
-
 relation CurricularCourseCompetenceCourse {
     CurricularCourse playsRole associatedCurricularCourses {
         multiplicity *;
@@ -12408,20 +12361,6 @@ relation OtherTypeCreditLineExecutionPeriod {
     ExecutionSemester playsRole executionPeriod;
 }
 
-relation ParentFAQSectionChildFAQEntry {
-    support.FAQEntry playsRole childEntries {
-        multiplicity *;
-    }
-    support.FAQSection playsRole parentSection;
-}
-
-relation ParentFAQSectionChildFAQSection {
-    support.FAQSection playsRole childSections {
-        multiplicity *;
-    }
-    support.FAQSection playsRole parentSection;
-}
-
 relation ParkingFileNewParkingDocument {
     parking.ParkingFile playsRole parkingFile;
     parking.NewParkingDocument playsRole newParkingDocument;
@@ -13981,27 +13920,6 @@ relation RootDomainObjectCreditsInScientificArea {
     }
 }
 
-relation RootDomainObjectCronRegistry {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    system.CronRegistry playsRole cronRegistry {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectCronScriptInvocation {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    system.CronScriptInvocation playsRole cronScriptInvocations {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectCronScriptState {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    system.CronScriptState playsRole cronScriptStates {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectCurricularCourseEquivalence {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     CurricularCourseEquivalence playsRole curricularCourseEquivalences {
@@ -14355,20 +14273,6 @@ relation RootDomainObjectExternalRegistrationData {
     }
 }
 
-relation RootDomainObjectFAQEntry {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    support.FAQEntry playsRole fAQEntrys {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectFAQSection {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    support.FAQSection playsRole fAQSections {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectFirstYearShiftsCapacityToggleLog {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     log.FirstYearShiftsCapacityToggleLog playsRole firstYearShiftsCapacityToggleLogs {
@@ -14414,13 +14318,6 @@ relation RootDomainObjectGeneralClassProperty {
 relation RootDomainObjectGenericEvent {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     GenericEvent playsRole genericEvents {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectGlossaryEntry {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    support.GlossaryEntry playsRole glossaryEntrys {
         multiplicity *;
     }
 }

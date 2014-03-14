@@ -246,22 +246,6 @@
                   <form-property type="java.lang.String" name="file"></form-property>
                   <form-property type="org.apache.struts.upload.FormFile" name="uploadedFile"></form-property>
             </form-bean>
-            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="faqSectionForm">
-                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
-                  <form-property type="java.lang.String" name="parentSectionId"></form-property>
-                  <form-property type="java.lang.String" name="sectionName"></form-property>
-            </form-bean>
-            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="faqForm">
-                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
-                  <form-property type="java.lang.String" name="parentSectionId"></form-property>
-                  <form-property type="java.lang.String" name="question"></form-property>
-                  <form-property type="java.lang.String" name="answer"></form-property>
-            </form-bean>
-            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="glossaryForm">
-                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
-                  <form-property type="java.lang.String" name="term"></form-property>
-                  <form-property type="java.lang.String" name="definition"></form-property>
-            </form-bean>
             <!-- ========== PRECEDENCES MANAGEMENT ========== -->
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="insertRestrictionForm">
                   <form-property type="java.lang.Integer" name="page"></form-property>
