@@ -54,3 +54,7 @@
         </fr:layout>
     </fr:view>
 </p>
+
+<p>
+	<span><bean:message key="label.message.thesis.publication.lag" /></span>
+<p>

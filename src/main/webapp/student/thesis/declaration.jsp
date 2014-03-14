@@ -85,3 +85,7 @@
 </p>
 
 </fr:form>
+
+<p>
+	<span><bean:message key="label.message.thesis.publication.lag"/></span>
+<p>
