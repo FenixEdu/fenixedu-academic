@@ -5,10 +5,12 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.ExternalUser;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeCoordinatorsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
+import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PhdProcessGuidingsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
@@ -70,6 +72,10 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
         	groups.add(new CurrentDegreeCoordinatorsGroup(phdProgram.getDegree()));
         }
         groups.add(new PhdProcessGuidingsGroup(individualProgramProcess));
+        final Person person = getPhdProgramProcess().getPerson();
+        if (person != null) {
+            groups.add(new PersonGroup(person));
+        }
 
         final Group group = new GroupUnion(groups);
         super.init(filename, filename, content, group);
@@ -132,11 +138,12 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
             if (getPhdProgramProcess().getPerson() == person
                     || new AcademicAuthorizationGroup(AcademicOperationType.MANAGE_PHD_PROCESSES).isMember(person)
                     || getPhdProgramProcess().getIndividualProgramProcess().isCoordinatorForPhdProgram(person)
-                    || getPhdProgramProcess().getIndividualProgramProcess().isGuiderOrAssistentGuider(person)) {
+                    || getPhdProgramProcess().getIndividualProgramProcess().isGuiderOrAssistentGuider(person)
+                    || ExternalUser.isExternalUser(person.getUsername())) {
                 return true;
             }
         }
-
+        
         return false;
     }
 
