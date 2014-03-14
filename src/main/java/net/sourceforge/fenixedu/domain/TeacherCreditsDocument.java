@@ -10,9 +10,14 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.credits.ReadAllTeacherCredits;
 import net.sourceforge.fenixedu.dataTransferObject.credits.CreditLineDTO;
+import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
+import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
+import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
+import net.sourceforge.fenixedu.domain.accessControl.groups.DepartmentPresidentGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
@@ -23,6 +28,7 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
+import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -44,7 +50,19 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
             throw new DomainException("");
         }
         String filename = getFilename(teacher, executionSemester);
-        init(filename, filename, content, null);
+        final Collection<IGroup> groups = new ArrayList<>();
+        final Person person = teacher.getPerson();
+        if (person != null) {
+            groups.add(new PersonGroup(person));
+        }
+        final Department department =
+                teacher.getLastWorkingDepartment(executionSemester.getBeginDateYearMonthDay(),
+                        executionSemester.getEndDateYearMonthDay());
+        if (department != null && department.getDepartmentUnit() != null) {
+            groups.add(new DepartmentPresidentGroup(department.getDepartmentUnit()));
+        }
+        groups.add(new RoleGroup(RoleType.SCIENTIFIC_COUNCIL));
+        init(filename, filename, content, new GroupUnion(groups));
     }
 
     private String getFilename(Teacher teacher, ExecutionSemester executionSemester) {

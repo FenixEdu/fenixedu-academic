@@ -20,7 +20,8 @@ public class DeclarationBean implements Serializable {
     public DeclarationBean(Thesis thesis) {
         super();
 
-        setVisibility(thesis.getVisibility());
+        final ThesisVisibilityType visibility = thesis.getVisibility();
+        setVisibility(visibility == null ? ThesisVisibilityType.PUBLIC : visibility);
         setAvailableAfter(thesis.getDocumentsAvailableAfter());
     }
 

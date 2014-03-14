@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess;
 
+import net.sourceforge.fenixedu.domain.accessControl.NoOneGroup;
 import pt.ist.fenixframework.Atomic;
 
 public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocumentFile_Base {
@@ -15,7 +16,7 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
         this.setCandidacyFileActive(Boolean.TRUE);
         addIndividualCandidacy(candidacy);
         setCandidacyFileType(type);
-        init(filename, filename, contents, null);
+        init(filename, filename, contents, new NoOneGroup());
 
         if (type.equals(IndividualCandidacyDocumentFileType.PHOTO)) {
             // storeToContentManager();
@@ -26,7 +27,7 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
         this();
         this.setCandidacyFileActive(Boolean.TRUE);
         setCandidacyFileType(type);
-        init(filename, filename, contents, null);
+        init(filename, filename, contents, new NoOneGroup());
 
         if (type.equals(IndividualCandidacyDocumentFileType.PHOTO)) {
             // storeToContentManager();

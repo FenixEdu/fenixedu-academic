@@ -144,7 +144,7 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
         }
 
         Degree degree = ((RegistryDiplomaRequest) getDocumentRequest()).getDegree();
-        ExecutionYear year = ((RegistryDiplomaRequest) getDocumentRequest()).getExecutionYear();
+        ExecutionYear year = ((RegistryDiplomaRequest) getDocumentRequest()).getConclusionYear();
 
         addParameter("secondParagraph", MessageFormat.format(secondParagraph, studentGender,
                 getEnumerationBundle().getString(person.getIdDocumentType().getName()), person.getDocumentIdNumber(), country,
