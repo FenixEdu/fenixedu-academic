@@ -12,6 +12,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
@@ -25,6 +26,7 @@ import net.sourceforge.fenixedu.domain.accounting.paymentCodes.IndividualCandida
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.rectorate.RectoratePaymentCode;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.importation.DgesStudentImportationProcess;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.sibs.SibsOutgoingPaymentFile;
@@ -75,7 +77,7 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
             StringBuilder errorsBuilder = new StringBuilder();
             byte[] paymentFileContents = createPaymentFile(lastSuccessfulSentDateTime, errorsBuilder).getBytes("ASCII");
             setErrors(errorsBuilder.toString());
-            init(outgoingFilename(), outgoingFilename(), paymentFileContents, null);
+            init(outgoingFilename(), outgoingFilename(), paymentFileContents, new RoleGroup(RoleType.MANAGER));
         } catch (UnsupportedEncodingException e) {
             throw new DomainException(e.getMessage(), e);
         }

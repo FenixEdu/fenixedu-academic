@@ -72,7 +72,6 @@ import net.sourceforge.fenixedu.domain.contacts.Phone;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.contacts.WebAddress;
-import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.documents.AnnualIRSDeclarationDocument;
 import net.sourceforge.fenixedu.domain.documents.GeneratedDocument;
@@ -174,7 +173,6 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.FenixFramework;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -3783,10 +3781,9 @@ public class Person extends Person_Base {
     }
 
     public boolean isTeacherEvaluationCoordinatorCouncilMember() {
-        final Content content = FenixFramework.getDomainObject("2482491971449");
-        if (content != null) {
-            final UnitSite site = (UnitSite) content;
-            return site.getManagersSet().contains(AccessControl.getPerson());
+        final UnitSite unitSite = Bennu.getInstance().getTeacherEvaluationCoordinatorCouncil();
+        if (unitSite != null) {
+            return unitSite.getManagersSet().contains(AccessControl.getPerson());
         }
         return false;
     }
