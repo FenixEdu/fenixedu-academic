@@ -70,6 +70,8 @@
 
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.mobility.outbound"/></h2>
 
+<span class="error"><!-- Error messages go here --><html:errors /></span>
+
 <logic:present name="outboundMobilityContextBean">
 
 	<bean:define id="outboundMobilityContextBean" name="outboundMobilityContextBean" type="net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound.OutboundMobilityContextBean"/>
