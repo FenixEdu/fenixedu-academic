@@ -843,7 +843,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
         }
 
         if (obj instanceof DateTime) {
-            return ((DateTime) obj).toString("dd-MM-yyyy HH:MM");
+            return ((DateTime) obj).toString("dd-MM-yyyy HH:mm");
         }
 
         if (obj instanceof LocalDate) {
