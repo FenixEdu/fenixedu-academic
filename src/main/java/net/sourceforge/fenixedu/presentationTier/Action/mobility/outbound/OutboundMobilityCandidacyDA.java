@@ -140,11 +140,16 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         final OutboundMobilityContextBean outboundMobilityContextBean = getRenderedObject();
         final OutboundMobilityCandidacyContest contest = getDomainObject(request, "contestOid");
         if (contest != null) {
-            final OutboundMobilityCandidacyContestGroup mobilityGroup = contest.getOutboundMobilityCandidacyContestGroup();
-            if (mobilityGroup.getOutboundMobilityCandidacyContestSet().size() == 1) {
-                outboundMobilityContextBean.getMobilityGroups().remove(mobilityGroup);
+            try {
+                final OutboundMobilityCandidacyContestGroup mobilityGroup = contest.getOutboundMobilityCandidacyContestGroup();
+                if (mobilityGroup.getOutboundMobilityCandidacyContestSet().size() == 1) {
+                    outboundMobilityContextBean.getMobilityGroups().remove(mobilityGroup);
+                }
+                contest.delete();
+            } catch (Exception e) {
+                addErrorMessage(request, "errors", e.getMessage());
             }
-            contest.delete();
+
         }
         RenderUtils.invalidateViewState();
         return prepare(mapping, request, outboundMobilityContextBean);

@@ -29,6 +29,9 @@ public class OutboundMobilityCandidacy extends OutboundMobilityCandidacy_Base im
         if (!submission.getOutboundMobilityCandidacyPeriod().isAcceptingCandidacies()) {
             throw new DomainException("error.CandidacyPeriod.closed");
         }
+        if (getSubmissionFromSelectedCandidacy() != null) {
+            throw new DomainException("error.SubmissionFromSelectedCandidacy.not.empty");
+        }
         setOutboundMobilityCandidacySubmission(null);
         setOutboundMobilityCandidacyContest(null);
         setRootDomainObject(null);

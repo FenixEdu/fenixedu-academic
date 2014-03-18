@@ -29,7 +29,7 @@
 	</fr:view>
 
 
-<p><em>Deseja saldar esta divida?</em></p>
+<p><em><bean:message key="label.pay.debt" bundle="ACADEMIC_OFFICE_RESOURCES"/></em></p>
 
 	
 	<fr:form action="/fctDebts.do" >
@@ -38,13 +38,14 @@
 			<fr:edit id="bean" name="bean">
 				<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.payments.ExternalScholarshipManagementDebtsDA$AmountBean">
 					<fr:slot name="value" key="label.payments.gratuityExemptions.amount"></fr:slot>
+					<fr:slot name="paymentDate" key="label.payments.gratuityExemptions.paymentDate"></fr:slot>
 				</fr:schema>
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle2 thlight" />
 					<fr:property name="columnClasses" value="nowrap," />
 				</fr:layout>
 			</fr:edit>
-		<html:submit>Saldar</html:submit> <html:button property="value" onclick="this.form.method.value='cancel';this.form.submit()">Cancelar</html:button>
+		<html:submit><bean:message key="label.payments.liquidate" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit> <html:button property="value" onclick="this.form.method.value='cancel';this.form.submit()">Cancelar</html:button>
 	</fr:form>
 </logic:equal>
 <logic:equal name="exemption" property="externalScholarshipPhdGratuityContribuitionEvent.open" value="false">

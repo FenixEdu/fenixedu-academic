@@ -39,6 +39,7 @@ public class ExternalScholarshipManagementDebtsDA extends FenixDispatchAction {
 
     public static class AmountBean implements Serializable {
         private Money value;
+        private DateTime paymentDate;
 
         public Money getValue() {
             return value;
@@ -46,6 +47,14 @@ public class ExternalScholarshipManagementDebtsDA extends FenixDispatchAction {
 
         public void setValue(Money value) {
             this.value = value;
+        }
+
+        public DateTime getPaymentDate() {
+            return paymentDate;
+        }
+
+        public void setPaymentDate(DateTime paymentDate) {
+            this.paymentDate = paymentDate;
         }
     }
 
@@ -60,12 +69,13 @@ public class ExternalScholarshipManagementDebtsDA extends FenixDispatchAction {
         PhdIndividualProgramProcess process = getProcess(request);
         ArrayList<PhdGratuityExternalScholarshipExemption> list = new ArrayList<PhdGratuityExternalScholarshipExemption>();
 
-        for (Event event : process.getPerson().getEvents()) {
+        for (Event event : process.getPerson().getEventsSet()) {
             if (event instanceof PhdGratuityEvent) {
-                for (Exemption exemption : event.getExemptions()) {
+                for (Exemption exemption : event.getExemptionsSet()) {
                     if (exemption instanceof PhdGratuityExternalScholarshipExemption) {
-                        PhdGratuityExternalScholarshipExemption exemption2 = (PhdGratuityExternalScholarshipExemption) exemption;
-                        list.add(exemption2);
+                        PhdGratuityExternalScholarshipExemption phdExemption =
+                                (PhdGratuityExternalScholarshipExemption) exemption;
+                        list.add(phdExemption);
                     }
                 }
             }
@@ -104,7 +114,7 @@ public class ExternalScholarshipManagementDebtsDA extends FenixDispatchAction {
         AmountBean bean = getRenderedObject("bean");
         List<EntryDTO> list = new ArrayList<EntryDTO>();
         list.add(new EntryDTO(EntryType.EXTERNAL_SCOLARSHIP_PAYMENT, event, bean.getValue()));
-        event.process(AccessControl.getPerson().getUser(), list, new AccountingTransactionDetailDTO(new DateTime(),
+        event.process(AccessControl.getPerson().getUser(), list, new AccountingTransactionDetailDTO(bean.getPaymentDate(),
                 PaymentMode.CASH));
 
         PhdGratuityEvent gratuityEvent = (PhdGratuityEvent) exemption.getEvent();
