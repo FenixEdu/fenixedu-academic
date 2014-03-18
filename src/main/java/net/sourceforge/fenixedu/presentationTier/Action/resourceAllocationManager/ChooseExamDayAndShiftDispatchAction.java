@@ -25,9 +25,19 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
+
+@Mapping(path = "/chooseDayAndShiftForm", module = "resourceAllocationManager",
+        input = "/chooseDayAndShiftForm.do?method=prepare&nextPage=viewExams&page=0", formBean = "chooseDayAndShiftForm")
+@Forwards(value = { @Forward(name = "Show Choose Form", path = "/chooseDayAndShift.jsp"),
+        @Forward(name = "viewExams", path = "/viewExamsDayAndShiftForm.do?method=view"),
+        @Forward(name = "viewEmptyRooms", path = "/viewEmptyRoomsInDayAndShift.do") })
 public class ChooseExamDayAndShiftDispatchAction extends FenixContextDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

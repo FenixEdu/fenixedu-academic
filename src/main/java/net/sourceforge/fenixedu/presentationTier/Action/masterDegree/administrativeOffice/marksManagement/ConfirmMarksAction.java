@@ -24,11 +24,21 @@ import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * 
  * @author Fernanda Quitério 10/07/2003
  * 
  */
+@Mapping(path = "/marksConfirmation", module = "masterDegreeAdministrativeOffice",
+        input = "/marksManagement/marksConfirmationMenu.jsp", formBean = "marksSubmissionForm", validate = false)
+@Forwards(value = { @Forward(name = "MarksConfirmationMenu", path = "/marksManagement/marksConfirmationMenu.jsp"),
+        @Forward(name = "MarksConfirmation", path = "/marksManagement/marksConfirmation.jsp"),
+        @Forward(name = "MarksPrint", path = "/marksManagement/marksPrint.jsp"),
+        @Forward(name = "ShowMarksManagementMenu", path = "/marksManagement.do?method=getStudentMarksList") })
 public class ConfirmMarksAction extends FenixDispatchAction {
 
     public ActionForward prepareMarksConfirmation(ActionMapping mapping, ActionForm form, HttpServletRequest request,

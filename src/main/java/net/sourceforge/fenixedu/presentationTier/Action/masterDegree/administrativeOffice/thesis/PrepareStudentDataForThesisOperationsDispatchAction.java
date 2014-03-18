@@ -14,6 +14,11 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -23,6 +28,16 @@ import pt.ist.fenixframework.FenixFramework;
  * 
  */
 
+@Mapping(path = "/prepareStudentForMasterDegreeThesisAndProof", module = "masterDegreeAdministrativeOffice",
+        input = "/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp?page=2",
+        formBean = "getStudentByNumberAndDegreeTypeForThesisForm")
+@Forwards(value = { @Forward(name = "success", path = "/thesis/indexThesis.jsp"),
+        @Forward(name = "chooseSCP", path = "masterDegree.thesis.chooseSCP"),
+        @Forward(name = "createThesis", path = "/thesis/indexCreateThesis.jsp"),
+        @Forward(name = "error", path = "/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp") })
+@Exceptions(value = { @ExceptionHandling(key = "resources.Action.exceptions.NonExistingActionException",
+        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class) })
 public class PrepareStudentDataForThesisOperationsDispatchAction extends FenixDispatchAction {
 
     public ActionForward getStudentAndDegreeTypeForThesisOperations(ActionMapping mapping, ActionForm form,

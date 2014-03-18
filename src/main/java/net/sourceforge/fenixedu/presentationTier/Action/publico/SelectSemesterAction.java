@@ -12,9 +12,16 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.LabelValueBean;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * @author tfc130
  */
+
+@Mapping(path = "/prepareViewRoomOcupation", module = "resourceAllocationManager")
+@Forwards(value = { @Forward(name = "Sucess", path = "/chooseSemester.jsp") })
 public class SelectSemesterAction extends FenixAction {
 
     @Override

@@ -41,11 +41,22 @@ import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Angela 30/06/2003 Modified by Fernanda Quitério
  */
+@Mapping(path = "/changeMarkDispatchAction", module = "masterDegreeAdministrativeOffice",
+        input = "/changeMarkDispatchAction.do?method=chooseStudentMarks", formBean = "studentNumberForm")
+@Forwards(value = { @Forward(name = "editStudentNumber", path = "/marksManagement/editMarkStudent.jsp"),
+        @Forward(name = "NoStudents", path = "/marksManagement.do?method=getStudentMarksList"),
+        @Forward(name = "NotAuthorized", path = "/student/notAuthorized.jsp"),
+        @Forward(name = "chooseCurricularCourse", path = "/showMarkDispatchAction.do?method=prepareShowMark"),
+        @Forward(name = "studentMarks", path = "/marksManagement/showStudentMarks.jsp"),
+        @Forward(name = "changeStudentMark", path = "/marksManagement.do?method=getStudentMarksList") })
 public class ChangeMarkDispatchAction extends FenixDispatchAction {
     InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = null;
 

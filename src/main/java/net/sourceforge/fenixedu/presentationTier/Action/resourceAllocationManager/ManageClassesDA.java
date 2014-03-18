@@ -34,12 +34,18 @@ import org.apache.struts.validator.DynaValidatorForm;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
  * 
  */
+@Mapping(path = "/deleteClasses", module = "resourceAllocationManager", input = "/manageClasses.do?method=listClasses&page=0",
+        formBean = "selectMultipleItemsForm")
+@Forwards(value = { @Forward(name = "ShowShiftList", path = "/manageClasses.do?method=listClasses&page=0") })
 public class ManageClassesDA extends FenixExecutionDegreeAndCurricularYearContextDispatchAction {
 
     public ActionForward listClasses(ActionMapping mapping, ActionForm form, HttpServletRequest request,

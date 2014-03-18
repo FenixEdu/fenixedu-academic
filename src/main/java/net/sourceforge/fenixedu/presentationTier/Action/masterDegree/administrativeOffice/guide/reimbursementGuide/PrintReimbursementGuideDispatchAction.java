@@ -31,11 +31,28 @@ import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  * 
  */
+@Mapping(path = "/printReimbursementGuide", module = "masterDegreeAdministrativeOffice",
+        input = "/printReimbursementGuide.do?page=0&method=print")
+@Forwards(value = { @Forward(name = "start", path = "/guide/reimbursementGuide/reimbursementGuideTemplate1.jsp"),
+        @Forward(name = "error", path = "df.page.reimbursementGuide_Error") })
+@Exceptions(value = {
+        @ExceptionHandling(key = "resources.Action.exceptions.FenixActionException",
+                handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+                type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException.class),
+        @ExceptionHandling(key = "resources.Action.exceptions.InvalidSituationActionException",
+                handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+                type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituationActionException.class) })
 public class PrintReimbursementGuideDispatchAction extends FenixDispatchAction {
 
     public ActionForward print(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

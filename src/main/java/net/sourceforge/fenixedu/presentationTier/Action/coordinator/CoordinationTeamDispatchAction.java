@@ -32,11 +32,20 @@ import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * 
  * @author João Mota
  * 
  */
+@Mapping(path = "/addCoordinator", module = "coordinator", input = "/viewCoordinationTeam.do?method=prepareAddCoordinator",
+        formBean = "addCoordinator")
+@Forwards(value = { @Forward(name = "coordinationTeam", path = "coordinationTeam"),
+        @Forward(name = "addCoordinator", path = "addCoordinator"),
+        @Forward(name = "sucess", path = "/viewCoordinationTeam.do?method=viewTeam") })
 public class CoordinationTeamDispatchAction extends FenixDispatchAction {
 
     @Override

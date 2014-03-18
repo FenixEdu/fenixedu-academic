@@ -24,9 +24,17 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
+@Mapping(path = "/printGuide", module = "masterDegreeAdministrativeOffice")
+@Forwards(value = { @Forward(name = "PrintReady", path = "/guide/printGuide.jsp"),
+        @Forward(name = "PrintOneGuide", path = "/guide/guideTemplate1.jsp"),
+        @Forward(name = "PrintTwoGuides", path = "/guide/printGuidePage.jsp") })
 public class PrintGuideDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

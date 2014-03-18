@@ -26,12 +26,21 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  * 
  *         This is the Action to display all the master degrees.
  * 
  */
+@Mapping(path = "/listCourseStudents", module = "masterDegreeAdministrativeOffice")
+@Forwards(value = { @Forward(name = "DisplayMasterDegreeList", path = "/lists/displayMasterDegrees.jsp"),
+        @Forward(name = "MasterDegreeReady", path = "/lists/displayCurricularPlanByChosenMasterDegree.jsp"),
+        @Forward(name = "PrepareSuccess", path = "/lists/chooseCurricularCourseToCourseStudentList.jsp"),
+        @Forward(name = "Success", path = "/lists/displayStudentListByCourse.jsp") })
 public class CourseListingDispatchAction extends FenixDispatchAction {
 
     public ActionForward chooseDegreeFromList(ActionMapping mapping, ActionForm form, HttpServletRequest request,

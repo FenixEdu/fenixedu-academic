@@ -12,9 +12,16 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * @author Luis Crus & Sara Ribeiro
  */
+
+@Mapping(path = "/consultRoomsForExams", module = "resourceAllocationManager")
+@Forwards(value = { @Forward(name = "Search Rooms", path = "/searchRoomsForExams.jsp") })
 public class ConsultRoomsForExamDA extends FenixDispatchAction {
 
     /**

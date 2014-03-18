@@ -20,6 +20,18 @@ import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+@Mapping(path = "/candidateOperation", module = "coordinator", input = "/candidate/indexCandidate.jsp")
+@Forwards(value = { @Forward(name = "ViewList", path = "/candidate/selectCandidateFromList.jsp"),
+        @Forward(name = "ActionReady", path = "/candidate/visualizeCandidate.jsp") })
+@Exceptions(value = { @ExceptionHandling(key = "resources.Action.exceptions.NonExistingActionException",
+        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class) })
 public class CandidateOperationDispatchAction extends FenixDispatchAction {
 
     @Override

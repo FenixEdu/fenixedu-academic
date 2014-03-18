@@ -13,9 +13,16 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * @author tfc130
  */
+
+@Mapping(path = "/prepararSalaForm", module = "resourceAllocationManager")
+@Forwards(value = { @Forward(name = "PesquisarSalas", path = "/pesquisarSalas.jsp", useTile = false) })
 public class PrepararCriarSalaFormAction extends FenixDispatchAction {
 
     /**

@@ -22,6 +22,12 @@ import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * 
  * @author : - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
@@ -29,6 +35,26 @@ import org.fenixedu.bennu.core.security.Authenticate;
  * 
  */
 
+@Mapping(path = "/changeMasterDegreeThesisLookup", module = "masterDegreeAdministrativeOffice",
+        input = "/changeMasterDegreeThesis.do?page=0&method=reloadForm", formBean = "changeMasterDegreeThesisForm")
+@Forwards(value = { @Forward(name = "start", path = "/thesis/changeMasterDegreeThesis.jsp"),
+        @Forward(name = "success", path = "/thesis/changeSuccessScreen.jsp"),
+        @Forward(name = "cancel", path = "/thesis/indexThesis.jsp"),
+        @Forward(name = "changeThesisCancel", path = "/thesis/indexChangeThesis.jsp"),
+        @Forward(name = "error", path = "/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp") })
+@Exceptions(value = {
+        @ExceptionHandling(key = "resources.Action.exceptions.NonExistingActionException",
+                handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+                type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class),
+        @ExceptionHandling(key = "resources.Action.exceptions.ExistingActionException",
+                handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+                type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException.class),
+        @ExceptionHandling(key = "resources.Action.exceptions.RequiredGuidersActionException",
+                handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+                type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.RequiredGuidersActionException.class),
+        @ExceptionHandling(key = "resources.Action.exceptions.GuiderAlreadyChosenActionException",
+                handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+                type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.GuiderAlreadyChosenActionException.class) })
 public class ChangeMasterDegreeThesisLookupDispatchAction extends CreateOrEditMasterDegreeThesisLookupDispatchAction {
 
     @Override

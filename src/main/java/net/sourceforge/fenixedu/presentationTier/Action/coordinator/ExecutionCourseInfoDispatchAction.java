@@ -41,12 +41,22 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.bennu.core.domain.User;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  * 
  */
+@Mapping(path = "/executionCoursesInformation", module = "coordinator", input = "/courses/searchCurricularCourses.jsp",
+        attribute = "searchExecutionCourses", formBean = "searchExecutionCourses")
+@Forwards(value = { @Forward(name = "ReadyToSearch", path = "/courses/searchCurricularCourses.jsp"),
+        @Forward(name = "ShowCurricularCourseList", path = "/courses/showCurricularCourses.jsp"),
+        @Forward(name = "showOccupancy", path = "/courses/showOccupancyLevels.jsp"),
+        @Forward(name = "showLoads", path = "/courses/showLoads.jsp"),
+        @Forward(name = "notAuthorized", path = "df.page.notAuthorizedSimple") })
 public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
 
     @Override

@@ -35,6 +35,11 @@ import org.apache.struts.validator.DynaValidatorForm;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -42,6 +47,13 @@ import pt.ist.fenixframework.FenixFramework;
  * 
  * 
  */
+
+@Mapping(path = "/ClassManagerDA", module = "resourceAllocationManager", input = "/viewTimeTable.jsp", formBean = "classForm")
+@Forwards(value = { @Forward(name = "viewTimeTable", path = "/viewTimeTable.jsp"),
+        @Forward(name = "listClasses", path = "ClassesManagerDA.do?method=listClasses") })
+@Exceptions(value = { @ExceptionHandling(key = "resources.Action.exceptions.ExistingActionException",
+        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException.class) })
 public class ClassManagerDispatchAction extends FenixClassAndExecutionDegreeAndCurricularYearContextDispatchAction {
     private static final String CLASS_NAME_PARAM = "className";
 

@@ -36,9 +36,20 @@ import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * @author jpvl
  */
+
+@Mapping(path = "/chooseExamsContextDA", module = "resourceAllocationManager",
+        input = "/chooseExamsContextDA.do?method=prepare&page=0&inputPage=chooseExamsContext", formBean = "chooseContextForm")
+@Forwards(value = { @Forward(name = "chooseExamsContext", path = "/chooseExamsContext.jsp"),
+        @Forward(name = "createExam", path = "/chooseExecutionCourseForm.do"),
+        @Forward(name = "listByDegreeAndAcademicYear", path = "/viewExamsByDegreeAndCurricularYear.do"),
+        @Forward(name = "addExecutionCourseToExam", path = "/chooseExecutionCourseToAddToExam.do") })
 public class ChooseContextDispatchAction extends FenixDateAndTimeDispatchAction {
 
     protected static final String INFO_DEGREE_INITIALS_PARAMETER = "degreeInitials";

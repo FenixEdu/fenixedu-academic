@@ -46,12 +46,36 @@ import org.apache.struts.util.LabelValueBean;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
  * 
  */
+
+@Mapping(path = "/manageLesson", module = "resourceAllocationManager", input = "/manageLesson.do?method=findInput&page=0",
+        formBean = "manageLessonForm")
+@Forwards(value = { @Forward(name = "ShowLessonForm", path = "/manageLesson.jsp"),
+        @Forward(name = "ShowChooseRoomForm", path = "/chooseRoomForLesson.jsp"),
+        @Forward(name = "EditShift", path = "/manageShift.do?method=prepareEditShift&page=0"),
+        @Forward(name = "LessonDeleted", path = "/manageShift.do?method=prepareEditShift&page=0"),
+        @Forward(name = "ViewAllLessonDates", path = "view.all.lesson.dates"),
+        @Forward(name = "ChangeRoom", path = "/changeRoom.jsp") })
+@Exceptions(value = {
+        @ExceptionHandling(key = "resources.Action.exceptions.ExistingActionException",
+                handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+                type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException.class),
+        @ExceptionHandling(key = "resources.Action.exceptions.InterceptingActionException",
+                handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+                type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.InterceptingActionException.class),
+        @ExceptionHandling(key = "resources.Action.exceptions.InvalidTimeIntervalActionException",
+                handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+                type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidTimeIntervalActionException.class) })
 public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
 
     public static String INVALID_TIME_INTERVAL = "errors.lesson.invalid.time.interval";

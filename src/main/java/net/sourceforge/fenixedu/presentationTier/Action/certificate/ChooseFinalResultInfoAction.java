@@ -37,6 +37,25 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.core.domain.User;
 
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+@Mapping(path = "/chooseFinalResultInfoAction", module = "masterDegreeAdministrativeOffice",
+        input = "/certificate/chooseFinalResult.jsp", attribute = "chooseCertificateInfoForm",
+        formBean = "chooseCertificateInfoForm")
+@Forwards(value = { @Forward(name = "PrepareReady", path = "/certificate/chooseFinalResult.jsp"),
+        @Forward(name = "ChooseStudentCurricularPlan", path = "df.page.chooseStudentCurricularPlanForFinalResult"),
+        @Forward(name = "ChooseSuccess", path = "/certificate/finalResultPage.jsp") })
+@Exceptions(value = {
+        @ExceptionHandling(key = "resources.Action.exceptions.NonExistingActionException",
+                handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+                type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class),
+        @ExceptionHandling(key = "resources.Action.exceptions.FinalResulUnreachedActionException",
+                handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+                type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.FinalResulUnreachedActionException.class) })
 public class ChooseFinalResultInfoAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

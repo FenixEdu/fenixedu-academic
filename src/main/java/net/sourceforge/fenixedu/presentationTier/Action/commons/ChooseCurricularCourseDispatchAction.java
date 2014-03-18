@@ -28,10 +28,21 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * @author Fernanda Quitério 03/07/2003
  * 
  */
+
+@Mapping(path = "/chooseCurricularCourseToCourseStudentList", module = "masterDegreeAdministrativeOffice",
+        input = "/lists/chooseCurricularCourseToCourseStudentList.jsp")
+@Forwards(value = { @Forward(name = "PrepareSuccess", path = "/lists/chooseCurricularCourseToCourseStudentList.jsp"),
+        @Forward(name = "ChooseSuccess", path = "/lists/displayStudentListByCourse.jsp"),
+        @Forward(name = "NoStudents", path = "/chooseMasterDegreeToCourseStudentList.do?method=chooseMasterDegree"),
+        @Forward(name = "NotAuthorized", path = "/student/notAuthorized.jsp") })
 public class ChooseCurricularCourseDispatchAction extends FenixDispatchAction {
 
     @Override

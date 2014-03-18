@@ -22,11 +22,29 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  * 
  * 
  */
+@Mapping(path = "/studentGuideDispatchAction", module = "masterDegreeAdministrativeOffice",
+        input = "/guide/chooseStudentGuide.jsp", attribute = "chooseStudentGuideForm", formBean = "chooseStudentGuideForm")
+@Forwards(value = { @Forward(name = "CreateStudentGuideReady", path = "/guide/createGuideReady.jsp") })
+@Exceptions(
+        value = {
+                @ExceptionHandling(
+                        key = "resources.Action.exceptions.InvalidInformationInFormActionException",
+                        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+                        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidInformationInFormActionException.class),
+                @ExceptionHandling(key = "resources.Action.exceptions.NoChangeMadeActionException",
+                        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+                        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoChangeMadeActionException.class) })
 public class StudentGuideDispatchAction extends FenixDispatchAction {
 
     private CreateGuideBean getCreateGuideBean() {

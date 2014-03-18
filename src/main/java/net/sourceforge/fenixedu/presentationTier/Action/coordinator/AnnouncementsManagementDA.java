@@ -17,8 +17,13 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
+@Mapping(path = "/announcements/manageUnitAnnouncementBoard", module = "coordinator")
+@Forwards(value = { @Forward(name = "listAnnouncements", path = "coordinator-announcements-list-announcements") })
 public class AnnouncementsManagementDA extends AnnouncementManagement {
 
     @Override

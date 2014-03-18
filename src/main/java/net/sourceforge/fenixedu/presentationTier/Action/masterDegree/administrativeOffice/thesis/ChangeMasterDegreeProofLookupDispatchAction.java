@@ -33,6 +33,11 @@ import org.apache.struts.actions.LookupDispatchAction;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -42,6 +47,25 @@ import pt.ist.fenixframework.FenixFramework;
  * 
  */
 
+@Mapping(path = "/changeMasterDegreeProofLookup", module = "masterDegreeAdministrativeOffice",
+        input = "/changeMasterDegreeProof.do?page=0&method=reloadForm", formBean = "changeMasterDegreeProofForm")
+@Forwards(value = { @Forward(name = "start", path = "/thesis/changeMasterDegreeProof.jsp"),
+        @Forward(name = "success", path = "/thesis/changeProofSuccessScreen.jsp"),
+        @Forward(name = "cancel", path = "/thesis/indexThesis.jsp"),
+        @Forward(name = "error", path = "/thesis/chooseStudentForMasterDegreeThesisAndProof.jsp") })
+@Exceptions(value = {
+        @ExceptionHandling(key = "resources.Action.exceptions.NonExistingActionException",
+                handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+                type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class),
+        @ExceptionHandling(key = "resources.Action.exceptions.ExistingActionException",
+                handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+                type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException.class),
+        @ExceptionHandling(key = "resources.Action.exceptions.RequiredJuriesActionException",
+                handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+                type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.RequiredJuriesActionException.class),
+        @ExceptionHandling(key = "resources.Action.exceptions.ScholarshipNotFinishedActionException",
+                handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+                type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.ScholarshipNotFinishedActionException.class) })
 public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchAction {
 
     public ActionForward addJury(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

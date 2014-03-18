@@ -18,11 +18,17 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author tfc130
  */
+@Mapping(path = "/chooseRoomToViewForExams", module = "resourceAllocationManager", input = "/searchRoomsForExams.jsp",
+        attribute = "roomForm", formBean = "roomForm", validate = false)
+@Forwards(value = { @Forward(name = "Sucess", path = "/listRoomsForExams.jsp") })
 public class SelectRoomsFormAction extends FenixAction {
 
     @Override

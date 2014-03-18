@@ -18,11 +18,27 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * @author Shezad Anavarali (sana@mega.ist.utl.pt)
  * @author Nadir Tarmahomed (naat@mega.ist.utl.pt)
  * 
  */
+
+@Mapping(path = "/chooseDataToCreateGuide", module = "masterDegreeAdministrativeOffice")
+@Forwards(value = {
+        @Forward(name = "DisplayMasterDegreeList", path = "/guide/chooseMasterDegreeToCreateGuide.jsp"),
+        @Forward(name = "DisplayMasterDegreeCurricularPlanList",
+                path = "/guide/chooseMasterDegreeCurricularPlanToCreateGuide.jsp"),
+        @Forward(name = "DisplayExecutionDegreeList", path = "/guide/chooseExecutionDegreeToCreateGuide.jsp") })
+@Exceptions(value = { @ExceptionHandling(key = "resources.Action.exceptions.NonExistingActionException",
+        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class) })
 public class ChooseDataToCreateGuideDispatchAction extends FenixDispatchAction {
 
     public ActionForward chooseDegreeFromList(ActionMapping mapping, ActionForm form, HttpServletRequest request,

@@ -26,12 +26,19 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
  * 
  */
+
+@Mapping(path = "/manageExecutionCourse", module = "resourceAllocationManager",
+        input = "/manageExecutionCourse.do?method=prepare&page=0", formBean = "editExecutionCourseForm")
+@Forwards(value = { @Forward(name = "ManageExecutionCourse", path = "/manageExecutionCourse.jsp", useTile = false) })
 public class ManageExecutionCourseDA extends FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

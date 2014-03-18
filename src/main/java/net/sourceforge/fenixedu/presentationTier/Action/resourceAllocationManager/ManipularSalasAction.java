@@ -19,11 +19,23 @@ import org.apache.struts.action.DynaActionFormClass;
 import org.apache.struts.config.FormBeanConfig;
 import org.apache.struts.config.ModuleConfig;
 
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * @author Nuno Antão
  * @author João Pereira
  */
 
+@Mapping(path = "/selectRoomToViewForExams", module = "resourceAllocationManager", input = "/listRoomsForExams.jsp",
+        attribute = "indexForm", formBean = "indexForm")
+@Forwards(value = { @Forward(name = "VerSala", path = "/viewRoomForExams.do") })
+@Exceptions(value = { @ExceptionHandling(key = "resources.Action.exceptions.notAuthorizedActionDeleteException",
+        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.notAuthorizedActionDeleteException.class) })
 public class ManipularSalasAction extends FenixSelectedRoomsContextAction {
 
     /**

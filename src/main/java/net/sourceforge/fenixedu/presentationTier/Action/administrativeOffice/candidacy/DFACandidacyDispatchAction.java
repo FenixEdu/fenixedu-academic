@@ -37,8 +37,14 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
+@Mapping(path = "/listDFACandidacy", module = "masterDegreeAdministrativeOffice", input = "df.page.listCandidacies")
+@Forwards(value = { @Forward(name = "listCandidacies", path = "df.page.listCandidacies"),
+        @Forward(name = "viewCandidacyDetails", path = "df.page.viewCandidacyDetails") })
 public class DFACandidacyDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareCreateCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

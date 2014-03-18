@@ -40,9 +40,18 @@ import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
+
+@Mapping(path = "/editExamRooms", module = "resourceAllocationManager", input = "/editExamRooms.do?method=prepare",
+        formBean = "editExamRoomsForm", validate = false)
+@Forwards(value = { @Forward(name = "ViewSelectRoomsForm", path = "/selectRoomsForExam.jsp"),
+        @Forward(name = "ViewEditExamForm", path = "/editExam.jsp") })
 public class EditExamRoomsDA extends
         FenixDateAndTimeAndCurricularYearsAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
 

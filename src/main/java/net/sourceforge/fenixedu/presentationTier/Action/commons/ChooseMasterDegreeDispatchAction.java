@@ -21,11 +21,20 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * 
  * @author Fernanda Quitério 03/07/2003
  * 
  */
+
+@Mapping(path = "/chooseMasterDegreeToCandidateRegistration", module = "masterDegreeAdministrativeOffice",
+        input = "/candidate/chooseMasterDegreeToSelectCandidates.jsp", attribute = "chooseMasterDegreeForm")
+@Forwards(value = { @Forward(name = "PrepareSuccess", path = "/candidate/chooseMasterDegreeToSelectCandidates.jsp"),
+        @Forward(name = "ChooseSuccess", path = "/candidateRegistration.do?method=getCandidateList") })
 public class ChooseMasterDegreeDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareChooseMasterDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,

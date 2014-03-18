@@ -36,6 +36,20 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+@Mapping(path = "/printCertificate", module = "masterDegreeAdministrativeOffice", input = "df.page.chooseStudentForCertificate",
+        attribute = "chooseCertificateInfoForm", formBean = "chooseCertificateInfoForm")
+@Forwards(value = { @Forward(name = "PrintReady", path = "/certificate/printCertificatePage.jsp"),
+        @Forward(name = "printDegreeLetter", path = "/certificate/printDegreeLetter.jsp"),
+        @Forward(name = "insucesso", path = "/chooseCertificateInfoAction.do?method=prepare") })
+@Exceptions(value = { @ExceptionHandling(key = "resources.Action.exceptions.NonExistingActionException",
+        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class) })
 public class PrintCertificateDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

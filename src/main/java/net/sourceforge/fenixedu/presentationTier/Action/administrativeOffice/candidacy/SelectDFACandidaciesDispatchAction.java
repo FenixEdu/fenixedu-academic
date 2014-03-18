@@ -26,11 +26,21 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
+
+@Mapping(path = "/selectDFACandidacies", module = "masterDegreeAdministrativeOffice",
+        input = "df.page.listCandidaciesForSelection")
+@Forwards(value = { @Forward(name = "listCandidacies", path = "df.page.listCandidaciesForSelection"),
+        @Forward(name = "confirmCandidaciesForSelection", path = "df.page.confirmCandidaciesForSelection"),
+        @Forward(name = "showCandidaciesForSelectionSuccess", path = "df.page.showCandidaciesForSelectionSuccess"),
+        @Forward(name = "printAcceptanceDispatch", path = "/candidacy/acceptanceDispatchTemplate.jsp") })
 public class SelectDFACandidaciesDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareListCandidacies(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

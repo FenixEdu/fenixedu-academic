@@ -59,6 +59,11 @@ import org.fenixedu.bennu.core.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -67,6 +72,15 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  * 
  */
+@Mapping(path = "/editCandidate", module = "masterDegreeAdministrativeOffice",
+        input = "/editCandidate.do?method=prepareEdit&page=0&error=1", attribute = "changeCandidateForm",
+        formBean = "changeCandidateForm")
+@Forwards(value = { @Forward(name = "PrepareReady", path = "/changeCandidate.jsp"),
+        @Forward(name = "ChangeSuccess", path = "/visualizeCandidate.jsp"),
+        @Forward(name = "ChangePasswordSuccess", path = "/guide/informationTemplate1.jsp") })
+@Exceptions(value = { @ExceptionHandling(key = "resources.Action.exceptions.FenixActionException",
+        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException.class) })
 public class ListCandidatesDispatchAction extends FenixDispatchAction {
 
     private static final Logger logger = LoggerFactory.getLogger(ListCandidatesDispatchAction.class);

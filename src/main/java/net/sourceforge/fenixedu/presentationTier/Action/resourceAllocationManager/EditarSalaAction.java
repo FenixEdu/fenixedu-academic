@@ -22,11 +22,23 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.core.domain.User;
 
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * @author Nuno Antão
  * @author João Pereira
  */
 
+@Mapping(path = "/editarSala", module = "resourceAllocationManager", input = "/editarSala.jsp", attribute = "criarSalaForm",
+        formBean = "roomForm")
+@Forwards(value = { @Forward(name = "Sucesso", path = "/pesquisarSalas.jsp") })
+@Exceptions(value = { @ExceptionHandling(key = "resources.Action.exceptions.ExistingActionException",
+        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException.class) })
 public class EditarSalaAction extends FenixSelectedRoomsAndSelectedRoomIndexContextAction {
 
     @Override

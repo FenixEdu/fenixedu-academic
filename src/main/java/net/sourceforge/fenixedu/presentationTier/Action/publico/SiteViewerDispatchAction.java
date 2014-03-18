@@ -10,8 +10,13 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
+@Mapping(path = "/siteViewer", module = "resourceAllocationManager", input = "/siteViewerError.jsp")
+@Forwards(value = { @Forward(name = "roomViewer", path = "/sopViewRoom.jsp") })
 public class SiteViewerDispatchAction extends FenixContextDispatchAction {
 
     @Override

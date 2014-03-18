@@ -34,11 +34,18 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  * @author David Santos
  */
 
+@Mapping(path = "/studentCurriculum", module = "masterDegreeAdministrativeOffice")
+@Forwards(value = { @Forward(name = "ShowStudentCurriculum", path = "/student/displayStudentCurriculum.jsp"),
+        @Forward(name = "NotAuthorized", path = "/student/notAuthorized.jsp") })
 public class CurriculumDispatchActionForMasterDegreeAdministrativeOffice extends FenixDispatchAction {
 
     public ActionForward getCurriculum(ActionMapping mapping, ActionForm form, HttpServletRequest request,

@@ -19,9 +19,17 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * @author Luis Cruz e Sara Ribeiro
  */
+@Mapping(path = "/viewAllRoomsSchedulesDA", module = "resourceAllocationManager",
+        input = "/viewAllRoomsSchedulesDA.do?method=choose&page=0", formBean = "chooseViewAllRoomsSchedulesContextForm")
+@Forwards(value = { @Forward(name = "choose", path = "/choosePavillionsToViewRoomsSchedules.jsp", useTile = false),
+        @Forward(name = "list", path = "/viewAllRoomsSchedules.jsp", useTile = false) })
 public class ViewAllRoomsSchedulesDA extends FenixContextDispatchAction {
 
     public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

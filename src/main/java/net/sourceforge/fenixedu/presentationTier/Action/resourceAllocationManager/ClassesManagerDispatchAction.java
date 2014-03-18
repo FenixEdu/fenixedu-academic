@@ -24,11 +24,17 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * @author jpvl
  * 
  * 
  */
+@Mapping(path = "/ClassesManagerDA", module = "resourceAllocationManager")
+@Forwards(value = { @Forward(name = "listClasses", path = "/listClasses.jsp") })
 public class ClassesManagerDispatchAction extends
         FenixClassAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
     static public final String CLASS_LIST_KEY = "classesList";

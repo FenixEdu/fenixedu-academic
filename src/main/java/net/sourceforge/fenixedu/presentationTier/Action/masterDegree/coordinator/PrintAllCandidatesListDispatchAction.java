@@ -22,11 +22,20 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.core.domain.User;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * @author Ricardo Clerigo
  * @author Telmo Nabais
  * 
  */
+
+@Mapping(path = "/printAllCandidatesList", module = "coordinator", input = "/candidate/indexCandidate.jsp",
+        attribute = "printAllCandidatesForm", formBean = "printAllCandidatesForm")
+@Forwards(value = { @Forward(name = "Prepare", path = "/printAllCandidatesList.jsp"),
+        @Forward(name = "PrintList", path = "/candidateListTemplate.jsp") })
 public class PrintAllCandidatesListDispatchAction extends FenixDispatchAction {
 
     // request parameters

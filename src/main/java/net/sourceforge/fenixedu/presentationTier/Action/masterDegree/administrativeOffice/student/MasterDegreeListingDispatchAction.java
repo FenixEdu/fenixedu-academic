@@ -28,6 +28,12 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
 
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -35,6 +41,17 @@ import org.fenixedu.bennu.core.domain.User;
  *         This is the Action to display all the master degrees.
  * 
  */
+
+@Mapping(path = "/listMasterDegrees", module = "masterDegreeAdministrativeOffice",
+        input = "/lists/displayCurricularPlanByChosenMasterDegree.jsp")
+@Forwards(value = { @Forward(name = "DisplayMasterDegreeList", path = "/lists/displayMasterDegrees.jsp"),
+        @Forward(name = "MasterDegreeReady", path = "/lists/displayCurricularPlanByChosenMasterDegree.jsp"),
+        @Forward(name = "CurricularPlanReady", path = "/lists/displayStudentListByDegree.jsp"),
+        @Forward(name = "NotAuthorized", path = "/student/notAuthorized.jsp"),
+        @Forward(name = "NoStudents", path = "/listMasterDegrees.do?method=chooseMasterDegree&page=0") })
+@Exceptions(value = { @ExceptionHandling(key = "resources.Action.exceptions.NonExistingActionException",
+        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class) })
 public class MasterDegreeListingDispatchAction extends FenixDispatchAction {
 
     public ActionForward chooseDegreeFromList(ActionMapping mapping, ActionForm form, HttpServletRequest request,

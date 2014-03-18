@@ -27,11 +27,18 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.core.domain.User;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Angela Created on 8/Out/2003
  */
+@Mapping(path = "/alterStudentCurricularPlan", module = "masterDegreeAdministrativeOffice",
+        input = "/editStudentCurricularPlan.do?method=prepare", formBean = "studentCurricularPlanForm")
+@Forwards(value = { @Forward(name = "editStudentCurricularCoursePlan", path = "df.page.editStudentCurricularCoursePlan"),
+        @Forward(name = "ShowStudentCurricularCoursePlan", path = "/showStudentCurricularCoursePlan.do") })
 public class EditStudentCurricularCoursePlan extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

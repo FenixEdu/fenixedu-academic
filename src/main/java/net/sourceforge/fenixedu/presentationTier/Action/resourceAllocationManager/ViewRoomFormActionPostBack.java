@@ -22,11 +22,17 @@ import org.apache.struts.action.DynaActionForm;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author tfc130
  */
+@Mapping(path = "/viewRoom", module = "resourceAllocationManager", input = "/manipularSalas.jsp", attribute = "indexForm",
+        formBean = "indexForm", validate = false)
+@Forwards(value = { @Forward(name = "Sucess", path = "/sopViewRoom.jsp", useTile = false) })
 public class ViewRoomFormActionPostBack extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

@@ -15,9 +15,16 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
+
+@Mapping(path = "/consultAllRoomsForExams", module = "resourceAllocationManager")
+@Forwards(value = { @Forward(name = "Sucess", path = "/viewAllRoomsForExams.jsp") })
 public class ViewAllRoomsForExamsFormAction extends FenixContextAction {
 
     @Override

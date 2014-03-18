@@ -27,12 +27,21 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.LabelValueBean;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
+@Mapping(path = "/chooseExecutionYearToRegisterCandidate", module = "masterDegreeAdministrativeOffice",
+        input = "/chooseExecutionYear.jsp", attribute = "chooseExecutionYearForm")
+@Forwards(value = { @Forward(name = "DisplayMasterDegreeList", path = "/candidate/displayMasterDegreesToEditCandidates.jsp"),
+        @Forward(name = "MasterDegreeReady", path = "/candidate/displayCurricularPlanByChosenMasterDegreeToEditCandidates.jsp"),
+        @Forward(name = "PrepareSuccess", path = "/candidate/chooseExecutionYear.jsp"),
+        @Forward(name = "ChooseSuccess", path = "/candidateRegistration.do?method=getCandidateList") })
 public class ChooseExecutionYearDispatchAction extends FenixDispatchAction {
 
     public ActionForward chooseDegreeFromList(ActionMapping mapping, ActionForm form, HttpServletRequest request,

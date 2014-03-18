@@ -38,12 +38,25 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.bennu.core.domain.User;
 
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  * 
  * 
  */
+@Mapping(path = "/editGuideSituation", module = "masterDegreeAdministrativeOffice", input = "/guide/editGuideSituation.jsp",
+        attribute = "editGuideSituationForm", formBean = "editGuideSituationForm")
+@Forwards(value = { @Forward(name = "EditReady", path = "/guide/editGuideSituation.jsp"),
+        @Forward(name = "SituationChanged", path = "/guide/changeSuccess.jsp") })
+@Exceptions(value = { @ExceptionHandling(key = "resources.Action.exceptions.NonValidChangeActionException",
+        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonValidChangeActionException.class) })
 public class EditGuideDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareEditSituation(ActionMapping mapping, ActionForm form, HttpServletRequest request,

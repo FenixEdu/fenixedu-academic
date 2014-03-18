@@ -43,10 +43,19 @@ import org.fenixedu.bennu.core.security.Authenticate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * @author Tânia Pousão
  * 
  */
+
+@Mapping(path = "/manageExemptionGratuity", module = "masterDegreeAdministrativeOffice",
+        input = "/manageExemptionGratuity.do?method=readExemptionGratuity&page=0", formBean = "exemptionGratuityForm")
+@Forwards(value = { @Forward(name = "manageExemptionGratuity", path = "manageExemptionGratuity"),
+        @Forward(name = "chooseStudent", path = "/readStudent.do?method=prepareReadStudent") })
 public class ExemptionGratuityAction extends FenixDispatchAction {
 
     private static final Logger logger = LoggerFactory.getLogger(ExemptionGratuityAction.class);

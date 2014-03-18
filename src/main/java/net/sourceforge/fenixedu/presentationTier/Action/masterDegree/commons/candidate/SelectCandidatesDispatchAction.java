@@ -37,9 +37,30 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.bennu.core.domain.User;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
+
+@Mapping(path = "/displayListToSelectCandidates", module = "masterDegreeAdministrativeOffice",
+        input = "/candidate/displayCandidateListBySituation.jsp", attribute = "chooseCandidateSituationForm",
+        formBean = "chooseCandidateSituationForm")
+@Forwards(value = {
+        @Forward(name = "PrepareSuccess", path = "/candidate/displayCandidateListBySituation.jsp"),
+        @Forward(name = "CancelConfirmation", path = "/displayListToSelectCandidates.do?method=prepareSelectCandidates"),
+        @Forward(name = "RequestConfirmation", path = "/candidate/warning.jsp"),
+        @Forward(name = "FinalPresentation", path = "/candidate/displayCandidatesFinalList.jsp"),
+        @Forward(name = "ChooseSuccess", path = "/displayListToSelectCandidates.do?method=preparePresentation&page=0"),
+        @Forward(name = "OrderCandidates", path = "/displayListToSelectCandidates.do?method=getSubstituteCandidates&page=0"),
+        @Forward(name = "Cancel", path = "/displayListToSelectCandidates.do?method=prepareSelectCandidates&page=0"),
+        @Forward(name = "OrderCandidatesReady", path = "/candidate/displayChosenSelection.jsp"),
+        @Forward(name = "NumerusClaususNotDefined",
+                path = "/chooseMasterDegreeToSelectCandidates.do?method=prepareChooseMasterDegree&page=0"),
+        @Forward(name = "BackError", path = "/backErrorCandidateApprovalPage.do", redirect = true),
+        @Forward(name = "PrintReady", path = "/candidate/approvalDispatchTemplate.jsp") })
 public class SelectCandidatesDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareSelectCandidates(ActionMapping mapping, ActionForm form, HttpServletRequest request,

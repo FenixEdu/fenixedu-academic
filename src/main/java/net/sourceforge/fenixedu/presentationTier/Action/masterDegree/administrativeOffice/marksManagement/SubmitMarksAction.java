@@ -37,12 +37,24 @@ import org.joda.time.YearMonthDay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Fernanda Quitério 01/07/2003
  * 
  */
+@Mapping(path = "/marksSubmission", module = "masterDegreeAdministrativeOffice",
+        input = "/marksSubmission.do?method=prepare&page=0", formBean = "marksSubmissionForm")
+@Forwards(value = { @Forward(name = "MarksSubmission", path = "/marksManagement/marksSubmission.jsp"),
+        @Forward(name = "ShowMarksManagementMenu", path = "/marksManagement.do?method=getStudentMarksList") })
+@Exceptions(value = { @ExceptionHandling(key = "resources.Action.exceptions.NonExistingActionException",
+        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class) })
 public class SubmitMarksAction extends FenixDispatchAction {
 
     private static final Logger logger = LoggerFactory.getLogger(SubmitMarksAction.class);

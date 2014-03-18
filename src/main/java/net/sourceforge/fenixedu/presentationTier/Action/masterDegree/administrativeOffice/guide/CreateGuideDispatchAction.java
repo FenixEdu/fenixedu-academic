@@ -39,6 +39,11 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -48,7 +53,26 @@ import pt.ist.fenixframework.FenixFramework;
  *         This is the Action to create a Guide
  * 
  */
-
+@Mapping(path = "/createGuideReadyDispatchAction", module = "masterDegreeAdministrativeOffice",
+        input = "/guide/createGuideReady.jsp", attribute = "guideCreateReadyForm", formBean = "guideCreateReadyForm")
+@Forwards(value = { @Forward(name = "PrepareSuccess", path = "/guide/createGuide.jsp"),
+        @Forward(name = "CreateCandidateGuide", path = "/guide/createGuideReady.jsp"),
+        @Forward(name = "CreateStudentGuide", path = "/guide/guideMenu.jsp"),
+        @Forward(name = "CreateSuccess", path = "/printGuide.do?method=prepare"),
+        @Forward(name = "BackError", path = "/backErrorPage.do", redirect = true) })
+@Exceptions(
+        value = {
+                @ExceptionHandling(
+                        key = "resources.Action.exceptions.NoActiveStudentCurricularPlanActionException",
+                        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+                        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoActiveStudentCurricularPlanActionException.class),
+                @ExceptionHandling(key = "resources.Action.exceptions.InvalidSituationActionException",
+                        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+                        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituationActionException.class),
+                @ExceptionHandling(
+                        key = "resources.Action.exceptions.InvalidInformationInFormActionException",
+                        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+                        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidInformationInFormActionException.class) })
 public class CreateGuideDispatchAction extends FenixDispatchAction {
 
     private CreateGuideBean getCreateGuideBean() {

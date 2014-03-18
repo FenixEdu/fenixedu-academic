@@ -29,6 +29,13 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+@Mapping(path = "/editStudentToVisualizeInformations", module = "masterDegreeAdministrativeOffice",
+        formBean = "changePersonalInfoForm")
+@Forwards(value = { @Forward(name = "Success", path = "/student/editStudentInfo.jsp") })
 public class ReadPersonInfoOfStudentsAction extends FenixAction {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

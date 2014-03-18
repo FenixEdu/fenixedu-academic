@@ -23,9 +23,18 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
+
+@Mapping(path = "/defineExamComment", module = "resourceAllocationManager", input = "/defineExamComment.jsp",
+        formBean = "examCommentForm", validate = false)
+@Forwards(value = { @Forward(name = "defineExamComment", path = "/defineExamComment.jsp"),
+        @Forward(name = "showExamsMap", path = "/viewExamsMap.do?method=view") })
 public class DefineExamCommentActionDA extends
         FenixCurricularYearsAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
 

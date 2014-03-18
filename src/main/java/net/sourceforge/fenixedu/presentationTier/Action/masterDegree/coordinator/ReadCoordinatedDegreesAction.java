@@ -18,6 +18,13 @@ import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+@Mapping(path = "/index", module = "coordinator")
+@Forwards(value = { @Forward(name = "ChooseDegree", path = "/chooseDegreePage.jsp", useTile = false),
+        @Forward(name = "oneDegreeSucces", path = "/chooseDegree.do") })
 public class ReadCoordinatedDegreesAction extends FenixAction {
 
     @Override

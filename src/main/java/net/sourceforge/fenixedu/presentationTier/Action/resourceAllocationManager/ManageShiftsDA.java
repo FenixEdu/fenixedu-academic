@@ -38,12 +38,18 @@ import org.apache.struts.util.LabelValueBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
  * 
  */
+@Mapping(path = "/deleteShifts", module = "resourceAllocationManager", input = "/manageShifts.do?method=listShifts&page=0",
+        formBean = "selectMultipleItemsForm")
+@Forwards(value = { @Forward(name = "ShowShiftList", path = "/manageShifts.do?method=listShifts&page=0") })
 public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContextDispatchAction {
 
     private static final Logger logger = LoggerFactory.getLogger(ManageShiftsDA.class);

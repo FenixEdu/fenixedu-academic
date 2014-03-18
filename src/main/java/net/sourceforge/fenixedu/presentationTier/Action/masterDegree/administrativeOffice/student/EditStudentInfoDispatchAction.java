@@ -36,6 +36,18 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.core.domain.User;
 
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+@Mapping(path = "/editStudentInfo", module = "masterDegreeAdministrativeOffice",
+        input = "/editStudentToVisualizeInformations.do?method=execute&page=0", formBean = "changePersonalInfoForm")
+@Forwards(value = { @Forward(name = "Success", path = "/student/visualizePersonalStudentInfo.jsp") })
+@Exceptions(value = { @ExceptionHandling(key = "resources.Action.exceptions.FenixActionException",
+        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException.class) })
 public class EditStudentInfoDispatchAction extends FenixDispatchAction {
 
     public ActionForward change(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

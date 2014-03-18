@@ -23,12 +23,33 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 3/Dez/2003
  * @author Fernanda Quitério 17/Dez/2003
  * 
  */
+
+@Mapping(path = "/mergeExecutionCoursesForm", module = "resourceAllocationManager",
+        input = "/chooseDegreesForExecutionCourseMerge.do?method=prepareChooseDegreesAndExecutionPeriod",
+        formBean = "mergeExecutionCoursesForm", validate = false)
+@Forwards(value = { @Forward(name = "sucess",
+        path = "/chooseDegreesForExecutionCourseMerge.do?method=prepareChooseDegreesAndExecutionPeriod") })
+@Exceptions(
+        value = {
+                @ExceptionHandling(
+                        key = "message.merge.execution.courses.sourceIsSameAsDestination",
+                        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+                        type = net.sourceforge.fenixedu.applicationTier.Servico.manager.MergeExecutionCourses.SourceAndDestinationAreTheSameException.class),
+                @ExceptionHandling(
+                        key = "error.duplicate.shift.names",
+                        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+                        type = net.sourceforge.fenixedu.applicationTier.Servico.manager.MergeExecutionCourses.DuplicateShiftNameException.class) })
 public class MergeExecutionCourseDispatchionAction extends FenixDispatchAction {
 
     public ActionForward chooseDegreesAndExecutionPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,

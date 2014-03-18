@@ -33,9 +33,17 @@ import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
+@Mapping(path = "/chooseExamsMapContextDA", module = "resourceAllocationManager",
+        input = "/chooseExamsMapContextDA.do?method=prepare&page=0", formBean = "chooseExamsMapContextForm")
+@Forwards(value = { @Forward(name = "chooseExamsMapContext", path = "/chooseExamsMapContext.jsp"),
+        @Forward(name = "showExamsMap", path = "/viewExamsMap.do?method=view") })
 public class ChooseExamsMapContextDA extends FenixContextDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

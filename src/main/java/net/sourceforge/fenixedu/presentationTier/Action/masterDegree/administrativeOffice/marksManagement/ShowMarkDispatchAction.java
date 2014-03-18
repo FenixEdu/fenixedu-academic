@@ -18,11 +18,19 @@ import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * @author Fernanda Quitério 30/06/2003
  * 
  */
-
+@Mapping(path = "/showMarkDispatchAction", module = "masterDegreeAdministrativeOffice",
+        input = "/marksManagement.do?method=chooseCurricularCourses", formBean = "studentNumberForm")
+@Forwards(value = { @Forward(name = "displayStudentList", path = "/marksManagement/displayStudentList.jsp"),
+        @Forward(name = "NoStudents", path = "/marksManagement.do?method=getStudentMarksList"),
+        @Forward(name = "NotAuthorized", path = "/student/notAuthorized.jsp") })
 public class ShowMarkDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareShowMark(ActionMapping mapping, ActionForm form, HttpServletRequest request,

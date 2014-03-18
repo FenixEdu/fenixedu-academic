@@ -25,6 +25,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -32,6 +35,11 @@ import pt.ist.fenixframework.FenixFramework;
  * 
  * 
  */
+
+@Mapping(path = "/chooseExecutionCourseToAddToExam", module = "resourceAllocationManager", input = "/chooseExecutionCourse.jsp",
+        formBean = "chooseExecutionCourseForm", validate = false)
+@Forwards(value = { @Forward(name = "forwardChoose", path = "/addExecutionCourseToExam.do"),
+        @Forward(name = "showForm", path = "/chooseExecutionCourse.jsp") })
 public class ChooseExecutionCourseAction extends FenixDateAndTimeAndClassAndExecutionDegreeAndCurricularYearContextAction {
 
     @Override

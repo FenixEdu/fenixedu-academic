@@ -18,11 +18,24 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.core.domain.User;
 
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
+@Mapping(path = "/chooseStudent", module = "masterDegreeAdministrativeOffice", input = "/student/chooseStudent.jsp",
+        formBean = "chooseStudentForm", validate = false)
+@Forwards(value = { @Forward(name = "ShowCurricularPlans", path = "/student/showCurricularPlans.jsp"),
+        @Forward(name = "StudentCurricularPlanChosen", path = "/gratuityOperations.do?method=getInformation&page=0") })
+@Exceptions(value = { @ExceptionHandling(key = "resources.Action.exceptions.NonExistingActionException",
+        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class) })
 public class ChooseStudentDispatchAction extends FenixDispatchAction {
 
     public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

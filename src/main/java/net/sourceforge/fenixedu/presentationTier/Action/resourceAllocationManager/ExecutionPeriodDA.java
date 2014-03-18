@@ -44,6 +44,8 @@ import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
@@ -51,8 +53,13 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
  * @author Luis Cruz & Sara Ribeiro
  */
 
-@Forward(name = "studentShiftEnrollmentManager",
-        path = "/resourceAllocationManager/studentShiftEnrollmentManager.do?method=prepare")
+@Mapping(path = "/mainExamsNew", module = "resourceAllocationManager", input = "/mainExamsNew.do?method=prepare",
+        formBean = "pagedIndexForm")
+@Forwards(value = {
+        @Forward(name = "showForm", path = "df.page.mainExams"),
+        @Forward(name = "choose", path = "df.page.mainExams"),
+        @Forward(name = "studentShiftEnrollmentManager",
+                path = "/resourceAllocationManager/studentShiftEnrollmentManager.do?method=prepare") })
 public class ExecutionPeriodDA extends FenixContextDispatchAction {
 
     static private final Integer FIRST_CURRICULAR_YEAR = Integer.valueOf(1);

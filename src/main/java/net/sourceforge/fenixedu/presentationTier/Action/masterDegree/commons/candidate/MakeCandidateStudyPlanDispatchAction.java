@@ -48,6 +48,11 @@ import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -55,6 +60,14 @@ import pt.ist.fenixframework.FenixFramework;
  * 
  * 
  */
+@Mapping(path = "/displayCourseListToStudyPlan", module = "masterDegreeAdministrativeOffice",
+        input = "/candidate/displayListOfCoursesToChoose.jsp", attribute = "chooseCourseListForm",
+        formBean = "chooseCourseListForm")
+@Forwards(value = { @Forward(name = "PrepareSuccess", path = "/candidate/displayListOfCoursesToChoose.jsp"),
+        @Forward(name = "ChooseSuccess", path = "/candidate/displayCandidateEnrolments.jsp") })
+@Exceptions(value = { @ExceptionHandling(key = "resources.Action.exceptions.NoChoiceMadeActionException",
+        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoChoiceMadeActionException.class) })
 public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
 
     @Override

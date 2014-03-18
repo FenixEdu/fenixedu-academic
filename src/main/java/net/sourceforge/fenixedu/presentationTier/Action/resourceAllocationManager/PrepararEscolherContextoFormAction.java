@@ -24,9 +24,15 @@ import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * @author tfc130
  */
+@Mapping(path = "/prepararEscolherContexto", module = "resourceAllocationManager")
+@Forwards(value = { @Forward(name = "Sucesso", path = "/escolherContexto.jsp") })
 public class PrepararEscolherContextoFormAction extends FenixContextAction {
 
     @Override

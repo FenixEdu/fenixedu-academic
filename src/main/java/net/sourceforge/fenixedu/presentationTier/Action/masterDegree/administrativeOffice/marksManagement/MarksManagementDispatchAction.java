@@ -28,11 +28,22 @@ import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
-/*
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+/**
  * 
  * @author Fernanda Quitério 17/Fev/2004
- *  
+ * 
  */
+@Mapping(path = "/marksManagement", module = "masterDegreeAdministrativeOffice",
+        input = "/marksManagement/chooseCurricularCourseToManageMarks.jsp")
+@Forwards(value = { @Forward(name = "showMasterDegrees", path = "/marksManagement/chooseMasterDegreeToManageMarks.jsp"),
+        @Forward(name = "showDegreeCurricularPlans", path = "/marksManagement/chooseDegreeCurricularPlanToManageMarks.jsp"),
+        @Forward(name = "showCurricularCourses", path = "/marksManagement/showCurricularCoursesToManageMarks.jsp"),
+        @Forward(name = "NotAuthorized", path = "/student/notAuthorized.jsp"),
+        @Forward(name = "showMarksManagementMenu", path = "/marksManagement/showMarksManagementMenu.jsp") })
 public class MarksManagementDispatchAction extends FenixDispatchAction {
     public ActionForward prepareChooseMasterDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {

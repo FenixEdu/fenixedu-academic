@@ -22,12 +22,27 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  * 
  *         This is the Action to choose, visualize and edit a Guide.
  * 
  */
+
+@Mapping(path = "/chooseGuideDispatchAction", module = "masterDegreeAdministrativeOffice", input = "/guide/chooseGuide.jsp",
+        attribute = "chooseGuideForm", formBean = "chooseGuideForm")
+@Forwards(value = { @Forward(name = "PrepareReady", path = "/guide/chooseGuide.jsp"),
+        @Forward(name = "ActionReady", path = "/guide/visualizeGuide.jsp"),
+        @Forward(name = "ShowVersionList", path = "/guide/chooseVersionPage.jsp") })
+@Exceptions(value = { @ExceptionHandling(key = "resources.Action.exceptions.NonExistingActionException",
+        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
+        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class) })
 public class ChooseGuideDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareChoose(ActionMapping mapping, ActionForm form, HttpServletRequest request,
