@@ -1971,7 +1971,8 @@ public class Person extends Person_Base {
             final boolean withInstallments) {
         final Set<Event> result = new HashSet<Event>();
 
-        for (final Event event : getEventsFromType(eventClass)) {
+        Set<Event> events = getEventsFromType(eventClass);
+        for (final Event event : events) {
             if (event.isOpen() && event.hasInstallments() == withInstallments
                     && isPayableOnAnyOfAdministrativeOffices(Collections.singleton(administrativeOffice), event)) {
                 result.add(event);
@@ -2024,7 +2025,8 @@ public class Person extends Person_Base {
 
     public List<Event> getPayedEvents(final Class eventClass) {
         final List<Event> result = new ArrayList<Event>();
-        for (final Event event : getEventsFromType(eventClass)) {
+        Set<Event> events = getEventsFromType(eventClass);
+        for (final Event event : events) {
             if (event.isClosed()) {
                 result.add(event);
             }
@@ -2086,7 +2088,8 @@ public class Person extends Person_Base {
 
     public Set<Entry> getPayments(final Class eventClass) {
         final Set<Entry> result = new HashSet<Entry>();
-        for (final Event event : getEventsFromType(eventClass)) {
+        Set<Event> events = getEventsFromType(eventClass);
+        for (final Event event : events) {
             if (!event.isCancelled()) {
                 result.addAll(event.getPositiveEntries());
             }
