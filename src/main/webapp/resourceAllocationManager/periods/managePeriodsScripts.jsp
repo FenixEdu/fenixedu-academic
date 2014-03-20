@@ -1,10 +1,3 @@
-<!--[if lt IE 9]>
-	<script>
-		document.createElement('header');
-		document.createElement('section');
-	</script>
-<![endif]-->
-
 <style>
 
 /*	Filipe Varela / keoshi.com
@@ -13,26 +6,8 @@
 
 /* Typography */
 
-header, nav, section, article, aside, footer {
-	display:block;
-}
-
-#container {
-	font: 13px/1.6 'Helvetica Neue', Helvetica, Arial, sans-serif;
-	color: #333;
-}
-
-h1 {
-	font-size: 1.8em;
-}
-
-h2 {
-	font-size: 1.4em;
-}
-
-h2 span {
-	color: #888;
-	padding-left: 10px;
+.all {
+	min-height: 750px;
 }
 
 .symbol,#period ul li a {
@@ -41,51 +16,16 @@ h2 span {
 }
 
 /* General */
-a {
-	color: #105c93;
-}
 
 ul {
 	list-style: none;
 }
 
 /* Structure */
-#main {
-	width: 65%;
-	position: relative;
-}
-
-#all {
-	position: relative;
-	height: 100%;
-}
 
 #sidebar {
-	width: 32%;
-	margin-left: 2%;
-	position:absolute;
-	top:0;
-	right:0;
-	max-height: 650px;
-	min-height: 70px;
-	overflow-y: auto;
-	overflow-x: hidden;
-}
-
-#cenas  {
-	position: fixed;
-	top: 240px;
-	right: 2%;
-	width: 28%;
-	bottom: 100px;
-
-
-	width: 32%;
-	margin-left: 2%;
-	position:absolute;
-	top:0;
-	right:0;
-	max-height: 100%;
+	margin-right: 10px;
+	max-height: 75%;
 	min-height: 70px;
 	overflow-y: auto;
 	overflow-x: hidden;
@@ -464,44 +404,6 @@ ul.courses-list {
 		rgba(255, 255, 255, 0.6) inset;
 }
 
-#sidebar h3 {
-	width: 100%;
-	color: #666;
-	font-size: 1.1em;
-	font-weight: bold;
-	text-decoration: none;
-	display: inline-block;
-	padding: 8px 0;
-	text-indent: 5px;
-	border-top: 1px solid #ccc;
-	background-image: linear-gradient(bottom, rgb(234, 234, 234) 100%,
-		rgb(221, 221, 221) 0% );
-	background-image: -o-linear-gradient(bottom, rgb(234, 234, 234) 100%,
-		rgb(221, 221, 221) 0% );
-	background-image: -moz-linear-gradient(bottom, rgb(234, 234, 234) 100%,
-		rgb(221, 221, 221) 0% );
-	background-image: -webkit-linear-gradient(bottom, rgb(234, 234, 234)
-		100%, rgb(221, 221, 221) 0% );
-	background-image: -ms-linear-gradient(bottom, rgb(234, 234, 234) 100%,
-		rgb(221, 221, 221) 0% );
-	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(1, rgb(234,
-		234, 234) ), color-stop(0, rgb(221, 221, 221) ) );
-	text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.5);
-	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.08), 0px 1px 1px 0px
-		rgba(255, 255, 255, 0.6) inset;
-}
-
-#sidebar h3:first-child {
-	border-bottom: 1px solid #ccc;
-	border-top-left-radius: 4px;
-	border-top-right-radius: 4px;
-}
-
-#sidebar h3:last-child {
-	border-bottom-left-radius: 4px;
-	border-bottom-right-radius: 4px;
-}
-
 #sidebar ul {
 	margin: 10px 0 16px;
 	text-indent: 14px;
@@ -554,9 +456,7 @@ a,input,.symbol {
 
 </style>
 
-<script src="../javaScript/jquery/jquery-1.8.0.min.js"></script>
-
-<script src="../javaScript/jquery/jquery-ui-1.8.23.min.js"></script>
+<script src="${pageContext.request.contextPath}/javaScript/jquery/jquery-ui.js"></script>
 
 <script type="text/javascript">
 
@@ -604,7 +504,7 @@ a,input,.symbol {
 				'<li><div id="oid" style="display:none">' + oid + '</div>'
 				+ '<div id="years" style="display:none">' + availableYears + '</div>'
 				+ name + ' <span>- ' +
-				years + '</span><img src="../images/iconRemoveOff.png" alt="remove"/>');
+				years + '</span><img src="${pageContext.request.contextPath}/images/iconRemoveOff.png" alt="remove"/>');
 		var size = $(this).children('.courses-list').children().size();
 		updateSize(this, size);
 		$(this).find(".courses-list li img").first().click(removeFunction);
@@ -767,7 +667,7 @@ a,input,.symbol {
 	function duplicatePeriodFunction(element, id) {
 		$("#duplicate-dialog").find("input[value=" + selectedTypeValue[id] + "]").attr('disabled',true);
 		$("#duplicate-dialog").find("input[name=toDuplicateId]").val(id);
-		$("#duplicate-dialog").dialog("open");
+		$('#duplicate-dialog').modal();
 	}
 	
 	function getDocHeight() {
@@ -812,11 +712,6 @@ a,input,.symbol {
 					start: function() {
 						$(this).addClass("course-dragging");
 					}
-				});
-
-				$("#cursos_acc").accordion({
-					icons : false,
-					autoHeight : false
 				});
 
 				$("#periods-classes").change(function() {
@@ -910,23 +805,6 @@ a,input,.symbol {
 				$(".add-date").click(addDateFunction);
 				
 				$(".remove-date").click(removeDateFunction);
-								
-				$("#duplicate-dialog").dialog({
-					autoOpen: false,
-					resizable: false,
-					modal: true,
-					width: '500px',
-					buttons: {
-						"Cancelar": function() {
-							$("#duplicate-dialog").find("input").attr('disabled',false);
-							$("#duplicate-dialog").find("input").attr('checked',false);
-							$(this).dialog("close");
-						},
-						"Duplicar": function() {
-							$(this).find("form").submit();
-						}
-					}
-				});
 				
 				$(".saveButton").hide();
 				
@@ -934,20 +812,6 @@ a,input,.symbol {
 				
 				if($(".newObject").length > 0)
 					showLeaveWarning();
-				
-				$( "#changeYear-dialog" ).dialog({
-					modal: true,
-					autoOpen: false,
-					buttons: {
-						"Cancelar": function() {
-							$( this ).dialog( "close" );
-						}
-					}
-				});
-				
-				$("#changeYear-link").click(function() {
-					$( "#changeYear-dialog" ).dialog( "open" );
-				});
 				
 			});
 

@@ -69,7 +69,7 @@
 	</p>
 
 	<%
-		final Lesson lesson = ((InfoLesson) request.getAttribute("lesson")).getLesson();
+		final Lesson lesson = (Lesson) request.getAttribute("lesson");
 		final ExecutionCourse executionCourse = lesson.getExecutionCourse();
 		final Set<ExecutionDegree> executionDegrees = executionCourse.getExecutionDegrees();
 		final YearMonthDay firstPossibleLessonDay = executionCourse.getMaxLessonsPeriod().getLeft();
@@ -153,7 +153,7 @@
 		        	<bean:message key="property.capacity"/>
 		        </th>
 			</tr>
-			<logic:iterate id="olesson" name="lesson" property="lesson.shift.associatedLessonsSet">
+			<logic:iterate id="olesson" name="lesson" property="shift.associatedLessonsSet">
 				<tr <% if (olesson == lesson) { %> class="selectedLesson" <% } else { %> class="notSelectedLesson" <% } %>>
 					<td>
 	<%

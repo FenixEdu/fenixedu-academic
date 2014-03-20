@@ -256,11 +256,6 @@
 
 <!-- Access Groups Management -->
 
-<schema name="ViewPersonToListAccessGroupsInResourceAllocationManagement" type="net.sourceforge.fenixedu.domain.Person" bundle="SOP_RESOURCES">
-	<slot name="name" key="label.access.group.person.name"/>
-	<slot name="username" key="label.access.group.person.username"/>	
-</schema>	
-
 <schema name="academicIntervalSelectionBean.choosePostBack"
 	type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.ContextSelectionBean"
 	bundle="SOP_RESOURCES">

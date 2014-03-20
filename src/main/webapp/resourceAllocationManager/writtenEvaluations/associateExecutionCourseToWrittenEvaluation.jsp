@@ -3,6 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.exams.MainExamsDA" />
+
 <f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ResourceAllocationManagerResources" var="bundleSOP"/>
@@ -49,7 +51,6 @@
 							onchange="this.form.submit();" valueChangeListener="#{SOPEvaluationManagementBackingBean.onExecutionDegreeChanged}">
 				<f:selectItems value="#{SOPEvaluationManagementBackingBean.executionDegrees}"/>
 			</fc:selectOneMenu>
-			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 		<h:outputText value="</td></tr>" escape="false"/>
 <%--
 			<fc:selectOneMenu value="#{SOPEvaluationManagementBackingBean.executionDegreeID}"
@@ -65,7 +66,6 @@
 							onchange="this.form.submit();" valueChangeListener="#{SOPEvaluationManagementBackingBean.onCurricularYearChanged}">
 				<f:selectItems value="#{SOPEvaluationManagementBackingBean.curricularYearItems}"/>
 			</fc:selectOneMenu>
-			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID3' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 		<h:outputText value="</td></tr>" escape="false"/>
 <%--
 			<fc:selectOneMenu value="#{SOPEvaluationManagementBackingBean.curricularYearID}"
@@ -81,7 +81,6 @@
 							onchange="this.form.submit();" valueChangeListener="#{SOPEvaluationManagementBackingBean.onExecutionCourseChanged}">
 				<f:selectItems value="#{SOPEvaluationManagementBackingBean.executionCoursesItems}"/>
 			</fc:selectOneMenu>
-			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID5' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 		<h:outputText value="</td></tr>" escape="false"/>
 <%--
 			<fc:selectOneMenu value="#{SOPEvaluationManagementBackingBean.executionCourseID}" 

@@ -1,11 +1,18 @@
 <%@ page language="java" %>
+<%@page import="net.sourceforge.fenixedu.domain.Instalation"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt"%>
 
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%><html:xhtml/>
-
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link href="<%= request.getContextPath() %>/CSS/dotist_print_new.css" rel="stylesheet" media="screen" type="text/css" />
+	<link href="<%= request.getContextPath() %>/CSS/dotist_print_new.css" rel="stylesheet" media="print" type="text/css" />
+	<title><%=Instalation.getInstance().getInstalationName() %></title>
+</head>
+<body>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
 <div style="font-family: Verdana, sans-serif; font-size: 80%;">
@@ -138,3 +145,5 @@
 
 </logic:present>
 </div>
+</body>
+</html>

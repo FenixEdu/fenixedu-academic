@@ -8,7 +8,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <html:xhtml/>
 
-<em><bean:message key="link.writtenEvaluationManagement" bundle="SOP_RESOURCES"/></em>
 <h2><bean:message key="link.courses.management" bundle="SOP_RESOURCES"/></h2>
 
 <logic:notEmpty name="courseLoadBean">

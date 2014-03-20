@@ -4,11 +4,23 @@
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%><html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
+<%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<em><bean:message key="link.writtenEvaluationManagement"/></em>
 <h2><bean:message key="link.exams.searchWrittenEvaluationsByDegreeAndYear"/></h2>
 
 <html:form action="/searchWrittenEvaluationsByDegreeAndYear" focus="executionDegreeID">
+
+	<fr:edit name="bean">
+		<fr:schema type="org.fenixedu.bennu.core.util.VariantBean" bundle="SOP_RESOURCES">
+			<fr:slot name="object" layout="menu-select-postback" key="property.academicInterval">
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.AcademicIntervalProvider" />
+				<fr:property name="format" value="\${pathName}" />
+				<fr:property name="nullOptionHidden" value="true" />
+			</fr:slot>
+		</fr:schema>
+		<fr:destination name="postback" path="/searchWrittenEvaluationsByDegreeAndYear.do?method=prepare" />
+		<fr:layout name="flow" />
+	</fr:edit>
 
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="choose"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>

@@ -1,12 +1,11 @@
 /*
  * Created on 2003/07/28
- *  
+ *
  */
 package net.sourceforge.fenixedu.presentationTier.Action.utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -20,19 +19,15 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDeg
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriodByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadClassByOID;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadExecutionDegreesByExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadLessonByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadShiftByOID;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
-import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.ContextSelectionBean;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -44,11 +39,7 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
 import org.apache.struts.util.LabelValueBean;
-import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.security.Authenticate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,7 +49,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- * 
+ *
  */
 public class ContextUtils {
 
@@ -153,68 +144,6 @@ public class ContextUtils {
             }
 
         }
-    }
-
-    /**
-     * @param request
-     */
-    public static void setCurricularYearsContext(HttpServletRequest request) {
-
-        String curricularYears_1 = (String) request.getAttribute(PresentationConstants.CURRICULAR_YEARS_1);
-        String curricularYears_2 = (String) request.getAttribute(PresentationConstants.CURRICULAR_YEARS_2);
-        String curricularYears_3 = (String) request.getAttribute(PresentationConstants.CURRICULAR_YEARS_3);
-        String curricularYears_4 = (String) request.getAttribute(PresentationConstants.CURRICULAR_YEARS_4);
-        String curricularYears_5 = (String) request.getAttribute(PresentationConstants.CURRICULAR_YEARS_5);
-        if (curricularYears_1 == null) {
-            curricularYears_1 = request.getParameter(PresentationConstants.CURRICULAR_YEARS_1);
-        }
-        if (curricularYears_2 == null) {
-            curricularYears_2 = request.getParameter(PresentationConstants.CURRICULAR_YEARS_2);
-        }
-        if (curricularYears_3 == null) {
-            curricularYears_3 = request.getParameter(PresentationConstants.CURRICULAR_YEARS_3);
-        }
-        if (curricularYears_4 == null) {
-            curricularYears_4 = request.getParameter(PresentationConstants.CURRICULAR_YEARS_4);
-        }
-        if (curricularYears_5 == null) {
-            curricularYears_5 = request.getParameter(PresentationConstants.CURRICULAR_YEARS_5);
-        }
-
-        List curricularYears = new ArrayList();
-
-        if (curricularYears_1 != null) {
-            try {
-                curricularYears.add(new Integer(curricularYears_1));
-            } catch (NumberFormatException ex) {
-            }
-        }
-        if (curricularYears_2 != null) {
-            try {
-                curricularYears.add(new Integer(curricularYears_2));
-            } catch (NumberFormatException ex) {
-            }
-        }
-        if (curricularYears_3 != null) {
-            try {
-                curricularYears.add(new Integer(curricularYears_3));
-            } catch (NumberFormatException ex) {
-            }
-        }
-        if (curricularYears_4 != null) {
-            try {
-                curricularYears.add(new Integer(curricularYears_4));
-            } catch (NumberFormatException ex) {
-            }
-        }
-        if (curricularYears_5 != null) {
-            try {
-                curricularYears.add(new Integer(curricularYears_5));
-            } catch (NumberFormatException ex) {
-            }
-        }
-
-        request.setAttribute(PresentationConstants.CURRICULAR_YEARS_LIST, curricularYears);
     }
 
     /**
@@ -378,23 +307,6 @@ public class ContextUtils {
         return false;
     }
 
-    // --------------------------------------------------------------------------
-    // -----
-    // Read from request utils
-    // --------------------------------------------------------------------------
-    // -----
-    private static String readRequestValue(HttpServletRequest request, String name) {
-        String obj = null;
-        if (((String) request.getAttribute(name)) != null && !((String) request.getAttribute(name)).equals("")) {
-            obj = (String) request.getAttribute(name);
-        } else if (request.getParameter(name) != null && !request.getParameter(name).equals("")
-                && !request.getParameter(name).equals("null")) {
-            obj = request.getParameter(name);
-        }
-
-        return obj;
-    }
-
     public static List getLabelListOfCurricularYears() {
         List labelListOfCurricularYears = new ArrayList();
         labelListOfCurricularYears.add(new LabelValueBean("escolher", ""));
@@ -415,103 +327,6 @@ public class ContextUtils {
         labelListOfCurricularYears.add(new LabelValueBean("4 º", "4"));
         labelListOfCurricularYears.add(new LabelValueBean("5 º", "5"));
         return labelListOfCurricularYears;
-    }
-
-    public static List getLabelListOfExecutionDegrees(List executionDegreeList) {
-        List labelListOfExecutionDegrees =
-                (List) CollectionUtils.collect(executionDegreeList, new EXECUTION_DEGREE_2_EXECUTION_DEGREE_LABEL());
-        labelListOfExecutionDegrees.add(0, new LabelValueBean("escolher", ""));
-        return labelListOfExecutionDegrees;
-    }
-
-    private static class EXECUTION_DEGREE_2_EXECUTION_DEGREE_LABEL implements Transformer {
-
-        /*
-         * (non-Javadoc)
-         * 
-         * @see
-         * org.apache.commons.collections.Transformer#transform(java.lang.Object
-         * )
-         */
-        @Override
-        public Object transform(Object arg0) {
-            InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) arg0;
-
-            String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
-
-            name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType().toString() + " de " + name;
-
-            return new LabelValueBean(name, infoExecutionDegree.getExternalId().toString());
-        }
-    }
-
-    /***************************************************************************
-     * Novos metodos para os exames
-     */
-
-    public static List createCurricularYearList() {
-        List anosCurriculares = new ArrayList();
-
-        anosCurriculares.add(new LabelValueBean("1 º", "1"));
-        anosCurriculares.add(new LabelValueBean("2 º", "2"));
-        anosCurriculares.add(new LabelValueBean("3 º", "3"));
-        anosCurriculares.add(new LabelValueBean("4 º", "4"));
-        anosCurriculares.add(new LabelValueBean("5 º", "5"));
-
-        return anosCurriculares;
-    }
-
-    public static List createExecutionDegreeList(HttpServletRequest request) throws FenixServiceException {
-        User userView = Authenticate.getUser();
-
-        InfoExecutionPeriod infoExecutionPeriod =
-                (InfoExecutionPeriod) request.getAttribute(PresentationConstants.EXECUTION_PERIOD);
-
-        /* Cria o form bean com as licenciaturas em execucao. */
-
-        List executionDegreeList = ReadExecutionDegreesByExecutionYear.run(infoExecutionPeriod.getInfoExecutionYear());
-
-        List licenciaturas = new ArrayList();
-
-        Collections.sort(executionDegreeList, new ComparatorByNameForInfoExecutionDegree());
-
-        Iterator iterator = executionDegreeList.iterator();
-
-        // sint index = 0;
-        while (iterator.hasNext()) {
-            InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) iterator.next();
-            String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();
-
-            name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getDegreeType().toString() + " em " + name;
-
-            name +=
-                    duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"
-                            + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
-
-            licenciaturas.add(new LabelValueBean(name, infoExecutionDegree.getExternalId().toString()));
-        }
-
-        return licenciaturas;
-    }
-
-    /**
-     * Method existencesOfInfoDegree.
-     * 
-     * @param executionDegreeList
-     * @param infoExecutionDegree
-     * @return int
-     */
-    private static boolean duplicateInfoDegree(List<InfoExecutionDegree> executionDegreeList,
-            InfoExecutionDegree infoExecutionDegree) {
-        final InfoDegree infoDegree = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree();
-        for (final InfoExecutionDegree otherInfoExecutionDegree : executionDegreeList) {
-            final InfoDegreeCurricularPlan infoDegreeCurricularPlan = otherInfoExecutionDegree.getInfoDegreeCurricularPlan();
-            final InfoDegree otherInfoDegree = infoDegreeCurricularPlan.getInfoDegree();
-            if (infoDegree.equals(otherInfoDegree) && !infoExecutionDegree.equals(otherInfoExecutionDegree)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public static void setContextSelectionBean(HttpServletRequest request, Object renderedObject) {

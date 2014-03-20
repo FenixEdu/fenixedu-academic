@@ -7,7 +7,6 @@
 <%@page import="net.sourceforge.fenixedu.domain.ShiftType"%>
 <html:xhtml/>
 
-<em><bean:message key="link.writtenEvaluationManagement" bundle="SOP_RESOURCES"/></em>
 <h2><bean:message key="label.hours.load.total" bundle="SOP_RESOURCES"/></h2>
 
 <logic:present name="infoExecutionCourse">

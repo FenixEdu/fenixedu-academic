@@ -8,15 +8,13 @@
 <%@page
 	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%><html:xhtml />
 
-<em><bean:message key="title.resourceAllocationManager.management"/></em>
 <h2><bean:message key="label.selected.space.written.evaluations"/></h2>
 <p><bean:message key="label.selected.space.written.evaluations.information"/></p>
 
 <p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
-<fr:form action="/mainExamsNew.do?method=choose">
-	<fr:edit schema="academicIntervalSelectionBean.choose"
-		name="<%=PresentationConstants.CONTEXT_SELECTION_BEAN%>">
+<fr:form action="/mainExams.do?method=prepare">
+	<fr:edit schema="academicIntervalSelectionBean.choose" name="bean">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />
@@ -29,20 +27,21 @@
 </fr:form>
 <br />
 
-<html:form action="/publishExams">
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method"
-		value="switchPublishedState" />
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
+<html:link styleClass="btn btn-default" page="/writtenEvaluations/writtenEvaluationCalendar.faces?academicInterval=${bean.academicInterval.resumedRepresentationInStringFormat}">
+	<bean:message key="link.writtenEvaluation.map" />
+</html:link>
+
+<fr:form action="/publishExams.do">
 	<html:hidden alt="<%=PresentationConstants.ACADEMIC_INTERVAL%>"
 		property="<%=PresentationConstants.ACADEMIC_INTERVAL%>"
-		value="<%=pageContext.findAttribute(PresentationConstants.ACADEMIC_INTERVAL).toString()%>" />
+		value="${bean.academicInterval.resumedRepresentationInStringFormat}" />
 
 	<p><bean:message key="publish.exams.map" /> <html:submit bundle="HTMLALT_RESOURCES"
 		altKey="submit.submit" styleClass="inputbutton">
 		<bean:message key="label.change.published.state" />
 	</html:submit></p>
 
-	<bean:define id="executionSemester" name="executionSemester" type="net.sourceforge.fenixedu.domain.ExecutionSemester"/>
+	<bean:define id="executionSemester" name="executionInterval" type="net.sourceforge.fenixedu.domain.ExecutionSemester"/>
 	<logic:present name="executionDegrees">
 		<table class="tstyle4">
 			<tr>
@@ -67,4 +66,4 @@
 		</table>
 	</logic:present>
 
-</html:form>
+</fr:form>

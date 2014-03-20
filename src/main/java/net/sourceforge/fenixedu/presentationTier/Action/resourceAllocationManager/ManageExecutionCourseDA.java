@@ -33,12 +33,10 @@ import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- * 
+ *
  */
-
-@Mapping(path = "/manageExecutionCourse", module = "resourceAllocationManager",
-        input = "/manageExecutionCourse.do?method=prepare&page=0", formBean = "editExecutionCourseForm")
-@Forwards(value = { @Forward(name = "ManageExecutionCourse", path = "/manageExecutionCourse.jsp", useTile = false) })
+@Mapping(path = "/manageExecutionCourse", module = "resourceAllocationManager", functionality = ManageExecutionCoursesDA.class)
+@Forwards(@Forward(name = "ManageExecutionCourse", path = "/resourceAllocationManager/manageExecutionCourse_bd.jsp"))
 public class ManageExecutionCourseDA extends FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

@@ -8,8 +8,7 @@
 <%@page
     import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%><html:xhtml />
 
-<em><bean:message key="title.resourceAllocationManager.management" /></em>
-<h2><bean:message key="title.manage.schedule" /></h2>
+<h2><bean:message key="title.manage.schedule" /> <span class="small">${context_selection_bean.academicInterval.pathName}</span></h2>
 
 <p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 

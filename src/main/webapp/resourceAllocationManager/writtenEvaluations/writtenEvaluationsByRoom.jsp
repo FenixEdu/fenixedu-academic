@@ -4,6 +4,8 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="c"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.RAMApplication$WrittenEvaluationsByRoom" />
+
 <f:view>
 			
 	<script type="text/javascript">
@@ -22,7 +24,6 @@
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ResourceAllocationManagerResources" var="bundle"/>
 	
-	<h:outputFormat value="<em class='printhidden'>#{bundle['link.writtenEvaluationManagement']}</em>" escape="false"/>
 	<h:outputFormat value="<h2 class='printhidden'>#{bundle['link.writtenEvaluation.by.room']}</h2>" escape="false"/>
 				
 	<h:panelGroup rendered="#{writtenEvaluationsByRoom.roomsToDisplayMap == null}">	
@@ -31,9 +32,18 @@
 		
 		<h:form>
 			<h:outputText escape="false" value="<input alt='input.submittedForm' id='submittedForm' name='submittedForm' type='hidden' value='true'/>"/>
-			<h:outputText escape="false" value="<input alt='input.academicInterval' id='academicInterval' name='academicInterval' type='hidden' value='#{writtenEvaluationsByRoom.academicInterval}'/>"/>
 	
 			<h:outputText value="<table class='tstyle5 thlight thright thmiddle mtop05 mbottom05'>" escape="false"/>
+
+			<h:outputText value="<tr><th>" escape="false"/>
+				<h:outputText value="#{bundle['property.academicInterval']}:"/>
+			<h:outputText value="</th><td>" escape="false"/>
+				<h:selectOneMenu id="academicInterval" value="#{writtenEvaluationsByRoom.academicInterval}">
+					<f:selectItems value="#{writtenEvaluationsByRoom.academicIntervals}"/>
+				</h:selectOneMenu>
+			<h:outputText value="</td></tr>" escape="false"/>
+	
+
 			<h:outputText value="<tr><th>" escape="false"/>
 				<h:outputText value="#{bundle['property.room.name']}:"/>
 			<h:outputText value="</th><td>" escape="false"/>
@@ -200,7 +210,7 @@
 		 	<fc:fenixCalendar 
 			 		begin="#{writtenEvaluationsByRoom.calendarBegin}" 
 		 			end="#{writtenEvaluationsByRoom.calendarEnd}"
-					editLinkPage="editWrittenTest.faces?contentContextPath_PATH=/gestao-de-recursos/gestao-de-recursos"
+					editLinkPage="#{writtenEvaluationsByRoom.request.contextPath}/resourceAllocationManager/writtenEvaluations/editWrittenTest.faces"
 		 			editLinkParameters="#{calendarLinks.value}"
 		 			extraLines="true"/>
 		</h:panelGroup>

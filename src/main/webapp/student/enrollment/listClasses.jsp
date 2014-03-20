@@ -6,7 +6,7 @@
 <c:set var="registrationOID" value="${registration.externalId}" />
 <c:set var="hasExecutionCourse" value="${!empty executionCourse}" />
 
-<h4 class="text-center"><bean:message key="link.shift.enrolment" /></h4>
+<h4 class="text-center"><bean:message key="link.shift.enrolment" bundle="STUDENT_RESOURCES" /></h4>
 
 <c:if test="${hasExecutionCourse}">
 	<h6 class="text-center">
@@ -38,6 +38,6 @@
 
 <div class="text-center">
 	<html:link styleClass="btn btn-default" page="/studentShiftEnrollmentManager.do?method=start&registrationOID=${registrationOID}">
-		« <bean:message key="button.back" />
+		« <bean:message key="button.back" bundle="STUDENT_RESOURCES" />
 	</html:link>
 </div>

@@ -9,9 +9,9 @@
 <h2><bean:message key="link.periods" bundle="SOP_RESOURCES"/></h2>
 
 <div class="simpleblock3 mtop2">
-	<fr:form action="/periods.do?method=firstPage">
+	<fr:form action="/showPeriods.do?method=firstPage">
 		<fr:edit id="executionSemesterContextBean" name="contextBean">
-			<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.PeriodsDA$ContextBean" bundle="APPLICATION_RESOURCES">
+			<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ViewPeriodsAction$ContextBean" bundle="APPLICATION_RESOURCES">
 				<fr:slot name="executionSemester" layout="menu-select-postback" key="label.executionPeriod">
 					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionSemestersProvider"/>
 					<fr:property name="format" value="${semester} - ${executionYear.year}" />
@@ -36,9 +36,9 @@
 </div>
 
 <div class="simpleblock3 mtop2">
-	<fr:form action="/periods.do?method=firstPage">
+	<fr:form action="/showPeriods.do?method=firstPage">
 		<fr:edit id="executionDegreeContextBean" name="contextBean">
-			<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.PeriodsDA$ContextBean" bundle="APPLICATION_RESOURCES">
+			<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ViewPeriodsAction$ContextBean" bundle="APPLICATION_RESOURCES">
 				<fr:slot name="executionDegree" layout="menu-select-postback" key="label.executionDegree">
 					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionDegreeForExecutionPeriodProvider"/>
 					<fr:property name="format" value="${degree.presentationName}" />

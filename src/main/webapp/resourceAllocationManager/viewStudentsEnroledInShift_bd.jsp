@@ -6,41 +6,15 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt" %>
 
-<script language="Javascript" type="text/javascript">
-<!--
+<jsp:include page="/commons/contextShiftAndExecutionCourseAndExecutionDegreeAndCurricularYear.jsp" />
 
-var select = false;
-
-function invertSelect(){
-	if ( select == false ) { 
-		select = true; 
-	} else { 
-		select = false;
-	}
-	if(document.forms[0].studentIDs.type=='checkbox'){
-		var e = document.forms[0].studentIDs;
-		e.checked = select;
-	}else{
-		for (var i=0; i<document.forms[0].studentIDs.length; i++){
-			var e = document.forms[0].studentIDs[i];
-			e.checked = select;
-		}
-	}
-}
-// -->
-</script>
-
-<em><bean:message key="title.resourceAllocationManager.management"/></em>
-<h2><bean:message key="link.manage.turnos"/></h2>
-
-<p class="mbottom05">O curso seleccionado &eacute;:</p>
-<strong><jsp:include page="context.jsp"/></strong>
+<h2><bean:message key="link.manage.turnos"/> <span class="small">${executionDegree.executionDegree.degreeCurricularPlan.name}</span></h2>
 
 <bean:define id="shiftName" name="<%= PresentationConstants.SHIFT %>" property="nome"/>
 <bean:define id="shiftId" name="<%= PresentationConstants.SHIFT %>" property="externalId"/>
 <bean:define id="shiftType" name="<%= PresentationConstants.SHIFT %>" property="shiftTypesIntegerComparator"/>
 
-<h3>Alunos Inscritos</h3>
+<h3>Alunos Inscritos <span class="small">${shift.nome}</span></h3>
 
 <p>
 	<logic:present name="<%= PresentationConstants.EXECUTION_COURSE %>" scope="request">
@@ -48,13 +22,10 @@ function invertSelect(){
 	</logic:present>
 </p>
 
-<p>Turno: <bean:write name="shiftName"/></p>
-
-
 <logic:present name="<%= PresentationConstants.STUDENT_LIST %>" scope="request">
-<html:form action="/manageShiftStudents">
-	<table>
-		<tr>
+<html:form styleClass="col-lg-8" action="/manageShift">
+	<table class="table">
+		<thead>
 			<th>
 			</th>
 			<th>
@@ -71,7 +42,7 @@ function invertSelect(){
 			</th>
 			<th>
 			</th>
-		</tr>
+		</thead>
 		<logic:iterate id="shiftEnrolment" name="shift" property="shift.shiftEnrolmentsOrderedByDate">
 			<bean:define id="student" name="shiftEnrolment" property="registration"/>
 			<tr>

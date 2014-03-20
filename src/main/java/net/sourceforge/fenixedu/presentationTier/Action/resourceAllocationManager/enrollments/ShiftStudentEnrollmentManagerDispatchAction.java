@@ -7,6 +7,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter.CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan;
+import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter.InquiriesNotAnswered;
+import net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter.OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.ReadShiftsToEnroll;
 import net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift.UnEnrollStudentFromShift;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -23,6 +26,8 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ExecutionPeriodDA;
+import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
 import net.sourceforge.fenixedu.util.ExecutionDegreesFormat;
 
 import org.apache.commons.lang.StringUtils;
@@ -39,32 +44,25 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "resourceAllocationManager", path = "/studentShiftEnrollmentManager",
-        input = "/studentShiftEnrollmentManager.do?method=prepare", attribute = "studentShiftEnrollmentForm",
-        formBean = "studentShiftEnrollmentForm", scope = "request", validate = false, parameter = "method")
-@Forwards(value = {
-        @Forward(name = "showEnrollmentPage", path = "/studentShiftEnrollmentManagerLoockup.do?method=Escolher Turnos"),
+        input = "/studentShiftEnrollmentManager.do?method=prepare", formBean = "studentShiftEnrollmentForm",
+        functionality = ExecutionPeriodDA.class, validate = false)
+@Forwards({
+        @Forward(name = "showEnrollmentPage",
+                path = "/resourceAllocationManager/studentShiftEnrollmentManagerLookup.do?method=proceedToShiftEnrolment"),
         @Forward(name = "chooseRegistration", path = "/student/enrollment/shifts/chooseRegistration.jsp"),
         @Forward(name = "showShiftsEnrollment", path = "/student/enrollment/showShiftsEnrollment.jsp"),
         @Forward(name = "selectCourses", path = "/student/showCoursesByDegree.jsp"),
         @Forward(name = "shiftEnrollmentCannotProceed", path = "/student/enrollment/bolonha/shiftEnrollmentCannotProceed.jsp"),
-        @Forward(name = "chooseStudent", path = "/chooseExecutionPeriod.do?method=prepare") })
-@Exceptions(
-        value = {
-                @ExceptionHandling(
-                        type = net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter.CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan.class,
-                        key = "error.message.CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan",
-                        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
-                        scope = "request"),
-                @ExceptionHandling(
-                        type = net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter.InquiriesNotAnswered.class,
-                        key = "message.student.cannotEnroll.inquiriesNotAnswered",
-                        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
-                        scope = "request"),
-                @ExceptionHandling(
-                        type = net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter.OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan.class,
-                        key = "error.message.OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan",
-                        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
-                        scope = "request") })
+        @Forward(name = "chooseStudent", path = "/resourceAllocationManager/chooseExecutionPeriod.do?method=prepare") })
+@Exceptions({
+        @ExceptionHandling(type = CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan.class,
+                key = "error.message.CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan",
+                handler = FenixErrorExceptionHandler.class, scope = "request"),
+        @ExceptionHandling(type = InquiriesNotAnswered.class, key = "message.student.cannotEnroll.inquiriesNotAnswered",
+                handler = FenixErrorExceptionHandler.class, scope = "request"),
+        @ExceptionHandling(type = OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan.class,
+                key = "error.message.OutsideOfCurrentClassesEnrolmentPeriodForDegreeCurricularPlan",
+                handler = FenixErrorExceptionHandler.class, scope = "request") })
 public class ShiftStudentEnrollmentManagerDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

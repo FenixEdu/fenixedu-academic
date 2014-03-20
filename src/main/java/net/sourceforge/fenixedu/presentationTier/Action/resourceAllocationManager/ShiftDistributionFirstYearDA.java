@@ -1,10 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.nio.charset.Charset;
@@ -30,14 +25,16 @@ import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.RAMApplication.RAMFirstYearShiftsApp;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,6 +45,8 @@ import pt.utl.ist.fenix.tools.util.FileUtils;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
+@StrutsFunctionality(app = RAMFirstYearShiftsApp.class, path = "shift-distribution",
+        titleKey = "link.firstTimeStudents.shiftDistribution", accessGroup = "nobody")
 @Mapping(path = "/shiftDistributionFirstYear", module = "resourceAllocationManager")
 @Forwards({
         @Forward(name = "shiftDistribution", path = "/resourceAllocationManager/firstTimeStudents/uploadAndDistributeShifts.jsp"),
@@ -64,7 +63,6 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
     private final int STUDENTS_PER_LINE = 20;
 
     private static final String COLUMN_SEPARATOR = "\t";
-    private static final String OUTPUT_FILENAME = "/shiftsInformation." + new LocalDate().toString() + ".csv";
     private static final String LINE_SEPARATOR = "\n";
 
     private static final String[] NO_VACANCY_DEGREE_CODES = { "9032", // Territorio
@@ -72,6 +70,7 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
             "9099" // Mestrado Ambiente
     };
 
+    @EntryPoint
     public ActionForward prepareShiftDistribution(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         request.setAttribute("fileBeanDistribution", new ShiftDistributionFileBean());
@@ -180,7 +179,7 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
             if (schoolClassDistribution.isDistributed()) {
                 schoolClassDistribution = getSchoolClassDistributionWithCapacity(schoolClassDistributions);
                 if (schoolClassDistribution == null) {
-                    //Not enough space in schoolClass to distribute students for 
+                    //Not enough space in schoolClass to distribute students for
                     //		    errorLog.add(new StringBuilder("Não há espaço suficiente na aula para distribuir os alunos de '").append(
                     //			    entry.getKey().getName()).append("'.").toString());
                     warningLog.add(new StringBuilder("\tInscritos ").append(numberOfEnroled).append(" alunos de '")
@@ -462,26 +461,6 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
         }
     }
 
-    private void writeCSV(Spreadsheet spreadsheet) {
-        BufferedOutputStream fileOutputStream = null;
-        try {
-            fileOutputStream = new BufferedOutputStream(new FileOutputStream(new File(OUTPUT_FILENAME)));
-            spreadsheet.exportToCSV(fileOutputStream, COLUMN_SEPARATOR, LINE_SEPARATOR);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (fileOutputStream != null) {
-                try {
-                    fileOutputStream.close();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-    }
-
     private Map<Shift, Map<DegreeCurricularPlan, Integer>> calculateStatistics(
             Map<Shift, List<GenericPair<DegreeCurricularPlan, Integer>>> distribution,
             Map<DegreeCurricularPlan, List<Integer>> abstractStudentNumbers) {
@@ -507,10 +486,10 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
     }
 
     private class SchoolClassDistributionInformation {
-        private SchoolClass schoolClass;
-        private String temporarySchoolClassName;
+        private final SchoolClass schoolClass;
+        private final String temporarySchoolClassName;
         private int maxCapacity;
-        private List<Shift> shiftsToEnrol;
+        private final List<Shift> shiftsToEnrol;
 
         SchoolClassDistributionInformation(SchoolClass schoolClass, String temporarySchoolClassName, int maxCapacity,
                 List<Shift> shifts) {

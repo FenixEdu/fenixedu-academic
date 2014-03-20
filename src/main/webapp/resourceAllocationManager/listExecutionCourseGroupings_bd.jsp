@@ -8,10 +8,9 @@
 <%@page
 	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%><html:xhtml />
 
-<em><bean:message key="label.manager.executionCourses" /></em>
 <h2><bean:message key="label.execution.course.groupings" bundle="SOP_RESOURCES" /></h2>
 
-<fr:form>
+<fr:form action="/listExecutionCourseGroupings.do?method=selectExecutionPeriod">
 	<fr:edit name="<%=PresentationConstants.CONTEXT_SELECTION_BEAN%>"
 		schema="academicInterval.chooseWithPostBack">
 		<fr:destination name="intervalPostBack"

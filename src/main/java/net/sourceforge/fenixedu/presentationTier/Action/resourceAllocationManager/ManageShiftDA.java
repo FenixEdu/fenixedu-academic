@@ -12,14 +12,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ChangeStudentsShift;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ChangeStudentsShift.UnableToTransferStudentsException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteLessons;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditarTurno;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerAlunosDeTurno;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.LerTurnosDeDisciplinaExecucao;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.RemoveClasses;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.RemoverTurno;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
+import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
@@ -27,11 +31,13 @@ import net.sourceforge.fenixedu.dataTransferObject.ShiftKey;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.RequestUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
+import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
@@ -44,6 +50,8 @@ import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -52,12 +60,26 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- * 
+ *
  */
-@Mapping(path = "/manageShiftMultipleItems", module = "resourceAllocationManager",
-        input = "/manageShift.do?method=prepareEditShift&page=0", formBean = "selectMultipleItemsForm")
-@Forwards(value = { @Forward(name = "EditShift", path = "/manageShift.do?method=prepareEditShift&page=0") })
+@Mapping(path = "/manageShift", module = "resourceAllocationManager", input = "/manageShift.do?method=prepareEditShift",
+        formBean = "createShiftForm", functionality = ExecutionPeriodDA.class)
+@Forwards({ @Forward(name = "EditShift", path = "/resourceAllocationManager/manageShift_bd.jsp"),
+        @Forward(name = "ViewStudentsEnroled", path = "/resourceAllocationManager/viewStudentsEnroledInShift_bd.jsp"),
+        @Forward(name = "continue", path = "/resourceAllocationManager/manageShift.do?method=prepareEditShift") })
+@Exceptions({
+        @ExceptionHandling(handler = FenixErrorExceptionHandler.class, type = ExistingActionException.class,
+                key = "resources.Action.exceptions.ExistingActionException", scope = "request"),
+        @ExceptionHandling(handler = FenixErrorExceptionHandler.class, type = UnableToTransferStudentsException.class,
+                key = "message.unable.to.transfer.students", scope = "request") })
 public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
+
+    @Mapping(path = "/manageShiftMultipleItems", module = "resourceAllocationManager",
+            input = "/manageShift.do?method=prepareEditShift", formBean = "selectMultipleItemsForm",
+            functionality = ExecutionPeriodDA.class)
+    @Forwards(@Forward(name = "EditShift", path = "/resourceAllocationManager/manageShift.do?method=prepareEditShift"))
+    public static class ManageShiftMultipleItemsDA extends ManageShiftDA {
+    }
 
     public ActionForward prepareEditShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
@@ -80,7 +102,7 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 
         editShiftForm.set("shiftTiposAula", selectedshiftTypesArray);
 
-        SessionUtils.getExecutionCourses(request);
+        getExecutionCourses(request);
 
         readAndSetShiftTypes(request, infoShiftToEdit.getInfoDisciplinaExecucao());
 
@@ -116,7 +138,7 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
             //editShiftForm.set("comment", "");
         }
 
-        SessionUtils.getExecutionCourses(request);
+        getExecutionCourses(request);
 
         readAndSetShiftTypes(request, infoExecutionCourse);
 
@@ -305,5 +327,27 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
             tiposAula.add(new LabelValueBean(bundle.getString(shiftType.getName()), shiftType.name()));
         }
         request.setAttribute("tiposAula", tiposAula);
+    }
+
+    static List getExecutionCourses(HttpServletRequest request) throws Exception {
+
+        List infoCourseList = new ArrayList();
+
+        // Ler Disciplinas em Execucao
+        InfoCurricularYear infoCurricularYear = (InfoCurricularYear) request.getAttribute(PresentationConstants.CURRICULAR_YEAR);
+        InfoExecutionDegree infoExecutionDegree =
+                (InfoExecutionDegree) request.getAttribute(PresentationConstants.EXECUTION_DEGREE);
+        AcademicInterval academicInterval =
+                AcademicInterval.getAcademicIntervalFromResumedString((String) request
+                        .getAttribute(PresentationConstants.ACADEMIC_INTERVAL));
+
+        infoCourseList =
+                LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular.run(infoExecutionDegree, academicInterval,
+                        infoCurricularYear.getYear());
+
+        request.setAttribute(PresentationConstants.EXECUTION_COURSE_LIST_KEY, infoCourseList);
+
+        return infoCourseList;
+
     }
 }

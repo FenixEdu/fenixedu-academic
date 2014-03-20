@@ -4,7 +4,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <html:xhtml/>
 
-<em><bean:message key="link.writtenEvaluationManagement" bundle="SOP_RESOURCES"/></em>
 <h2><bean:message key="property.shift.ocupation"/></h2>
 
 <bean:define id="infoExecutionCourse" name="infoExecutionCourseOccupancy" property="infoExecutionCourse" />

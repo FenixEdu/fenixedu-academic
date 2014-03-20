@@ -18,6 +18,8 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <html:xhtml/>
 
+<jsp:include page="/commons/contextLessonAndShiftAndExecutionCourseAndExecutionDegreeAndCurricularYear.jsp" />
+
 <style>
 <!--
 .selectedLesson {
@@ -30,13 +32,12 @@
 -->
 </style>
 
-<em><bean:message key="title.resourceAllocationManager.management"/></em>
 <h2><bean:message key="link.manage.turnos"/></h2>
 
 <jsp:include page="context.jsp"/>
 
 	<%
-		final Lesson lesson = ((InfoLesson) request.getAttribute("lesson")).getLesson();
+		final Lesson lesson = ((InfoLesson) pageContext.findAttribute("lesson")).getLesson();
 		final ExecutionCourse executionCourse = lesson.getExecutionCourse();
 		final Set<ExecutionDegree> executionDegrees = executionCourse.getExecutionDegrees();
 		final YearMonthDay firstPossibleLessonDay = executionCourse.getMaxLessonsPeriod().getLeft();

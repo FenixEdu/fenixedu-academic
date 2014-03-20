@@ -1,5 +1,6 @@
 <%@ page language="java" %>
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %><%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <html:xhtml/>
@@ -10,7 +11,6 @@
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.availableRoomsId" property="availableRoomsId" value="<%= room.getExternalId().toString() %>" />
 	</logic:iterate>
 
-	<em class="printhidden"><bean:message key="link.writtenEvaluationManagement"/></em>
 	<h2>Salas livres dia <bean:write name="<%=PresentationConstants.DATE%>"/>
  		das <bean:write name="<%=PresentationConstants.START_TIME%>"/>
  		às <bean:write name="<%=PresentationConstants.END_TIME%>"/></h2>

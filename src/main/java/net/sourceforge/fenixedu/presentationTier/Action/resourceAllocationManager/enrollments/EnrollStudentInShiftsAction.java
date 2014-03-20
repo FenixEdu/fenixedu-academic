@@ -12,12 +12,12 @@ import net.sourceforge.fenixedu.dataTransferObject.enrollment.shift.ShiftEnrollm
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ExecutionPeriodDA;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.bennu.core.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,10 +27,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "resourceAllocationManager", path = "/enrollStudentInShifts",
-        input = "/studentShiftEnrollmentManagerLoockup.do?method=Escolher Turnos&page=0",
-        attribute = "studentShiftEnrollmentForm", formBean = "studentShiftEnrollmentForm", scope = "request", validate = false)
-@Forwards(value = { @Forward(name = "enrollmentConfirmation",
-        path = "/studentShiftEnrollmentManagerLoockup.do?method=Escolher Turnos") })
+        input = "/studentShiftEnrollmentManagerLookup.do?method=proceedToShiftEnrolment",
+        formBean = "studentShiftEnrollmentForm", validate = false, functionality = ExecutionPeriodDA.class)
+@Forwards(@Forward(name = "enrollmentConfirmation",
+        path = "/resourceAllocationManager/studentShiftEnrollmentManagerLookup.do?method=proceedToShiftEnrolment"))
 public class EnrollStudentInShiftsAction extends FenixAction {
 
     private static final Logger logger = LoggerFactory.getLogger(EnrollStudentInShiftsAction.class);
@@ -38,8 +38,6 @@ public class EnrollStudentInShiftsAction extends FenixAction {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
-
-        final User userView = getUserView(request);
 
         final String shiftId = request.getParameter("shiftId");
         if (!StringUtils.isEmpty(request.getParameter("executionCourseID"))) {

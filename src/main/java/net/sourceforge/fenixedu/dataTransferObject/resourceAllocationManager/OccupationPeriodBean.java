@@ -350,6 +350,10 @@ public class OccupationPeriodBean implements Serializable, Comparable<Occupation
     @Atomic
     public OccupationPeriodBean duplicate(int newId, OccupationPeriodType newPeriodType) {
 
+        if (newPeriodType == null) {
+            throw new DomainException("label.occupation.period.duplicate.message");
+        }
+
         OccupationPeriodBean newBean = new OccupationPeriodBean(newId);
 
         newBean.setOccupationPeriodType(newPeriodType);

@@ -32,10 +32,10 @@ import pt.ist.fenixframework.FenixFramework;
 /**
  * @author tfc130
  */
-@Mapping(path = "/pesquisarSalas", module = "resourceAllocationManager", input = "/pesquisarSala.jsp",
-        attribute = "pesquisarSalaForm", formBean = "pesquisarSalaForm")
-@Forwards(value = { @Forward(name = "Sucesso", path = "/manipularSalas.jsp"),
-        @Forward(name = "Voltar", path = "/principalSalas.do") })
+@Mapping(module = "publico", path = "/chooseRoomsFormNew", input = "/prepareConsultRoomsNew.do?method=prepare&page=0",
+        attribute = "roomForm", formBean = "roomForm", scope = "request")
+@Forwards(value = { @Forward(name = "one", path = "/siteViewerRoomNew.do?method=roomViewer"),
+        @Forward(name = "list", path = "chooseRoom") })
 public class SelectRoomsFormAction extends FenixContextAction {
 
     private static final Logger logger = LoggerFactory.getLogger(SelectRoomsFormAction.class);

@@ -3,11 +3,12 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.exams.MainExamsDA" />
+
 <f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ResourceAllocationManagerResources" var="bundleSOP"/>
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
-	<script src="<%= request.getContextPath() + "/javaScript/jquery/jquery.js" %>" type="text/javascript"></script> 
 	<script type="text/javascript">
 		function getRoomCount(checkbox) {
 			return 	parseInt(checkbox.value.split('-')[1]);
@@ -48,7 +49,6 @@
 		$(document).ready(init);
 	</script>
 	
-	<h:outputFormat value="<em>#{bundleSOP['link.writtenEvaluationManagement']}</em>" escape="false"/>
 	<h:outputText value="<h2>#{bundleSOP['written.evaluation.associate.rooms']}</h2>" escape="false"/>
 
 	<h:form>

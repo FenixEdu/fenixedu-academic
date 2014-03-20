@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManag
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixDateAndTimeDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -15,13 +15,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- * 
+ *
  */
-@Mapping(path = "/chooseContext", module = "resourceAllocationManager", input = "/chooseContext.do?method=prepare&page=0",
-        formBean = "chooseScheduleContextForm")
-@Forwards(value = { @Forward(name = "ShowChooseForm", path = "/chooseScheduleContext.jsp", useTile = false),
-        @Forward(name = "ManageSchedules", path = "/manageSchedules.do") })
-public class ChooseContextDA extends FenixDateAndTimeDispatchAction {
+@Mapping(path = "/chooseContext", module = "resourceAllocationManager", functionality = ExecutionPeriodDA.class)
+@Forwards({ @Forward(name = "ShowChooseForm", path = "/resourceAllocationManager/chooseScheduleContext_bd.jsp"),
+        @Forward(name = "ManageSchedules", path = "/resourceAllocationManager/manageSchedules_bd.jsp") })
+public class ChooseContextDA extends FenixContextDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {

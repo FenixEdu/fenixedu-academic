@@ -7,7 +7,8 @@
 <%@ page import="java.util.List"%>
 <html:xhtml/>
 
-<em><bean:message key="title.resourceAllocationManager.management"/></em>
+<jsp:include page="/commons/contextExecutionCourseAndExecutionDegreeAndCurricularYear.jsp" />
+
 <h2><bean:message key="link.manage.turnos"/></h2>
 
 <jsp:include page="context.jsp"/>

@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftGroupStatistics;
 import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.ContextSelectionBean;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.RAMApplication.RAMExecutionCoursesApp;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
@@ -26,6 +27,12 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
+
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -33,16 +40,16 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- * 
+ *
  */
-@Mapping(path = "/manageExecutionCourses", module = "resourceAllocationManager",
-        input = "/manageExecutionCourses.do?method=prepareSearch&page=0", formBean = "searchExecutionCourse")
-@Forwards(value = { @Forward(name = "ShowSearchForm", path = "/manageExecutionCourses.jsp", useTile = false),
-        @Forward(name = "showOccupancy", path = "/showOccupancyLevels.jsp", useTile = false),
-        @Forward(name = "showLoads", path = "/showLoads.jsp", useTile = false),
-        @Forward(name = "ManageExecutionCourse", path = "/manageExecutionCourse.do?method=prepare&page=0") })
+@StrutsFunctionality(app = RAMExecutionCoursesApp.class, path = "manage", titleKey = "link.management")
+@Mapping(path = "/manageExecutionCourses", module = "resourceAllocationManager")
+@Forwards({ @Forward(name = "ShowSearchForm", path = "/resourceAllocationManager/manageExecutionCourses_bd.jsp"),
+    @Forward(name = "showOccupancy", path = "/resourceAllocationManager/showOccupancyLevels_bd.jsp"),
+        @Forward(name = "showLoads", path = "/resourceAllocationManager/showLoads_bd.jsp") })
 public class ManageExecutionCoursesDA extends FenixExecutionDegreeAndCurricularYearContextDispatchAction {
 
+    @EntryPoint
     public ActionForward prepareSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         return mapping.findForward("ShowSearchForm");

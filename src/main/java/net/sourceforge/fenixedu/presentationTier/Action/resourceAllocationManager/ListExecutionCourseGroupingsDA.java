@@ -25,11 +25,14 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.RAMApplication.RAMExecutionCoursesApp;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -38,11 +41,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
-@Mapping(path = "/listExecutionCourseGroupings", module = "resourceAllocationManager",
-        input = "/listExecutionCourseGroupings.do?method=prepare")
-@Forwards(value = { @Forward(name = "show-choose-execution-period-page", path = "/listExecutionCourseGroupings.jsp",
-        useTile = false) })
-public class ListExecutionCoursesDA extends FenixDispatchAction {
+@StrutsFunctionality(app = RAMExecutionCoursesApp.class, path = "list-groupings",
+        titleKey = "link.list.execution.course.groupings")
+@Mapping(path = "/listExecutionCourseGroupings", module = "resourceAllocationManager")
+@Forwards(@Forward(name = "show-choose-execution-period-page",
+        path = "/resourceAllocationManager/listExecutionCourseGroupings_bd.jsp"))
+public class ListExecutionCourseGroupingsDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -51,6 +55,7 @@ public class ListExecutionCoursesDA extends FenixDispatchAction {
         return mapping.findForward("show-choose-execution-period-page");
     }
 
+    @EntryPoint
     public ActionForward selectExecutionPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
@@ -58,7 +63,8 @@ public class ListExecutionCoursesDA extends FenixDispatchAction {
         RenderUtils.invalidateViewState();
 
         if (contextSelectionBean == null) {
-            return prepare(mapping, form, request, response);
+            request.setAttribute(PresentationConstants.CONTEXT_SELECTION_BEAN, new ContextSelectionBean());
+            return mapping.findForward("show-choose-execution-period-page");
         }
 
         request.setAttribute(PresentationConstants.CONTEXT_SELECTION_BEAN, contextSelectionBean);
