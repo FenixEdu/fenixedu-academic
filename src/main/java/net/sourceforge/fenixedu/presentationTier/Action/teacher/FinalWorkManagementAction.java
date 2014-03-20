@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.TransposeFinalDegreeWorkProposalToExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.TransposeFinalDegreeWorkProposalToExecutionYear.ProposalAlreadyTransposed;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.TransposeFinalDegreeWorkProposalToExecutionYear.ProposalPeriodNotDefined;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.TransposeFinalDegreeWorkProposalToExecutionYear.ProposalSchedulingNoMatch;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
@@ -892,6 +893,9 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
             messages.add("finalDegreeWork.error", new ActionMessage("label.teacher.finalWork.transposition.periodNotDefined"));
         } catch (ProposalAlreadyTransposed e) {
             messages.add("finalDegreeWork.error", new ActionMessage("label.teacher.finalWork.transpositionAlreadyTransposed"));
+        } catch (ProposalSchedulingNoMatch e) {
+            messages.add("finalDegreeWork.error",
+                    new ActionMessage("label.teacher.finalWork.transpositionNotPossible.scheduling"));
         } catch (Exception e) {
             messages.add("finalDegreeWork.error", new ActionMessage("label.teacher.finalWork.transpositionError"));
         }

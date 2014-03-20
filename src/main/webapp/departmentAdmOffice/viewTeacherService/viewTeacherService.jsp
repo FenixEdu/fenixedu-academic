@@ -17,17 +17,17 @@
 	
 	<h:outputText value="<h2>#{viewTeacherService.departmentName}</h2> <p />" escape="false"/>
 	
-	<h:form>
+	<h:form id="teacherServiceForm">
 		<h:panelGrid columns="1" styleClass="search">
 			<h:panelGrid columns="3" styleClass="search">
 				<h:outputText value="#{bundle['label.common.executionYear']}&nbsp;" escape="false" styleClass="aright" />
-				<fc:selectOneMenu value="#{viewTeacherService.selectedExecutionYearID}"
+				<fc:selectOneMenu id="selectedExecutionYearID" value="#{viewTeacherService.selectedExecutionYearID}"
 					onchange="this.form.submit();">
 					<f:selectItems binding="#{viewTeacherService.executionYearItems}"/>
 				</fc:selectOneMenu>
 				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 			 	<h:outputText value="#{bundle['label.common.courseSemester']}&nbsp;" escape="false" styleClass="aright" />
-				<fc:selectOneMenu value="#{viewTeacherService.selectedExecutionPeriodID}"
+				<fc:selectOneMenu id="selectedExecutionPeriodID" value="#{viewTeacherService.selectedExecutionPeriodID}"
 					onchange="this.form.submit();">
 					<f:selectItems binding="#{viewTeacherService.executionPeriodsItems}"/>
 				</fc:selectOneMenu>	
