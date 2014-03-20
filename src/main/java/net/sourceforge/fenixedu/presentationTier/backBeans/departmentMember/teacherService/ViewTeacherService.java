@@ -111,10 +111,10 @@ public class ViewTeacherService extends FenixBackingBean {
     }
 
     public String getSelectedExecutionYearID() throws FenixServiceException {
-        String executionYearIDString = this.getRequestParameter("selectedExecutionYearID");
+        String executionYearIDString = this.getRequestParameter("teacherServiceForm:selectedExecutionYearID");
 
         if (executionYearIDString != null) {
-            this.selectedExecutionYearID = this.getRequestParameter("selectedExecutionYearID");
+            this.selectedExecutionYearID = this.getRequestParameter("teacherServiceForm:selectedExecutionYearID");
         } else {
             if (this.selectedExecutionYearID == null) {
                 List<SelectItem> executionYearItems = (List<SelectItem>) this.getExecutionYearItems().getValue();
@@ -128,10 +128,10 @@ public class ViewTeacherService extends FenixBackingBean {
 
     public Integer getSelectedExecutionPeriodID() {
 
-        String executionPeriodIDString = this.getRequestParameter("selectedExecutionPeriodID");
+        String executionPeriodIDString = this.getRequestParameter("teacherServiceForm:selectedExecutionPeriodID");
 
         if (executionPeriodIDString != null) {
-            selectedExecutionPeriodID = Integer.valueOf(this.getRequestParameter("selectedExecutionPeriodID"));
+            selectedExecutionPeriodID = Integer.valueOf(this.getRequestParameter("teacherServiceForm:selectedExecutionPeriodID"));
         } else if (selectedExecutionPeriodID == null) {
             selectedExecutionPeriodID = BOTH_SEMESTERS_ID;
         }
