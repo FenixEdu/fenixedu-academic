@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionCou
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionDegreeByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriodByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.publico.SelectRooms;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadClassByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadExecutionDegreesByExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadLessonByOID;
@@ -32,7 +31,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoRoomEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.ComparatorByNameForInfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.ContextSelectionBean;
@@ -42,10 +40,8 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.space.RoomClassification;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -312,59 +308,6 @@ public class ContextUtils {
         }
     }
 
-    public static void setSelectedRoomsContext(HttpServletRequest request) throws FenixActionException {
-
-        List selectedRooms = null;
-        selectedRooms =
-                (List) SelectRooms.run(new InfoRoomEditor(readRequestValue(request, "selectRoomCriteria_Name"), readRequestValue(
-                        request, "selectRoomCriteria_Building"), readIntegerRequestValue(request, "selectRoomCriteria_Floor"),
-                        readTypeRoomRequestValue(request, "selectRoomCriteria_Type"), readIntegerRequestValue(request,
-                                "selectRoomCriteria_CapacityNormal"), readIntegerRequestValue(request,
-                                "selectRoomCriteria_CapacityExame")));
-        if (selectedRooms != null && !selectedRooms.isEmpty()) {
-            Collections.sort(selectedRooms);
-        }
-        request.setAttribute(PresentationConstants.SELECTED_ROOMS, selectedRooms);
-
-        setRoomSearchCriteriaContext(request);
-
-    }
-
-    /**
-     * @param request
-     */
-    private static void setRoomSearchCriteriaContext(HttpServletRequest request) {
-
-        request.setAttribute("selectRoomCriteria_Name", readRequestValue(request, "selectRoomCriteria_Name"));
-        request.setAttribute("selectRoomCriteria_Building", readRequestValue(request, "selectRoomCriteria_Building"));
-        request.setAttribute("selectRoomCriteria_Floor", readRequestValue(request, "selectRoomCriteria_Floor"));
-        request.setAttribute("selectRoomCriteria_Type", readRequestValue(request, "selectRoomCriteria_Type"));
-        request.setAttribute("selectRoomCriteria_CapacityNormal", readRequestValue(request, "selectRoomCriteria_CapacityNormal"));
-        request.setAttribute("selectRoomCriteria_CapacityExame", readRequestValue(request, "selectRoomCriteria_CapacityExame"));
-
-    }
-
-    /**
-     * @param request
-     */
-    public static void setSelectedRoomIndexContext(HttpServletRequest request) {
-        Integer selectedRoomIndex = (Integer) request.getAttribute(PresentationConstants.SELECTED_ROOM_INDEX);
-
-        // if (selectedRoomIndexString == null)
-        // {
-        String selectedRoomIndexString = request.getParameter(PresentationConstants.SELECTED_ROOM_INDEX);
-        // }
-
-        // Integer selectedRoomIndex = null;
-        if (selectedRoomIndex != null) {
-            // Place it in request
-            request.setAttribute(PresentationConstants.SELECTED_ROOM_INDEX, selectedRoomIndex);
-        } else if (selectedRoomIndexString != null) {
-            selectedRoomIndex = new Integer(selectedRoomIndexString);
-            request.setAttribute(PresentationConstants.SELECTED_ROOM_INDEX, selectedRoomIndex);
-        }
-    }
-
     @Deprecated
     public static void prepareChangeExecutionDegreeAndCurricularYear(HttpServletRequest request) {
         ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
@@ -450,24 +393,6 @@ public class ContextUtils {
         }
 
         return obj;
-    }
-
-    private static Integer readIntegerRequestValue(HttpServletRequest request, String name) {
-        String obj = readRequestValue(request, name);
-        if (obj != null) {
-            return new Integer(obj);
-        }
-
-        return null;
-    }
-
-    private static RoomClassification readTypeRoomRequestValue(HttpServletRequest request, String name) {
-        String obj = readRequestValue(request, name);
-        if (obj != null) {
-            return FenixFramework.getDomainObject(obj);
-        }
-
-        return null;
     }
 
     public static List getLabelListOfCurricularYears() {

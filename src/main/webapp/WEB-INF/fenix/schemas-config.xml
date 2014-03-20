@@ -26,7 +26,6 @@
     <!ENTITY departmentMember SYSTEM "schemas/departmentMember-schemas.xml">
     <!ENTITY manager SYSTEM "schemas/manager-schemas.xml">
     <!ENTITY resourceAllocationManager SYSTEM "schemas/resourceAllocationManager-schemas.xml">
-    <!ENTITY resourceManager SYSTEM "schemas/resourceManager-schemas.xml">
     <!ENTITY teacher SYSTEM "schemas/teacher-schemas.xml">
     <!ENTITY departmentAdmOffice SYSTEM "schemas/departmentAdmOffice-schemas.xml">
     <!ENTITY coordinator SYSTEM "schemas/coordinator-schemas.xml">
@@ -748,7 +747,6 @@
     &departmentMember;
     &manager;
     &resourceAllocationManager;
-    &resourceManager;
     &teacher;
     &departmentAdmOffice;
     &coordinator;

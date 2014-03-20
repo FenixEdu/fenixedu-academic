@@ -3,7 +3,7 @@
       <!-- ========== Data Source Configuration =============================== -->
       <!-- ========== Form Bean Definitions ================================== -->
       <form-beans type="org.apache.struts.action.ActionFormBean">
-      		<form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="studentShiftEnrollmentForm">
+      	<form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="studentShiftEnrollmentForm">
                   <form-property type="java.lang.Integer" name="studentId"></form-property>
                   <form-property type="java.lang.String" name="degree"></form-property>
                   <form-property type="java.lang.String" name="wantedCourse"></form-property>
@@ -360,19 +360,13 @@
       <!-- ========== Action Mapping Definitions =============================== -->
       <action-mappings type="org.apache.struts.action.ActionMapping">
             <!-- page fronting actions -->
-            <action path="/index" forward="/paginaPrincipal.do"></action>
-            <action path="/paginaPrincipal" forward="/paginaPrincipal.jsp"></action>
-            <action path="/autenticacaoSOP" forward="/autenticacaoSOP.jsp"></action>
             <action path="/criarSala" forward="/criarSala.jsp"></action>
             <action path="/gestaoHorarios" forward="/gestaoHorarios.jsp"></action>
             <action path="/principalAulas" forward="/principalAulas.jsp"></action>
             <action path="/principalTurnos" forward="/principalTurnos.jsp"></action>
             <action path="/escolherDisciplinaETipo" forward="/escolherDisciplinaETipo.jsp"></action>
             <action path="/createExamComment" forward="/defineExamComment.jsp"></action>
-            <action path="/home" forward="/switchAction.do?prefix=&amp;page=/home.do"></action>
-            <action path="/switchAction" type="org.apache.struts.actions.SwitchAction"></action>
             <action path="/manageSchedules" forward="/manageSchedules.jsp"></action>
-            <action path="/principalSalas" forward="/dumpRoomAllocation.do?method=firstPage"></action>
       </action-mappings>
       <!-- ========== Controller Configuration ================================ -->
       <controller processorClass="pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessor"></controller>

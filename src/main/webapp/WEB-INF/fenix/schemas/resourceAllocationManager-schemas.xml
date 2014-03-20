@@ -353,25 +353,3 @@
         <property name="destination" value="academicIntervalPostBack" />
     </slot>
 </schema>
-
-<schema name="roomOccupationWeek.choose"
-    type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.RoomOccupationWeekBean"
-    bundle="SOP_RESOURCES">
-    <slot name="academicInterval" layout="menu-select-postback" key="property.executionPeriod"
-        validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-        <property name="providerClass"
-            value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveAcademicIntervalProvider" />
-        <property name="format" value="${pathName}" />
-        <property name="nullOptionHidden" value="true" />
-        <property name="destination" value="academicIntervalPostBack" />
-    </slot>
-    <slot name="weekBean" layout="menu-select-postback" key="property.executionPeriod"
-        validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-        <property name="providerClass"
-            value="net.sourceforge.fenixedu.presentationTier.renderers.providers.RoomOccupationWeekBeanProvider" />
-        <property name="format" value="${presentationName}" />
-        <property name="sortBy" value="presentationName" />
-        <property name="nullOptionHidden" value="true" />
-        <property name="destination" value="weekPostBack" />
-    </slot>
-</schema>

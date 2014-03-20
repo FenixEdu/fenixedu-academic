@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadBuildings;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBuilding;
 import net.sourceforge.fenixedu.domain.space.RoomClassification;
-import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.Season;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -54,33 +53,6 @@ public class Util {
         }
 
         return tipos;
-    }
-
-    public static List<LabelValueBean> getDaysOfWeek() {
-        List<LabelValueBean> weekDays = new ArrayList<LabelValueBean>();
-        weekDays.add(new LabelValueBean("segunda", (new Integer(DiaSemana.SEGUNDA_FEIRA)).toString()));
-        weekDays.add(new LabelValueBean("terça", (new Integer(DiaSemana.TERCA_FEIRA)).toString()));
-        weekDays.add(new LabelValueBean("quarta", (new Integer(DiaSemana.QUARTA_FEIRA)).toString()));
-        weekDays.add(new LabelValueBean("quinta", (new Integer(DiaSemana.QUINTA_FEIRA)).toString()));
-        weekDays.add(new LabelValueBean("sexta", (new Integer(DiaSemana.SEXTA_FEIRA)).toString()));
-        weekDays.add(new LabelValueBean("sábado", (new Integer(DiaSemana.SABADO)).toString()));
-
-        return weekDays;
-    }
-
-    public static List<String> getHours() {
-        List<String> hoursList = new ArrayList<String>();
-        for (int i = 8; i <= 23; i++) {
-            hoursList.add(String.valueOf(i));
-        }
-        return hoursList;
-    }
-
-    public static List<String> getMinutes() {
-        List<String> minutesList = new ArrayList<String>();
-        minutesList.add("00");
-        minutesList.add("30");
-        return minutesList;
     }
 
     public static List<String> getDaysOfMonth() {
