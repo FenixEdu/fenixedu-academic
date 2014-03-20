@@ -97,13 +97,12 @@ public class TransposeFinalDegreeWorkProposalToExecutionYear {
         // error...
 
         if (originalScheduleing.getExecutionDegrees().size() != newScheduleing.getExecutionDegrees().size()) {
-            throw new FenixServiceException("The target Scheduling is not compatible with the source Scheduling");
+            throw new ProposalSchedulingNoMatch();
         }
 
         Collection<ExecutionDegree> newDegrees = newScheduleing.getExecutionDegrees();
 
         for (ExecutionDegree originalDegree : originalScheduleing.getExecutionDegrees()) {
-
             boolean found = false;
 
             for (ExecutionDegree newDegree : newDegrees) {
@@ -112,9 +111,8 @@ public class TransposeFinalDegreeWorkProposalToExecutionYear {
                     break;
                 }
             }
-
             if (!found) {
-                throw new FenixServiceException("The target Scheduling is not compatible with the source Scheduling");
+                throw new ProposalSchedulingNoMatch());
             }
 
         }
@@ -276,6 +274,14 @@ public class TransposeFinalDegreeWorkProposalToExecutionYear {
     public static class ProposalPeriodNotDefined extends FenixServiceException {
 
         public ProposalPeriodNotDefined() {
+            super();
+        }
+    }
+
+    @SuppressWarnings("serial")
+    public static class ProposalSchedulingNoMatch extends FenixServiceException {
+
+        public ProposalSchedulingNoMatch() {
             super();
         }
     }
