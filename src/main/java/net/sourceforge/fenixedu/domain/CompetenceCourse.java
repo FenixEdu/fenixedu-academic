@@ -1258,17 +1258,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return result;
     }
 
-    @Override
-    @Deprecated
-    /**
-     * 
-     * @see #getDepartments()
-     */
-    public Set<Department> getDepartmentsSet() {
-        // TODO Auto-generated method stub
-        return super.getDepartmentsSet();
-    }
-
     @Deprecated
     public java.util.Date getCreationDate() {
         org.joda.time.YearMonthDay ymd = getCreationDateYearMonthDay();

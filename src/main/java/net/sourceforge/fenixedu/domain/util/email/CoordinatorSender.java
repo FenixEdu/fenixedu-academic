@@ -43,6 +43,12 @@ public class CoordinatorSender extends CoordinatorSender_Base {
         return String.format("%s (%s: %s)", Unit.getInstitutionAcronym(), getDegree().getSigla(), "Coordenação");
     }
 
+    @Override
+    public void delete() {
+        setDegree(null);
+        super.delete();
+    }
+
     @Atomic
     public static CoordinatorSender newInstance(Degree degree) {
         CoordinatorSender sender = degree.getSender();

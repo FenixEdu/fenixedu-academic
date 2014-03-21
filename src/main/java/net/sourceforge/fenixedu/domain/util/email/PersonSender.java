@@ -24,6 +24,12 @@ public class PersonSender extends PersonSender_Base {
         return String.format("%s (%s)", Unit.getInstitutionAcronym(), getPerson().getName());
     }
 
+    @Override
+    public void delete() {
+        setPerson(null);
+        super.delete();
+    }
+
     @Atomic
     public static PersonSender newInstance(final Person person) {
         return person.hasSender() ? person.getSender() : new PersonSender(person);

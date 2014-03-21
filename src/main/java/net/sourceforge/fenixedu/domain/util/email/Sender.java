@@ -55,6 +55,10 @@ public class Sender extends Sender_Base {
                 removeRecipients(recipient);
             }
         }
+        for (ReplyTo replyTo : getReplyTosSet()) {
+            removeReplyTos(replyTo);
+            replyTo.safeDelete();
+        }
         setRootDomainObject(null);
         deleteDomainObject();
     }

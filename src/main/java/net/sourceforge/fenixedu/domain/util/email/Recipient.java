@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.Atomic.TxMode;
 
 public class Recipient extends Recipient_Base {
 
@@ -49,10 +50,25 @@ public class Recipient extends Recipient_Base {
         setMembers(members);
     }
 
-    @Atomic
+    @Atomic(mode = TxMode.WRITE)
     public void delete() {
         for (final Sender sender : getSendersSet()) {
             removeSenders(sender);
+        }
+        for (Message message : getMessagesSet()) {
+            if (message.getRootDomainObjectFromPendingRelation() == null) {
+                message.delete();
+            }
+        }
+        for (Message message : getMessagesCcsSet()) {
+            if (message.getRootDomainObjectFromPendingRelation() == null) {
+                message.delete();
+            }
+        }
+        for (Message message : getMessagesTosSet()) {
+            if (message.getRootDomainObjectFromPendingRelation() == null) {
+                message.delete();
+            }
         }
         setRootDomainObject(null);
         deleteDomainObject();

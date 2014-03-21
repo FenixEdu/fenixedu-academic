@@ -71,6 +71,12 @@ public class ExecutionCourseSender extends ExecutionCourseSender_Base {
 
     }
 
+    @Override
+    public void delete() {
+        setCourse(null);
+        super.delete();
+    }
+
     @Atomic
     public static ExecutionCourseSender newInstance(ExecutionCourse ec) {
         ExecutionCourseSender sender = ec.getSender();
