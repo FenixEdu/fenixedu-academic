@@ -1700,14 +1700,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
     	RoleOperationType operationType;
     }  
     
-        class ResourceAllocationRole extends Role {
-            Group schedulesAccessGroup;     
-            Group spacesAccessGroup;
-            Group materialsAccessGroup;
-            Group vehiclesAccessGroup;          
-        }
-
-
     class SchoolClass  {
         Integer anoCurricular;
         String nome;

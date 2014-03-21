@@ -2,6 +2,20 @@
 
 This file contains the steps required to update from one version to another. The following sections represent the steps required to update from the previous to that version. 
 
+## Migrating from 2.x to 3.0
+
+```
+set @xpto = (select OID >> 32 from ROLE where ROLE_TYPE = 'PERSON');
+set @oldOid = (select OID from ROLE where ROLE_TYPE = 'RESOURCE_ALLOCATION_MANAGER');
+update ROLE set OID = ((select @xpto) << 32) + ID_INTERNAL where OID = (select @oldOid);
+set @newOid = (select OID from ROLE where ROLE_TYPE = 'RESOURCE_ALLOCATION_MANAGER');
+update `GROUP` set OID_ROLE = (select @newOid) where OID_ROLE = (select @oldOid);
+update PERSON_ROLE set OID_ROLE = (select @newOid) where OID_ROLE = (select @oldOid);
+update ROLE_OPERATION_LOG set OID_ROLE = (select @newOid) where OID_ROLE = (select @oldOid);
+```
+
+TEMPORARY: For the IST Database, run `delete from PERSON_ROLE where OID_ROLE = 2899102924804;`
+
 ## Migrating from 1.x to 2.0
 
 Version 2.0 introduces major architectural changes. FenixEdu is now built on top of the [Bennu](https://github.com/FenixEdu/bennu) Framework.

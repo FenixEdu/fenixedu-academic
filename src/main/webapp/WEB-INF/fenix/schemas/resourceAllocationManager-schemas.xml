@@ -260,10 +260,6 @@
 	<slot name="name" key="label.access.group.person.name"/>
 	<slot name="username" key="label.access.group.person.username"/>	
 </schema>	
-<schema name="AddPersonToAccessGroupInResourceAllocationManagement" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.AccessGroupBean" bundle="SOP_RESOURCES">
-	<slot name="accessGroupType" key="label.access.group" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="person" layout="username-as-person" key="label.access.group.person" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>			
-</schema>
 
 <schema name="academicIntervalSelectionBean.choosePostBack"
 	type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.ContextSelectionBean"

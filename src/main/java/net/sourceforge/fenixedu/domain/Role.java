@@ -33,7 +33,7 @@ public class Role extends Role_Base implements Comparable<Role> {
 
     /**
      * This map is a temporary solution until DML provides indexed relations.
-     * 
+     *
      */
     private static final Map<RoleType, SoftReference<Role>> roleMap = new HashMap<RoleType, SoftReference<Role>>();
 
@@ -61,12 +61,7 @@ public class Role extends Role_Base implements Comparable<Role> {
         return null;
     }
 
-    protected Role() {
-        super();
-    }
-
     public Role(final RoleType roleType) {
-        this();
         setRootDomainObject(Bennu.getInstance());
         setRoleType(roleType);
     }
@@ -78,23 +73,15 @@ public class Role extends Role_Base implements Comparable<Role> {
 
     @Override
     protected void setRoleType(RoleType roleType) {
-        if (roleType == null || roleType.equals(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
+        if (roleType == null) {
             throw new DomainException("error.Role.empty.role.type");
         }
-        super.setRoleType(roleType);
-    }
-
-    protected void setRoleTypeWithoutCheckType(RoleType roleType) {
         super.setRoleType(roleType);
     }
 
     @Override
     public int compareTo(Role role) {
         return (role != null) ? getRoleType().compareTo(role.getRoleType()) : -1;
-    }
-
-    public boolean isResourceAllocationRole() {
-        return false;
     }
 
     public ArrayList<RoleOperationLog> getRoleOperationLogArrayListOrderedByDate() {

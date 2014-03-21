@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Instalation;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.ResourceAllocationRole;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.PersistentAcademicAuthorizationGroup;
@@ -260,11 +259,8 @@ public class Installer {
 
     private static void createRoles() {
         for (RoleType roleType : RoleType.values()) {
-            if (roleType != RoleType.RESOURCE_ALLOCATION_MANAGER) {
-                new Role(roleType);
-            }
+            new Role(roleType);
         }
-        new ResourceAllocationRole();
     }
 
     private static void createCurricularYearsAndSemesters() {

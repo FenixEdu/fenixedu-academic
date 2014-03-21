@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.predicates;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.ResourceAllocationRole;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Blueprint;
 import net.sourceforge.fenixedu.domain.space.ExtensionSpaceOccupation;
@@ -57,7 +56,7 @@ public class SpacePredicates {
             new AccessControlPredicate<Space>() {
                 @Override
                 public boolean evaluate(Space space) {
-                    ResourceAllocationRole.checkIfPersonHasPermissionToManageSpacesAllocation(AccessControl.getPerson());
+//                    ResourceAllocationRole.checkIfPersonHasPermissionToManageSpacesAllocation(AccessControl.getPerson());
                     return true;
                 }
             };
@@ -86,7 +85,7 @@ public class SpacePredicates {
             new AccessControlPredicate<GenericEventSpaceOccupation>() {
                 @Override
                 public boolean evaluate(GenericEventSpaceOccupation spaceOccupation) {
-                    ResourceAllocationRole.checkIfPersonHasPermissionToManageSpacesAllocation(AccessControl.getPerson());
+//                    ResourceAllocationRole.checkIfPersonHasPermissionToManageSpacesAllocation(AccessControl.getPerson());
                     return checkPermissionsToManageOccupations.evaluate(spaceOccupation);
                 }
             };
@@ -119,7 +118,7 @@ public class SpacePredicates {
             new AccessControlPredicate<WrittenEvaluationSpaceOccupation>() {
                 @Override
                 public boolean evaluate(WrittenEvaluationSpaceOccupation spaceOccupation) {
-                    ResourceAllocationRole.checkIfPersonHasPermissionToManageSchedulesAllocation(AccessControl.getPerson());
+//                    ResourceAllocationRole.checkIfPersonHasPermissionToManageSchedulesAllocation(AccessControl.getPerson());
                     return checkPermissionsToManageOccupationsWithoutCheckSpaceManager.evaluate(spaceOccupation);
                 }
             };
@@ -128,7 +127,7 @@ public class SpacePredicates {
             new AccessControlPredicate<LessonSpaceOccupation>() {
                 @Override
                 public boolean evaluate(LessonSpaceOccupation spaceOccupation) {
-                    ResourceAllocationRole.checkIfPersonHasPermissionToManageSchedulesAllocation(AccessControl.getPerson());
+//                    ResourceAllocationRole.checkIfPersonHasPermissionToManageSchedulesAllocation(AccessControl.getPerson());
                     return checkPermissionsToManageOccupationsWithoutCheckSpaceManager.evaluate(spaceOccupation);
                 }
             };
@@ -157,7 +156,7 @@ public class SpacePredicates {
             new AccessControlPredicate<LessonInstanceSpaceOccupation>() {
                 @Override
                 public boolean evaluate(LessonInstanceSpaceOccupation lessonInstanceSpaceOccupation) {
-                    ResourceAllocationRole.checkIfPersonHasPermissionToManageSchedulesAllocation(AccessControl.getPerson());
+//                    ResourceAllocationRole.checkIfPersonHasPermissionToManageSchedulesAllocation(AccessControl.getPerson());
                     return true;
                 }
             };
@@ -177,7 +176,7 @@ public class SpacePredicates {
                         return true;
                     }
 
-                    ResourceAllocationRole.checkIfPersonHasPermissionToManageSchedulesAllocation(loggedPerson);
+//                    ResourceAllocationRole.checkIfPersonHasPermissionToManageSchedulesAllocation(loggedPerson);
                     return true;
                 }
             };
