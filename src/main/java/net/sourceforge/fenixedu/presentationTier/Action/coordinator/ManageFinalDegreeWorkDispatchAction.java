@@ -629,12 +629,10 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
                     }
                     finalWorkForm.set("title", infoProposal.getTitle());
                     if (infoProposal.getOrientatorsCreditsPercentage() != null) {
-                        finalWorkForm.set("responsibleCreditsPercentage", infoProposal.getOrientatorsCreditsPercentage()
-                                .toString());
+                        finalWorkForm.set("responsibleCreditsPercentage", infoProposal.getOrientatorsCreditsPercentage());
                     }
                     if (infoProposal.getCoorientatorsCreditsPercentage() != null) {
-                        finalWorkForm.set("coResponsibleCreditsPercentage", infoProposal.getCoorientatorsCreditsPercentage()
-                                .toString());
+                        finalWorkForm.set("coResponsibleCreditsPercentage", infoProposal.getCoorientatorsCreditsPercentage());
                     }
                     finalWorkForm.set("companionName", infoProposal.getCompanionName());
                     finalWorkForm.set("companionMail", infoProposal.getCompanionMail());
@@ -792,8 +790,6 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 
         String externalId = (String) finalWorkForm.get("externalId");
         String title = (String) finalWorkForm.get("title");
-        String responsibleCreditsPercentage = (String) finalWorkForm.get("responsibleCreditsPercentage");
-        String coResponsibleCreditsPercentage = (String) finalWorkForm.get("coResponsibleCreditsPercentage");
         String companionName = (String) finalWorkForm.get("companionName");
         String companionMail = (String) finalWorkForm.get("companionMail");
         String companionPhone = (String) finalWorkForm.get("companionPhone");
@@ -831,8 +827,8 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             return mapping.getInputForward();
         }
 
-        Integer orientatorCreditsPercentage = Integer.valueOf(responsibleCreditsPercentage);
-        Integer coorientatorCreditsPercentage = Integer.valueOf(coResponsibleCreditsPercentage);
+        Integer orientatorCreditsPercentage = (Integer) finalWorkForm.get("responsibleCreditsPercentage");
+        Integer coorientatorCreditsPercentage = (Integer) finalWorkForm.get("coResponsibleCreditsPercentage");
         if ((orientatorCreditsPercentage.intValue() < 0) || (coorientatorCreditsPercentage.intValue() < 0)
                 || (orientatorCreditsPercentage.intValue() + coorientatorCreditsPercentage.intValue() != 100)) {
             ActionErrors actionErrors = new ActionErrors();
@@ -847,8 +843,8 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
             infoFinalWorkProposal.setExternalId(externalId);
         }
         infoFinalWorkProposal.setTitle(title);
-        infoFinalWorkProposal.setOrientatorsCreditsPercentage(Integer.valueOf(responsibleCreditsPercentage));
-        infoFinalWorkProposal.setCoorientatorsCreditsPercentage(Integer.valueOf(coResponsibleCreditsPercentage));
+        infoFinalWorkProposal.setOrientatorsCreditsPercentage(orientatorCreditsPercentage);
+        infoFinalWorkProposal.setCoorientatorsCreditsPercentage(coorientatorCreditsPercentage);
         infoFinalWorkProposal.setFraming(framing);
         infoFinalWorkProposal.setObjectives(objectives);
         infoFinalWorkProposal.setDescription(description);

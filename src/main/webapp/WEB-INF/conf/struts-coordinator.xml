@@ -174,8 +174,8 @@
                   <form-property type="java.lang.String" name="title"></form-property>
                   <form-property type="java.lang.String" name="orientatorOID"></form-property>
                   <form-property type="java.lang.String" name="coorientatorOID"></form-property>
-                  <form-property type="java.lang.String" name="responsibleCreditsPercentage"></form-property>
-                  <form-property type="java.lang.String" name="coResponsibleCreditsPercentage"></form-property>
+                  <form-property type="java.lang.Integer" name="responsibleCreditsPercentage"></form-property>
+                  <form-property type="java.lang.Integer" name="coResponsibleCreditsPercentage"></form-property>
                   <form-property type="java.lang.String" name="framing"></form-property>
                   <form-property type="java.lang.String" name="objectives"></form-property>
                   <form-property type="java.lang.String" name="description"></form-property>
