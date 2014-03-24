@@ -1,12 +1,12 @@
 <%@ page language="java" %>
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %><html:xhtml/>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ page import="org.apache.struts.Globals" %>
 <%@ page import="java.util.List" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
-	<em><bean:message key="title.masterDegree.administrativeOffice"/></em>
 	<h2><bean:message key="title.masterDegree.administrativeOffice.createCandidate"/></h2>
 
 	<p>
@@ -14,7 +14,7 @@
 	</p>
 
   <bean:define id="masterDegreeCPlanList" name="<%= PresentationConstants.MASTER_DEGREE_CURRICULAR_PLAN_LIST %>" scope="request" />
-  <bean:define id="link">/listMasterDegreesCandidate.do?method=prepareChooseExecutionYear<%= "&" %>page=0<%= "&" %>curricularPlanID=</bean:define>
+  <bean:define id="link">/chooseExecutionYear.do?method=prepareChooseExecutionYear<%= "&" %>page=0<%= "&" %>curricularPlanID=</bean:define>
 
     <p><strong><%= ((List) masterDegreeCPlanList).size()%> <bean:message key="label.masterDegree.administrativeOffice.curricularPlanFound"/></strong></p>
     <% if (((List) masterDegreeCPlanList).size() != 0) { %>

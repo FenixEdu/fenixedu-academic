@@ -578,28 +578,8 @@
                   <form-property type="java.lang.Integer" name="areaID"></form-property>
             </form-bean>
       </form-beans>
-      <!-- ========== Global Exception Definitions ============================== -->
-      <global-exceptions>
-            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.Exception" type="java.lang.Exception"></exception>
-            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"></exception>
-            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException"></exception>
-      </global-exceptions>
-      <!-- ========== Global Forward Definitions =============================== -->
-      <global-forwards type="org.apache.struts.action.ActionForward">
-            <forward redirect="true" path="index.do" name="index"></forward>
-            <forward path="/index.do" name="firstPage"></forward>
-            <forward contextRelative="true" path="/logoff.do" name="logoff"></forward>
-            <forward contextRelative="true" path="/redirect.do" name="redirect"></forward>
-      </global-forwards>
-      <!-- ========== Action Mapping Definitions =============================== -->
-      <action-mappings type="org.apache.struts.action.ActionMapping">
-            <!-- page fronting actions -->
-            <action forward="/switchAction.do?prefix=&amp;page=/mainPortalPage.jsp" path="/home"></action>
-            <action type="org.apache.struts.actions.SwitchAction" path="/switchAction"></action>
-            <action forward="/index.jsp" path="/index"></action>
-      </action-mappings>
       <!-- ========== Controller Configuration ================================ -->
-      <controller processorClass="pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessor"></controller>
+      <controller processorClass="pt.ist.fenixWebFramework.renderers.plugin.SimpleRenderersRequestProcessor"></controller>
       <!-- ========== Message Resources Definitions ============================ -->
       <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
       <message-resources null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
@@ -611,13 +591,6 @@
       <!-- ========== Plug Ins Configuration ================================= -->
       <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
             <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-masterDegreeAdministrativeOffice.xml" property="pathnames"></set-property>
-      </plug-in>
-      <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin">
-            <set-property value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/masterDegreeAdministrativeOffice/tiles-masterDegreeAdministrativeOffice-definitions.xml,/WEB-INF/tiles/masterDegreeAdministrativeOffice/tiles-masterDegreeAdministrativeOffice-pages-definitions.xml" property="definitions-config"></set-property>
-            <set-property value="true" property="moduleAware"></set-property>
-            <set-property value="true" property="definitions-parser-validate"></set-property>
-            <set-property value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" property="factoryClassname"></set-property>
-            <set-property value="definition.masterDegreeAdministrativeOffice.masterPage" property="defaultTileDefinition"></set-property>
       </plug-in>
       <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
 </struts-config>

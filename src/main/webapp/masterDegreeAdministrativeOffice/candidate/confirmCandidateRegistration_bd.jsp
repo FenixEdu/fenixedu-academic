@@ -12,7 +12,7 @@
 
 
 <logic:present name="infoMasterDegreeCandidate">
-	<html:form action="/candidateRegistrationConfirmation.do?method=confirm">
+	<html:form action="/candidateRegistration.do?method=confirm">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.candidateID" property="candidateID" />
 		<table>
 			<tr>

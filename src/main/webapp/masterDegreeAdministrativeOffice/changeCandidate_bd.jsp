@@ -20,8 +20,6 @@
    	<bean:define id="personalInfo" name="infoCandidate" property="infoPerson" />
     	<span class="error"><!-- Error messages go here --><html:errors /></span>
 
-
-<em><bean:message key="title.masterDegree.administrativeOffice"/></em>
 <h2><bean:message key="label.person.title.changePersonalInfo" /></h2>
 
 <!-- Dados Pessoais -->
@@ -301,17 +299,5 @@
 	   <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.Alterar" property="Alterar">Alterar Dados</html:submit>
 	   <html:reset bundle="HTMLALT_RESOURCES" altKey="reset.Reset" property="Reset">Dados Originais</html:reset>
    </p>
-   
-   <% InfoMasterDegreeCandidate infoMasterDegreeCandidate = (InfoMasterDegreeCandidate) request.getAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE); 
-      if (!infoMasterDegreeCandidate.getInfoCandidateSituation().getSituation().equals(SituationName.PRE_CANDIDATO_STRING)) {	%>
-
-		<bean:define id="link">/editCandidate.do?method=changePassword&candidateID=
-			<bean:write name="infoCandidate" property="externalId"/>
-		</bean:define>
-		
-        <html:link page='<%= pageContext.findAttribute("link").toString() %>' target="_blank">
-       		<bean:message key="link.masterDegree.administrativeOffice.changePassword" />
-       	</html:link>
-   <% } %>
 
 	</html:form>

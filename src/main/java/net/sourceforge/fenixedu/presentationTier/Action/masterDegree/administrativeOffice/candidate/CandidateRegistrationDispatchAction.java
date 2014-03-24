@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateRegistration;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseExecutionYearDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ActiveStudentCurricularPlanAlreadyExistsActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -34,6 +35,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.GratuityValue
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidChangeActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidInformationInFormActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidStudentNumberActionException;
+import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionError;
@@ -43,6 +45,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.portal.servlet.PortalLayoutInjector;
 
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
@@ -51,42 +54,35 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 /**
- * 
+ *
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
- * 
- * 
+ *
+ *
  */
-@Mapping(path = "/candidateRegistrationConfirmation", module = "masterDegreeAdministrativeOffice",
-        input = "/candidate/confirmCandidateRegistration.jsp", formBean = "candidateRegistrationForm")
-@Forwards(value = { @Forward(name = "ListCandidates", path = "/candidate/displayCandidateListForRegistration.jsp"),
-        @Forward(name = "ShowConfirmation", path = "/candidate/confirmCandidateRegistration.jsp"),
-        @Forward(name = "PrepareCandidateList", path = "/candidateRegistration.do?method=getCandidateList"),
-        @Forward(name = "ShowResult", path = "/candidate/candidateRegistered.jsp"),
-        @Forward(name = "Print", path = "/candidate/candidateRegistrationTemplate.jsp") })
-@Exceptions(
-        value = {
-                @ExceptionHandling(
-                        key = "resources.Action.exceptions.InvalidInformationInFormActionException",
-                        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
-                        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidInformationInFormActionException.class),
-                @ExceptionHandling(key = "resources.Action.exceptions.InvalidChangeActionException",
-                        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
-                        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidChangeActionException.class),
-                @ExceptionHandling(key = "resources.Action.exceptions.ExistingActionException",
-                        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
-                        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException.class),
-                @ExceptionHandling(
-                        key = "resources.Action.exceptions.ActiveStudentCurricularPlanAlreadyExistsActionException",
-                        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
-                        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.ActiveStudentCurricularPlanAlreadyExistsActionException.class),
-                @ExceptionHandling(
-                        key = "resources.Action.exceptions.InvalidStudentNumberActionException",
-                        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
-                        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidStudentNumberActionException.class),
-                @ExceptionHandling(
-                        key = "resources.Action.exceptions.GratuityValuesNotDefinedActionException",
-                        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class,
-                        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.GratuityValuesNotDefinedActionException.class) })
+@Mapping(path = "/candidateRegistration", module = "masterDegreeAdministrativeOffice", input = "/chooseMasterDegree_bd.jsp",
+        formBean = "candidateRegistrationForm", functionality = ChooseExecutionYearDispatchAction.class)
+@Forwards(value = {
+        @Forward(name = "ListCandidates",
+                path = "/masterDegreeAdministrativeOffice/candidate/displayCandidateListForRegistration_bd.jsp"),
+        @Forward(name = "ShowConfirmation",
+                path = "/masterDegreeAdministrativeOffice/candidate/confirmCandidateRegistration_bd.jsp"),
+        @Forward(name = "PrepareCandidateList",
+                path = "/masterDegreeAdministrativeOffice/candidateRegistration.do?method=getCandidateList"),
+        @Forward(name = "ShowResult", path = "/masterDegreeAdministrativeOffice/candidate/candidateRegistered_bd.jsp"),
+        @Forward(name = "Print", path = "/masterDegreeAdministrativeOffice/candidate/candidateRegistrationTemplatePrint.jsp") })
+@Exceptions({
+        @ExceptionHandling(key = "resources.Action.exceptions.InvalidInformationInFormActionException",
+                handler = FenixErrorExceptionHandler.class, type = InvalidInformationInFormActionException.class),
+        @ExceptionHandling(key = "resources.Action.exceptions.InvalidChangeActionException",
+                handler = FenixErrorExceptionHandler.class, type = InvalidChangeActionException.class),
+        @ExceptionHandling(key = "resources.Action.exceptions.ExistingActionException",
+                handler = FenixErrorExceptionHandler.class, type = ExistingActionException.class),
+        @ExceptionHandling(key = "resources.Action.exceptions.ActiveStudentCurricularPlanAlreadyExistsActionException",
+                handler = FenixErrorExceptionHandler.class, type = ActiveStudentCurricularPlanAlreadyExistsActionException.class),
+        @ExceptionHandling(key = "resources.Action.exceptions.InvalidStudentNumberActionException",
+                handler = FenixErrorExceptionHandler.class, type = InvalidStudentNumberActionException.class),
+        @ExceptionHandling(key = "resources.Action.exceptions.GratuityValuesNotDefinedActionException",
+                handler = FenixErrorExceptionHandler.class, type = GratuityValuesNotDefinedActionException.class) })
 public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
 
     public ActionForward getCandidateList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -252,6 +248,7 @@ public class CandidateRegistrationDispatchAction extends FenixDispatchAction {
         request.setAttribute("infoExecutionDegree", infoCandidateRegistration.getInfoMasterDegreeCandidate()
                 .getInfoExecutionDegree());
 
+        PortalLayoutInjector.skipLayoutOn(request);
         return mapping.findForward("Print");
     }
 
