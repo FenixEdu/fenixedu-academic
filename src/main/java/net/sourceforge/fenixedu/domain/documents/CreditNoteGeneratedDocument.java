@@ -7,9 +7,6 @@ import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.Acad
 import net.sourceforge.fenixedu.domain.accounting.CreditNote;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-
-import org.fenixedu.bennu.core.util.CoreConfiguration;
-
 import pt.ist.fenixframework.Atomic;
 
 /**
@@ -35,9 +32,7 @@ public class CreditNoteGeneratedDocument extends CreditNoteGeneratedDocument_Bas
 
     @Atomic
     public static void store(CreditNote source, String filename, byte[] content) {
-        if (!CoreConfiguration.getConfiguration().developmentMode()) {
-            new CreditNoteGeneratedDocument(source, source.getReceipt().getPerson(), AccessControl.getPerson(), filename, content);
-        }
+        new CreditNoteGeneratedDocument(source, source.getReceipt().getPerson(), AccessControl.getPerson(), filename, content);
     }
 
     @Deprecated

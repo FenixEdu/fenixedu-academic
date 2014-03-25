@@ -25,7 +25,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -214,10 +213,6 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
                 email = new EMail("mail.adm", "erro@dot.ist.utl.pt");
                 String aluminiEmailAddress = Instalation.getInstance().getInstituitionalEmailAddress("alumni");
                 email.send(aluminiEmailAddress, "Erro Registo Alumni", mailBody.toString());
-                if (CoreConfiguration.getConfiguration().developmentMode()) {
-                    logger.info("send email to " + aluminiEmailAddress + "with subject Erro Registo Alumni and body : "
-                            + mailBody.toString());
-                }
             }
         } catch (Throwable t) {
             logger.error(t.getMessage(), t);
