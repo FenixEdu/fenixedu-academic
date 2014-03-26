@@ -6,16 +6,23 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis.ReadActiveMasterDegreeThesisDataVersionsByDegreeCurricularPlan;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeThesisDataVersionWithGuidersAndRespAndThesis;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.ist.fenixframework.FenixFramework;
+
 /**
- * 
+ *
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
- * 
+ *
  */
 public class ListStudentThesis {
 
@@ -41,7 +48,7 @@ public class ListStudentThesis {
     public List getMasterDegreeThesisDataVersions() {
 
         try {
-            return ReadActiveMasterDegreeThesisDataVersionsByDegreeCurricularPlan.run(degreeCurricularPlanID);
+            return run(degreeCurricularPlanID);
         } catch (IllegalDataAccessException e) {
             // TODO Auto-generated catch block
             logger.error(e.getMessage(), e);
@@ -52,6 +59,28 @@ public class ListStudentThesis {
 
         return null;
 
+    }
+
+    private static List run(String degreeCurricularPlanID) throws FenixServiceException {
+
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
+
+        List masterDegreeThesisDataVersions = degreeCurricularPlan.readActiveMasterDegreeThesisDataVersions();
+
+        if (masterDegreeThesisDataVersions == null || masterDegreeThesisDataVersions.isEmpty()) {
+            throw new NonExistingServiceException("error.exception.masterDegree.nonExistingMasterDegreeThesis");
+        }
+
+        CollectionUtils.transform(masterDegreeThesisDataVersions, new Transformer() {
+            @Override
+            public Object transform(Object arg0) {
+                MasterDegreeThesisDataVersion masterDegreeThesisDataVersion = (MasterDegreeThesisDataVersion) arg0;
+                return InfoMasterDegreeThesisDataVersionWithGuidersAndRespAndThesis
+                        .newInfoFromDomain(masterDegreeThesisDataVersion);
+            }
+        });
+
+        return masterDegreeThesisDataVersions;
     }
 
 }

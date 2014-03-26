@@ -10,7 +10,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants;
 
 /**
  * @author Tânia Pousão
@@ -47,7 +46,7 @@ public class InfoGratuitySituation extends InfoObject {
 
     // calculations
 
-    private String insurancePayed = PresentationConstants.NOT_PAYED_INSURANCE; // attributes
+    private String insurancePayed = "label.notPayed"; // attributes
 
     // auxiliaries
     // for

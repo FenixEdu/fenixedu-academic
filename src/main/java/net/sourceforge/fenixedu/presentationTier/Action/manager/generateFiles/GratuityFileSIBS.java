@@ -14,7 +14,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -187,7 +186,7 @@ public class GratuityFileSIBS extends GratuityFile {
         if (valueToPay < 0) {
             valueToPay = 0;
         }
-        if (infoGratuitySituation.getInsurancePayed().equals(PresentationConstants.NOT_PAYED_INSURANCE)) {
+        if (infoGratuitySituation.getInsurancePayed().equals("label.notPayed")) {
             valueToPay = valueToPay + INSURANCE;
         }
 
