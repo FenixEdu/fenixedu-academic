@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.externalServices;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +45,7 @@ public class SetEmailDA extends FenixDispatchAction {
         final String ip = request.getRemoteAddr();
         final String password = request.getParameter("password");
         final String userUId = request.getParameter("userUId");
-        final String email = request.getParameter("email");
+        final String email = URLDecoder.decode(request.getParameter("email"), "UTF-8");
 
         String message = "ko";
 
