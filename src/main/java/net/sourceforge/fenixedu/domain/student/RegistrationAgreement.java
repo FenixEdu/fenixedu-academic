@@ -9,85 +9,88 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum RegistrationAgreement {
 
-    NORMAL(true, true),
+    NORMAL(true, true, true),
 
-    AFA(false, false),
+    AFA(false, false, false),
 
-    MA(false, false),
+    MA(false, false, false),
 
-    NC(false, false),
+    NC(false, false, false),
 
-    ERASMUS(false, false),
+    ERASMUS(false, false, true),
 
-    SOCRATES(false, false),
+    SOCRATES(false, false, true),
 
-    SOCRATES_ERASMUS(false, false),
+    SOCRATES_ERASMUS(false, false, true),
 
-    TEMPUS(false, false),
+    TEMPUS(false, false, true),
 
-    BILATERAL_AGREEMENT(false, false),
+    BILATERAL_AGREEMENT(false, false, true),
 
-    ALFA2(false, false),
+    ALFA2(false, false, true),
 
-    UNIFOR(false, false),
+    UNIFOR(false, false, true),
 
-    TIME(false, false),
+    TIME(false, false, true),
 
-    TOTAL(false, true),
+    TOTAL(false, true, true),
 
-    OTHER_EXTERNAL(false, false),
+    OTHER_EXTERNAL(false, false, true),
 
-    MITP(false, true),
+    MITP(false, true, true),
 
-    SMILE(false, false),
+    SMILE(false, false, true),
 
-    ANGOLA_TELECOM(false, true),
+    ANGOLA_TELECOM(false, true, true),
 
-    ERASMUS_MUNDUS(false, false),
+    ERASMUS_MUNDUS(false, false, true),
 
-    ALMEIDA_GARRETT(false, false),
+    ALMEIDA_GARRETT(false, false, true),
 
-    INOV_IST(false, false),
+    INOV_IST(false, false, true),
 
-    TECMIC(false, false),
+    TECMIC(false, false, true),
     
-    IST_UCP(false, false),
+    IST_UCP(false, false, true),
     
-    IST_USP(false, false),
+    IST_USP(false, false, true),
     
-    CLUSTER(false, false),
+    CLUSTER(false, false, true),
     
-    EUSYSBIO(false, false),
+    EUSYSBIO(false, false, true),
 
-    IST_ISA(false, false),
+    IST_ISA(false, false, true),
     
-    IST_PHARMACY_FACULTY(false, false),
+    IST_PHARMACY_FACULTY(false, false, true),
 
-    IBERO_SANTANDER(false, false),
+    IBERO_SANTANDER(false, false, true),
     
-    BRAZIL_SANTANDER(false, false),
+    BRAZIL_SANTANDER(false, false, true),
 
-    CHINA_AGREEMENTS(false, false),
+    CHINA_AGREEMENTS(false, false, true),
     
-    RUSSIA_AGREEMENTS(false, false),
+    RUSSIA_AGREEMENTS(false, false, true),
 
-    AFRICA_AGREEMENTS(false, false),
+    AFRICA_AGREEMENTS(false, false, true),
     
-    BRAZIL_AGREEMENTS(false, false),
+    BRAZIL_AGREEMENTS(false, false, true),
 
-    SCIENCE_WITHOUT_BORDERS(false, false),
+    SCIENCE_WITHOUT_BORDERS(false, false, true),
     
-    USA_AGREEMENTS(false, true),
+    USA_AGREEMENTS(false, true, true),
     
-    KIC_INNOENERGY(false, false);
+    KIC_INNOENERGY(false, false, true);
 
     private boolean enrolmentByStudentAllowed;
 
     private boolean payGratuity;
 
-    private RegistrationAgreement(final boolean enrolmentByStudentAllowed, final boolean payGratuity) {
+    private boolean allowsIDCard;
+
+    private RegistrationAgreement(final boolean enrolmentByStudentAllowed, final boolean payGratuity, final boolean allowsIDCard) {
         this.enrolmentByStudentAllowed = enrolmentByStudentAllowed;
         this.payGratuity = payGratuity;
+        this.allowsIDCard = allowsIDCard;
     }
 
     public boolean isNormal() {
@@ -108,6 +111,10 @@ public enum RegistrationAgreement {
 
     public boolean isToPayGratuity() {
         return payGratuity;
+    }
+
+    public boolean allowsIDCard() {
+        return this.allowsIDCard;
     }
 
     public static RegistrationAgreement getByLegacyCode(int code) {
