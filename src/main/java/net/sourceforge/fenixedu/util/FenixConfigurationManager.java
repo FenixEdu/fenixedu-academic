@@ -276,36 +276,6 @@ public class FenixConfigurationManager {
         @ConfigurationProperty(key = "twilio.stoken")
         public String getTwilioStoken();
 
-        @ConfigurationProperty(key = "webServices.LibraryManagement.password")
-        public String getWebServicesLibraryManagementPassword();
-
-        @ConfigurationProperty(key = "webServices.LibraryManagement.username")
-        public String getWebServicesLibraryManagementUsername();
-
-        @ConfigurationProperty(key = "webServices.PaymentManagement.password")
-        public String getWebServicesPaymentManagementPassword();
-
-        @ConfigurationProperty(key = "webServices.PaymentManagement.username")
-        public String getWebServicesPaymentManagementUsername();
-
-        @ConfigurationProperty(key = "webServices.PersonInformation.getPersonInformation.password")
-        public String getWebServicesPersonInformationGetPersonInformationPassword();
-
-        @ConfigurationProperty(key = "webServices.PersonInformation.getPersonInformation.username")
-        public String getWebServicesPersonInformationGetPersonInformationUsername();
-
-        @ConfigurationProperty(key = "webServices.PersonManagement.getPersonInformation.password")
-        public String getWebServicesPersonManagementgetPersonInformationPassword();
-
-        @ConfigurationProperty(key = "webServices.PersonManagement.getPersonInformation.password")
-        public String getWebServicesPersonManagementGetPersonInformationPassword();
-
-        @ConfigurationProperty(key = "webServices.PersonManagement.getPersonInformation.username")
-        public String getWebServicesPersonManagementgetPersonInformationUsername();
-
-        @ConfigurationProperty(key = "webServices.PersonManagement.getPersonInformation.username")
-        public String getWebServicesPersonManagementGetPersonInformationUsername();
-
         @ConfigurationProperty(key = "webServices.internationalRegistration.username")
         public String getWebServicesInternationalRegistrationUsername();
 
@@ -373,7 +343,7 @@ public class FenixConfigurationManager {
     /**
      * The absolute URL for the Fenix instalation.
      * It ends with the defined appContext without slash at the end.
-     * 
+     *
      */
     public static String getFenixUrl() {
         final String appName = FenixConfigurationManager.getConfiguration().getHTTPHost();

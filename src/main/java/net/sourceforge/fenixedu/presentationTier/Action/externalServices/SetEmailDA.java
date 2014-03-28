@@ -24,10 +24,10 @@ import org.apache.commons.httpclient.cookie.CookiePolicy;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.protocol.DefaultProtocolSocketFactory;
 import org.apache.commons.httpclient.protocol.Protocol;
+import org.apache.commons.httpclient.protocol.SSLProtocolSocketFactory;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.codehaus.xfire.transport.http.EasySSLProtocolSocketFactory;
 import org.fenixedu.bennu.core.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -109,7 +109,7 @@ public class SetEmailDA extends FenixDispatchAction {
             if (serverPort == 80 || serverPort == 8080) {
                 protocol = new Protocol("http", new DefaultProtocolSocketFactory(), serverPort);
             } else if (serverPort == 443 || serverPort == 8443) {
-                protocol = new Protocol("https", new EasySSLProtocolSocketFactory(), serverPort);
+                protocol = new Protocol("https", new SSLProtocolSocketFactory(), serverPort);
             } else {
                 throw new Error("Unknown protocol for port: " + serverPort);
             }

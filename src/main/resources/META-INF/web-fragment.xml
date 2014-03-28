@@ -154,19 +154,6 @@
 			<param-value>true</param-value>
 		</init-param>
 	</servlet>
-    <servlet>
-        <display-name>XFire Servlet</display-name>
-        <servlet-name>XFireServlet</servlet-name>
-        <servlet-class>org.codehaus.xfire.transport.http.XFireConfigurableServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>XFireServlet</servlet-name>
-        <url-pattern>/servlet/XFireServlet/*</url-pattern>
-    </servlet-mapping>    
-    <servlet-mapping>
-        <servlet-name>XFireServlet</servlet-name>
-        <url-pattern>/services/*</url-pattern>
-    </servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>dwr-invoker</servlet-name>
 		<url-pattern>/dwr/*</url-pattern>
