@@ -27,7 +27,7 @@ function selectQuestionType(){
 <html:form action="/exerciseType">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="chooseQuestionType"/>
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID" property="executionCourseID" value="<%=(pageContext.findAttribute("executionCourseID")).toString()%>"/>
 <%if (pageContext.findAttribute("exerciseCode")!=null){%>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.exerciseCode" property="exerciseCode" value="<%=(pageContext.findAttribute("exerciseCode")).toString()%>"/>
 <%}%>
@@ -75,7 +75,7 @@ function selectQuestionType(){
 <html:form action="/testsManagement">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="testsFirstPage"/>
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID" property="executionCourseID" value="<%=(pageContext.findAttribute("executionCourseID")).toString()%>"/>
 <td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.cancel"/></html:submit></td>
 </html:form>
 </tr>

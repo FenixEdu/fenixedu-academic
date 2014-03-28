@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
 import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
@@ -39,7 +40,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ChangeStudentTestQuestion {
 
-    protected Boolean run(String executionCourseId, String distributedTestId, String oldQuestionId, String newMetadataId,
+    protected Boolean run(ExecutionCourse executionCourse, String distributedTestId, String oldQuestionId, String newMetadataId,
             String studentId, TestQuestionChangesType changesType, Boolean delete, TestQuestionStudentsChangesType studentsType,
             String path) throws FenixServiceException {
 
@@ -253,11 +254,11 @@ public class ChangeStudentTestQuestion {
     private static final ChangeStudentTestQuestion serviceInstance = new ChangeStudentTestQuestion();
 
     @Atomic
-    public static Boolean runChangeStudentTestQuestion(String executionCourseId, String distributedTestId, String oldQuestionId,
-            String newMetadataId, String studentId, TestQuestionChangesType changesType, Boolean delete,
+    public static Boolean runChangeStudentTestQuestion(ExecutionCourse executionCourse, String distributedTestId,
+            String oldQuestionId, String newMetadataId, String studentId, TestQuestionChangesType changesType, Boolean delete,
             TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException, NotAuthorizedException {
-        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
-        return serviceInstance.run(executionCourseId, distributedTestId, oldQuestionId, newMetadataId, studentId, changesType,
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourse);
+        return serviceInstance.run(executionCourse, distributedTestId, oldQuestionId, newMetadataId, studentId, changesType,
                 delete, studentsType, path);
     }
 

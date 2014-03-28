@@ -1,5 +1,6 @@
 <%@ page language="java" %>
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%><html:xhtml/>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
@@ -33,7 +34,7 @@
 	<logic:empty name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList">
 		<ul class="mvert15">
 			<li>
-				<html:link page="<%="/viewShiftsAndGroups.do?method=viewShiftsAndGroups&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+				<html:link page="<%="/studentGroupManagement.do?method=viewShiftsAndGroups&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
 					<bean:message key=""/>
 				</html:link>
 			</li>
@@ -49,7 +50,7 @@
 
 		<ul class="mvert15">
 			<li>
-				<html:link page="<%="/viewShiftsAndGroups.do?method=viewShiftsAndGroups&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+				<html:link page="<%="/studentGroupManagement.do?method=viewShiftsAndGroups&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
 			    	<bean:message key="link.backToShiftsAndGroups"/>
 		    	</html:link>
 	    	</li>
@@ -61,12 +62,12 @@
 	</p>
 	
 	<logic:present name="showPhotos">
-		<html:link page="<%="/viewAllStudentsAndGroups.do?method=viewAllStudentsAndGroups&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;showPhotos=true&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+		<html:link page="<%="/studentGroupManagement.do?method=viewAllStudentsAndGroups&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;showPhotos=true&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
 		    	<bean:message key="label.viewPhoto"/>
 		</html:link>
 	</logic:present>
 	<logic:notPresent name="showPhotos">
-		<html:link page="<%="/viewAllStudentsAndGroups.do?method=viewAllStudentsAndGroups&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+		<html:link page="<%="/studentGroupManagement.do?method=viewAllStudentsAndGroups&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
 		    	<bean:message key="label.notViewPhoto"/>
 		</html:link>
 	</logic:notPresent>

@@ -83,12 +83,12 @@ function remove(i){
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="2"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createExercise"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.questionType" property="questionType"/>
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.optionNumber" property="optionNumber"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.cardinalityType" property="cardinalityType"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.conditionId" property="conditionId"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.evaluationQuestion" property="evaluationQuestion"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.exerciseCode" property="exerciseCode"/>
+<input type="hidden" name="executionCourseID" value="${executionCourseID}" />
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
 
@@ -344,7 +344,7 @@ function remove(i){
 <html:form action="/testsManagement">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="testsFirstPage"/>
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID" property="executionCourseID" value="<%=(pageContext.findAttribute("executionCourseID")).toString()%>"/>
 <td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.cancel"/></html:submit></td>
 </html:form>
 </tr>

@@ -4,11 +4,10 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 
 
-<logic:present name="siteView">
 <h2><bean:message key="title.insertStudentGroup"/></h2>
 
 <div class="dinline forminline">
-<html:form action="/insertStudentGroup" >
+<html:form action="/studentGroupManagement" >
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
 <div class="infoop2">
@@ -47,8 +46,8 @@
 <logic:notEmpty name="infoSiteStudentGroup" property="infoSiteStudentInformationList">
 <p>
 	<%
-		final String urlPhoto = "/insertStudentGroup.do?method=prepareCreateStudentGroup"
-				+ "&amp;objectCode=" + pageContext.findAttribute("objectCode")
+		final String urlPhoto = "/studentGroupManagement.do?method=prepareCreateStudentGroup"
+				+ "&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")
 				+ (request.getParameter("shiftCode") != null ? "&amp;shiftCode=" + request.getParameter("shiftCode") : "")
 				+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode");
 	%>
@@ -112,7 +111,7 @@
 
 
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createStudentGroup"/>
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID"  property="executionCourseID" value="<%= pageContext.findAttribute("executionCourseID").toString() %>" />
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.groupPropertiesCode"  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
 
 <logic:present name="shiftCode">
@@ -130,13 +129,11 @@
 
 	</html:form>
 
-	<html:form action="/viewShiftsAndGroups" >
+	<html:form action="/studentGroupManagement" >
 		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton"><bean:message key="button.cancel"/></html:cancel>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="viewShiftsAndGroups"/>
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID"  property="executionCourseID" value="<%= pageContext.findAttribute("executionCourseID").toString() %>" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.groupPropertiesCode"  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
 	</html:form>
 
 </div>
-
-</logic:present>

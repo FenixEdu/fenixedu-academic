@@ -1,5 +1,6 @@
 <%@ page language="java" %>
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %><html:xhtml/>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt" %>
@@ -43,9 +44,6 @@
 						>
 					<html:options collection="infoExecutionYears" property="externalId" labelProperty="nextExecutionYearYear" />
 				</html:select>
-				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-					<bean:message bundle="APPLICATION_RESOURCES" key="button.submit"/>
-				</html:submit>
 			</td>
 			<td>
 				<html:select bundle="HTMLALT_RESOURCES" property="degree"
@@ -53,9 +51,6 @@
 						>
 					<html:options collection="executionDegreeList" property="externalId" labelProperty="infoDegreeCurricularPlan.presentationName" />
 				</html:select>
-				<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-					<bean:message bundle="APPLICATION_RESOURCES" key="button.submit"/>
-				</html:submit>
 			</td>
 		</tr>
 	</table>
@@ -216,16 +211,13 @@
 									</logic:iterate>
 									<tr>
 										<td bgcolor="<%= bgColor %>" align="center" rowspan="<%= numberOfStudents.toString() %>">			
-								<html:form action="/finalDegreeWorkAttribution">
+								<html:form action="/finalWorkManagement">
 								<bean:define id="proposalId" name="groupProposal" property="externalId"/>
 								<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="attributeFinalDegreeWork"/>
 								<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedGroupProposal" property="selectedGroupProposal" value="<%= String.valueOf(proposalId) %>"/>
 								<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYear" property="executionYear"/>
 								<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degree" property="degree"/>
 								<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.selectedGroupProposals" property="selectedGroupProposals" onclick="this.form.submit();"><bean:write name="groupProposal" property="externalId"/></html:multibox>
-								<html:submit styleClass="switchNone" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-								<bean:message bundle="APPLICATION_RESOURCES" key="button.submit"/>
-								</html:submit>															
 									</html:form>									
 
 										</td>
@@ -327,7 +319,3 @@
 <logic:notPresent name="finalDegreeWorkProposalHeaders">
 	<span class="error"><!-- Error messages go here --><bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeaders.notPresent"/></span>
 </logic:notPresent>
-
-<script type="text/javascript" language="javascript">
-switchGlobal();
-</script>

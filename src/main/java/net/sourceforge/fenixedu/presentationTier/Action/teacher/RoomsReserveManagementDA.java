@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherApplication.TeacherTeachingApp;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagram;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
 
@@ -27,6 +28,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
@@ -37,12 +40,14 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
-@Mapping(module = "teacher", path = "/roomsReserveManagement", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "viewRoomsReserves", path = "view-rooms-reserves"),
-        @Forward(name = "seeSpecifiedRoomsReserve", path = "see-specified-rooms-reserve"),
-        @Forward(name = "createNewRoomsReserve", path = "create-new-rooms-reserve") })
+@StrutsFunctionality(app = TeacherTeachingApp.class, path = "rooms-reserve", titleKey = "link.rooms.reserve")
+@Mapping(module = "teacher", path = "/roomsReserveManagement")
+@Forwards({ @Forward(name = "viewRoomsReserves", path = "/teacher/roomsReserveManagement/viewRoomsReserves.jsp"),
+        @Forward(name = "seeSpecifiedRoomsReserve", path = "/teacher/roomsReserveManagement/seeSpecifiedRoomsReserve.jsp"),
+        @Forward(name = "createNewRoomsReserve", path = "/teacher/roomsReserveManagement/createNewRoomsReserve.jsp") })
 public class RoomsReserveManagementDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward viewReserves(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 

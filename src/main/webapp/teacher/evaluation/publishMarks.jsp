@@ -7,10 +7,13 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
 <f:view>
+
+	<h:outputText value="#{evaluationManagementBackingBean.hackToStoreExecutionCourse}" />
+	<jsp:include page="/teacher/evaluation/evaluationMenu.jsp" />
+
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 
-	<h:outputText value="<em>#{bundle['message.evaluationElements']}</em>" escape="false" />
 
 	<h:outputFormat value="<h2>#{bundle['title.evaluation.manage.publishMarks']}</h2>" escape="false">
 		<f:param value="#{evaluationManagementBackingBean.executionCourse.nome}" />
@@ -81,3 +84,5 @@
 	</h:form>
 
 </f:view>
+</div>
+</div>

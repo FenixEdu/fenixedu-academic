@@ -6,20 +6,17 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
 
-<logic:present name="siteView" property="component"> 
-
 <h2><bean:message key="title.editGroupProperties"/></h2>
 
-<bean:define id="infoSiteGroupProperties" name="siteView" property="component"/>
-<bean:define id="groupProperties" name="infoSiteGroupProperties" property="infoGrouping"/>
+<bean:define id="groupProperties" name="infoGrouping" />
 
 <div class="dinline forminline">
 
-<html:form action="/editGroupProperties">
+<html:form action="/studentGroupManagement">
 	<fr:context>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editGroupProperties"/>	
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID"  property="executionCourseID" value="<%= pageContext.findAttribute("executionCourseID").toString() %>" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.groupPropertiesCode"  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
 			
 	<div class="infoop2">
@@ -241,24 +238,14 @@
 
 	
 	
-	<html:form action="/viewShiftsAndGroups" >
+	<html:form action="/studentGroupManagement" >
 		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton"><bean:message key="button.cancel"/></html:cancel>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="viewShiftsAndGroups"/>
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID"  property="executionCourseID" value="<%= pageContext.findAttribute("executionCourseID").toString() %>" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.groupPropertiesCode"  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
 	</html:form>
 
 </div>
-
-</logic:present>
-
-
-
-<logic:notPresent name="siteView" property="component"> 
-<p>
-	<span class="warning0"><bean:message key="message.infoGroupProperties.not.available" /></span>
-</p>
-</logic:notPresent>
 
 <script language="javascript">
 	function setAutomaticValues(form) {

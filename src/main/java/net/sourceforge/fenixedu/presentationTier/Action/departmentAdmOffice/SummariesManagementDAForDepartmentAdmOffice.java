@@ -1,7 +1,11 @@
 package net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice;
 
-import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.TeacherSearchForSummariesManagement;
+import javax.servlet.http.HttpServletRequest;
+
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.SummariesManagementDA;
+
+import org.apache.struts.action.ActionForward;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -15,4 +19,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "prepareInsertComplexSummary",
                 path = "/departmentAdmOffice/teacher/executionCourse/createComplexSummary.jsp") })
 public class SummariesManagementDAForDepartmentAdmOffice extends SummariesManagementDA {
+
+    @Override
+    protected ActionForward processForward(HttpServletRequest request, ActionForward forward) {
+        return forward;
+    }
 }

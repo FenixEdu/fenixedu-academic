@@ -8,6 +8,9 @@
 
 <f:view>
 
+	<h:outputText value="#{evaluationManagementBackingBean.hackToStoreExecutionCourse}" />
+	<jsp:include page="/teacher/evaluation/evaluationMenu.jsp" />
+
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 	<logic:messagesPresent message="true">
 		<html:messages bundle="APPLICATION_RESOURCES" id="messages" message="true">
@@ -20,9 +23,7 @@
 	<h:messages layout="table" errorClass="error"/>
 	<h:form>
 		<h:inputHidden binding="#{evaluationManagementBackingBean.executionCourseIdHidden}" />
-		
-		<h:outputText value="<em>#{bundle['message.evaluationElements']}</em>" escape="false" />
-		
+				
 		<h:outputText value="<h2>#{bundle['label.finalEvaluation']}</h2>" escape="false" />
 	
 		<h:outputText value="<ul class='links'><li><b>#{bundle['label.students.listMarks']}:</b> " escape="false"/>
@@ -53,3 +54,6 @@
 	</h:form>
 
 </f:view>
+
+</div>
+</div>

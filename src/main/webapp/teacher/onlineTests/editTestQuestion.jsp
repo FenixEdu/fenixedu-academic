@@ -6,7 +6,7 @@
 <h2><bean:message key="title.editTestQuestion" /></h2>
 
 <logic:present name="testQuestion">
-	<bean:define id="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
+	<bean:define id="executionCourseID" value="<%=(pageContext.findAttribute("executionCourseID")).toString()%>"/>
 	<bean:define id="question" name="testQuestion" property="question" />
 	<bean:define id="exerciseCode" name="question" property="externalId" />
 	<bean:define id="metadataId" name="question" property="metadata.externalId" />
@@ -16,7 +16,7 @@
 	<html:form action="/testQuestionEdition">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editTestQuestion" />
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID" property="executionCourseID" value="<%=(pageContext.findAttribute("executionCourseID")).toString()%>" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.testCode" property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.testQuestionCode" property="testQuestionCode" value="<%= testQuestionCode.toString() %>" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.questionCode" property="questionCode" value="<%=(pageContext.findAttribute("questionCode")).toString()%>" />
@@ -66,7 +66,7 @@
 	<html:form action="/testEdition">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editTest" />
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID" property="executionCourseID" value="<%=(pageContext.findAttribute("executionCourseID")).toString()%>" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.testCode" property="testCode" value="<%=(pageContext.findAttribute("testCode")).toString()%>" />
 		<td><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 			<bean:message key="link.goBack" />

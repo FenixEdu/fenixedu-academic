@@ -7,7 +7,7 @@
 <html:form action="/testChecksumValidation">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="validateTestChecksum"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID" property="executionCourseID" value="<%=(pageContext.findAttribute("executionCourseID")).toString()%>"/>
 	<bean:define id="studentCode" name="registration" property="externalId"/>
 	<bean:define id="distributedTestCode" name="distributedTest" property="externalId"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentCode" property="studentCode" value="<%=studentCode.toString()%>"/>

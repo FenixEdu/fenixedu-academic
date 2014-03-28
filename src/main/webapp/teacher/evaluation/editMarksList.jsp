@@ -3,6 +3,9 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
 <f:view>
+	<h:outputText value="#{evaluationManagementBackingBean.hackToStoreExecutionCourse}" />
+	<jsp:include page="/teacher/evaluation/evaluationMenu.jsp" />
+
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>	
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
@@ -166,3 +169,5 @@
 	</h:form>
 
 </f:view>
+</div>
+</div>

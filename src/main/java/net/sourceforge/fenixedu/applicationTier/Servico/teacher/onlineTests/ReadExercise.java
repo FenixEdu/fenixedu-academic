@@ -3,12 +3,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class ReadExercise {
-    protected Metadata run(String executionCourseId, String metadataId) throws FenixServiceException {
+    protected Metadata run(ExecutionCourse executionCourseId, String metadataId) throws FenixServiceException {
         return FenixFramework.getDomainObject(metadataId);
     }
 
@@ -17,7 +18,7 @@ public class ReadExercise {
     private static final ReadExercise serviceInstance = new ReadExercise();
 
     @Atomic
-    public static Metadata runReadExercise(String executionCourseId, String metadataId) throws FenixServiceException,
+    public static Metadata runReadExercise(ExecutionCourse executionCourseId, String metadataId) throws FenixServiceException,
             NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         return serviceInstance.run(executionCourseId, metadataId);

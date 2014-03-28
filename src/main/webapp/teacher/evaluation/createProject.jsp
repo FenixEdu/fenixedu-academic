@@ -3,6 +3,10 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
 <f:view>
+
+	<h:outputText value="#{projectManagementBackingBean.hackToStoreExecutionCourse}" />
+	<jsp:include page="/teacher/evaluation/evaluationMenu.jsp" />
+
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
@@ -10,7 +14,6 @@
 		<h:form>
 			<h:inputHidden binding="#{projectManagementBackingBean.executionCourseIdHidden}" />
 	
-			<h:outputText value="<em>#{bundle['message.evaluationElements']}</em>" escape="false" />
 			<h:outputFormat value="<h2>#{bundle['link.create.project']}</h2/>" escape="false"/>
 			
 			<%-- ERROR MESSAGE --%>
@@ -98,3 +101,5 @@
 				styleClass="inputbutton" value="#{bundle['button.cancel']}"/>
 		</h:form>
 </f:view>
+</div>
+</div>

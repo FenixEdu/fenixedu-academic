@@ -10,6 +10,7 @@
 <html:xhtml/>
 
 <jsp:include page="context.jsp"/>
+<jsp:include page="/commons/renderers/treeRendererHeader.jsp" />
 
 <bean:define id="actionName" name="siteActionName"/>
 <bean:define id="contextParam" name="siteContextParam"/>

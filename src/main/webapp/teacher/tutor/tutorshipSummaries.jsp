@@ -5,7 +5,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<em><bean:message key="label.teacher.tutor.operations" /></em>
 <h2><bean:message key="label.tutorshipSummary" bundle="APPLICATION_RESOURCES" /></h2>
 
 <html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">

@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.EmailsDA;
+import net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -26,12 +27,12 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "teacher", path = "/sendMailToWorkGroupStudents")
+@Mapping(module = "teacher", path = "/sendMailToWorkGroupStudents", functionality = ManageExecutionCourseDA.class)
 public class SendMailToWorkGroupStudents extends FenixDispatchAction {
 
     public ActionForward sendEmail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        String executionCourseCode = request.getParameter("objectCode");
+        String executionCourseCode = request.getParameter("executionCourseID");
         String studentGroupCode = request.getParameter("studentGroupCode");
         ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseCode);
         StudentGroup studentGroup = FenixFramework.getDomainObject(studentGroupCode);
@@ -46,7 +47,7 @@ public class SendMailToWorkGroupStudents extends FenixDispatchAction {
 
     public ActionForward sendGroupingEmail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        String executionCourseCode = request.getParameter("objectCode");
+        String executionCourseCode = request.getParameter("executionCourseID");
         String groupingCode = request.getParameter("groupingCode");
         ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseCode);
         Grouping grouping = FenixFramework.getDomainObject(groupingCode);

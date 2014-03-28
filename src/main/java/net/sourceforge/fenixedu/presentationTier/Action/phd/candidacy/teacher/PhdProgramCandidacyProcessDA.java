@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestElement;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.CommonPhdCandidacyDA;
+import net.sourceforge.fenixedu.presentationTier.Action.phd.teacher.PhdIndividualProgramProcessDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -14,14 +15,9 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(path = "/phdProgramCandidacyProcess", module = "teacher")
-@Forwards(tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp"), value = {
-
-@Forward(name = "manageCandidacyDocuments", path = "/phd/candidacy/teacher/manageCandidacyDocuments.jsp")
-
-})
+@Mapping(path = "/phdProgramCandidacyProcess", module = "teacher", functionality = PhdIndividualProgramProcessDA.class)
+@Forwards(@Forward(name = "manageCandidacyDocuments", path = "/phd/candidacy/teacher/manageCandidacyDocuments.jsp"))
 public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 
     @Override

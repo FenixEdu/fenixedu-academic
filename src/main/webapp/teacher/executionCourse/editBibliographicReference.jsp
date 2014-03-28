@@ -12,8 +12,7 @@
 </div>
 
 <logic:present name="bibliographicReference">
-	<blockquote>
-		<html:form action="/editBibliographicReference">
+		<html:form action="/manageBibliographicReference">
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editBibliographicReference"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 			<bean:define id="bibliographicReferenceID" type="java.lang.String" name="bibliographicReference" property="externalId"/>
@@ -74,5 +73,4 @@
 				</html:reset>
 			</p>
 		</html:form>
-	</blockquote>
 </logic:present>

@@ -3,6 +3,10 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
 <f:view>
+
+	<h:outputText value="#{adHocEvaluationManagementBackingBean.hackToStoreExecutionCourse}" />
+	<jsp:include page="/teacher/evaluation/evaluationMenu.jsp" />
+
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
@@ -10,7 +14,6 @@
 		<h:form>
 			<h:inputHidden binding="#{adHocEvaluationManagementBackingBean.executionCourseIdHidden}" />
 
-			<h:outputText value="<em>#{bundle['message.evaluationElements']}</em>" escape="false" />
 			<h:outputFormat value="<h2>#{bundle['link.edit.adHocEvaluation']}</h2/>" escape="false"/>
 			<%-- ERROR MESSAGE --%>
 			<h:outputText styleClass="error" rendered="#{!empty adHocEvaluationManagementBackingBean.errorMessage}"
@@ -47,3 +50,5 @@
 				styleClass="inputbutton" value="#{bundle['button.cancel']}"/>
 		</h:form>
 </f:view>
+</div>
+</div>

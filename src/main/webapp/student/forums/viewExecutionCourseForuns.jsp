@@ -21,7 +21,7 @@
 	
 	<logic:notEmpty name="executionCourse" property="foruns">
 		<logic:iterate id="executionCourseForum" name="executionCourse" property="foruns">
-			<bean:size id="threadsCount" name="executionCourseForum" property="conversationThreads"/>
+			<bean:size id="threadsCount" name="executionCourseForum" property="conversationThreadSet"/>
 			<tr>
 				<td>
 					<html:link action="/viewExecutionCourseForuns.do?method=viewForum" paramId="forumId" paramName="executionCourseForum" paramProperty="externalId">

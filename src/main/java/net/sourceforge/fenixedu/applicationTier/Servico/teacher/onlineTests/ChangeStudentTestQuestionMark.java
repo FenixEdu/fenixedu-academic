@@ -35,8 +35,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ChangeStudentTestQuestionMark {
     protected void run(String executionCourseId, String distributedTestId, Double newMark, String questionId, String studentId,
-            TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException {
-        path = path.replace('\\', '/');
+            TestQuestionStudentsChangesType studentsType) throws FenixServiceException {
 
         DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestId);
         Question question = distributedTest.findQuestionByOID(questionId);
@@ -69,7 +68,7 @@ public class ChangeStudentTestQuestionMark {
                     Response response = null;
                     try {
                         ParseSubQuestion parse = new ParseSubQuestion();
-                        studentTestQuestion = parse.parseStudentTestQuestion(studentTestQuestion, path);
+                        studentTestQuestion = parse.parseStudentTestQuestion(studentTestQuestion);
                     } catch (Exception e) {
                         throw new FenixServiceException(e);
                     }
@@ -126,10 +125,10 @@ public class ChangeStudentTestQuestionMark {
 
     @Atomic
     public static void runChangeStudentTestQuestionMark(String executionCourseId, String distributedTestId, Double newMark,
-            String questionId, String studentId, TestQuestionStudentsChangesType studentsType, String path)
-            throws FenixServiceException, NotAuthorizedException {
+            String questionId, String studentId, TestQuestionStudentsChangesType studentsType) throws FenixServiceException,
+            NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
-        serviceInstance.run(executionCourseId, distributedTestId, newMark, questionId, studentId, studentsType, path);
+        serviceInstance.run(executionCourseId, distributedTestId, newMark, questionId, studentId, studentsType);
     }
 
 }

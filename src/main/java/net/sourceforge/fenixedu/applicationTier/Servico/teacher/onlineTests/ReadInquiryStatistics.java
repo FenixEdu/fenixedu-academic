@@ -32,8 +32,7 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ReadInquiryStatistics {
 
-    public List<InfoInquiryStatistics> run(String executionCourseId, String distributedTestId, String path)
-            throws FenixServiceException {
+    public List<InfoInquiryStatistics> run(String executionCourseId, String distributedTestId) throws FenixServiceException {
         List<InfoInquiryStatistics> infoInquiryStatisticsList = new ArrayList<InfoInquiryStatistics>();
         DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestId);
         if (distributedTest == null) {
@@ -45,7 +44,7 @@ public class ReadInquiryStatistics {
             InfoInquiryStatistics infoInquiryStatistics = new InfoInquiryStatistics();
             ParseSubQuestion parse = new ParseSubQuestion();
             try {
-                parse.parseStudentTestQuestion(studentTestQuestion, path.replace('\\', '/'));
+                parse.parseStudentTestQuestion(studentTestQuestion);
                 if (studentTestQuestion.getOptionShuffle() == null
                         && studentTestQuestion.getSubQuestionByItem().getShuffle() != null) {
                     studentTestQuestion.setOptionShuffle(studentTestQuestion.getSubQuestionByItem().getShuffleString());
@@ -103,10 +102,10 @@ public class ReadInquiryStatistics {
     private static final ReadInquiryStatistics serviceInstance = new ReadInquiryStatistics();
 
     @Atomic
-    public static List<InfoInquiryStatistics> runReadInquiryStatistics(String executionCourseId, String distributedTestId,
-            String path) throws FenixServiceException, NotAuthorizedException {
+    public static List<InfoInquiryStatistics> runReadInquiryStatistics(String executionCourseId, String distributedTestId)
+            throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
-        return serviceInstance.run(executionCourseId, distributedTestId, path);
+        return serviceInstance.run(executionCourseId, distributedTestId);
     }
 
 }

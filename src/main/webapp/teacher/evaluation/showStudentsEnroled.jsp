@@ -4,6 +4,10 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
 <f:view>
+
+	<h:outputText value="#{evaluationManagementBackingBean.hackToStoreExecutionCourse}" />
+	<jsp:include page="/teacher/evaluation/evaluationMenu.jsp" />
+
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 
@@ -12,7 +16,6 @@
 		<h:inputHidden binding="#{evaluationManagementBackingBean.executionCourseIdHidden}" />
 		<h:inputHidden binding="#{evaluationManagementBackingBean.evaluationIdHidden}" />
 		
-		<h:outputText value="<em>#{bundle['message.evaluationElements']}</em>" escape="false" />
 		<h:outputText value="<h2>#{bundle['label.students.enrolled']}</h2>" escape="false" />
 
 		<h:outputText value="<table class='tstyle2 thlight thright'>" escape="false" />
@@ -110,3 +113,6 @@
 		<h:outputText value="</p>" escape="false" />
 	</h:form>
 </f:view>
+
+</div>
+</div>

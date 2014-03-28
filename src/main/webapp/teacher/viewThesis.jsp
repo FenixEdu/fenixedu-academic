@@ -8,8 +8,6 @@
 
 <html:xhtml />
 
-<em><bean:message bundle="APPLICATION_RESOURCES"
-	key="label.thesis.document.confirmation" /></em>
 <h2><bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES"
 	key="title.scientificCouncil.thesis.evaluated.view" /></h2>
 

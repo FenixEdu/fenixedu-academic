@@ -9,10 +9,10 @@
 <logic:present name="executionCourse">
 
 	<bean:define id="executionCourseID" name="executionCourse" property="externalId"/>	
-	<bean:define id="submitUrl">/manageExecutionCourse.do?method=listExecutionCoursesToImportBibliographicReferences&amp;executionCourseID=<bean:write name="executionCourseID"/></bean:define>
-	<bean:define id="showBibliographicReferences">/manageExecutionCourse.do?method=bibliographicReference&amp;executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
-	<bean:define id="postBackLink">/manageExecutionCourse.do?method=prepareImportBibliographicReferencesPostBack&amp;executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
-	<bean:define id="invalidLink">/manageExecutionCourse.do?method=prepareImportBiliographicReferencesInvalid&amp;executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
+	<bean:define id="submitUrl">/manageBibliographicReference.do?method=listExecutionCoursesToImportBibliographicReferences&amp;executionCourseID=<bean:write name="executionCourseID"/></bean:define>
+	<bean:define id="showBibliographicReferences">/manageBibliographicReference.do?method=bibliographicReference&amp;executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
+	<bean:define id="postBackLink">/manageBibliographicReference.do?method=prepareImportBibliographicReferencesPostBack&amp;executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
+	<bean:define id="invalidLink">/manageBibliographicReference.do?method=prepareImportBiliographicReferencesInvalid&amp;executionCourseID=<bean:write name="executionCourseID"/></bean:define>	
 
 	<h2><bean:message key="label.import.bibliographicReferences.title"/></h2>
 	
@@ -31,7 +31,7 @@
 	<logic:notEmpty name="importContentBean" property="curricularYear">	
 	 	<logic:notEmpty name="importContentBean" property="executionPeriod">	
 	 		<logic:notEmpty name="importContentBean" property="executionDegree">	
-				<bean:define id="importBibliographicReferencesUrl">/manageExecutionCourse.do?method=importBibliographicReferences&amp;executionCourseID=<bean:write name="executionCourseID"/></bean:define>		
+				<bean:define id="importBibliographicReferencesUrl">/manageBibliographicReference.do?method=importBibliographicReferences&amp;executionCourseID=<bean:write name="executionCourseID"/></bean:define>		
 				<h3 class="mtop2 mbottom025"><bean:message key="label.choose.course"/></h3>
 				<fr:edit id="importContentBeanWithExecutionCourse" name="importContentBean" schema="ListExecutionCoursesToImportContent" 
 					action="<%= importBibliographicReferencesUrl %>">

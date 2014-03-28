@@ -364,6 +364,7 @@
 					</fr:form>
 				</div>
 			</div>
+		</div>
 
 		<div class="modal fade" id="change-year-modal">
 			<div class="modal-dialog">

@@ -21,7 +21,7 @@ import pt.ist.fenixframework.FenixFramework;
  * @author Susana Fernandes
  */
 public class ReadStudentDistributedTest {
-    public List<StudentTestQuestion> run(String executionCourseId, String distributedTestId, String studentId, String path)
+    public List<StudentTestQuestion> run(String executionCourseId, String distributedTestId, String studentId)
             throws FenixServiceException {
 
         List<StudentTestQuestion> studentTestQuestionList = new ArrayList<StudentTestQuestion>();
@@ -40,7 +40,7 @@ public class ReadStudentDistributedTest {
         for (StudentTestQuestion studentTestQuestion : studentTestQuestions) {
             ParseSubQuestion parse = new ParseSubQuestion();
             try {
-                parse.parseStudentTestQuestion(studentTestQuestion, path.replace('\\', '/'));
+                parse.parseStudentTestQuestion(studentTestQuestion);
             } catch (Exception e) {
                 throw new FenixServiceException(e);
             }
@@ -59,9 +59,9 @@ public class ReadStudentDistributedTest {
 
     @Atomic
     public static List<StudentTestQuestion> runReadStudentDistributedTest(String executionCourseId, String distributedTestId,
-            String studentId, String path) throws FenixServiceException, NotAuthorizedException {
+            String studentId) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
-        return serviceInstance.run(executionCourseId, distributedTestId, studentId, path);
+        return serviceInstance.run(executionCourseId, distributedTestId, studentId);
     }
 
 }

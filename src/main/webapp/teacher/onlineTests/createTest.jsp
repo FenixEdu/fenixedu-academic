@@ -14,8 +14,7 @@
 		<html:form action="/testsManagement">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createTest"/>
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode"/>
-
+		<input type="hidden" name="executionCourseID" value="${executionCourseID}" />
 		<table><tr><td class="infoop"><bean:message key="message.createTest.information" /></td></tr></table>
 		<br/><br/>
 		<table>

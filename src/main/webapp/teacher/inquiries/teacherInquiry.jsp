@@ -76,7 +76,6 @@ float: none;
 <link href="<%= request.getContextPath() %>/CSS/quc_results.css" rel="stylesheet" media="screen, print" type="text/css" />
 
 <script type="text/javascript" language="javascript">switchGlobal();</script> 
-<em><bean:message key="title.teacherPortal" bundle="INQUIRIES_RESOURCES"/></em>
 <h2><bean:message key="title.inquiry.quc.teacher" bundle="INQUIRIES_RESOURCES"/></h2>
 
 <h3><bean:write name="executionCourse" property="name"/> - <bean:write name="executionCourse" property="sigla"/> (<bean:write name="executionPeriod" property="semester"/>º Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</h3>

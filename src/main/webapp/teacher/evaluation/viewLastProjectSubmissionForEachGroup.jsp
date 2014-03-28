@@ -11,7 +11,6 @@
 	<span class="error"><!-- Error messages go here --> <bean:write name="message" /> </span>
 </html:messages>
 
-<em><bean:message key="message.evaluationElements"  bundle="APPLICATION_RESOURCES" /></em>
 <h2><bean:message key="label.teacher.executionCourseManagement.evaluation.project.viewLastProjectSubmissionForEachGroup.title" bundle="APPLICATION_RESOURCES"/></h2>
 
 <fr:view name="project" schema="evaluation.project.view-with-name-description-and-grouping">
@@ -76,7 +75,7 @@
 			<fr:property name="key(groupComment)" value="link.teacher.executionCourseManagement.evaluation.project.viewLastProjectSubmissionForEachGroup.groupComment"/>
 			<fr:property name="visibleIfNot(groupComment)" value="project.submissionPeriodOpen"/>
 	    </fr:layout>
-		<fr:destination name="groupNumberLink" path="<%= "/viewStudentGroupInformation.do?method=viewDeletedStudentGroupInformation&amp;studentGroupId=${studentGroup.externalId}&amp;executionCourseID=" + executionCourseID + "&amp;projectOID=${project.externalId}"  %>"/>
+		<fr:destination name="groupNumberLink" path="<%= "/studentGroupManagement.do?method=viewDeletedStudentGroupInformation&amp;studentGroupId=${studentGroup.externalId}&amp;executionCourseID=" + executionCourseID + "&amp;projectOID=${project.externalId}"  %>"/>
 	</fr:view>
 
 </logic:notEmpty>

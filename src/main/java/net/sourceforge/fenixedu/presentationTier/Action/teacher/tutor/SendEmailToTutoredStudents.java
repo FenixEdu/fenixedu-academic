@@ -16,21 +16,23 @@ import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.EmailsDA;
+import net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherApplication.TeacherTutorApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@StrutsFunctionality(app = TeacherTutorApp.class, path = "send-email-to-students",
+        titleKey = "link.teacher.tutorship.sendMailToTutoredStudents")
 @Mapping(path = "/sendMailToTutoredStudents", module = "teacher")
-@Forwards(tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp"), value = { @Forward(
-        name = "chooseReceivers", path = "/teacher/tutor/chooseReceivers.jsp", tileProperties = @Tile(
-                title = "private.teacher.managementmentoring.sendemail")) })
+@Forwards(@Forward(name = "chooseReceivers", path = "/teacher/tutor/chooseReceivers.jsp"))
 public class SendEmailToTutoredStudents extends FenixDispatchAction {
 
     public Teacher getTeacher(HttpServletRequest request) {
@@ -53,6 +55,7 @@ public class SendEmailToTutoredStudents extends FenixDispatchAction {
         return recipients;
     }
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 

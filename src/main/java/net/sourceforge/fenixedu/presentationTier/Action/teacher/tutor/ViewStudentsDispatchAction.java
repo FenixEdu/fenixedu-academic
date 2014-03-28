@@ -10,25 +10,26 @@ import net.sourceforge.fenixedu.domain.TutorshipLog;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.tutorship.ViewStudentsByTutorDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherApplication.TeacherTutorApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
+@StrutsFunctionality(app = TeacherTutorApp.class, path = "students-by-tutor", titleKey = "link.teacher.tutorship.history")
 @Mapping(path = "/viewStudentsByTutor", module = "teacher")
-@Forwards(tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp"), value = {
-        @Forward(name = "viewStudentsByTutor", path = "/teacher/tutor/viewStudentsByTutor.jsp", tileProperties = @Tile(
-                title = "private.teacher.managementmentoring.seetutorandos")),
-        @Forward(name = "editStudent", path = "/teacher/tutor/editStudent.jsp", tileProperties = @Tile(
-                title = "private.teacher.managementmentoring.seetutorandos")) })
+@Forwards({ @Forward(name = "viewStudentsByTutor", path = "/teacher/tutor/viewStudentsByTutor.jsp"),
+        @Forward(name = "editStudent", path = "/teacher/tutor/editStudent.jsp") })
 public class ViewStudentsDispatchAction extends ViewStudentsByTutorDispatchAction {
 
+    @EntryPoint
     public ActionForward viewStudentsByTutor(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 

@@ -6,20 +6,14 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-
-<em><bean:message bundle="MESSAGING_RESOURCES" key="label.manage.channels"/></em>
 <h2><bean:message bundle="MESSAGING_RESOURCES" key="messaging.annoucenment.edit.label"/></h2>
 
 <jsp:include flush="true" page="/messaging/context.jsp"/>
 
-<bean:define id="contextPrefix" name="contextPrefix" />
-<bean:define id="extraParameters" name="extraParameters" />
 <bean:define id="announcementBoardId" name="announcementBoard" property="externalId"/>
 
 
-<bean:define id="action"><%= "method=viewAnnouncements&announcementBoardId=" + announcementBoardId + "&" + extraParameters %></bean:define>
-
-<fr:form action="<%=  contextPrefix + action %>">
+<fr:form action="/announcementManagement.do?method=viewAnnouncements&announcementBoardId=${announcementBoardId}&executionCourseID=${executionCourseID}">
 
 
 <p class="mtop2 mbottom025"><strong><bean:message key="label.messaging.requiredFields" bundle="MESSAGING_RESOURCES"/>:</strong></p>
@@ -57,7 +51,7 @@
 			<fr:message for="announcement-body-validated" />
 		</td>
 	</tr>
-	<logic:notEmpty name="announcementBoard" property="files">
+	<logic:notEmpty name="announcementBoard" property="fileContentSet">
 		<tr>
 		<th>
 			<bean:message key="link.insertFile" bundle="SITE_RESOURCES"/>
@@ -211,7 +205,7 @@
 
 	<p>
 		<fr:edit name="announcement"  slot="creator">
-			<fr:hidden name="person"/>
+			<fr:hidden name="LOGGED_USER_ATTRIBUTE" property="person" />
 		</fr:edit>		
 
 	<p>

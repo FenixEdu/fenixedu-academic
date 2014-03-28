@@ -23,9 +23,9 @@ import net.sourceforge.fenixedu.domain.util.email.CoordinatorSender;
 import net.sourceforge.fenixedu.domain.util.email.ExecutionCourseSender;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.EmailsDA;
+import net.sourceforge.fenixedu.presentationTier.Action.teacher.executionCourse.ExecutionCourseBaseAction;
 import net.sourceforge.fenixedu.util.WorkingStudentSelectionType;
 
 import org.apache.commons.lang.StringUtils;
@@ -35,10 +35,12 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
-public class SearchExecutionCourseAttendsAction extends FenixDispatchAction {
+@Mapping(path = "/searchECAttends", module = "teacher", functionality = ManageExecutionCourseDA.class)
+public class SearchExecutionCourseAttendsAction extends ExecutionCourseBaseAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -50,7 +52,7 @@ public class SearchExecutionCourseAttendsAction extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         // Integer objectCode =
         // Integer.valueOf(request.getParameter("objectCode"));
-        ExecutionCourse executionCourse = getDomainObject(request, "objectCode");
+        ExecutionCourse executionCourse = getExecutionCourse(request);
         // ExecutionCourse executionCourse =
         // FenixFramework.getDomainObject(objectCode);
         SearchExecutionCourseAttendsBean searchExecutionCourseAttendsBean = readSearchBean(request, executionCourse);
@@ -61,7 +63,7 @@ public class SearchExecutionCourseAttendsAction extends FenixDispatchAction {
 
         prepareAttendsCollectionPages(request, searchExecutionCourseAttendsBean, executionCourse);
 
-        return mapping.findForward("search");
+        return forward(request, "/teacher/viewAttendsSearch.jsp");
     }
 
     private SearchExecutionCourseAttendsBean readSearchBean(HttpServletRequest request, ExecutionCourse executionCourse) {
@@ -189,7 +191,7 @@ public class SearchExecutionCourseAttendsAction extends FenixDispatchAction {
 
         prepareAttendsCollectionPages(request, bean, bean.getExecutionCourse());
 
-        return mapping.findForward("search");
+        return forward(request, "/teacher/viewAttendsSearch.jsp");
     }
 
 }

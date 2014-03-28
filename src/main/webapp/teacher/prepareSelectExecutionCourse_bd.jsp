@@ -1,5 +1,6 @@
 <%@ page language="java" %>
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %><html:xhtml/>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
@@ -17,11 +18,11 @@
 	</table>
 	<br/>
 <span class="error"><!-- Error messages go here --><html:errors /></span>        
-<html:form action="/viewSiteExecutionCourse" >
+<html:form action="/studentGroupManagement" >
 	<input alt="input.method" type="hidden" name="method" value="firstPage">       		
    	<%-- hide previous form for validation matters --%>
-	<html:hidden alt="<%=PresentationConstants.EXECUTION_PERIOD_OID%>" property="<%=PresentationConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(PresentationConstants.EXECUTION_PERIOD_OID)%>" />
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+	<html:hidden alt="<%=PresentationConstants.EXECUTION_PERIOD_OID%>" property="<%=PresentationConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+pageContext.findAttribute(PresentationConstants.EXECUTION_PERIOD_OID)%>" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID"  property="executionCourseID" value="<%= pageContext.findAttribute("executionCourseID").toString() %>" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.groupPropertiesCode"  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curYear" name="chooseSearchContextForm" property="curYear"/>	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.index" name="chooseSearchContextForm" property="index"/>

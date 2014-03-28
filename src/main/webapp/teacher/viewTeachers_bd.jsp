@@ -12,21 +12,18 @@
 	<p><bean:message key="label.teachers.specialTeacherWarning" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" /></p>
 </div>
 
+<bean:define id="isResponsible" name="professorship" property="responsibleFor" />
+
 <p>
 	<span class="error0"><!-- Error messages go here --><html:errors /></span>	
 </p>
 
-<logic:present name="siteView">
-<bean:define id="infoSiteTeachers" name="siteView" property="component"/>
-<bean:define id="teachersList" name="infoSiteTeachers" property="infoTeachers"/>
-<bean:define id="isResponsible" name="infoSiteTeachers" property="isResponsible"/>
-
 <logic:equal name="isResponsible" value="true">
 <ul class="mvert15">
 	<li>
-		<html:link page="<%= "/teacherManagerDA.do?method=prepareAssociateTeacher&amp;objectCode=" + pageContext.findAttribute("objectCode") %>"><bean:message key="link.addTeacher"/></html:link>
+		<html:link page="/teachersManagerDA.do?method=prepareAssociateTeacher&executionCourseID=${executionCourseID}"><bean:message key="link.addTeacher"/></html:link>
 	</li>
-</ul> 
+</ul>
 </logic:equal>
 <table class="tstyle2 tdcenter">
 	<tr>
@@ -37,7 +34,7 @@
 			<th><bean:message key="message.edit" /></th>    
 		</logic:equal>
 	</tr>	
-	<logic:iterate id="professorship" name="listPersons">
+	<logic:iterate id="professorship" name="executionCourse" property="professorships">
 	<bean:define id="person" name="professorship" property="person" />
 	<tr>
 		<td><bean:write name="person"  property="istUsername" /></td>
@@ -48,8 +45,7 @@
 				<bean:message key="label.no.capitalized" />
 			</td>
 			<td>
-				<bean:define id="teacherOID" name="professorship" property="externalId"/>		
-				<html:link page="<%= "/teachersManagerDA.do?method=viewProfessorshipProperties&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;teacherOID=" + teacherOID %>">
+				<html:link page="/teachersManagerDA.do?method=viewProfessorshipProperties&executionCourseID=${executionCourseID}&teacherOID=${professorship.externalId}">
 					Detalhes
 				</html:link>
 			</td>
@@ -66,4 +62,3 @@
 	</tr>
 	</logic:iterate>	
 </table>
-</logic:present>

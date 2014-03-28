@@ -43,6 +43,16 @@ public abstract class Forum extends Forum_Base {
         return null;
     }
 
+    public int getConversationMessagesCount() {
+        int total = 0;
+
+        for (ConversationThread conversationThread : getConversationThreadSet()) {
+            total += conversationThread.getMessageSet().size();
+        }
+
+        return total;
+    }
+
     public void checkIfPersonCanWrite(Person person) {
         if (!getWritersGroup().isMember(person)) {
             throw new DomainException("forum.person.cannot.write");

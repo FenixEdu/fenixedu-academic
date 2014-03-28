@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.accessControl.InternalPersonGroup;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -135,6 +136,10 @@ public abstract class Site extends Site_Base {
     public String getReversePath() {
         // throw new UnsupportedOperationException("Not yet implemented");
         return "http://fenixedu.org";
+    }
+
+    public String getFullPath() {
+        return CoreConfiguration.getConfiguration().applicationUrl() + getReversePath();
     }
 
     public static final class SiteMapper {

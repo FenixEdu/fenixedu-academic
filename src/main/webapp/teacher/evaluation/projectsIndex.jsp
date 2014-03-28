@@ -4,9 +4,12 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
 <f:view>
+
+	<h:outputText value="#{projectManagementBackingBean.hackToStoreExecutionCourse}" />
+	<jsp:include page="/teacher/evaluation/evaluationMenu.jsp" />
+
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 
-	<h:outputText value="<em>#{bundle['message.evaluationElements']}</em>" escape="false" />
 	<h:outputText value="<h2>#{bundle['link.projects']}</h2>" escape="false" />
 	<h:form>
 		<h:inputHidden binding="#{projectManagementBackingBean.executionCourseIdHidden}" />
@@ -68,3 +71,5 @@
 		</h:panelGroup>		
 	</h:form>
 </f:view>
+</div>
+</div>

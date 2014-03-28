@@ -29,8 +29,8 @@ public class ReadCourseInformation {
         final InfoSiteCourseInformation resultComponent = new InfoSiteCourseInformation(executionCourse);
 
         final TeacherAdministrationSiteView result = new TeacherAdministrationSiteView();
-        result.setCommonComponent(TeacherAdministrationSiteComponentBuilder.getInstance().getComponent(new InfoSiteCommon(),
-                executionCourse.getSite(), null, null, null));
+        result.setCommonComponent(TeacherAdministrationSiteComponentBuilder.getInfoSiteCommon(new InfoSiteCommon(),
+                executionCourse.getSite()));
         result.setComponent(resultComponent);
 
         return result;

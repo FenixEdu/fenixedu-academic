@@ -10,7 +10,8 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Section;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA;
+import net.sourceforge.fenixedu.presentationTier.Action.teacher.executionCourse.ExecutionCourseBaseAction;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.rules.ResourceRule;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.rules.Rule;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.rules.SimpleTransformRule;
@@ -19,55 +20,20 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "teacher", path = "/generateArchive", scope = "session", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "fallback", path = "manage-execution-course-instructions", tileProperties = @Tile(title = "bolacha")),
-        @Forward(name = "options", path = "execution-course-archive-options", tileProperties = @Tile(title = "bolacha2")) })
-public class GenerateSiteArchive extends FenixDispatchAction {
-
-    public ExecutionCourse getExecutionCourse(HttpServletRequest request) {
-        String parameter = request.getParameter("executionCourseID");
-
-        if (parameter == null) {
-            return null;
-        }
-
-        try {
-            return FenixFramework.getDomainObject(parameter);
-        } catch (NumberFormatException e) {
-            return null;
-        }
-    }
-
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        ExecutionCourse executionCourse = getExecutionCourse(request);
-        if (executionCourse != null) {
-            request.setAttribute("executionCourse", executionCourse);
-        }
-
-        return super.execute(mapping, actionForm, request, response);
-    }
+@Mapping(module = "teacher", path = "/generateArchive", functionality = ManageExecutionCourseDA.class)
+public class GenerateSiteArchive extends ExecutionCourseBaseAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         request.setAttribute("options", new ArchiveOptions());
-        return mapping.findForward("options");
+        return forward(request, "/teacher/executionCourse/archiveOptions.jsp");
     }
 
     public ActionForward generate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         ExecutionCourse executionCourse = getExecutionCourse(request);
-        if (executionCourse == null) {
-            return mapping.findForward("fallback");
-        }
 
         ArchiveOptions options = getOptions(request);
         if (options == null) {

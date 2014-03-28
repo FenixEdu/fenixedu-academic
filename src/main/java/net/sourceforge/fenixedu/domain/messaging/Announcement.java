@@ -328,6 +328,7 @@ public class Announcement extends Announcement_Base {
         }
         setCampus(null);
         setCreator(null);
+        setAnnouncementBoard(null);
         deleteDomainObject();
     }
 

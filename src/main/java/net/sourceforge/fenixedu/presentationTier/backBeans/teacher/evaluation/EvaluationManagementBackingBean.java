@@ -675,6 +675,12 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return FenixFramework.getDomainObject(getExecutionCourseID());
     }
 
+    public String getHackToStoreExecutionCourse() {
+        ExecutionCourse course = getExecutionCourse();
+        setRequestAttribute("executionCourse", course);
+        return "";
+    }
+
     public Map<String, String> getMarks() throws FenixServiceException {
         final Evaluation evaluation = getEvaluation();
         final ExecutionCourse executionCourse = getExecutionCourse();

@@ -68,7 +68,7 @@ public class ReadShiftsAndGroups {
     }
 
     @Atomic
-    public static InfoSiteShiftsAndGroups run(Grouping grouping) throws FenixServiceException {
+    public static InfoSiteShiftsAndGroups run(Grouping grouping) {
         checkPermissions(grouping);
         final InfoSiteShiftsAndGroups infoSiteShiftsAndGroups = new InfoSiteShiftsAndGroups();
 

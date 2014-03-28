@@ -6,19 +6,15 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <html:xhtml/>
 
-
-<em><bean:message bundle="MESSAGING_RESOURCES" key="label.manageChannels"/></em>
 <h2><bean:message bundle="MESSAGING_RESOURCES" key="messaging.annoucenment.add.label"/></h2>
 
 <jsp:include flush="true" page="/messaging/context.jsp"/>
 
-<bean:define id="contextPrefix" name="contextPrefix" type="java.lang.String"/>
-<bean:define id="person" name="person" type="net.sourceforge.fenixedu.domain.Person"/>
-<bean:define id="extraParameters" name="extraParameters" />
+<bean:define id="person" name="LOGGED_USER_ATTRIBUTE" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
 <bean:define id="announcementBoardId" name="announcementBoard" property="externalId"/>
 <bean:define id="announcementBoard" name="announcementBoard"/>
 
-<fr:form action="<%= contextPrefix + "method=viewAnnouncements&announcementBoardId="+announcementBoardId+ "&"+extraParameters%>">
+<fr:form action="/announcementManagement.do?method=viewAnnouncements&announcementBoardId=${announcementBoardId}&executionCourseID=${executionCourseID}">
 
 <%--
 <p class="mtop2 mbottom025"><strong><bean:message key="label.requiredFields" bundle="MESSAGING_RESOURCES"/>:</strong></p>
@@ -76,7 +72,7 @@
 			</fr:create>
 		</td>
 	</tr>
-	<logic:notEmpty name="announcementBoard" property="files">
+	<logic:notEmpty name="announcementBoard" property="fileContentSet">
 		<tr>
 		<th>
 			<bean:message key="link.insertFile" bundle="SITE_RESOURCES"/>

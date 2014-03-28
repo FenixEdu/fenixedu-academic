@@ -29,13 +29,15 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.commons.StringNormalizer;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.YearMonthDay;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 /**
  * @author Andre Fernandes / Joao Brito
  */
+@Mapping(module = "teacher", path = "/getTabSeparatedStudentList", functionality = ManageExecutionCourseDA.class)
 public class DownloadStudentsWithAttendsByExecutionCourseListAction extends FenixDispatchAction {
 
     private static final String SEPARATOR = "\t";
@@ -52,12 +54,6 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
 
     private static final String ATTENDACY_TYPE = "Tipo de Inscrição";
 
-    private static final String ATTENDACY_TYPE_NORMAL = "Normal";
-
-    private static final String ATTENDACY_TYPE_NOT_ENROLLED = "Não Inscrito";
-
-    private static final String ATTENDACY_TYPE_IMPROVEMENT = "Melhoria";
-
     private static final String COURSE = "Degree";
 
     private static final String NAME = "Nome";
@@ -68,22 +64,11 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
 
     private static final String SHIFT = "Turno ";
 
-    private static final String THEORETICAL = "Teórico";
-
-    private static final String LABORATORIAL = "Laboratorial";
-
-    private static final String PRACTICAL = "Prático";
-
-    private static final String THEO_PRACTICAL = "Teórico-Prático";
-
     private static final String SUMMARY = "Resumo:";
 
     private static final String NUMBER_ENROLLMENTS = "Número de inscrições";
 
     private static final String NUMBER_STUDENTS = "Número de alunos";
-
-    private final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources",
-            Language.getLocale());
 
     @Override
     public ActionForward execute(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
@@ -119,7 +104,10 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
                 new ArrayList<ShiftType>(executionCourseAttendsBean.getExecutionCourse().getShiftTypes());
         Collections.sort(shiftTypes);
         for (final ShiftType shiftType : shiftTypes) {
-            fileContents += SHIFT + enumerationResources.getString(shiftType.getName()) + SEPARATOR;
+            fileContents +=
+                    SHIFT
+                            + ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale()).getString(
+                                    shiftType.getName()) + SEPARATOR;
         }
 
         fileContents += NEWLINE;
@@ -134,7 +122,10 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
                         attends.getEnrolment()
                                 .getNumberOfTotalEnrolmentsInThisCourse(attends.getEnrolment().getExecutionPeriod()) + SEPARATOR;
             }
-            fileContents += enumerationResources.getString(attends.getAttendsStateType().getQualifiedName()) + SEPARATOR;
+            fileContents +=
+                    ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale()).getString(
+                            attends.getAttendsStateType().getQualifiedName())
+                            + SEPARATOR;
             fileContents += attends.getStudentCurricularPlanFromAttends().getDegreeCurricularPlan().getName() + SEPARATOR;
             fileContents += attends.getRegistration().getStudent().getPerson().getName() + SEPARATOR;
             for (final Grouping grouping : groupings) {

@@ -1,5 +1,6 @@
 <%@ page language="java" %>
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %><html:xhtml/>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ page import="org.apache.struts.Globals" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
@@ -25,8 +26,8 @@
 	<input alt="input.method" type="hidden" name="method" value="nextPagePublic"/>
 	<input alt="input.nextPage" type="hidden" name="nextPage" value="<%= nextPage %>"/>
 	<input alt="input.inputPage" type="hidden" name="inputPage" value="<%= inputPage %>"/>
-	<html:hidden alt="<%=PresentationConstants.EXECUTION_PERIOD_OID%>" property="<%=PresentationConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(PresentationConstants.EXECUTION_PERIOD_OID)%>" />
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+	<html:hidden alt="<%=PresentationConstants.EXECUTION_PERIOD_OID%>" property="<%=PresentationConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+pageContext.findAttribute(PresentationConstants.EXECUTION_PERIOD_OID)%>" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID"  property="executionCourseID" value="<%= pageContext.findAttribute("executionCourseID").toString() %>" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.groupPropertiesCode"  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 

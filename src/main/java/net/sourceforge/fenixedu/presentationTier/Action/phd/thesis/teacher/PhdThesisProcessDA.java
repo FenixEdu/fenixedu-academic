@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdDocumentsZip;
+import net.sourceforge.fenixedu.presentationTier.Action.phd.teacher.PhdIndividualProgramProcessDA;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.thesis.CommonPhdThesisProcessDA;
 
 import org.apache.struts.action.ActionForm;
@@ -22,18 +23,11 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(path = "/phdThesisProcess", module = "teacher")
-@Forwards(tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp"), value = {
-
-@Forward(name = "manageThesisDocuments", path = "/phd/thesis/teacher/manageThesisDocuments.jsp"),
-
-@Forward(name = "juryReporterFeedbackUpload", path = "/phd/thesis/teacher/juryReporterFeedbackUpload.jsp"),
-
-@Forward(name = "scheduleThesisMeeting", path = "/phd/thesis/teacher/scheduleThesisMeeting.jsp")
-
-})
+@Mapping(path = "/phdThesisProcess", module = "teacher", functionality = PhdIndividualProgramProcessDA.class)
+@Forwards({ @Forward(name = "manageThesisDocuments", path = "/phd/thesis/teacher/manageThesisDocuments.jsp"),
+        @Forward(name = "juryReporterFeedbackUpload", path = "/phd/thesis/teacher/juryReporterFeedbackUpload.jsp"),
+        @Forward(name = "scheduleThesisMeeting", path = "/phd/thesis/teacher/scheduleThesisMeeting.jsp") })
 public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
     private static final List<PhdIndividualProgramDocumentType> AVAILABLE_DOCUMENTS_TO_TEACHER = Arrays

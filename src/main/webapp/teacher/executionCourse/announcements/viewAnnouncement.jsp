@@ -7,16 +7,7 @@
 
 <logic:present name="announcement">
 
-		
-	<em><bean:message key="label.messaging.portal" bundle="MESSAGING_RESOURCES"/></em>
 	<h2><bean:write name="announcement" property="announcementBoard.name"/></h2>
-	
-	<%
-	String contextPrefix = (String) request.getAttribute("contextPrefix");
-	String extraParameters = (String) request.getAttribute("extraParameters");
-	net.sourceforge.fenixedu.domain.Person person = (net.sourceforge.fenixedu.domain.Person) request.getAttribute("person");
-	%>
-	
 
 <div class="mvert2 announcement">
 

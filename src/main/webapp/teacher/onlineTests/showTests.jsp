@@ -6,7 +6,7 @@
 <h2><bean:message key="title.showTests" /></h2>
 
 <logic:present name="testList">
-	<bean:define id="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
+	<bean:define id="executionCourseID" value="<%=(pageContext.findAttribute("executionCourseID")).toString()%>" />
 
 	<bean:size id="testsSize" name="testList" />
 	<logic:equal name="testsSize" value="0">
@@ -20,7 +20,7 @@
 		</table>
 		<br />
 		<div class="gen-button"><html:link
-			page="<%= "/testsManagement.do?method=prepareCreateTest&amp;objectCode=" + pageContext.findAttribute("objectCode")%>">
+			page="<%= "/testsManagement.do?method=prepareCreateTest&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")%>">
 			<bean:message key="link.createTest" />
 		</html:link></div>
 		<br />
@@ -42,32 +42,32 @@
 					<bean:define id="testCode" name="test" property="externalId" />
 					<td>
 					<div class="gen-button"><html:link
-						page="<%= "/testEdition.do?method=editTest&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;testCode=" + testCode %>">
+						page="<%= "/testEdition.do?method=editTest&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID") + "&amp;testCode=" + testCode %>">
 						<bean:message key="label.edit" />
 					</html:link></div>
 					</td>
 					<td>
 					<div class="gen-button"><html:link
-						page="<%= "/testsManagement.do?method=prepareDeleteTest&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;testCode=" + testCode %>">
+						page="<%= "/testsManagement.do?method=prepareDeleteTest&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID") + "&amp;testCode=" + testCode %>">
 						<bean:message key="link.remove" />
 					</html:link></div>
 					</td>
 					<td>
 					<div class="gen-button"><html:link
-						page="<%= "/testEdition.do?method=editAsNewTest&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;testCode=" + testCode %>">
+						page="<%= "/testEdition.do?method=editAsNewTest&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID") + "&amp;testCode=" + testCode %>">
 						<bean:message key="label.duplicate" />
 					</html:link></div>
 					</td>
 					<td>
 					<div class="gen-button"><html:link
-						page="<%= "/testDistribution.do?method=prepareDistributeTest&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;testCode=" + testCode %>">
+						page="<%= "/testDistribution.do?method=prepareDistributeTest&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID") + "&amp;testCode=" + testCode %>">
 						<bean:message key="link.student.room.distribution" />
 					</html:link></div>
 					</td>
 					<%--
 					<td>
 					<div class="gen-button"><html:link
-						page="<%= "/studentTestManagement.do?method=chooseTestSimulationOptions&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;testCode=" +testCode %>">
+						page="<%= "/studentTestManagement.do?method=chooseTestSimulationOptions&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID") + "&amp;testCode=" +testCode %>">
 						<bean:message key="label.Simulate" />
 					</html:link></div>
 					</td>

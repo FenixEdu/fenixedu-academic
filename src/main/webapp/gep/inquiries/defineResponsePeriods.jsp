@@ -40,5 +40,6 @@
 				<fr:destination name="cancel" path="/defineResponsePeriods.do?method=prepare"/>
 		   	</fr:layout>	    	
 		</fr:edit>
-	</logic:notPresent>	
+	</logic:notPresent>
+	<html:submit />
 </fr:form>

@@ -30,7 +30,7 @@ function invertSelect(){
 // -->
 </script>
 <logic:present name="distributedTests">
-	<bean:define id="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
+	<bean:define id="executionCourseID" value="<%=(pageContext.findAttribute("executionCourseID")).toString()%>" />
 
 	<logic:present name="successfulDistribution">
 		<logic:equal name="successfulDistribution" value="true">
@@ -63,7 +63,7 @@ function invertSelect(){
 		<html:form action="/distributedTestMarks">
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="downloadTestMarks" />
-			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID" property="executionCourseID" value="<%=(pageContext.findAttribute("executionCourseID")).toString()%>" />
 			<span class="error"><!-- Error messages go here --><html:errors /></span>
 			<table>
 				<tr>
@@ -88,14 +88,14 @@ function invertSelect(){
 
         %></td>
 						<td class="listClasses"><html:link
-							page="<%= "/distributedTestEdition.do?method=prepareEditDistributedTest&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;distributedTestCode=" + distributedTestCode %>">
+							page="<%= "/distributedTestEdition.do?method=prepareEditDistributedTest&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID") + "&amp;distributedTestCode=" + distributedTestCode %>">
 							<bean:write name="distributedTest" property="title" />
 						</html:link></td>
 						<td class="listClasses"><bean:write name="distributedTest" property="beginDateTimeFormatted" /></td>
 						<td class="listClasses"><bean:write name="distributedTest" property="endDateTimeFormatted" /></td>
 						<td>
 						<div class="gen-button"><html:link
-							page="<%= "/testDistribution.do?method=prepareDeleteDistributedTest&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;distributedTestCode=" + distributedTestCode %>">
+							page="<%= "/testDistribution.do?method=prepareDeleteDistributedTest&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID") + "&amp;distributedTestCode=" + distributedTestCode %>">
 							<bean:message key="link.remove" />
 						</html:link></div>
 						</td>
@@ -104,18 +104,18 @@ function invertSelect(){
             %>
 						<%-- <td>
 						<div class="gen-button"><html:link
-							page="<%= "/testDistribution.do?method=showTestMarksStatistics&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;distributedTestCode=" + distributedTestCode %>">
+							page="<%= "/testDistribution.do?method=showTestMarksStatistics&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID") + "&amp;distributedTestCode=" + distributedTestCode %>">
 							<bean:message key="label.test.statistics" />
 						</html:link></div>
 						</td> --%>
 						<td>
 						<div class="gen-button"><html:link
-							page="<%= "/testDistribution.do?method=showTestMarks&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;distributedTestCode=" + distributedTestCode %>">
+							page="<%= "/testDistribution.do?method=showTestMarks&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID") + "&amp;distributedTestCode=" + distributedTestCode %>">
 							<bean:message key="label.test.marks" />
 						</html:link></div>
 						</td>
 						<%--	<td><div class="gen-button">
-			<html:link page="<%= "/testsManagement.do?method=downloadTestMarks&amp;distributedTestCode=" +distributedTestCode+ "&amp;objectCode=" +pageContext.findAttribute("objectCode")%>">
+			<html:link page="<%= "/testsManagement.do?method=downloadTestMarks&amp;distributedTestCode=" +distributedTestCode+ "&amp;executionCourseID=" +pageContext.findAttribute("executionCourseID")%>">
 			<bean:message key="link.export"/>
 			</html:link></div></td> --%>
 						<%} else {
@@ -123,7 +123,7 @@ function invertSelect(){
             %>
 						<td>
 						<div class="gen-button"><html:link
-							page="<%= "/testDistribution.do?method=showTestStatistics&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;distributedTestCode=" + distributedTestCode %>">
+							page="<%= "/testDistribution.do?method=showTestStatistics&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID") + "&amp;distributedTestCode=" + distributedTestCode %>">
 							<bean:message key="label.test.statistics" />
 						</html:link></div>
 						</td>

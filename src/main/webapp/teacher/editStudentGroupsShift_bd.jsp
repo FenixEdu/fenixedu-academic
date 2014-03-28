@@ -1,6 +1,7 @@
 <%@ page language="java" %>
 
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%><html:xhtml/>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 
@@ -8,11 +9,6 @@
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoLesson"%>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoShift"%>
 <%@ page import="java.util.Calendar" %>
-
-
-
-<logic:present name="siteView" property="component"> 
-<bean:define id="component" name="siteView" property="component" />
 
 
 <h2><bean:message key="title.editStudentGroupsShift"/></h2>
@@ -146,7 +142,7 @@
 
 <ul>
 	<li>
-		<html:link page="<%="/viewStudentsAndGroupsByShift.do?method=viewStudentsAndGroupsByShift&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+ "&amp;shiftCode=" + request.getParameter("shiftCode")%>">
+		<html:link page="<%="/studentGroupManagement.do?method=viewStudentsAndGroupsByShift&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+ "&amp;shiftCode=" + request.getParameter("shiftCode")%>">
 			<bean:message key="link.backToViewStudentsAndGroupsByShift"/>
 		</html:link>
 	</li>
@@ -161,7 +157,7 @@
 
 
 <logic:notEmpty name="component" property="infoSiteStudentsAndShiftByStudentGroupList">
-<html:form action="/executeEditStudentGroupsShift" >
+<html:form action="/studentGroupManagement" >
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 
 <p class="mtop2 mbottom05">
@@ -223,19 +219,11 @@
 
 
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editStudentGroupsShift"/>
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID"  property="executionCourseID" value="<%= pageContext.findAttribute("executionCourseID").toString() %>" />
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.groupPropertiesCode"  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.shiftCode"  property="shiftCode" value="<%= request.getParameter("shiftCode") %>" />
 
 </html:form>
 
 </logic:notEmpty> 	
-
-</logic:present>
-
-<logic:notPresent name="siteView" property="component">
-<p>
-	<span class="warning0"><bean:message key="message.infoSiteStudentsAndShiftByStudentGroupList.not.available" /></span>
-</p>
-</logic:notPresent>
 

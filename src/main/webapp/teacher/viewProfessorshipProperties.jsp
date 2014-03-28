@@ -24,10 +24,10 @@ function selectNone(){
 
 <bean:define id="teacherOID" name="professorship" property="externalId"/>
 <ul>
-<li><html:link page="<%= "/teacherManagerDA.do?method=viewTeachersByProfessorship&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
+<li><html:link page="/teachersManagerDA.do?method=viewTeachersByProfessorship&executionCourseID=${executionCourseID}">
 <bean:message key="button.back" bundle="APPLICATION_RESOURCES"/>
 </html:link></li>
-<li><html:link page="<%= "/teachersManagerDA.do?method=removeTeacher&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;teacherOID=" + teacherOID %>">
+<li><html:link page="/teachersManagerDA.do?method=removeTeacher&executionCourseID=${executionCourseID}&teacherOID=${teacherOID}">
 		<bean:message key="link.removeTeacher"/>
 </html:link></li>
 </ul>
@@ -35,7 +35,7 @@ function selectNone(){
 
 <html:link href="#" onclick="selectAll()"><bean:message bundle="APPLICATION_RESOURCES" key="form.select.all"/></html:link> | <html:link href="#" onclick="selectNone()"><bean:message bundle="APPLICATION_RESOURCES" key="form.select.none"/></html:link> | <html:link href="#" onclick="inverSelection()"><bean:message bundle="APPLICATION_RESOURCES" key="form.select.invert"/></html:link>
  
-<fr:form action="<%= "/teacherManagerDA.do?method=viewTeachersByProfessorship&amp;objectCode=" + pageContext.findAttribute("objectCode") %>">
+<fr:form action="/teachersManagerDA.do?method=viewTeachersByProfessorship&executionCourseID=${executionCourseID}">
 	<fr:edit id="permissions" name="professorship" property="permissions" schema="professorship.view.properties">
    	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thleft tdleft thlight"/>

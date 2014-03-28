@@ -24,8 +24,8 @@ import pt.ist.fenixframework.Atomic;
 public class CleanSubQuestions {
 
     @Atomic
-    public static void run(Registration registration, DistributedTest distributedTest, String exerciseCode, Integer itemCode,
-            String path) throws FenixServiceException {
+    public static void run(Registration registration, DistributedTest distributedTest, String exerciseCode, Integer itemCode)
+            throws FenixServiceException {
         check(RolePredicates.STUDENT_PREDICATE);
         if (distributedTest == null) {
             throw new FenixServiceException();
@@ -36,7 +36,7 @@ public class CleanSubQuestions {
             if (studentTestQuestion.getQuestion().getExternalId().equals(exerciseCode)) {
                 ParseSubQuestion parse = new ParseSubQuestion();
                 try {
-                    parse.parseStudentTestQuestion(studentTestQuestion, path.replace('\\', '/'));
+                    parse.parseStudentTestQuestion(studentTestQuestion);
                 } catch (Exception e) {
                     throw new FenixServiceException(e);
                 }

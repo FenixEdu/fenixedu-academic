@@ -11,7 +11,6 @@
 <logic:equal name="isTeacher" value="true">
 
 <%-- ### Title #### --%>
-<em><bean:message  key="label.phd.teacher.breadcrumb" bundle="PHD_RESOURCES"/></em>
 <h2><bean:message key="label.phd.candidacy.academicAdminOffice.manageCandidacyDocuments" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 

@@ -36,6 +36,14 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "viewForuns", path = "/student/forums/viewExecutionCourseForuns.jsp") })
 public class ViewExecutionCourseForunsDispatchAction extends ForunsManagement {
 
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        request.setAttribute("contextPrefix", "/viewExecutionCourseForuns.do");
+        request.setAttribute("module", "/student");
+        return super.execute(mapping, actionForm, request, response);
+    }
+
     @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException, FenixServiceException {

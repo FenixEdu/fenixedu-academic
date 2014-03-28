@@ -1693,6 +1693,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return getNome();
     }
 
+    public String getPrettyAcronym() {
+        return getSigla().replaceAll("[0-9]", "");
+    }
+
     public String getDegreePresentationString() {
         SortedSet<Degree> degrees = this.getDegreesSortedByDegreeName();
         String result = "";

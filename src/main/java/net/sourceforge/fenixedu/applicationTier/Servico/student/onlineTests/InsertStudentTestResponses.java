@@ -50,7 +50,7 @@ public class InsertStudentTestResponses {
 
     @Atomic
     public static InfoSiteStudentTestFeedback run(Registration registration, Integer studentNumber,
-            final String distributedTestId, Response[] response, String path) throws FenixServiceException {
+            final String distributedTestId, Response[] response) throws FenixServiceException {
         check(RolePredicates.STUDENT_PREDICATE);
 
         ServiceMonitoring.logService(InsertStudentTestResponses.class, registration, studentNumber, distributedTestId, response,
@@ -58,7 +58,6 @@ public class InsertStudentTestResponses {
 
         String logIdString = "student num" + studentNumber.toString() + " testId " + distributedTestId.toString();
         InfoSiteStudentTestFeedback infoSiteStudentTestFeedback = new InfoSiteStudentTestFeedback();
-        path = path.replace('\\', '/');
         if (registration == null) {
             throw new FenixServiceException();
         }
@@ -101,7 +100,7 @@ public class InsertStudentTestResponses {
                         // n�o pode aceitar nova resposta
                     } else {
                         try {
-                            studentTestQuestion = parse.parseStudentTestQuestion(studentTestQuestion, path);
+                            studentTestQuestion = parse.parseStudentTestQuestion(studentTestQuestion);
                             studentTestQuestion
                                     .setSubQuestionByItem(correctQuestionValues(studentTestQuestion.getSubQuestionByItem(),
                                             new Double(studentTestQuestion.getTestQuestionValue().doubleValue())));
@@ -242,7 +241,7 @@ public class InsertStudentTestResponses {
             StudentTestQuestion nextStudentTestQuestion) throws FenixServiceException {
         ParseSubQuestion parse = new ParseSubQuestion();
         try {
-            parse.parseStudentTestQuestion(nextStudentTestQuestion, path.replace('\\', '/'));
+            parse.parseStudentTestQuestion(nextStudentTestQuestion);
         } catch (Exception e) {
             throw new FenixServiceException(e);
         }

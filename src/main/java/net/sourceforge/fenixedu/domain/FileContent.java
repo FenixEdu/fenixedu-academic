@@ -45,6 +45,18 @@ public class FileContent extends FileContent_Base {
         throw new UnsupportedOperationException("Not implemented");
     }
 
+    public void logEditFile() {
+
+    }
+
+    @Override
+    protected void disconnect() {
+        super.disconnect();
+        if (getAnnouncementBoard() != null) {
+            setAnnouncementBoard(null);
+        }
+    }
+
     @Override
     public void setDisplayName(String displayName) {
         super.setDisplayName(processDisplayName(displayName));
