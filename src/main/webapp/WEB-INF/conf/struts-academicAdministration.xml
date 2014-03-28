@@ -1,4 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE struts-config PUBLIC
+      "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+      "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
 <struts-config>
       <!-- ========== Data Source Configuration =============================== -->
       <data-sources></data-sources>
@@ -189,7 +192,7 @@
       <message-resources null="false" key="DEGREE_ADM_OFFICE" parameter="resources.DegreeAdministrativeOfficeResources"></message-resources>
       <!-- ========== Plug Ins Configuration ================================= -->
       <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
-            <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-default.xml" property="pathnames"></set-property>
+            <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml" property="pathnames"></set-property>
       </plug-in>
       <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
 </struts-config>
