@@ -101,9 +101,11 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
         final Set<PhdProgramProcessDocument> result = new HashSet<PhdProgramProcessDocument>();
 
         for (final PhdIndividualProgramDocumentType type : getSortedSharedDocumentTypes()) {
-            final PhdProgramProcessDocument document = getCandidacyProcess().getLatestDocumentVersionFor(type);
-            if (document != null) {
-                result.add(document);
+            if (type.isVersioned()) {
+                final PhdProgramProcessDocument document = getCandidacyProcess().getLatestDocumentVersionFor(type);
+                if (document != null) {
+                    result.add(document);
+                }
             }
         }
         return result;
