@@ -292,7 +292,7 @@
 		<put name="body" value="/teacher/submitFinalWorkProposal_bd.jsp"></put>
 	</definition>
 	<definition name="df.page.viewfinalDegreeWorkProposal" extends="researcher.masterPage">
-		<put name="bundle" value="private.curriculum.dissertations"/>
+		<put name="bundle" value="TITLES_RESOURCES"/>
 		<put name="title" value="private.curriculum.dissertations"/>
 		<put name="body" value="/teacher/viewFinalDegreeWorkProposal_bd.jsp"></put>
 	</definition>	
@@ -306,6 +306,11 @@
 	</definition>
 	<definition name="df.page.showStudentCurriculum" extends="researcher.masterPage" >
 		<put name="body" value="/student/curriculum/displayStudentCurriculum_bd.jsp" />
+	</definition>
+	<definition name="df.page.transposeFinalDegreeWorkProposal" extends="researcher.masterPage">
+		<put name="bundle" value="TITLES_RESOURCES"/>
+		<put name="title" value="private.curriculum.dissertations"/>
+		<put name="body" value="/teacher/transposeFinalDegreeWorkProposal.jsp"></put>
 	</definition>
 	<definition name="df.page.notAuthorized" extends="researcher.masterPage" >
 		<put name="body" value="/student/notAuthorized_bd.jsp" />
