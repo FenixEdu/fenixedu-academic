@@ -221,9 +221,10 @@ public abstract class PostingRule extends PostingRule_Base {
         super.setEndDate(when.minus(10000));
     }
 
-    public final void delete() {
+    public void delete() {
         check(this, AcademicPredicates.MANAGE_PAYMENTS);
         super.setServiceAgreementTemplate(null);
+
         setRootDomainObject(null);
         removeOtherRelations();
         deleteDomainObject();

@@ -202,7 +202,7 @@
 			<fr:form action="/roomsReserveManagement.do">
 				<html:hidden property="method" value="createNewRoomsReserveComment"/>
 				
-				<fr:hasMessages for="roomsReserveNewComment">
+				<fr:hasMessages for="roomsReserveNewComment" type="conversion">
 					<p>
 						<span class="error0">			
 							<fr:message for="roomsReserveNewComment" show="message"/>

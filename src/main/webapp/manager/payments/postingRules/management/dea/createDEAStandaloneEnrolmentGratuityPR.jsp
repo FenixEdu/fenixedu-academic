@@ -5,8 +5,10 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
+<!-- createPaymentPlan.jsp -->
+
 <h2><bean:message
-	key="label.payments.postingRules.createDEAGratuityPR"
+	key="label.payments.postingRules.createGraduationStandaloneEnrolmentGratuityPostingRule"
 	bundle="MANAGER_RESOURCES" /></h2>
 
 <br />
@@ -40,32 +42,47 @@
 
 <fr:form action="<%= "/postingRules.do?degreeCurricularPlanId=" + degreeCurricularPlanId %>">
 	<input type="hidden" name="method" value="" />
-
-	<fr:edit id="paymentPlanEditor" name="paymentPlanEditor" >
-		<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.PaymentPlanBean"
-			bundle="APPLICATION_RESOURCES">
-			<fr:slot name="executionYear" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
-				<fr:property name="format" value="${year}" />
-				<fr:property name="destination" value="changeExecutionYearPostback"/>
-			</fr:slot>
-		</fr:schema>
-		
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle4 thlight thcenter mtop05" />
-			<fr:destination name="invalid" path="/postingRules.do?method=createDEAGratuityPRInvalid" />
-			<fr:destination name="changeExecutionYearPostback" path="/postingRules.do?method=changeExecutionYearForDEAGratuityPR"/>
-		</fr:layout>
-	</fr:edit>
 	
-	<br/><br/>
+	<!-- Formulas description -->
+	<h3>
+		<bean:message
+			key="StandaloneEnrolmentGratuityPR.formulaDescription.title"
+			bundle="APPLICATION_RESOURCES" />
+	</h3>
+	<strong>
+		<bean:message
+			key="StandaloneEnrolmentGratuityPR.formulaDescription.emptyDegrees.label"
+			bundle="APPLICATION_RESOURCES" />
+	</strong>
+	<p>
+		<bean:message
+			key="StandaloneEnrolmentGratuityPR.formulaDescription.emptyDegrees.formula"
+			bundle="APPLICATION_RESOURCES" />
+	</p>
+	<strong>
+		<bean:message
+			key="StandaloneEnrolmentGratuityPR.formulaDescription.normalDegrees.label"
+			bundle="APPLICATION_RESOURCES" />
+	</strong>
+	<p>
+		<bean:message
+			key="StandaloneEnrolmentGratuityPR.formulaDescription.normalDegrees.formula"
+			bundle="APPLICATION_RESOURCES" />
+	</p>
+	<p>
+		<bean:message
+			key="StandaloneEnrolmentGratuityPR.formulaDescription.description"
+			bundle="APPLICATION_RESOURCES" />
+	</p>
+	
 	
 	<fr:edit id="installmentEditor" name="installmentEditor">
-		<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.InstallmentBean"
+		<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.StandaloneInstallmentBean"
 			bundle="APPLICATION_RESOURCES">
-			<fr:slot name="amount" />
 			<fr:slot name="startDate" />
-			<fr:slot name="endDate" />
+			<fr:slot name="ectsForYear" />
+			<fr:slot name="gratuityFactor" />
+			<fr:slot name="ectsFactor" />
 		</fr:schema>
 		
 		<fr:layout name="tabular">
@@ -78,7 +95,7 @@
 	<br/><br/>
 
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"
-		onclick="this.form.method.value='createDEAGratuityPR';">
+		onclick="this.form.method.value='createDEAStandaloneGratuityPR';">
 		<bean:message bundle="APPLICATION_RESOURCES" key="label.create" />
 	</html:submit>
 	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel"

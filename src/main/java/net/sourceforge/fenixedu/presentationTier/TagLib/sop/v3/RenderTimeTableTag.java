@@ -107,9 +107,7 @@ public final class RenderTimeTableTag extends TagSupport {
         List<InfoShowOccupation> infoLessonList = null;
         try {
             infoLessonList = (List<InfoShowOccupation>) pageContext.findAttribute(name);
-            if (hasLessonBefore8(infoLessonList)) {
-                startTimeTableHour = new Integer(0);
-            } else if (infoLessonList.size() > 0) {
+            if (infoLessonList.size() > 0) {
 
                 for (InfoShowOccupation occupation : infoLessonList) {
                     // Calculate start hour based on earliest event

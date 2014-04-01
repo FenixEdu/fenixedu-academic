@@ -351,7 +351,8 @@ public class Alumni extends Alumni_Base {
                 clazzList.add(MobilePhone.class);
             }
             Set<Party> partyRead = new HashSet<Party>();
-            for (PartyContact contact : PartyContact.readPartyContactsOfType(clazzList.toArray(new Class[0]))) {
+            Set<PartyContact> contacts = PartyContact.readPartyContactsOfType(clazzList.toArray(new Class[0]));
+            for (PartyContact contact : contacts) {
                 if (!StringUtils.isEmpty(mobileNumber)
                         && !(contact.isMobile() && mobileNumber.equals(contact.getPresentationValue()))) {
                     continue;

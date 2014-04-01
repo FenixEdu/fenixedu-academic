@@ -44,7 +44,7 @@
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="784" splitType="Stretch">
+		<band height="780" splitType="Stretch">
 			<textField>
 				<reportElement key="staticText-10" x="59" y="325" width="468" height="17"/>
 				<textElement textAlignment="Center" lineSpacing="Single" markup="none">
@@ -178,7 +178,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{day}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement key="staticText-19" x="88" y="682" width="200" height="16"/>
+				<reportElement key="staticText-19" x="88" y="682" width="200" height="28"/>
 				<textElement textAlignment="Center" verticalAlignment="Top" lineSpacing="Single" markup="none">
 					<font fontName="Quadraat-Regular" size="8" isBold="false" isItalic="false" pdfFontName="QUAD____.ttf" isPdfEmbedded="true"/>
 				</textElement>
@@ -197,13 +197,15 @@
 				</graphicElement>
 			</line>
 			<break>
-				<reportElement key="element-1" x="0" y="783" width="595" height="1">
+				<reportElement key="element-1" x="0" y="779" width="595" height="1">
 					<printWhenExpression><![CDATA[$P{registryCode} != null]]></printWhenExpression>
 				</reportElement>
 			</break>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField-34" x="360" y="682" width="92" height="16"/>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Center">
+					<font fontName="Quadraat-Regular" size="8" isBold="false" isItalic="false" pdfFontName="QUAD____.ttf" isPdfEmbedded="true"/>
+				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{theRector}]]></textFieldExpression>
 			</textField>
 			<textField>

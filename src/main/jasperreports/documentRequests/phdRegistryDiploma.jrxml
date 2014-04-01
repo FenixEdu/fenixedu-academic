@@ -47,7 +47,7 @@
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="329" splitType="Stretch">
+		<band height="343" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
 				<reportElement key="textField-1" x="0" y="0" width="455" height="20"/>
 				<textElement textAlignment="Justified">
@@ -84,35 +84,35 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{thirdParagraph}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-6" positionType="Float" x="0" y="164" width="455" height="25"/>
+				<reportElement key="textField-6" positionType="Float" x="0" y="203" width="455" height="25"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font fontName="Times New Roman" size="14" pdfFontName="tnr.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{graduateTitle}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement key="textField-7" positionType="Float" x="0" y="252" width="455" height="13"/>
+				<reportElement key="textField-7" positionType="Float" x="0" y="291" width="455" height="13"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Times New Roman" size="10" pdfFontName="tnr.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{fifthParagraph}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement key="textField-12" positionType="Float" x="0" y="145" width="455" height="20"/>
+				<reportElement key="textField-12" positionType="Float" x="0" y="184" width="455" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10" pdfFontName="tnr.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{fourthParagraph}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-13" positionType="Float" x="0" y="115" width="455" height="30" isPrintWhenDetailOverflows="true"/>
+				<reportElement key="textField-13" positionType="Float" x="0" y="115" width="455" height="69" isPrintWhenDetailOverflows="true"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
 					<font fontName="Times New Roman" size="14" pdfFontName="tnr.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{thesisTitle}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-6" positionType="Float" x="0" y="218" width="455" height="30" isRemoveLineWhenBlank="true">
+				<reportElement key="textField-6" positionType="Float" x="0" y="257" width="455" height="30" isRemoveLineWhenBlank="true">
 					<printWhenExpression><![CDATA[!$P{university}.isEmpty()]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
@@ -121,7 +121,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{university}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-6" positionType="Float" x="0" y="188" width="455" height="31" isRemoveLineWhenBlank="true">
+				<reportElement key="textField-6" positionType="Float" x="0" y="227" width="455" height="31" isRemoveLineWhenBlank="true">
 					<printWhenExpression><![CDATA[!$P{by}.isEmpty()]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
@@ -130,7 +130,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$P{by}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-8" x="0" y="308" width="455" height="20"/>
+				<reportElement key="textField-8" x="0" y="320" width="455" height="20"/>
 				<textElement>
 					<font fontName="Times New Roman" size="10" pdfFontName="tnr.ttf" isPdfEmbedded="true"/>
 				</textElement>

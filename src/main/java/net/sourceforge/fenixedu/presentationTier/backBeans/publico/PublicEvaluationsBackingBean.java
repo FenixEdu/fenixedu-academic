@@ -65,14 +65,14 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
             setRequestAttribute("degreeID", degree.getExternalId());
             degreeID = degree.getExternalId();
         } else if (degreeID == null) {
-            degreeID = getAndHoldStringParameter("degreeID");
+            degreeID = getAndHoldStringParameter("publicEvaluationForm:degreeID");
         }
         return degreeID;
     }
 
     public String getDegreeCurricularPlanID() {
         if (degreeCurricularPlanID == null) {
-            degreeCurricularPlanID = getAndHoldStringParameter("degreeCurricularPlanID");
+            degreeCurricularPlanID = getAndHoldStringParameter("publicEvaluationForm:degreeCurricularPlanID");
             if (degreeCurricularPlanID == null) {
                 degreeCurricularPlanID = getMostRecentDegreeCurricularPlan().getExternalId();
             }
@@ -82,7 +82,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
 
     public String getExecutionPeriodID() {
         if (executionPeriodID == null || !contains(getExecutionPeriodSelectItems(), executionPeriodID)) {
-            executionPeriodID = getAndHoldStringParameter("executionPeriodID");
+            executionPeriodID = getAndHoldStringParameter("publicEvaluationForm:executionPeriodID");
             if (executionPeriodID == null) {
                 ExecutionSemester currentExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
                 ExecutionDegree currentExecutionDegree =
@@ -97,7 +97,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
     }
 
     public String getCurricularYearID() {
-        return (curricularYearID == null) ? curricularYearID = getAndHoldStringParameter("curricularYearID") : curricularYearID;
+        return (curricularYearID == null) ? curricularYearID = getAndHoldStringParameter("publicEvaluationForm:curricularYearID") : curricularYearID;
     }
 
     public Degree getDegree() {
@@ -152,7 +152,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
     public CurricularYear getCurricularYear() {
         final String curricularYearID = getCurricularYearID();
         if (!StringUtils.isEmpty(curricularYearID)) {
-            return FenixFramework.getDomainObject(curricularYearID);
+            return CurricularYear.readByYear(Integer.parseInt(curricularYearID));
         } else {
             return null;
         }

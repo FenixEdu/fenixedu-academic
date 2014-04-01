@@ -30,7 +30,7 @@
 	<logic:messagesPresent message="true">
 		<p>
 		<span class="error0"><!-- Error messages go here -->
-			<html:messages id="message" message="true" bundle="MANAGER_RESOURCES">
+			<html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
 				<bean:write name="message"/>
 			</html:messages>
 		</span>

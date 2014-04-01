@@ -7,9 +7,6 @@ import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-
-import org.fenixedu.bennu.core.util.CoreConfiguration;
-
 import pt.ist.fenixframework.Atomic;
 
 /**
@@ -35,9 +32,7 @@ public class ReceiptGeneratedDocument extends ReceiptGeneratedDocument_Base {
 
     @Atomic
     public static void store(Receipt source, String filename, byte[] content) {
-        if (!CoreConfiguration.getConfiguration().developmentMode()) {
-            new ReceiptGeneratedDocument(source, source.getPerson(), AccessControl.getPerson(), filename, content);
-        }
+        new ReceiptGeneratedDocument(source, source.getPerson(), AccessControl.getPerson(), filename, content);
     }
 
     @Deprecated

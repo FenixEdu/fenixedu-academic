@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingT
 import net.sourceforge.fenixedu.applicationTier.Filtro.ResourceAllocationManagerAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
+import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
@@ -38,6 +39,11 @@ public class DeleteWrittenEvaluation {
                 (WrittenEvaluation) FenixFramework.getDomainObject(writtenEvaluationOID);
         if (writtenEvaluationToDelete == null) {
             throw new FenixServiceException("error.noWrittenEvaluation");
+        }
+        if (writtenEvaluationToDelete instanceof Exam) {
+            if (!((Exam) writtenEvaluationToDelete).getExamDateCertificateRequestsSet().isEmpty()) {
+                throw new FenixServiceException("exam.has.exam.certificates.requests");
+            }
         }
         if (writtenEvaluationToDelete.hasAnyVigilancies()) {
             notifyVigilants(writtenEvaluationToDelete);

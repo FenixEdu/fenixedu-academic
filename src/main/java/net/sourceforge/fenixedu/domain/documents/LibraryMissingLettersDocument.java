@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.library.LibraryCard;
 import net.sourceforge.fenixedu.domain.library.LibraryDocument;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
-import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -39,11 +38,9 @@ public class LibraryMissingLettersDocument extends LibraryMissingLettersDocument
 
     @Atomic
     public static void store(List<LibraryCard> source, Person operator, byte[] content, boolean forStudents) {
-        if (!CoreConfiguration.getConfiguration().developmentMode()) {
-            DateTime time = new DateTime();
-            new LibraryMissingLettersDocument(source, operator, "missing_letters_" + time.toString("yMd_kms") + ".pdf", content,
-                    forStudents);
-        }
+        DateTime time = new DateTime();
+        new LibraryMissingLettersDocument(source, operator, "missing_letters_" + time.toString("yMd_kms") + ".pdf", content,
+                forStudents);
     }
 
     @Deprecated

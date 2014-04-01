@@ -799,6 +799,15 @@
 	<slot name="ectsForYear" />
 </schema>
 
+<schema name="GratuityWithPaymentPlanPR.view" type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR"
+		bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+</schema>
+
+<schema name="GratuityWithPaymentPlanPR.edit" type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR"
+		bundle="APPLICATION_RESOURCES">
+		<slot name="startDate"></slot>
+</schema>
+
 <schema name="StandaloneEnrolmentGratuityPR.edit" type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR"
 		bundle="APPLICATION_RESOURCES">
 	<slot name="ectsForYear">

@@ -47,7 +47,7 @@
 		
 		
 		<fr:property name="linkFormat(delete)"
-			value="<%="/postingRules.do?method=deleteDegreeCurricularPlanPostingRule&amp;postingRuleId=${externalId}&amp;degreeCurricularPlanId=" + degreeCurricularPlanId%>" />
+			value="<%="/postingRules.do?method=deleteDEAPostingRule&amp;postingRuleId=${externalId}&amp;degreeCurricularPlanId=" + degreeCurricularPlanId%>" />
 		<fr:property name="key(delete)" value="label.delete" />
 		<fr:property name="bundle(delete)" value="APPLICATION_RESOURCES" />
 		<fr:property name="visibleIf(delete)" value="mostRecent" />
@@ -77,8 +77,7 @@
 		</html:link>
 		<br />		
 	</logic:equal>
-	
-	
+		
 	<logic:equal name="degreeCurricularPlan" property="degreeType" value="<%= DegreeType.BOLONHA_SPECIALIZATION_DEGREE.name() %>">
 		<html:link
 			action="<%="/postingRules.do?method=prepareCreateSpecializationDegreeGratuityPR&amp;degreeCurricularPlanId=" + degreeCurricularPlanId %>">
@@ -87,7 +86,23 @@
 		</html:link>
 		<br />		
 	</logic:equal>
+	
+	
 </logic:equal>
+
+<logic:equal name="allowCreateStandaloneGratuityPR" value="true">
+
+	<logic:equal name="degreeCurricularPlan" property="degreeType" value="<%= DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA.name() %>">
+		<html:link
+			action="<%="/postingRules.do?method=prepareCreateDEAStandaloneEnrolmentGratuityPR&amp;degreeCurricularPlanId=" + degreeCurricularPlanId %>">
+			<bean:message key="label.payments.postingRules.createGraduationStandaloneEnrolmentGratuityPostingRule"
+				bundle="MANAGER_RESOURCES" />
+		</html:link>
+		<br />		
+	</logic:equal>
+	
+</logic:equal>
+
 
 <br />
 <html:link

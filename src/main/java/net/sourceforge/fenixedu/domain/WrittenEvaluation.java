@@ -131,7 +131,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         HourMinuteSecond begin = this.getBeginningDateHourMinuteSecond();
         YearMonthDay yearMonthDay = this.getDayDateYearMonthDay();
         return new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(), yearMonthDay.getDayOfMonth(), begin.getHour(),
-                begin.getMinuteOfHour(), begin.getSecondOfMinute(), 0);
+                begin.getMinuteOfHour(), 0, 0);
 
     }
 
@@ -139,7 +139,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         HourMinuteSecond end = this.getEndDateHourMinuteSecond();
         YearMonthDay yearMonthDay = this.getDayDateYearMonthDay();
         return new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(), yearMonthDay.getDayOfMonth(), end.getHour(),
-                end.getMinuteOfHour(), end.getSecondOfMinute(), 0);
+                end.getMinuteOfHour(), 0, 0);
 
     }
 

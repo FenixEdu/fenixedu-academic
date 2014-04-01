@@ -1294,8 +1294,8 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
     private boolean isViewerAdministrativeOfficeEmployeeOrManager(final StudentCurricularPlan studentCurricularPlan) {
         final Person person = AccessControl.getPerson();
         return person.hasRole(RoleType.MANAGER)
-                || AcademicAuthorizationGroup.getProgramsForOperation(person, AcademicOperationType.STUDENT_ENROLMENTS).contains(
-                        studentCurricularPlan.getDegree());
+                || AcademicAuthorizationGroup.getProgramsForOperation(person, AcademicOperationType.VIEW_FULL_STUDENT_CURRICULUM)
+                        .contains(studentCurricularPlan.getDegree());
     }
 
 }

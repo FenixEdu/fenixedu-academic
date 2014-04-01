@@ -47,10 +47,11 @@ public class StandaloneEnrolmentGratuityPR extends StandaloneEnrolmentGratuityPR
     private void init(DateTime startDate, DateTime endDate, ServiceAgreementTemplate serviceAgreementTemplate,
             BigDecimal ectsForYear, BigDecimal gratuityFactor, BigDecimal ectsFactor) {
 
+        checkParameters(ectsForYear, gratuityFactor, ectsFactor);
+        checkGratuityPR(serviceAgreementTemplate);
+
         super.init(EntryType.STANDALONE_ENROLMENT_GRATUITY_FEE, EventType.STANDALONE_ENROLMENT_GRATUITY, startDate, endDate,
                 serviceAgreementTemplate);
-
-        checkParameters(ectsForYear, gratuityFactor, ectsFactor);
 
         super.setEctsForYear(ectsForYear);
         super.setGratuityFactor(gratuityFactor);
@@ -78,6 +79,20 @@ public class StandaloneEnrolmentGratuityPR extends StandaloneEnrolmentGratuityPR
                     "error.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.ectsFactor.cannot.be.null", args2);
         }
 
+    }
+
+    /**
+     * Check gratuity pr.
+     * Check if a posting rule with gratuity event type already exists.
+     * Such posting rule must exists first because standalone PR is calculated
+     * based on grauity PR
+     * 
+     * @param serviceAgreementTemplate the service agreement template
+     */
+    private void checkGratuityPR(ServiceAgreementTemplate serviceAgreementTemplate) {
+        if (!serviceAgreementTemplate.hasActivePostingRuleFor(EventType.GRATUITY)) {
+            throw new DomainException("error.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR.must.have.gratuityPR");
+        }
     }
 
     @Override
