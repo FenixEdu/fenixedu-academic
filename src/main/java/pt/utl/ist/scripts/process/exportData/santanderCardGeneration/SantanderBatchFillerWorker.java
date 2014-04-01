@@ -287,9 +287,7 @@ public class SantanderBatchFillerWorker {
                 continue;
             }
             final RegistrationAgreement registrationAgreement = registration.getRegistrationAgreement();
-            if (registrationAgreement != RegistrationAgreement.NORMAL && registrationAgreement != RegistrationAgreement.TOTAL
-                    && registrationAgreement != RegistrationAgreement.ANGOLA_TELECOM
-                    && registrationAgreement != RegistrationAgreement.MITP) {
+            if (!registrationAgreement.allowsIDCard()) {
                 continue;
             }
             final DegreeType degreeType = registration.getDegreeType();
