@@ -136,6 +136,14 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
         return mapping.findForward("viewCandidacyRefereeLetter");
     }
 
+    public ActionForward sendCandidacyRefereeEmail(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) {
+        final PhdCandidacyReferee referee = getDomainObject(request, "candidacyRefereeId");
+        referee.sendEmail();
+        addActionMessage("error", request, "message.resent.email.to", referee.getEmail());
+        return viewProcess(mapping, actionForm, request, response);
+    }
+
     public ActionForward manageFocusAreas(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
