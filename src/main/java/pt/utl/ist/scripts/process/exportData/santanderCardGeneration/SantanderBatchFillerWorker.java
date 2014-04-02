@@ -102,7 +102,9 @@ public class SantanderBatchFillerWorker {
          * 5. Student
          */
         String line = null;
-        if (treatAsTeacher(person)) {
+        if (treatAsStudent(person, batch.getExecutionYear())) {
+            line = createLine(batch, person, RoleType.STUDENT);
+        } else if (treatAsTeacher(person)) {
             line = createLine(batch, person, RoleType.TEACHER);
         } else if (treatAsResearcher(person)) {
             line = createLine(batch, person, RoleType.RESEARCHER);
@@ -110,8 +112,6 @@ public class SantanderBatchFillerWorker {
             line = createLine(batch, person, RoleType.EMPLOYEE);
         } else if (treatAsGrantOwner(person)) {
             line = createLine(batch, person, RoleType.GRANT_OWNER);
-        } else if (treatAsStudent(person, batch.getExecutionYear())) {
-            line = createLine(batch, person, RoleType.STUDENT);
         } else {
             return;
         }
