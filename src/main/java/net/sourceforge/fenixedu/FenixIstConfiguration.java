@@ -15,6 +15,12 @@ public class FenixIstConfiguration {
 
         @ConfigurationProperty(key = "db.giaf.alias", defaultValue = "//localhost:3306/AssiduidadeOracleTeste")
         public String dbGiafAlias();
+
+        @ConfigurationProperty(key = "ldap.sync.services.username")
+        public String ldapSyncServicesUsername();
+
+        @ConfigurationProperty(key = "ldap.sync.services.password")
+        public String ldapSyncServicesPassword();
     }
 
     public static ConfigurationProperties getConfiguration() {
