@@ -56,6 +56,7 @@
 	</logic:notEmpty>
 	
 	<bean:define id="individualProgramProcess" name="hashCode" property="individualProgramProcess" />
+	<bean:define id="hashCodeId" name="hashCode" property="externalId" />
 
 	<%--  ### Candidacy Information ### --%>
 	<h2 style="margin-top: 1em;"><bean:message key="label.phd.public.candidacy.createCandidacy.fillCandidacyInformation" bundle="PHD_RESOURCES"/></h2>
@@ -154,7 +155,11 @@
 					<bean:message bundle="PHD_RESOURCES" key="label.view"/>
 				</html:link>
 			</logic:equal>
-		
+			<logic:equal name="candidacyReferee" property="letterAvailable" value="false">
+				<html:link action="<%= "/candidacies/phdProgramCandidacyProcess.do?method=sendCandidacyRefereeEmail&hashCodeId=" + hashCodeId %>" paramId="candidacyRefereeId" paramName="candidacyReferee" paramProperty="externalId">
+					<bean:message key="label.resend.email" bundle="PHD_RESOURCES"/>
+				</html:link>
+			</logic:equal>		
 		</logic:iterate>
 		
 	</logic:notEmpty>
