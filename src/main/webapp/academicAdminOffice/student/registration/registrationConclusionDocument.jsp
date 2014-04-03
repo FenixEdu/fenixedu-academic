@@ -197,9 +197,11 @@
 		<td colspan="2" style="padding: 5px;">
 			<p class="apura-pt9">
 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="conclusion.document.concluded.uppercase"/>  
-				<logic:equal name="registration" property="degreeType.administrativeOfficeType.qualifiedName" value="AdministrativeOfficeType.MASTER_DEGREE"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="conclusion.document.scholarship.of"/></logic:equal>o 
-				<bean:write name="registrationConclusionBean" property="degreeDescription"/>
-				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.in"/> <bean:write name="degreeFinalizationDate"/><bean:write name="degreeFinalizationGrade"/>, 
+				<logic:equal name="registration" property="degreeType.administrativeOfficeType.qualifiedName" value="AdministrativeOfficeType.MASTER_DEGREE">
+					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="conclusion.document.scholarship.of"/>
+				</logic:equal>
+				o <bean:write name="registrationConclusionBean" property="conclusionDegreeDescription"/> <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.in"/> 
+				<bean:write name="degreeFinalizationDate"/><bean:write name="degreeFinalizationGrade"/>, 
 				tendo obtido o total de <bean:write name="degreeFinalizationEcts"/><bean:write name="creditsDescription"/>.
 			</p>
 		</td>
