@@ -56,7 +56,7 @@
 				<text><![CDATA[CERTIFICADO]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement key="textField-16" x="38" y="198" width="519" height="102"/>
+				<reportElement key="textField-16" x="38" y="180" width="519" height="120"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -66,7 +66,7 @@
 				<textElement textAlignment="Justified" lineSpacing="1_1_2" markup="styled">
 					<font size="12" isBold="false" isItalic="false" pdfFontName="Times-Roman"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["A Técnica Superior da Secção de Graduação do "+ $P{institutionName} +" da "+ $P{universityName} + ", certifica que <style pdfFontName=\"Times-Bold\"> " + $P{name} + ",</style> aluno com o número <style pdfFontName=\"Times-Bold\"> " + $P{studentNumber} + "</style>, do <style pdfFontName=\"Times-Bold\"> " + $P{degreeDescription} + "</style>, consta o(s) seguinte(s) registo(s) de teste(s) na(s) disciplina(s) abaixo discriminada(s):"]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA["A Técnica Superior da Secção de Graduação do "+ $P{institutionName} +" da "+ $P{universityName} + ", certifica que <style pdfFontName=\"Times-Bold\"> " + $P{name} + ",</style> aluno com o número <style pdfFontName=\"Times-Bold\"> " + $P{studentNumber} + "</style>, do <style pdfFontName=\"Times-Bold\"> " + $P{degreeDescription} + "</style>, consta o(s) seguinte(s) registo(s) de teste(s) na(s) disciplina(s) abaixo discriminada(s) (à data da emissão deste documento):"]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>

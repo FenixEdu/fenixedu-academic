@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExamDateCertificateRequest;
 import net.sourceforge.fenixedu.domain.util.email.ConcreteReplyTo;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
@@ -41,14 +42,19 @@ public class DeleteWrittenEvaluation {
             throw new FenixServiceException("error.noWrittenEvaluation");
         }
         if (writtenEvaluationToDelete instanceof Exam) {
-            if (!((Exam) writtenEvaluationToDelete).getExamDateCertificateRequestsSet().isEmpty()) {
-                throw new FenixServiceException("exam.has.exam.certificates.requests");
-            }
+            disconnectExamCertificateRequests(writtenEvaluationToDelete);
         }
         if (writtenEvaluationToDelete.hasAnyVigilancies()) {
             notifyVigilants(writtenEvaluationToDelete);
         }
         writtenEvaluationToDelete.delete();
+    }
+
+    private void disconnectExamCertificateRequests(WrittenEvaluation writtenEvaluationToDelete) {
+        Exam examToDelete = (Exam) writtenEvaluationToDelete;
+        for(ExamDateCertificateRequest examDateCertificateRequest : examToDelete.getExamDateCertificateRequestsSet()){
+            examDateCertificateRequest.removeExams(examToDelete);
+        }
     }
 
     private void notifyVigilants(WrittenEvaluation writtenEvaluation) {
