@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.thesis;
 
-import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ScientificCommissionGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ThesisReadersGroup;
@@ -25,13 +24,5 @@ public class MakeThesisDocumentsAvailable {
         Group thesisGroup = ThesisReadersGroup.get(thesis);
 
         thesisFile.setPermittedGroup(scientificCouncil.or(commissionMembers).or(student).or(thesisGroup));
-
-        final net.sourceforge.fenixedu.domain.research.result.publication.Thesis publication = thesis.getPublication();
-        if (publication != null) {
-            for (final File file : publication.getResultDocumentFilesSet()) {
-                file.setPermittedGroup(thesisFile.getPermittedGroup());
-            }
-        }
     }
-
 }

@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.thesis;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ScientificCommissionGroup;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
 
@@ -23,13 +22,5 @@ public class MakeThesisDocumentsUnavailable {
         Group student = thesis.getStudent().getPerson().getPersonGroup();
 
         thesisFile.setPermittedGroup(scientificCouncil.or(commissionMembers).or(student));
-
-        final net.sourceforge.fenixedu.domain.research.result.publication.Thesis publication = thesis.getPublication();
-        if (publication != null) {
-            for (final ResearchResultDocumentFile researchResultDocumentFile : publication.getResultDocumentFilesSet()) {
-                researchResultDocumentFile.setPermittedGroup(thesisFile.getPermittedGroup());
-            }
-        }
     }
-
 }

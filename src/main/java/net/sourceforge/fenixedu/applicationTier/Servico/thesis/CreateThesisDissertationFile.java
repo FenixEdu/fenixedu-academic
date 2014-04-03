@@ -7,8 +7,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.student.thesis.Scientific
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile;
-import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile.FileResultPermittedGroupType;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
 
@@ -42,20 +40,6 @@ public class CreateThesisDissertationFile extends CreateThesisFile {
         file.setLanguage(language);
 
         thesis.setDissertation(file);
-
-        final net.sourceforge.fenixedu.domain.research.result.publication.Thesis publication = thesis.getPublication();
-        if (publication != null) {
-            final ResearchResultDocumentFile researchResultDocumentFile =
-                    publication.getResultDocumentFilesSet().iterator().next();
-
-            final FileResultPermittedGroupType permittedGroupType = researchResultDocumentFile.getFileResultPermittedGroupType();
-
-            researchResultDocumentFile.delete();
-
-            publication.addDocumentFile(bytes, fileName, file.getDisplayName(), permittedGroupType);
-            publication.setThesis(thesis);
-
-        }
     }
 
     // Service Invokers migrated from Berserk

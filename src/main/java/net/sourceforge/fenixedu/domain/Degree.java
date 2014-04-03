@@ -42,6 +42,7 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
+import net.sourceforge.fenixedu.domain.thesis.ThesisState;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import net.sourceforge.fenixedu.util.MarkType;
@@ -1337,7 +1338,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
                 for (IEnrolment enrolment : enrolments) {
                     Thesis thesis = enrolment.getThesis();
 
-                    if (thesis != null && thesis.hasPublication()) {
+                    if (thesis != null && thesis.getState().equals(ThesisState.EVALUATED)) {
                         return true;
                     }
                 }

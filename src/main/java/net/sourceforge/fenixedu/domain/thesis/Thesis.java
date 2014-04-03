@@ -43,8 +43,6 @@ import net.sourceforge.fenixedu.domain.exceptions.FieldIsRequiredException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificCouncilUnit;
-import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile;
-import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile.FileResultPermittedGroupType;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
@@ -1069,19 +1067,10 @@ public class Thesis extends Thesis_Base {
             throw new DomainException("thesis.acceptDeclaration.visibility.required");
         }
 
-        FileResultPermittedGroupType groupType;
         if (visibility.equals(ThesisVisibilityType.INTRANET)) {
             setVisibility(ThesisVisibilityType.PUBLIC);
-            groupType = FileResultPermittedGroupType.PUBLIC;
         } else {
             setVisibility(ThesisVisibilityType.INTRANET);
-            groupType = FileResultPermittedGroupType.INSTITUTION;
-        }
-        final net.sourceforge.fenixedu.domain.research.result.publication.Thesis publication = getPublication();
-        if (publication != null) {
-            for (final ResearchResultDocumentFile researchResultDocumentFile : publication.getResultDocumentFilesSet()) {
-                researchResultDocumentFile.setFileResultPermittedGroupType(groupType);
-            }
         }
     }
 
@@ -1404,10 +1393,6 @@ public class Thesis extends Thesis_Base {
         } else {
             thesisAbstract = thesisAbstract.with(realLanguage, text);
             setThesisAbstract(thesisAbstract);
-        }
-
-        if (hasPublication()) {
-            getPublication().replaceAbstract(thesisAbstract);
         }
     }
 
@@ -1834,16 +1819,6 @@ public class Thesis extends Thesis_Base {
     @Deprecated
     public boolean hasState() {
         return getState() != null;
-    }
-
-    @Deprecated
-    public boolean hasBennuFromPendingPublication() {
-        return getRootDomainObjectFromPendingPublication() != null;
-    }
-
-    @Deprecated
-    public boolean hasPublication() {
-        return getPublication() != null;
     }
 
     @Deprecated

@@ -14551,13 +14551,6 @@ relation RootDomainObjectThesis {
     }
 }
 
-relation RootDomainObjectThesisPendingPublication {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectFromPendingPublication;
-    thesis.Thesis playsRole thesesPendingPublication {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectTransaction {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     transactions.Transaction playsRole transactions {
