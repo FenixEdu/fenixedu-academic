@@ -7,7 +7,7 @@ import java.util.TreeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYearBean;
+import net.sourceforge.fenixedu.dataTransferObject.commons.ExecutionYearBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ExpectationEvaluationGroup;
 import net.sourceforge.fenixedu.domain.Person;

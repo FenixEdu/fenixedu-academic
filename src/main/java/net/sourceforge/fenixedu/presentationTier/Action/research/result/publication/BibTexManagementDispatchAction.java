@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateJournalIssue;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.activity.CreateResearchEventEdition;
 import net.sourceforge.fenixedu.applicationTier.Servico.research.result.publication.ImportBibtexPublication;
-import net.sourceforge.fenixedu.dataTransferObject.research.result.OpenFileBean;
+import net.sourceforge.fenixedu.dataTransferObject.commons.OpenFileBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultDocumentFileSubmissionBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultParticipationCreationBean.ParticipationType;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.ResultUnitAssociationCreationBean;

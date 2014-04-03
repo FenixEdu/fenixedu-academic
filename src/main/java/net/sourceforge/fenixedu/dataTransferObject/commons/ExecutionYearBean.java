@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.dataTransferObject.research.result;
+package net.sourceforge.fenixedu.dataTransferObject.commons;
 
 import java.io.Serializable;
 

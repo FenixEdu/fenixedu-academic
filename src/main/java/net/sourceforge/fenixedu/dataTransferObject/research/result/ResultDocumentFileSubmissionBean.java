@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject.research.result;
 
+import net.sourceforge.fenixedu.dataTransferObject.commons.OpenFileBean;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile.FileResultPermittedGroupType;
 

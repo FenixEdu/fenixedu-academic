@@ -24,7 +24,7 @@
 	<html:hidden property="method" value="uploadFile"/>
 	<fr:edit id="executionCourseAudit" name="executionCourseAudit" visible="false"/>
 	<fr:edit id="fileBean" name="fileBean">
-		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.research.result.OpenFileBean">
+		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.commons.OpenFileBean">
 			<fr:slot name="inputStream" key="label.file">
 				<fr:property name="fileNameSlot" value="fileName"/>
 			</fr:slot>		

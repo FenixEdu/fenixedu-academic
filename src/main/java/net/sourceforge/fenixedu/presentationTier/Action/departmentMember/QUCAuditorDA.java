@@ -8,10 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
+import net.sourceforge.fenixedu.dataTransferObject.commons.OpenFileBean;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.AuditProcessBean;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CompetenceCourseResultsResume;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseResumeResult;
-import net.sourceforge.fenixedu.dataTransferObject.research.result.OpenFileBean;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;

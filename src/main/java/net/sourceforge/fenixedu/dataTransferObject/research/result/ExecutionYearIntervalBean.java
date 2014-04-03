@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject.research.result;
 
 import java.io.Serializable;
 
+import net.sourceforge.fenixedu.dataTransferObject.commons.ExecutionYearBean;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean.ResultPublicationType;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 
