@@ -151,12 +151,6 @@
                   <form-property type="java.lang.String" name="status"></form-property>
                   <form-property type="java.lang.String" name="degreeCurricularPlanID"></form-property>
             </form-bean>
-            <!-- TEACHER INFORMATION -->
-            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="teacherInformationForm">
-                  <form-property type="java.lang.String" name="yearString"></form-property>
-                  <form-property type="java.lang.String" name="executionDegreeId"></form-property>
-                  <form-property initial="0" type="java.lang.Integer" name="degreeCurricularPlanID"></form-property>
-            </form-bean>
             <!-- VIEW STUDENT CURRICULUM FORMS -->
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="studentCurricularPlanAndEnrollmentsSelectionForm">
                   <form-property type="java.lang.String" name="studentCPID"></form-property>
