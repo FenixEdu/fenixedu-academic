@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.LeafGroup;
+import net.sourceforge.fenixedu.domain.accessControl.PersistentStudentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.OidOperator;
@@ -74,5 +75,10 @@ public class StudentsByDegreeAndCurricularYear extends LeafGroup {
             return 3;
         }
 
+    }
+
+    @Override
+    public PersistentStudentGroup convert() {
+        return PersistentStudentGroup.getInstance(getDegree(), getCurricularYear(), getExecutionYear());
     }
 }

@@ -6,6 +6,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.DomainBackedGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.accessControl.PersistentCerimonyInquiryGroup;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongTypeOfArgumentException;
@@ -72,4 +73,8 @@ public class CerimonyInquiryGroup extends DomainBackedGroup<CerimonyInquiry> {
 
     }
 
+    @Override
+    public PersistentCerimonyInquiryGroup convert() {
+        return PersistentCerimonyInquiryGroup.getInstance(getObject());
+    }
 }

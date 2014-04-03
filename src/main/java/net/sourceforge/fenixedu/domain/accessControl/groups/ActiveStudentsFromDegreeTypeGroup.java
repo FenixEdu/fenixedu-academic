@@ -7,6 +7,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.accessControl.PersistentStudentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
@@ -67,5 +68,10 @@ public class ActiveStudentsFromDegreeTypeGroup extends Group {
         public int getMinArguments() {
             return 1;
         }
+    }
+
+    @Override
+    public PersistentStudentGroup convert() {
+        return PersistentStudentGroup.getInstance(degreeType);
     }
 }

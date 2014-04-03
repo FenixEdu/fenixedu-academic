@@ -152,11 +152,6 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
         return true;
     }
 
-    @Override
-    public Group getPermittedGroup() {
-        throw new DomainException("error.phd.PhdProgramProcessDocument.use.isPersonAllowedToAccess.method.instead");
-    }
-
     public PhdProgramProcessDocument replaceDocument(PhdIndividualProgramDocumentType documentType, String remarks,
             byte[] content, String filename, Person uploader) {
         if (!this.getClass().equals(PhdProgramProcessDocument.class)) {

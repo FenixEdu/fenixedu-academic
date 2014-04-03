@@ -77,4 +77,9 @@ public class StudentGroupStudentsGroup extends DomainBackedGroup<StudentGroup> {
         }
 
     }
+
+    @Override
+    public PersistentStudentGroupGroup convert() {
+        return PersistentStudentGroupGroup.getInstance(getObject());
+    }
 }

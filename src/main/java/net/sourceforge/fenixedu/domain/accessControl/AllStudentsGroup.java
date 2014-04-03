@@ -49,4 +49,8 @@ public class AllStudentsGroup extends Group {
         return null;
     }
 
+    @Override
+    public PersistentStudentGroup convert() {
+        return PersistentStudentGroup.getInstance();
+    }
 }

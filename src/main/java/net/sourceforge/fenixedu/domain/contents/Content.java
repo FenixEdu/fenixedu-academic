@@ -512,6 +512,10 @@ public abstract class Content extends Content_Base {
     public void logSectionInsertFile(Content childContent, Section section) {
     }
 
+    public AvailabilityPolicy getOwnAvailabilityPolicy() {
+        return super.getAvailabilityPolicy();
+    }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.contents.Node> getParents() {
         return getParentsSet();

@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.domain.groups.AnyoneGroup;
 
 /**
  * This groups represents the group of everyone. All person belong to this group
@@ -61,4 +62,8 @@ public class EveryoneGroup extends Group {
         return new Argument[0];
     }
 
+    @Override
+    public AnyoneGroup convert() {
+        return AnyoneGroup.getInstance();
+    }
 }

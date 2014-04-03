@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.VariableNotDefinedException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.OidOperator;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 
 public class ResearchUnitElementGroup extends DomainBackedGroup<ResearchUnit> {
@@ -68,5 +69,10 @@ public class ResearchUnitElementGroup extends DomainBackedGroup<ResearchUnit> {
             return 1;
         }
 
+    }
+
+    @Override
+    public PersistentUnitGroup convert() {
+        return PersistentUnitGroup.getInstance(getObject(), AccountabilityTypeEnum.RESEARCH_CONTRACT, null, false);
     }
 }

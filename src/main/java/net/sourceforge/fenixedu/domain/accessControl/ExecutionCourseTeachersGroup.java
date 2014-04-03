@@ -100,4 +100,8 @@ public class ExecutionCourseTeachersGroup extends AbstractExecutionCourseTeacher
         return false;
     }
 
+    @Override
+    public PersistentTeacherGroup convert() {
+        return PersistentTeacherGroup.getInstance(getExecutionCourse());
+    }
 }

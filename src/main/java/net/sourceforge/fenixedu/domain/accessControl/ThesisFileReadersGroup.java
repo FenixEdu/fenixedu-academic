@@ -121,4 +121,9 @@ public class ThesisFileReadersGroup extends DomainBackedGroup<Thesis> {
         }
 
     }
+
+    @Override
+    public org.fenixedu.bennu.core.domain.groups.Group convert() {
+        return PersistentThesisReadersGroup.getInstance(getObject());
+    }
 }

@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.O
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.fenixedu.bennu.core.domain.groups.NobodyGroup;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
@@ -171,5 +172,14 @@ public class ConclusionYearDegreesStudentsGroup extends LeafGroup {
 
     public void setRegistrationEnd(ExecutionYear registrationEnd) {
         this.registrationEnd = registrationEnd;
+    }
+
+    @Override
+    public org.fenixedu.bennu.core.domain.groups.Group convert() {
+        org.fenixedu.bennu.core.domain.groups.Group group = NobodyGroup.getInstance();
+        for (Degree degree : getDegrees()) {
+            group = group.or(PersistentStudentsConcludedInExecutionYearGroup.getInstance(degree, getRegistrationEnd()));
+        }
+        return group;
     }
 }

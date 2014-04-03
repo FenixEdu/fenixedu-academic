@@ -8,8 +8,6 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.groups.Group;
 
-import pt.ist.fenixframework.FenixFramework;
-
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
@@ -24,10 +22,6 @@ public class BennuGroupBridge extends net.sourceforge.fenixedu.domain.accessCont
         this.bennuGroup = group;
     }
 
-    private BennuGroupBridge(String id) {
-        this.bennuGroup = FenixFramework.getDomainObject(id);
-    }
-
     @Override
     public Set<Person> getElements() {
         return Sets.newHashSet(Iterables.transform(bennuGroup.getMembers(), new Function<User, Person>() {
@@ -40,16 +34,15 @@ public class BennuGroupBridge extends net.sourceforge.fenixedu.domain.accessCont
 
     @Override
     public int getElementsCount() {
-        return bennuGroup.getMembers().size();
+        return getElements().size();
     }
 
     @Override
     public boolean isMember(Person person) {
-        if (person.getUser() == null) {
-            return false;
-        } else {
+        if (person != null) {
             return bennuGroup.isMember(person.getUser());
         }
+        return bennuGroup.isMember(null);
     }
 
     @Override

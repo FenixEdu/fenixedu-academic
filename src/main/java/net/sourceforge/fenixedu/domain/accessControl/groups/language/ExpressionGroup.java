@@ -251,4 +251,9 @@ public class ExpressionGroup extends Group implements GroupContextProvider {
         return getGroup().without(group);
     }
 
+    @Override
+    public org.fenixedu.bennu.core.domain.groups.Group convert() {
+        return getGroup().convert();
+    }
+
 }

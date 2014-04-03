@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 
 public class ResponsibleProfessorshipsForCurrentSemester extends Group {
 
@@ -42,4 +43,8 @@ public class ResponsibleProfessorshipsForCurrentSemester extends Group {
         return null;
     }
 
+    @Override
+    public org.fenixedu.bennu.core.domain.groups.Group convert() {
+        return PersistentProfessorshipsGroup.getInstance(false, AcademicPeriod.SEMESTER);
+    }
 }

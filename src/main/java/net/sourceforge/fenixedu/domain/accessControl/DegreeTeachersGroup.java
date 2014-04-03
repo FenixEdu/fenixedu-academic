@@ -66,4 +66,9 @@ public class DegreeTeachersGroup extends DegreeGroup {
         }
 
     }
+
+    @Override
+    public PersistentTeacherGroup convert() {
+        return PersistentTeacherGroup.getInstance(getDegree());
+    }
 }

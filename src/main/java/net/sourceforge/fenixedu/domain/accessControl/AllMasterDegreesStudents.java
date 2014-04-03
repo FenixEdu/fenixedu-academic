@@ -58,4 +58,9 @@ public class AllMasterDegreesStudents extends Group {
         return new Argument[0];
     }
 
+    @Override
+    public org.fenixedu.bennu.core.domain.groups.Group convert() {
+        return PersistentStudentGroup.getInstance(DegreeType.MASTER_DEGREE).or(
+                PersistentStudentGroup.getInstance(DegreeType.BOLONHA_MASTER_DEGREE));
+    }
 }

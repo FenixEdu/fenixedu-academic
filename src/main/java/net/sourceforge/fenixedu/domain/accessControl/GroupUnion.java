@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.domain.groups.NobodyGroup;
 
 /**
  * @deprecated Use Bennu Groups instead
@@ -117,4 +118,12 @@ public final class GroupUnion extends NodeGroup {
         return "||";
     }
 
+    @Override
+    public org.fenixedu.bennu.core.domain.groups.Group convert() {
+        org.fenixedu.bennu.core.domain.groups.Group group = NobodyGroup.getInstance();
+        for (IGroup child : getChildren()) {
+            group = group.or(child.convert());
+        }
+        return group;
+    }
 }

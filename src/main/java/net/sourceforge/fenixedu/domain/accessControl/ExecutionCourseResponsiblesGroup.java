@@ -67,4 +67,8 @@ public class ExecutionCourseResponsiblesGroup extends Group {
         return null;
     }
 
+    @Override
+    public PersistentResponsibleForExecutionCourseGroup convert() {
+        return PersistentResponsibleForExecutionCourseGroup.getInstance();
+    }
 }

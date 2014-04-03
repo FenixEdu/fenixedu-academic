@@ -58,4 +58,11 @@ public class AllDegreesStudentsGroup extends Group {
     protected Argument[] getExpressionArguments() {
         return new Argument[0];
     }
+
+    @Override
+    public org.fenixedu.bennu.core.domain.groups.Group convert() {
+        return PersistentStudentGroup.getInstance(DegreeType.DEGREE)
+                .or(PersistentStudentGroup.getInstance(DegreeType.BOLONHA_DEGREE))
+                .or(PersistentStudentGroup.getInstance(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
+    }
 }

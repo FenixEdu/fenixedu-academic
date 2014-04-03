@@ -74,4 +74,8 @@ public class TeachersWithGradesToSubmit extends TeachersByExecutionPeriodDegreeA
         }
     }
 
+    @Override
+    public PersistentTeachersWithGradesToSubmitGroup convert() {
+        return PersistentTeachersWithGradesToSubmitGroup.getInstance(getExecutionPeriod(), getDegreeCurricularPlan());
+    }
 }

@@ -5,6 +5,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.accessControl.PersistentResearchAuthorGroup;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -69,4 +70,8 @@ public class AuthorGroup extends Group {
         return new Argument[0];
     }
 
+    @Override
+    public PersistentResearchAuthorGroup convert() {
+        return PersistentResearchAuthorGroup.getInstance();
+    }
 }

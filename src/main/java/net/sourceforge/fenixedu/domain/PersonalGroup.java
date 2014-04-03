@@ -102,4 +102,9 @@ public class PersonalGroup extends PersonalGroup_Base implements IGroup {
         return getPerson() != null;
     }
 
+    @Override
+    public org.fenixedu.bennu.core.domain.groups.Group convert() {
+        throw new UnsupportedOperationException();
+    }
+
 }

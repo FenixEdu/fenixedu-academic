@@ -56,4 +56,8 @@ public class ExecutionCourseResponsibleTeachersGroup extends AbstractExecutionCo
         return getExecutionCourse().responsibleFors();
     }
 
+    @Override
+    public PersistentTeacherResponsibleOfExecutionCourseGroup convert() {
+        return PersistentTeacherResponsibleOfExecutionCourseGroup.getInstance(getExecutionCourse());
+    }
 }

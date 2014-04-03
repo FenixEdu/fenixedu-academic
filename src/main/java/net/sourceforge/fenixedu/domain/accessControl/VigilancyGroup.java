@@ -76,4 +76,9 @@ public class VigilancyGroup extends DomainBackedGroup<Vigilancy> {
         }
 
     }
+
+    @Override
+    public PersistentVigilancyGroup convert() {
+        return PersistentVigilancyGroup.getInstance(getObject());
+    }
 }

@@ -134,4 +134,8 @@ public class DelegatesGroup extends LeafGroup {
 
     }
 
+    @Override
+    public PersistentDelegatesGroup convert() {
+        return PersistentDelegatesGroup.getInstance(getDegree(), getFunctionType());
+    }
 }

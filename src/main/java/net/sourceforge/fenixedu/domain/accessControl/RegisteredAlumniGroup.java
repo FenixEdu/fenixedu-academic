@@ -31,4 +31,8 @@ public class RegisteredAlumniGroup extends Group {
         return null;
     }
 
+    @Override
+    public PersistentAlumniGroup convert() {
+        return PersistentAlumniGroup.getInstance();
+    }
 }

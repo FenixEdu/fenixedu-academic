@@ -1,10 +1,12 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
@@ -12,6 +14,9 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilde
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.OidOperator;
 import net.sourceforge.fenixedu.domain.student.Registration;
+
+import org.fenixedu.bennu.core.domain.groups.NobodyGroup;
+
 import pt.ist.fenixframework.FenixFramework;
 
 public class DelegateCurricularCourseStudentsGroup extends LeafGroup {
@@ -114,4 +119,13 @@ public class DelegateCurricularCourseStudentsGroup extends LeafGroup {
         return curricularCourse.getEnrolmentsByExecutionYear(executionYear).size();
     }
 
+    @Override
+    public org.fenixedu.bennu.core.domain.groups.Group convert() {
+        List<ExecutionCourse> executions = getCurricularCourse().getExecutionCoursesByExecutionYear(getExecutionYear());
+        org.fenixedu.bennu.core.domain.groups.Group converted = NobodyGroup.getInstance();
+        for (ExecutionCourse executionCourse : executions) {
+            converted = converted.or(PersistentStudentGroup.getInstance(executionCourse));
+        }
+        return converted;
+    }
 }

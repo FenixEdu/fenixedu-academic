@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.domain.groups.NobodyGroup;
 
 /**
  * 
@@ -149,4 +150,11 @@ public class RoleGroup extends LeafGroup {
 
     }
 
+    @Override
+    public org.fenixedu.bennu.core.domain.groups.Group convert() {
+        if (getRole() != null) {
+            return RoleCustomGroup.getInstance(getRole());
+        }
+        return NobodyGroup.getInstance();
+    }
 }

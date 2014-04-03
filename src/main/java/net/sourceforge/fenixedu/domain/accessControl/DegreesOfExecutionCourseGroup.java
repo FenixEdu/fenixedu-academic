@@ -135,4 +135,9 @@ public class DegreesOfExecutionCourseGroup extends ExecutionCourseGroup {
         }
 
     }
+
+    @Override
+    public PersistentStudentSharingDegreeOfExecutionCourseGroup convert() {
+        return PersistentStudentSharingDegreeOfExecutionCourseGroup.getInstance(getExecutionCourse());
+    }
 }

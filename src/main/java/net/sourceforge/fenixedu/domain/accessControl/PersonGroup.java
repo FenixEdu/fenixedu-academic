@@ -10,6 +10,8 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongNumberOfArgumentsException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongTypeOfArgumentException;
 
+import org.fenixedu.bennu.core.domain.groups.NobodyGroup;
+import org.fenixedu.bennu.core.domain.groups.UserGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -116,5 +118,13 @@ public class PersonGroup extends DomainBackedGroup<Person> {
             return 1;
         }
 
+    }
+
+    @Override
+    public org.fenixedu.bennu.core.domain.groups.Group convert() {
+        if (getPerson().getUser() == null) {
+            return NobodyGroup.getInstance();
+        }
+        return UserGroup.getInstance(getPerson().getUser());
     }
 }

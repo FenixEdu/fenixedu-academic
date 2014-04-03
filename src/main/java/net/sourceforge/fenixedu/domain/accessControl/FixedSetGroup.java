@@ -11,7 +11,17 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongTypeOfArgumentException;
+
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.domain.groups.NobodyGroup;
+import org.fenixedu.bennu.core.domain.groups.UserGroup;
+
 import pt.ist.fenixframework.FenixFramework;
+
+import com.google.common.base.Function;
+import com.google.common.base.Predicate;
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.ImmutableSet;
 
 public class FixedSetGroup extends LeafGroup {
 
@@ -146,5 +156,24 @@ public class FixedSetGroup extends LeafGroup {
             return Integer.MAX_VALUE;
         }
 
+    }
+
+    @Override
+    public org.fenixedu.bennu.core.domain.groups.Group convert() {
+        ImmutableSet<User> users = FluentIterable.from(persons).filter(new Predicate<Person>() {
+            @Override
+            public boolean apply(Person person) {
+                return person.getUser() != null;
+            }
+        }).transform(new Function<Person, User>() {
+            @Override
+            public User apply(Person person) {
+                return person.getUser();
+            }
+        }).toSet();
+        if (users.isEmpty()) {
+            return NobodyGroup.getInstance();
+        }
+        return UserGroup.getInstance(users);
     }
 }

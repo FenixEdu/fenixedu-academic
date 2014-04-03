@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 
 public class DepartmentEmployeesByExecutionYearGroup extends DepartmentByExecutionYearGroup {
 
@@ -68,4 +69,13 @@ public class DepartmentEmployeesByExecutionYearGroup extends DepartmentByExecuti
         return new String[] { getDepartment().getName(), getExecutionYear().getYear() };
     }
 
+    @Override
+    public PersistentUnitGroup convert() {
+        ///// TODO: attention, we are loosing the ExecutionYear here. make sure that when you want it time framed use isMember(user, when)
+        if (getDepartment() == null) {
+            throw new InvalidGroupException();
+        }
+        return PersistentUnitGroup.getInstance(getDepartment().getDepartmentUnit(), AccountabilityTypeEnum.WORKING_CONTRACT,
+                null, false);
+    }
 }

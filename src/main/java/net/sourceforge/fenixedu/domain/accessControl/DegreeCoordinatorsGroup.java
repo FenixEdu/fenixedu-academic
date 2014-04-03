@@ -72,4 +72,9 @@ public class DegreeCoordinatorsGroup extends Group {
     public int hashCode() {
         return getClass().hashCode();
     }
+
+    @Override
+    public PersistentCoordinatorGroup convert() {
+        return PersistentCoordinatorGroup.getInstance(DegreeType.DEGREE);
+    }
 }

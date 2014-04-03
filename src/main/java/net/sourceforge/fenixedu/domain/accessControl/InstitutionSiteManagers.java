@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.groups.Group;
 
 /**
  * Specialization of the WebSiteManagersGroup that represents the managers of a
@@ -48,4 +49,8 @@ public class InstitutionSiteManagers extends LeafGroup {
         return this.institutionSite;
     }
 
+    @Override
+    public Group convert() {
+        return PersistentManagersOfUnitSiteGroup.getInstance(initialize());
+    }
 }

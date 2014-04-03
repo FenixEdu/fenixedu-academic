@@ -72,4 +72,8 @@ public class ProjectDepartmentAccessGroup extends DomainBackedGroup<Project> {
 
     }
 
+    @Override
+    public PersistentProjectDepartmentGroup convert() {
+        return PersistentProjectDepartmentGroup.getInstance(getObject());
+    }
 }

@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherAuthorization;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 
 public class ExternalTeachersForCurrentSemester extends Group {
 
@@ -46,4 +47,8 @@ public class ExternalTeachersForCurrentSemester extends Group {
         return null;
     }
 
+    @Override
+    public PersistentProfessorshipsGroup convert() {
+        return PersistentProfessorshipsGroup.getInstance(true, AcademicPeriod.SEMESTER);
+    }
 }
