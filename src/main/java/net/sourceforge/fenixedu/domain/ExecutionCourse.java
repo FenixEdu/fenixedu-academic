@@ -56,8 +56,6 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
-import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
-import net.sourceforge.fenixedu.domain.tests.TestGroupStatus;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.ExecutionCoursePredicates;
@@ -495,9 +493,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             }
 
             for (; !getMetadatas().isEmpty(); getMetadatas().iterator().next().delete()) {
-                ;
-            }
-            for (; !getTestGroups().isEmpty(); getTestGroups().iterator().next().delete()) {
                 ;
             }
             for (; !getExportGroupings().isEmpty(); getExportGroupings().iterator().next().delete()) {
@@ -1716,46 +1711,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return result;
     }
 
-    public boolean hasPublishedTestGroups() {
-        return this.getPublishedTestGroupsCount() > 0;
-    }
-
-    public Integer getPublishedTestGroupsCount() {
-        return this.getPublishedTestGroups().size();
-    }
-
-    public boolean hasFinishedTestGroups() {
-        return this.getFinishedTestGroupsCount() > 0;
-    }
-
-    public Integer getFinishedTestGroupsCount() {
-        return this.getFinishedTestGroups().size();
-    }
-
-    public List<NewTestGroup> getPublishedTestGroups() {
-        List<NewTestGroup> testGroups = new ArrayList<NewTestGroup>();
-
-        for (NewTestGroup testGroup : this.getTestGroups()) {
-            if (testGroup.getStatus().equals(TestGroupStatus.PUBLISHED)) {
-                testGroups.add(testGroup);
-            }
-        }
-
-        return testGroups;
-    }
-
-    public List<NewTestGroup> getFinishedTestGroups() {
-        List<NewTestGroup> testGroups = new ArrayList<NewTestGroup>();
-
-        for (NewTestGroup testGroup : this.getTestGroups()) {
-            if (testGroup.isCorrected()) {
-                testGroups.add(testGroup);
-            }
-        }
-
-        return testGroups;
-    }
-
     public Registration getRegistration(Person person) {
         for (Registration registration : person.getStudents()) {
             for (StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlans()) {
@@ -2902,16 +2857,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     @Deprecated
     public boolean hasAnyAssociatedSummaries() {
         return !getAssociatedSummariesSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewTestGroup> getTestGroups() {
-        return getTestGroupsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTestGroups() {
-        return !getTestGroupsSet().isEmpty();
     }
 
     @Deprecated

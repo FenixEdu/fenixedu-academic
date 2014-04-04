@@ -229,11 +229,6 @@
 			<version>1.2.2</version>
 		</dependency>
 		<dependency>
-			<groupId>net.sourceforge.jeuclid</groupId>
-			<artifactId>jeuclid</artifactId>
-			<version>2.9.0</version>
-		</dependency>
-		<dependency>
 			<groupId>org.mnode.ical4j</groupId>
 			<artifactId>ical4j</artifactId>
 			<version>1.0.5.2</version>
@@ -374,11 +369,6 @@
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>2.4</version>
-		</dependency>
-		<dependency>
-			<groupId>avalon</groupId>
-			<artifactId>avalon-framework</artifactId>
-			<version>4.1.4</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>

@@ -151,8 +151,6 @@ enum net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlan
 enum net.sourceforge.fenixedu.domain.teacher.AdviseType                                                                   as AdviseType;
 enum net.sourceforge.fenixedu.domain.teacher.CategoryType                                                                 as CategoryType;
 enum net.sourceforge.fenixedu.domain.teacher.WishesTutor                                                                  as WishesTutor;
-enum net.sourceforge.fenixedu.domain.tests.NewPermission                                                                  as NewPermission;
-enum net.sourceforge.fenixedu.domain.tests.TestGroupStatus                                                                as TestGroupStatus;
 enum net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType                                                       as ThesisParticipationType;
 enum net.sourceforge.fenixedu.domain.thesis.ThesisState                                                                   as ThesisState;
 enum net.sourceforge.fenixedu.domain.thesis.ThesisVisibilityType                                                          as ThesisVisibilityType;
@@ -282,30 +280,6 @@ valueType net.sourceforge.fenixedu.domain.degreeStructure.EctsComparabilityPerce
     }
 
     internalizeWith fromString();
-}
-
-valueType net.sourceforge.fenixedu.domain.tests.TestsGrade as TestsGrade {
-    externalizeWith {
-        bytearray pt.ist.fenixframework.core.Externalization.externalizeSerializableGZiped();
-    }
-
-    internalizeWith pt.ist.fenixframework.core.Externalization.internalizeSerializableGZiped();
-}
-
-valueType net.sourceforge.fenixedu.domain.tests.answers.ConcreteAnswer as ConcreteAnswer {
-    externalizeWith {
-        bytearray pt.ist.fenixframework.core.Externalization.externalizeSerializableGZiped();
-    }
-
-    internalizeWith pt.ist.fenixframework.core.Externalization.internalizeSerializableGZiped();
-}
-
-valueType net.sourceforge.fenixedu.domain.tests.predicates.Predicate as Predicate {
-    externalizeWith {
-        bytearray pt.ist.fenixframework.core.Externalization.externalizeSerializableGZiped();
-    }
-
-    internalizeWith pt.ist.fenixframework.core.Externalization.internalizeSerializableGZiped();
 }
 
 valueType net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval as AcademicInterval {
@@ -1368,9 +1342,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
 
         class space.BlueprintFile extends File {
             ByteArray contentFile;
-        }
-
-        class tests.PictureMaterialFile extends File {
         }
 
         class thesis.ThesisFile extends File {
@@ -5440,113 +5411,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         HourMinuteSecond endTimeHourMinuteSecond;
         HourMinuteSecond startTimeHourMinuteSecond;
         DiaSemana weekDay;
-    }
-
-    class tests.NewAnswer  {
-        ConcreteAnswer concreteAnswer;
-        Double percentage;
-    }
-
-    class tests.NewCorrector  {
-        Integer percentage;
-        Integer position;
-        Predicate predicate;
-    }
-
-    class tests.NewGroupElement  {
-        Integer position;
-    }
-
-    class tests.NewPermissionUnit  {
-        NewPermission permission;
-    }
-
-    class tests.NewPresentationMaterial  {
-        Boolean inline;
-        Integer position;
-    }
-
-        class tests.NewMathMlMaterial extends tests.NewPresentationMaterial {
-            String mathMl;
-        }
-
-        class tests.NewPictureMaterial extends tests.NewPresentationMaterial {
-        }
-
-        class tests.NewStringMaterial extends tests.NewPresentationMaterial {
-            String text;
-        }
-
-    class tests.NewTestElement  {
-        Integer sectionPosition;
-    }
-
-        class tests.NewChoice extends tests.NewTestElement {
-            Integer position;
-        }
-
-        class tests.NewModelRestriction extends tests.NewTestElement {
-            Integer count;
-            Integer position;
-            Double value;
-        }
-
-            class tests.NewModelGroup extends tests.NewModelRestriction {
-                String name;
-            }
-
-                class tests.NewTestModel extends tests.NewModelGroup {
-                    DateTime created;
-                    Double scale;
-                }
-
-        class tests.NewQuestion extends tests.NewTestElement {
-            TestsGrade grade;
-            Predicate preCondition;
-            Integer timesUsed;
-        }
-
-            class tests.NewAtomicQuestion extends tests.NewQuestion {
-                Predicate validator;
-            }
-
-                class tests.NewDateQuestion extends tests.NewAtomicQuestion {
-                }
-
-                class tests.NewMultipleChoiceQuestion extends tests.NewAtomicQuestion {
-                    Boolean shuffle;
-                }
-
-                class tests.NewNumericQuestion extends tests.NewAtomicQuestion {
-                }
-
-                class tests.NewStringQuestion extends tests.NewAtomicQuestion {
-                }
-
-            class tests.NewQuestionGroup extends tests.NewQuestion {
-                String name;
-            }
-
-                class tests.NewAllGroup extends tests.NewQuestionGroup {
-                }
-
-                class tests.NewQuestionBank extends tests.NewQuestionGroup {
-                }
-
-        class tests.NewSection extends tests.NewTestElement {
-            Predicate preCondition;
-        }
-
-            class tests.NewTest extends tests.NewSection {
-                Integer position;
-                Double scale;
-            }
-
-    class tests.NewTestGroup  {
-        DateTime beginDate;
-        DateTime finalDate;
-        String name;
-        TestGroupStatus status;
     }
 
     class thesis.Thesis  {
@@ -10021,25 +9885,11 @@ relation AnnualEventExecutionYear {
     }
 }
 
-relation AnswerAtomicQuestion {
-    tests.NewAnswer playsRole answers {
-        multiplicity *;
-    }
-    tests.NewAtomicQuestion playsRole atomicQuestion;
-}
-
 relation AnswerExportProposal {
     ExportGrouping playsRole exportGroupingReceivers {
         multiplicity *;
     }
     Person playsRole receiverPerson;
-}
-
-relation AnswerPerson {
-    tests.NewAnswer playsRole answers {
-        multiplicity *;
-    }
-    Person playsRole person;
 }
 
 relation AnyCurricularCourseDegree {
@@ -10215,13 +10065,6 @@ relation CareerTeacherTemp {
     Teacher playsRole teacher {
        multiplicity 0..1;
     }
-}
-
-relation ChoiceMultipleChoiceQuestion {
-    tests.NewChoice playsRole choices {
-        multiplicity *;
-    }
-    tests.NewMultipleChoiceQuestion playsRole multipleChoiceQuestion;
 }
 
 relation CompetenceCourseDepartment {
@@ -10439,13 +10282,6 @@ relation CoordinatorTeacher {
         multiplicity *;
     }
     Person playsRole person;
-}
-
-relation CorrectorAtomicQuestion {
-    tests.NewCorrector playsRole correctors {
-        multiplicity *;
-    }
-    tests.NewAtomicQuestion playsRole atomicQuestion;
 }
 
 relation CourseGroupContext {
@@ -11702,20 +11538,6 @@ relation GratuityValuesExecutionDegree {
     ExecutionDegree playsRole executionDegree;
 }
 
-relation GroupElementQuestion {
-    tests.NewGroupElement playsRole parentElements {
-        multiplicity *;
-    }
-    tests.NewQuestion playsRole child;
-}
-
-relation GroupElementQuestionGroup {
-    tests.NewGroupElement playsRole childElements {
-        multiplicity *;
-    }
-    tests.NewQuestionGroup playsRole parent;
-}
-
 relation GroupExecutionDegree {
     finalDegreeWork.FinalDegreeWorkGroup playsRole associatedFinalDegreeWorkGroups {
         multiplicity *;
@@ -12243,20 +12065,6 @@ relation MetadataFromExecutionCourse {
     ExecutionCourse playsRole executionCourse;
 }
 
-relation ModelRestrictionModelGroup {
-    tests.NewModelRestriction playsRole childRestrictions {
-        multiplicity *;
-    }
-    tests.NewModelGroup playsRole parentGroup;
-}
-
-relation ModelRestrictionQuestion {
-    tests.NewModelRestriction playsRole modelRestrictions {
-        multiplicity *;
-    }
-    tests.NewQuestion playsRole question;
-}
-
 relation NonAffiliatedTeacherExecutionCourse {
     NonAffiliatedTeacher playsRole nonAffiliatedTeachers {
         multiplicity *;
@@ -12608,20 +12416,6 @@ relation PeriodNextPeriod {
     OccupationPeriod playsRole nextPeriod;
 }
 
-relation PermissionUnitParty {
-    tests.NewPermissionUnit playsRole permissionUnits {
-        multiplicity *;
-    }
-    organizationalStructure.Party playsRole party;
-}
-
-relation PermissionUnitQuestion {
-    tests.NewPermissionUnit playsRole permissionUnits {
-        multiplicity *;
-    }
-    tests.NewQuestion playsRole question;
-}
-
 relation PersistentAccessGroupRoot {
 	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
 		multiplicity 0..1;
@@ -12861,13 +12655,6 @@ relation PhysicalAddressCountryOfResidence {
         multiplicity *;
     }
     Country playsRole countryOfResidence;
-}
-
-relation PictureMaterialFilePictureMaterial {
-    tests.NewPictureMaterial playsRole pictureMaterials {
-        multiplicity *;
-    }
-    tests.PictureMaterialFile playsRole pictureMaterialFile;
 }
 
 relation PrecedenceRestriction {
@@ -13185,11 +12972,6 @@ relation QualificationModifiedByPerson {
         multiplicity *;
     }
     Person playsRole modifiedBy;
-}
-
-relation QuestionBankParty {
-    tests.NewQuestionBank playsRole questionBank;
-    organizationalStructure.Party playsRole owner;
 }
 
 relation QuestionFromTestQuestion {
@@ -14540,58 +14322,9 @@ relation RootDomainObjectMetadata {
     }
 }
 
-relation RootDomainObjectNewAnswer {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    tests.NewAnswer playsRole answers {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectNewCorrector {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    tests.NewCorrector playsRole correctors {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectNewGroupElement {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    tests.NewGroupElement playsRole groupElements {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectNewParkingDocument {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     parking.NewParkingDocument playsRole newParkingDocuments {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectNewPermissionUnit {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    tests.NewPermissionUnit playsRole permissionUnits {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectNewPresentationMaterial {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    tests.NewPresentationMaterial playsRole presentationMaterials {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectNewTestElement {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    tests.NewTestElement playsRole newTestElements {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectNewTestGroup {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    tests.NewTestGroup playsRole testGroups {
         multiplicity *;
     }
 }
@@ -15597,13 +15330,6 @@ relation ScientificCommissionRootDomainObject {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
 }
 
-relation SectionTestElement {
-    tests.NewTestElement playsRole testElements {
-        multiplicity *;
-    }
-    tests.NewSection playsRole section;
-}
-
 relation SendProposal {
     ExportGrouping playsRole groupingSenderExecutionCourse {
         multiplicity *;
@@ -16155,55 +15881,6 @@ relation TeacherSummary {
         multiplicity *;
     }
     Teacher playsRole teacher;
-}
-
-relation TestElementPresentationMaterial {
-    tests.NewTestElement playsRole testElement;
-    tests.NewPresentationMaterial playsRole presentationMaterials {
-        multiplicity *;
-    }
-}
-
-relation TestGroupExecutionCourse {
-    tests.NewTestGroup playsRole testGroups {
-        multiplicity *;
-    }
-    ExecutionCourse playsRole executionCourse;
-}
-
-relation TestGroupTeacher {
-    tests.NewTestGroup playsRole testGroups {
-        multiplicity *;
-    }
-    Teacher playsRole creator;
-}
-
-relation TestGroupTest {
-    tests.NewTest playsRole tests {
-        multiplicity *;
-    }
-    tests.NewTestGroup playsRole testGroup;
-}
-
-relation TestModelModelGroup {
-    tests.NewTestModel playsRole bagModel;
-    tests.NewModelGroup playsRole bag;
-}
-
-relation TestModelTeacher {
-    tests.NewTestModel playsRole testModels {
-        multiplicity *;
-    }
-    Teacher playsRole creator;
-}
-
-relation TestPerson {
-    tests.NewTest playsRole tests {
-        multiplicity *;
-    }
-    Person playsRole persons {
-        multiplicity *;
-    }
 }
 
 relation TestScope {

@@ -4590,16 +4590,6 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewAnswer> getAnswers() {
-        return getAnswersSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAnswers() {
-        return !getAnswersSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ExportGrouping> getExportGroupingSenders() {
         return getExportGroupingSendersSet();
     }
@@ -5567,16 +5557,6 @@ public class Person extends Person_Base {
     @Deprecated
     public boolean hasAnyFakeShiftEnrollments() {
         return !getFakeShiftEnrollmentsSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewTest> getTests() {
-        return getTestsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTests() {
-        return !getTestsSet().isEmpty();
     }
 
     @Deprecated

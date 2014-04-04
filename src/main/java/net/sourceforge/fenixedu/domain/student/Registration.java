@@ -105,7 +105,6 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.domain.studentCurriculum.StandaloneCurriculumGroup;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
-import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -2096,26 +2095,6 @@ public class Registration extends Registration_Base {
                 AcademicOperationType.MANAGE_REGISTRATIONS).contains(getDegree())
                 || AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
                         AcademicOperationType.VIEW_FULL_STUDENT_CURRICULUM).contains(getDegree());
-    }
-
-    final public List<NewTestGroup> getPublishedTestGroups() {
-        List<NewTestGroup> testGroups = new ArrayList<NewTestGroup>();
-
-        for (ExecutionCourse executionCourse : this.getAttendingExecutionCoursesForCurrentExecutionPeriod()) {
-            testGroups.addAll(executionCourse.getPublishedTestGroups());
-        }
-
-        return testGroups;
-    }
-
-    final public List<NewTestGroup> getFinishedTestGroups() {
-        List<NewTestGroup> testGroups = new ArrayList<NewTestGroup>();
-
-        for (ExecutionCourse executionCourse : this.getAttendingExecutionCoursesForCurrentExecutionPeriod()) {
-            testGroups.addAll(executionCourse.getFinishedTestGroups());
-        }
-
-        return testGroups;
     }
 
     public boolean isCurricularCourseApproved(final CurricularCourse curricularCourse) {

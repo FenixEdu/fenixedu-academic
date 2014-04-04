@@ -254,10 +254,6 @@
 		</init-param>
 	</servlet>
     <servlet>
-        <servlet-name>MathMlServlet</servlet-name>
-        <servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.MathMlServlet</servlet-class>
-    </servlet>
-    <servlet>
         <display-name>XFire Servlet</display-name>
         <servlet-name>XFireServlet</servlet-name>
         <servlet-class>org.codehaus.xfire.transport.http.XFireConfigurableServlet</servlet-class>
@@ -270,10 +266,6 @@
         <servlet-name>XFireServlet</servlet-name>
         <url-pattern>/services/*</url-pattern>
     </servlet-mapping>
-   	<servlet-mapping>
-		<servlet-name>MathMlServlet</servlet-name>
-		<url-pattern>/mathml/MathMlServlet</url-pattern>
-	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>dwr-invoker</servlet-name>
 		<url-pattern>/dwr/*</url-pattern>

@@ -1795,16 +1795,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewPermissionUnit> getPermissionUnits() {
-        return getPermissionUnitsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPermissionUnits() {
-        return !getPermissionUnitsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.research.ResearchInterest> getResearchInterests() {
         return getResearchInterestsSet();
     }
@@ -1882,11 +1872,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     @Deprecated
     public boolean hasPartySocialSecurityNumber() {
         return getPartySocialSecurityNumber() != null;
-    }
-
-    @Deprecated
-    public boolean hasQuestionBank() {
-        return getQuestionBank() != null;
     }
 
     @Deprecated
