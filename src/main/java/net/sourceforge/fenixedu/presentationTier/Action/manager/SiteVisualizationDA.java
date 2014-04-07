@@ -77,7 +77,7 @@ public abstract class SiteVisualizationDA extends FenixDispatchAction {
         User userView = prepareUserView(request);
 
         if (section.isAvailable()) {
-            prepareProtectedItems(request, userView, section.getOrderedItems());
+            prepareProtectedItems(request, userView, section.getChildrenItems());
             return mapping.findForward("site-section");
         } else {
             if (isAuthenticated(userView)) {
@@ -133,7 +133,7 @@ public abstract class SiteVisualizationDA extends FenixDispatchAction {
     private List<ProtectedItem> setupItems(HttpServletRequest request, Collection<Item> items) {
         List<ProtectedItem> protectedItems = new ArrayList<ProtectedItem>();
         for (Item item : items) {
-            if (item.isVisible()) {
+            if (item.getVisible()) {
                 protectedItems.add(new ProtectedItem(item));
             }
         }

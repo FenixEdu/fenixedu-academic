@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrat
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Instalation;
 import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.cms.OldCmsPortalBackend;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart;
 import net.sourceforge.fenixedu.domain.person.PersonNamePart;
@@ -38,6 +39,7 @@ import org.fenixedu.bennu.core.domain.groups.Group;
 import org.fenixedu.bennu.core.presentationTier.servlets.filters.ExceptionHandlerFilter;
 import org.fenixedu.bennu.core.presentationTier.servlets.filters.ExceptionHandlerFilter.CustomHandler;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
+import org.fenixedu.bennu.portal.servlet.PortalBackendRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -88,6 +90,8 @@ public class FenixInitializer implements ServletContextListener {
         initializeFenixAPI();
         initializeBennuManagersGroup();
         registerPresentationStrategy();
+
+        PortalBackendRegistry.registerPortalBackend(new OldCmsPortalBackend());
 
         logger.info("Fenix initialized successfully");
     }

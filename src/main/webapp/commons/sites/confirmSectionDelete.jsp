@@ -21,20 +21,20 @@
 	<fr:view name="section" property="name" />
 </h2>
 
-<logic:notEmpty name="section" property="associatedSections">
+<logic:notEmpty name="section" property="childrenSections">
 	<p class="mtop15">
 	    <span class="warning0">
 	        <bean:message key="message.section.subSection.count" bundle="SITE_RESOURCES" 
-	                      arg0="<%= String.valueOf(section.getAssociatedSectionsCount()) %>"/>
+	                      arg0="<%= String.valueOf(section.getChildrenSections().size()) %>"/>
 	    </span>
     </p>
 </logic:notEmpty>
 
-<logic:notEmpty name="section" property="associatedItems">
+<logic:notEmpty name="section" property="childrenItems">
 	<p class="mtop15">
 	    <span class="warning0">
 	        <bean:message key="message.section.items.count" bundle="SITE_RESOURCES"
-	                      arg0="<%= String.valueOf(section.getAssociatedItemsCount()) %>"/>
+	                      arg0="<%= String.valueOf(section.getChildrenItems().size()) %>"/>
 	    </span>
     </p>
 </logic:notEmpty>

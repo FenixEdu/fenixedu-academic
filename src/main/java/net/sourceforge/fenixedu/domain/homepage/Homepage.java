@@ -116,4 +116,9 @@ public class Homepage extends Homepage_Base {
         return new MultiLanguageString().with(Language.pt, String.valueOf(getPerson().getIstUsername()));
     }
 
+    @Override
+    public String getReversePath() {
+        return super.getReversePath() + "/" + getPerson().getUsername();
+    }
+
 }

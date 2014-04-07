@@ -6,8 +6,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/collection-pager" prefix="cp" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext"%>
-<bean:define id="executionCourse" name="<%= FunctionalityContext.CONTEXT_KEY %>" property="selectedContainer"/>
 <bean:define id="executionCourseID" name="executionCourse" property="externalId"/>
 <bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceCoursesBean"/>
 

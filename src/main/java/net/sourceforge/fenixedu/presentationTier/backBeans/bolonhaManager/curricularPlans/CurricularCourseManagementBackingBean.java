@@ -31,6 +31,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
@@ -774,6 +775,14 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     public Degree getDegree() {
         return getDegreeCurricularPlan().getDegree();
+    }
+
+    public Degree getDegreeAndSelectSite() {
+        Degree degree = getDegreeCurricularPlan().getDegree();
+        if (degree != null) {
+            OldCmsSemanticURLHandler.selectSite(getRequest(), degree.getSite());
+        }
+        return degree;
     }
 
     public String getDegreePresentationName() {

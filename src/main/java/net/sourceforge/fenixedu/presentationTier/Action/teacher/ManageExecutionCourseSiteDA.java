@@ -40,6 +40,9 @@ public class ManageExecutionCourseSiteDA extends SiteManagementDA {
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         ExecutionCourseBaseAction.propageContextIds(request);
+        request.setAttribute("siteActionName", "/manageExecutionCourseSite.do");
+        request.setAttribute("siteContextParam", "executionCourseID");
+        request.setAttribute("siteContextParamValue", ((ExecutionCourse) request.getAttribute("executionCourse")).getExternalId());
         ActionForward forward = super.execute(mapping, actionForm, request, response);
         return ExecutionCourseBaseAction.forward(request, forward.getPath());
     }
@@ -66,15 +69,7 @@ public class ManageExecutionCourseSiteDA extends SiteManagementDA {
 
     @Override
     protected String getItemLocationForFile(HttpServletRequest request, Item item, Section section) {
-
-        String path = section.getSite().getReversePath();
-        if (path == null) {
-            return null;
-        }
-
-        String resourceLocation =
-                request.getScheme() + "://" + request.getServerName() + request.getContextPath() + path + item.getReversePath();
-        return resourceLocation;
+        return item.getFullPath();
     }
 
 }

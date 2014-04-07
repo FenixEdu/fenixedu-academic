@@ -1,16 +1,18 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
+<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <html:xhtml/>
 
-<f:view>" definition="definition.public.mainPageIST" attributeName="body-inline">
+<ft:tilesView definition="definition.public.mainPageIST" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 	<f:loadBundle basename="resources/GlobalResources" var="globalBundle"/>
 	<f:loadBundle basename="resources/PublicDegreeInformation" var="publicDegreeInfoBundle"/>
+
+	<h:outputText value="<span style='display:none'>#{CurricularCourseManagement.degreeAndSelectSite}</span>" escape="false" />
 
 	<h:outputLink value="#{CurricularCourseManagement.instalationUrl}" >
 		<h:outputText value="#{CurricularCourseManagement.institutionAcronym}"/>
@@ -28,9 +30,9 @@
 	
 	&nbsp;&gt;&nbsp;
 
-     <h:outputText rendered="#{!empty CurricularCourseManagement.organizeBy}" value="#{facesContext.externalContext.requestContextPath}/publico/degreeSite/<a href='showDegreeCurricularPlanBolonha.faces?degreeID=#{CurricularCourseManagement.degreeCurricularPlan.degree.externalId}&amp;degreeCurricularPlanID=#{CurricularCourseManagement.degreeCurricularPlanID}&amp;executionPeriodID=#{CurricularCourseManagement.executionYearID}&amp;organizeBy=#{CurricularCourseManagement.organizeBy}&amp;showRules=#{CurricularCourseManagement.showRules}&amp;hideCourses=#{CurricularCourseManagement.hideCourses}'>#{publicDegreeInfoBundle['public.degree.information.label.curriculum']}</a>" escape="false"/>	
+     <h:outputText rendered="#{!empty CurricularCourseManagement.organizeBy}" value="<a href='#{facesContext.externalContext.requestContextPath}/publico/degreeSite/showDegreeCurricularPlanBolonha.faces?degreeID=#{CurricularCourseManagement.degreeCurricularPlan.degree.externalId}&amp;degreeCurricularPlanID=#{CurricularCourseManagement.degreeCurricularPlanID}&amp;executionPeriodID=#{CurricularCourseManagement.executionYearID}&amp;organizeBy=#{CurricularCourseManagement.organizeBy}&amp;showRules=#{CurricularCourseManagement.showRules}&amp;hideCourses=#{CurricularCourseManagement.hideCourses}'>#{publicDegreeInfoBundle['public.degree.information.label.curriculum']}</a>" escape="false"/>	
 
-     <h:outputText rendered="#{empty CurricularCourseManagement.organizeBy}" value="#{facesContext.externalContext.requestContextPath}/publico/degreeSite/<a href='showDegreeCurricularPlanBolonha.faces?degreeID=#{CurricularCourseManagement.degreeCurricularPlan.degree.externalId}&amp;degreeCurricularPlanID=#{CurricularCourseManagement.degreeCurricularPlanID}&amp;executionPeriodID=#{CurricularCourseManagement.executionYearID}&amp;organizeBy=groups&amp;showRules=false&amp;hideCourses=false'>#{publicDegreeInfoBundle['public.degree.information.label.curriculum']}</a>" escape="false"/>	 	
+     <h:outputText rendered="#{empty CurricularCourseManagement.organizeBy}" value="<a href='#{facesContext.externalContext.requestContextPath}/publico/degreeSite/showDegreeCurricularPlanBolonha.faces?degreeID=#{CurricularCourseManagement.degreeCurricularPlan.degree.externalId}&amp;degreeCurricularPlanID=#{CurricularCourseManagement.degreeCurricularPlanID}&amp;executionPeriodID=#{CurricularCourseManagement.executionYearID}&amp;organizeBy=groups&amp;showRules=false&amp;hideCourses=false'>#{publicDegreeInfoBundle['public.degree.information.label.curriculum']}</a>" escape="false"/>	 	
 
 	&nbsp;&gt;&nbsp;
 	<h:outputText rendered="#{!CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.curricularCourseSemesterBean.curricularCourseName}"/>
@@ -65,7 +67,7 @@
 			<h:outputText value="<strong>#{bolonhaBundle['competenceCourse']}</strong></td></tr>" escape="false"/>
 			<h:outputText value="<tr><td class='box_cell'>" escape="false"/>
 				
-				<h:outputText rendered="#{!CurricularCourseManagement.renderInEnglish}" value="#{facesContext.externalContext.requestContextPath}/publico/degreeSite/<a href='#{CurricularCourseManagement.contextPath}/publico/department/showCompetenceCourse.faces?competenceCourseID=#{CurricularCourseManagement.curricularCourse.competenceCourse.externalId}&amp;selectedDepartmentUnitID=#{CurricularCourseManagement.curricularCourseSemesterBean.departmentUnit.externalId}'>#{CurricularCourseManagement.curricularCourseSemesterBean.curricularCourseName}</a>" escape="false"/> 
+				<h:outputText rendered="#{!CurricularCourseManagement.renderInEnglish}" value="<a href='#{CurricularCourseManagement.contextPath}/publico/department/showCompetenceCourse.faces?competenceCourseID=#{CurricularCourseManagement.curricularCourse.competenceCourse.externalId}&amp;selectedDepartmentUnitID=#{CurricularCourseManagement.curricularCourseSemesterBean.departmentUnit.externalId}'>#{CurricularCourseManagement.curricularCourseSemesterBean.curricularCourseName}</a>" escape="false"/> 
 				<h:outputText rendered="#{CurricularCourseManagement.renderInEnglish}" value="#{facesContext.externalContext.requestContextPath}/publico/degreeSite/<a href='#{CurricularCourseManagement.contextPath}/publico/department/showCompetenceCourse.faces?competenceCourseID=#{CurricularCourseManagement.curricularCourse.competenceCourse.externalId}&amp;selectedDepartmentUnitID=#{CurricularCourseManagement.curricularCourseSemesterBean.departmentUnit.externalId}'>#{CurricularCourseManagement.curricularCourseSemesterBean.curricularCourseNameEn}</a>" escape="false"/> 			
 											
 				<h:outputText value=" #{publicDegreeInfoBundle['public.degree.information.label.from.masculine']} "/>
@@ -155,4 +157,4 @@
 		<h:outputText escape="false" value="<input alt='input.action' id='action' name='action' type='hidden' value='#{CurricularCourseManagement.action}'/>"/>
 	</h:form>
 
-</f:view>
+</ft:tilesView>

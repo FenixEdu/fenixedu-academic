@@ -12,6 +12,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.WebSiteManagersGroup;
+import net.sourceforge.fenixedu.domain.cms.CmsContent;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
@@ -19,6 +20,8 @@ import net.sourceforge.fenixedu.predicates.UnitSitePredicates;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+
+import com.google.common.collect.Ordering;
 
 public class UnitSite extends UnitSite_Base {
 
@@ -231,7 +234,7 @@ public class UnitSite extends UnitSite_Base {
     }
 
     public Section getSideSection() {
-        for (Section section : getAssociatedSections()) {
+        for (Section section : getAssociatedSectionSet()) {
             if (isSideSection(section)) {
                 return section;
             }
@@ -342,6 +345,15 @@ public class UnitSite extends UnitSite_Base {
         groups.addAll(getUnit().getGroups());
 
         return groups;
+    }
+
+    @Override
+    public CmsContent getInitialContent() {
+        Section section = getSideSection();
+        if (section == null) {
+            return super.getInitialContent();
+        }
+        return section.getChildSet().isEmpty() ? null : Ordering.natural().min(section.getChildSet());
     }
 
     @Deprecated

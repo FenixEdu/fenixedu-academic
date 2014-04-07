@@ -118,7 +118,7 @@ public class FenixConfigurationManager {
         public String getGenericApplicationEmailRecommendationLink();
 
         @ConfigurationProperty(key = "google.analytics.snippet",
-                description = "Google Analytics snippet configuration (without <script> tags)")
+                description = "Google Analytics snippet configuration (without <script> tags)", defaultValue = "")
         public String getGoogleAnalyticsSnippet();
 
         @ConfigurationProperty(

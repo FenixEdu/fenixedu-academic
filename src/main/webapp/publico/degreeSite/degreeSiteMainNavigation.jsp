@@ -2,20 +2,11 @@
 <%@ page import="org.fenixedu.bennu.core.domain.Bennu" %>
 <%@ page import="net.sourceforge.fenixedu.domain.Degree" %>
 
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %><%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
 <html:xhtml/>
 
-<%
-	net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext currentContext = (net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext) net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext.getCurrentContext(request);
-	net.sourceforge.fenixedu.domain.DegreeSite selectedContainer = (net.sourceforge.fenixedu.domain.DegreeSite) currentContext.getSelectedContainer();	
-	net.sourceforge.fenixedu.domain.Degree degree = selectedContainer.getDegree();
-
-	if (degree != null) {
-	    request.setAttribute("site", degree.getSite());
-	}
-%>
-
-<fr:view name="site" type="net.sourceforge.fenixedu.domain.Site" layout="side-menu"/>
+<fr:view name="actual$site" type="net.sourceforge.fenixedu.domain.Site" layout="side-menu"/>

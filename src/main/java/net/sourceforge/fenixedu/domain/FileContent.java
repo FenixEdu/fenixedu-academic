@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.cms.CmsContent;
 import pt.ist.fenixframework.FenixFramework;
 
 public class FileContent extends FileContent_Base {
@@ -25,6 +26,7 @@ public class FileContent extends FileContent_Base {
 
     protected FileContent() {
         super();
+        setVisible(true);
     }
 
     public FileContent(String filename, String displayName, byte[] content, Group group, EducationalResourceType type) {
@@ -41,12 +43,8 @@ public class FileContent extends FileContent_Base {
         return name.replace('\\', '-').replace('/', '-');
     }
 
-    public Section getSection() {
-        throw new UnsupportedOperationException("Not implemented");
-    }
-
-    public void logEditFile() {
-
+    public Site getSite() {
+        return getCmsContent() == null ? null : getCmsContent().getOwnerSite();
     }
 
     @Override
@@ -54,6 +52,23 @@ public class FileContent extends FileContent_Base {
         super.disconnect();
         if (getAnnouncementBoard() != null) {
             setAnnouncementBoard(null);
+        }
+        if (getCmsContent() != null) {
+            setCmsContent(null);
+        }
+    }
+
+    public void logEditFile() {
+        final CmsContent content = getCmsContent();
+        if (content != null) {
+            content.getOwnerSite().logEditFile(this);
+        }
+    }
+
+    public void logItemFilePermittedGroup() {
+        final CmsContent content = getCmsContent();
+        if (content != null) {
+            content.getOwnerSite().logItemFilePermittedGroup(this, content);
         }
     }
 

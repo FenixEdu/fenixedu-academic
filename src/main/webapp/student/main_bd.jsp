@@ -59,9 +59,9 @@ table tr.disabled td span.success0 { color: #555; background: #e5e5e5; }
 
 				<th rowspan="<%= rowNumber %>" style="vertical-align: top; padding-right: 2em; text-align: left;">
 					<h4 class="mtop025">
-					<app:contentLink name="executionCoursesAnnouncement" property="executionCourse.site" target="_blank">
+					<a href="${executionCoursesAnnouncement.executionCourse.site.fullPath}" target="_blank">
 							<bean:write name="executionCoursesAnnouncement" property="executionCourse.nome"/>
-					</app:contentLink>
+					</a>
 					</h4>
 				</th>
 				<th></th>

@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import net.sourceforge.fenixedu.domain.Section;
 
-import org.joda.time.YearMonthDay;
+import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -19,7 +19,7 @@ public class InfoSection extends InfoObject implements Comparable, ISiteComponen
 
     protected Integer sectionOrder;
 
-    protected YearMonthDay lastModifiedDate;
+    protected DateTime lastModifiedDate;
 
     protected InfoSite infoSite;
 
@@ -99,7 +99,7 @@ public class InfoSection extends InfoObject implements Comparable, ISiteComponen
     /**
      * @return Date
      */
-    public YearMonthDay getLastModifiedDate() {
+    public DateTime getLastModifiedDate() {
         return lastModifiedDate;
     }
 
@@ -109,7 +109,7 @@ public class InfoSection extends InfoObject implements Comparable, ISiteComponen
      * @param lastModifiedDate
      *            The lastModifiedDate to set
      */
-    public void setLastModifiedDate(YearMonthDay lastModifiedDate) {
+    public void setLastModifiedDate(DateTime lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
         setSectionDepth(calculateDepth());
     }

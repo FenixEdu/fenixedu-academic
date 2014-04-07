@@ -35,9 +35,9 @@ import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Site.SiteMapper;
 import net.sourceforge.fenixedu.domain.StudentGroup;
+import net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler;
 import net.sourceforge.fenixedu.domain.executionCourse.SummariesSearchBean;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.TeacherInquiryTemplate;
@@ -90,6 +90,7 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
             executionCourse = site.getSiteExecutionCourse();
         }
 
+        OldCmsSemanticURLHandler.selectSite(request, executionCourse.getSite());
         request.setAttribute("executionCourse", executionCourse);
         request.setAttribute("executionCourseID", executionCourse.getExternalId());
 

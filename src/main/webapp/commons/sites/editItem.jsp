@@ -39,7 +39,7 @@
 		</fr:layout>
     </fr:edit>
     
-    <logic:notEmpty name="item" property="fileItems">
+    <logic:notEmpty name="item" property="fileContentSet">
         <h3 class="mbottom05">
             <bean:message key="title.item.files" bundle="SITE_RESOURCES"/>
         </h3>
@@ -48,7 +48,7 @@
         	<bean:message key="label.item.edit.add.file.instructions" bundle="SITE_RESOURCES"/>
         </div>
     
-        <fr:edit id="edit-files" name="item" property="sortedAttachmentNodes" schema="site.item.files.visible">
+        <fr:edit id="edit-files" name="item" property="fileContentSet" schema="site.item.files.visible">
             <fr:layout name="tabular-editable">
 	            <fr:property name="classes" value="tstyle5 thlight mvert0"/>
 	            <fr:property name="columnClasses" value="acenter"/>

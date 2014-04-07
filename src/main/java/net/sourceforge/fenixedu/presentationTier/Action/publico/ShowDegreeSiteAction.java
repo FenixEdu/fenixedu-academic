@@ -23,9 +23,9 @@ import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.domain.DegreeSite;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Site.SiteMapper;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -411,6 +411,7 @@ public class ShowDegreeSiteAction extends FenixDispatchAction {
         if (degree != null) {
             request.setAttribute("degreeID", degree.getExternalId());
             request.setAttribute("degree", degree);
+            OldCmsSemanticURLHandler.selectSite(request, degree.getSite());
         }
         return degree;
     }

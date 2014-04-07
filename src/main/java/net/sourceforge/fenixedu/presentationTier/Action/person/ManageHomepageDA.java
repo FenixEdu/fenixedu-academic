@@ -34,22 +34,24 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
-@StrutsFunctionality(app = HomepageApp.class, path = "manage", titleKey = "link.homepage.options")
-@Mapping(module = "person", path = "/manageHomepage", input = "/manageHomepage.do?method=prepare", formBean = "homepageForm")
-@Forwards(value = { @Forward(name = "addInstitutionSection", path = "homepage-add-institution-section"),
-        @Forward(name = "organizeItems", path = "homepage-organizeItems"),
-        @Forward(name = "organizeFiles", path = "homepage-organizeFiles"),
-        @Forward(name = "edit-fileItem-name", path = "homepage-editFileItemName"),
-        @Forward(name = "editSectionPermissions", path = "homepage-editSectionPermissions"),
-        @Forward(name = "confirmSectionDelete", path = "homepage-confirmSectionDelete"),
-        @Forward(name = "editItemPermissions", path = "homepage-editItemPermissions"),
-        @Forward(name = "createSection", path = "homepage-createSection"), @Forward(name = "section", path = "homepage-section"),
-        @Forward(name = "editSection", path = "homepage-editSection"),
-        @Forward(name = "uploadFile", path = "homepage-uploadFile"),
-        @Forward(name = "sectionsManagement", path = "homepage-sectionsManagement"),
-        @Forward(name = "createItem", path = "homepage-createItem"),
+@StrutsFunctionality(app = HomepageApp.class, path = "manage", titleKey = "title.manage.homepage")
+@Mapping(module = "person", path = "/manageHomepage", formBean = "homepageForm")
+@Forwards({ @Forward(name = "addInstitutionSection", path = "/commons/sites/addInstitutionSection.jsp"),
+        @Forward(name = "organizeItems", path = "/commons/sites/organizeItems.jsp"),
+        @Forward(name = "organizeFiles", path = "/commons/sites/organizeFiles.jsp"),
+        @Forward(name = "edit-fileItem-name", path = "/commons/sites/editFileItemDisplayName.jsp"),
+        @Forward(name = "editSectionPermissions", path = "/commons/sites/editSectionPermissions.jsp"),
+        @Forward(name = "confirmSectionDelete", path = "/commons/sites/confirmSectionDelete.jsp"),
+        @Forward(name = "editItemPermissions", path = "/commons/sites/editItemPermissions.jsp"),
+        @Forward(name = "createSection", path = "/commons/sites/createSection.jsp"),
+        @Forward(name = "section", path = "/commons/sites/section.jsp"),
+        @Forward(name = "editSection", path = "/commons/sites/editSection.jsp"),
+        @Forward(name = "uploadFile", path = "/commons/sites/uploadFile.jsp"),
+        @Forward(name = "sectionsManagement", path = "/commons/sites/sectionsManagement.jsp"),
+        @Forward(name = "createItem", path = "/commons/sites/createItem.jsp"),
         @Forward(name = "show-homepage-options", path = "/person/homepageOptions.jsp"),
-        @Forward(name = "editItem", path = "homepage-editItem"), @Forward(name = "editFile", path = "homepage-editFile") })
+        @Forward(name = "editItem", path = "/commons/sites/editItem.jsp"),
+        @Forward(name = "editFile", path = "/commons/sites/editFile.jsp") })
 public class ManageHomepageDA extends SiteManagementDA {
 
     @Override
@@ -58,6 +60,10 @@ public class ManageHomepageDA extends SiteManagementDA {
         Homepage homepage = getSite(request);
         if (homepage != null) {
             request.setAttribute("homepage", homepage);
+            request.setAttribute("site", homepage);
+            request.setAttribute("siteActionName", "/manageHomepage.do");
+            request.setAttribute("siteContextParam", "homepageID");
+            request.setAttribute("siteContextParamValue", homepage.getExternalId());
         }
 
         return super.execute(mapping, actionForm, request, response);

@@ -12,7 +12,7 @@
 <bean:define id="contextParamValue" name="siteContextParamValue"/>
 <bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
 
-<bean:define id="container" name="fileItemCreator" property="fileHolder"/>
+<bean:define id="container" name="fileItemCreator" property="content"/>
 <bean:define id="containerId" name="container" property="externalId"/>
 
 <bean:define id="topContainerString" value="<%= "sectionID=" %>"/>

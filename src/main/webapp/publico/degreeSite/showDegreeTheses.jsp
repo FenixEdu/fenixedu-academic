@@ -7,8 +7,9 @@
 
 <html:xhtml/>
 
+<bean:define id="degreeID" name="actual$site" property="degree.externalId" />
 <bean:define id="listThesesActionPath" value="/showDegreeTheses.do" toScope="request"/>
-<bean:define id="listThesesContext" value="<%= "degreeID=" + request.getParameter("degreeID") %>" toScope="request"/>
+<bean:define id="listThesesContext" value="<%= "degreeID=" + pageContext.findAttribute("degreeID") %>" toScope="request"/>
 <bean:define id="listThesesSchema" value="degree.thesis.list.filter" toScope="request"/>
 
 <bean:define id="institutionUrl" type="java.lang.String"><%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %></bean:define>
@@ -19,7 +20,7 @@
 	<a href="<%=institutionUrlTeaching%>"><bean:message  bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.education"/></a>
 	<logic:present name="degree">
 		&nbsp;&gt;&nbsp;
-		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + request.getAttribute("degreeID").toString() %>"><bean:write name="degree" property="sigla"/></html:link>
+		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + pageContext.findAttribute("degreeID").toString() %>"><bean:write name="degree" property="sigla"/></html:link>
 	</logic:present>
 	&nbsp;&gt;&nbsp;
 	<bean:message key="public.degree.information.label.theses"  bundle="PUBLIC_DEGREE_INFORMATION" />

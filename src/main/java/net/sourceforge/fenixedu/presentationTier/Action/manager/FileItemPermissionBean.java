@@ -34,4 +34,8 @@ public class FileItemPermissionBean implements Serializable {
         this.permittedGroup = permittedGroup;
     }
 
+    public void logItemFilePermittedGroup() {
+        fileItem.logItemFilePermittedGroup();
+    }
+
 }

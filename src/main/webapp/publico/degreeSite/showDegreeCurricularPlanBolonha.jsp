@@ -1,9 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
+<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
-<f:view>" definition="definition.public.mainPageIST" attributeName="body-inline">
+<ft:tilesView definition="definition.public.mainPageIST" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ApplicationResources" var="applicationBundle"/>
 	<f:loadBundle basename="resources/GlobalResources" var="globalBundle"/>
@@ -11,6 +11,8 @@
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
+
+	<h:outputText value="<span style='display:none'>#{CurricularCourseManagement.degreeAndSelectSite}</span>" escape="false" />
 
 	<h:outputText value="<div class='breadcumbs mvert0'>"  escape="false"/>
 	<h:outputLink value="#{CurricularCourseManagement.instalationUrl}" >
@@ -160,7 +162,7 @@
 					showRules="<%=request.getParameter("showRules")%>"
 					hideCourses="<%=request.getParameter("hideCourses")%>"
 					executionYear="#{CurricularCourseManagement.executionYear}"
-					module="/publico"/>
+					module="/publico/degreeSite"/>
 			</h:panelGroup>
 	
 		</h:panelGroup>
@@ -174,4 +176,4 @@
 		<h:outputText escape="false" value="<input alt='input.action' id='action' name='action' type='hidden' value='#{CurricularCourseManagement.action}'/>"/>
 	</h:form>
 
-</f:view>
+</ft:tilesView>

@@ -222,7 +222,7 @@ public class GenerateSiteArchive extends ExecutionCourseBaseAction {
             fetcher.queue(resource);
         }
 
-        for (Section section : executionCourse.getSite().getAssociatedSections()) {
+        for (Section section : executionCourse.getSite().getAssociatedSectionSet()) {
             addSectionToFetcher(executionCourse, options, fetcher, contextPath, globalRules, section);
         }
 
@@ -250,8 +250,8 @@ public class GenerateSiteArchive extends ExecutionCourseBaseAction {
 
     private void getFilesFromSection(Fetcher fetcher, Resource sectionResource, Section section, List<Rule> globalRules,
             String contextPath) {
-        for (Item item : section.getAssociatedItems()) {
-            for (FileContent file : item.getFileSet()) {
+        for (Item item : section.getChildrenItems()) {
+            for (FileContent file : item.getFileContentSet()) {
                 sectionResource.addRule(new ResourceRule(file.getDownloadUrl(), "files/" + file.getFilename()));
                 sectionResource.addRule(new ResourceRule(file.getFileDownloadPrefix() + file.getExternalId(), "files/"
                         + file.getFilename()));
@@ -260,7 +260,7 @@ public class GenerateSiteArchive extends ExecutionCourseBaseAction {
             }
 
         }
-        for (FileContent file : section.getChildrenFiles()) {
+        for (FileContent file : section.getFileContentSet()) {
             sectionResource
                     .addRule(new ResourceRule(contextPath + "" /* att.getReversePath() */, "files/" + file.getFilename()));
             Resource fileResource = new Resource("files/" + file.getFilename(), file.getDownloadUrl());

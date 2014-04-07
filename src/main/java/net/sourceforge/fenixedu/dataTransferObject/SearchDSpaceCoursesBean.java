@@ -157,7 +157,7 @@ public class SearchDSpaceCoursesBean implements Serializable {
     }
 
     protected void search(Site site) {
-        for (Section section : site.getAssociatedSections()) {
+        for (Section section : site.getAssociatedSectionSet()) {
             search(section);
         }
     }
@@ -166,7 +166,7 @@ public class SearchDSpaceCoursesBean implements Serializable {
         for (Section child : container.getChildrenSections()) {
             search(child);
         }
-        for (FileContent file : container.getChildrenFiles()) {
+        for (FileContent file : container.getFileContentSet()) {
             if (!educationalResourceTypes.isEmpty() && !educationalResourceTypes.contains(file.getResourceType())) {
                 continue;
             }

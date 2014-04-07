@@ -1,5 +1,4 @@
 <%@ page language="java" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.messaging.ExecutionCourseAliasExpandingAction"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -24,8 +23,8 @@
 	<%
 		StringBuilder buffer = new StringBuilder();
 		buffer.append(ExecutionCourseAliasExpandingAction.emailAddressPrefix);
-		buffer.append(request.getParameter("executionCourseID")).append("@");
-		buffer.append(TeacherAdministrationViewerDispatchAction.mailingListDomainConfiguration());
+		buffer.append(pageContext.findAttribute("executionCourseID")).append("@");
+		buffer.append(ExecutionCourseAliasExpandingAction.mailingListDomainConfiguration());
 	%>
 	<bean:define id="advisoryText">
 		<bean:message  key="send.email.dynamicMailDistribution.link" bundle="PUBLIC_DEGREE_INFORMATION"/>

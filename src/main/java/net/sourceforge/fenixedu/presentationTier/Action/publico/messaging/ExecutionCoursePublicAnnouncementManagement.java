@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
-import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Site.SiteMapper;
+import net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NotAuthorizedActionException;
@@ -101,6 +101,8 @@ public class ExecutionCoursePublicAnnouncementManagement extends PublicAnnouncem
             response.setStatus(404);
             response.getWriter().print("Bad request");
             return null;
+        } else {
+            OldCmsSemanticURLHandler.selectSite(request, course.getSite());
         }
         request.setAttribute("executionCourse", course);
         return super.execute(mapping, actionForm, request, response);

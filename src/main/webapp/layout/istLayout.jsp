@@ -6,7 +6,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
-<%@page import="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext"%>
 <html:html xhtml="true">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -139,6 +138,7 @@
 
 <script type="text/javascript">
 	hideButtons()
+	$("body").hide().show();
 </script>
 
 <tiles:insert attribute="analytics" ignore="true"/>

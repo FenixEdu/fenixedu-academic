@@ -22,10 +22,10 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Project;
-import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Site.SiteMapper;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
+import net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
@@ -100,6 +100,9 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
     public Degree getDegree() {
         if (degree == null) {
             degree = FenixFramework.getDomainObject(getDegreeID());
+        }
+        if (degree != null) {
+            OldCmsSemanticURLHandler.selectSite(getRequest(), degree.getSite());
         }
         return degree;
     }

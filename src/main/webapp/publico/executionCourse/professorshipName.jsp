@@ -13,9 +13,7 @@
 	</logic:notPresent>
 	<logic:present name="person" property="homepage.activated">
 		<logic:equal name="person" property="homepage.activated" value="true">			
-			<app:contentLink name="person" property="homepage">
-				<bean:write name="person" property="nickname"/>
-			</app:contentLink>									
+			<a href="${person.homepage.fullPath}"><bean:write name="person" property="nickname"/></a>									
 		</logic:equal>
 		<logic:equal name="person" property="homepage.activated" value="false">
 			<p style="margin-top: 6px; margin-bottom: 6px;"><bean:write name="person" property="name"/>

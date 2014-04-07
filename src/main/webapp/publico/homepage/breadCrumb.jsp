@@ -1,5 +1,4 @@
 <%@ page language="java" %>
-<%@page import="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext"%>
 
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -8,7 +7,7 @@
 
 <html:xhtml/>
 
-<bean:define id="homepage" name="<%= FunctionalityContext.CONTEXT_KEY %>" property="selectedContainer" toScope="request"/>
+<bean:define id="homepage" name="actual$site" toScope="request"/>
 
 <logic:present name="homepage">
     <logic:present name="homepage" property="person.employee.currentDepartmentWorkingPlace">

@@ -6,7 +6,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/messaging" prefix="messaging"%>
 
-<%@page import="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext"%>
 <html:xhtml />
 
 
@@ -111,38 +110,6 @@
 				<fr:view name="announcement" property="announcementBoard.name" />
 			</html:link> <bean:message bundle="MESSAGING_RESOURCES"
 				key="label.messaging.symbol.less" /> 
-				
-				
-				<%-- Manage --%> 
-				
-				<bean:define id="contentContext" name="<%= FunctionalityContext.CONTEXT_KEY%>"/>
-				<bean:define id="showWritePermission" value="true"/>
-						
-				<logic:equal name="contentContext" property="selectedContainer.publicAvailable" value="false">
-					<logic:equal name="announcement" property="announcementBoard.currentUserManager" value="true">
-						<bean:message key="label.permissions" bundle="MESSAGING_RESOURCES" />:
-					    <html:link
-						action="<%= "/announcements/manage" + announcementBoardClass + ".do?method=prepareEditAnnouncementBoard" + "&amp;announcementBoardId=" + announcementBoardId + "&amp;tabularVersion=true&amp;" + extraParameters %>">
-						<bean:message bundle="MESSAGING_RESOURCES" key="messaging.manage.link" />
-					    </html:link> 
-					    <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" /> 
-						<bean:define id="showWritePermission" value="false"/>
-				    </logic:equal>
-			    </logic:equal>
-			    
-				<logic:equal name="showWritePermission" value="true">
-                <logic:equal name="contentContext" property="selectedContainer.publicAvailable" value="false">
-	                <logic:equal name="announcement" property="announcementBoard.currentUserWriter" value="true">
-	                <bean:message key="label.permissions" bundle="MESSAGING_RESOURCES" />:
-				   <html:link
-					action="<%= "/announcements/manage" + announcementBoardClass + ".do?method=viewAnnouncements" + "&amp;announcementBoardId=" + announcementBoardId + "&amp;tabularVersion=true&amp;" + extraParameters %>">
-					<bean:message bundle="MESSAGING_RESOURCES"
-						key="messaging.write.link" />
-				</html:link> 
-				 <bean:message bundle="MESSAGING_RESOURCES" key="label.messaging.symbol.less" />
-				 </logic:equal> 
-			 </logic:equal>
-			 </logic:equal>
  
  <%-- ReferedSubject Date --%> <logic:notEmpty name="announcement"
 				property="referedSubjectBegin">

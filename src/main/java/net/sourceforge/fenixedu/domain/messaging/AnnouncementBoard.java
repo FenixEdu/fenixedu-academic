@@ -173,7 +173,7 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
         for (Announcement announcement : getAnnouncementSet()) {
             if (announcement.isActive()
                     && announcement.getVisible()
-                    && (announcement.getApproved() || (person != null && (announcement.getCreator().equals(person) || announcement
+                    && (announcement.getApproved() || (person != null && (person.equals(announcement.getCreator()) || announcement
                             .getAnnouncementBoard().getApprovers().isMember(person))))) {
                 activeAnnouncements.add(announcement);
             }

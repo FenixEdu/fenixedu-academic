@@ -16,6 +16,13 @@
     <slot name="name"/>
 </schema>
 
+<schema name="site.template.name" type="net.sourceforge.fenixedu.domain.cms.TemplatedSectionInstance">
+    <slot name="name" layout="link">
+        <property name="useParent" value="true"/>
+        <property name="destination" value="functionality.view"/>
+    </slot>
+</schema>
+
 <!--  
 <schema name="site.functionalitySection.name" type="net.sourceforge.fenixedu.domain.FunctionalitySection">
     <slot name="name" layout="link">

@@ -163,4 +163,9 @@
 			<session-timeout>120</session-timeout>
 	</session-config>
 
+    <error-page>
+        <error-code>404</error-code>
+        <location>/notFound.jsp</location>
+    </error-page>
+
 </web-fragment>

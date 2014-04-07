@@ -29,9 +29,9 @@
 <span>
 <logic:iterate id="curricularCourse" name="executionCourse" property="curricularCoursesSortedByDegreeAndCurricularCourseName" indexId="i">
 	<logic:notEqual name="i" value="0">,</logic:notEqual>				
-	<app:contentLink name="curricularCourse" property="degreeCurricularPlan.degree.site">
+	<a href="${curricularCourse.degreeCurricularPlan.degree.site.fullPath}">
 		<bean:write name="curricularCourse" property="degreeCurricularPlan.degree.sigla"/>
-	</app:contentLink>								
+	</a>								
 </logic:iterate>
 </span>
 </p>

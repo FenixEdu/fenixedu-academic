@@ -1,5 +1,6 @@
 <%@ page language="java" %>
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %><%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
 <html:xhtml/>
@@ -99,9 +100,9 @@
 				<logic:iterate id="executionCourseView" name="executionCourseViewsTableCurrent1_2" property='<%= "row[" + rowIndex + "]" %>'>	
 				<td class="<%= rowColor %>" width="50%">
 					<logic:notEmpty name="executionCourseView">										
-						<app:contentLink name="executionCourseView" property="executionCourse.site">
+						<a href="${executionCourseView.executionCourse.site.fullPath}">
 							<bean:write name="executionCourseView" property="executionCourseName"/>
-						</app:contentLink>				
+						</a>				
 					</logic:notEmpty>
 					<logic:empty name="executionCourseView">&nbsp;</logic:empty>
 				</td>
@@ -123,9 +124,9 @@
 				<logic:iterate id="executionCourseView" name="executionCourseViewsTableCurrent3_4" property='<%= "row[" + rowIndex + "]" %>'>	
 				<td class="<%= rowColor %>" width="50%">
 					<logic:notEmpty name="executionCourseView">
-						<app:contentLink name="executionCourseView" property="executionCourse.site">
+						<a href="${executionCourseView.executionCourse.site.fullPath}">
 							<bean:write name="executionCourseView" property="executionCourseName"/>
-						</app:contentLink>
+						</a>
 					</logic:notEmpty>
 					<logic:empty name="executionCourseView">&nbsp;</logic:empty>
 				</td>
@@ -145,9 +146,9 @@
 				<logic:iterate id="executionCourseView" name="executionCourseViewsTableCurrent5" property='<%= "row[" + rowIndex + "]" %>'>	
 				<td class="<%= rowColor %>" colspan="2">
 					<logic:notEmpty name="executionCourseView">
-						<app:contentLink name="executionCourseView" property="executionCourse.site">
+						<a href="${executionCourseView.executionCourse.site.fullPath}">
 							<bean:write name="executionCourseView" property="executionCourseName"/>
-						</app:contentLink>
+						</a>
 					</logic:notEmpty>
 					<logic:empty name="executionCourseView">&nbsp;</logic:empty>
 				</td>
@@ -180,9 +181,9 @@
 				<logic:iterate id="executionCourseView" name="executionCourseViewsTablePrevious1_2" property='<%= "row[" + rowIndex + "]" %>'>	
 				<td class="<%= rowColor %>" width="50%">
 					<logic:notEmpty name="executionCourseView">
-						<app:contentLink name="executionCourseView" property="executionCourse.site">
+						<a href="${executionCourseView.executionCourse.site.fullPath}">
 							<bean:write name="executionCourseView" property="executionCourseName"/>
-						</app:contentLink>
+						</a>
 					</logic:notEmpty>
 					<logic:empty name="executionCourseView">&nbsp;</logic:empty>
 				</td>
@@ -203,9 +204,9 @@
 				<logic:iterate id="executionCourseView" name="executionCourseViewsTablePrevious3_4" property='<%= "row[" + rowIndex + "]" %>'>	
 				<td class="<%= rowColor %>" width="50%">
 					<logic:notEmpty name="executionCourseView">
-						<app:contentLink name="executionCourseView" property="executionCourse.site">
+						<a href="${executionCourseView.executionCourse.site.fullPath}">
 							<bean:write name="executionCourseView" property="executionCourseName"/>
-						</app:contentLink>
+						</a>
 					</logic:notEmpty>
 					<logic:empty name="executionCourseView">&nbsp;</logic:empty>
 				</td>
@@ -225,9 +226,9 @@
 				<logic:iterate id="executionCourseView" name="executionCourseViewsTablePrevious5" property='<%= "row[" + rowIndex + "]" %>'>	
 				<td class="<%= rowColor %>" colspan="2">
 					<logic:notEmpty name="executionCourseView">
-						<app:contentLink name="executionCourseView" property="executionCourse.site">
+						<a href="${executionCourseView.executionCourse.site.fullPath}">
 							<bean:write name="executionCourseView" property="executionCourseName"/>
-						</app:contentLink>
+						</a>
 					</logic:notEmpty>
 					<logic:empty name="executionCourseView">&nbsp;</logic:empty>
 				</td>

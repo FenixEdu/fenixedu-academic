@@ -151,12 +151,12 @@ public class InfoItem extends InfoObject implements Comparable {
         super.copyFromDomain(item);
         if (item != null) {
             setInformation(item.getBody().getContent(Language.pt));
-            setItemOrder(item.getItemOrder());
+            setItemOrder(item.getOrder());
             setName(item.getName().getContent(Language.pt));
 
             List<InfoFileContent> infoFileItems = new ArrayList<InfoFileContent>();
 
-            for (FileContent fileItem : item.getFileSet()) {
+            for (FileContent fileItem : item.getFileContentSet()) {
                 infoFileItems.add(InfoFileContent.newInfoFromDomain(fileItem));
             }
 

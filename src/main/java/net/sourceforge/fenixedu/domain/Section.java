@@ -5,81 +5,77 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.Objects;
+
+import net.sourceforge.fenixedu.domain.cms.CmsContent;
+import net.sourceforge.fenixedu.domain.cms.TemplatedSectionInstance;
 
 import org.joda.time.DateTime;
-import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixframework.DomainObject;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+
+import com.google.common.base.Predicate;
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.Ordering;
 
 /**
  * @author Ivo Brandão
  */
 public class Section extends Section_Base {
 
-    public static final Comparator<Section> COMPARATOR_BY_ORDER = new Comparator<Section>() {
-
-        @Override
-        public int compare(Section o1, Section o2) {
-            final int co = o1.getOrder().compareTo(o2.getOrder());
-            if (co != 0) {
-                return co;
-            }
-            final int cn = o1.getName().compareTo(o2.getName());
-            return cn == 0 ? DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2) : cn;
-        }
-
-    };
-
     protected Section() {
-        super();
-
         setCreationDate(new DateTime());
         setShowSubSections(true);
+        setVisible(true);
+    }
+
+    protected Section(MultiLanguageString name) {
+        this();
+        setName(name);
+    }
+
+    public Section(Site site, MultiLanguageString name) {
+        this(name);
+        setSite(Objects.requireNonNull(site, "site"));
+        setOrder(site.getAssociatedSectionSet().size() + 1);
     }
 
     public Section(Section parent, MultiLanguageString name) {
-        this();
-
-        if (parent == null) {
-            throw new NullPointerException();
-        }
-
-        setName(name);
-        setParent(parent);
-        setVisible(true);
+        this(name);
+        setParent(Objects.requireNonNull(parent, "parent"));
+        setOrder(parent.getChildSet().size() + 1);
     }
 
     public Section(Section parent, MultiLanguageString name, Integer sectionOrder) {
-        this();
-        setName(name);
-        setParent(parent);
-        setVisible(true);
+        this(parent, name);
+        setOrder(sectionOrder);
     }
 
-    private void setParent(Section parent) {
-        throw new UnsupportedOperationException("Not implemented");
+    public Collection<Section> getChildrenSections() {
+        return FluentIterable.from(getChildSet()).filter(Section.class).toList();
     }
 
-    public Set<Section> getChildrenSections() {
-        throw new UnsupportedOperationException("Not implemented");
+    public Collection<Item> getChildrenItems() {
+        return FluentIterable.from(getChildSet()).filter(Item.class).toList();
     }
 
-    public Integer getOrder() {
-        throw new UnsupportedOperationException("Not implemented");
+    public Collection<TemplatedSectionInstance> getChildrenTemplatedSections() {
+        return FluentIterable.from(getChildSet()).filter(TemplatedSectionInstance.class).toList();
     }
 
-    // TODO: check were lastModifiedDate is used and if this edit is really
-    // required
+    public int getChildrenItemsCount() {
+        return FluentIterable.from(getChildSet()).filter(Item.class).size();
+    }
+
     public void edit(MultiLanguageString name, Section nextSection) {
-        setModificationDate(new YearMonthDay());
+        setModificationDate(new DateTime());
         setName(name);
         setNextSection(nextSection);
-        Site st = getSite();
+        Site st = getOwnerSite();
+        st.logEditSection(this);
     }
 
     @Override
@@ -87,20 +83,20 @@ public class Section extends Section_Base {
         if (name == null || name.isEmpty()) {
             throw new NullPointerException();
         }
-
-        // NOTE: removed restriction because it introduces techinal problems
-        // that are not really necessary or good for any of the parts: developer
-        // and user
-
-        // if (! isNameUnique(getSiblings(), name)) {
-        // throw new DuplicatedNameException("site.section.name.duplicated");
-        // }
-
         super.setName(name);
     }
 
     public void setNextSection(Section section) {
-        throw new UnsupportedOperationException("Not implemented");
+        if (section != null) {
+            setOrder(section.getOrder());
+            section.setOrder(section.getOrder() + 1);
+        } else {
+            setOrder(getSiblings().size() + 1);
+        }
+    }
+
+    private Collection<? extends CmsContent> getSiblings() {
+        return getSite() != null ? getSite().getAssociatedSectionSet() : getParent().getChildSet();
     }
 
     public void insertItem(MultiLanguageString itemName, MultiLanguageString itemInformation, Integer insertItemOrder,
@@ -109,45 +105,45 @@ public class Section extends Section_Base {
     }
 
     public void copyItemsFrom(Section sectionFrom) {
-        for (final Item item : sectionFrom.getAssociatedItems()) {
-            this.insertItem(item.getName(), item.getBody(), item.getItemOrder(), item.getShowName());
+        for (final Item item : sectionFrom.getChildrenItems()) {
+            this.insertItem(item.getName(), item.getBody(), item.getOrder(), item.getShowName());
         }
     }
 
     public void copySubSectionsAndItemsFrom(Section sectionFrom) {
         for (final Section subSectionFrom : sectionFrom.getChildrenSections()) {
             if (subSectionFrom.getSuperiorSection() != null) {
-                Section subSectionTo = this.getSite().createSection(subSectionFrom.getName(), this, subSectionFrom.getOrder());
+                Section subSectionTo =
+                        this.getOwnerSite().createSection(subSectionFrom.getName(), this, subSectionFrom.getOrder());
                 subSectionTo.copyItemsFrom(subSectionFrom);
                 subSectionTo.copySubSectionsAndItemsFrom(subSectionFrom);
             }
         }
     }
 
-    public SortedSet<Section> getOrderedSubSections() {
-        final SortedSet<Section> sections = new TreeSet<Section>(Section.COMPARATOR_BY_ORDER);
-        sections.addAll(getChildrenSections());
-        return sections;
+    public List<Section> getOrderedSubSections() {
+        return FluentIterable.from(getChildSet()).filter(Section.class).toSortedList(Ordering.natural());
     }
 
-    public SortedSet<Section> getOrderedVisibleSubSections() {
-        final SortedSet<Section> sections = new TreeSet<Section>(Section.COMPARATOR_BY_ORDER);
-        for (Section section : getChildrenSections()) {
-            if (section.getVisible()) {
-                sections.add(section);
+    public List<Item> getOrderedChildItems() {
+        return FluentIterable.from(getChildSet()).filter(Item.class).toSortedList(Ordering.natural());
+    }
+
+    public List<CmsContent> getOrderedChildren() {
+        return FluentIterable.from(getChildSet()).toSortedList(Ordering.natural());
+    }
+
+    public List<Section> getOrderedVisibleSubSections() {
+        return FluentIterable.from(getChildSet()).filter(Section.class).filter(new Predicate<Section>() {
+            @Override
+            public boolean apply(Section input) {
+                return input.getVisible();
             }
-        }
-        return sections;
+        }).toSortedList(Ordering.natural());
     }
 
     public boolean getShowSubSectionTree() {
         return getShowSubSections() != null && getShowSubSections() && !getOrderedVisibleSubSections().isEmpty();
-    }
-
-    public SortedSet<Item> getOrderedItems() {
-        final SortedSet<Item> items = new TreeSet<Item>(Item.COMPARATOR_BY_ORDER);
-        items.addAll(getAssociatedItems());
-        return items;
     }
 
     /**
@@ -168,24 +164,8 @@ public class Section extends Section_Base {
         return true;
     }
 
-    public List<Item> getAssociatedItems() {
-        throw new UnsupportedOperationException("Not implemented");
-    }
-
-    public int getAssociatedItemsCount() {
-        return getAssociatedItems().size();
-    }
-
     public Section getSuperiorSection() {
-        throw new UnsupportedOperationException("Not implemented");
-    }
-
-    public List<FileContent> getChildrenFiles() {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    public void addFile(FileContent content) {
-        throw new UnsupportedOperationException("Not implemented");
+        return getParent();
     }
 
     public List<Section> getSubSections() {
@@ -200,28 +180,52 @@ public class Section extends Section_Base {
         return getSuperiorSection() != null;
     }
 
-    public Site getSite() {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
     public boolean isDeletable() {
-        throw new UnsupportedOperationException("Not implemented");
+        return true;
     }
 
-    public void setVisible(Boolean visible) {
-        throw new UnsupportedOperationException("Not implemented");
+    public Section getNextSection() {
+        List<Section> others = FluentIterable.from(getSiblings()).filter(Section.class).toSortedList(Ordering.natural());
+        int index = others.indexOf(this);
+        return index == others.size() - 1 ? null : others.get(index + 1);
     }
 
-    public Boolean getVisible() {
-        throw new UnsupportedOperationException("Not implemented");
-    }
-
+    @Override
     public void delete() {
-        throw new UnsupportedOperationException("Not implemented");
+        setSite(null);
+        for (CmsContent child : getChildSet()) {
+            child.delete();
+        }
+        super.delete();
     }
 
-    public boolean isAvailable() {
-        throw new UnsupportedOperationException("Not implemented");
+    public Collection<? extends DomainObject> getEverythingForTree() {
+        if (getFileContentSet().isEmpty()) {
+            return getOrderedChildren();
+        }
+        List<DomainObject> objects = new ArrayList<DomainObject>(getOrderedChildren());
+        objects.addAll(getFileContentSet());
+        return objects;
+    }
+
+    @Override
+    public Site getOwnerSite() {
+        return getSite() != null ? getSite() : super.getOwnerSite();
+    }
+
+    public void logEditSectionPermission() {
+        getOwnerSite().logEditSectionPermission(this);
+    }
+
+    @Override
+    public void applyStructureModifications(Section newParent, int order) {
+        if (newParent == null) {
+            setSite(getOwnerSite());
+            setParent(null);
+        } else {
+            setParent(newParent);
+        }
+        setOrder(order);
     }
 
 }

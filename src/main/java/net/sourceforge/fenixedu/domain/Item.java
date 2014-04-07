@@ -1,8 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.util.Comparator;
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.exceptions.DuplicatedNameException;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -15,22 +14,6 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
  */
 public class Item extends Item_Base {
 
-    public static final Comparator<Item> COMPARATOR_BY_ORDER = new Comparator<Item>() {
-
-        @Override
-        public int compare(Item o1, Item o2) {
-            final int co = o1.getItemOrder().compareTo(o2.getItemOrder());
-            if (co != 0) {
-                return co;
-            }
-            final int cn = o1.getName().compareTo(o2.getName());
-            if (cn != 0) {
-                return cn;
-            }
-            return DomainObjectUtil.COMPARATOR_BY_ID.compare(o1, o2);
-        }
-    };
-
     protected Item() {
         super();
     }
@@ -42,20 +25,8 @@ public class Item extends Item_Base {
             throw new NullPointerException();
         }
 
-        setSection(section);
+        setParent(section);
         setName(name);
-    }
-
-    private void setSection(Section section) {
-        throw new UnsupportedOperationException("Not implemented");
-    }
-
-    public Section getSection() {
-        throw new UnsupportedOperationException("Not implemented");
-    }
-
-    public Integer getItemOrder() {
-        throw new UnsupportedOperationException("Not implemented");
     }
 
     public Item(Section section, MultiLanguageString name, MultiLanguageString information, Integer itemOrder, Boolean showName) {
@@ -70,14 +41,14 @@ public class Item extends Item_Base {
             throw new NullPointerException();
         }
 
-        if (!isNameUnique(getSection().getAssociatedItems(), name)) {
+        if (!isNameUnique(getParent().getChildrenItems(), name)) {
             throw new DuplicatedNameException("site.section.item.name.duplicated");
         }
 
         super.setName(name);
     }
 
-    protected boolean isNameUnique(List<Item> siblings, MultiLanguageString name) {
+    protected boolean isNameUnique(Collection<Item> siblings, MultiLanguageString name) {
         for (Item sibling : siblings) {
             if (sibling == this) {
                 continue;
@@ -89,16 +60,17 @@ public class Item extends Item_Base {
         return true;
     }
 
+    public Section getSection() {
+        return getParent();
+    }
+
     public void setNextItem(Item item) {
-        throw new UnsupportedOperationException("Not implemented");
-    }
-
-    public Set<FileContent> getFileSet() {
-        throw new UnsupportedOperationException("Not implemented");
-    }
-
-    public boolean isAvailable() {
-        throw new UnsupportedOperationException("Not implemented");
+        if (item != null) {
+            setOrder(item.getOrder());
+            item.setOrder(item.getOrder() + 1);
+        } else {
+            setOrder(getParent().getChildSet().size() + 1);
+        }
     }
 
     /**
@@ -115,7 +87,7 @@ public class Item extends Item_Base {
             return false;
         }
 
-        Section section = getSection();
+        Section section = getParent();
 
         String sectionName = section.getName().getContent();
         String itemName = getName().getContent();
@@ -124,11 +96,7 @@ public class Item extends Item_Base {
             return true;
         }
 
-        return section.getAssociatedItems().size() > 1;
-    }
-
-    public void delete() {
-        deleteDomainObject();
+        return section.getChildrenItemsCount() > 1;
     }
 
     @Deprecated
@@ -141,16 +109,26 @@ public class Item extends Item_Base {
         return getShowName() != null;
     }
 
-    public String getReversePath() {
-        throw new UnsupportedOperationException("Not implemented");
+    public boolean isDeletable() {
+        return true;
     }
 
-    public void setVisible(boolean visible) {
-        throw new UnsupportedOperationException("Not implemented");
+    public Item getNextItem() {
+        List<Item> others = getParent().getOrderedChildItems();
+        int index = others.indexOf(this);
+        return index == others.size() - 1 ? null : others.get(index + 1);
     }
 
-    public boolean isVisible() {
-        throw new UnsupportedOperationException("Not implemented");
+    public void logCreateItemtoSection() {
+        getOwnerSite().logCreateItemtoSection(this);
+    }
+
+    public void logEditItemtoSection() {
+        getOwnerSite().logEditItemtoSection(this);
+    }
+
+    public void logEditItemPermission() {
+        getOwnerSite().logEditItemPermission(this);
     }
 
 }

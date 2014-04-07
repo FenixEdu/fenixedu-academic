@@ -8,7 +8,6 @@
 
 <html:xhtml/>
 
-<em><bean:message key="label.person.main.title" /></em>
 <h2><bean:message key="title.manage.homepage" bundle="HOMEPAGE_RESOURCES"/></h2>
 
 <div class="infoop2">
@@ -45,9 +44,6 @@
         <bean:message key="label.homepage.activated" bundle="HOMEPAGE_RESOURCES"/>
         <html:radio bundle="HTMLALT_RESOURCES" altKey="radio.activated" property="activated" value="true" ondblclick="this.form.submit();" onclick="this.form.submit();"/><bean:message key="label.homepage.activated.yes" bundle="HOMEPAGE_RESOURCES"/>
         <html:radio bundle="HTMLALT_RESOURCES" altKey="radio.activated" property="activated" value="false" ondblclick="this.form.submit();" onclick="this.form.submit();"/><bean:message key="label.homepage.activated.no" bundle="HOMEPAGE_RESOURCES"/>
-        <html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-            <bean:message key="button.submit"/>
-        </html:submit>
     </p>
     
 
@@ -75,6 +71,11 @@
     </logic:present>
     </p>
 
+    <p>
+	    <h3>
+	    	<a href="${pageContext.request.contextPath}/person/manageHomepage.do?method=sections"><bean:message key="link.manage.homepage.content" /></a>
+	    </h3>
+    </p>
 
 	<p>
         <h3 class="mtop2"><bean:message key="label.homepage.components" bundle="HOMEPAGE_RESOURCES"/></h3>

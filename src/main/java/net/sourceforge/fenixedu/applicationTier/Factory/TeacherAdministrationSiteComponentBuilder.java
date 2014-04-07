@@ -54,7 +54,7 @@ public class TeacherAdministrationSiteComponentBuilder {
     public static InfoSiteCommon getInfoSiteCommon(InfoSiteCommon component, ExecutionCourseSite site)
             throws FenixServiceException {
 
-        final List<Section> allSections = site.getAssociatedSections();
+        final Set<Section> allSections = site.getAssociatedSectionSet();
         final List<InfoSection> infoSectionsList = new ArrayList<InfoSection>(allSections.size());
         for (final Section section : allSections) {
             infoSectionsList.add(InfoSectionWithAll.newInfoFromDomain(section));

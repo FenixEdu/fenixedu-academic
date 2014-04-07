@@ -252,7 +252,11 @@ public class Announcement extends Announcement_Base {
     @Override
     public void setAnnouncementBoard(final AnnouncementBoard announcementBoard) {
         if (announcementBoard != null) {
-            announcementBoard.logEdit(this);
+            if (getAnnouncementBoard() != null) {
+                announcementBoard.logEdit(this);
+            } else {
+                announcementBoard.logCreate(this);
+            }
             super.setApproved(announcementBoard.getInitialAnnouncementsApprovedState());
         }
         super.setAnnouncementBoard(announcementBoard);

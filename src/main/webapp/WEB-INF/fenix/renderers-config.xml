@@ -271,6 +271,14 @@ Documentation:
     	<property name="nullLabel" value="-"/>
     </renderer>
 
+    <renderer type="net.sourceforge.fenixedu.domain.Site" layout="side-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.SiteMenuRenderer">
+        <property name="depthStyle" value="margin-left: 1em;"/>
+    </renderer>
+    <renderer type="net.sourceforge.fenixedu.domain.Site" layout="unit-side-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.UnitSiteSideMenuRenderer" >
+        <property name="depthStyle" value="margin-left: 1em;"/>
+    </renderer>
+    <renderer type="net.sourceforge.fenixedu.domain.Site" layout="unit-top-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.UnitSiteTopMenuRenderer"/>
+
 	<!--@ File displayed as an html picture -->
     <renderer type="net.sourceforge.fenixedu.domain.File"
               class="net.sourceforge.fenixedu.presentationTier.renderers.FileAsPictureRenderer"

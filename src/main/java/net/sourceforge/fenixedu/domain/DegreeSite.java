@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeCoordinatorsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
+import net.sourceforge.fenixedu.domain.cms.CmsContent;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
@@ -69,4 +70,14 @@ public class DegreeSite extends DegreeSite_Base {
         return getDegree() != null;
     }
 
+    @Override
+    public String getReversePath() {
+        return super.getReversePath() + "/" + getDegree().getSigla().toLowerCase();
+    }
+
+    @Override
+    public CmsContent getInitialContent() {
+        List<Section> sections = getOrderedSections();
+        return sections.isEmpty() ? null : sections.get(0);
+    }
 }

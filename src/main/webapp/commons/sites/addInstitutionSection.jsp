@@ -35,10 +35,10 @@
 
 <p class="mtop15 mbottom05"><bean:message key="label.unitSite.institutionSection.choose" bundle="SITE_RESOURCES"/>:</p>
 
-<fr:view name="template" property="pool">
+<fr:view name="template" property="templatedSection">
 	<fr:layout>
 		<fr:property name="eachLayout" value="values"/>
-		<fr:property name="eachSchema" value="functionalities.functionality.tree"/>
+		<fr:property name="eachSchema" value="site.section.name"/>
 	</fr:layout>
-	<fr:destination name="functionality.view" path="<%= actionName + "?method=addFromPool&amp;containerId=" +  parentId + "&amp;contentId=${externalId}&amp;oid=" + siteId + "&amp;sectionID=" + parentId + "&amp;" + context%>"/>
+	<fr:destination name="section.view" path="<%= actionName + "?method=addFromPool&amp;containerId=" +  parentId + "&amp;contentId=${externalId}&amp;oid=" + siteId + "&amp;sectionID=" + parentId + "&amp;" + context%>"/>
 </fr:view>

@@ -12,7 +12,7 @@ public class DeleteFileContentFilter {
     public static final DeleteFileContentFilter instance = new DeleteFileContentFilter();
 
     public void execute(FileContent fileContent) throws NotAuthorizedException {
-        Site site = fileContent.getSection().getSite();
+        Site site = fileContent.getSite();
 
         if (site != null) {
             IGroup owner = site.getOwner();

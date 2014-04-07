@@ -686,6 +686,10 @@
     <slot name="filename"/>
 </schema>
 
+<schema name="item.file.filename" type="net.sourceforge.fenixedu.domain.FileContent" bundle="SITE_RESOURCES">
+    <slot name="filename"/>
+</schema>
+
 <schema name="item.file.permittedGroup" type="net.sourceforge.fenixedu.presentationTier.Action.manager.FileItemPermissionBean" bundle="SITE_RESOURCES">
     <slot name="permittedGroup" layout="radio-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.FileItemGroupProvider" />

@@ -1,11 +1,9 @@
-<%@ page isELIgnored="true"%>
 <%@ page language="java" %>
 
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
-<%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
 
 <html:xhtml/>
 
@@ -21,28 +19,24 @@
 
     <h2>
         <fr:view name="section" property="name" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString"/>
-   		<app:defineContentPath id="sectionURL" name="section" toScope="request"/>
-		<bean:define id="url" name="sectionURL" type="java.lang.String"/>
-  		<span class="permalink1">(<a href="<%= request.getContextPath()  + url %>"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
+  		<span class="permalink1">(<a href="${section.fullPath}"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
     </h2>
 
- 	<logic:notEmpty name="section" property="orderedSubSections">
-		<fr:view name="section" property="orderedSubSections" layout="list">
-		    <fr:layout>
-		        <fr:property name="eachLayout" value="values"/>
-		        <fr:property name="eachSchema" value="site.section.name"/>
-		    </fr:layout>
-		    <fr:destination name="section.view" path="<%= actionName + "?method=section&amp;sectionID=${externalId}&amp;" + context %>"/>
-		</fr:view>
-    </logic:notEmpty>
+		<logic:equal name="section" property="showSubSectionTree" value="true">
+				<ul>
+					<logic:iterate id="section" name="section" property="orderedVisibleSubSections" type="net.sourceforge.fenixedu.domain.Section">		
+							<li>
+								<a href="${section.fullPath}">${section.name}</a>
+							</li>
+						</logic:iterate>
+				</ul>
+		</logic:equal>
    
     <bean:define id="item" name="item" type="net.sourceforge.fenixedu.domain.Item"/>
             
 	<h3 class="mtop2 mbottom05">
         <fr:view name="item" property="name"/>
-		<app:defineContentPath id="itemURL" name="item" toScope="request"/>
-		<bean:define id="url" name="itemURL" type="java.lang.String"/>
-  		<span class="permalink1">(<a href="<%= request.getContextPath()  + url %>"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
+  		<span class="permalink1">(<a href="${item.fullPath}"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
     </h3>
 
 	<logic:equal name="itemAvailable" value="true">
@@ -55,8 +49,8 @@
 	        	</fr:view>
 		</logic:notEmpty>
 	    
-		<logic:notEmpty name="item" property="sortedVisibleFileItems">
-	        <fr:view name="item" property="sortedVisibleFileItems">
+		<logic:notEmpty name="item" property="visibleFiles">
+	        <fr:view name="item" property="visibleFiles">
 	            <fr:layout name="list">
 	                <fr:property name="eachSchema" value="site.item.file.basic"/>
 	                <fr:property name="eachLayout" value="values"/>
@@ -75,7 +69,7 @@
 							    final String server = request.getServerName();
 							    final int port = request.getServerPort();
 		%>
-				<a href="<%= "https://barra.tecnico.ulisboa.pt/login?next=https://id.ist.utl.pt/cas/login?service=" + schema + "://" + server + (port == 80 || port == 443 ? "" : ":" + port) + request.getContextPath() + item.getReversePath() %>">
+				<a href="<%= "https://barra.tecnico.ulisboa.pt/login?next=https://id.ist.utl.pt/cas/login?service=" + schema + "://" + server + (port == 80 || port == 443 ? "" : ":" + port) + request.getContextPath() + item.getFullPath() %>">
             		<bean:message key="link.section.view.login" bundle="SITE_RESOURCES"/>
        			</a>.
 		<%

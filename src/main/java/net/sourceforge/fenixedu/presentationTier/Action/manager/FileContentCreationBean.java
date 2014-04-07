@@ -7,12 +7,14 @@ import net.sourceforge.fenixedu.domain.FileContent.EducationalResourceType;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.cms.CmsContent;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 
 public class FileContentCreationBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private CmsContent content;
     private AnnouncementBoard fileHolder;
     private Site site;
 
@@ -38,6 +40,14 @@ public class FileContentCreationBean implements Serializable {
         this.fileHolder = fileHolder;
     }
 
+    public CmsContent getContent() {
+        return content;
+    }
+
+    public void setContent(CmsContent content) {
+        this.content = content;
+    }
+
     public Site getSite() {
         return site;
     }
@@ -48,6 +58,14 @@ public class FileContentCreationBean implements Serializable {
 
     public void setAuthorsName(String authorsName) {
         this.authorsName = authorsName;
+    }
+
+    public FileContentCreationBean(CmsContent content, Site site) {
+        super();
+        setSite(site);
+        setContent(content);
+
+        this.permittedGroup = new EveryoneGroup();
     }
 
     public FileContentCreationBean(AnnouncementBoard container, Site site) {

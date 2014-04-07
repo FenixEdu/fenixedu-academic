@@ -1,5 +1,6 @@
 <%@ page language="java" %>
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %><%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
@@ -45,19 +46,7 @@
 			<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.title.coordinator"/>&nbsp;
 			<logic:notEmpty name="responsibleCoordinatorTeacher" property="person.homepageWebAddress">
 				<bean:define id="homepageWebAddres" name="responsibleCoordinatorTeacher" property="person.homepageWebAddress" type="java.lang.String"/>
-				<%
-					if (homepageWebAddres.startsWith("http")) {
-				%>
 					<a target="_blank" href="<%= homepageWebAddres %>"><bean:write name="responsibleCoordinatorTeacher" property="person.nickname"/></a>
-				<%
-					} else {
-				%>
-					<app:contentLink name="responsibleCoordinatorTeacher" property="person.homepage" target="_blank">
-						<bean:write name="responsibleCoordinatorTeacher" property="person.nickname"/>
-					</app:contentLink>					
-				<%
-					}
-				%>
 			</logic:notEmpty>
 			<logic:empty name="responsibleCoordinatorTeacher" property="person.homepageWebAddress">
 				<bean:write name="responsibleCoordinatorTeacher" property="person.nickname"/>
