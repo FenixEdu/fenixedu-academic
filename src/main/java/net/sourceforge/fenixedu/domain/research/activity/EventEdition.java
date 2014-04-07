@@ -91,7 +91,7 @@ public class EventEdition extends EventEdition_Base implements ParticipationsInt
      * connections if not, the object is deleted.
      */
     public void sweep() {
-        if (!hasAnyParticipations() && !hasAnyAssociatedProjects() && !hasAnyEventConferenceArticlesAssociations()) {
+        if (!hasAnyParticipations() && !hasAnyEventConferenceArticlesAssociations()) {
             this.delete();
         }
     }
@@ -159,16 +159,6 @@ public class EventEdition extends EventEdition_Base implements ParticipationsInt
             }
             addParticipations(eventEditionParticipation);
         }
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation> getAssociatedProjects() {
-        return getAssociatedProjectsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAssociatedProjects() {
-        return !getAssociatedProjectsSet().isEmpty();
     }
 
     @Override

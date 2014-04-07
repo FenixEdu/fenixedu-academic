@@ -1662,16 +1662,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.research.project.ProjectParticipation> getProjectParticipations() {
-        return getProjectParticipationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyProjectParticipations() {
-        return !getProjectParticipationsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.organizationalStructure.Accountability> getChilds() {
         return getChildsSet();
     }

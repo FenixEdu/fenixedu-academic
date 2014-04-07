@@ -19,7 +19,7 @@ public class EventConferenceArticlesAssociation extends EventConferenceArticlesA
 
                         if (eventEdition != null && association != null
                                 && !eventEdition.hasAnyEventConferenceArticlesAssociations()
-                                && !eventEdition.hasAnyParticipations() && !eventEdition.hasAnyAssociatedProjects()) {
+                                && !eventEdition.hasAnyParticipations()) {
                             eventEdition.delete();
                         }
                     }

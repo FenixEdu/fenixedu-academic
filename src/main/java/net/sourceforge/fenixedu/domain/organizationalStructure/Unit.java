@@ -217,13 +217,12 @@ public class Unit extends Unit_Base {
         return (!hasAnyParents() || (getParentsSet().size() == 1 && getParentUnits().size() == 1)) && !hasAnyChilds()
                 && !hasAnyFunctions() && !hasAnyVigilantGroups() && !hasAnyAssociatedNonAffiliatedTeachers()
                 && !hasAnyPayedGuides() && !hasAnyPayedReceipts() && !hasAnyExternalCurricularCourses()
-                && !hasAnyResultUnitAssociations() && !hasUnitServiceAgreementTemplate() && !hasAnyProjectParticipations()
-                && !hasAnyParticipations() && getBoardsSet().isEmpty() && (!hasSite() || getSite().isDeletable())
-                && !hasAnyOwnedReceipts() && !hasAnyPrecedentDegreeInformations()
-                && !hasAnyCandidacyPrecedentDegreeInformations() && !hasAnyUnitSpaceOccupations() && !hasAnyExamCoordinators()
-                && !hasAnyExternalRegistrationDatas() && !hasAnyCooperation() && !hasAnyFiles() && !hasAnyPersistentGroups()
-                && !hasAnyExternalCourseLoadRequests() && !hasAnyExternalProgramCertificateRequests()
-                && !getUnitGroupSet().isEmpty();
+                && !hasAnyResultUnitAssociations() && !hasUnitServiceAgreementTemplate() && !hasAnyParticipations()
+                && getBoardsSet().isEmpty() && (!hasSite() || getSite().isDeletable()) && !hasAnyOwnedReceipts()
+                && !hasAnyPrecedentDegreeInformations() && !hasAnyCandidacyPrecedentDegreeInformations()
+                && !hasAnyUnitSpaceOccupations() && !hasAnyExamCoordinators() && !hasAnyExternalRegistrationDatas()
+                && !hasAnyCooperation() && !hasAnyFiles() && !hasAnyPersistentGroups() && !hasAnyExternalCourseLoadRequests()
+                && !hasAnyExternalProgramCertificateRequests() && !getUnitGroupSet().isEmpty();
     }
 
     @Override

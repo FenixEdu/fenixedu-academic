@@ -1323,9 +1323,8 @@ public class Person extends Person_Base {
                 && !hasAnyAssociatedQualifications() && !hasAnyAssociatedAlteredCurriculums() && !hasAnyEnrolmentEvaluations()
                 && !hasAnyExportGroupingSenders() && !hasAnyResponsabilityTransactions() && !hasAnyMasterDegreeCandidates()
                 && !hasAnyGuides() && !hasEmployee() && !hasTeacher() && !hasAnyPayedGuides() && !hasAnyPayedReceipts()
-                && !hasAnyProjectParticipations() && !hasAnyParticipations() && !hasAnyPersonFunctions()
-                && (!hasHomepage() || getHomepage().isDeletable()) && !hasAnyInternalParticipants()
-                && !hasAnyCreatedQualifications() && !hasAnyCreateJobs();
+                && !hasAnyParticipations() && !hasAnyPersonFunctions() && (!hasHomepage() || getHomepage().isDeletable())
+                && !hasAnyInternalParticipants() && !hasAnyCreatedQualifications() && !hasAnyCreateJobs();
     }
 
     public ExternalContract getExternalContract() {

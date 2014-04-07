@@ -123,9 +123,6 @@ enum net.sourceforge.fenixedu.domain.research.activity.CooperationType          
 enum net.sourceforge.fenixedu.domain.research.activity.EventType                                                          as activity.EventType;
 enum net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole                    as ResearchActivityParticipationRole;
 enum net.sourceforge.fenixedu.domain.research.activity.ResearchActivityStage                                              as ResearchActivityStage;
-enum net.sourceforge.fenixedu.domain.research.project.ProjectEventAssociation.ProjectEventAssociationRole                 as ProjectEventAssociationRole;
-enum net.sourceforge.fenixedu.domain.research.project.ProjectParticipation.ProjectParticipationType                       as ProjectParticipationType;
-enum net.sourceforge.fenixedu.domain.research.project.ProjectType                                                         as ProjectType;
 enum net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile.FileResultPermittedGroupType              as FileResultPermittedGroupType;
 enum net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole                          as ResultParticipationRole;
 enum net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation.ResultUnitAssociationRole                      as ResultUnitAssociationRole;
@@ -4139,24 +4136,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
         String publisher;
         ResearchActivityStage stage;
         String url;
-    }
-
-    class research.project.Project  {
-        String acronym;
-        Partial endDate;
-        Integer number;
-        MultiLanguageString projectAbstract;
-        ProjectType projectType;
-        Partial startDate;
-        MultiLanguageString title;
-    }
-
-    class research.project.ProjectEventAssociation  {
-        ProjectEventAssociationRole role;
-    }
-
-    class research.project.ProjectParticipation  {
-        ProjectParticipationType role;
     }
 
     class research.Researcher  {
@@ -10588,13 +10567,6 @@ relation EventEventEdition {
     }
 }
 
-relation EventProjectEventAssociation {
-    research.project.ProjectEventAssociation playsRole associatedProjects {
-        multiplicity *;
-    }
-    research.activity.EventEdition playsRole eventEdition;
-}
-
 relation ExamCoordinatorBelongToUnit {
     vigilancy.ExamCoordinator playsRole examCoordinators {
         multiplicity *;
@@ -12302,28 +12274,6 @@ relation ProjectsDeparments {
 	}
 }
 
-
-relation ProjectParticipationParty {
-    organizationalStructure.Party playsRole party;
-    research.project.ProjectParticipation playsRole projectParticipations {
-        multiplicity *;
-    }
-}
-
-relation ProjectParticipationProject {
-    research.project.Project playsRole project;
-    research.project.ProjectParticipation playsRole projectParticipations {
-        multiplicity *;
-    }
-}
-
-relation ProjectProjectEventAssociation {
-    research.project.ProjectEventAssociation playsRole associatedEvents {
-        multiplicity *;
-    }
-    research.project.Project playsRole project;
-}
-
 relation ProjectSubmissionAttends {
     Attends playsRole attends;
     ProjectSubmission playsRole projectSubmissions {
@@ -13977,27 +13927,6 @@ relation RootDomainObjectPrice {
 relation RootDomainObjectProfessorship {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Professorship playsRole professorships {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectProject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    research.project.Project playsRole projects {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectProjectEventAssociation {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    research.project.ProjectEventAssociation playsRole projectEventAssociations {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectProjectParticipation {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    research.project.ProjectParticipation playsRole projectParticipations {
         multiplicity *;
     }
 }
