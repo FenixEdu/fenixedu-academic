@@ -3,12 +3,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.research.result;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.research.prizes.DeletePrize;
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
-import net.sourceforge.fenixedu.domain.research.Prize;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
@@ -68,43 +65,6 @@ public class ResultsManagementAction extends FenixDispatchAction {
             return mapping.findForward("ListPublications");
         }
         return null;
-    }
-
-    public ActionForward associatePrize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
-
-        final ResearchResult result = getResultByIdFromRequest(request);
-        request.setAttribute("publication", result);
-
-        return mapping.findForward("associatePrize");
-
-    }
-
-    public ActionForward deletePrize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException {
-
-        String prizeID = request.getParameter("oid");
-        Prize prize = (Prize) FenixFramework.getDomainObject(prizeID);
-        if (prize.isDeletableByUser((getLoggedPerson(request)))) {
-            try {
-                DeletePrize.runDeletePrize(prize);
-            } catch (DomainException e) {
-                addActionMessage(request, e.getMessage());
-            }
-        }
-        return associatePrize(mapping, form, request, response);
-    }
-
-    public ActionForward editPrize(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException {
-
-        String prizeID = request.getParameter("oid");
-        Prize prize = (Prize) FenixFramework.getDomainObject(prizeID);
-        if (prize != null && prize.isEditableByUser(getLoggedPerson(request))) {
-            request.setAttribute("prize", prize);
-        }
-        request.setAttribute("result", getResultByIdFromRequest(request));
-        return mapping.findForward("editPrize");
     }
 
     protected ResearchResult getResultByIdFromRequest(HttpServletRequest request) {

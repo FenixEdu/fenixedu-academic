@@ -101,8 +101,6 @@
                   <forward path="edit-event" name="editEvent"></forward>
                   <forward path="/resultPublications/listPublications.do" name="backFromDetails"></forward>
                   <forward path="/researchUnitFunctionalities.do?method=preparePublications" name="ListUnitPublications"></forward>
-                  <forward path="publications.associate.prize" name="associatePrize"></forward>
-                  <forward path="edit.prize" name="editPrize"></forward>
                   <forward path="/resultAssociations/prepareEditUnitAssociations.do" name="forwardToUnitAssociation"></forward>
             </action>
             <!-- Bibtex Publications Management Action Mapping -->

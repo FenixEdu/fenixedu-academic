@@ -706,12 +706,6 @@ extends="eventCreation">
 		</validator>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
-	<slot name="prizes">
-		<property name="eachLayout" value="values"/>
-		<property name="eachSchema" value="prize.name"/>
-		<property name="sortBy" value="year"/>
-		<property name="classes" value="nobullet list6"/>
-	</slot>
 	<slot name="country" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider"/> 
 		<property name="format" value="${name}"/>
@@ -2152,61 +2146,8 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Co
 		<property name="sortBy" value="unit.name"/>
 		<property name="classes" value="nobullet list6"/>
 	</slot>
-	<slot name="prizes">
-		<property name="eachLayout" value="values"/>
-		<property name="eachSchema" value="prize.name"/>
-		<property name="sortBy" value="year"/>
-		<property name="classes" value="nobullet list6"/>
-	</slot>
 </schema>
  
-<schema name="prize.name" type="net.sourceforge.fenixedu.domain.research.Prize" bundle="RESEARCHER_RESOURCES">
-	<slot name="name" layout="link">
-		<property name="useParent" value="true"/>
-		<property name="destination" value="view.prize"/>
-	</slot>
-</schema>
-
-<schema name="prize.details" type="net.sourceforge.fenixedu.domain.research.Prize" bundle="RESEARCHER_RESOURCES">
-	<slot name="name"/>
-	<slot name="description" key="research.PrizeAssociation.PrizeDescription"/>
-	<slot name="year"/>
-</schema>
-
-<schema name="prize.view.details" type="net.sourceforge.fenixedu.domain.research.Prize" bundle="RESEARCHER_RESOURCES">
-	<slot name="name"/>
-	<slot name="year"/>
-	<slot name="description" key="research.PrizeAssociation.PrizeDescription"/>
-	<slot name="people" key="label.prize.people" layout="flowLayout">
-		<property name="eachLayout" value="values"/>
-		<property name="eachSchema" value="person.name.with.link"/>
-		<property name="htmlSeparator" value=", "/>
-	</slot>
-	<slot name="units" key="label.prize.unit">
-		<property name="eachLayout" value="unit-with-parent-and-links"/>
-		<property name="classes" value="nobullet list6"/>
-	</slot>
-	<slot name="researchResultPublication" key="label.prize.resultPublication" layout="values" schema="publication.Title"/>
-	<slot name="researchResultPatent" key="label.prize.resultPatent" layout="values" schema="patent.Title"/>
-</schema>
-
-
-<schema name="prize.details.with.result" type="net.sourceforge.fenixedu.domain.research.Prize" bundle="RESEARCHER_RESOURCES">
-	<slot name="name" layout="link">
-		<property name="useParent" value="true"/>
-		<property name="destination" value="view.prize"/>
-		<property name="classes" value="bold"/>
-	</slot>
-	<slot name="year"/>
-	<slot name="description" key="research.PrizeAssociation.PrizeDescription"/>
-	<slot name="researchResult" layout="null-as-label" key="label.publication">
-		<property name="label" value="-"/>
-		<property name="subLayout" value="values"/>
-		<property name="subSchema" value="publication.Title"/>
-	</slot>
-</schema>
-
-
 <schema name="patent.Title" bundle="RESEARCHER_RESOURCES"
 	type="net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication">	
 	<slot name="title" layout="link">
@@ -2743,114 +2684,6 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 		<property name="sortBy" value="name"/>
 	</slot>
 </schema>
-
-<schema name="result.prize.association" constructor="name, description,year,researchResult" type="net.sourceforge.fenixedu.domain.research.Prize" bundle="RESEARCHER_RESOURCES">
-	<slot name="name" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
-		<property name="size" value="60"/>
-	</slot>
-	<slot name="description" layout="area" key="research.PrizeAssociation.PrizeDescription">
-		<property name="rows" value="5"/>
-		<property name="columns" value="60"/>
-	</slot>
-	<slot name="year" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="size" value="6"/>
-	</slot>
-	<slot name="researchResult" hidden="true"/>
-</schema>
-
-<schema name="create.prize" type="net.sourceforge.fenixedu.presentationTier.Action.research.PrizeBean" bundle="RESEARCHER_RESOURCES">
-	<slot name="name" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
-		<property name="size" value="60"/>
-	</slot>
-	<slot name="description" layout="area" key="research.PrizeAssociation.PrizeDescription">
-		<property name="rows" value="5"/>
-		<property name="columns" value="60"/>
-	</slot>
-	<slot name="year" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="size" value="6"/>
-	</slot>
-</schema>
-
-<schema name="create.prize.person.association.internal" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonNameBean" bundle="RESEARCHER_RESOURCES">
-	<slot name="external" layout="radio-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.participantType">
-		<property name="classes" value="nobullet liinline"/>
-		<property name="bundle" value="RESEARCHER_RESOURCES"/>
-		<property name="falseLabel" value="label.internal"/>
-		<property name="trueLabel" value="label.external"/>
-	</slot>
-	<slot name="personName" layout="autoComplete" key="label.person" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
-		<property name="size" value="70"/>
-		<property name="rawSlotName" value="name"/>
-		<property name="labelField" value="text"/>
-		<property name="format" value="${text}"/>
-		<property name="indicatorShown" value="true"/>
-		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchInternalPersons"/>
-		<property name="args" value="slot=name,size=20"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.person.PersonName"/>
-		<property name="minChars" value="3"/>
-	</slot>
-</schema>
-
-<schema name="create.prize.person.association.external" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonNameBean" bundle="RESEARCHER_RESOURCES">
-	<slot name="external" layout="radio-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.participantType">
-			<property name="classes" value="nobullet liinline"/>
-			<property name="bundle" value="RESEARCHER_RESOURCES"/>
-			<property name="falseLabel" value="label.internal"/>
-			<property name="trueLabel" value="label.external"/>
-	</slot>
-	<slot name="personName" layout="autoComplete" key="label.person">
-		<property name="size" value="70"/>
-		<property name="rawSlotName" value="name"/>
-		<property name="labelField" value="text"/>
-		<property name="format" value="${text}"/>
-		<property name="indicatorShown" value="true"/>
-		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalPersons"/>
-		<property name="args" value="slot=name,size=20"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.person.PersonName"/>
-		<property name="minChars" value="3"/>
-	</slot>
-</schema>
-
-<schema name="create.prize.unit.association.internal" type="net.sourceforge.fenixedu.presentationTier.Action.research.UnitNameBean" bundle="RESEARCHER_RESOURCES">
-	<slot name="external" layout="radio-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.participantType">
-		<property name="classes" value="nobullet liinline"/>
-		<property name="bundle" value="RESEARCHER_RESOURCES"/>
-		<property name="falseLabel" value="label.internal"/>
-		<property name="trueLabel" value="label.external"/>
-	</slot>
-	<slot name="unitName" layout="autoComplete" key="label.unit" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
-		<property name="size" value="70"/>
-		<property name="rawSlotName" value="rawName"/>
-		<property name="labelField" value="name"/>
-		<property name="format" value="${name} (${unit.parentUnitsPresentationName})"/>
-		<property name="indicatorShown" value="true"/>
-		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchInternalUnits"/>
-		<property name="args" value="slot=name,size=20"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
-		<property name="minChars" value="3"/>
-	</slot>
-</schema>
-
-<schema name="create.prize.unit.association.external" type="net.sourceforge.fenixedu.presentationTier.Action.research.UnitNameBean" bundle="RESEARCHER_RESOURCES">
-	<slot name="external" layout="radio-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.participantType">
-			<property name="classes" value="nobullet liinline"/>
-			<property name="bundle" value="RESEARCHER_RESOURCES"/>
-			<property name="falseLabel" value="label.internal"/>
-			<property name="trueLabel" value="label.external"/>
-	</slot>
-	<slot name="unitName" layout="autoComplete" key="label.unit">
-		<property name="size" value="70"/>
-		<property name="rawSlotName" value="rawName"/>
-		<property name="labelField" value="name"/>
-		<property name="format" value="${name}"/>
-		<property name="indicatorShown" value="true"/>
-		<property name="provider" value="net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalUnits"/>
-		<property name="args" value="slot=name,size=20"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
-		<property name="minChars" value="3"/>
-	</slot>
-</schema>
-
 
 <schema name="present.research.member" type="net.sourceforge.fenixedu.domain.Person" bundle="RESEARCHER_RESOURCES">
 	<slot name="name" layout="conditional-link">

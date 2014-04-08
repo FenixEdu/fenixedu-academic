@@ -422,10 +422,6 @@
 
 
 	<!--  View Research Result -->
-	<definition name="view.prize" extends="definition.public.homepage">
-		<put name="body" value="/publico/researcher/viewPrize.jsp" />
-	</definition>
-
     <definition name="department-site-front-page-banner-intro" extends="definition.public.department.frontPage">
         <put name="banner" value="/commons/sites/unitSite/frontPage_BannerIntro.jsp"/>
         <put name="body" value="/commons/sites/unitSite/mainBody.jsp"/>

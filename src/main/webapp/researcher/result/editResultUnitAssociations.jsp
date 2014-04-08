@@ -32,8 +32,6 @@
 	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.publications"/></em>
 </logic:notEqual>
 
-<h2><bean:message key="label.prizeUnits" bundle="RESEARCHER_RESOURCES"/></h2>
-
 <h3><fr:view name="result" property="title"/></h3>
 
 <bean:define id="linkKey" value="link.goBackToView" toScope="request"/>

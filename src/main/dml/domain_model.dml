@@ -4061,12 +4061,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
         State state;
     }
 
-    class research.Prize  {
-        MultiLanguageString description;
-        MultiLanguageString name;
-        Integer year;
-    }
-
     class research.activity.ArticleAssociation  {
     }
 
@@ -12221,22 +12215,6 @@ relation PrecedentDegreeInformationStudentCurricularPlan {
     }
 }
 
-relation PrizeRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    research.Prize playsRole prizes {
-        multiplicity *;
-    }
-}
-
-relation PrizeWinners {
-    organizationalStructure.Party playsRole parties {
-        multiplicity *;
-    }
-    research.Prize playsRole prizes {
-        multiplicity *;
-    }
-}
-
 relation ProfessorshipShiftProfessorship {
     Professorship playsRole professorship;
     ShiftProfessorship playsRole associatedShiftProfessorship {
@@ -12759,13 +12737,6 @@ relation PreferredPublicationsPublication {
         multiplicity 1..1;
     }
     research.result.publication.PreferredPublication playsRole personThatPrefers {
-        multiplicity *;
-    }
-}
-
-relation ResearchResultPrize {
-    research.result.ResearchResult playsRole researchResult;
-    research.Prize playsRole prizes {
         multiplicity *;
     }
 }

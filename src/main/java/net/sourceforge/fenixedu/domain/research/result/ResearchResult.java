@@ -305,10 +305,6 @@ public abstract class ResearchResult extends ResearchResult_Base {
 
         }
 
-        for (; !getPrizes().isEmpty(); getPrizes().iterator().next().delete()) {
-
-        }
-
         for (; !getResultUnitAssociations().isEmpty(); getResultUnitAssociations().iterator().next().delete()) {
 
         }
@@ -449,16 +445,6 @@ public abstract class ResearchResult extends ResearchResult_Base {
     @Deprecated
     public boolean hasAnyResultUnitAssociations() {
         return !getResultUnitAssociationsSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.research.Prize> getPrizes() {
-        return getPrizesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPrizes() {
-        return !getPrizesSet().isEmpty();
     }
 
     @Deprecated

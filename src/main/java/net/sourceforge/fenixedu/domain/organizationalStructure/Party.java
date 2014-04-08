@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.contacts.WebAddress;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.research.Prize;
 import net.sourceforge.fenixedu.domain.research.activity.Cooperation;
 import net.sourceforge.fenixedu.domain.research.activity.CooperationParticipation;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
@@ -1423,16 +1422,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         return publicationsForExecutionYear;
     }
 
-    public List<Prize> getPrizes(ExecutionYear executionYear) {
-        List<Prize> prizes = new ArrayList<Prize>();
-        for (Prize prize : this.getPrizes()) {
-            if (executionYear.belongsToCivilYear(prize.getYear())) {
-                prizes.add(prize);
-            }
-        }
-        return prizes;
-    }
-
     public abstract List<ResearchResultPublication> getResearchResultPublications();
 
     public List<ResearchResultPublication> getBooks() {
@@ -1739,16 +1728,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     @Deprecated
     public boolean hasAnyInvitationAccountabilities() {
         return !getInvitationAccountabilitiesSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.research.Prize> getPrizes() {
-        return getPrizesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPrizes() {
-        return !getPrizesSet().isEmpty();
     }
 
     @Deprecated
