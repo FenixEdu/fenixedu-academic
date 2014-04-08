@@ -8,6 +8,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -137,10 +138,16 @@ public class ExportEPFLPhdProgramCandidacies {
 
         writer.println(addTabs(3) + String.format(" <detail type=\"URL_IST-EPFL\">%s</detail>", getUrlForProcess(process)));
         writer.println(addTabs(3) + String.format(" <detail type=\"URL_IST-EPFL_DOCUMENTS\">%s</detail>", getUrlForProcessDocs(process)));
+        final Photograph photo = person.getPersonalPhotoEvenIfPending();
+        if (photo != null) {
+            writer.println(addTabs(3) + String.format(" <detail type=\"URL_IST-EPFL_PHOTO\">%s</detail>", getUrlForPhoto(photo)));
+        }
 
-        writer.println(addTabs(3)
-                + String.format("<detail type=\"PDOC_AT_EPFL\" format=\"COURTU\">%s</detail>", process.getExternalPhdProgram()
-                        .getAcronym()));
+        if (process.getExternalPhdProgram() != null) {
+            writer.println(addTabs(3)
+                    + String.format("<detail type=\"PDOC_AT_EPFL\" format=\"COURTU\">%s</detail>", process.getExternalPhdProgram()
+                            .getAcronym()));
+        }
 
         writer.println(addTabs(3)
                 + String.format(" <detail type=\"GPSDOMFOCUS\" conversion=\"IMPORT_IST:GPSDOMFOCUS\">%s</detail> ", process
@@ -159,6 +166,10 @@ public class ExportEPFLPhdProgramCandidacies {
     private static String getUrlForProcessDocs(PhdIndividualProgramProcess process) {
         return String.format("https://fenix.ist.utl.pt/phd/epfl/applications/candidateDocuments?candidateOid=%s", process
                 .getCandidacyProcessHashCode().getExternalId());
+    }
+
+    private static String getUrlForPhoto(final Photograph photo) {
+        return String.format("https://fenix.ist.utl.pt/phd/epfl/applications/photo?photoOid=%s", photo.getExternalId());
     }
 
     private static String addTabs(int level) {
