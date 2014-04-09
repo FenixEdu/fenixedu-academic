@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.cms.CmsContent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
@@ -32,7 +33,8 @@ public class ResearchUnitSite extends ResearchUnitSite_Base {
             throw new DomainException("unit.acronym.cannot.be.null");
         }
         this.setUnit(unit);
-        addAssociatedSections(new MultiLanguageString().with(MultiLanguageString.pt, "Lateral").with(MultiLanguageString.en, "Side"));
+        addAssociatedSections(new MultiLanguageString().with(MultiLanguageString.pt, "Lateral").with(MultiLanguageString.en,
+                "Side"));
         addAssociatedSections(new MultiLanguageString().with(MultiLanguageString.pt, "Topo").with(MultiLanguageString.en, "Top"));
     }
 
@@ -63,6 +65,19 @@ public class ResearchUnitSite extends ResearchUnitSite_Base {
         }
 
         return new MultiLanguageString().with(MultiLanguageString.pt, buffer.toString());
+    }
+
+    @Override
+    public String getReversePath() {
+        StringBuilder stringBuilder = new StringBuilder(super.getReversePath()).append('/');
+        for (final Unit parentUnit : getUnit().getParentUnitsPath()) {
+            if (parentUnit.isResearchUnit()) {
+                stringBuilder.append(CmsContent.normalize(parentUnit.getAcronym()));
+                stringBuilder.append('/');
+            }
+        }
+        stringBuilder.append(getUnit().getAcronym());
+        return stringBuilder.toString();
     }
 
 }

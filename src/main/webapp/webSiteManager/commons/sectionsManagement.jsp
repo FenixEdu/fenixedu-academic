@@ -109,21 +109,8 @@
 			<fr:destination name="functionality.view" path="<%= actionName + "?method=sections&siteID=" + siteId + "&functionalityID=${externalId}&" + context  + "#content-${externalId}"%>"/>
         </fr:view>
 	
-		<p class="mtop15">
-	    <fr:form action="<%= actionName + "?method=sections&amp;" + context %>">
-	        <html:button bundle="HTMLALT_RESOURCES" altKey="button.saveButton" property="saveButton" onclick="<%= "treeRenderer_saveTree('" + treeId + "');" %>">
-	            <bean:message key="button.sections.order.save" bundle="SITE_RESOURCES"/>
-	        </html:button>
-	        <html:submit>
-	            <bean:message key="button.sections.order.reset" bundle="SITE_RESOURCES"/>
-	        </html:submit>
-	    </fr:form>
-	    </p>
     </div>
     
-<p style="color: #888;">
-	<em><bean:message key="message.section.reorder.tip" bundle="SITE_RESOURCES"/></em>
-</p>
 </logic:notEmpty>
 
 <!-- Functionalities -->

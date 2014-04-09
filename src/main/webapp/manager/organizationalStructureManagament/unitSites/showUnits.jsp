@@ -19,8 +19,6 @@
 
 <fr:view name="units" layout="unit-sites-tree">
 	<fr:layout>
-        <fr:property name="treeId" value="managerUnitsSites"/>
-
         <fr:property name="eachLayout" value="values"/>
         <fr:property name="eachSchema" value="unitSite.tree.unit.name"/>
 

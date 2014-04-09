@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Site.SiteMapper;
+import net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler;
 import net.sourceforge.fenixedu.presentationTier.Action.research.result.publication.SearchPublicationsAction;
 
 import org.apache.struts.action.ActionForm;
@@ -43,6 +44,7 @@ public class SearchPublicationsDA extends SearchPublicationsAction {
         if (site == null) {
             String siteID = request.getParameter("siteID");
             site = (Site) FenixFramework.getDomainObject(siteID);
+            OldCmsSemanticURLHandler.selectSite(request, site);
         }
         request.setAttribute("site", site);
     }

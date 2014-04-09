@@ -2,10 +2,12 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.cms.CmsContent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.groups.Group;
@@ -57,6 +59,23 @@ public class ScientificAreaSite extends ScientificAreaSite_Base {
         }
 
         return new MultiLanguageString().with(MultiLanguageString.pt, buffer.toString());
+    }
+
+    @Override
+    public String getReversePath() {
+        StringBuilder stringBuilder = new StringBuilder(super.getReversePath()).append('/');
+
+        Unit institutionalUnit = UnitUtils.readInstitutionUnit();
+
+        for (final Unit parentUnit : getUnit().getParentUnitsPath()) {
+            if (!parentUnit.isAggregateUnit() && parentUnit != institutionalUnit) {
+                stringBuilder.append(CmsContent.normalize(parentUnit.getAcronym()));
+                stringBuilder.append('/');
+            }
+        }
+        stringBuilder.append(CmsContent.normalize(getUnit().getAcronym()));
+
+        return stringBuilder.toString();
     }
 
 }

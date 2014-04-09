@@ -26,11 +26,11 @@ import com.google.common.collect.Ordering;
 
 public class UnitSite extends UnitSite_Base {
 
-    private static MultiLanguageString TOP_SECTION_NAME = new MultiLanguageString().with(MultiLanguageString.pt, "Topo").with(MultiLanguageString.en,
-            "Top");
+    private static MultiLanguageString TOP_SECTION_NAME = new MultiLanguageString().with(MultiLanguageString.pt, "Topo").with(
+            MultiLanguageString.en, "Top");
 
-    private static MultiLanguageString SIDE_SECTION_NAME = new MultiLanguageString().with(MultiLanguageString.pt, "Lateral").with(
-            MultiLanguageString.en, "Side");
+    private static MultiLanguageString SIDE_SECTION_NAME = new MultiLanguageString().with(MultiLanguageString.pt, "Lateral")
+            .with(MultiLanguageString.en, "Side");
 
     static {
         getRelationUnitSiteManagers().addListener(new ManageWebsiteManagerRole());
@@ -350,11 +350,23 @@ public class UnitSite extends UnitSite_Base {
 
     @Override
     public CmsContent getInitialContent() {
+        if (getTemplate() != null && !getTemplate().getOrderedSections().isEmpty()) {
+            return getTemplate().getOrderedSections().get(0);
+        }
         Section section = getSideSection();
         if (section == null) {
             return super.getInitialContent();
         }
         return section.getChildSet().isEmpty() ? null : Ordering.natural().min(section.getChildSet());
+    }
+
+    @Override
+    public String getReversePath() {
+        return super.getReversePath() + getSpecificPart();
+    }
+
+    private String getSpecificPart() {
+        return this.getClass() == UnitSite.class ? "/" + getExternalId() : "";
     }
 
     @Deprecated

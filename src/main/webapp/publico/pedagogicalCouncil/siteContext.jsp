@@ -1,9 +1,8 @@
 <%@ page language="java" %>
-<%@page import="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext"%>
 
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 
-<bean:define id="site" name="<%= FunctionalityContext.CONTEXT_KEY %>" property="selectedContainer" toScope="request"/>
+<bean:define id="site" name="actual$site" />
 
 <bean:define id="announcementActionVariable" value="/pedagogicalCouncil/announcements.do" toScope="request"/>
 <bean:define id="eventActionVariable" value="/pedagogicalCouncil/events.do" toScope="request"/>

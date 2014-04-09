@@ -1,7 +1,6 @@
 <%@ page isELIgnored="true"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
-<%@page import="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext"%>
 <html:xhtml />
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -15,7 +14,7 @@
 
 <bean:define id="showMethod" value="&method=showPublications" toScope="request" />
 <bean:define id="searchMethod" value="&method=prepareSearchPublication" toScope="request" />
-<bean:define id="siteID" name="<%= FunctionalityContext.CONTEXT_KEY%>" property="selectedContainer.externalId"/>
+<bean:define id="siteID" name="actual$site" property="externalId"/>
 <bean:define id="showArguments" value="<%= "siteID=" + siteID %>" toScope="request" />
 <bean:define id="searchArguments" value="<%=  "siteID=" + siteID %>" toScope="request" />
 

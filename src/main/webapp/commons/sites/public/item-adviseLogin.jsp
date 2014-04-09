@@ -41,7 +41,7 @@
 	<h3 class="mtop2">
         <a name="<%= "item" + item.getExternalId() %>"></a>
         <fr:view name="item" property="name"/>
-            <span class="permalink1">(<app:contentLink name="item"><bean:message key="label.link" bundle="SITE_RESOURCES"/></app:contentLink>)</span>
+        <span class="permalink1">(<app:contentLink name="item"><bean:message key="label.link" bundle="SITE_RESOURCES"/></app:contentLink>)</span>
     </h3>
 
     <p>

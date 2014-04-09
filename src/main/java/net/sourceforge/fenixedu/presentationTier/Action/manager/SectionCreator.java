@@ -89,7 +89,7 @@ public class SectionCreator implements Serializable {
     public void createSection() {
         Section section = superiorSection == null ? new Section(site, getName()) : new Section(getSuperiorSection(), getName());
         section.setNextSection(getNextSection());
-        // section.setAccessGroup(getPermittedGroup());
+        section.setPermittedGroup(getPermittedGroup());
         section.setVisible(getVisible());
     }
 }

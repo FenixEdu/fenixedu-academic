@@ -1088,7 +1088,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public boolean isMemberOfAnyScientificCommission(Person person) {
-        return getMostRecentScientificCommission(person) != null;
+        return person != null && getMostRecentScientificCommission(person) != null;
     }
 
     public boolean isMemberOfCurrentScientificCommission(Person person) {
@@ -1166,9 +1166,11 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
      *         execution degree
      */
     final public boolean isCoordinatorInSomeExecutionYear(final Person person) {
-        for (Coordinator coordinator : person.getCoordinators()) {
-            if (coordinator.getExecutionDegree().getDegree() == this) {
-                return true;
+        if (person != null) {
+            for (Coordinator coordinator : person.getCoordinators()) {
+                if (coordinator.getExecutionDegree().getDegree() == this) {
+                    return true;
+                }
             }
         }
 

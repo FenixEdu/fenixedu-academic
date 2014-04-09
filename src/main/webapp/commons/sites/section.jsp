@@ -214,10 +214,8 @@
     		</html:link>
     	</span>
 		|
-		
-		<%-- <app:defineContentPath id="url" name="section"/> --%>
-		<bean:define id="url" value="http://fenixedu.org" />
-		<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a  target="_blank" href="<%= request.getContextPath() + url %>">
+
+		<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a  target="_blank" href="${section.fullPath}">
 			<bean:message key="link.view" bundle="SITE_RESOURCES"/> »
 		</a>
         

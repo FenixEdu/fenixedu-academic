@@ -249,11 +249,7 @@ public class SiteMenuRenderer extends OutputRenderer {
 
                 HtmlText text = new HtmlText(content.getName().getContent());
                 text.setFace(Face.STANDARD);
-                HtmlComponent component = text;
-
-                if (content.isAvailable()) {
-                    component = generateLink(site, content, component, selectedPath, depth);
-                }
+                HtmlComponent component = generateLink(site, content, text, selectedPath, depth);
 
                 MultiLanguageString title = content.getName();
                 if (title != null && !title.isEmpty()) {

@@ -5,18 +5,16 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.FileContentCreationBean;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.FileItemPermissionBean;
 
 import org.fenixedu.bennu.core.groups.AnyoneGroup;
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.LoggedGroup;
 
 import pt.ist.fenixWebFramework.renderers.DataProvider;
-import pt.ist.fenixWebFramework.renderers.components.converters.BiDirectionalConverter;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class FileItemGroupProvider implements DataProvider {
@@ -56,23 +54,13 @@ public class FileItemGroupProvider implements DataProvider {
     private List<Group> getDefaultPermissions() {
         List<Group> groups = new ArrayList<Group>();
         groups.add(AnyoneGroup.get());
-        groups.add(RoleGroup.get(RoleType.PERSON));
+        groups.add(LoggedGroup.get());
         return groups;
     }
 
     @Override
     public Converter getConverter() {
-        return new BiDirectionalConverter() {
-            @Override
-            public Object convert(Class type, Object value) {
-                return value == null ? null : Group.parse((String) value);
-            }
-
-            @Override
-            public String deserialize(Object object) {
-                return object == null ? null : ((Group) object).getExpression();
-            }
-        };
+        return null;
     }
 
 }

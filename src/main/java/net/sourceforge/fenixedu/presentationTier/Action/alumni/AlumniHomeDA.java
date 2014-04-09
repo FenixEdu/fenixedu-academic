@@ -25,7 +25,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@StrutsApplication(bundle = "AlumniResources", path = "alumni", titleKey = "label.alumni.main.title", hint = "Alumni",
+@StrutsApplication(bundle = "AlumniResources", path = "alumni-section", titleKey = "label.alumni.main.title", hint = "Alumni",
         accessGroup = "role(ALUMNI)")
 @Mapping(module = "alumni", path = "/index")
 @Forwards(value = { @Forward(name = "Success", path = "/alumni/index.jsp") })

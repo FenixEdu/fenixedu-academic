@@ -15,7 +15,7 @@
 	<h:outputText value="<span style='display:none'>#{CurricularCourseManagement.degreeAndSelectSite}</span>" escape="false" />
 
 	<h:outputText value="<div class='breadcumbs mvert0'>"  escape="false"/>
-	<h:outputLink value="#{CurricularCourseManagement.instalationUrl}" >
+	<h:outputLink value="#{CurricularCourseManagement.applicationUrl}" >
 		<h:outputText value="#{CurricularCourseManagement.institutionAcronym}"/>
 	</h:outputLink>
 	&nbsp;&gt;&nbsp;

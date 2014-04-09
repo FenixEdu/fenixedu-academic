@@ -14,22 +14,22 @@
 
 <div id="logoist">
 
-	<logic:equal name="site" property="showInstitutionLogo" value="true">
+	<logic:equal name="actual$site" property="showInstitutionLogo" value="true">
 		<a href="<%= institutionUrl %>">
 			<img alt="<%=org.fenixedu.bennu.portal.domain.PortalConfiguration.getInstance().getApplicationTitle().getContent() %>" src="<%= request.getContextPath() + "/images/newImage2012/logo-ist.png"%>"/>
 		</a>
 	</logic:equal>
 
-	<logic:equal name="site" property="defaultLogoUsed" value="false">
-		<logic:present name="site" property="logo">
-			<bean:define id="logoFile" type="net.sourceforge.fenixedu.domain.UnitSiteFile" name="site" property="logo"/>
+	<logic:equal name="actual$site" property="defaultLogoUsed" value="false">
+		<logic:present name="actual$site" property="logo">
+			<bean:define id="logoFile" type="net.sourceforge.fenixedu.domain.UnitSiteFile" name="actual$site" property="logo"/>
 				<a href="<%= institutionUrl %>">
 					<img alt="Logo" src="<%= logoFile.getDownloadUrl() %>" class="usitelogo"/>
 				</a>
 		</logic:present>
 	</logic:equal>
 
-	<logic:equal name="site" property="defaultLogoUsed" value="true">
+	<logic:equal name="actual$site" property="defaultLogoUsed" value="true">
 		<logic:present name="siteDefaultLogo">
 			<bean:define id="logoUrl" name="siteDefaultLogo" type="java.lang.String"/>
 				<a href="<%= institutionUrl %>">
@@ -39,20 +39,20 @@
 	</logic:equal>
 </div>
 
-<logic:equal name="site" property="defaultLogoUsed" value="true">
+<logic:equal name="actual$site" property="defaultLogoUsed" value="true">
 	<logic:notPresent name="siteDefaultLogo">
 		<div class="unitname">
-			<logic:notEmpty name="site" property="unit.acronym">
+			<logic:notEmpty name="actual$site" property="unit.acronym">
 				<h1>
-					<fr:view name="site" property="unit.acronym"/>
+					<fr:view name="actual$site" property="unit.acronym"/>
 				</h1>
 				<p>
-					<fr:view name="site" property="unit.nameI18n"/>
+					<fr:view name="actual$site" property="unit.nameI18n"/>
 				</p>
 			</logic:notEmpty>
-			<logic:empty name="site" property="unit.acronym">
+			<logic:empty name="actual$site" property="unit.acronym">
 				<h1>
-					<fr:view name="site" property="unit.nameI18n"/>
+					<fr:view name="actual$site" property="unit.nameI18n"/>
 				</h1>
 			</logic:empty>
 		</div>
@@ -66,9 +66,9 @@
 		<bean:message bundle="GLOBAL_RESOURCES" key="dot.title"/>
 	</a>
 
-<logic:notEmpty name="site" property="sortedTopLinks">
+<logic:notEmpty name="actual$site" property="sortedTopLinks">
    |
-   <fr:view name="site" property="sortedTopLinks">
+   <fr:view name="actual$site" property="sortedTopLinks">
 		<fr:layout name="flowLayout">
 			<fr:property name="eachLayout" value="values"/>
 			<fr:property name="eachSchema" value="showFooterLink"/>

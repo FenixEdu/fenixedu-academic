@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.space.Campus;
@@ -42,6 +43,7 @@ public class DegreeAnnouncementsDA extends AnnouncementManagement {
         Degree degree = getDegree(request);
         if (degree != null) {
             request.setAttribute("degree", degree);
+            OldCmsSemanticURLHandler.selectSite(request, degree.getSite());
         }
 
         Collection<Campus> campus = degree.getCurrentCampus();

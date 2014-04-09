@@ -66,10 +66,11 @@ public class Item extends Item_Base {
 
     public void setNextItem(Item item) {
         if (item != null) {
-            setOrder(item.getOrder());
-            item.setOrder(item.getOrder() + 1);
+            Integer order = item.getOrder();
+            shiftRight(getParent().getChildSet(), order);
+            setOrder(order);
         } else {
-            setOrder(getParent().getChildSet().size() + 1);
+            setOrder(getParent().getChildSet().size());
         }
     }
 

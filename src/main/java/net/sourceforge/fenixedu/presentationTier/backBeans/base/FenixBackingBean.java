@@ -17,10 +17,10 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
-import java.util.Locale;
 
 public class FenixBackingBean {
 
@@ -236,5 +236,9 @@ public class FenixBackingBean {
 
     public String getInstitutionAcronym() {
         return Unit.getInstitutionAcronym();
+    }
+
+    public String getApplicationUrl() {
+        return CoreConfiguration.getConfiguration().applicationUrl();
     }
 }

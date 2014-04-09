@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Site.SiteMapper;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
@@ -444,7 +445,13 @@ public class ViewHomepageDA extends SiteVisualizationDA {
             return (Homepage) site;
         } else {
             String homepageID = request.getParameter("homepageID");
-            return (Homepage) FenixFramework.getDomainObject(homepageID);
+            if (homepageID != null) {
+                site = FenixFramework.getDomainObject(homepageID);
+            } else {
+                site = getDomainObject(request, "siteID");
+            }
+            OldCmsSemanticURLHandler.selectSite(request, site);
+            return (Homepage) site;
         }
 
     }

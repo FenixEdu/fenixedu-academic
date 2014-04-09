@@ -1,9 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
+<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
-<f:view>" definition="definition.public.department" attributeName="body-inline">
+<ft:tilesView definition="definition.public.department" attributeName="body-inline">
 	
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
@@ -13,8 +13,10 @@
 	<f:loadBundle basename="resources/PublicDepartmentResources" var="publicDepartmentBundle"/>
 	<f:loadBundle basename="resources/GlobalResources" var="globalBundle"/>
 
+	<h:outputText value="<span style='display:none'>#{CurricularCourseManagement.departmentAndSelectSite}</span>" escape="false" />
+
     <h:outputText value="<div class='breadcumbs mvert0'>" escape="false"/>
-	<h:outputLink value="#{CurricularCourseManagement.instalationUrl}" >
+	<h:outputLink value="#{CurricularCourseManagement.applicationUrl}" >
 		<h:outputText value="#{CurricularCourseManagement.institutionAcronym}"/>
 	</h:outputLink>
 	
@@ -226,4 +228,4 @@
  		<h:outputText escape="false" value="<input alt='input.executionPeriodOID' id='executionPeriodOID' name='executionPeriodOID' type='hidden' value='#{CurricularCourseManagement.executionPeriodOID}'/>"/>
 	</h:form>
 
-</f:view>
+</ft:tilesView>

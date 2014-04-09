@@ -15,11 +15,13 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Site.SiteMapper;
 import net.sourceforge.fenixedu.domain.UnitSite;
+import net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteVisualizationDA;
 
 import org.apache.struts.action.ActionForm;
@@ -30,13 +32,17 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+
+import com.google.common.base.Strings;
 
 public class UnitSiteVisualizationDA extends SiteVisualizationDA {
 
     public static final int ANNOUNCEMENTS_NUMBER = 3;
 
-    public static final MultiLanguageString ANNOUNCEMENTS_NAME = new MultiLanguageString().with(MultiLanguageString.pt, "Anúncios");
+    public static final MultiLanguageString ANNOUNCEMENTS_NAME = new MultiLanguageString().with(MultiLanguageString.pt,
+            "Anúncios");
 
     public static final MultiLanguageString EVENTS_NAME = new MultiLanguageString().with(MultiLanguageString.pt, "Eventos");
 
@@ -126,7 +132,15 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
 
         if (unit == null) {
             UnitSite site = SiteMapper.getSite(request);
+            if (site == null) {
+                String siteId = FenixContextDispatchAction.getFromRequest("siteID", request);
+                if (!Strings.isNullOrEmpty(siteId)) {
+                    site = FenixFramework.getDomainObject(siteId);
+                    OldCmsSemanticURLHandler.selectSite(request, site);
+                }
+            }
             unit = site.getUnit();
+            request.setAttribute("unit", unit);
         }
 
         return unit;
@@ -168,6 +182,10 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
     public ActionForward showPublications(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         Unit unit = getUnit(request);
+
+        if (unit != null && unit.getSite() != null) {
+            OldCmsSemanticURLHandler.selectSite(request, unit.getSite());
+        }
 
         IViewState viewState = RenderUtils.getViewState("executionYearIntervalBean");
 

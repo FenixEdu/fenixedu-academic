@@ -11,11 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.presentationTier.servlets.startup.FenixInitializer.FenixCustomExceptionHandler;
 
 import org.fenixedu.bennu.portal.domain.MenuFunctionality;
 import org.fenixedu.bennu.portal.servlet.SemanticURLHandler;
 
 import pt.ist.fenixWebFramework.servlets.filters.RequestWrapperFilter;
+
+import com.google.common.base.Strings;
 
 public class OldCmsSemanticURLHandler implements SemanticURLHandler {
 
@@ -26,34 +29,41 @@ public class OldCmsSemanticURLHandler implements SemanticURLHandler {
     @Override
     public void handleRequest(MenuFunctionality functionality, HttpServletRequest request, HttpServletResponse response,
             FilterChain chain) throws IOException, ServletException {
-        String path = request.getRequestURI().substring(request.getContextPath().length() + functionality.getFullPath().length());
-        path = path.startsWith("/") ? path.substring(1) : path;
-        String[] parts = path.split("/");
-        SiteTemplateController controller = functionality.getSiteTemplate().getController();
-        Site site = controller.selectSiteForPath(parts);
-        int startIndex = controller.getTrailingPath(site, parts);
+        try {
+            String path =
+                    request.getRequestURI().substring(request.getContextPath().length() + functionality.getFullPath().length());
+            path = path.startsWith("/") ? path.substring(1) : path;
+            String[] parts = Strings.isNullOrEmpty(path) ? new String[] {} : path.split("/");
+            SiteTemplateController controller = functionality.getSiteTemplate().getController();
+            Site site = controller.selectSiteForPath(parts);
+            int startIndex = controller.getTrailingPath(site, parts);
 
-        CmsContent content = site == null ? null : findContent(site, null, site.getOrderedSections(), parts, startIndex);
+            CmsContent content = site == null ? null : findContent(site, null, site.getOrderedSections(), parts, startIndex);
 
-        if (content instanceof TemplatedSectionInstance) {
-            content = ((TemplatedSectionInstance) content).getSectionTemplate();
+            if (content instanceof TemplatedSectionInstance) {
+                content = ((TemplatedSectionInstance) content).getSectionTemplate();
+            }
+
+            String dispatch = NOT_FOUND_PATH;
+
+            if (content instanceof TemplatedSection) {
+                TemplatedSection section = (TemplatedSection) content;
+                dispatch = section.getCustomPath();
+            } else if (content instanceof Section) {
+                dispatch = SECTION_PATH;
+            } else if (content instanceof Item) {
+                dispatch = ITEM_PATH;
+            }
+
+            request.setAttribute("actual$site", site);
+            request.setAttribute("site", site);
+            request.setAttribute("actual$content", content);
+
+            request.getRequestDispatcher(dispatch).forward(RequestWrapperFilter.getFenixHttpServletRequestWrapper(request),
+                    response);
+        } catch (Throwable t) {
+            new FenixCustomExceptionHandler().handle(request, response, t);
         }
-
-        String dispatch = NOT_FOUND_PATH;
-
-        if (content instanceof TemplatedSection) {
-            TemplatedSection section = (TemplatedSection) content;
-            dispatch = section.getCustomPath();
-        } else if (content instanceof Section) {
-            dispatch = SECTION_PATH;
-        } else if (content instanceof Item) {
-            dispatch = ITEM_PATH;
-        }
-
-        request.setAttribute("actual$site", site);
-        request.setAttribute("actual$content", content);
-
-        request.getRequestDispatcher(dispatch).forward(RequestWrapperFilter.getFenixHttpServletRequestWrapper(request), response);
     }
 
     private CmsContent findContent(Site site, CmsContent initial, List<? extends CmsContent> sections, String[] parts,
@@ -66,7 +76,7 @@ public class OldCmsSemanticURLHandler implements SemanticURLHandler {
         }
 
         for (CmsContent content : sections) {
-            if (content.matchesPath(parts[startIndex]) && content.isAvailable() && content.getVisible()) {
+            if (content.matchesPath(parts[startIndex])) {
                 if (content instanceof Item || content instanceof TemplatedSection || content instanceof TemplatedSectionInstance) {
                     return content;
                 } else {

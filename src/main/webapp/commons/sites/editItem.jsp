@@ -38,32 +38,6 @@
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
     </fr:edit>
-    
-    <logic:notEmpty name="item" property="fileContentSet">
-        <h3 class="mbottom05">
-            <bean:message key="title.item.files" bundle="SITE_RESOURCES"/>
-        </h3>
-        
-        <div class="infoop2 mtop05 mbottom1">
-        	<bean:message key="label.item.edit.add.file.instructions" bundle="SITE_RESOURCES"/>
-        </div>
-    
-        <fr:edit id="edit-files" name="item" property="fileContentSet" schema="site.item.files.visible">
-            <fr:layout name="tabular-editable">
-	            <fr:property name="classes" value="tstyle5 thlight mvert0"/>
-	            <fr:property name="columnClasses" value="acenter"/>
-                <fr:property name="customLink(add)">
-                    <span class="switchInline">
-                        (<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="#" onclick="insertLink('${child.file.downloadUrl}', '${child.file.displayName}');"><bean:message key="link.item.edit.add.file" bundle="SITE_RESOURCES"/></a>)
-                    </span>
-                </fr:property>
-            </fr:layout>
-        </fr:edit>
-        
-		
-        <script type="text/javascript" src='<%= request.getContextPath() + "/javaScript/tinyMCEHook.js"%>'></script>
- 
-    </logic:notEmpty>
 
     <p class="mtop15">
 	    <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.editItemButton" property="editItemButton">

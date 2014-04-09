@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.ResearchUnitSite;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Site.SiteMapper;
+import net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 import org.apache.struts.action.ActionForm;
@@ -71,7 +72,9 @@ public class ViewResearchUnitSiteDA extends UnitSiteVisualizationDA {
         Site container = SiteMapper.getSite(request);
         if (container == null) {
             String siteID = request.getParameter(getContextParamName(request));
-            return (ResearchUnitSite) FenixFramework.getDomainObject(siteID);
+            ResearchUnitSite site = FenixFramework.getDomainObject(siteID);
+            OldCmsSemanticURLHandler.selectSite(request, site);
+            return site;
         } else {
             return (ResearchUnitSite) container;
         }

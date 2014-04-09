@@ -28,7 +28,11 @@ public class CmsContent extends CmsContent_Base implements Comparable<CmsContent
     }
 
     public Group getPermittedGroup() {
-        return getGroup().toGroup();
+        if (getGroup() == null) {
+            return AnyoneGroup.get();
+        } else {
+            return getGroup().toGroup();
+        }
     }
 
     public void setPermittedGroup(Group group) {
@@ -48,6 +52,10 @@ public class CmsContent extends CmsContent_Base implements Comparable<CmsContent
     }
 
     public boolean isAvailable() {
+        if (getParent() != null && !getParent().isAvailable()) {
+            return false;
+        }
+
         if (getGroup() == null) {
             return true;
         }
@@ -68,7 +76,7 @@ public class CmsContent extends CmsContent_Base implements Comparable<CmsContent
             file.delete();
         }
         setParent(null);
-        setPermittedGroup(null);
+        setGroup(null);
         deleteDomainObject();
     }
 
@@ -156,9 +164,16 @@ public class CmsContent extends CmsContent_Base implements Comparable<CmsContent
                 return true;
             }
         } else {
-            return getPermittedGroup().equals(AnyoneGroup.get());
+            return getPermittedGroup().isMember(null);
         }
+    }
 
+    public void shiftRight(Collection<? extends CmsContent> contents, Integer order) {
+        for (CmsContent content : contents) {
+            if (content.getOrder() >= order) {
+                content.setOrder(content.getOrder() + 1);
+            }
+        }
     }
 
 }

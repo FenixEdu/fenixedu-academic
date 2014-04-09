@@ -1,9 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
-<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
+<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
-<f:view>" definition="definition.public.department" attributeName="body-inline">
+<ft:tilesView definition="definition.public.mainPageIST" attributeName="body-inline">
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 	<f:loadBundle basename="resources/PublicDepartmentResources" var="publicDepartmentBundle"/>
@@ -11,7 +11,7 @@
 	
 	
 	<h:outputText value="<div class='breadcumbs mvert0'>" escape="false"/>
-		<h:outputLink value="#{CurricularCourseManagement.instalationUrl}" >
+		<h:outputLink value="#{CurricularCourseManagement.applicationUrl}" >
 			<h:outputText value="#{CurricularCourseManagement.institutionAcronym}"/>
 		</h:outputLink>
 		&nbsp;&gt;&nbsp;
@@ -52,4 +52,4 @@
 
 	</h:form>
 
-</f:view>
+</ft:tilesView>

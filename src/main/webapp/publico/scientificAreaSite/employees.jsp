@@ -5,7 +5,7 @@
 
 <html:xhtml/>
 
-<h1 class="mbottom03 cnone"><fr:view name="site" property="unitNameWithAcronym"/></h1>
+<h1 class="mbottom03 cnone"><fr:view name="actual$site" property="unitNameWithAcronym"/></h1>
 <h2 class="mtop15"><bean:message key="label.employees" bundle="SITE_RESOURCES"/></h2>
 
 

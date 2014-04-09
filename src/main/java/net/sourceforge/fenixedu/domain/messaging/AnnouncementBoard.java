@@ -275,7 +275,7 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
     }
 
     public boolean hasReader(Person person) {
-        return (isPublicToRead() || getReaders().isMember(person.getUser()));
+        return (isPublicToRead() || (person != null && getReaders().isMember(person.getUser())));
     }
 
     public boolean isCurrentUserReader() {
@@ -283,7 +283,7 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
     }
 
     public boolean hasWriter(Person person) {
-        return (isPublicToWrite() || getWriters().isMember(person.getUser()));
+        return (isPublicToWrite() || (person != null && getWriters().isMember(person.getUser())));
     }
 
     public boolean isCurrentUserWriter() {
@@ -295,7 +295,7 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
     }
 
     public boolean hasApprover(Person person) {
-        return (isPublicToApprove() || getApprovers().isMember(person.getUser()));
+        return (isPublicToApprove() || (person != null && getApprovers().isMember(person.getUser())));
     }
 
     public boolean hasManager(Person person) {

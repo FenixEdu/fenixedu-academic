@@ -16,5 +16,5 @@
 </logic:present>
     
 <div class="usitebannerlat">
-	<fr:view name="site" property="sideBanner" layout="html" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString"/>
+	${site.sideBanner}
 </div>

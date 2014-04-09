@@ -26,7 +26,7 @@
     </html:link>
     &nbsp;&gt;&nbsp;
     
-    <bean:define id="site" name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>" property="selectedContainer"/>
+    <bean:define id="site" name="actual$site"/>
 
 	<bean:define id="unitId" name="site" property="unit.externalId"/>
 	

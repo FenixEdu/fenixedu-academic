@@ -11,8 +11,8 @@
 <bean:define id="contextParamValue" name="siteContextParamValue"/>
 <bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
 
-	<logic:equal name="site" property="showAnnouncements" value="true"> 
-	<logic:equal name="site" property="showEvents" value="true">
+	<logic:equal name="actual$site" property="showAnnouncements" value="true"> 
+	<logic:equal name="actual$site" property="showEvents" value="true">
 		<tr class="usitechannels">
 			<th class="usitechannel1 width50pc">
 				<bean:message key="label.announcements"/>
@@ -24,8 +24,8 @@
 	</logic:equal>
 	</logic:equal>
 	
-	<logic:equal name="site" property="showAnnouncements" value="false"> 
-	<logic:equal name="site" property="showEvents" value="true">
+	<logic:equal name="actual$site" property="showAnnouncements" value="false"> 
+	<logic:equal name="actual$site" property="showEvents" value="true">
 		<tr class="usitechannels">
 			<th class="usitechannel2">
 				<bean:message key="label.events"/>
@@ -34,8 +34,8 @@
 	</logic:equal>
 	</logic:equal>
 	
-	<logic:equal name="site" property="showAnnouncements" value="true"> 
-	<logic:equal name="site" property="showEvents" value="false">
+	<logic:equal name="actual$site" property="showAnnouncements" value="true"> 
+	<logic:equal name="actual$site" property="showEvents" value="false">
 		<tr class="usitechannels">
 			<th class="usitechannel1">
 				<bean:message key="label.announcements"/>
@@ -46,34 +46,34 @@
 
 
 	<%-- <tr> that contains events and annoucements are shown if at least one channel exists--%>
-	<logic:equal name="site" property="showEvents" value="true">
-	<logic:equal name="site" property="showAnnouncements" value="true">
+	<logic:equal name="actual$site" property="showEvents" value="true">
+	<logic:equal name="actual$site" property="showAnnouncements" value="true">
 		<tr class="usitechannels">
 	</logic:equal>
 	</logic:equal>
 
-	<logic:equal name="site" property="showEvents" value="true">
-	<logic:equal name="site" property="showAnnouncements" value="false">
+	<logic:equal name="actual$site" property="showEvents" value="true">
+	<logic:equal name="actual$site" property="showAnnouncements" value="false">
 		<tr class="usitechannels">
 	</logic:equal>
 	</logic:equal>
 	
-	<logic:equal name="site" property="showEvents" value="false">
-	<logic:equal name="site" property="showAnnouncements" value="true">
+	<logic:equal name="actual$site" property="showEvents" value="false">
+	<logic:equal name="actual$site" property="showAnnouncements" value="true">
 		<tr class="usitechannels">
 	</logic:equal>
 	</logic:equal>
     
     <bean:define id="textLength" value="350" toScope="request"/>
     
-	<logic:notEqual name="site" property="showAnnouncements" value="true">
+	<logic:notEqual name="actual$site" property="showAnnouncements" value="true">
         <bean:define id="textLength" value="700" toScope="request"/>
     </logic:notEqual>
-	<logic:notEqual name="site" property="showEvents" value="true">
+	<logic:notEqual name="actual$site" property="showEvents" value="true">
         <bean:define id="textLength" value="700" toScope="request"/>
     </logic:notEqual>
     
-	<logic:equal name="site" property="showAnnouncements" value="true">
+	<logic:equal name="actual$site" property="showAnnouncements" value="true">
 		<td>
 			<logic:notEmpty name="announcements">
 			
@@ -118,7 +118,7 @@
 			</logic:empty>
 		</td>
 	</logic:equal>
-	<logic:equal name="site" property="showEvents" value="true">
+	<logic:equal name="actual$site" property="showEvents" value="true">
 		<td>
 		    <bean:define id="hasAnnouncements" value="false" toScope="request"/>
 		    <logic:notEmpty name="today-events">
@@ -220,20 +220,20 @@
 	</logic:equal>
 
 
-	<logic:equal name="site" property="showEvents" value="true">
-	<logic:equal name="site" property="showAnnouncements" value="true">
+	<logic:equal name="actual$site" property="showEvents" value="true">
+	<logic:equal name="actual$site" property="showAnnouncements" value="true">
 		</tr>
 	</logic:equal>
 	</logic:equal>
 
-	<logic:equal name="site" property="showEvents" value="true">
-	<logic:equal name="site" property="showAnnouncements" value="false">
+	<logic:equal name="actual$site" property="showEvents" value="true">
+	<logic:equal name="actual$site" property="showAnnouncements" value="false">
 		</tr>
 	</logic:equal>
 	</logic:equal>
 	
-	<logic:equal name="site" property="showEvents" value="false">
-	<logic:equal name="site" property="showAnnouncements" value="true">
+	<logic:equal name="actual$site" property="showEvents" value="false">
+	<logic:equal name="actual$site" property="showAnnouncements" value="true">
 		</tr>
 	</logic:equal>
 	</logic:equal>

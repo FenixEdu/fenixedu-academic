@@ -1,10 +1,10 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
+<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="c"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
-<f:view>
+<ft:tilesView definition="definition.public.findSpaces" attributeName="body-inline">
 
 	<f:loadBundle basename="resources/ResourceAllocationManagerResources" var="bundle"/>				
 	
@@ -46,4 +46,4 @@
 		
 	</fc:dataRepeater>
 		
-</f:view>
+</ft:tilesView>

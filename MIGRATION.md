@@ -255,9 +255,9 @@ Before migrating to version 3.0, you must first ensure that:
     ```
 5. Start your application and login with a manager user. Once you login, you will be redirected to the application's start page. If you want to manually manage the new menu structure, go to `http://your-app/bennu-admin` and click on 'Manage Portal'. If you wish to import the menu structure using a script, you must go to `http://your-app/bennu-scheduler-ui/#custom` and run the task. A sample task (containing IST's structure) can be found at: https://gist.github.com/jcarvalho/cc89b00606135cf6ce97.
 
-6. Your application should now be functional.
+6. You now need to configure the revamped CMS. You need to instantiate SiteTemplates for every different site you want to support, as well as connecting them to Portal Functionalities. An example script can be found at `https://gist.github.com/jcarvalho/0c16a878255a7afe6971`. It contains paths and names that are specific to IST's installation, but you can use it as the starting point to configure your own sites.
 
-7. Run the following task to import the previously existing FunctionalityCalls
+7. After the sites have been created, run the following task to import the previously existing FunctionalityCalls
 
     ```java
     package pt.ist.fenix;
@@ -329,7 +329,7 @@ Before migrating to version 3.0, you must first ensure that:
         }
     }
     ```
-
+8. Your application should now be fully functional.
 
 ## Migrating from 1.x to 2.0
 

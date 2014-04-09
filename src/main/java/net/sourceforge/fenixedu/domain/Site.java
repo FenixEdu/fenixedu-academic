@@ -9,15 +9,14 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.cms.CmsContent;
 import net.sourceforge.fenixedu.domain.cms.SiteTemplate;
 import net.sourceforge.fenixedu.domain.cms.TemplatedSectionInstance;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.AnyoneGroup;
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.LoggedGroup;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -59,7 +58,7 @@ public abstract class Site extends Site_Base {
         List<Group> groups = new ArrayList<Group>();
 
         groups.add(AnyoneGroup.get());
-        groups.add(RoleGroup.get(RoleType.PERSON));
+        groups.add(LoggedGroup.get());
 
         return groups;
     }

@@ -4,8 +4,8 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
 <div id="foot_links">
-	<logic:notEmpty name="site" property="sortedFooterLinks">
-		<fr:view name="site" property="sortedFooterLinks">
+	<logic:notEmpty name="actual$site" property="sortedFooterLinks">
+		<fr:view name="actual$site" property="sortedFooterLinks">
 			<fr:layout name="flowLayout">
 				<fr:property name="eachLayout" value="values"/>
 				<fr:property name="eachSchema" value="showFooterLink"/>
@@ -19,10 +19,10 @@
 	<bean:message bundle="GLOBAL_RESOURCES" key="footer.copyright.label"/>
 	<dt:format pattern="yyyy"><dt:currentTime/></dt:format>
 	-
-	<logic:present name="site">
-		<bean:write name="site" property="unit.name"/>
+	<logic:present name="actual$site">
+		<bean:write name="actual$site" property="unit.name"/>
 	</logic:present>
-	<logic:notPresent name="site">
+	<logic:notPresent name="actual$site">
 		<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%>
 	</logic:notPresent>
 </div>

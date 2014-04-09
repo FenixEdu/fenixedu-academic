@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.AnyoneGroup;
 import org.fenixedu.bennu.core.groups.Group;
 
 import pt.ist.fenixframework.Atomic;
@@ -83,6 +84,7 @@ public class CreateUnitAnnouncementBoard {
         Group managers = RoleGroup.get(roleType);
         switch (type) {
         case UB_PUBLIC:
+            group = AnyoneGroup.get();
             break;
         case UB_MANAGER:
             group = managers;

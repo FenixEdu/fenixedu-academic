@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.cms.TemplatedSectionInstance;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.DomainObject;
+import pt.ist.fenixframework.consistencyPredicates.ConsistencyPredicate;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.google.common.base.Predicate;
@@ -88,10 +89,11 @@ public class Section extends Section_Base {
 
     public void setNextSection(Section section) {
         if (section != null) {
-            setOrder(section.getOrder());
-            section.setOrder(section.getOrder() + 1);
+            Integer order = section.getOrder();
+            shiftRight(getSiblings(), section.getOrder());
+            setOrder(order);
         } else {
-            setOrder(getSiblings().size() + 1);
+            setOrder(getSiblings().size());
         }
     }
 
@@ -215,6 +217,11 @@ public class Section extends Section_Base {
 
     public void logEditSectionPermission() {
         getOwnerSite().logEditSectionPermission(this);
+    }
+
+    @ConsistencyPredicate
+    public boolean checkCorrectParent() {
+        return !(getParent() != null && getSite() != null);
     }
 
     @Override

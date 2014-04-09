@@ -10,7 +10,7 @@
 	<f:loadBundle basename="resources/GlobalResources" var="globalBundle"/>
 	
 	<h:outputText value="<div class='breadcumbs mvert0'>" escape="false"/>
-		<h:outputLink value="#{DepartmentManagement.instalationUrl}" >
+		<h:outputLink value="#{DepartmentManagement.applicationUrl}" >
 			<h:outputText value="#{DepartmentManagement.institutionAcronym}"/>
 		</h:outputLink>
 		&nbsp;&gt;&nbsp;

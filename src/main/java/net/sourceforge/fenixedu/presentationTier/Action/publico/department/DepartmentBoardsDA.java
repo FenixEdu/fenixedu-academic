@@ -14,8 +14,8 @@ public abstract class DepartmentBoardsDA extends UnitSiteBoardsDA {
         Department department = getDepartment(request);
         if (department != null) {
             request.setAttribute("department", department);
+            OldCmsSemanticURLHandler.selectSite(request, department.getDepartmentUnit().getSite());
         }
-        OldCmsSemanticURLHandler.selectSite(request, department.getDepartmentUnit().getSite());
     }
 
     public Department getDepartment(HttpServletRequest request) {

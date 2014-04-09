@@ -785,6 +785,17 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return degree;
     }
 
+    public DepartmentUnit getDepartmentAndSelectSite() {
+        DepartmentUnit department = getDepartmentUnit();
+        if (department == null) {
+            department = FenixFramework.getDomainObject(getAndHoldStringParameter("selectedDepartmentUnitID"));
+        }
+        if (department != null) {
+            OldCmsSemanticURLHandler.selectSite(getRequest(), department.getSite());
+        }
+        return department;
+    }
+
     public String getDegreePresentationName() {
         return getDegree().getPresentationName(getExecutionYear());
     }
@@ -801,4 +812,5 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return getEndExecutionPeriodID() == null ? null : FenixFramework
                 .<ExecutionSemester> getDomainObject(getEndExecutionPeriodID());
     }
+
 }

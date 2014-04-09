@@ -9,18 +9,18 @@
 	width: 100%; float: left; background-color: #019AD7; background-image: url(<%= request.getContextPath() %>/images/site/bolonha_bck.gif); background-repeat: repeat-x;
 </bean:define>
 
-<logic:equal name="site" property="bannerAvailable" value="true">
- 	<bean:define id="banner" type="net.sourceforge.fenixedu.domain.UnitSiteBanner" name="site" property="currentBanner" toScope="request"/>
+<logic:equal name="actual$site" property="bannerAvailable" value="true">
+ 	<bean:define id="banner" type="net.sourceforge.fenixedu.domain.UnitSiteBanner" name="actual$site" property="currentBanner" toScope="request"/>
 	<bean:define id="style" type="java.lang.String" value="<%= "width: 100%; float: left; " + ((banner.getColor()!=null) ? "background-color: " + banner.getColor() + ";" : "") + (banner.hasBackgroundImage() ? " background-image: url('" + banner.getBackgroundImage().getDownloadUrl() +"'); background-repeat: " + banner.getRepeatType().getRepresentation() + ";" : "") %>" toScope="request"/>
 </logic:equal>
 
-<logic:notEqual name="site" property="showBanner" value="true">
+<logic:notEqual name="actual$site" property="showBanner" value="true"> 
 	<bean:define id="style" type="java.lang.String" value="" toScope="request"/>
 
-	<logic:notEqual name="site" property="showIntroduction" value="true">
+	<logic:notEqual name="actual$site" property="showIntroduction" value="true">
 		<bean:define id="hideBannerContainer" value="true" toScope="request"/>
 	
-		<logic:equal name="site" property="showFlags" value="true">
+		<logic:equal name="actual$site" property="showFlags" value="true">
 			 <jsp:include page="../../../i18n.jsp"/>
 		</logic:equal>
 	</logic:notEqual>
@@ -28,23 +28,23 @@
 
 <logic:notPresent name="hideBannerContainer">
 	<div class="usitebanner" style="<%= style %>">
-			<logic:equal name="site" property="showFlags" value="true">
+			<logic:equal name="actual$site" property="showFlags" value="true">
 				 <jsp:include page="../../../i18n.jsp"/>
 			</logic:equal>
-		<logic:equal name="site" property="showIntroduction" value="true">
-			<logic:present name="site" property="description">
+		<logic:equal name="actual$site" property="showIntroduction" value="true">
+			<logic:present name="actual$site" property="description">
 				<div class="usiteintrofloated">
-					<fr:view name="site" property="description" layout="html"/>
+					<fr:view name="actual$site" property="description" layout="html"/>
 				</div>
 			</logic:present>
-			<logic:notPresent name="site" property="description">
+			<logic:notPresent name="actual$site" property="description">
 				<div class="usiteintrofloated" style="background-color: #eeeeee; height: 150px;">
 		
 				</div>
 			</logic:notPresent>
 		</logic:equal>
 	
-		<logic:equal name="site" property="showBanner" value="true">
+		<logic:equal name="actual$site" property="showBanner" value="true">
 			<logic:present name="banner">
 				<bean:define id="banner" name="banner" type="net.sourceforge.fenixedu.domain.UnitSiteBanner"/>
 				<logic:empty name="banner" property="link">

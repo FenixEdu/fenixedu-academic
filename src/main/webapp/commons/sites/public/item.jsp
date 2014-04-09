@@ -83,6 +83,6 @@
        	%>
 
 	    </p>
-	    <bean:message key="label.permittedGroup" bundle="SITE_RESOURCES"/> <fr:view name="item" property="availabilityPolicy.targetGroup.name"/>
+	    <bean:message key="label.permittedGroup" bundle="SITE_RESOURCES"/> ${item.permittedGroup.presentationName}
 	</logic:equal>
 </logic:present>

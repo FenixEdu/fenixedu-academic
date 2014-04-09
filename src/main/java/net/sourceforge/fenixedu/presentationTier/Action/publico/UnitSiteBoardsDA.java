@@ -8,10 +8,12 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Site.SiteMapper;
 import net.sourceforge.fenixedu.domain.UnitSite;
+import net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler;
+import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
+import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.AnnouncementManagement;
 
@@ -43,6 +45,7 @@ public abstract class UnitSiteBoardsDA extends AnnouncementManagement {
         if (unit != null) {
             request.setAttribute("unit", unit);
             request.setAttribute("site", unit.getSite());
+            OldCmsSemanticURLHandler.selectSite(request, unit.getSite());
         }
     }
 
@@ -68,7 +71,17 @@ public abstract class UnitSiteBoardsDA extends AnnouncementManagement {
 
         if (parameter == null) {
             UnitSite site = SiteMapper.getSite(request);
-            return site.getUnit();
+            if (site != null) {
+                return site.getUnit();
+            }
+            UnitAnnouncementBoard board = getDomainObject(request, "announcementBoardId");
+            if (board != null) {
+                return board.getUnit();
+            }
+            Announcement announcement = getDomainObject(request, "announcementId");
+            if (announcement != null) {
+                return ((UnitAnnouncementBoard) announcement.getAnnouncementBoard()).getUnit();
+            }
         }
 
         try {

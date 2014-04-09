@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteFileConten
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteItem;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteSection;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.EditFilePermissions;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.ApplyStructureModifications;
 import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.FileContent.EducationalResourceType;
 import net.sourceforge.fenixedu.domain.Item;
@@ -477,20 +476,7 @@ public abstract class SiteManagementDA extends FenixDispatchAction {
 
     public ActionForward saveSectionsOrder(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        String orderString = request.getParameter("sectionsOrder");
-        Site site = getSite(request);
         Section parentSection = getSection(request);
-
-        List<ModifiedContentBean> modifiedContent = getModifiedContent(site, orderString);
-
-        try {
-            ApplyStructureModifications.run(modifiedContent);
-        } catch (DomainException de) {
-            addActionMessage(request, de.getMessage(), de.getArgs());
-        } catch (Exception e) {
-            addActionMessage(request, e.getMessage());
-        }
-
         if (parentSection == null) {
             return sections(mapping, form, request, response);
         } else {
