@@ -176,15 +176,15 @@
 			</html:link>
 		</li>
 
-		<li class="navheader">
-			<strong><bean:message key="title.final.degree.works"/></strong>
-		</li>
+<!-- 		<li class="navheader"> -->
+<%-- 			<strong><bean:message key="title.final.degree.works"/></strong> --%>
+<!-- 		</li> -->
 
-       	<li>
-        	<html:link page="/manageFinalDegreeWork.do?method=showChooseExecutionDegreeFormForDepartment">
-				<bean:message key="link.manage.final.degree.works"/>
-			</html:link>
-		</li>	
+<!--        	<li> -->
+<%--         	<html:link page="/manageFinalDegreeWork.do?method=showChooseExecutionDegreeFormForDepartment"> --%>
+<%-- 				<bean:message key="link.manage.final.degree.works"/> --%>
+<%-- 			</html:link> --%>
+<!-- 		</li>	 -->
 
 		<li class="navheader">
 			<strong><bean:message key="label.navheader.person.examCoordinator" bundle="VIGILANCY_RESOURCES"/></strong>
