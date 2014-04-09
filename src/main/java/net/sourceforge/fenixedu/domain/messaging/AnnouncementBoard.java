@@ -213,6 +213,7 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
         if (!isDeletable()) {
             throw new DomainException("cannot.delete.non.empty.announcement.board");
         }
+        setBennu(null);
         removeBookmarkedBoards();
         deleteDomainObject();
     }

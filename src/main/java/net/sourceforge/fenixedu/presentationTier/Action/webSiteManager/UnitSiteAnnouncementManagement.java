@@ -18,15 +18,34 @@ import org.apache.struts.action.ActionMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+
+@Forwards({ @Forward(name = "viewAnnouncement", path = "/messaging/announcements/viewAnnouncement.jsp"),
+        @Forward(name = "uploadFile", path = "/messaging/announcements/uploadFileToBoard.jsp"),
+        @Forward(name = "edit", path = "/messaging/announcements/editAnnouncement.jsp"),
+        @Forward(name = "listAnnouncements", path = "/messaging/announcements/listBoardAnnouncements.jsp"),
+        @Forward(name = "add", path = "/messaging/announcements/addAnnouncement.jsp"),
+        @Forward(name = "noBoards", path = "/webSiteManager/commons/noBoards.jsp"),
+        @Forward(name = "editFile", path = "/messaging/announcements/editFileInBoard.jsp"),
+        @Forward(name = "listAnnouncementBoards", path = "/webSiteManager/commons/listAnnouncementBoards.jsp") })
 public abstract class UnitSiteAnnouncementManagement extends AnnouncementManagement {
 
     private static final Logger logger = LoggerFactory.getLogger(UnitSiteAnnouncementManagement.class);
+
+    private static final ActionForward FORWARD = new ActionForward("/websiteFrame.jsp");
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         request.setAttribute("site", getSite(request));
-        return super.execute(mapping, actionForm, request, response);
+        ActionForward forward = super.execute(mapping, actionForm, request, response);
+        if (forward.getPath().endsWith(".jsp")) {
+            request.setAttribute("actual$page", forward.getPath());
+            return FORWARD;
+        } else {
+            return forward;
+        }
     }
 
     private Integer getId(String id) {
@@ -71,8 +90,7 @@ public abstract class UnitSiteAnnouncementManagement extends AnnouncementManagem
 
                 ActionForward forward = new ActionForward(mapping.findForward("viewAnnouncementsRedirect"));
                 forward.setPath(forward.getPath()
-                        + String.format("&announcementBoardId=%s&oid=", board.getExternalId(), site.getExternalId()));
-                forward.setRedirect(true);
+                        + String.format("&announcementBoardId=%s&oid=%s", board.getExternalId(), site.getExternalId()));
 
                 return forward;
             }

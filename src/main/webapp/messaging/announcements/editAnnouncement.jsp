@@ -85,7 +85,7 @@
 			<fr:message for="announcement-body-validated"/>
 		</td>
 	</tr>
-	<logic:notEmpty name="announcementBoard" property="files">
+	<logic:notEmpty name="announcementBoard" property="fileContentSet">
 		<tr>
 		<th>
 			<bean:message key="label.insertFiles" bundle="MESSAGING_RESOURCES"/>
@@ -341,7 +341,7 @@
 	</tr>
 
 
-	<logic:notEmpty name="announcementBoard" property="files">
+	<logic:notEmpty name="announcementBoard" property="fileContentSet">
 		<tr>
 		<th>
 			<bean:message key="label.define.image" bundle="MESSAGING_RESOURCES"/>:

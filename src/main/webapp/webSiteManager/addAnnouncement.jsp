@@ -6,8 +6,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-
-<em>Gestão de Canais</em>
 <h2><bean:message bundle="MESSAGING_RESOURCES" key="messaging.annoucenment.add.label"/></h2>
 
 <jsp:include flush="true" page="/messaging/context.jsp"/>
@@ -74,7 +72,7 @@
 			<span class="error0"><fr:message for="announcement-body-validated"/></span>
 		</td>
 	</tr>
-	<logic:notEmpty name="announcementBoard" property="files">
+	<logic:notEmpty name="announcementBoard" property="fileContentSet">
 		<tr>
 		<th>
 			<bean:message key="link.insertFile" bundle="SITE_RESOURCES"/>
@@ -345,7 +343,7 @@
 		</td>	
 	</tr>
 	
-	<logic:notEmpty name="announcementBoard" property="files">
+	<logic:notEmpty name="announcementBoard" property="fileContentSet">
 		<tr>
 		<th>
 			<bean:message key="label.define.image" bundle="MESSAGING_RESOURCES"/>:

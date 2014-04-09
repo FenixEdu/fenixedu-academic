@@ -6,7 +6,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/messaging" prefix="messaging"%>
 
-<%@page import="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext"%>
 <html:xhtml />
 
 
@@ -115,7 +114,6 @@
 				
 				<%-- Manage --%> 
 				
-				<bean:define id="contentContext" name="<%= FunctionalityContext.CONTEXT_KEY%>"/>
 				<bean:define id="showWritePermission" value="true"/>
 						
 				<logic:equal name="contentContext" property="selectedContainer.publicAvailable" value="false">

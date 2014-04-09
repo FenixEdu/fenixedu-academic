@@ -15,6 +15,7 @@
 
 <bean:define id="targetId" name="target" property="externalId"/>
 
+<jsp:include page="/commons/renderers/treeRendererHeader.jsp" />
 
 <h2>
     <bean:message key="title.site.manage.functions" bundle="SITE_RESOURCES"/>

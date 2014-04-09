@@ -43,8 +43,8 @@ public class UnitSite extends UnitSite_Base {
         setShowAnnouncements(true);
         setShowEvents(true);
 
-        addAssociatedSections(TOP_SECTION_NAME);
         addAssociatedSections(SIDE_SECTION_NAME);
+        addAssociatedSections(TOP_SECTION_NAME);
     }
 
     public UnitSite(Unit unit) {

@@ -15,6 +15,8 @@
 <bean:define id="contextParamValue" name="siteContextParamValue"/>
 <bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
 
+<jsp:include page="/commons/renderers/treeRendererHeader.jsp" />
+
 <h2>
     <bean:message key="title.site.manage.functions" bundle="SITE_RESOURCES"/>
 </h2>

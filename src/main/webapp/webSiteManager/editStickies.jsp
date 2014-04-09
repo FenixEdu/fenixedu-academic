@@ -9,6 +9,8 @@
 <bean:define id="contextPrefix" name="contextPrefix" type="java.lang.String"/>
 <bean:define id="extraParameters" name="extraParameters" type="java.lang.String"/>
 
+<jsp:include page="/commons/renderers/treeRendererHeader.jsp" />
+
 <em><bean:message key="label.webSiteManagement" bundle="MESSAGING_RESOURCES"/></em>
 
 <h2><bean:message key="label.sticky.ordering"

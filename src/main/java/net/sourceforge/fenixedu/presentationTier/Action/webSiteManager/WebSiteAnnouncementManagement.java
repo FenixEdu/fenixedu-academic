@@ -35,17 +35,16 @@ import pt.ist.fenixframework.FenixFramework;
  *         Created on Jun 8, 2006, 2:28:29 PM
  * 
  */
-@Mapping(module = "webSiteManager", path = "/announcementsManagement", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "viewAnnouncement", path = "websiteManager-view-announcement"),
-        @Forward(name = "uploadFile", path = "websiteManager-uploadFile"),
-        @Forward(name = "viewAnnouncementBoard", path = "websiteManager-view-announcementBoard"),
-        @Forward(name = "unitStructuredBoards", path = "unit-structured-boards"),
-        @Forward(name = "edit", path = "websiteManager-edit-announcement"),
-        @Forward(name = "listAnnouncements", path = "websiteManager-list-announcements"),
-        @Forward(name = "add", path = "websiteManager-add-announcement"),
-        @Forward(name = "editStickies", path = "websiteManager-editStickies"),
-        @Forward(name = "editFile", path = "websiteManager-editFile"),
-        @Forward(name = "listAnnouncementBoards", path = "websiteManager-list-announcement-boards") })
+@Mapping(module = "webSiteManager", path = "/announcementsManagement", functionality = ListSitesAction.class)
+@Forwards({ @Forward(name = "viewAnnouncement", path = "/messaging/announcements/viewAnnouncement.jsp"),
+        @Forward(name = "uploadFile", path = "/messaging/announcements/uploadFileToBoard.jsp"),
+        @Forward(name = "viewAnnouncementBoard", path = "/webSiteManager/sectionPage.jsp"),
+        @Forward(name = "edit", path = "/webSiteManager/editAnnouncement.jsp"),
+        @Forward(name = "listAnnouncements", path = "/webSiteManager/listBoardAnnouncements.jsp"),
+        @Forward(name = "add", path = "/webSiteManager/addAnnouncement.jsp"),
+        @Forward(name = "editStickies", path = "/webSiteManager/editStickies.jsp"),
+        @Forward(name = "editFile", path = "/messaging/announcements/editFileInBoard.jsp"),
+        @Forward(name = "listAnnouncementBoards", path = "/webSiteManager/sectionsFirstPage_bd.jsp") })
 public class WebSiteAnnouncementManagement extends AnnouncementManagement {
 
     private static final Logger logger = LoggerFactory.getLogger(WebSiteAnnouncementManagement.class);
@@ -53,6 +52,20 @@ public class WebSiteAnnouncementManagement extends AnnouncementManagement {
     private static final int UP = -1;
 
     private static final int DOWN = 1;
+
+    private static final ActionForward FORWARD = new ActionForward("/announcementsFrame.jsp");
+
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        ActionForward forward = super.execute(mapping, actionForm, request, response);
+        if (forward.getPath().endsWith(".jsp")) {
+            request.setAttribute("actual$page", forward.getPath());
+            return FORWARD;
+        } else {
+            return forward;
+        }
+    }
 
     @Override
     public ActionForward start(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

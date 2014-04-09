@@ -9,8 +9,19 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.DepartmentSite;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.UnitSite;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@Mapping(module = "webSiteManager", path = "/manageDepartmentSite", functionality = ListSitesAction.class)
 public class DepartmentSiteManagementDA extends CustomUnitSiteManagementDA {
+
+    @Override
+    protected void setContext(HttpServletRequest request) {
+        request.setAttribute("siteActionName", "/manageDepartmentSite.do");
+        request.setAttribute("siteContextParam", "oid");
+        request.setAttribute("siteContextParamValue", getSite(request).getExternalId());
+        request.setAttribute("announcementsActionName", "/manageDepartmentSiteAnnouncements.do");
+        request.setAttribute("unitId", getSite(request).getUnit().getExternalId());
+    }
 
     private Department getDepartment(final HttpServletRequest request) {
         DepartmentSite site = (DepartmentSite) getSite(request);

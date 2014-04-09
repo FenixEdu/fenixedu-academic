@@ -11,24 +11,26 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(module = "webSiteManager", path = "/manageResearchUnitAnnouncements", scope = "session", parameter = "method")
-@Forwards(value = { @Forward(name = "viewAnnouncement", path = "research-announcements-view-announcement"),
-        @Forward(name = "uploadFile", path = "research-announcements-uploadFile"),
-        @Forward(name = "edit", path = "research-announcements-edit-announcement"),
-        @Forward(name = "listAnnouncements", path = "research-announcements-list-announcements"),
-        @Forward(name = "add", path = "research-announcements-add-announcement"),
-        @Forward(name = "noBoards", path = "research-site-no-boards"),
-        @Forward(name = "editFile", path = "research-announcements-editFile"),
-        @Forward(name = "listAnnouncementBoards", path = "research-announcements-list-boards") })
+@Mapping(module = "webSiteManager", path = "/manageResearchUnitAnnouncements", functionality = ListSitesAction.class)
 public class ManageResearchUnitAnnouncementsDA extends UnitSiteAnnouncementManagement {
+
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        request.setAttribute("siteActionName", "/manageResearchUnitSite.do");
+        request.setAttribute("siteContextParam", "oid");
+        request.setAttribute("siteContextParamValue", getSite(request).getExternalId());
+        request.setAttribute("siteId", getSite(request).getExternalId());
+        request.setAttribute("announcementsActionName", "/manageResearchUnitAnnouncements.do");
+        request.setAttribute("researchUnit", true);
+        return super.execute(mapping, actionForm, request, response);
+    }
 
     public ActionForward editAnnouncementBoards(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Collection<UnitAnnouncementBoard> boards = getUnit(request).getBoards();
+        Collection<UnitAnnouncementBoard> boards = getUnit(request).getBoardsSet();
         request.setAttribute("announcementBoards", boards);
         return mapping.findForward(boards.isEmpty() ? "noBoards" : "listAnnouncementBoards");
     }

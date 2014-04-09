@@ -56,12 +56,79 @@ import org.slf4j.LoggerFactory;
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.model.MetaSlot;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
+@Mapping(path = "/manageUnitSite", module = "webSiteManager", functionality = ListSitesAction.class)
+@Forwards({ @Forward(name = "confirmDeleteFunction", path = "/webSiteManager/commons/deleteFunctionConfirm.jsp"),
+        @Forward(name = "changePersonFunctions", path = "/webSiteManager/commons/changePersonFunctions.jsp"),
+        @Forward(name = "createPersonFunction", path = "/webSiteManager/commons/createPersonFunction.jsp"),
+        @Forward(name = "editSideBanner", path = "/webSiteManager/commons/edit-side-banner.jsp"),
+        @Forward(name = "confirmSectionDelete", path = "/commons/sites/confirmSectionDelete.jsp"),
+        @Forward(name = "editFooterNavigation", path = "/webSiteManager/commons/edit-footer-navigation.jsp"),
+        @Forward(name = "editSection", path = "/commons/sites/editSection.jsp"),
+        @Forward(name = "chooseManagers", path = "/webSiteManager/commons/chooseManagers.jsp"),
+        @Forward(name = "uploadFile", path = "/commons/sites/uploadFile.jsp"),
+        @Forward(name = "editConfiguration", path = "/webSiteManager/commons/edit-configuration.jsp"),
+        @Forward(name = "organizeTopLinks", path = "/webSiteManager/commons/organize-top-links.jsp"),
+        @Forward(name = "editFunctionalitySection", path = "/webSiteManager/commons/editInstitutionalSection.jsp"),
+        @Forward(name = "organizeFooterLinks", path = "/webSiteManager/commons/organize-footer-links.jsp"),
+        @Forward(name = "editItem", path = "/commons/sites/editItem.jsp"),
+        @Forward(name = "editFile", path = "/commons/sites/editFile.jsp"),
+        @Forward(name = "functionalitySection", path = "/webSiteManager/commons/institutionalSection.jsp"),
+        @Forward(name = "addInstitutionSection", path = "/commons/sites/addInstitutionSection.jsp"),
+        @Forward(name = "organizeFunctions", path = "/webSiteManager/commons/organizeFunctions.jsp"),
+        @Forward(name = "editBanners", path = "/webSiteManager/commons/edit-banners.jsp"),
+        @Forward(name = "organizeItems", path = "/commons/sites/organizeItems.jsp"),
+        @Forward(name = "manageExistingFunctions", path = "/webSiteManager/commons/manageExistingFunctions.jsp"),
+        @Forward(name = "organizeFiles", path = "/commons/sites/organizeFiles.jsp"),
+        @Forward(name = "edit-fileItem-name", path = "/commons/sites/editFileItemDisplayName.jsp"),
+        @Forward(name = "addFunction", path = "/webSiteManager/commons/addFunction.jsp"),
+        @Forward(name = "editSectionPermissions", path = "/commons/sites/editSectionPermissions.jsp"),
+        @Forward(name = "analytics", path = "/webSiteManager/commons/analytics.jsp"),
+        @Forward(name = "editFunction", path = "/webSiteManager/commons/editFunction.jsp"),
+        @Forward(name = "chooseIntroductionSections", path = "/webSiteManager/commons/chooseIntroductionSections.jsp"),
+        @Forward(name = "section", path = "/commons/sites/section.jsp"),
+        @Forward(name = "createSection", path = "/commons/sites/createSection.jsp"),
+        @Forward(name = "editItemPermissions", path = "/commons/sites/editItemPermissions.jsp"),
+        @Forward(name = "editIntroduction", path = "/webSiteManager/commons/edit-introduction.jsp"),
+        @Forward(name = "editLogo", path = "/webSiteManager/commons/edit-logo.jsp"),
+        @Forward(name = "editTopNavigation", path = "/webSiteManager/commons/edit-top-navigation.jsp"),
+        @Forward(name = "sectionsManagement", path = "/webSiteManager/commons/sectionsManagement.jsp"),
+        @Forward(name = "start", path = "/webSiteManager/commons/start.jsp"),
+        @Forward(name = "createItem", path = "/commons/sites/createItem.jsp"),
+        @Forward(name = "manageFunctions", path = "/webSiteManager/commons/manageFunctions.jsp"),
+        @Forward(name = "editPersonFunction", path = "/webSiteManager/commons/editPersonFunction.jsp") })
 public class CustomUnitSiteManagementDA extends SiteManagementDA {
 
     private static final Logger logger = LoggerFactory.getLogger(CustomUnitSiteManagementDA.class);
+
+    private static final ActionForward FORWARD = new ActionForward("/websiteFrame.jsp");
+
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        setContext(request);
+        ActionForward forward = super.execute(mapping, actionForm, request, response);
+        if (forward.getPath().endsWith(".jsp")) {
+            request.setAttribute("actual$page", forward.getPath());
+            return FORWARD;
+        } else {
+            return forward;
+        }
+    }
+
+    protected void setContext(HttpServletRequest request) {
+        request.setAttribute("siteActionName", "/manageUnitSite.do");
+        request.setAttribute("siteContextParam", "oid");
+        request.setAttribute("siteContextParamValue", getSite(request).getExternalId());
+
+        request.setAttribute("unitId", getSite(request).getUnit().getExternalId());
+        request.setAttribute("announcementsActionName", "/manageUnitAnnouncements.do");
+    }
 
     private Integer getId(String id) {
         if (id == null || id.equals("")) {

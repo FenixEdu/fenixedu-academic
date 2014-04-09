@@ -4,8 +4,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
-<%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app"%>
-
 
 <html:xhtml/>
 
@@ -16,6 +14,7 @@
 <bean:define id="contextParamValue" name="siteContextParamValue"/>
 <bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
 
+<jsp:include page="/commons/renderers/treeRendererHeader.jsp" />
 <jsp:include page="/commons/sites/siteQuota.jsp"/>
 
 <h2>
@@ -46,26 +45,17 @@
 		</html:link>
 	</span>
 	
-	<span class="pleft1">
-		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-		<html:link page="<%= actionName + "?method=chooseIntroductionSections&amp;" + context %>">
-			<bean:message key="link.introductionSections.choose" bundle="WEBSITEMANAGER_RESOURCES"/>
-		</html:link>
-	</span>
-	
 	<logic:equal name="site" property="templateAvailable" value="true">
-		<logic:equal name="site" property="template.contentPoolAvailable" value="true">
 			<span class="pleft1">
 				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
 				<html:link page="<%= actionName + "?method=prepareAddFromPool&amp;" + context %>">
 							<bean:message key="link.institutionSection.add" bundle="WEBSITEMANAGER_RESOURCES"/>
 				</html:link>
 			</span>
-		</logic:equal>
 	</logic:equal>
 </p>
 
-<logic:empty name="site" property="directChildrenAsContent">
+<logic:empty name="site" property="associatedSectionSet">
     <p>
         <span class="warning0">
             <bean:message key="message.sections.empty" bundle="SITE_RESOURCES"/>
@@ -84,7 +74,7 @@
 	   		</ul>
     </div>
     <script type="text/javascript"> hideElement('help_box'); </script>
-<logic:notEmpty name="site" property="directChildrenAsContent">
+<logic:notEmpty name="site" property="associatedSectionSet">
     <fr:form action="<%= actionName + "?method=saveSectionsOrder&amp;" + context %>">
         <input alt="input.sectionsOrder" id="sections-order" type="hidden" name="sectionsOrder" value=""/>
     </fr:form>
@@ -92,24 +82,31 @@
     <% String treeId = "sectionsTree." + contextParam + "." + contextParamValue; %>
     
     <div class="section1">
-        <fr:view name="site" property="directChildrenAsContent">
+        <fr:view name="site" property="orderedAssociatedSections">
             <fr:layout name="tree">
                 <fr:property name="treeId" value="<%= treeId %>"/>
                 <fr:property name="fieldId" value="sections-order"/>
                 
-                <fr:property name="eachLayout" value="values"/>
+	             <fr:property name="eachLayout" value="values"/>
+                <fr:property name="childrenFor(Section)" value="everythingForTree"/>
                 <fr:property name="schemaFor(Section)" value="site.section.name"/>
-                <fr:property name="childrenFor(Section)" value="directChildrenAsContent"/>
+
+				<fr:property name="schemaFor(TemplatedSectionInstance)" value="site.template.name"/>
+				<fr:property name="imageFor(TemplatedSectionInstance)" value="/images/icon-institutional.gif"/>
+
 				<fr:property name="schemaFor(Item)" value="site.item.name"/>
-                <fr:property name="childrenFor(Item)" value="directChildrenAsContent"/>
-				<fr:property name="schemaFor(Attachment)" value="content.in.tree"/>
+                <fr:property name="childrenFor(Item)" value="fileContentSet"/>
+
+				<fr:property name="schemaFor(FileContent)" value="item.file.filename"/>
+				<fr:property name="imageFor(FileContent)" value="/images/icon-attachment.gif"/>
+				
 				<fr:property name="schemaFor(Forum)" value="content.in.tree"/>
-				<fr:property name="schemaFor(Functionality)" value="site.functionality.name"/>
+				
       		    <fr:property name="movedClass" value="highlight3"/>
             </fr:layout>
             <fr:destination name="section.view" path="<%= actionName + "?method=section&amp;sectionID=${externalId}&amp;" + context %>"/>
             <fr:destination name="item.view" path="<%= actionName + "?method=section&sectionID=${section.externalId}&" + context  + "#item-${externalId}"%>"/>
-            <fr:destination name="functionality.view" path="<%= actionName + "?method=functionality&siteID=" + siteId + "&functionalityID=${externalId}&" + context  + "#content-${externalId}"%>"/>
+			<fr:destination name="functionality.view" path="<%= actionName + "?method=sections&siteID=" + siteId + "&functionalityID=${externalId}&" + context  + "#content-${externalId}"%>"/>
         </fr:view>
 	
 		<p class="mtop15">
@@ -132,7 +129,6 @@
 <!-- Functionalities -->
 
 <logic:equal name="site" property="templateAvailable" value="true">
-<logic:equal name="site" property="template.contentPoolAvailable" value="true">
 <h3 class="mtop15 separator2"><bean:message key="title.section.institutionalContents" bundle="SITE_RESOURCES"/></h3>
 
 	<ul class="mbottom2 list5" style="list-style: none;">
@@ -144,13 +140,13 @@
 		</li>
 	</ul>
 
-<logic:empty name="site" property="associatedFunctionalities">
+<logic:empty name="site" property="templatedSectionInstances">
 	<p><em><bean:message key="label.site.noInstitutionalContents" bundle="SITE_RESOURCES"/>.</em></p>
 </logic:empty>
 
-<logic:notEmpty name="site" property="associatedFunctionalities">
+<logic:notEmpty name="site" property="templatedSectionInstances">
 	<bean:define id="containerID" name="site" property="externalId"/>
-	<logic:iterate id="functionality" name="site" property="associatedFunctionalities">
+	<logic:iterate id="functionality" name="site" property="templatedSectionInstances">
 			<bean:define id="contentID" name="functionality" property="externalId"/>
 
 			<div id="content-<%= contentID%>" class="mtop15 mbottom0" style="background: #f5f5f5; padding: 0.5em;">
@@ -171,15 +167,13 @@
 
 				<p>
 				<span>
-    					<html:link action="<%=  actionName + "?method=removeFunctionalityFromContainer&amp;" + context + "&amp;contentID=" + contentID + "&amp;containerID=" + containerID %>">
+    					<html:link action="<%=  actionName + "?method=deleteSection&amp;confirm=true&amp;" + context + "&amp;sectionID=" + contentID + "&amp;containerID=" + containerID %>">
 								<bean:message key="link.delete" bundle="SITE_RESOURCES"/>
 			 			</html:link>
 				</span>
 				| 
-			
-				<app:defineContentPath id="url" name="functionality"/>
-					<bean:define id="url" name="url" type="java.lang.String"/>
-					<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a  target="_blank" href="<%= request.getContextPath() + url %>">
+
+					<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a  target="_blank" href="${functionality.fullPath}">
 					<bean:message key="link.view" bundle="SITE_RESOURCES"/> »
 					</a>
 				</p>
@@ -187,6 +181,5 @@
 			
 	</logic:iterate>
 </logic:notEmpty>
-</logic:equal>
 </logic:equal>
 

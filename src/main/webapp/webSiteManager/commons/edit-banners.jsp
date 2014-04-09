@@ -10,6 +10,7 @@
 <bean:define id="contextParamValue" name="siteContextParamValue"/>
 <bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
 
+<jsp:include page="/webSiteManager/commons/colorPickerHeader.jsp" />
 
 <h2><bean:message key="title.site.banners" bundle="WEBSITEMANAGER_RESOURCES"/></h2>
 

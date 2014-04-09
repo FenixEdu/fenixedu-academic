@@ -8,7 +8,6 @@
 
 <%@page import="net.sourceforge.fenixedu.domain.messaging.Announcement"%>
 
-<em>Gest�o de Canais</em>
 <h2><bean:message bundle="MESSAGING_RESOURCES" key="messaging.annoucenment.edit.label"/></h2>
 
 <bean:define id="contextPrefix" name="contextPrefix" />
@@ -296,7 +295,7 @@
 	</tr>
 
 
-	<logic:notEmpty name="announcementBoard" property="files">
+	<logic:notEmpty name="announcementBoard" property="fileContentSet">
 		<tr>
 		<th>
 			<bean:message key="label.define.image" bundle="MESSAGING_RESOURCES"/>:

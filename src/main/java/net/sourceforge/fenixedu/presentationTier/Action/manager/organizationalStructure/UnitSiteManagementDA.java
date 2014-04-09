@@ -46,6 +46,10 @@ public class UnitSiteManagementDA extends CustomUnitSiteManagementDA {
     }
 
     @Override
+    protected void setContext(HttpServletRequest request) {
+    }
+
+    @Override
     @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {

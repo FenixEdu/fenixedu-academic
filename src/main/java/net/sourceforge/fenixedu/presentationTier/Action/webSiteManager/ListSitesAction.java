@@ -14,13 +14,16 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.StrutsApplication;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(module = "webSiteManager", path = "/index", scope = "session")
-@Forwards(value = { @Forward(name = "list", path = "website-index") })
+@StrutsApplication(bundle = "PortalResources", path = "website-manager", titleKey = "portal.webSiteManager.name",
+        hint = "Website Manager", accessGroup = "role(WEBSITE_MANAGER)")
+@Mapping(module = "webSiteManager", path = "/index")
+@Forwards(@Forward(name = "list", path = "/webSiteManager/firstPage.jsp"))
 public class ListSitesAction extends FenixAction {
 
     @Override
@@ -29,15 +32,12 @@ public class ListSitesAction extends FenixAction {
         Person person = getLoggedPerson(request);
 
         SortedSet<UnitSite> sites = new TreeSet<UnitSite>(new Comparator<UnitSite>() {
-
             @Override
             public int compare(UnitSite o1, UnitSite o2) {
                 return o1.getUnit().getName().compareTo(o2.getUnit().getName());
             }
-
         });
-
-        sites.addAll(person.getUnitSites());
+        sites.addAll(person.getUnitSitesSet());
         request.setAttribute("sites", sites);
 
         return mapping.findForward("list");

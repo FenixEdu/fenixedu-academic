@@ -63,4 +63,9 @@ public class DepartmentSite extends DepartmentSite_Base {
         return new MultiLanguageString().with(Language.pt, getUnit().getAcronym());
     }
 
+    @Override
+    public String getReversePath() {
+        return super.getReversePath() + "/" + getUnit().getAcronym().toLowerCase();
+    }
+
 }

@@ -7,13 +7,10 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<%@page import="net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext"%>
-<%@page import="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext"%>
 <bean:define id="language" name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language"/>
 
 <%
-	FunctionalityContext context = (FunctionalityContext) AbstractFunctionalityContext.getCurrentContext(request);
-	UnitSite site = (UnitSite) context.getSelectedContainer();
+	UnitSite site = (UnitSite) net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler.getSite(request);
 	Unit unit = site.getUnit();
 		
     request.setAttribute("unit", unit);
