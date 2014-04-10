@@ -6,21 +6,20 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.messaging.annou
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.UnitBoardPermittedGroupType;
-import net.sourceforge.fenixedu.domain.accessControl.AllDegreesStudentsGroup;
-import net.sourceforge.fenixedu.domain.accessControl.AllMasterDegreesStudents;
-import net.sourceforge.fenixedu.domain.accessControl.DegreeCoordinatorsGroup;
-import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseResponsiblesGroup;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
-import net.sourceforge.fenixedu.domain.accessControl.InstitutionSiteManagers;
-import net.sourceforge.fenixedu.domain.accessControl.MasterDegreeCoordinatorsGroup;
-import net.sourceforge.fenixedu.domain.accessControl.RoleTypeGroup;
-import net.sourceforge.fenixedu.domain.accessControl.TeachersAndInstitutionSiteManagersGroup;
-import net.sourceforge.fenixedu.domain.accessControl.UnitEmployeesGroup;
-import net.sourceforge.fenixedu.domain.accessControl.WebSiteManagersGroup;
+import net.sourceforge.fenixedu.domain.accessControl.CoordinatorGroup;
+import net.sourceforge.fenixedu.domain.accessControl.ManagersOfUnitSiteGroup;
+import net.sourceforge.fenixedu.domain.accessControl.ResponsibleForExecutionCourseGroup;
+import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
+import net.sourceforge.fenixedu.domain.accessControl.StudentGroup;
+import net.sourceforge.fenixedu.domain.accessControl.UnitGroup;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.Group;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -80,7 +79,8 @@ public class CreateUnitAnnouncementBoard {
 
     protected static Group buildGroup(UnitBoardPermittedGroupType type, Unit unit) {
         Group group = null;
-        Group managers = new RoleTypeGroup(RoleType.MANAGER);
+        RoleType roleType = RoleType.MANAGER;
+        Group managers = RoleGroup.get(roleType);
         switch (type) {
         case UB_PUBLIC:
             break;
@@ -88,42 +88,46 @@ public class CreateUnitAnnouncementBoard {
             group = managers;
             break;
         case UB_UNIT_PERSONS:
-            group = new UnitEmployeesGroup(unit);
+            group = UnitGroup.recursiveWorkers(unit);
             break;
         case UB_DEGREE_COORDINATOR:
-            group = new DegreeCoordinatorsGroup();
+            group = CoordinatorGroup.get(DegreeType.DEGREE);
             break;
         case UB_EMPLOYEE:
-            group = new RoleTypeGroup(RoleType.EMPLOYEE);
+            group = RoleGroup.get(RoleType.EMPLOYEE);
             break;
         case UB_TEACHER:
-            group = new RoleTypeGroup(RoleType.TEACHER);
+            group = RoleGroup.get(RoleType.TEACHER);
             break;
         case UB_WEBSITE_MANAGER:
-            group = new InstitutionSiteManagers();
+            group = ManagersOfUnitSiteGroup.get(Bennu.getInstance().getInstitutionUnit().getSite());
             break;
         case UB_DEGREE_STUDENT:
-            group = new AllDegreesStudentsGroup();
+            group =
+                    StudentGroup.get(DegreeType.DEGREE).or(StudentGroup.get(DegreeType.BOLONHA_DEGREE))
+                            .or(StudentGroup.get(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
             break;
         case UB_EXECUTION_COURSE_RESPONSIBLE:
-            group = new ExecutionCourseResponsiblesGroup();
+            group = ResponsibleForExecutionCourseGroup.get();
             break;
         case UB_MASTER_DEGREE_COORDINATOR:
-            group = new MasterDegreeCoordinatorsGroup();
+            group = CoordinatorGroup.get(DegreeType.MASTER_DEGREE);
             break;
         case UB_MASTER_DEGREE_STUDENT:
-            group = new AllMasterDegreesStudents();
+            group = StudentGroup.get(DegreeType.MASTER_DEGREE).or(StudentGroup.get(DegreeType.BOLONHA_MASTER_DEGREE));
             break;
         case UB_UNITSITE_MANAGERS:
-            group = new WebSiteManagersGroup(unit.getSite());
+            group = ManagersOfUnitSiteGroup.get(unit.getSite());
             break;
         case UB_TEACHER_AND_WEBSITE_MANAGER:
-            group = new TeachersAndInstitutionSiteManagersGroup();
+            group =
+                    RoleGroup.get(RoleType.TEACHER).or(
+                            ManagersOfUnitSiteGroup.get(Bennu.getInstance().getInstitutionUnit().getSite()));
             break;
         }
 
         if (group != null) {
-            group = new GroupUnion(managers, group);
+            group = managers.or(group);
         }
         return group;
     }

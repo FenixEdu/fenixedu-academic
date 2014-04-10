@@ -3,14 +3,16 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContest;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContestGroup;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriod;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound.OutboundMobilityContextBean;
+
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
@@ -31,13 +33,15 @@ public class OutboundMobilityCandidacyGroupProvider implements DataProvider {
 
     public SortedSet<OutboundMobilityCandidacyContestGroup> getCandidacyContestGroupSet(
             final OutboundMobilityCandidacyPeriod period) {
-        final Person person = AccessControl.getPerson();
-        if (new AcademicAuthorizationGroup(AcademicOperationType.MANAGE_MOBILITY_OUTBOUND).isMember(person)) {
+        final User user = Authenticate.getUser();
+        if (AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_MOBILITY_OUTBOUND).isMember(
+                user)) {
             return period.getOutboundMobilityCandidacyContestGroupSet();
         }
         final SortedSet<OutboundMobilityCandidacyContestGroup> result = new TreeSet<OutboundMobilityCandidacyContestGroup>();
-        if (person != null) {
-            for (final OutboundMobilityCandidacyContestGroup group : person.getOutboundMobilityCandidacyContestGroupSet()) {
+        if (user != null && user.getPerson() != null) {
+            for (final OutboundMobilityCandidacyContestGroup group : user.getPerson()
+                    .getOutboundMobilityCandidacyContestGroupSet()) {
                 if (hasContestForPeriod(period, group)) {
                     result.add(group);
                 }

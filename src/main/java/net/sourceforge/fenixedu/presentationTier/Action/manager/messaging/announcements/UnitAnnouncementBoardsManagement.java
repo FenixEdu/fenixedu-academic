@@ -158,7 +158,7 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
 
         UnitAnnouncementBoard board = (UnitAnnouncementBoard) this.getRequestedAnnouncementBoard(request);
 
-        if (board.getManagers() != null && !board.getManagers().allows(getUserView(request))) {
+        if (board.getManagers() != null && !board.getManagers().isMember(getUserView(request))) {
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.not.allowed.to.edit.board"));
             saveErrors(request, actionMessages);
@@ -195,7 +195,7 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
 
         UnitAnnouncementBoard board = (UnitAnnouncementBoard) this.getRequestedAnnouncementBoard(request);
 
-        if (board.getWriters() != null && !board.getWriters().allows(getUserView(request))) {
+        if (board.getWriters() != null && !board.getWriters().isMember(getUserView(request))) {
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.not.allowed.to.edit.board."));
             saveErrors(request, actionMessages);
@@ -211,7 +211,7 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
         Collection<AnnouncementBoardApproversBean> approvers = new ArrayList<AnnouncementBoardApproversBean>();
         for (Person person : board.getUnit().getSite().getManagers()) {
             approvers.add(new AnnouncementBoardApproversBean(person, board.getApprovers() != null ? board.getApprovers()
-                    .isMember(person) : false));
+                    .isMember(person.getUser()) : false));
         }
 
         request.setAttribute("approvers", approvers);
@@ -226,7 +226,7 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
 
         AnnouncementBoard board = this.getRequestedAnnouncementBoard(request);
 
-        if (board.getWriters() != null && !board.getWriters().allows(getUserView(request))) {
+        if (board.getWriters() != null && !board.getWriters().isMember(getUserView(request))) {
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.not.allowed.to.edit.board"));
             saveErrors(request, actionMessages);
@@ -259,7 +259,7 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
         UnitAnnouncementBoardParameters params = new UnitAnnouncementBoardParameters();
         AnnouncementBoard board = this.getRequestedAnnouncementBoard(request);
 
-        if (board.getManagers() != null && !board.getManagers().allows(getUserView(request))) {
+        if (board.getManagers() != null && !board.getManagers().isMember(getUserView(request))) {
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.not.allowed.to.edit.board"));
             saveErrors(request, actionMessages);
@@ -349,8 +349,8 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
         if (unit != null) {
             for (AnnouncementBoard board : unit.getBoards()) {
                 if (board.getWriters() == null || board.getReaders() == null || board.getManagers() == null
-                        || board.getWriters().allows(getUserView(request)) || board.getReaders().allows(getUserView(request))
-                        || board.getManagers().allows(getUserView(request))) {
+                        || board.getWriters().isMember(getUserView(request)) || board.getReaders().isMember(getUserView(request))
+                        || board.getManagers().isMember(getUserView(request))) {
                     boards.add(board);
                 }
             }

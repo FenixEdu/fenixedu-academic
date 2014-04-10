@@ -10,8 +10,10 @@ import net.sourceforge.fenixedu.domain.ExecutionCourseBoardPermittedGroupType;
 import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.fenixedu.bennu.core.groups.Group;
+
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncementBoard_Base {
@@ -155,6 +157,7 @@ public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncemen
                         .getExecutionCourse().getNome(), this.getExecutionCourse().getDegreePresentationString());
     }
 
+    @Override
     public void logAddFile(FileContent attachment) {
         ContentManagementLog.createLog(getExecutionCourse(), "resources.MessagingResources",
                 "log.executionCourse.content.file.added", attachment.getDisplayName(), getExecutionCourse().getNome(),

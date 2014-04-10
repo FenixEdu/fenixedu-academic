@@ -7,7 +7,7 @@ public class PhysicalAddressValidationFile extends PhysicalAddressValidationFile
 
     public PhysicalAddressValidationFile(PhysicalAddressValidation validation, String filename, String displayName, byte[] content) {
         super();
-        super.init(filename, displayName, content, new RoleGroup(RoleType.OPERATOR));
+        super.init(filename, displayName, content, RoleGroup.get(RoleType.OPERATOR));
         setPyhsicalAddressValidation(validation);
     }
 

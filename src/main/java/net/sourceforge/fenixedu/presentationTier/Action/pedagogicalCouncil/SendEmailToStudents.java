@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.elections.
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.accessControl.groups.StudentsByDegreeAndCurricularYear;
+import net.sourceforge.fenixedu.domain.accessControl.StudentGroup;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PedagogicalCouncilUnit;
 import net.sourceforge.fenixedu.domain.util.email.EmailBean;
@@ -90,8 +90,7 @@ public class SendEmailToStudents extends FenixDispatchAction {
         CurricularYear curricularYear = CurricularYear.readByYear(Integer.valueOf(request.getParameter("curricularYear")));
         Degree degree = FenixFramework.getDomainObject(request.getParameter("degreeId"));
 
-        StudentsByDegreeAndCurricularYear studentsByDegreeAndCurricularYear =
-                new StudentsByDegreeAndCurricularYear(degree, curricularYear, executionYear);
+        StudentGroup studentsByDegreeAndCurricularYear = StudentGroup.get(degree, curricularYear, executionYear);
 
         String message =
                 MessageResources.getMessageResources("resources.PedagogicalCouncilResources").getMessage(

@@ -10,7 +10,6 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.messaging.ConversationMessage;
 import net.sourceforge.fenixedu.domain.messaging.ConversationThread;
 import net.sourceforge.fenixedu.domain.messaging.ForumSubscription;
@@ -21,6 +20,8 @@ import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.UserGroup;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/>
@@ -40,7 +41,7 @@ public abstract class ForumService {
     }
 
     private void notifyEmailSubscribers(ConversationMessage conversationMessage) {
-        final Set<Person> readers = conversationMessage.getConversationThread().getForum().getReadersGroup().getElements();
+        final Set<User> readers = conversationMessage.getConversationThread().getForum().getReadersGroup().getMembers();
         final Set<Person> teachers = new HashSet<Person>();
         final Set<Person> students = new HashSet<Person>();
         final Set<ForumSubscription> subscriptionsToRemove = new HashSet<ForumSubscription>();
@@ -48,7 +49,7 @@ public abstract class ForumService {
         for (final ForumSubscription subscription : conversationMessage.getConversationThread().getForum()
                 .getForumSubscriptionsSet()) {
             Person subscriber = subscription.getPerson();
-            if (!readers.contains(subscriber)) {
+            if (!readers.contains(subscriber.getUser())) {
                 subscriptionsToRemove.add(subscription);
             }
 
@@ -98,7 +99,8 @@ public abstract class ForumService {
 
     private void sendEmailToPersons(Set<Person> persons, String personsName, String subject, String body) {
         if (!persons.isEmpty()) {
-            final Recipient recipient = new Recipient(GLOBAL_RESOURCES.getString("label.teachers"), new FixedSetGroup(persons));
+            final Recipient recipient =
+                    new Recipient(GLOBAL_RESOURCES.getString("label.teachers"), UserGroup.of(Person.convertToUsers(persons)));
             SystemSender systemSender = Bennu.getInstance().getSystemSender();
             new Message(systemSender, systemSender.getConcreteReplyTos(), recipient.asCollection(), subject, body, "");
         }

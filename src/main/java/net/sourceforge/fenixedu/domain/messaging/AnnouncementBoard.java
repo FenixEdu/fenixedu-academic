@@ -11,13 +11,15 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -81,11 +83,11 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
 
     public static class AcessLevelPredicate implements Predicate {
         AnnouncementBoardAccessLevel level;
-        Person person;
+        User user;
 
-        public AcessLevelPredicate(AnnouncementBoardAccessLevel level, Person person) {
+        public AcessLevelPredicate(AnnouncementBoardAccessLevel level, User user) {
             this.level = level;
-            this.person = person;
+            this.user = user;
         }
 
         @Override
@@ -95,23 +97,23 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
             switch (level) {
             case ABAL_ALL:
                 if (board.getManagers() == null || board.getWriters() == null || board.getReaders() == null
-                        || board.getManagers().isMember(person) || board.getWriters().isMember(person)
-                        || board.getReaders().isMember(person)) {
+                        || board.getManagers().isMember(user) || board.getWriters().isMember(user)
+                        || board.getReaders().isMember(user)) {
                     result = true;
                 }
                 break;
             case ABAL_MANAGE:
-                if (board.getManagers() == null || board.getManagers().isMember(person)) {
+                if (board.getManagers() == null || board.getManagers().isMember(user)) {
                     result = true;
                 }
                 break;
             case ABAL_READ:
-                if (board.getReaders() == null || board.getReaders().isMember(person)) {
+                if (board.getReaders() == null || board.getReaders().isMember(user)) {
                     result = true;
                 }
                 break;
             case ABAL_WRITE:
-                if (board.getWriters() == null || board.getWriters().isMember(person)) {
+                if (board.getWriters() == null || board.getWriters().isMember(user)) {
                     result = true;
                 }
                 break;
@@ -168,13 +170,13 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
     }
 
     public List<Announcement> getApprovedAnnouncements() {
-        final Person person = AccessControl.getPerson();
+        final User user = Authenticate.getUser();
         final List<Announcement> activeAnnouncements = new ArrayList<Announcement>();
         for (Announcement announcement : getAnnouncementSet()) {
             if (announcement.isActive()
                     && announcement.getVisible()
-                    && (announcement.getApproved() || (person != null && (person.equals(announcement.getCreator()) || announcement
-                            .getAnnouncementBoard().getApprovers().isMember(person))))) {
+                    && (announcement.getApproved() || (user != null && (announcement.getCreator().equals(user.getPerson()) || announcement
+                            .getAnnouncementBoard().getApprovers().isMember(user))))) {
                 activeAnnouncements.add(announcement);
             }
         }
@@ -224,6 +226,38 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
         }
     }
 
+    public Group getManagers() {
+        return getManagersGroup() != null ? getManagersGroup().toGroup() : null;
+    }
+
+    public void setManagers(Group managers) {
+        setManagersGroup(managers.toPersistentGroup());
+    }
+
+    public Group getReaders() {
+        return getReadersGroup() != null ? getReadersGroup().toGroup() : null;
+    }
+
+    public void setReaders(Group readers) {
+        setReadersGroup(readers.toPersistentGroup());
+    }
+
+    public Group getWriters() {
+        return getWritersGroup().toGroup();
+    }
+
+    public void setWriters(Group writers) {
+        setWritersGroup(writers.toPersistentGroup());
+    }
+
+    public Group getApprovers() {
+        return getApproversGroup() != null ? getApproversGroup().toGroup() : null;
+    }
+
+    public void setApprovers(Group approvers) {
+        setApproversGroup(approvers.toPersistentGroup());
+    }
+
     public boolean isPublicToRead() {
         return getReaders() == null;
     }
@@ -241,7 +275,7 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
     }
 
     public boolean hasReader(Person person) {
-        return (isPublicToRead() || getReaders().isMember(person));
+        return (isPublicToRead() || getReaders().isMember(person.getUser()));
     }
 
     public boolean isCurrentUserReader() {
@@ -249,7 +283,7 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
     }
 
     public boolean hasWriter(Person person) {
-        return (isPublicToWrite() || getWriters().isMember(person));
+        return (isPublicToWrite() || getWriters().isMember(person.getUser()));
     }
 
     public boolean isCurrentUserWriter() {
@@ -261,11 +295,11 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
     }
 
     public boolean hasApprover(Person person) {
-        return (isPublicToApprove() || getApprovers().isMember(person));
+        return (isPublicToApprove() || getApprovers().isMember(person.getUser()));
     }
 
     public boolean hasManager(Person person) {
-        return (isPublicToManage() || getManagers().isMember(person));
+        return (isPublicToManage() || getManagers().isMember(person.getUser()));
     }
 
     public boolean isCurrentUserManager() {
@@ -285,7 +319,7 @@ public abstract class AnnouncementBoard extends AnnouncementBoard_Base {
     abstract public String getQualifiedName();
 
     protected boolean isGroupMember(final Group group) {
-        return group == null || group.isMember(AccessControl.getPerson());
+        return group == null || group.isMember(Authenticate.getUser());
     }
 
     public boolean isReader() {

@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.cms.CmsContent;
+
+import org.fenixedu.bennu.core.groups.Group;
+
 import pt.ist.fenixframework.FenixFramework;
 
 public class FileContent extends FileContent_Base {

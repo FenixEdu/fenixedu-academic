@@ -1,16 +1,14 @@
 package net.sourceforge.fenixedu.presentationTier.Action.research.researchUnit;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import net.sourceforge.fenixedu.domain.UnitFile;
 import net.sourceforge.fenixedu.domain.UnitFileTag;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
+
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.NobodyGroup;
 
 public class UnitFileBean implements Serializable {
 
@@ -20,13 +18,13 @@ public class UnitFileBean implements Serializable {
 
     private String description;
 
-    private List<IGroup> groups;
+    private Group group;
 
     private String tags;
 
     protected UnitFileBean() {
         this.file = null;
-        groups = new ArrayList<IGroup>();
+        group = NobodyGroup.get();
     }
 
     public UnitFileBean(UnitFile file) {
@@ -50,37 +48,11 @@ public class UnitFileBean implements Serializable {
     }
 
     private void setupGroups(Group permittedGroup) {
-        if (permittedGroup instanceof GroupUnion) {
-            groups = flatten((GroupUnion) permittedGroup);
-        } else {
-            groups = new ArrayList<IGroup>();
-            groups.add(permittedGroup);
-        }
-
-    }
-
-    private List<IGroup> flatten(GroupUnion group) {
-        List<IGroup> groups = new ArrayList<IGroup>();
-        for (IGroup children : group.getChildren()) {
-            if (children instanceof GroupUnion) {
-                groups.addAll(flatten((GroupUnion) children));
-            } else {
-                groups.add(children);
-            }
-        }
-        return groups;
+        group = group.or(permittedGroup);
     }
 
     public UnitFile getFile() {
         return file;
-    }
-
-    public List<IGroup> getGroups() {
-        return groups;
-    }
-
-    public void setGroups(List<IGroup> groups) {
-        this.groups = groups;
     }
 
     public String getDescription() {
@@ -100,7 +72,7 @@ public class UnitFileBean implements Serializable {
     }
 
     public Group getGroup() {
-        return new GroupUnion(getGroups());
+        return group;
     }
 
     public Unit getUnit() {

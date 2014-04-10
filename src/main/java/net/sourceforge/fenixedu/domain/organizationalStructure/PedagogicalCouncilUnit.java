@@ -8,13 +8,13 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.PedagogicalCouncilSite;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.accessControl.ManagersOfUnitSiteGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DelegatesGroup;
-import net.sourceforge.fenixedu.domain.accessControl.PedagogicalCouncilMembersGroup;
-import net.sourceforge.fenixedu.domain.accessControl.WebSiteManagersGroup;
+import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
 
+import org.fenixedu.bennu.core.groups.Group;
 import org.joda.time.YearMonthDay;
 
 public class PedagogicalCouncilUnit extends PedagogicalCouncilUnit_Base {
@@ -30,18 +30,18 @@ public class PedagogicalCouncilUnit extends PedagogicalCouncilUnit_Base {
     }
 
     @Override
-    protected List<IGroup> getDefaultGroups() {
-        List<IGroup> groups = super.getDefaultGroups();
+    protected List<Group> getDefaultGroups() {
+        List<Group> groups = super.getDefaultGroups();
 
-        groups.add(new PedagogicalCouncilMembersGroup());
-        groups.add(new WebSiteManagersGroup(getSite()));
+        groups.add(RoleGroup.get(RoleType.PEDAGOGICAL_COUNCIL));
+        groups.add(ManagersOfUnitSiteGroup.get(getSite()));
 
         /* For sending mail to all degrees delegates */
-        groups.add(new DelegatesGroup(FunctionType.DELEGATE_OF_GGAE));
-        groups.add(new DelegatesGroup(FunctionType.DELEGATE_OF_YEAR));
-        groups.add(new DelegatesGroup(FunctionType.DELEGATE_OF_DEGREE));
-        groups.add(new DelegatesGroup(FunctionType.DELEGATE_OF_MASTER_DEGREE));
-        groups.add(new DelegatesGroup(FunctionType.DELEGATE_OF_INTEGRATED_MASTER_DEGREE));
+        groups.add(DelegatesGroup.get(FunctionType.DELEGATE_OF_GGAE));
+        groups.add(DelegatesGroup.get(FunctionType.DELEGATE_OF_YEAR));
+        groups.add(DelegatesGroup.get(FunctionType.DELEGATE_OF_DEGREE));
+        groups.add(DelegatesGroup.get(FunctionType.DELEGATE_OF_MASTER_DEGREE));
+        groups.add(DelegatesGroup.get(FunctionType.DELEGATE_OF_INTEGRATED_MASTER_DEGREE));
 
         /*
          * For sending mail to selected degrees delegates IS THIS REALLY

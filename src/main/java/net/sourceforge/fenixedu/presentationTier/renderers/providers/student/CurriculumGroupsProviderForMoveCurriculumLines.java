@@ -5,7 +5,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -50,8 +50,7 @@ public class CurriculumGroupsProviderForMoveCurriculumLines implements DataProvi
         }
 
         final Set<AcademicProgram> programs =
-                AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-                        AcademicOperationType.STUDENT_ENROLMENTS);
+                AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.STUDENT_ENROLMENTS);
 
         return Collections2.filter(result, new Predicate<CurriculumGroup>() {
             @Override

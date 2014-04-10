@@ -8,7 +8,6 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.domain.util.email.Message;
@@ -16,6 +15,8 @@ import net.sourceforge.fenixedu.domain.util.email.PersonSender;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.groups.UserGroup;
 
 public abstract class ThesisServiceWithMailNotification {
 
@@ -45,7 +46,7 @@ public abstract class ThesisServiceWithMailNotification {
     private Set<Recipient> getRecipients(Thesis thesis) {
         Set<Recipient> recipients = new HashSet<Recipient>();
         for (Person person : getReceivers(thesis)) {
-            recipients.add(Recipient.newInstance(new PersonGroup(person)));
+            recipients.add(Recipient.newInstance(UserGroup.of(person.getUser())));
         }
         return recipients;
     }

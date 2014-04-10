@@ -9,15 +9,17 @@ import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.FileContent.EducationalResourceType;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.cms.CmsContent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.fenixedu.bennu.core.groups.Group;
+
 import pt.ist.fenixframework.Atomic;
 
 /**
  * @author naat
  */
-public class CreateFileContent extends FileContentService {
+public class CreateFileContent {
 
     protected void run(Site site, CmsContent container, byte[] bytes, String originalFilename, String displayName,
             Group permittedGroup, Person person, EducationalResourceType type) throws DomainException, IOException {

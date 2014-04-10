@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationFromUniqueCardDTO;
 import net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accounting.AcademicEvent;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
@@ -154,6 +153,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.user.management.UserLoginPeriod;
 import org.fenixedu.bennu.user.management.UserManager;
 import org.fenixedu.commons.StringNormalizer;
@@ -170,10 +171,27 @@ import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import java.util.Locale;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
+import com.google.common.collect.FluentIterable;
+
 public class Person extends Person_Base {
 
     private static HashSet<Role> OPT_OUT_ROLES;
     private static final Integer MAX_VALIDATION_REQUESTS = 5;
+    public static com.google.common.base.Function<User, Person> userToPerson =
+            new com.google.common.base.Function<User, Person>() {
+                @Override
+                public Person apply(User user) {
+                    return user.getPerson();
+                }
+            };
+
+    public static com.google.common.base.Function<Person, User> personToUser =
+            new com.google.common.base.Function<Person, User>() {
+                @Override
+                public User apply(Person person) {
+                    return person.getUser();
+                }
+            };
 
     static {
         Role.getRelationPersonRole().addListener(new PersonRoleListener());
@@ -1209,8 +1227,8 @@ public class Person extends Person_Base {
     /**
      * @return a group that only contains this person
      */
-    public PersonGroup getPersonGroup() {
-        return new PersonGroup(this);
+    public Group getPersonGroup() {
+        return UserGroup.of(this.getUser());
     }
 
     /**
@@ -1530,7 +1548,7 @@ public class Person extends Person_Base {
             final Sender sender = Bennu.getInstance().getSystemSender();
 
             if (sender != null) {
-                final Recipient recipient = new Recipient(new RoleGroup(RoleType.MANAGER));
+                final Recipient recipient = new Recipient(RoleGroup.get(RoleType.MANAGER));
                 new Message(sender, recipient, BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
                         subjectKey), BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", bodyKey,
                         person.getPresentationName()));
@@ -4436,6 +4454,15 @@ public class Person extends Person_Base {
     @Override
     public void logRefuseContact(PartyContact contact) {
         contact.logRefuse(this);
+    }
+
+    public static Set<User> convertToUsers(Iterable<Person> persons) {
+        return FluentIterable.from(persons).filter(new com.google.common.base.Predicate<Person>() {
+            @Override
+            public boolean apply(Person person) {
+                return person.getUser() != null;
+            }
+        }).transform(personToUser).toSet();
     }
 
     @Deprecated

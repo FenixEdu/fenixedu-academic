@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.accounting.EditReceipt;
 import net.sourceforge.fenixedu.applicationTier.Servico.accounting.RegisterReceiptPrint;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.CreateReceiptBean;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
@@ -356,8 +356,7 @@ public class ReceiptsManagementDA extends PaymentsManagementDispatchAction {
     }
 
     protected Set<AdministrativeOffice> getAdministrativeOffices() {
-        return AcademicAuthorizationGroup.getOfficesForOperation(AccessControl.getPerson(),
-                AcademicOperationType.MANAGE_STUDENT_PAYMENTS);
+        return AcademicAuthorizationGroup.getOfficesForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_STUDENT_PAYMENTS);
     }
 
 }

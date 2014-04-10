@@ -2,13 +2,13 @@ package net.sourceforge.fenixedu.presentationTier.Action.research.researchUnit;
 
 import java.io.InputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
+
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UnionGroup;
 
 public class UnitFileUploadBean extends UnitFileBean implements Serializable {
 
@@ -17,7 +17,7 @@ public class UnitFileUploadBean extends UnitFileBean implements Serializable {
     private String fileName;
     private Long fileSize;
 
-    private List<IGroup> permittedGroups;
+    private Set<Group> permittedGroups;
     private Group permittedGroup;
 
     transient private InputStream uploadFile;
@@ -25,7 +25,7 @@ public class UnitFileUploadBean extends UnitFileBean implements Serializable {
 
     public UnitFileUploadBean(Unit unit) {
         this.unit = unit;
-        permittedGroups = new ArrayList<IGroup>();
+        permittedGroups = new HashSet<Group>();
     }
 
     @Override
@@ -74,14 +74,14 @@ public class UnitFileUploadBean extends UnitFileBean implements Serializable {
     }
 
     public Group getUnion() {
-        return new GroupUnion(getPermittedGroups());
+        return UnionGroup.of(getPermittedGroups());
     }
 
-    public List<IGroup> getPermittedGroups() {
+    public Set<Group> getPermittedGroups() {
         return permittedGroups;
     }
 
-    public void setPermittedGroups(List<IGroup> permittedGroups) {
+    public void setPermittedGroups(Set<Group> permittedGroups) {
         this.permittedGroups = permittedGroups;
     }
 }

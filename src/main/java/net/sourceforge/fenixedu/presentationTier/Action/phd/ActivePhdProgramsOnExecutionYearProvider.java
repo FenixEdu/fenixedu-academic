@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
@@ -23,8 +23,7 @@ public class ActivePhdProgramsOnExecutionYearProvider extends AbstractDomainObje
 
         List<PhdProgram> phdProgramsList = new ArrayList<PhdProgram>();
 
-        for (PhdProgram phdProgram : AcademicAuthorizationGroup.getPhdProgramsForOperation(AccessControl.getPerson(),
-                AcademicOperationType.MANAGE_PHD_PROCESSES)) {
+        for (PhdProgram phdProgram : AcademicAuthorizationGroup.getPhdProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_PHD_PROCESSES)) {
             if (phdProgram.isActive(bean.getExecutionYear())) {
                 phdProgramsList.add(phdProgram);
             }

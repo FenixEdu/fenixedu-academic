@@ -17,12 +17,12 @@ import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.DelegateCurricularCourseStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.DelegateStudentsGroup;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.accessControl.StudentGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.messaging.EmailsDA;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
 
@@ -62,17 +63,20 @@ public class SendEmailToDelegateStudents extends FenixDispatchAction {
 
                 List<CurricularCourse> curricularCourses = (List<CurricularCourse>) request.getAttribute("curricularCoursesList");
                 for (CurricularCourse curricularCourse : curricularCourses) {
-                    groups.add(new DelegateCurricularCourseStudentsGroup(curricularCourse, executionYear));
+                    List<ExecutionCourse> executions = curricularCourse.getExecutionCoursesByExecutionYear(executionYear);
+                    for (ExecutionCourse executionCourse : executions) {
+                        groups.add(StudentGroup.get(executionCourse));
+                    }
                 }
             } else {
                 if (delegateFunction != null && delegateFunction.getFunction().isOfFunctionType(FunctionType.DELEGATE_OF_GGAE)) {
-                    groups.add(new DelegateStudentsGroup(delegateFunction));
+                    groups.add(DelegateStudentsGroup.get(delegateFunction, delegateFunction.getFunction().getFunctionType()));
                 } else if (delegateFunction != null
                         && delegateFunction.getFunction().isOfFunctionType(FunctionType.DELEGATE_OF_YEAR)) {
-                    groups.add(new DelegateStudentsGroup(delegateFunction));
+                    groups.add(DelegateStudentsGroup.get(delegateFunction, delegateFunction.getFunction().getFunctionType()));
                 } else {
-                    groups.add(new DelegateStudentsGroup(delegateFunction, FunctionType.DELEGATE_OF_YEAR));
-                    groups.add(new DelegateStudentsGroup(delegateFunction));
+                    groups.add(DelegateStudentsGroup.get(delegateFunction, FunctionType.DELEGATE_OF_YEAR));
+                    groups.add(DelegateStudentsGroup.get(delegateFunction, delegateFunction.getFunction().getFunctionType()));
                 }
             }
         }

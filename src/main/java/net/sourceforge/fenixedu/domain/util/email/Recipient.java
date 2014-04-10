@@ -10,11 +10,12 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UserGroup;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
@@ -37,17 +38,25 @@ public class Recipient extends Recipient_Base {
     }
 
     public Recipient(final Group group) {
-        this(group.getName(), group);
+        this(group.getPresentationName(), group);
     }
 
     public Recipient(final Collection<Person> persons) {
-        this(new FixedSetGroup(persons));
+        this(UserGroup.of(Person.convertToUsers(persons)));
     }
 
     public Recipient(final String toName, final Group members) {
         this();
         setToName(toName);
         setMembers(members);
+    }
+
+    public Group getMembers() {
+        return getMembersGroup().toGroup();
+    }
+
+    public void setMembers(Group members) {
+        setMembersGroup(members.toPersistentGroup());
     }
 
     @Atomic(mode = TxMode.WRITE)
@@ -75,8 +84,8 @@ public class Recipient extends Recipient_Base {
     }
 
     public void addDestinationEmailAddresses(final Set<String> emailAddresses) {
-        for (final Person person : getMembers().getElements()) {
-            final EmailAddress emailAddress = person.getEmailAddressForSendingEmails();
+        for (final User user : getMembers().getMembers()) {
+            final EmailAddress emailAddress = user.getPerson().getEmailAddressForSendingEmails();
             if (emailAddress != null) {
                 final String value = emailAddress.getValue();
                 if (value != null && !value.isEmpty()) {
@@ -96,7 +105,7 @@ public class Recipient extends Recipient_Base {
 
     @Atomic
     private void initToName() {
-        setToName(getMembers().getName());
+        setToName(getMembers().getPresentationName());
     }
 
     @Override
@@ -143,10 +152,11 @@ public class Recipient extends Recipient_Base {
         StringBuilder builder = new StringBuilder();
         Group membersGroup = getMembers();
 
-        Set<Person> elements = membersGroup.getElements();
+        Set<User> elements = membersGroup.getMembers();
 
-        for (Person person : elements) {
-            builder.append(person.getName()).append(" (").append(person.getEmailForSendingEmails()).append(")").append("\n");
+        for (User user : elements) {
+            builder.append(user.getPerson().getName()).append(" (").append(user.getPerson().getEmailForSendingEmails())
+                    .append(")").append("\n");
         }
 
         return builder.toString();

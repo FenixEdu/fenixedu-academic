@@ -34,7 +34,7 @@ public class CourseGroupPredicates {
                         return true;
                     }
 
-                    return parentDegreeCurricularPlan.getCurricularPlanMembersGroup().isMember(person);
+                    return parentDegreeCurricularPlan.getCurricularPlanMembersGroup().isMember(person.getUser());
                 }
 
             };

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.messaging;
 
-import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
+import org.fenixedu.bennu.core.groups.AnyoneGroup;
 
 public class PublicBoardFileContent extends PublicBoardFileContent_Base {
 
@@ -10,7 +10,7 @@ public class PublicBoardFileContent extends PublicBoardFileContent_Base {
 
     public PublicBoardFileContent(String fileName, byte[] content, String creatorName, AnnouncementBoard board) {
         super();
-        init(fileName, fileName, content, new EveryoneGroup());
+        init(fileName, fileName, content, AnyoneGroup.get());
         board.addFileContent(this);
     }
 }

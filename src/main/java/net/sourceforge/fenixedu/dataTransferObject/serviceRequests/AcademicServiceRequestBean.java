@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
@@ -197,7 +197,6 @@ public class AcademicServiceRequestBean implements Serializable {
     }
 
     public Collection<AcademicServiceRequest> searchAcademicServiceRequests() {
-        return AcademicAuthorizationGroup.getAcademicServiceRequests(AccessControl.getPerson(), serviceRequestYear,
-                academicServiceRequestSituationType, null);
+        return AcademicAuthorizationGroup.getAcademicServiceRequests(AccessControl.getPerson(), serviceRequestYear, academicServiceRequestSituationType, null);
     }
 }

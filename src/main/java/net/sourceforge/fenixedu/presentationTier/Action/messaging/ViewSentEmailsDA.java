@@ -52,7 +52,7 @@ public class ViewSentEmailsDA extends FenixDispatchAction {
         final TreeSet<ExecutionCourseSender> sendersGroupsCourses =
                 new TreeSet<ExecutionCourseSender>(ExecutionCourseSender.COMPARATOR_BY_EXECUTION_COURSE_SENDER);
         for (final Sender sender : Bennu.getInstance().getUtilEmailSendersSet()) {
-            boolean allow = sender.getMembers().allows(userView);
+            boolean allow = sender.getMembers().isMember(userView);
             boolean isExecutionCourseSender = sender instanceof ExecutionCourseSender;
             if (allow && !isExecutionCourseSender) {
                 sendersGroups.add(sender);

@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile.FileResultPermittedGroupType;
@@ -24,6 +23,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.ResultPredicates;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 
@@ -131,7 +131,8 @@ public abstract class ResearchResult extends ResearchResult_Base {
     }
 
     public ResearchResultDocumentFile addDocumentFile(byte[] content, String filename, String displayName,
-            FileResultPermittedGroupType permittedGroupType, Group permittedGroup, Boolean isVisible) {
+            FileResultPermittedGroupType permittedGroupType, org.fenixedu.bennu.core.groups.Group permittedGroup,
+            Boolean isVisible) {
         check(this, ResultPredicates.writePredicate);
         final ResearchResultDocumentFile documentFile =
                 new ResearchResultDocumentFile(content, this, filename, displayName, permittedGroupType, permittedGroup);

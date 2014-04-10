@@ -3,14 +3,16 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Formatter;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.accessControl.CompetenceCourseGroup;
-import net.sourceforge.fenixedu.domain.accessControl.DegreesOfExecutionCourseGroup;
-import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersAndStudentsGroup;
-import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup;
+import net.sourceforge.fenixedu.domain.accessControl.StudentGroup;
+import net.sourceforge.fenixedu.domain.accessControl.StudentSharingDegreeOfCompetenceOfExecutionCourseGroup;
+import net.sourceforge.fenixedu.domain.accessControl.StudentSharingDegreeOfExecutionCourseGroup;
+import net.sourceforge.fenixedu.domain.accessControl.TeacherGroup;
 import net.sourceforge.fenixedu.domain.cms.CmsContent;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.util.BundleUtil;
+
+import org.fenixedu.bennu.core.groups.Group;
+
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -58,22 +60,22 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
     }
 
     @Override
-    public List<IGroup> getContextualPermissionGroups() {
-        List<IGroup> groups = super.getContextualPermissionGroups();
+    public List<Group> getContextualPermissionGroups() {
+        List<Group> groups = super.getContextualPermissionGroups();
 
         ExecutionCourse executionCourse = getSiteExecutionCourse();
 
-        groups.add(new ExecutionCourseTeachersGroup(executionCourse));
-        groups.add(new ExecutionCourseTeachersAndStudentsGroup(executionCourse));
-        groups.add(new DegreesOfExecutionCourseGroup(executionCourse));
-        groups.add(new CompetenceCourseGroup(executionCourse));
+        groups.add(TeacherGroup.get(executionCourse));
+        groups.add(TeacherGroup.get(executionCourse).or(StudentGroup.get(executionCourse)));
+        groups.add(StudentSharingDegreeOfExecutionCourseGroup.get(executionCourse));
+        groups.add(StudentSharingDegreeOfCompetenceOfExecutionCourseGroup.get(executionCourse));
 
         return groups;
     }
 
     @Override
-    public IGroup getOwner() {
-        return new ExecutionCourseTeachersGroup(getSiteExecutionCourse());
+    public Group getOwner() {
+        return TeacherGroup.get(getSiteExecutionCourse());
     }
 
     public static ExecutionCourseSite readExecutionCourseSiteByOID(String oid) {

@@ -45,7 +45,7 @@
 			<bean:define id="accessGroupType" name="accessGroupType" toScope="request" type="org.apache.struts.util.LabelValueBean"/>
 								
 			<logic:notEmpty name="space" property="<%= slotName %>">																										
-				<bean:define id="accessGroup" name="space" property="<%= slotName %>" type="net.sourceforge.fenixedu.domain.accessControl.Group" toScope="request"/>																																	
+				<bean:define id="accessGroup" name="space" property="<%= slotName %>" type="org.fenixedu.bennu.core.groups.Group" toScope="request"/>																																	
 				<logic:notEmpty name="accessGroup" property="elements">					
 					<p class="mtop1 mbottom05"><strong><bean:write name="accessGroupType" property="label"/></strong></p>
 					<bean:define id="withLinks" value="true" toScope="request"/>									
@@ -54,11 +54,11 @@
 			</logic:notEmpty>
 					
 			<logic:notEmpty name="space" property="<%= slotName %>">			
-				<bean:define id="accessGroup" name="space" property="<%= slotName %>" type="net.sourceforge.fenixedu.domain.accessControl.Group"/>			
+				<bean:define id="accessGroup" name="space" property="<%= slotName %>" type="org.fenixedu.bennu.core.groups.Group"/>			
 				<logic:empty name="accessGroup" property="elements">		
 					<bean:define id="slotNameWithChain" type="java.lang.String"> <%= slotName %>WithChainOfResponsibility </bean:define>
 					<logic:notEmpty name="space" property="<%= slotNameWithChain %>">
-						<bean:define id="accessGroup" name="space" property="<%= slotNameWithChain %>" type="net.sourceforge.fenixedu.domain.accessControl.Group" toScope="request"/>
+						<bean:define id="accessGroup" name="space" property="<%= slotNameWithChain %>" type="org.fenixedu.bennu.core.groups.Group" toScope="request"/>
 						<logic:notEmpty name="accessGroup">	
 							<logic:notEmpty name="accessGroup" property="elements">	
 								<p class="mtop2 mbottom05"><strong><bean:write name="accessGroupType" property="label"/> - (<bean:message key="label.defined.elements.in.parent.space" bundle="SPACE_RESOURCES"/>)</strong></p>																		
@@ -73,7 +73,7 @@
 			<logic:empty name="space" property="<%= slotName %>">							
 				<bean:define id="slotNameWithChain" type="java.lang.String"> <%= slotName %>WithChainOfResponsibility </bean:define>
 				<logic:notEmpty name="space" property="<%= slotNameWithChain %>">
-					<bean:define id="accessGroup" name="space" property="<%= slotNameWithChain %>" type="net.sourceforge.fenixedu.domain.accessControl.Group" toScope="request"/>
+					<bean:define id="accessGroup" name="space" property="<%= slotNameWithChain %>" type="org.fenixedu.bennu.core.groups.Group" toScope="request"/>
 					<logic:notEmpty name="accessGroup">	
 						<logic:notEmpty name="accessGroup" property="elements">										
 							<p class="mtop2 mbottom05"><strong><bean:write name="accessGroupType" property="label"/> - (<bean:message key="label.defined.elements.in.parent.space" bundle="SPACE_RESOURCES"/>)</strong></p>																		

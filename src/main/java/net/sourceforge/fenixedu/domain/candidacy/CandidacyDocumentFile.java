@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.candidacy;
 
-import net.sourceforge.fenixedu.domain.accessControl.Group;
+import org.fenixedu.bennu.core.groups.Group;
 
 public class CandidacyDocumentFile extends CandidacyDocumentFile_Base {
 

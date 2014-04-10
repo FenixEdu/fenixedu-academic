@@ -7,7 +7,6 @@ import java.io.InputStream;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.spaceManager.CreateBlueprintSubmissionBean;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Blueprint;
@@ -36,8 +35,7 @@ public abstract class BlueprintVersionManagmentService {
 
         final String displayName = blueprintSubmissionBean.getFilename();
         final BlueprintFile blueprintFile =
-                new BlueprintFile(blueprint, filename, displayName,
-                        new RoleGroup(Role.getRoleByRoleType(RoleType.SPACE_MANAGER)), contents);
+                new BlueprintFile(blueprint, filename, displayName, RoleGroup.get(RoleType.SPACE_MANAGER), contents);
 //        blueprintFile.setContent(new ByteArray(contents));
     }
 

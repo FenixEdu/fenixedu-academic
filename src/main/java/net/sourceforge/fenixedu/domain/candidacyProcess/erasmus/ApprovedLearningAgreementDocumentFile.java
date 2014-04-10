@@ -5,13 +5,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.accessControl.NoOneGroup;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.bennu.core.groups.NobodyGroup;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -37,14 +37,14 @@ public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgree
         this.setCandidacyFileActive(Boolean.TRUE);
         addIndividualCandidacy(candidacy);
         setCandidacyFileType(IndividualCandidacyDocumentFileType.APPROVED_LEARNING_AGREEMENT);
-        init(filename, filename, contents, new NoOneGroup());
+        init(filename, filename, contents, NobodyGroup.get());
     }
 
     protected ApprovedLearningAgreementDocumentFile(byte[] contents, String filename) {
         this();
         this.setCandidacyFileActive(Boolean.TRUE);
         setCandidacyFileType(IndividualCandidacyDocumentFileType.APPROVED_LEARNING_AGREEMENT);
-        init(filename, filename, contents, new NoOneGroup());
+        init(filename, filename, contents, NobodyGroup.get());
     }
 
     @Atomic

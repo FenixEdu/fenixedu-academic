@@ -2,13 +2,15 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.accessControl.DegreeCoordinatorsGroup;
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
-import net.sourceforge.fenixedu.domain.accessControl.RoleTypeGroup;
+import net.sourceforge.fenixedu.domain.accessControl.CoordinatorGroup;
+import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PedagogicalCouncilUnit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
+
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UserGroup;
+
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -29,16 +31,16 @@ public class PedagogicalCouncilSite extends PedagogicalCouncilSite_Base {
     }
 
     @Override
-    public IGroup getOwner() {
-        return new GroupUnion(new RoleTypeGroup(RoleType.PEDAGOGICAL_COUNCIL), new RoleTypeGroup(RoleType.TUTORSHIP),
-                new FixedSetGroup(getManagers()));
+    public Group getOwner() {
+        return RoleGroup.get(RoleType.PEDAGOGICAL_COUNCIL).or(RoleGroup.get(RoleType.TUTORSHIP))
+                .or(UserGroup.of(Person.convertToUsers(getManagers())));
     }
 
     @Override
-    public List<IGroup> getContextualPermissionGroups() {
-        List<IGroup> list = super.getContextualPermissionGroups();
+    public List<Group> getContextualPermissionGroups() {
+        List<Group> list = super.getContextualPermissionGroups();
 
-        list.add(new DegreeCoordinatorsGroup());
+        list.add(CoordinatorGroup.get(DegreeType.DEGREE));
 
         return list;
     }

@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -84,7 +84,6 @@ public class RegisteredDegreeCandidaciesDA extends FenixDispatchAction {
     }
 
     protected Set<Degree> getDegreesToSearch() {
-        return AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
-                AcademicOperationType.MANAGE_REGISTERED_DEGREE_CANDIDACIES);
+        return AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_REGISTERED_DEGREE_CANDIDACIES);
     }
 }

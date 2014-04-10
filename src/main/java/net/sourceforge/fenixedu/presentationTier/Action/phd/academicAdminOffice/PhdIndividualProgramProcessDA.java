@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.JobBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.QualificationBean;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.ManageEnrolmentsBean;
@@ -1377,8 +1377,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
         predicate.add(new Predicate<PhdMigrationIndividualProcessData>() {
             @Override
             public boolean eval(PhdMigrationIndividualProcessData process) {
-                return AcademicAuthorizationGroup.getPhdProgramsForOperation(AccessControl.getPerson(),
-                        AcademicOperationType.MANAGE_PHD_PROCESSES).contains(process.getProcessBean().getPhdProgram());
+                return AcademicAuthorizationGroup.getPhdProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_PHD_PROCESSES).contains(process.getProcessBean().getPhdProgram());
 
             }
         });

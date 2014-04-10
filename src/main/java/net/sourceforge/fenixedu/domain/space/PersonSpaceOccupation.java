@@ -7,12 +7,12 @@ import java.util.Collection;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
 import net.sourceforge.fenixedu.predicates.SpacePredicates;
 
+import org.fenixedu.bennu.core.groups.Group;
 import org.joda.time.YearMonthDay;
 
 public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {

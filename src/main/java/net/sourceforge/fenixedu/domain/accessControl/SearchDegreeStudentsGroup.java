@@ -14,14 +14,12 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.accessControl.groups.BennuGroupBridge;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 
 import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.domain.groups.UserGroup;
 import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixframework.FenixFramework;
@@ -211,7 +209,7 @@ public class SearchDegreeStudentsGroup implements Serializable {
         return elements;
     }
 
-    public Group getUserGroup() {
+    public org.fenixedu.bennu.core.groups.Group getUserGroup() {
         Set<User> users = new HashSet<>();
         final Map<StudentCurricularPlan, RegistrationStateType> students = searchStudentCurricularPlans(null, null);
         for (StudentCurricularPlan student : students.keySet()) {
@@ -220,7 +218,8 @@ public class SearchDegreeStudentsGroup implements Serializable {
                 users.add(user);
             }
         }
-        return new BennuGroupBridge(UserGroup.getInstance(users));
+//        return UserGroup.of(users);
+        return null;
     }
 
     private Comparator<StudentCurricularPlan> determineComparatorKind() {

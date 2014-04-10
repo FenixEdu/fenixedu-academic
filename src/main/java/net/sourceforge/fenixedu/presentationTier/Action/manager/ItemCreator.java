@@ -4,8 +4,10 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Section;
-import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
+
+import org.fenixedu.bennu.core.groups.AnyoneGroup;
+import org.fenixedu.bennu.core.groups.Group;
+
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ItemCreator implements Serializable {
@@ -29,7 +31,7 @@ public class ItemCreator implements Serializable {
         this.nextItem = null;
         this.visible = true;
         this.showName = true;
-        this.permittedGroup = new EveryoneGroup();
+        this.permittedGroup = AnyoneGroup.get();
     }
 
     public MultiLanguageString getInformation() {

@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
@@ -59,8 +59,7 @@ public class ThesisPredicates {
                 public boolean evaluate(Thesis thesis) {
                     Person person = AccessControl.getPerson();
                     return (person.getStudent() == thesis.getStudent() && thesis.isWaitingConfirmation())
-                            || (AcademicAuthorizationGroup.getProgramsForOperation(person,
-                                    AcademicOperationType.MANAGE_MARKSHEETS).contains(thesis.getDegree()))
+                            || (AcademicAuthorizationGroup.getProgramsForOperation(person, AcademicOperationType.MANAGE_MARKSHEETS).contains(thesis.getDegree()))
                             || person.hasRole(RoleType.SCIENTIFIC_COUNCIL);
                 }
 

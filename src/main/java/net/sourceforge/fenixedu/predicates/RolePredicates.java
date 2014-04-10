@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.dataTransferObject.contacts.PartyContactBean;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -32,8 +32,7 @@ public class RolePredicates {
 
             if (contactPerson.hasStudent() && !contactPerson.hasRole(RoleType.GRANT_OWNER)
                     && !contactPerson.hasRole(RoleType.EMPLOYEE)) {
-                return new AcademicAuthorizationGroup(AcademicOperationType.EDIT_STUDENT_PERSONAL_DATA).isMember(AccessControl
-                        .getPerson());
+                return AcademicAuthorizationGroup.get(AcademicOperationType.EDIT_STUDENT_PERSONAL_DATA).isMember(Authenticate.getUser());
             }
 
             return false;

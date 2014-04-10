@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.phd.ManageEnrolmentsBean;
@@ -29,8 +29,7 @@ public class PhdDegreeCurricularPlansProvider implements DataProvider {
     public Object provide(Object source, Object currentValue) {
 
         Set<AcademicProgram> programs =
-                AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-                        AcademicOperationType.MANAGE_PHD_ENROLMENT_PERIODS);
+                AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_PHD_ENROLMENT_PERIODS);
 
         final ManageEnrolmentsBean bean = (ManageEnrolmentsBean) source;
 

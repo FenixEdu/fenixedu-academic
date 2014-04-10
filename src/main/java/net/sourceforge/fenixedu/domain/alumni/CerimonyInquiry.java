@@ -6,7 +6,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.accessControl.CerimonyInquiryGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 
@@ -90,8 +90,7 @@ public class CerimonyInquiry extends CerimonyInquiry_Base implements Comparable<
     }
 
     public Recipient createRecipient() {
-        final Group group = new CerimonyInquiryGroup(this);
-        return Recipient.newInstance("Inquiridos: " + getDescription(), group);
+        return Recipient.newInstance("Inquiridos: " + getDescription(), CerimonyInquiryGroup.get(this));
     }
 
     @Atomic

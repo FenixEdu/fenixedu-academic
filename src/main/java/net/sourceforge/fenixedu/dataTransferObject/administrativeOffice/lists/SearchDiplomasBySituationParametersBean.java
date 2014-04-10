@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
@@ -39,9 +39,7 @@ public class SearchDiplomasBySituationParametersBean extends AcademicServiceRequ
 
     @Override
     public Collection<AcademicServiceRequest> searchAcademicServiceRequests() {
-        return AcademicAuthorizationGroup.getAcademicServiceRequests(AccessControl.getPerson(), serviceRequestYear,
-                academicServiceRequestSituationType,
-                new Interval(searchBegin.toDateTimeAtStartOfDay(), searchEnd.toDateTimeAtStartOfDay()));
+        return AcademicAuthorizationGroup.getAcademicServiceRequests(AccessControl.getPerson(), serviceRequestYear, academicServiceRequestSituationType, new Interval(searchBegin.toDateTimeAtStartOfDay(), searchEnd.toDateTimeAtStartOfDay()));
     }
 
 }

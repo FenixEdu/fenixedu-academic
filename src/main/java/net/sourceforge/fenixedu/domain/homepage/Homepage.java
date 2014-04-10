@@ -7,9 +7,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.Group;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -66,7 +66,7 @@ public class Homepage extends Homepage_Base {
     }
 
     @Override
-    public IGroup getOwner() {
+    public Group getOwner() {
         return getPerson().getPersonGroup();
     }
 
@@ -82,8 +82,8 @@ public class Homepage extends Homepage_Base {
     }
 
     @Override
-    public List<IGroup> getContextualPermissionGroups() {
-        List<IGroup> groups = super.getContextualPermissionGroups();
+    public List<Group> getContextualPermissionGroups() {
+        List<Group> groups = super.getContextualPermissionGroups();
         groups.add(getPerson().getPersonGroup());
 
         return groups;

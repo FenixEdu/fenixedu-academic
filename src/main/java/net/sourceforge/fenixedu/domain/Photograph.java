@@ -17,7 +17,6 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.photograph.AspectRatio;
@@ -32,6 +31,7 @@ import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.commons.i18n.I18N;
 import org.imgscalr.Scalr;
 import org.imgscalr.Scalr.Method;
@@ -134,9 +134,9 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
                     Set<String> sendTo = Collections.singleton(institutionalOrDefaultEmailAddress.getValue());
 
                     SystemSender systemSender = getRootDomainObject().getSystemSender();
-                    new Message(systemSender, systemSender.getConcreteReplyTos(),
-                            new Recipient(new PersonGroup(getPerson())).asCollection(),
-                            bundle.getString(REJECTION_MAIL_SUBJECT_KEY), bundle.getString(REJECTION_MAIL_BODY_KEY), "");
+                    new Message(systemSender, systemSender.getConcreteReplyTos(), new Recipient(UserGroup.of(getPerson()
+                            .getUser())).asCollection(), bundle.getString(REJECTION_MAIL_SUBJECT_KEY),
+                            bundle.getString(REJECTION_MAIL_BODY_KEY), "");
                 }
 
             }

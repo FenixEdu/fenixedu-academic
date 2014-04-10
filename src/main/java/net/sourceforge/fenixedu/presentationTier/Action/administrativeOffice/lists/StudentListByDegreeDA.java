@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyPersonalDetails;
@@ -94,12 +94,10 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
         SearchStudentsByDegreeParametersBean bean = getRenderedObject("searchParametersBean");
         if (bean == null) {
             Set<DegreeType> degreeTypesForOperation =
-                    AcademicAuthorizationGroup.getDegreeTypesForOperation(AccessControl.getPerson(),
-                            AcademicOperationType.STUDENT_LISTINGS);
+                    AcademicAuthorizationGroup.getDegreeTypesForOperation(AccessControl.getPerson(), AcademicOperationType.STUDENT_LISTINGS);
             bean =
                     new SearchStudentsByDegreeParametersBean(degreeTypesForOperation,
-                            AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
-                                    AcademicOperationType.STUDENT_LISTINGS));
+                            AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(), AcademicOperationType.STUDENT_LISTINGS));
         }
         return bean;
     }
@@ -655,8 +653,7 @@ public class StudentListByDegreeDA extends FenixDispatchAction {
 
     protected Set<CycleType> getAdministratedCycleTypes() {
         Set<CycleType> cycles = new HashSet<CycleType>();
-        for (DegreeType degreeType : AcademicAuthorizationGroup.getDegreeTypesForOperation(AccessControl.getPerson(),
-                AcademicOperationType.STUDENT_LISTINGS)) {
+        for (DegreeType degreeType : AcademicAuthorizationGroup.getDegreeTypesForOperation(AccessControl.getPerson(), AcademicOperationType.STUDENT_LISTINGS)) {
             cycles.addAll(degreeType.getCycleTypes());
         }
         return cycles;

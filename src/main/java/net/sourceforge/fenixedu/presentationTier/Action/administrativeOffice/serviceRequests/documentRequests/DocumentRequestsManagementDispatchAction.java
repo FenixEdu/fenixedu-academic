@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.documents.GeneratedDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -332,8 +332,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
         final DocumentRequestCreateBean documentRequestCreateBean = getRenderedObject();
         if (documentRequestCreateBean.isToUseAll()) {
             Set<Degree> degrees =
-                    AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
-                            AcademicOperationType.SERVICE_REQUESTS);
+                    AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(), AcademicOperationType.SERVICE_REQUESTS);
             Set<Enrolment> aprovedEnrolments = new HashSet<Enrolment>();
             for (Degree degree : degrees) {
                 for (final Registration registration : documentRequestCreateBean.getStudent().getRegistrationsFor(degree)) {

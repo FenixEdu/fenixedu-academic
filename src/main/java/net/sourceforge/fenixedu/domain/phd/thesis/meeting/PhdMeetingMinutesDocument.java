@@ -3,16 +3,16 @@ package net.sourceforge.fenixedu.domain.phd.thesis.meeting;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeCoordinatorsGroup;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.CoordinatorGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
+
+import org.fenixedu.bennu.core.groups.Group;
 
 public class PhdMeetingMinutesDocument extends PhdMeetingMinutesDocument_Base {
 
@@ -41,14 +41,15 @@ public class PhdMeetingMinutesDocument extends PhdMeetingMinutesDocument_Base {
         super.setUploader(uploader);
         super.setDocumentAccepted(true);
 
-        final Group roleGroup = new AcademicAuthorizationGroup(AcademicOperationType.MANAGE_PHD_PROCESSES);
+        final Group roleGroup =
+                AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_PHD_PROCESSES);
 
         final PhdIndividualProgramProcess individualProgramProcess =
                 meeting.getMeetingProcess().getThesisProcess().getIndividualProgramProcess();
         final PhdProgram phdProgram = individualProgramProcess.getPhdProgram();
-        final Group coordinatorGroup = new CurrentDegreeCoordinatorsGroup(phdProgram.getDegree());
+        final Group coordinatorGroup = CoordinatorGroup.get(phdProgram.getDegree());
 
-        final Group group = new GroupUnion(roleGroup, coordinatorGroup);
+        final Group group = roleGroup.or(coordinatorGroup);
         super.init(filename, filename, content, group);
     }
 

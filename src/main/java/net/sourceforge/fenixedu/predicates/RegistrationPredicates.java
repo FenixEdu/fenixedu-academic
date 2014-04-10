@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.predicates;
 
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -25,8 +25,7 @@ public class RegistrationPredicates {
                         return true;
                     }
 
-                    return AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-                            AcademicOperationType.MANAGE_CONCLUSION).contains(registration.getDegree());
+                    return AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_CONCLUSION).contains(registration.getDegree());
                 }
             };
 

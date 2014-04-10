@@ -16,7 +16,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -33,6 +32,7 @@ import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.UserGroup;
 import org.joda.time.Duration;
 
 import pt.ist.fenixframework.Atomic;
@@ -533,7 +533,8 @@ public class Shift extends Shift_Base {
         registration.removeShifts(this);
 
         ExecutionCourseSender sender = ExecutionCourseSender.newInstance(executionCourse);
-        Collection<Recipient> recipients = Collections.singletonList(new Recipient(new PersonGroup(registration.getPerson())));
+        Collection<Recipient> recipients =
+                Collections.singletonList(new Recipient(UserGroup.of(registration.getPerson().getUser())));
         final String subject =
                 BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.shift.remove.subject");
         final String body =

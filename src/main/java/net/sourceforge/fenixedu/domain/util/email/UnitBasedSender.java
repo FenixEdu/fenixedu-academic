@@ -2,12 +2,13 @@ package net.sourceforge.fenixedu.domain.util.email;
 
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.PersistentGroup;
+import net.sourceforge.fenixedu.domain.accessControl.MembersLinkGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
-import net.sourceforge.fenixedu.domain.accessControl.UnitMembersGroup;
+import net.sourceforge.fenixedu.domain.accessControl.UnitGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
+
+import org.fenixedu.bennu.core.groups.Group;
+
 import pt.ist.fenixframework.Atomic;
 
 public class UnitBasedSender extends UnitBasedSender_Base {
@@ -80,8 +81,8 @@ public class UnitBasedSender extends UnitBasedSender_Base {
         final Unit unit = getUnit();
         if (unit != null) {
 
-            for (final IGroup group : unit.getGroups()) {
-                if (!hasRecipientWithToName(group.getName())) {
+            for (final Group group : unit.getGroups()) {
+                if (!hasRecipientWithToName(group.getPresentationName())) {
                     createRecipient(group);
                 }
             }
@@ -92,7 +93,7 @@ public class UnitBasedSender extends UnitBasedSender_Base {
                 }
             }
             for (final Recipient recipient : super.getRecipientsSet()) {
-                if (recipient.getMembers() instanceof PersistentGroup) {
+                if (recipient.getMembers() instanceof MembersLinkGroup) {
                     if (!hasPersistentGroup(recipient.getToName())) {
                         if (recipient.getMessagesSet().isEmpty()) {
                             recipient.delete();
@@ -129,16 +130,16 @@ public class UnitBasedSender extends UnitBasedSender_Base {
 
     @Atomic
     protected void createRecipient(final PersistentGroupMembers persistentGroupMembers) {
-        addRecipients(new Recipient(null, new PersistentGroup(persistentGroupMembers)));
+        addRecipients(new Recipient(null, MembersLinkGroup.get(persistentGroupMembers)));
     }
 
-    protected void createRecipient(final IGroup group) {
-        addRecipients(new Recipient(null, (Group) group));
+    protected void createRecipient(final Group group) {
+        addRecipients(new Recipient(null, group));
     }
 
     @Atomic
     public static UnitBasedSender newInstance(Unit unit) {
-        return new UnitBasedSender(unit, Sender.getNoreplyMail(), new UnitMembersGroup(unit));
+        return new UnitBasedSender(unit, Sender.getNoreplyMail(), UnitGroup.recursiveWorkers(unit));
     }
 
     @Deprecated

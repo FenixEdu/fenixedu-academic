@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.elections.DelegateElectionBlankVote;
 import net.sourceforge.fenixedu.domain.elections.DelegateElectionVote;
 import net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod;
@@ -19,10 +18,10 @@ import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixframework.Atomic;
-import java.util.Locale;
 
 public class VoteYearDelegateElections {
 
@@ -45,7 +44,7 @@ public class VoteYearDelegateElections {
                 votingPeriod.addVotingStudents(student);
                 votingPeriod.addVotes(vote);
                 new Message(Bennu.getInstance().getSystemSender(), new ConcreteReplyTo(fromAddress).asCollection(),
-                        new Recipient(new PersonGroup(person)).asCollection(), subject, msg, "");
+                        new Recipient(UserGroup.of(person.getUser())).asCollection(), subject, msg, "");
             } else {
                 throw new FenixServiceException("error.student.elections.voting.studentAlreadyVoted");
             }

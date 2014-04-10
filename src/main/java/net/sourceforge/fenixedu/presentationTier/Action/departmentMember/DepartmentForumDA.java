@@ -73,7 +73,7 @@ public class DepartmentForumDA extends ForunsManagement {
     private boolean belongsPersonWithDepartment(Person person, Department department) {
         DepartmentForum departmentForum = department.getDepartmentForum();
         if (departmentForum != null) {
-            return departmentForum.getDepartmentForumGroup().isMember(person);
+            return departmentForum.getDepartmentForumGroup().isMember(person.getUser());
         }
         return false;
     }

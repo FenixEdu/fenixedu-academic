@@ -14,8 +14,7 @@ import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent;
@@ -32,12 +31,12 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
-import java.util.Locale;
 
 abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base {
 
@@ -177,8 +176,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     protected String getDescription(final AcademicServiceRequestType academicServiceRequestType, final String specificServiceType) {
-        final ResourceBundle enumerationResources =
-                ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
+        final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
         final StringBuilder result = new StringBuilder();
         result.append(enumerationResources.getString(academicServiceRequestType.getQualifiedName()));
         if (specificServiceType != null) {
@@ -292,7 +290,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
         }
 
         final Sender sender = getAdministrativeOffice().getUnit().getUnitBasedSender().iterator().next();
-        final Recipient recipient = new Recipient(new PersonGroup(getPerson()));
+        final Recipient recipient = new Recipient(UserGroup.of(getPerson().getUser()));
         new Message(sender, sender.getReplyTos(), recipient.asCollection(), getDescription(), body, "");
     }
 
@@ -645,10 +643,8 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
      */
     @Deprecated
     final public boolean getLoggedPersonCanCancel() {
-        return isCancelledSituationAccepted()
-                && (!isPayable() || !hasEvent() || !isPayed())
-                && (createdByStudent() && !isConcluded() || AcademicAuthorizationGroup.isAuthorized(AccessControl.getPerson(),
-                        this));
+        return isCancelledSituationAccepted() && (!isPayable() || !hasEvent() || !isPayed())
+                && (createdByStudent() && !isConcluded() || AcademicAuthorizationGroup.isAuthorized(AccessControl.getPerson(), this));
     }
 
     final public DateTime getCreationDate() {

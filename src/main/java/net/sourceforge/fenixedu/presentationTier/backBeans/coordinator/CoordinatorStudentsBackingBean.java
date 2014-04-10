@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Tutorship;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.SearchDegreeStudentsGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
@@ -64,10 +63,6 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
     private Integer maxIndex = null;
 
     private Boolean showPhoto = null;
-
-    private final Group filteredStudents = null;
-
-    private final String label = "";
 
     public String getDegreeCurricularPlanID() {
         return (degreeCurricularPlanID == null) ? degreeCurricularPlanID = getAndHoldStringParameter("degreeCurricularPlanID") : degreeCurricularPlanID;

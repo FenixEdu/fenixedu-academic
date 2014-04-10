@@ -15,7 +15,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionPeriods;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.credits.CreditsPersonFunctionsSharedQueueJob;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;

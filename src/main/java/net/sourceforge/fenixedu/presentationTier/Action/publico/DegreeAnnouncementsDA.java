@@ -126,7 +126,7 @@ public class DegreeAnnouncementsDA extends AnnouncementManagement {
                 boards.add(board);
             }
 
-            if (board.getReaders().allows(userView)) {
+            if (board.getReaders().isMember(userView)) {
                 boards.add(board);
             }
         }

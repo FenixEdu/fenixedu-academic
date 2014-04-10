@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState;
@@ -99,8 +99,7 @@ public class StandaloneCandidacyProcess extends StandaloneCandidacyProcess_Base 
             DegreeType.BOLONHA_SPECIALIZATION_DEGREE);
 
     static private boolean isAllowedToManageProcess(User userView) {
-        for (AcademicProgram program : AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
-                AcademicOperationType.MANAGE_CANDIDACY_PROCESSES)) {
+        for (AcademicProgram program : AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(), AcademicOperationType.MANAGE_CANDIDACY_PROCESSES)) {
             if (ALLOWED_DEGREE_TYPES.contains(program.getDegreeType())) {
                 return true;
             }

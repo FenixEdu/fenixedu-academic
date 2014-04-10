@@ -97,13 +97,13 @@
 				
 				<p><fr:view name="file" property="displayName"/>
 				   <span class="color888">(<fr:view name="file" property="filename"/>)
-				   <fr:view name="file" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
+				   <fr:view name="file" property="permittedGroup" layout="null-as-label" type="org.fenixedu.bennu.core.groups.Group">
 	                                        <fr:layout>
-	                                            <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
+	                                            <fr:property name="label" value="label.public"/>
 	                                            <fr:property name="key" value="true"/>
 	                                            <fr:property name="bundle" value="SITE_RESOURCES"/>
 	                                            <fr:property name="subLayout" value="values"/>
-	                                            <fr:property name="subSchema" value="permittedGroup.class.text"/>
+	                                            <fr:property name="subSchema" value="permittedGroup.name"/>
 	                                        </fr:layout>
 	                                    </fr:view>
 	                </span> - <bean:define id="downloadUrl" name="file" property="downloadUrl"/>

@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.QueueJob;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState;
@@ -264,8 +264,7 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
             DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
 
     static private boolean isAllowedToManageProcess(User userView) {
-        for (AcademicProgram program : AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
-                AcademicOperationType.MANAGE_CANDIDACY_PROCESSES)) {
+        for (AcademicProgram program : AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(), AcademicOperationType.MANAGE_CANDIDACY_PROCESSES)) {
             if (ALLOWED_DEGREE_TYPES.contains(program.getDegreeType())) {
                 return true;
             }

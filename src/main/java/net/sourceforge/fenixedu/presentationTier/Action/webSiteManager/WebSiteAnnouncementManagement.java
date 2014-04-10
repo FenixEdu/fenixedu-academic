@@ -21,6 +21,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -141,7 +142,7 @@ public class WebSiteAnnouncementManagement extends AnnouncementManagement {
         for (final AnnouncementBoard currentBoard : rootDomainObject.getInstitutionUnit().getBoards()) {
             final UnitAnnouncementBoard board = (UnitAnnouncementBoard) currentBoard;
             if (board.getUnitPermittedWriteGroupType() == UnitBoardPermittedGroupType.UB_WEBSITE_MANAGER
-                    && board.getWriters().isMember(this.getLoggedPerson(request))) {
+                    && board.getWriters().isMember(Authenticate.getUser())) {
                 boards.add(board);
             }
         }

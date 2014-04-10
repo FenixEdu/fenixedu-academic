@@ -15,10 +15,12 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
 import net.sourceforge.fenixedu.util.WorkingStudentSelectionType;
+
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UserGroup;
+
 import pt.utl.ist.fenix.tools.predicates.AndPredicate;
 import pt.utl.ist.fenix.tools.predicates.InlinePredicate;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
@@ -217,7 +219,7 @@ public class SearchExecutionCourseAttendsBean implements Serializable {
         for (Attends attends : getAttendsResult()) {
             persons.add(attends.getRegistration().getStudent().getPerson());
         }
-        return new FixedSetGroup(persons);
+        return UserGroup.of(Person.convertToUsers(persons));
     }
 
     public String getLabel() {

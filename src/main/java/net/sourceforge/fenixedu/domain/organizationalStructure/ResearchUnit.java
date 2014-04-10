@@ -11,17 +11,16 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ResearchUnitSite;
-import net.sourceforge.fenixedu.domain.accessControl.ResearchUnitElementGroup;
-import net.sourceforge.fenixedu.domain.accessControl.ResearchUnitMembersGroup;
+import net.sourceforge.fenixedu.domain.accessControl.UnitGroup;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.util.email.ResearchUnitBasedSender;
 import net.sourceforge.fenixedu.domain.util.email.UnitBasedSender;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.groups.Group;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
@@ -178,15 +177,9 @@ public class ResearchUnit extends ResearchUnit_Base {
     }
 
     @Override
-    public List<IGroup> getDefaultGroups() {
-        List<IGroup> groups = super.getDefaultGroups();
-
-        groups.add(new ResearchUnitMembersGroup(this, ResearcherContract.class));
-        groups.add(new ResearchUnitMembersGroup(this, ResearchInternshipContract.class));
-        groups.add(new ResearchUnitMembersGroup(this, ResearchScholarshipContract.class));
-        groups.add(new ResearchUnitMembersGroup(this, ResearchTechnicalStaffContract.class));
-        groups.add(new ResearchUnitElementGroup(this));
-
+    public List<Group> getDefaultGroups() {
+        List<Group> groups = super.getDefaultGroups();
+        groups.add(UnitGroup.get(this, AccountabilityTypeEnum.RESEARCH_CONTRACT, false));
         return groups;
     }
 

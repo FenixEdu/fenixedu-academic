@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
@@ -137,8 +137,7 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 
     static private boolean isAllowedToManageProcess(DegreeTransferIndividualCandidacyProcess process, User userView) {
         Set<AcademicProgram> programs =
-                AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
-                        AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
+                AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(), AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
 
         if (process == null || process.getCandidacy() == null) {
             return false;

@@ -10,16 +10,14 @@ import net.sourceforge.fenixedu.domain.Alumni;
 import net.sourceforge.fenixedu.domain.AlumniIdentityCheckRequest;
 import net.sourceforge.fenixedu.domain.AlumniRequestType;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.commons.i18n.I18N;
-
-import java.util.Locale;
 
 public class AlumniNotificationService {
 
@@ -42,7 +40,7 @@ public class AlumniNotificationService {
     }
 
     private static List<Recipient> getAlumniRecipients(Alumni alumni) {
-        return Collections.singletonList(Recipient.newInstance(new PersonGroup(alumni.getStudent().getPerson())));
+        return Collections.singletonList(Recipient.newInstance(UserGroup.of(alumni.getStudent().getPerson().getUser())));
     }
 
     protected static void sendPublicAccessMail(final Alumni alumni, final String alumniEmail) {

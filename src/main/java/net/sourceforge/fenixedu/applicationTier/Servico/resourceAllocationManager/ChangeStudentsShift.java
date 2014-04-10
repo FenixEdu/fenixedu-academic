@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Installation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.email.ConcreteReplyTo;
 import net.sourceforge.fenixedu.domain.util.email.Message;
@@ -21,6 +20,7 @@ import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.UserGroup;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -68,7 +68,7 @@ public class ChangeStudentsShift {
 
         final String message = messagePrefix + messagePosfix;
 
-        Recipient recipient = new Recipient(groupName, new FixedSetGroup(recievers));
+        Recipient recipient = new Recipient(groupName, UserGroup.of(Person.convertToUsers(recievers)));
         Sender sender = Bennu.getInstance().getSystemSender();
         String gopEmailAddress = Installation.getInstance().getInstituitionalEmailAddress("gop");
         new Message(sender, new ConcreteReplyTo(gopEmailAddress).asCollection(), recipient.asCollection(), subject, message, "");

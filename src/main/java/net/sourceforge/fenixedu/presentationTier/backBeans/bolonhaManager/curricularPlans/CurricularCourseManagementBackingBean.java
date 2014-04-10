@@ -689,7 +689,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         for (final Department department : Bennu.getInstance().getDepartmentsSet()) {
             if (department.getCompetenceCourseMembersGroup() != null
-                    && department.getCompetenceCourseMembersGroup().isMember(getUserView().getPerson())) {
+                    && department.getCompetenceCourseMembersGroup().isMember(getUserView())) {
                 DepartmentUnit departmentUnit = department.getDepartmentUnit();
                 result.add(new SelectItem(departmentUnit.getExternalId(), departmentUnit.getName()));
             }

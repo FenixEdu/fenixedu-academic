@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.MarkSheet;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
@@ -112,8 +112,7 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
 
         final List<LabelValueBean> result = new ArrayList<LabelValueBean>();
         Set<Degree> degreesForMarksheets =
-                AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
-                        AcademicOperationType.MANAGE_MARKSHEETS);
+                AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_MARKSHEETS);
 
         for (final DegreeCurricularPlan dcp : dcps) {
             if (degreesForMarksheets.contains(dcp.getDegree())) {

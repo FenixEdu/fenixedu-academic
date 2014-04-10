@@ -5,10 +5,11 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.FileContent.EducationalResourceType;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.cms.CmsContent;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
+
+import org.fenixedu.bennu.core.groups.AnyoneGroup;
+import org.fenixedu.bennu.core.groups.Group;
 
 public class FileContentCreationBean implements Serializable {
 
@@ -65,7 +66,7 @@ public class FileContentCreationBean implements Serializable {
         setSite(site);
         setContent(content);
 
-        this.permittedGroup = new EveryoneGroup();
+        this.permittedGroup = AnyoneGroup.get();
     }
 
     public FileContentCreationBean(AnnouncementBoard container, Site site) {
@@ -73,7 +74,7 @@ public class FileContentCreationBean implements Serializable {
         setSite(site);
         setFileHolder(container);
 
-        this.permittedGroup = new EveryoneGroup();
+        this.permittedGroup = AnyoneGroup.get();
     }
 
     public Group getPermittedGroup() {

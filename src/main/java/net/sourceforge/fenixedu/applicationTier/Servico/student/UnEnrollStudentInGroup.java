@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
@@ -28,6 +27,8 @@ import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.struts.util.MessageResources;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UserGroup;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -63,7 +64,7 @@ public class UnEnrollStudentInGroup {
             final Person person = attends.getRegistration().getPerson();
             people.add(person);
         }
-        final FixedSetGroup fixedSetGroup = new FixedSetGroup(people);
+        final Group fixedSetGroup = UserGroup.of(Person.convertToUsers(people));
         final Recipient recipient = new Recipient("", fixedSetGroup);
         final Collection<Recipient> recipients = new ArrayList<Recipient>();
         recipients.add(recipient);

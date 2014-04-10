@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsByTutor
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.util.email.PersonSender;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
@@ -21,6 +20,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherApplicati
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
 
@@ -48,7 +48,7 @@ public class SendEmailToTutoredStudents extends FenixDispatchAction {
         if (receivers != null) {
             for (Tutorship tutorship : receivers.getStudentsList()) {
                 Person person = tutorship.getStudent().getPerson();
-                recipients.add(Recipient.newInstance(person.getName(), new PersonGroup(person)));
+                recipients.add(Recipient.newInstance(person.getName(), UserGroup.of(person.getUser())));
             }
         }
 

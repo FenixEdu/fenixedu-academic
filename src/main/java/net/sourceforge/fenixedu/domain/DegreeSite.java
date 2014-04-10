@@ -2,12 +2,14 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeCoordinatorsGroup;
+import net.sourceforge.fenixedu.domain.accessControl.CoordinatorGroup;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.cms.CmsContent;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
+
+import org.fenixedu.bennu.core.groups.Group;
+
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -20,16 +22,16 @@ public class DegreeSite extends DegreeSite_Base {
     }
 
     @Override
-    public IGroup getOwner() {
-        return new CurrentDegreeCoordinatorsGroup(getDegree());
+    public Group getOwner() {
+        return CoordinatorGroup.get(getDegree());
     }
 
     @Override
-    public List<IGroup> getContextualPermissionGroups() {
-        List<IGroup> groups = super.getContextualPermissionGroups();
+    public List<Group> getContextualPermissionGroups() {
+        List<Group> groups = super.getContextualPermissionGroups();
 
-        groups.add(new CurrentDegreeCoordinatorsGroup(getDegree()));
-        groups.add(new RoleGroup(RoleType.TEACHER));
+        groups.add(CoordinatorGroup.get(getDegree()));
+        groups.add((Group) RoleGroup.get(RoleType.TEACHER));
 
         return groups;
     }

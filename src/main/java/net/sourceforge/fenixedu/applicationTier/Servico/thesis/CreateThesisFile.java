@@ -4,16 +4,15 @@ import java.io.IOException;
 import java.util.Locale;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeScientificCommissionMembersGroup;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
-import net.sourceforge.fenixedu.domain.accessControl.RoleTypeGroup;
-import net.sourceforge.fenixedu.domain.accessControl.ThesisFileReadersGroup;
+import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
+import net.sourceforge.fenixedu.domain.accessControl.ScientificCommissionGroup;
+import net.sourceforge.fenixedu.domain.accessControl.ThesisReadersGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
 
+import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 public abstract class CreateThesisFile {
@@ -34,13 +33,13 @@ public abstract class CreateThesisFile {
         if (bytes == null || fileName == null) {
             return null;
         }
+        RoleType roleType = RoleType.SCIENTIFIC_COUNCIL;
 
-        RoleTypeGroup scientificCouncil = new RoleTypeGroup(RoleType.SCIENTIFIC_COUNCIL);
-        CurrentDegreeScientificCommissionMembersGroup commissionMembers =
-                new CurrentDegreeScientificCommissionMembersGroup(thesis.getDegree());
-        PersonGroup student = thesis.getStudent().getPerson().getPersonGroup();
-        ThesisFileReadersGroup thesisGroup = new ThesisFileReadersGroup(thesis);
-        final GroupUnion permittedGroup = new GroupUnion(scientificCouncil, commissionMembers, student, thesisGroup);
+        Group scientificCouncil = RoleGroup.get(roleType);
+        Group commissionMembers = ScientificCommissionGroup.get(thesis.getDegree());
+        Group student = thesis.getStudent().getPerson().getPersonGroup();
+        Group thesisGroup = ThesisReadersGroup.get(thesis);
+        final Group permittedGroup = scientificCouncil.or(commissionMembers).or(student).or(thesisGroup);
 
         ThesisFile file = new ThesisFile(fileName, fileName, bytes, permittedGroup);
 

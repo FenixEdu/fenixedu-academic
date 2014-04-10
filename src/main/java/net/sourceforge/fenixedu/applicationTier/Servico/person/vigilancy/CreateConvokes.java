@@ -7,7 +7,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.util.email.ConcreteReplyTo;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.PersonSender;
@@ -17,6 +16,7 @@ import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
+import org.fenixedu.bennu.core.groups.UserGroup;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -57,7 +57,7 @@ public class CreateConvokes {
                             group.getEmailSubjectPrefix(), writtenEvaluation.getName(), group.getName(), beginDateString });
 
             new Message(PersonSender.newInstance(person), new ConcreteReplyTo(replyTo).asCollection(), new Recipient(
-                    new FixedSetGroup(recievers)).asCollection(), Collections.EMPTY_LIST, Collections.EMPTY_LIST, subject,
+                    UserGroup.of(Person.convertToUsers(recievers))).asCollection(), Collections.EMPTY_LIST, Collections.EMPTY_LIST, subject,
                     emailMessage, bccs);
         }
     }

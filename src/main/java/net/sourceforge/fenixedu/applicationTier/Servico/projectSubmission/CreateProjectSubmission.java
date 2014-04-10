@@ -14,14 +14,13 @@ import net.sourceforge.fenixedu.domain.ProjectSubmission;
 import net.sourceforge.fenixedu.domain.ProjectSubmissionFile;
 import net.sourceforge.fenixedu.domain.ProjectSubmissionLog;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
-import net.sourceforge.fenixedu.domain.accessControl.ProjectDepartmentAccessGroup;
-import net.sourceforge.fenixedu.domain.accessControl.StudentGroupStudentsGroup;
+import net.sourceforge.fenixedu.domain.accessControl.ProjectDepartmentGroup;
+import net.sourceforge.fenixedu.domain.accessControl.StudentGroupGroup;
+import net.sourceforge.fenixedu.domain.accessControl.TeacherGroup;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 import org.apache.commons.io.IOUtils;
+import org.fenixedu.bennu.core.groups.Group;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -42,8 +41,7 @@ public class CreateProjectSubmission {
 
     private static Group createPermittedGroup(final Attends attends, final StudentGroup studentGroup, final Project project) {
         final ExecutionCourse executionCourse = attends.getExecutionCourse();
-        return new GroupUnion(new ExecutionCourseTeachersGroup(executionCourse), new StudentGroupStudentsGroup(studentGroup),
-                new ProjectDepartmentAccessGroup(project));
+        return TeacherGroup.get(executionCourse).or(StudentGroupGroup.get(studentGroup)).or(ProjectDepartmentGroup.get(project));
     }
 
     private static void checkPermissions(Attends attends, Person person) throws FenixServiceException {

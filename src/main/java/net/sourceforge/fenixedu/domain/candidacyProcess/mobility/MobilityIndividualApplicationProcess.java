@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
@@ -190,8 +190,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
     static private boolean isAllowedToManageProcess(MobilityIndividualApplicationProcess process, User userView) {
         Set<AcademicProgram> programs =
-                AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
-                        AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
+                AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(), AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
 
         if (process == null || process.getCandidacy() == null) {
             return false;

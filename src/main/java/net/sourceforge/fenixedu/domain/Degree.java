@@ -43,13 +43,13 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import net.sourceforge.fenixedu.util.MarkType;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
@@ -1602,12 +1602,12 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return result;
     }
 
-    public static List<IGroup> getDegreesDelegatesGroupByDegreeType(DegreeType degreeType) {
-        List<IGroup> result = new ArrayList<IGroup>();
+    public static List<Group> getDegreesDelegatesGroupByDegreeType(DegreeType degreeType) {
+        List<Group> result = new ArrayList<Group>();
 
         List<Degree> degrees = Degree.readAllByDegreeType(degreeType);
         for (Degree degree : degrees) {
-            result.add(new DelegatesGroup(degree));
+            result.add(DelegatesGroup.get(degree));
         }
 
         return result;

@@ -70,7 +70,7 @@
 	</logic:empty>
 	
 	<logic:empty name="stopPrint">
-		<logic:equal name="accessGroup" property="class.name" value="<%= RoleGroup.class.getName() %>">
+		<logic:equal name="accessGroup" property="class.name" value="<%= NewRoleGroup.class.getName() %>">
 			<bean:define id="accessGroupExpression" name="accessGroup" property="expressionInHex" type="java.lang.String"/>
 			<table class="tstyle4 thlight tdcenter mtop05">
 				<tr>

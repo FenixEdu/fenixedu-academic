@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -155,8 +155,7 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
     private void setInfoDegreesToManage(final HttpServletRequest request, final User userView) throws FenixServiceException {
 
         final SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
-        degrees.addAll(AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
-                AcademicOperationType.MANAGE_EQUIVALENCES));
+        degrees.addAll(AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_EQUIVALENCES));
         request.setAttribute("infoDegrees", degrees);
     }
 

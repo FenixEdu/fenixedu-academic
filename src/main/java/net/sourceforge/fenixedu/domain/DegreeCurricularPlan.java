@@ -21,8 +21,6 @@ import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.ID
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
 import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseView;
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
@@ -64,6 +62,9 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.NobodyGroup;
+import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
@@ -187,7 +188,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         if (curricularPeriod == null) {
             throw new DomainException("degreeCurricularPlan.curricularPeriod.not.null");
         }
-        setCurricularPlanMembersGroup(new FixedSetGroup(creator));
+        setCurricularPlanMembersGroup(UserGroup.of(creator.getUser()));
         setDegreeStructure(curricularPeriod);
         setState(DegreeCurricularPlanState.ACTIVE);
 
@@ -1171,7 +1172,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public Boolean getUserCanBuild() {
         Person person = AccessControl.getPerson();
         return AcademicPredicates.MANAGE_DEGREE_CURRICULAR_PLANS.evaluate(this.getDegree())
-                || (this.isBolonhaDegree() ? this.getCurricularPlanMembersGroup().isMember(person) : false);
+                || (this.isBolonhaDegree() ? this.getCurricularPlanMembersGroup().isMember(person.getUser()) : false);
     }
 
     public Boolean getCanModify() {
@@ -1184,10 +1185,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                 || executionDegrees.iterator().next().getExecutionYear().isCurrent();
     }
 
-    @Override
-    public void setCurricularPlanMembersGroup(Group curricularPlanMembersGroup) {
+    public Group getCurricularPlanMembersGroup() {
+        return getMembersGroup() != null ? getMembersGroup().toGroup() : NobodyGroup.get();
+    }
+
+    public void setCurricularPlanMembersGroup(Group group) {
         check(this, DegreeCurricularPlanPredicates.scientificCouncilWritePredicate);
-        super.setCurricularPlanMembersGroup(curricularPlanMembersGroup);
+        setMembersGroup(group.toPersistentGroup());
     }
 
     @Override

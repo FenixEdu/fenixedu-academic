@@ -38,6 +38,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.joda.time.DateTime;
 
@@ -135,7 +136,7 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         AnnouncementBoard board = this.getRequestedAnnouncementBoard(request);
-        if (board.getWriters() != null && !board.getWriters().isMember(getLoggedPerson(request))) {
+        if (board.getWriters() != null && !board.getWriters().isMember(Authenticate.getUser())) {
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.not.allowed.to.write.board"));
             saveErrors(request, actionMessages);
@@ -244,7 +245,7 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
 
         Announcement announcement = this.getRequestedAnnouncement(request);
         if (announcement.getAnnouncementBoard().getWriters() != null
-                && !announcement.getAnnouncementBoard().getWriters().isMember(getLoggedPerson(request))) {
+                && !announcement.getAnnouncementBoard().getWriters().isMember(Authenticate.getUser())) {
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.not.allowed.to.write.board"));
             saveErrors(request, actionMessages);

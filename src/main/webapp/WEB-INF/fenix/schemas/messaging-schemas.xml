@@ -133,8 +133,8 @@
     </slot>
 </schema>
 
-<schema name="researchUnitGroupDescription" type="net.sourceforge.fenixedu.injectionCode.IGroup" bundle="MESSAGING_RESOURCES">
-	<slot name="name"/>
+<schema name="researchUnitGroupDescription" type="org.fenixedu.bennu.core.groups.Group" bundle="MESSAGING_RESOURCES">
+	<slot name="presentationName"/>
 </schema>
 
 <schema name="messaging.file.sourceGroup" type="net.sourceforge.fenixedu.presentationTier.Action.person.PersonFileSourceGroupBean">
@@ -154,8 +154,8 @@
 	</slot>
 </schema>
 
-<schema name="delegatesGroupDescription" type="net.sourceforge.fenixedu.injectionCode.IGroup" bundle="MESSAGING_RESOURCES">
-	<slot name="name"/>
+<schema name="delegatesGroupDescription" type="org.fenixedu.bennu.core.groups.Group" bundle="MESSAGING_RESOURCES">
+	<slot name="presentationName"/>
 </schema>
 
 

@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.dismissal.DismissalBean.SelectedCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.NoCourseGroupEnrolmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetEnrolmentEvaluationBean;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.ImprovementOfApprovedEnrolmentEvent;
@@ -2406,8 +2406,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         final Person person = AccessControl.getPerson();
 
         final boolean hasUpdateRegistrationAfterConclusionProcessPermission =
-                AcademicAuthorizationGroup.getProgramsForOperation(person,
-                        AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION).contains(this.getDegree());
+                AcademicAuthorizationGroup.getProgramsForOperation(person, AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION).contains(this.getDegree());
 
         if (courseGroup != null) {
             final CurriculumGroup group = findCurriculumGroupFor(courseGroup);
@@ -2662,8 +2661,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     private void checkPermission(final Person responsiblePerson, final CurriculumLineLocationBean bean) {
 
         final boolean hasUpdateRegistrationAfterConclusionPermission =
-                AcademicAuthorizationGroup.getProgramsForOperation(responsiblePerson,
-                        AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION).contains(this.getDegree());
+                AcademicAuthorizationGroup.getProgramsForOperation(responsiblePerson, AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION).contains(this.getDegree());
 
         if (bean.getCurriculumGroup().getParentCycleCurriculumGroup() != null
                 && bean.getCurriculumGroup().getParentCycleCurriculumGroup().isConclusionProcessed()
@@ -2853,8 +2851,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
         if (enrolment.getParentCycleCurriculumGroup() != null
                 && enrolment.getParentCycleCurriculumGroup().isConclusionProcessed()
-                && !AcademicAuthorizationGroup.getProgramsForOperation(person,
-                        AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION).contains(this.getDegree())) {
+                && !AcademicAuthorizationGroup.getProgramsForOperation(person, AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION).contains(this.getDegree())) {
             throw new DomainException("error.StudentCurricularPlan.cannot.move.is.not.authorized");
         }
 
@@ -2896,8 +2893,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
         if (enrolment.getParentCycleCurriculumGroup() != null
                 && enrolment.getParentCycleCurriculumGroup().isConclusionProcessed()
-                && !AcademicAuthorizationGroup.getProgramsForOperation(person,
-                        AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION).contains(this.getDegree())) {
+                && !AcademicAuthorizationGroup.getProgramsForOperation(person, AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION).contains(this.getDegree())) {
             throw new DomainException("error.StudentCurricularPlan.cannot.move.is.not.authorized");
         }
 
@@ -3059,13 +3055,11 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public boolean isAllowedToManageEnrolments() {
-        return AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-                AcademicOperationType.STUDENT_ENROLMENTS).contains(this.getDegree());
+        return AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.STUDENT_ENROLMENTS).contains(this.getDegree());
     }
 
     public boolean isAllowedToManageAccountingEvents() {
-        return AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-                AcademicOperationType.MANAGE_ACCOUNTING_EVENTS).contains(this.getDegree());
+        return AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_ACCOUNTING_EVENTS).contains(this.getDegree());
     }
 
     @Deprecated

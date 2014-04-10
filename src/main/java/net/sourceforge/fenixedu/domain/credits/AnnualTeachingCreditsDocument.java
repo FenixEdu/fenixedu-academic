@@ -1,15 +1,16 @@
 package net.sourceforge.fenixedu.domain.credits;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
+
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UnionGroup;
+import org.fenixedu.bennu.core.groups.UserGroup;
 
 public class AnnualTeachingCreditsDocument extends AnnualTeachingCreditsDocument_Base {
 
@@ -18,17 +19,17 @@ public class AnnualTeachingCreditsDocument extends AnnualTeachingCreditsDocument
         super();
         String filename = getFilename(annualTeachingCredits);
 
-        final Collection<IGroup> groups = new ArrayList<>();
+        final Set<Group> groups = new HashSet<>();
         final Teacher teacher = annualTeachingCredits.getTeacher();
         if (teacher != null) {
             final Person person = teacher.getPerson();
             if (person != null) {
-                groups.add(new PersonGroup(person));
+                groups.add(UserGroup.of(person.getUser()));
             }
         }
-        groups.add(new RoleGroup(RoleType.SCIENTIFIC_COUNCIL));
+        groups.add(RoleGroup.get(RoleType.SCIENTIFIC_COUNCIL));
 
-        init(filename, filename, content, new GroupUnion(groups));
+        init(filename, filename, content, UnionGroup.of(groups));
         setAnnualTeachingCredits(annualTeachingCredits);
         setHasConfidencialInformation(hasConfidencialInformation);
     }

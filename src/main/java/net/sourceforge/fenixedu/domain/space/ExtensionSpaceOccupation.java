@@ -1,13 +1,13 @@
 package net.sourceforge.fenixedu.domain.space;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.material.Extension;
 import net.sourceforge.fenixedu.domain.material.Material;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
 import net.sourceforge.fenixedu.predicates.SpacePredicates;
 
+import org.fenixedu.bennu.core.groups.Group;
 import org.joda.time.YearMonthDay;
 
 public class ExtensionSpaceOccupation extends ExtensionSpaceOccupation_Base {

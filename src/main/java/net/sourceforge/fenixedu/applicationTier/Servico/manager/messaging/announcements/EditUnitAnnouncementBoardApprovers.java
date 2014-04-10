@@ -5,8 +5,10 @@ import java.util.HashSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.messaging.AnnouncementBoardApproversBean;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
+
+import org.fenixedu.bennu.core.groups.UserGroup;
+
 import pt.ist.fenixframework.Atomic;
 
 public class EditUnitAnnouncementBoardApprovers {
@@ -19,6 +21,6 @@ public class EditUnitAnnouncementBoardApprovers {
                 persons.add(announcementBoardApproversBean.getPerson());
             }
         }
-        announcementBoard.setApprovers(new FixedSetGroup(persons));
+        announcementBoard.setApprovers(UserGroup.of(Person.convertToUsers(persons)));
     }
 }

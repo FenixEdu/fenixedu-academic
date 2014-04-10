@@ -27,10 +27,9 @@ import net.sourceforge.fenixedu.dataTransferObject.spaceManager.AccessGroupPerso
 import net.sourceforge.fenixedu.dataTransferObject.spaceManager.MoveSpaceBean;
 import net.sourceforge.fenixedu.dataTransferObject.spaceManager.ViewEventSpaceOccupationsBean;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.PersistentGroup;
-import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
+import net.sourceforge.fenixedu.domain.accessControl.MembersLinkGroup;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
+import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -60,6 +59,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.fenixedu.bennu.core.groups.UserGroup;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
@@ -258,11 +258,11 @@ public class ManageSpacesDA extends FenixDispatchAction {
         RoleType roleType = (bean != null) ? bean.getRoleType() : null;
 
         if (person != null) {
-            groupExpression = new PersonGroup(person).getExpression();
+            groupExpression = UserGroup.of(person.getUser()).getExpression();
         } else if (persistentGroupMembers != null) {
-            groupExpression = new PersistentGroup(persistentGroupMembers).getExpression();
+            groupExpression = MembersLinkGroup.get(persistentGroupMembers).getExpression();
         } else if (roleType != null) {
-            groupExpression = new RoleGroup(roleType).getExpression();
+            groupExpression = RoleGroup.get(roleType).getExpression();
         }
 
         try {

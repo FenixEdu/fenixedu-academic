@@ -8,11 +8,10 @@ import java.util.regex.Pattern;
 import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
-import org.fenixedu.bennu.core.domain.groups.AnyoneGroup;
+import org.fenixedu.bennu.core.groups.AnyoneGroup;
+import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.commons.StringNormalizer;
 
@@ -29,11 +28,11 @@ public class CmsContent extends CmsContent_Base implements Comparable<CmsContent
     }
 
     public Group getPermittedGroup() {
-        return new EveryoneGroup();
+        return getGroup().toGroup();
     }
 
     public void setPermittedGroup(Group group) {
-        // Do nothing...
+        setGroup(group.toPersistentGroup());
     }
 
     @Override
@@ -49,10 +48,10 @@ public class CmsContent extends CmsContent_Base implements Comparable<CmsContent
     }
 
     public boolean isAvailable() {
-        if (getAccessGroup() == null) {
+        if (getGroup() == null) {
             return true;
         }
-        return getAccessGroup().isMember(Authenticate.getUser());
+        return getGroup().isMember(Authenticate.getUser());
     }
 
     public Site getOwnerSite() {
@@ -69,7 +68,7 @@ public class CmsContent extends CmsContent_Base implements Comparable<CmsContent
             file.delete();
         }
         setParent(null);
-        setAccessGroup(null);
+        setPermittedGroup(null);
         deleteDomainObject();
     }
 
@@ -150,14 +149,14 @@ public class CmsContent extends CmsContent_Base implements Comparable<CmsContent
     }
 
     public boolean isPublicAvailable() {
-        if (getAccessGroup() == null) {
+        if (getPermittedGroup() == null) {
             if (getParent() != null) {
                 return getParent().isPublicAvailable();
             } else {
                 return true;
             }
         } else {
-            return getAccessGroup() == AnyoneGroup.getInstance();
+            return getPermittedGroup().equals(AnyoneGroup.get());
         }
 
     }

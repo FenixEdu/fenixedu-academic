@@ -28,9 +28,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Summary;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryCourseAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry;
@@ -46,7 +43,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -393,24 +389,24 @@ public class MergeExecutionCourses {
 //            }
 //        }
 //    }
-
-    private Set<String> createListOfEmailAddresses(final ExecutionCourse executionCourseTo) {
-        final Set<String> emails = new HashSet<String>();
-        for (final Professorship professorship : executionCourseTo.getProfessorshipsSet()) {
-            emails.add(professorship.getPerson().getEmail());
-        }
-        return emails;
-    }
-
-    private Group createExecutionCourseResponsibleTeachersGroup(final ExecutionCourse executionCourseTo) {
-        final Set<IGroup> groups = new HashSet<IGroup>();
-        for (final Professorship professorship : executionCourseTo.getProfessorshipsSet()) {
-            if (professorship.isResponsibleFor()) {
-                groups.add(new PersonGroup(professorship.getPerson()));
-            }
-        }
-        return groups.isEmpty() ? null : new GroupUnion(groups);
-    }
+//
+//    private Set<String> createListOfEmailAddresses(final ExecutionCourse executionCourseTo) {
+//        final Set<String> emails = new HashSet<String>();
+//        for (final Professorship professorship : executionCourseTo.getProfessorshipsSet()) {
+//            emails.add(professorship.getPerson().getEmail());
+//        }
+//        return emails;
+//    }
+//
+//    private Group createExecutionCourseResponsibleTeachersGroup(final ExecutionCourse executionCourseTo) {
+//        final Set<Group> groups = new HashSet<Group>();
+//        for (final Professorship professorship : executionCourseTo.getProfessorshipsSet()) {
+//            if (professorship.isResponsibleFor()) {
+//                groups.add(UserGroup.of(professorship.getPerson().getUser()));
+//            }
+//        }
+//        return groups.isEmpty() ? null : UnionGroup.of(groups);
+//    }
 
     private void copyProfessorships(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
         for (; !executionCourseFrom.getProfessorships().isEmpty();) {

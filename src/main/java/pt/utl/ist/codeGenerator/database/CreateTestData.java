@@ -60,8 +60,6 @@ import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
@@ -135,6 +133,7 @@ import net.sourceforge.fenixedu.util.Season;
 
 import org.fenixedu.bennu.core.bootstrap.AdminUserBootstrapper.AdminUserSection;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.portal.domain.PortalBootstrapper.PortalSection;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
@@ -423,10 +422,8 @@ public class CreateTestData {
                     Boolean.FALSE, null);
         }
 
-        private Group getCompetenceCourseMembersGroup() {
-            final Group teachersGroup = getRoleGroup(RoleType.TEACHER);
-            final Group managersGroup = getRoleGroup(RoleType.MANAGER);
-            return new GroupUnion(teachersGroup, managersGroup);
+        private org.fenixedu.bennu.core.groups.Group getCompetenceCourseMembersGroup() {
+            return RoleGroup.get(RoleType.TEACHER).or(RoleGroup.get(RoleType.MANAGER));
         }
 
         private String getDepartmentName(final int i) {
@@ -445,7 +442,7 @@ public class CreateTestData {
     }
 
     private static Group getRoleGroup(final RoleType roleType) {
-        return new RoleGroup(Role.getRoleByRoleType(roleType));
+        return RoleGroup.get(roleType);
     }
 
     public static class CreateDegrees {
@@ -1196,7 +1193,7 @@ public class CreateTestData {
 
             final Department department = new Department();
             department.setCode(degree.getSigla());
-            department.setCompetenceCourseMembersGroup(new RoleGroup(Role.getRoleByRoleType(RoleType.TEACHER)));
+            department.setCompetenceCourseMembersGroup(RoleGroup.get(RoleType.TEACHER));
 
             department.setName("Department " + degree.getName());
             department.setRealName("Department " + degree.getName());

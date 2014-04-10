@@ -2,14 +2,14 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UserGroup;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -42,8 +42,8 @@ public class ResearchUnitSite extends ResearchUnitSite_Base {
     }
 
     @Override
-    public IGroup getOwner() {
-        return new FixedSetGroup(getManagers());
+    public Group getOwner() {
+        return UserGroup.of(Person.convertToUsers(getManagers()));
     }
 
     @Override

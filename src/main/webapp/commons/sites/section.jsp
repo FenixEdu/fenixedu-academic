@@ -144,13 +144,13 @@
 		
 		<span style="color: rgb(136, 136, 136); padding-left: 0.75em;">
             <bean:message key="label.item.availableFor" bundle="SITE_RESOURCES"/>:
-            <fr:view name="section" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
+            <fr:view name="section" property="permittedGroup" layout="null-as-label" type="org.fenixedu.bennu.core.groups.Group">
                 <fr:layout>
-                    <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
+                    <fr:property name="label" value="label.public"/>
                     <fr:property name="key" value="true"/>
                     <fr:property name="bundle" value="SITE_RESOURCES"/>
                     <fr:property name="subLayout" value="values"/>
-                    <fr:property name="subSchema" value="permittedGroup.class.text"/>
+                    <fr:property name="subSchema" value="permittedGroup.name"/>
                 </fr:layout>
             </fr:view>    
         </span>
@@ -299,13 +299,13 @@
 	            
 	            <span style="color: #888; padding-left: 0.75em;">
 	                <bean:message key="label.item.availableFor" bundle="SITE_RESOURCES"/>:
-	                <fr:view name="item" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
+	                <fr:view name="item" property="permittedGroup" layout="null-as-label" type="org.fenixedu.bennu.core.groups.Group">
 	                    <fr:layout>
-	                        <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
+	                        <fr:property name="label" value="label.public"/>
 	                        <fr:property name="key" value="true"/>
 	                        <fr:property name="bundle" value="SITE_RESOURCES"/>
 	                        <fr:property name="subLayout" value="values"/>
-	                        <fr:property name="subSchema" value="permittedGroup.class.text"/>
+	                        <fr:property name="subSchema" value="permittedGroup.name"/>
 	                    </fr:layout>
 	                </fr:view>
 	            </span>
@@ -426,13 +426,13 @@
             					<td>
 	                                <span class="pleft1" style="color: #888;">
 	                                    <bean:message key="label.item.file.availableFor" bundle="SITE_RESOURCES"/>:
-	                                    <fr:view name="fileItem" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
+	                                    <fr:view name="fileItem" property="permittedGroup" layout="null-as-label" type="org.fenixedu.bennu.core.groups.Group">
 	                                        <fr:layout>
-	                                            <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
+	                                            <fr:property name="label" value="label.public"/>
 	                                            <fr:property name="key" value="true"/>
 	                                            <fr:property name="bundle" value="SITE_RESOURCES"/>
 	                                            <fr:property name="subLayout" value="values"/>
-	                                            <fr:property name="subSchema" value="permittedGroup.class.text"/>
+	                                            <fr:property name="subSchema" value="permittedGroup.name"/>
 	                                        </fr:layout>
 	                                    </fr:view>
 	                                </span>
@@ -494,13 +494,13 @@
 					
 				<span style="color: #888; padding-left: 0.75em;">
 	                <bean:message key="label.item.availableFor" bundle="SITE_RESOURCES"/>:
-	                <fr:view name="functionality" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
+	                <fr:view name="functionality" property="permittedGroup" layout="null-as-label" type="org.fenixedu.bennu.core.groups.Group">
 	                    <fr:layout>
-	                        <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
+	                        <fr:property name="label" value="label.public"/>
 	                        <fr:property name="key" value="true"/>
 	                        <fr:property name="bundle" value="SITE_RESOURCES"/>
 	                        <fr:property name="subLayout" value="values"/>
-	                        <fr:property name="subSchema" value="permittedGroup.class.text"/>
+	                        <fr:property name="subSchema" value="permittedGroup.name"/>
 	                    </fr:layout>
 	                </fr:view>
 	            </span>
@@ -568,13 +568,13 @@
             					<td>
 	                                <span class="pleft1" style="color: #888;">
 	                                    <bean:message key="label.item.file.availableFor" bundle="SITE_RESOURCES"/>:
-	                                    <fr:view name="fileItem" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
+	                                    <fr:view name="fileItem" property="permittedGroup" layout="null-as-label" type="org.fenixedu.bennu.core.groups.Group">
 	                                        <fr:layout>
-	                                            <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
+	                                            <fr:property name="label" value="label.public"/>
 	                                            <fr:property name="key" value="true"/>
 	                                            <fr:property name="bundle" value="SITE_RESOURCES"/>
 	                                            <fr:property name="subLayout" value="values"/>
-	                                            <fr:property name="subSchema" value="permittedGroup.class.text"/>
+	                                            <fr:property name="subSchema" value="permittedGroup.name"/>
 	                                        </fr:layout>
 	                                    </fr:view>
 	                                </span>

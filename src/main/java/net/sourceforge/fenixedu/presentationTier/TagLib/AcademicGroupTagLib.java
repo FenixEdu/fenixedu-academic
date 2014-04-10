@@ -7,7 +7,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import net.sourceforge.fenixedu.domain.AcademicProgram;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 
@@ -30,8 +30,8 @@ public class AcademicGroupTagLib extends TagSupport {
         Set<AdministrativeOffice> offices =
                 office != null ? Collections.singleton(office) : Collections.<AdministrativeOffice> emptySet();
         AcademicAuthorizationGroup group =
-                new AcademicAuthorizationGroup(AcademicOperationType.valueOf(operation), programs, offices);
-        if (group.allows(Authenticate.getUser())) {
+                AcademicAuthorizationGroup.get(AcademicOperationType.valueOf(operation), programs, offices, null);
+        if (group.isMember(Authenticate.getUser())) {
             return EVAL_BODY_INCLUDE;
         }
         return SKIP_BODY;

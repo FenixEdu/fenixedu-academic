@@ -19,6 +19,8 @@ import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
 
+import org.fenixedu.bennu.core.security.Authenticate;
+
 public class SpacePredicates {
 
     // Generic Space Predicates
@@ -26,7 +28,7 @@ public class SpacePredicates {
     public static final AccessControlPredicate<Space> checkPermissionsToManageSpace = new AccessControlPredicate<Space>() {
         @Override
         public boolean evaluate(Space space) {
-            space.checkIfLoggedPersonHasPermissionsToManageSpace(AccessControl.getPerson());
+            space.checkIfLoggedPersonHasPermissionsToManageSpace(Authenticate.getUser());
             return true;
         }
     };

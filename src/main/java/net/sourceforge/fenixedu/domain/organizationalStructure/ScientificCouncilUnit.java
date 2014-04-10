@@ -7,14 +7,14 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.ScientificCouncilSite;
+import net.sourceforge.fenixedu.domain.accessControl.ManagersOfUnitSiteGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersonsInFunctionGroup;
-import net.sourceforge.fenixedu.domain.accessControl.ScientificCouncilMembersGroup;
-import net.sourceforge.fenixedu.domain.accessControl.WebSiteManagersGroup;
+import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Campus;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
 
+import org.fenixedu.bennu.core.groups.Group;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -35,15 +35,15 @@ public class ScientificCouncilUnit extends ScientificCouncilUnit_Base {
     }
 
     @Override
-    protected List<IGroup> getDefaultGroups() {
-        List<IGroup> groups = super.getDefaultGroups();
+    protected List<Group> getDefaultGroups() {
+        List<Group> groups = super.getDefaultGroups();
 
-        groups.add(new ScientificCouncilMembersGroup());
-        groups.add(new WebSiteManagersGroup(getSite()));
+        groups.add(RoleGroup.get(RoleType.SCIENTIFIC_COUNCIL));
+        groups.add(ManagersOfUnitSiteGroup.get(getSite()));
 
         Function function = getCoordinationCommitteeMembersFunction();
         if (function != null) {
-            groups.add(new PersonsInFunctionGroup(function));
+            groups.add(PersonsInFunctionGroup.get(function));
         }
 
         return groups;

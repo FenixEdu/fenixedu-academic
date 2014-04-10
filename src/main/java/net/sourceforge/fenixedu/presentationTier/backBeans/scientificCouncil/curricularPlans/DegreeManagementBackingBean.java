@@ -110,7 +110,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
             for (final DegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
                 if (dcp.getCurricularStage().equals(CurricularStage.PUBLISHED)
                         || dcp.getCurricularStage().equals(CurricularStage.APPROVED)
-                        || dcp.getCurricularPlanMembersGroup().isMember(this.getUserView().getPerson())) {
+                        || dcp.getCurricularPlanMembersGroup().isMember(this.getUserView())) {
                     result.add(degree);
                 }
             }

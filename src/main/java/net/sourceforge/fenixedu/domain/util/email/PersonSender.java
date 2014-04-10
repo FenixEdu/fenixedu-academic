@@ -1,8 +1,10 @@
 package net.sourceforge.fenixedu.domain.util.email;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+
+import org.fenixedu.bennu.core.groups.UserGroup;
+
 import pt.ist.fenixframework.Atomic;
 
 public class PersonSender extends PersonSender_Base {
@@ -16,7 +18,7 @@ public class PersonSender extends PersonSender_Base {
     public PersonSender(final Person person) {
         this();
         setPerson(person);
-        setMembers(new PersonGroup(person));
+        setMembers(UserGroup.of(person.getUser()));
         setFromName(createFromName());
     }
 

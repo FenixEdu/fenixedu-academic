@@ -6,12 +6,11 @@ import java.io.IOException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.UnitFile;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 import org.apache.commons.io.FileUtils;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UserGroup;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -31,7 +30,7 @@ public class CreateUnitFile {
 
         final byte[] content = read(file);
         new UnitFile(unit, person, description, tags, originalFilename, displayName, content,
-                !isPublic(permittedGroup) ? new GroupUnion(permittedGroup, new PersonGroup(person)) : permittedGroup);
+                !isPublic(permittedGroup) ? permittedGroup.or(UserGroup.of(person.getUser())) : permittedGroup);
     }
 
     private static boolean isPublic(Group permittedGroup) {

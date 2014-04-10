@@ -37,7 +37,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.FieldIsRequiredException;
@@ -56,6 +55,7 @@ import net.sourceforge.fenixedu.util.EvaluationType;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
@@ -662,7 +662,8 @@ public class Thesis extends Thesis_Base {
                 persons.add(thesisEvaluationParticipant.getPerson());
             }
         }
-        final Recipient recipient = new Recipient("Membros da tese " + getTitle().toString(), new FixedSetGroup(persons));
+        final Recipient recipient =
+                new Recipient("Membros da tese " + getTitle().toString(), UserGroup.of(Person.convertToUsers(persons)));
         final String studentNumber = getStudent().getNumber().toString();
         final String title = getFinalFullTitle().getContent();
         final String subject = getMessage("message.thesis.reject.submission.email.subject", studentNumber);

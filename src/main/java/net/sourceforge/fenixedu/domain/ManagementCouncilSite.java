@@ -1,9 +1,10 @@
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ManagementCouncilUnit;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
+
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UserGroup;
+
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ManagementCouncilSite extends ManagementCouncilSite_Base {
@@ -14,8 +15,8 @@ public class ManagementCouncilSite extends ManagementCouncilSite_Base {
     }
 
     @Override
-    public IGroup getOwner() {
-        return new GroupUnion(new FixedSetGroup(getManagers()));
+    public Group getOwner() {
+        return UserGroup.of(Person.convertToUsers(getManagers()));
     }
 
     @Override

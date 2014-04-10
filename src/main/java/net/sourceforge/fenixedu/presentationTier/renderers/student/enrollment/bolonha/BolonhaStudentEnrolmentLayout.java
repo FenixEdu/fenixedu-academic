@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.OptionalEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
@@ -654,8 +654,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
     public void setBolonhaStudentEnrollmentBean(BolonhaStudentEnrollmentBean bolonhaStudentEnrollmentBean) {
         this.bolonhaStudentEnrollmentBean = bolonhaStudentEnrollmentBean;
         this.canPerformStudentEnrolments =
-                AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-                        AcademicOperationType.STUDENT_ENROLMENTS).contains(
+                AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.STUDENT_ENROLMENTS).contains(
                         bolonhaStudentEnrollmentBean.getStudentCurricularPlan().getDegree());
     }
 

@@ -51,7 +51,7 @@ import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent;
@@ -1852,8 +1852,7 @@ public class Registration extends Registration_Base {
     private void checkIfReachedAttendsLimit() {
         final User userView = Authenticate.getUser();
         if (userView == null
-                || !AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
-                        AcademicOperationType.STUDENT_ENROLMENTS).contains(this.getDegree())) {
+                || !AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(), AcademicOperationType.STUDENT_ENROLMENTS).contains(this.getDegree())) {
             if (readAttendsInCurrentExecutionPeriod().size() >= MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD) {
                 throw new DomainException("error.student.reached.attends.limit",
                         String.valueOf(MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD));
@@ -2092,10 +2091,8 @@ public class Registration extends Registration_Base {
     }
 
     final public boolean isAllowedToManageRegistration() {
-        return AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-                AcademicOperationType.MANAGE_REGISTRATIONS).contains(getDegree())
-                || AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-                        AcademicOperationType.VIEW_FULL_STUDENT_CURRICULUM).contains(getDegree());
+        return AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_REGISTRATIONS).contains(getDegree())
+                || AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.VIEW_FULL_STUDENT_CURRICULUM).contains(getDegree());
     }
 
     public boolean isCurricularCourseApproved(final CurricularCourse curricularCourse) {

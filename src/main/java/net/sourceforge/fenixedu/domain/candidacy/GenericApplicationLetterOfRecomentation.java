@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.domain.candidacy;
 
-import net.sourceforge.fenixedu.domain.accessControl.NoOneGroup;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.NobodyGroup;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -13,7 +13,7 @@ public class GenericApplicationLetterOfRecomentation extends GenericApplicationL
     public GenericApplicationLetterOfRecomentation(GenericApplicationRecomentation recomentation, String displayName,
             String fileName, byte[] content) {
         super();
-        init(fileName, displayName, content, new NoOneGroup());
+        init(fileName, displayName, content, NobodyGroup.get());
         setRecomentation(recomentation);
         sendEmailForRecommendationUploadNotification();
     }

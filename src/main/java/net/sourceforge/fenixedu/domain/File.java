@@ -2,10 +2,11 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.regex.Pattern;
 
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
-import org.apache.commons.codec.digest.DigestUtils;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.NobodyGroup;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.joda.time.DateTime;
 
@@ -16,8 +17,6 @@ public abstract class File extends File_Base {
     protected void init(String filename, String displayName, byte[] content, Group group) {
         init(FileUtils.getFilenameOnly(displayName), FileUtils.getFilenameOnly(filename), content);
         setPermittedGroup(group);
-        setChecksum(DigestUtils.shaHex(content));
-        setChecksumAlgorithm("SHA");
     }
 
     @Override
@@ -34,11 +33,16 @@ public abstract class File extends File_Base {
         }
     }
 
+    public Group getPermittedGroup() {
+        return getAccessGroup() != null ? getAccessGroup().toGroup() : NobodyGroup.get();
+    }
+
+    public void setPermittedGroup(Group group) {
+        setAccessGroup(group.toPersistentGroup());
+    }
+
     public boolean isPrivate() {
-        if (getPermittedGroup().isMember(null)) {
-            return false;
-        }
-        return true;
+        return !getPermittedGroup().isMember(null);
     }
 
     @Deprecated
@@ -67,9 +71,14 @@ public abstract class File extends File_Base {
         super.delete();
     }
 
+    @Override
+    public boolean isAccessible(User user) {
+        return getPermittedGroup().isMember(user);
+    }
+
+    @Deprecated
     public boolean isPersonAllowedToAccess(Person person) {
-        final Group group = this.getPermittedGroup();
-        return group == null || group.isMember(person);
+        return isAccessible(person.getUser());
     }
 
     @Deprecated

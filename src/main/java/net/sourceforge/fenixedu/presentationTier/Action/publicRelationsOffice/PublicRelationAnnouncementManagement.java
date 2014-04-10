@@ -39,7 +39,7 @@ public class PublicRelationAnnouncementManagement extends AnnouncementManagement
         final Person person = this.getLoggedPerson(request);
         for (final AnnouncementBoard currentBoard : rootDomainObject.getInstitutionUnit().getBoardsSet()) {
             final UnitAnnouncementBoard board = (UnitAnnouncementBoard) currentBoard;
-            if (board.getWriters().isMember(person)) {
+            if (board.getWriters().isMember(person.getUser())) {
                 boards.add(board);
             }
         }

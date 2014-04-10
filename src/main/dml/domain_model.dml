@@ -243,14 +243,6 @@ valueType net.sourceforge.fenixedu.domain.Grade as Grade {
     internalizeWith importFromString();
 }
 
-valueType net.sourceforge.fenixedu.domain.accessControl.Group as Group {
-    externalizeWith {
-        String getExpression();
-    }
-
-    internalizeWith fromString();
-}
-
 valueType net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences as BibliographicReferences {
     externalizeWith {
         String net.sourceforge.fenixedu.domain.degreeStructure.Externalization.externalizeBibliographicReferences();
@@ -792,7 +784,6 @@ valueType net.sourceforge.fenixedu.domain.cms.SiteTemplateController as SiteTemp
 
     class DegreeCurricularPlan  {
         String anotation;
-        Group curricularPlanMembersGroup;
         CurricularStage curricularStage;
         Integer degreeDuration;
         String description;
@@ -855,13 +846,12 @@ valueType net.sourceforge.fenixedu.domain.cms.SiteTemplateController as SiteTemp
 
     class Department  {
         String code;
-        Group competenceCourseMembersGroup;
         String name;
         String realName;
         String realNameEn;
         Boolean active;
     }
-    
+
     class DepartmentCreditsPool {
 	    BigDecimal originalCreditsPool;
     	BigDecimal creditsPool;
@@ -1186,9 +1176,6 @@ valueType net.sourceforge.fenixedu.domain.cms.SiteTemplateController as SiteTemp
     }
 
     class File extends .org.fenixedu.bennu.io.domain.GenericFile {
-        String checksum;
-        String checksumAlgorithm;
-        Group permittedGroup;
     }
     
 		class teacher.evaluation.TeacherEvaluationFile extends File {
@@ -4425,13 +4412,6 @@ valueType net.sourceforge.fenixedu.domain.cms.SiteTemplateController as SiteTemp
 
         class space.Space extends resource.Resource {
             YearMonthDay createdOn;
-            Group extensionOccupationsAccessGroup;
-            Group genericEventOccupationsAccessGroup;
-            Group lessonOccupationsAccessGroup;
-            Group personOccupationsAccessGroup;
-            Group spaceManagementAccessGroup;
-            Group unitOccupationsAccessGroup;
-            Group writtenEvaluationOccupationsAccessGroup;
         }
 
             class space.AllocatableSpace extends space.Space {
@@ -5393,7 +5373,6 @@ valueType net.sourceforge.fenixedu.domain.cms.SiteTemplateController as SiteTemp
 
     class util.email.Recipient  {
         String toName;
-        Group members;
         Integer membersSize;
     }
 
@@ -5413,7 +5392,6 @@ valueType net.sourceforge.fenixedu.domain.cms.SiteTemplateController as SiteTemp
     class util.email.Sender  {
         String fromName;
         String fromAddress;
-        Group members;
     }
 
     class util.email.UnitBasedSender extends util.email.Sender {}
@@ -5722,11 +5700,7 @@ class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionP
                 class messaging.AnnouncementBoard {
                     DateTime creationDate;
                     MultiLanguageString name;
-                    Group managers;
                     Boolean mandatory;
-                    Group readers;
-                    Group writers;
-                    Group approvers;
                 }
 
                     class messaging.ExecutionCourseAnnouncementBoard extends messaging.AnnouncementBoard {
@@ -6753,7 +6727,6 @@ class phd.alert.PhdAlert extends Alert {
 }
 
     class phd.alert.PhdCustomAlert extends phd.alert.PhdAlert {
-        Group targetGroup;
         Boolean sendEmail;
         LocalDate whenToFire;
         Boolean userDefined;
@@ -7454,9 +7427,9 @@ class Installation {
 	String instituitionEmailDomain;
 }
 
-class accessControl.FenixPersistentGroup extends .org.fenixedu.bennu.core.domain.groups.CustomGroup;
+class accessControl.FenixPersistentGroup extends .org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 
-class accessControl.RoleCustomGroup extends accessControl.FenixPersistentGroup;
+class accessControl.PersistentRoleGroup extends accessControl.FenixPersistentGroup;
 
 class accessControl.FenixPredicateGroup extends accessControl.FenixPersistentGroup;
 
@@ -12194,11 +12167,11 @@ relation PersistentGroupMembersUnit {
     }
 }
 
-relation RoleCustomGroupRole {
+relation PersistentRoleGroupRole {
     public Role playsRole role {
         multiplicity 1..1;
     }
-    public accessControl.RoleCustomGroup playsRole roleCustomGroup {
+    public accessControl.PersistentRoleGroup playsRole roleGroup {
         multiplicity 0..1;
     }
 }
@@ -15141,7 +15114,7 @@ relation CmsContentAccessGroup {
     cms.CmsContent playsRole content {
         multiplicity *;
     }
-    .org.fenixedu.bennu.core.domain.groups.Group playsRole accessGroup;
+    .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole group;
 }
 
 
@@ -19247,6 +19220,159 @@ relation PersistentMembersLinkGroupPersistentGroupMembers {
 		multiplicity 0..1;
 	}
 	public accessControl.PersistentGroupMembers playsRole persistentGroupMembers {
+		multiplicity 1..1;
+	}
+}
+
+relation DegreeCurricularPlanMembers {
+	protected DegreeCurricularPlan playsRole degreeCurricularPlanAsMembers {
+		multiplicity *;
+	}
+	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole membersGroup {
+		multiplicity 0..1;
+	}
+}
+
+relation DepartmentCompetenceCourseMembersGroup {
+	protected Department playsRole departmentAsMembers {
+		multiplicity *;
+	}
+	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole membersGroup {
+		multiplicity 1..1;
+	}
+}
+
+relation FilePermittedGroup {
+	protected File playsRole fileAsAccessGroup {
+		multiplicity *;
+	}
+	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole accessGroup {
+		multiplicity 0..1;
+	}
+}
+
+relation SpaceExtensionOccupationsAccessGroup {
+	protected space.Space playsRole spaceAsExtensionOccupationsAccessGroup {
+		multiplicity *;
+	}
+	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole extensionOccupationsGroup {
+		multiplicity 0..1;
+	}
+}
+
+relation SpaceGenericEventOccupationsAccessGroup {
+	protected space.Space playsRole spaceAsGenericEventOccupationsAccessGroup {
+		multiplicity *;
+	}
+	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole genericEventOccupationsGroup {
+		multiplicity 0..1;
+	}
+}
+
+relation SpaceLessonOccupationsAccessGroup {
+	protected space.Space playsRole spaceAsLessonOccupationsAccessGroup {
+		multiplicity *;
+	}
+	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole lessonOccupationsGroup {
+		multiplicity 0..1;
+	}
+}
+
+relation SpacePersonOccupationsAccessGroup {
+	protected space.Space playsRole spaceAsPersonOccupationsAccessGroup {
+		multiplicity *;
+	}
+	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole personOccupationsGroup {
+		multiplicity 0..1;
+	}
+}
+
+relation SpaceSpaceManagementAccessGroup {
+	protected space.Space playsRole spaceAsSpaceManagementAccessGroup {
+		multiplicity *;
+	}
+	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole spaceManagementGroup {
+		multiplicity 0..1;
+	}
+}
+
+relation SpaceUnitOccupationsAccessGroup {
+	protected space.Space playsRole spaceAsUnitOccupationsAccessGroup {
+		multiplicity *;
+	}
+	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole unitOccupationsGroup {
+		multiplicity 0..1;
+	}
+}
+
+relation SpaceWrittenEvaluationOccupationsAccessGroup {
+	protected space.Space playsRole spaceAsWrittenEvaluationOccupationsAccessGroup {
+		multiplicity *;
+	}
+	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole writtenEvaluationOccupationsGroup {
+		multiplicity 0..1;
+	}
+}
+
+relation RecipientMembers {
+	protected util.email.Recipient playsRole recipientAsMembers {
+		multiplicity *;
+	}
+	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole membersGroup {
+		multiplicity 0..1;
+	}
+}
+
+relation SenderMembers {
+	protected util.email.Sender playsRole senderAsMembers {
+		multiplicity *;
+	}
+	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole membersGroup {
+		multiplicity 1..1;
+	}
+}
+
+relation AnnouncementBoardManagers {
+	protected messaging.AnnouncementBoard playsRole announcementBoardAsManagers {
+		multiplicity *;
+	}
+	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole managersGroup {
+		multiplicity 0..1;
+	}
+}
+
+relation AnnouncementBoardReaders {
+	protected messaging.AnnouncementBoard playsRole announcementBoardAsReaders {
+		multiplicity *;
+	}
+	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole readersGroup {
+		multiplicity 0..1;
+	}
+}
+
+relation AnnouncementBoardWriters {
+	protected messaging.AnnouncementBoard playsRole announcementBoardAsWriters {
+		multiplicity *;
+	}
+	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole writersGroup {
+		multiplicity 0..1;
+	}
+}
+
+relation AnnouncementBoardApprovers {
+	protected messaging.AnnouncementBoard playsRole announcementBoardAsApprovers {
+		multiplicity *;
+	}
+	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole approversGroup {
+		multiplicity 0..1;
+	}
+}
+
+relation PhdCustomAlertTargetGroup {
+	protected phd.alert.PhdCustomAlert playsRole phdCustomAlertAsTargetGroup {
+		multiplicity *;
+	}
+	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole targetGroup {
 		multiplicity 1..1;
 	}
 }

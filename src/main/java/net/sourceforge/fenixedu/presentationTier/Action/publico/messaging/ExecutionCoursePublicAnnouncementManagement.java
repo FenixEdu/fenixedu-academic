@@ -123,7 +123,7 @@ public class ExecutionCoursePublicAnnouncementManagement extends PublicAnnouncem
     protected Collection<AnnouncementBoard> boardsToView(HttpServletRequest request) throws Exception {
         Collection<AnnouncementBoard> boards = new ArrayList<AnnouncementBoard>(1);
         AnnouncementBoard board = this.getRequestedExecutionCourse(request).getBoard();
-        if (board.getReaders() == null || (getUserView(request) != null && board.getReaders().allows(getUserView(request)))) {
+        if (board.getReaders() == null || (getUserView(request) != null && board.getReaders().isMember(getUserView(request)))) {
             boards.add(this.getRequestedExecutionCourse(request).getBoard());
         }
         return boards;

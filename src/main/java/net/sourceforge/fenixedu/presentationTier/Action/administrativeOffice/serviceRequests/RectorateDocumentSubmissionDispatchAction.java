@@ -14,7 +14,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -58,8 +58,7 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
     public ActionForward index(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         Set<AdministrativeOffice> offices =
-                AcademicAuthorizationGroup.getOfficesForOperation(getLoggedPerson(request),
-                        AcademicOperationType.SERVICE_REQUESTS_RECTORAL_SENDING);
+                AcademicAuthorizationGroup.getOfficesForOperation(getLoggedPerson(request), AcademicOperationType.SERVICE_REQUESTS_RECTORAL_SENDING);
 
         request.setAttribute("unsent",
                 RectorateSubmissionBatch.getRectorateSubmissionBatchesByState(offices, RectorateSubmissionState.UNSENT));

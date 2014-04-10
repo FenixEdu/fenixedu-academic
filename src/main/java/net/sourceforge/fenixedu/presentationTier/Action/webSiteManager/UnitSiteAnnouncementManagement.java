@@ -126,8 +126,8 @@ public abstract class UnitSiteAnnouncementManagement extends AnnouncementManagem
         if (unit != null) {
             for (AnnouncementBoard board : unit.getBoards()) {
                 if (board.getWriters() == null || board.getReaders() == null || board.getManagers() == null
-                        || board.getWriters().allows(getUserView(request)) || board.getReaders().allows(getUserView(request))
-                        || board.getManagers().allows(getUserView(request))) {
+                        || board.getWriters().isMember(getUserView(request)) || board.getReaders().isMember(getUserView(request))
+                        || board.getManagers().isMember(getUserView(request))) {
                     boards.add(board);
                 }
             }

@@ -54,7 +54,7 @@ public class ManageAdvisoriesDA extends AnnouncementManagement {
         final User userView = getUserView(request);
         final Collection<AnnouncementBoard> boardsToShow = new ArrayList<AnnouncementBoard>();
         for (AnnouncementBoard board : rootDomainObject.getInstitutionUnit().getBoards()) {
-            if (board.getWriters() == null || board.getWriters().allows(userView)) {
+            if (board.getWriters() == null || board.getWriters().isMember(userView)) {
                 boardsToShow.add(board);
             }
         }

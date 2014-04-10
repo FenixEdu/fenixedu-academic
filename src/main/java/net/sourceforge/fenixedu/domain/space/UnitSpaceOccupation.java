@@ -5,7 +5,6 @@ import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.DomainObjectUtil;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
@@ -14,6 +13,7 @@ import net.sourceforge.fenixedu.predicates.SpacePredicates;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.NullComparator;
+import org.fenixedu.bennu.core.groups.Group;
 import org.joda.time.YearMonthDay;
 
 public class UnitSpaceOccupation extends UnitSpaceOccupation_Base {

@@ -39,6 +39,8 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.Group;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
@@ -377,8 +379,20 @@ public class Department extends Department_Base {
         return count;
     }
 
+    public Group getCompetenceCourseMembersGroup() {
+        return getMembersGroup().toGroup();
+    }
+
+    public void setCompetenceCourseMembersGroup(Group group) {
+        setMembersGroup(group.toPersistentGroup());
+    }
+
+    public boolean isUserMemberOfCompetenceCourseMembersGroup(User user) {
+        return getCompetenceCourseMembersGroup().isMember(user);
+    }
+
     public boolean isUserMemberOfCompetenceCourseMembersGroup(Person person) {
-        return getCompetenceCourseMembersGroup().isMember(person);
+        return getCompetenceCourseMembersGroup().isMember(person.getUser());
     }
 
     public boolean isCurrentUserMemberOfCompetenceCourseMembersGroup() {

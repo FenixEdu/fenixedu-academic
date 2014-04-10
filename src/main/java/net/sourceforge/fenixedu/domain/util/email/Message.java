@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.util.EmailAddressList;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -323,7 +324,7 @@ public class Message extends Message_Base {
     public int getPossibleRecipientsCount() {
         int count = 0;
         for (Recipient recipient : getRecipients()) {
-            count += recipient.getMembers().getElements().size();
+            count += recipient.getMembers().getMembers().size();
         }
         return count;
     }
@@ -331,9 +332,9 @@ public class Message extends Message_Base {
     public int getRecipientsWithEmailCount() {
         int count = 0;
         for (Recipient recipient : getRecipients()) {
-            final Set<Person> elements = recipient.getMembers().getElements();
-            for (Person person : elements) {
-                if (person.getEmailForSendingEmails() != null) {
+            final Set<User> elements = recipient.getMembers().getMembers();
+            for (User user : elements) {
+                if (user.getPerson().getEmailForSendingEmails() != null) {
                     count++;
                 }
             }

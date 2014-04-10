@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.domain.JobBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.QualificationBean;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
@@ -199,8 +199,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     public boolean isAllowedToManageProcess(User userView) {
         if (userView != null) {
             Set<AcademicProgram> programs =
-                    AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
-                            AcademicOperationType.MANAGE_PHD_PROCESSES);
+                    AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(), AcademicOperationType.MANAGE_PHD_PROCESSES);
 
             return programs.contains(this.getPhdProgram());
         } else {
@@ -222,8 +221,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
         }
 
         Set<AcademicProgram> programs =
-                AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
-                        AcademicOperationType.MANAGE_PHD_PROCESS_STATE);
+                AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(), AcademicOperationType.MANAGE_PHD_PROCESS_STATE);
 
         return programs.contains(this.getPhdProgram());
     }
@@ -758,8 +756,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     public boolean isRegistrationAvailable() {
         return hasRegistration()
-                && AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-                        AcademicOperationType.MANAGE_REGISTRATIONS).contains(getRegistration().getDegree());
+                && AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_REGISTRATIONS).contains(getRegistration().getDegree());
     }
 
     @Override

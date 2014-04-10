@@ -1,10 +1,11 @@
 package net.sourceforge.fenixedu.domain.util.email;
 
-import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+
+import org.fenixedu.bennu.core.groups.Group;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 
@@ -12,7 +13,7 @@ public class SystemSender extends SystemSender_Base {
 
     public SystemSender() {
         super();
-        setMembers(new RoleGroup(Role.getRoleByRoleType(RoleType.MANAGER)));
+        setMembers(RoleGroup.get(RoleType.MANAGER));
         setFromAddress(Sender.getNoreplyMail());
         setSystemRootDomainObject(getRootDomainObject());
         setFromName(createFromName());
@@ -23,20 +24,18 @@ public class SystemSender extends SystemSender_Base {
     }
 
     public Recipient getRoleRecipient(RoleType roleType) {
-        final RoleGroup roleGroup = new RoleGroup(roleType);
+        final Group roleGroup = RoleGroup.get(roleType);
         for (Recipient recipient : getRecipientsSet()) {
             final Group members = recipient.getMembers();
-            if (members != null && members instanceof RoleGroup) {
-                if (members.equals(roleGroup)) {
-                    return recipient;
-                }
+            if (roleGroup.equals(members)) {
+                return recipient;
             }
         }
         return createRoleRecipient(roleGroup);
     }
 
     @Atomic(mode = TxMode.WRITE)
-    private Recipient createRoleRecipient(RoleGroup roleGroup) {
+    private Recipient createRoleRecipient(Group roleGroup) {
         final Recipient recipient = new Recipient(roleGroup);
         addRecipients(recipient);
         return recipient;

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.accessControl.Group;
+import org.fenixedu.bennu.core.groups.Group;
 
 public class GroupsBean implements Serializable {
     List<Group> groups;

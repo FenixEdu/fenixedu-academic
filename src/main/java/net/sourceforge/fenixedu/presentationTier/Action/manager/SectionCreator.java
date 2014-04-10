@@ -4,8 +4,10 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
+
+import org.fenixedu.bennu.core.groups.AnyoneGroup;
+import org.fenixedu.bennu.core.groups.Group;
+
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class SectionCreator implements Serializable {
@@ -31,7 +33,7 @@ public class SectionCreator implements Serializable {
         this.superiorSection = null;
         this.nextSection = null;
         this.visible = true;
-        this.permittedGroup = new EveryoneGroup();
+        this.permittedGroup = AnyoneGroup.get();
     }
 
     public SectionCreator(Section section) {

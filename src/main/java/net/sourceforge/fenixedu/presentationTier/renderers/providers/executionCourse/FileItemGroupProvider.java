@@ -5,14 +5,16 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.InternalPersonGroup;
+import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.FileContentCreationBean;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.FileItemPermissionBean;
+
+import org.fenixedu.bennu.core.groups.AnyoneGroup;
+import org.fenixedu.bennu.core.groups.Group;
+
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.BiDirectionalConverter;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -51,10 +53,10 @@ public class FileItemGroupProvider implements DataProvider {
         return site != null ? site.getContextualPermissionGroups() : getDefaultPermissions();
     }
 
-    private List<IGroup> getDefaultPermissions() {
-        List<IGroup> groups = new ArrayList<IGroup>();
-        groups.add(new EveryoneGroup());
-        groups.add(new InternalPersonGroup());
+    private List<Group> getDefaultPermissions() {
+        List<Group> groups = new ArrayList<Group>();
+        groups.add(AnyoneGroup.get());
+        groups.add(RoleGroup.get(RoleType.PERSON));
         return groups;
     }
 
@@ -63,7 +65,7 @@ public class FileItemGroupProvider implements DataProvider {
         return new BiDirectionalConverter() {
             @Override
             public Object convert(Class type, Object value) {
-                return value == null ? null : Group.fromString((String) value);
+                return value == null ? null : Group.parse((String) value);
             }
 
             @Override

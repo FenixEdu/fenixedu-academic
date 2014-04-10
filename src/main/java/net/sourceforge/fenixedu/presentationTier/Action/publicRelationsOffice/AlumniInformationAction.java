@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publicRelationsOffice;
 
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,16 +15,10 @@ import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniInfoNotUpdatedBe
 import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniMailSendToBean;
 import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniSearchBean;
 import net.sourceforge.fenixedu.domain.Alumni;
-import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Formation;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.QueueJob;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.accessControl.ConclusionYearDegreesStudentsGroup;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.NotUpdatedAlumniInfoForSpecificTimeGroup;
 import net.sourceforge.fenixedu.domain.alumni.AlumniReportFile;
 import net.sourceforge.fenixedu.domain.alumni.AlumniReportFileBean;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -44,7 +37,6 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
@@ -52,9 +44,6 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
-import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonPrimitive;
@@ -217,103 +206,6 @@ public class AlumniInformationAction extends FenixDispatchAction {
         alumniInfoNotUpdatedBean.createRecipientGroup(gepSender);
 
         return manageRecipients(mapping, actionForm, request, response);
-    }
-
-    public ActionForward exportGroupList(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-
-        String recipientOID = (String) getFromRequest(request, "recipientOID");
-        Recipient recipient = FenixFramework.getDomainObject(recipientOID);
-        String fileName = recipient.getToName().replace(" ", "_");
-        final Spreadsheet groupSheet;
-
-        Group group = recipient.getMembers();
-        ConclusionYearDegreesStudentsGroup yearDegreesStudentsGroup = null;
-        NotUpdatedAlumniInfoForSpecificTimeGroup alumniInfoForSpecificTimeGroup = null;
-        if (group instanceof ConclusionYearDegreesStudentsGroup) {
-            fileName = fileName.split("_:")[0];
-            groupSheet = new Spreadsheet(fileName);
-            yearDegreesStudentsGroup = (ConclusionYearDegreesStudentsGroup) group;
-            setYearDegreesStudentsSheet(recipient, groupSheet, yearDegreesStudentsGroup);
-        } else {
-            groupSheet = new Spreadsheet(fileName);
-            alumniInfoForSpecificTimeGroup = (NotUpdatedAlumniInfoForSpecificTimeGroup) group;
-            setAlumniInfoForSpecificTimeSheet(recipient, groupSheet);
-        }
-
-        groupSheet.setHeaders(new String[] { "NOME", "NUMERO_ALUNO", "CURSO", "INICIO", "CONCLUSAO", "EMAIL", "TELEMOVEL" });
-        response.setContentType("application/vnd.ms-excel");
-        response.setHeader("Content-disposition", "attachment; filename=" + fileName);
-        final OutputStream outputStream = response.getOutputStream();
-        groupSheet.exportToXLSSheet(outputStream);
-        outputStream.flush();
-        response.flushBuffer();
-        return null;
-    }
-
-    private void setYearDegreesStudentsSheet(Recipient recipient, final Spreadsheet groupSheet,
-            ConclusionYearDegreesStudentsGroup yearDegreesStudentsGroup) {
-        for (Person person : recipient.getMembers().getElements()) {
-            Row row = groupSheet.addRow();
-            row.setCell(person.getName());
-            row.setCell(person.getStudent().getNumber());
-
-            for (final Registration registration : person.getStudent().getRegistrationsSet()) {
-                if (registration.isConcluded() && yearDegreesStudentsGroup.getDegrees().contains(registration.getDegree())) {
-                    LocalDate conclusionDate = getConclusionDate(registration.getDegree(), registration);
-                    if (conclusionDate != null
-                            && (conclusionDate.getYear() == yearDegreesStudentsGroup.getRegistrationEnd().getEndCivilYear() || conclusionDate
-                                    .getYear() == yearDegreesStudentsGroup.getRegistrationEnd().getBeginCivilYear())) {
-                        row.setCell(registration.getDegree().getNameI18N().getContent());
-                        row.setCell(registration.getStartDate().toString());
-                        row.setCell(conclusionDate.toString());
-                        break;
-                    }
-                }
-            }
-            row.setCell(person.getEmailForSendingEmails());
-            row.setCell(person.getDefaultMobilePhoneNumber());
-        }
-    }
-
-    private void setAlumniInfoForSpecificTimeSheet(Recipient recipient, final Spreadsheet groupSheet) {
-        for (Person person : recipient.getMembers().getElements()) {
-            Row row = groupSheet.addRow();
-            row.setCell(person.getName());
-            row.setCell(person.getStudent().getNumber());
-
-            for (final Registration registration : person.getStudent().getRegistrationsSet()) {
-                if (registration.isConcluded()) {
-                    LocalDate conclusionDate = getConclusionDate(registration.getDegree(), registration);
-                    if (conclusionDate != null) {
-                        row.setCell(registration.getDegree().getNameI18N().getContent());
-                        row.setCell(registration.getStartDate().toString());
-                        row.setCell(conclusionDate.toString());
-                        break;
-                    }
-                }
-            }
-            row.setCell(person.getEmailForSendingEmails());
-            row.setCell(person.getDefaultMobilePhoneNumber());
-        }
-    }
-
-    private LocalDate getConclusionDate(Degree degree, Registration registration) {
-        for (StudentCurricularPlan scp : registration.getStudentCurricularPlansByDegree(degree)) {
-            if (registration.isBolonha()) {
-                if (scp.getLastConcludedCycleCurriculumGroup() != null) {
-                    YearMonthDay conclusionDate =
-                            registration.getConclusionDate(scp.getLastConcludedCycleCurriculumGroup().getCycleType());
-                    if (conclusionDate != null) {
-                        return conclusionDate.toLocalDate();
-                    }
-                }
-                return null;
-            } else {
-                return registration.getConclusionDate() != null ? registration.getConclusionDate().toLocalDate() : null;
-            }
-        }
-        return null;
     }
 
     public ActionForward removeRecipients(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

@@ -237,7 +237,7 @@ Documentation:
 	<renderer type="net.sourceforge.fenixedu.domain.research.activity.JournalIssue" class="net.sourceforge.fenixedu.presentationTier.renderers.JournalIssueRenderer"/> 
  
     <!--@ Renders one or more (in case of group union) groups names. The group must support getName -->
-    <renderer type="net.sourceforge.fenixedu.domain.accessControl.Group" layout="show-groups" class="net.sourceforge.fenixedu.presentationTier.renderers.GroupRenderer"/>
+    <renderer type="org.fenixedu.bennu.core.groups.Group" layout="show-groups" class="net.sourceforge.fenixedu.presentationTier.renderers.GroupRenderer"/>
     
     <!--@ The tree layout allows a collection to be presented as a tree, that is, were you specify how an hierarchy is
           formed and a structure made by lists inside lists is created. -->

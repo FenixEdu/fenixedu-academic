@@ -33,6 +33,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.util.MessageResources;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
@@ -102,7 +103,7 @@ public abstract class ForunsManagement extends FenixDispatchAction {
         Forum forum = getRequestedForum(request);
         request.setAttribute("forum", this.getRequestedForum(request));
 
-        request.setAttribute("loggedPersonCanWrite", forum.getWritersGroup().isMember(loggedPerson));
+        request.setAttribute("loggedPersonCanWrite", forum.getWritersGroup().isMember(Authenticate.getUser()));
         request.setAttribute("showReplyBox", this.getShowReplyBox(request));
 
         return mapping.findForward("viewThread");
@@ -235,7 +236,7 @@ public abstract class ForunsManagement extends FenixDispatchAction {
         Person loggedPerson = getLoggedPerson(request);
         request.setAttribute("receivingMessagesByEmail", forum.isPersonReceivingMessagesByEmail(loggedPerson));
 
-        request.setAttribute("loggedPersonCanWrite", forum.getWritersGroup().isMember(loggedPerson));
+        request.setAttribute("loggedPersonCanWrite", forum.getWritersGroup().isMember(Authenticate.getUser()));
     }
 
 }

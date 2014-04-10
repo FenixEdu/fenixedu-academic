@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.predicates;
 
+import net.sourceforge.fenixedu.domain.accessControl.ResearchAuthorGroup;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.research.AuthorGroup;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
@@ -22,7 +22,8 @@ public class ResultPredicates {
             final User userView = Authenticate.getUser();
             if (userView != null
                     && (userView.getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL) || ((userView.getPerson().hasRole(
-                            RoleType.RESEARCHER) || new AuthorGroup().allows(userView)) && !result.hasAnyResultParticipations()))) {
+                            RoleType.RESEARCHER) || ResearchAuthorGroup.get().isMember(userView)) && !result
+                            .hasAnyResultParticipations()))) {
                 return true;
             }
             return false;
@@ -35,7 +36,7 @@ public class ResultPredicates {
             final User userView = Authenticate.getUser();
             if (userView != null
                     && (userView.getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)
-                            || userView.getPerson().hasRole(RoleType.RESEARCHER) || new AuthorGroup().allows(userView))) {
+                            || userView.getPerson().hasRole(RoleType.RESEARCHER) || ResearchAuthorGroup.get().isMember(userView))) {
                 return true;
             }
             return false;

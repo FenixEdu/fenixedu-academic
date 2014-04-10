@@ -29,6 +29,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.DateTime;
@@ -295,8 +296,8 @@ public class AnnouncementsStartPageHandler extends AnnouncementManagement {
             Collection<? extends AnnouncementBoard> announcementBoards, final AnnouncementBoardAccessLevel level,
             final AnnouncementBoardAccessType type) {
         announcementBoards =
-                CollectionUtils.select(announcementBoards, new AnnouncementBoard.AcessLevelPredicate(level,
-                        getLoggedPerson(request)));
+                CollectionUtils.select(announcementBoards,
+                        new AnnouncementBoard.AcessLevelPredicate(level, Authenticate.getUser()));
         announcementBoards =
                 CollectionUtils.select(announcementBoards, new AnnouncementBoard.AcessTypePredicate(type,
                         getLoggedPerson(request)));

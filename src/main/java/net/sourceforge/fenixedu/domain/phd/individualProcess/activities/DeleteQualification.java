@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.phd.individualProcess.activities;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -33,6 +33,7 @@ public class DeleteQualification extends PhdIndividualProgramProcessActivity {
         }
         final Person creator = qualification.getCreator();
         return creator == person
-                || new AcademicAuthorizationGroup(AcademicOperationType.MANAGE_PHD_PROCESS_STATE).isMember(creator);
+                || AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_PHD_PROCESS_STATE)
+                        .isMember(creator.getUser());
     }
 }

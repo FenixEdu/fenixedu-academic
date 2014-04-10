@@ -1,14 +1,16 @@
 package net.sourceforge.fenixedu.domain.documents;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.groups.Group;
+
 import pt.ist.fenixframework.Atomic;
 
 /**
@@ -32,7 +34,7 @@ public class DocumentRequestGeneratedDocument extends DocumentRequestGeneratedDo
 
     @Override
     protected Group computePermittedGroup() {
-        return new AcademicAuthorizationGroup(AcademicOperationType.SERVICE_REQUESTS);
+        return AcademicAuthorizationGroup.get(AcademicOperationType.SERVICE_REQUESTS);
     }
 
     @Override

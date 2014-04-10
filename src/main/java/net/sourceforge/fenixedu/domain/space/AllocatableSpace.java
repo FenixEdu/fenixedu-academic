@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
@@ -26,6 +25,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.Group;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
@@ -186,7 +186,7 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
     }
 
     protected boolean groupHasElements(final Group group, Person person) {
-        return group != null && group.getElementsCount() > 0 && (person == null || group.isMember(person));
+        return group != null && group.getMembers().size() > 0 && (person == null || group.isMember(person.getUser()));
     }
 
     public boolean isForPunctualOccupation() {
@@ -545,7 +545,7 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
     }
 
     public boolean isActiveManager(Person person) {
-        return getSpaceManagementAccessGroupWithChainOfResponsibility().isMember(person);
+        return getSpaceManagementAccessGroupWithChainOfResponsibility().isMember(person.getUser());
     }
 
     @Deprecated

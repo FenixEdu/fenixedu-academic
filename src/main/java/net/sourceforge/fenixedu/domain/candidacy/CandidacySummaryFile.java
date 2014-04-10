@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.domain.candidacy;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UserGroup;
 
 public class CandidacySummaryFile extends CandidacySummaryFile_Base {
 
@@ -16,9 +16,7 @@ public class CandidacySummaryFile extends CandidacySummaryFile_Base {
     }
 
     private Group createPermittedGroup(Person candidacyStudent) {
-        FixedSetGroup student = new FixedSetGroup(candidacyStudent);
-        RoleGroup admins = new RoleGroup(RoleType.ADMINISTRATOR);
-        return new GroupUnion(student, admins);
+        return UserGroup.of(candidacyStudent.getUser()).or(RoleGroup.get(RoleType.ADMINISTRATOR));
     }
 
     @Deprecated

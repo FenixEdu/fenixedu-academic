@@ -10,13 +10,15 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
-import net.sourceforge.fenixedu.domain.accessControl.WebSiteManagersGroup;
+import net.sourceforge.fenixedu.domain.accessControl.ManagersOfUnitSiteGroup;
 import net.sourceforge.fenixedu.domain.cms.CmsContent;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.predicates.UnitSitePredicates;
+
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UserGroup;
+
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -56,8 +58,8 @@ public class UnitSite extends UnitSite_Base {
     }
 
     @Override
-    public IGroup getOwner() {
-        return new FixedSetGroup(getManagers());
+    public Group getOwner() {
+        return UserGroup.of(Person.convertToUsers(getManagers()));
     }
 
     @Override
@@ -338,9 +340,9 @@ public class UnitSite extends UnitSite_Base {
     }
 
     @Override
-    public List<IGroup> getContextualPermissionGroups() {
-        List<IGroup> groups = super.getContextualPermissionGroups();
-        groups.add(new WebSiteManagersGroup(this));
+    public List<Group> getContextualPermissionGroups() {
+        List<Group> groups = super.getContextualPermissionGroups();
+        groups.add(ManagersOfUnitSiteGroup.get(this));
         groups.addAll(getUnit().getGroups());
 
         return groups;

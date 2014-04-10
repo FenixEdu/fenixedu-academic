@@ -3,9 +3,9 @@ package net.sourceforge.fenixedu.domain.messaging;
 import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.commons.StringNormalizer;
 import org.joda.time.DateTime;
 
@@ -55,7 +55,7 @@ public abstract class Forum extends Forum_Base {
     }
 
     public void checkIfPersonCanWrite(Person person) {
-        if (!getWritersGroup().isMember(person)) {
+        if (!getWritersGroup().isMember(person.getUser())) {
             throw new DomainException("forum.person.cannot.write");
         }
     }
@@ -67,7 +67,7 @@ public abstract class Forum extends Forum_Base {
     }
 
     public void addEmailSubscriber(Person person) {
-        if (!getReadersGroup().isMember(person)) {
+        if (!getReadersGroup().isMember(person.getUser())) {
             throw new DomainException("forum.cannot.subscribe.person.because.does.not.belong.to.readers");
         }
 

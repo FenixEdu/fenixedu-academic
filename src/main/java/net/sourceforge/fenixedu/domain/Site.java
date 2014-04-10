@@ -9,14 +9,15 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
-import net.sourceforge.fenixedu.domain.accessControl.InternalPersonGroup;
+import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.cms.CmsContent;
 import net.sourceforge.fenixedu.domain.cms.SiteTemplate;
 import net.sourceforge.fenixedu.domain.cms.TemplatedSectionInstance;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.AnyoneGroup;
+import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -39,7 +40,7 @@ public abstract class Site extends Site_Base {
         return new Section(parentContainer, sectionName, sectionOrder);
     }
 
-    public abstract IGroup getOwner();
+    public abstract Group getOwner();
 
     public void copySectionsAndItemsFrom(Site siteFrom) {
         for (Section sectionFrom : siteFrom.getAssociatedSectionSet()) {
@@ -54,11 +55,11 @@ public abstract class Site extends Site_Base {
      * 
      * @return
      */
-    public List<IGroup> getContextualPermissionGroups() {
-        List<IGroup> groups = new ArrayList<IGroup>();
+    public List<Group> getContextualPermissionGroups() {
+        List<Group> groups = new ArrayList<Group>();
 
-        groups.add(new EveryoneGroup());
-        groups.add(new InternalPersonGroup());
+        groups.add(AnyoneGroup.get());
+        groups.add(RoleGroup.get(RoleType.PERSON));
 
         return groups;
     }

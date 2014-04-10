@@ -77,7 +77,7 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
             StringBuilder errorsBuilder = new StringBuilder();
             byte[] paymentFileContents = createPaymentFile(lastSuccessfulSentDateTime, errorsBuilder).getBytes("ASCII");
             setErrors(errorsBuilder.toString());
-            init(outgoingFilename(), outgoingFilename(), paymentFileContents, new RoleGroup(RoleType.MANAGER));
+            init(outgoingFilename(), outgoingFilename(), paymentFileContents, RoleGroup.get(RoleType.MANAGER));
         } catch (UnsupportedEncodingException e) {
             throw new DomainException(e.getMessage(), e);
         }

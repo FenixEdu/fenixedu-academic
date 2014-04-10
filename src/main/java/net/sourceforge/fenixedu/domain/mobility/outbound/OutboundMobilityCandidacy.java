@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.mobility.outbound;
 
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.email.Message;
@@ -9,6 +8,7 @@ import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.UserGroup;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -84,7 +84,7 @@ public class OutboundMobilityCandidacy extends OutboundMobilityCandidacy_Base im
         final SystemSender sender = getRootDomainObject().getSystemSender();
         if (sender != null) {
             final Registration registration = getOutboundMobilityCandidacySubmission().getRegistration();
-            final Recipient recipient = new Recipient(new PersonGroup(registration.getPerson()));
+            final Recipient recipient = new Recipient(UserGroup.of(registration.getPerson().getUser()));
             new Message(sender, recipient, BundleUtil.getStringFromResourceBundle("resources.StudentResources",
                     "label.email.deleted.contest.subject"), BundleUtil.getStringFromResourceBundle("resources.StudentResources",
                     "label.email.deleted.contest.body", getOutboundMobilityCandidacyContest().getMobilityAgreement()

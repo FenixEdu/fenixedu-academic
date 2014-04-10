@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -13,8 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacy;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContest;
@@ -26,7 +24,6 @@ import net.sourceforge.fenixedu.domain.util.email.EmailBean;
 import net.sourceforge.fenixedu.domain.util.email.PersonSender;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminCandidaciesApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.BundleUtil;
@@ -34,6 +31,9 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UnionGroup;
+import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
 
@@ -435,7 +435,7 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
                 BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice",
                         "label.send.email.to.candidates.group.to.name", mobilityGroup.getDescription(), period
                                 .getExecutionInterval().getName());
-        final GroupUnion group = new GroupUnion(getCandidateGroups(mobilityGroup, period));
+        final Group group = UnionGroup.of(getCandidateGroups(mobilityGroup, period));
 
         final Recipient recipient = Recipient.newInstance(toGroupName, group);
         final EmailBean bean = new EmailBean();
@@ -454,12 +454,12 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         return mapping.findForward("sendEmail");
     }
 
-    private Collection<IGroup> getCandidateGroups(final OutboundMobilityCandidacyContestGroup mobilityGroup,
+    private Set<Group> getCandidateGroups(final OutboundMobilityCandidacyContestGroup mobilityGroup,
             final OutboundMobilityCandidacyPeriod period) {
-        final Collection<IGroup> groups = new HashSet<IGroup>();
+        final Set<Group> groups = new HashSet<Group>();
         for (final OutboundMobilityCandidacySubmission submission : period.getOutboundMobilityCandidacySubmissionSet()) {
             if (submission.hasContestInGroup(mobilityGroup)) {
-                groups.add(new PersonGroup(submission.getRegistration().getPerson()));
+                groups.add(UserGroup.of(submission.getRegistration().getPerson().getUser()));
             }
         }
         return groups;

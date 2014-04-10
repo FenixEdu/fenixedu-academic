@@ -25,8 +25,8 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean;
-import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup;
-import net.sourceforge.fenixedu.domain.accessControl.RoleTypeGroup;
+import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
+import net.sourceforge.fenixedu.domain.accessControl.TeacherGroup;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
@@ -1203,8 +1203,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public ExecutionCourseAnnouncementBoard createExecutionCourseAnnouncementBoard(final String name) {
-        return new ExecutionCourseAnnouncementBoard(name, this, new ExecutionCourseTeachersGroup(this), null, new RoleTypeGroup(
-                RoleType.MANAGER), ExecutionCourseBoardPermittedGroupType.ECB_EXECUTION_COURSE_TEACHERS,
+        RoleType roleType = RoleType.MANAGER;
+        return new ExecutionCourseAnnouncementBoard(name, this, TeacherGroup.get(this), null, RoleGroup.get(roleType),
+                ExecutionCourseBoardPermittedGroupType.ECB_EXECUTION_COURSE_TEACHERS,
                 ExecutionCourseBoardPermittedGroupType.ECB_PUBLIC, ExecutionCourseBoardPermittedGroupType.ECB_MANAGER);
     }
 

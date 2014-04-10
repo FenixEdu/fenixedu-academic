@@ -58,7 +58,7 @@ public class ChangeConvokeActive {
                         writtenEvaluation.getName(), group.getName(), beginDateString, time });
 
         new Message(PersonSender.newInstance(person), new ConcreteReplyTo(replyTo).asCollection(), new Recipient(
-                new VigilancyGroup(convoke)).asCollection(), Collections.EMPTY_LIST, Collections.EMPTY_LIST, subject,
+                VigilancyGroup.get(convoke)).asCollection(), Collections.EMPTY_LIST, Collections.EMPTY_LIST, subject,
                 emailMessage, convoke.getSitesAndGroupEmails());
 
     }

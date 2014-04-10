@@ -10,14 +10,16 @@ import java.util.Map;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import pt.utl.ist.fenix.tools.predicates.InlinePredicate;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 
@@ -72,7 +74,8 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
 
         final Map<CurricularCourse, Enrolment> enrolmentsMap = new HashMap<CurricularCourse, Enrolment>();
         boolean isServices =
-                new AcademicAuthorizationGroup(AcademicOperationType.STUDENT_ENROLMENTS).isMember(AccessControl.getPerson());
+                AcademicAuthorizationGroup.get(AcademicOperationType.STUDENT_ENROLMENTS).isMember(
+                        Authenticate.getUser());
 
         for (final CurriculumModule curriculumModule : group.getCurriculumModules()) {
             if (curriculumModule.isEnrolment()) {

@@ -9,10 +9,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.CandidacyDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyDocument;
@@ -20,6 +16,8 @@ import net.sourceforge.fenixedu.domain.candidacy.CandidacyDocumentFile;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.apache.commons.io.FileUtils;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UserGroup;
 
 import pt.ist.fenixframework.Atomic;
 
@@ -32,10 +30,9 @@ public class SaveCandidacyDocumentFiles {
     @Atomic
     public static void run(List<CandidacyDocumentUploadBean> candidacyDocuments) {
 
-        Group masterDegreeOfficeEmployeesGroup =
-                new RoleGroup(Role.getRoleByRoleType(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE));
-        Group coordinatorsGroup = new RoleGroup(Role.getRoleByRoleType(RoleType.COORDINATOR));
-        Group permittedGroup = new GroupUnion(masterDegreeOfficeEmployeesGroup, coordinatorsGroup);
+        Group masterDegreeOfficeEmployeesGroup = RoleGroup.get(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
+        Group coordinatorsGroup = RoleGroup.get(RoleType.COORDINATOR);
+        Group permittedGroup = masterDegreeOfficeEmployeesGroup.or(coordinatorsGroup);
 
         for (CandidacyDocumentUploadBean candidacyDocumentUploadBean : candidacyDocuments) {
             if (candidacyDocumentUploadBean.getTemporaryFile() != null) {
@@ -52,8 +49,7 @@ public class SaveCandidacyDocumentFiles {
                 }
 
                 final CandidacyDocumentFile candidacyDocumentFile =
-                        new CandidacyDocumentFile(filename, filename, content, new GroupUnion(permittedGroup, new PersonGroup(
-                                person)));
+                        new CandidacyDocumentFile(filename, filename, content, permittedGroup.or(UserGroup.of(person.getUser())));
                 candidacyDocument.setFile(candidacyDocumentFile);
             }
         }
