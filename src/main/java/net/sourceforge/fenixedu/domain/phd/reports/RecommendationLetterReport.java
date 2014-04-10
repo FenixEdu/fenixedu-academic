@@ -50,7 +50,28 @@ public class RecommendationLetterReport extends PhdReport {
                     addCellValue(row, onNullEmptyString(processNumber), 0);
                     addCellValue(row, onNullEmptyString(name), 1);
                     addCellValue(row, onNullEmptyString(email), 2);
-                    addCellValue(row, onNullEmptyString(letter == null ? "NO" : "YES"), 3);
+                    if (letter == null) {
+                        addCellValue(row, "NO", 3);
+                    } else {
+                        addCellValue(row, "YES", 3);
+                        addCellValue(row, onNullEmptyString(letter.getHowLongKnownApplicant()), 4);
+                        addCellValue(row, onNullEmptyString(letter.getCapacity()), 5);
+                        addCellValue(row, onNullEmptyString(letter.getComparisonGroup()), 6);
+                        addCellValue(row, onNullEmptyString(letter.getRankInClass()), 7);
+
+                        addCellValue(row, onNullEmptyString(letter.getAcademicPerformance().getLocalizedName()), 8);
+                        addCellValue(row, onNullEmptyString(letter.getSocialAndCommunicationSkills()), 9);
+                        addCellValue(row, onNullEmptyString(letter.getPotencialToExcelPhd()), 10);
+
+                        addCellValue(row, onNullEmptyString(letter.getRefereeName()), 11);
+                        addCellValue(row, onNullEmptyString(letter.getRefereePosition()), 12);
+                        addCellValue(row, onNullEmptyString(letter.getRefereeInstitution()), 13);
+                        addCellValue(row, onNullEmptyString(letter.getRefereeAddress()), 14);
+                        addCellValue(row, onNullEmptyString(letter.getRefereeCity()), 15);
+                        addCellValue(row, onNullEmptyString(letter.getRefereeZipCode()), 16);
+                        addCellValue(row, onNullEmptyString(letter.getRefereeCountry().getLocalizedName().getContent()), 17);
+                        addCellValue(row, onNullEmptyString(letter.getRefereeEmail()), 18);
+                    }
                 }
             }
 
@@ -81,11 +102,31 @@ public class RecommendationLetterReport extends PhdReport {
         addHeaderCell(sheet, getHeaderInBundle("refererName"), 1);
         addHeaderCell(sheet, getHeaderInBundle("refererEmaol"), 2);
         addHeaderCell(sheet, getHeaderInBundle("hasReferenceLetter"), 3);
+
+        addHeaderCell(sheet, getResource("label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter.howLongKnownApplicant"), 4);
+        addHeaderCell(sheet, getResource("label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter.capacity"), 5);
+        addHeaderCell(sheet, getResource("label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter.comparisonGroup"), 6);
+        addHeaderCell(sheet, getResource("label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter.rankInClass"), 7);
+        addHeaderCell(sheet, getResource("label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter.academicPerformance"), 8);
+        addHeaderCell(sheet, getResource("label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter.socialAndCommunicationSkills"), 9);
+        addHeaderCell(sheet, getResource("label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter.potencialToExcelPhd"), 10);
+        addHeaderCell(sheet, getResource("label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter.refereeName"), 11);
+        addHeaderCell(sheet, getResource("label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter.refereePosition"), 12);
+        addHeaderCell(sheet, getResource("label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter.refereeInstitution"), 13);
+        addHeaderCell(sheet, getResource("label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter.refereeAddress"), 14);
+        addHeaderCell(sheet, getResource("label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter.refereeCity"), 15);
+        addHeaderCell(sheet, getResource("label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter.refereeZipCode"), 16);
+        addHeaderCell(sheet, getResource("label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter.refereeCountry"), 17);
+        addHeaderCell(sheet, getResource("label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter.email"), 18);
     }
 
     private String getHeaderInBundle(String field) {
         return this.bundle.getString("label.net.sourceforge.fenixedu.domain.phd.reports.PhdIndividualProgramProcessesReport."
                 + field);
+    }
+
+    private String getResource(String key) {
+        return this.bundle.getString(key);
     }
 
 }
