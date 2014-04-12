@@ -97,6 +97,7 @@ import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PhdMigrat
 import net.sourceforge.fenixedu.domain.phd.reports.EPFLCandidatesReport;
 import net.sourceforge.fenixedu.domain.phd.reports.PhdGuidersReport;
 import net.sourceforge.fenixedu.domain.phd.reports.PhdIndividualProgramProcessesReport;
+import net.sourceforge.fenixedu.domain.phd.reports.RecommendationLetterReport;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -125,7 +126,6 @@ import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
 @Mapping(path = "/phdIndividualProgramProcess", module = "academicAdministration")
 @Forwards({
-
         @Forward(name = "manageProcesses", path = "/phd/academicAdminOffice/manageProcesses.jsp"),
         @Forward(name = "viewProcess", path = "/phd/academicAdminOffice/viewProcess.jsp"),
         @Forward(name = "editPersonalInformation", path = "/phd/academicAdminOffice/editPersonalInformation.jsp"),
@@ -1604,6 +1604,9 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 
         EPFLCandidatesReport epflReport = new EPFLCandidatesReport(workbook);
         epflReport.build(searchBean);
+
+        RecommendationLetterReport recommendationLetterReport = new RecommendationLetterReport(workbook);
+        recommendationLetterReport.build(searchBean);
 
         response.setContentType("application/vnd.ms-excel");
         response.setHeader("Content-Disposition", "attachment; filename=phd.xls");

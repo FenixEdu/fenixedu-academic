@@ -10,7 +10,7 @@
 	<groupId>pt.ist</groupId>
 	<artifactId>fenix</artifactId>
 	<packaging>jar</packaging>
-	<version>2.1.18</version>
+	<version>2.1.19</version>
 	<name>Fenix</name>
 	<url>http://fenix-ashes.ist.utl.pt</url>
 

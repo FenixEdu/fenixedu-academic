@@ -170,6 +170,9 @@
 
 	<%--  ### Documents ### --%>
 	<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.documents" bundle="PHD_RESOURCES"/></h2>
+	<html:link action="/candidacies//phdProgramCandidacyProcess.do?method=downloadCandidacyDocuments" paramId="processId" paramName="hashCode" paramProperty="phdProgramCandidacyProcess.externalId">
+		<bean:message key="label.phd.documents.download.all" bundle="PHD_RESOURCES" />
+	</html:link>
 	<logic:notEmpty name="individualProgramProcess" property="candidacyProcessDocuments">
 		<fr:view name="individualProgramProcess" property="candidacyProcessDocuments" schema="Public.PhdProgramProcessDocument.view">
 			<fr:layout name="tabular">

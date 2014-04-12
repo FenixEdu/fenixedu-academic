@@ -203,7 +203,9 @@ public class ExportPhdIndividualProgramProcessesInHtml {
         page.rowStart().header("Area:").column(process.getPhdProgramFocusArea().getName().getContent()).rowEnd();
         page.rowStart().header(Unit.getInstitutionAcronym() + " Phd Program:")
                 .column(process.getPhdProgram().getName().getContent(Language.en)).rowEnd();
-        page.rowStart().header("EPFL Phd Program:").column(process.getExternalPhdProgram().getName().getContent(Language.en));
+        if (process.getExternalPhdProgram() != null) {
+            page.rowStart().header("EPFL Phd Program:").column(process.getExternalPhdProgram().getName().getContent(Language.en));
+        }
         page.rowStart().header("Title:").column(string(process.getThesisTitle())).rowEnd();
         page.rowStart().header("Collaboration:").column(process.getCollaborationTypeName()).rowEnd();
         page.rowStart().header("Year:").column(process.getExecutionYear().getYear()).rowEnd();

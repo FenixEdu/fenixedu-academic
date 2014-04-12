@@ -167,7 +167,8 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
                 throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
             }
 
-            if (!getRegistration().getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
+            if (!getRegistration().getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) &&
+                    !getRegistration().getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA)) {
                 RegistryCode code = getRegistryCode();
                 if (code != null) {
                     if (!code.getDocumentRequestSet().contains(this)) {
