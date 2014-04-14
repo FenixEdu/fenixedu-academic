@@ -1561,12 +1561,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         Double balance;
     }
 
-    class PersonalGroup  {
-        Group concreteGroup;
-        String description;
-        String name;
-    }
-
     class Price  {
         String description;
         DocumentType documentType;
@@ -12534,13 +12528,6 @@ relation PersonExtensionPerson {
     }
 }
 
-relation PersonHasPersonalGroups {
-    Person playsRole person;
-    PersonalGroup playsRole personalGroups {
-        multiplicity *;
-    }
-}
-
 relation PersonHomepage {
     Person playsRole person;
     homepage.Homepage playsRole homepage;
@@ -14460,13 +14447,6 @@ relation RootDomainObjectPersonName {
 relation RootDomainObjectPersonNamePart {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     person.PersonNamePart playsRole personNamePart {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectPersonalGroup {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    PersonalGroup playsRole personalGroups {
         multiplicity *;
     }
 }

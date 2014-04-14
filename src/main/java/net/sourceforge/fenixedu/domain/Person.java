@@ -4960,16 +4960,6 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.PersonalGroup> getPersonalGroups() {
-        return getPersonalGroupsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPersonalGroups() {
-        return !getPersonalGroupsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.MasterDegreeCandidate> getMasterDegreeCandidates() {
         return getMasterDegreeCandidatesSet();
     }
