@@ -80,7 +80,6 @@ import net.sourceforge.fenixedu.domain.accessControl.ResponsibleProfessorshipsFo
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ScientificAreaMemberGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ScientificCouncilMembersGroup;
-import net.sourceforge.fenixedu.domain.accessControl.SearchDegreeStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.StudentGroupStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.TeachersAndInstitutionSiteManagersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.TeachersWithGradesToSubmit;
@@ -280,7 +279,6 @@ public class GroupBuilderRegistry {
         register("author", AuthorGroup.class, new AuthorGroup.AuthorGroupBuilder());
         register("projectDepartmentAccessGroup", ProjectDepartmentAccessGroup.class, new ProjectDepartmentAccessGroup.Builder());
 
-        register("searchDegreeStudentsGroup", SearchDegreeStudentsGroup.class, new SearchDegreeStudentsGroup.Builder());
         register("academic", AcademicAuthorizationGroup.class, new AcademicAuthorizationGroupBuilder());
         register("phdProcessGuidingsGroup", PhdProcessGuidingsGroup.class, new PhdProcessGuidingsGroup.Builder());
 

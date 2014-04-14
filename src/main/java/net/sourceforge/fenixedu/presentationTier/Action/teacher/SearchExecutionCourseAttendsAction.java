@@ -165,11 +165,10 @@ public class SearchExecutionCourseAttendsAction extends ExecutionCourseBaseActio
             sender = ExecutionCourseSender.newInstance(executionCourse);
         } else {
             SearchDegreeStudentsGroup degreeStudentsGroup =
-                    (SearchDegreeStudentsGroup) Group.fromStringinHex((String) getFromRequestOrForm(request,
-                            (DynaActionForm) form, "searchGroup"));
+                    SearchDegreeStudentsGroup.parse((String) getFromRequestOrForm(request, (DynaActionForm) form, "searchGroup"));
             label = degreeStudentsGroup.getLabel();
             String executionDegreeId = (String) getFromRequestOrForm(request, (DynaActionForm) form, "executionDegreeId");
-            studentsGroup = degreeStudentsGroup;
+            studentsGroup = degreeStudentsGroup.getUserGroup();
             ExecutionDegree executionDegree = FenixFramework.getDomainObject(executionDegreeId);
             sender = CoordinatorSender.newInstance(executionDegree.getDegree());
         }
