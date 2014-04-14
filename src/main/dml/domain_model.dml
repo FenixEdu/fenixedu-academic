@@ -1463,12 +1463,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         String name;
     }
 
-    class ManagementGroups  {
-        Group assiduousnessManagers;
-        Group assiduousnessSectionStaff;
-        Group payrollSectionStaff;
-    }
-
     class Mark  {
         String mark;
         String publishedMark;
@@ -14216,13 +14210,6 @@ relation RootDomainObjectLessonPlanning {
 relation RootDomainObjectLocality {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Locality playsRole localities {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectManagementGroups {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    ManagementGroups playsRole managementGroups {
         multiplicity *;
     }
 }

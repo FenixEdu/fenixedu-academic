@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.Hashtable;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.domain.ManagementGroups;
 import net.sourceforge.fenixedu.domain.accessControl.ActiveAssistantCoordinatorCycle1Group;
 import net.sourceforge.fenixedu.domain.accessControl.ActiveAssistantCoordinatorCycle2Group;
 import net.sourceforge.fenixedu.domain.accessControl.ActiveAssistantCoordinatorCycle3Group;
@@ -249,11 +248,7 @@ public class GroupBuilderRegistry {
         register("personInFunction", PersonsInFunctionGroup.class, new PersonsInFunctionGroup.Builder());
         register("currentDegreeScientificComissionMembers", CurrentDegreeScientificCommissionMembersGroup.class,
                 new CurrentDegreeScientificCommissionMembersGroup.Builder());
-        register("assiduousnessManagers", ManagementGroups.class, new ManagementGroups.AssiduousnessManagerGroupBuilder());
-        register("assiduousnessSectionStaff", ManagementGroups.class,
-                new ManagementGroups.AssiduousnessSectionStaffGroupBuilder());
         register("scientificAreaMembers", ScientificAreaMemberGroup.class, new ScientificAreaMemberGroup.Builder());
-        register("payrollSectionStaff", ManagementGroups.class, new ManagementGroups.PayrollSectionStaffGroupBuilder());
         register("allStudentsByCampus", AllStudentsByCampus.class, new AllStudentsByCampus.Builder());
         register("allTeachersByCampus", AllTeachersByCampus.class, new AllTeachersByCampus.Builder());
         register("allEmployeesByCampus", AllEmployeesByCampus.class, new AllEmployeesByCampus.Builder());
