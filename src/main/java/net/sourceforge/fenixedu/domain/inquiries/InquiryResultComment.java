@@ -52,11 +52,6 @@ public class InquiryResultComment extends InquiryResultComment_Base {
     }
 
     @Deprecated
-    public boolean hasAllowedToView() {
-        return getAllowedToView() != null;
-    }
-
-    @Deprecated
     public boolean hasComment() {
         return getComment() != null;
     }
