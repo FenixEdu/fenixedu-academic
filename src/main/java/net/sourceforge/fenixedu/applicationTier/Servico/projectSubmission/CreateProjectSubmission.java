@@ -9,7 +9,6 @@ import java.io.InputStream;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.DeleteFileRequest;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Project;
@@ -22,7 +21,6 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.ProjectDepartmentAccessGroup;
 import net.sourceforge.fenixedu.domain.accessControl.StudentGroupStudentsGroup;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 import org.apache.commons.io.IOUtils;
@@ -78,8 +76,6 @@ public class CreateProjectSubmission {
     private static ProjectSubmission createProjectSubmission(InputStream inputStream, String filename, Attends attends,
             Project project, StudentGroup studentGroup, final Group permittedGroup) throws FenixServiceException {
 
-        final String fileToDeleteExternalId = getFileToDeleteExternalId(project, studentGroup);
-
         final byte[] bs = read(inputStream);
         final ProjectSubmissionFile projectSubmissionFile = new ProjectSubmissionFile(filename, filename, bs, permittedGroup);
 
@@ -89,22 +85,8 @@ public class CreateProjectSubmission {
                 projectSubmissionFile.getChecksum(), projectSubmissionFile.getChecksumAlgorithm(), bs.length, studentGroup,
                 attends, project);
 
-        if (fileToDeleteExternalId != null) {
-            new DeleteFileRequest(AccessControl.getPerson(), fileToDeleteExternalId);
-        }
-
         return projectSubmission;
 
     }
 
-    private static String getFileToDeleteExternalId(Project project, StudentGroup studentGroup) {
-        String fileToDeleteStorageId = null;
-        if (!project.canAddNewSubmissionWithoutExceedLimit(studentGroup)) {
-            fileToDeleteStorageId =
-                    project.getOldestProjectSubmissionForStudentGroup(studentGroup).getProjectSubmissionFile()
-                            .getExternalStorageIdentification();
-        }
-
-        return fileToDeleteStorageId;
-    }
 }

@@ -54,15 +54,6 @@ public class FenixConfigurationManager {
         @ConfigurationProperty(key = "context.filter.exceptions", defaultValue = "/bennu,/bankai,/theme")
         public String getContextFilterExceptions();
 
-        @ConfigurationProperty(key = "dspace.password")
-        public String getDspacePassword();
-
-        @ConfigurationProperty(key = "dspace.serverUrl", defaultValue = "https://localhost:8443/dspace")
-        public String getDspaceServerUrl();
-
-        @ConfigurationProperty(key = "dspace.username")
-        public String getDspaceUsername();
-
         @ConfigurationProperty(
                 key = "email.admin.allowed.hosts",
                 description = "comma seperated values of hosts and/or ip addresses that are allowed to call external email administration",

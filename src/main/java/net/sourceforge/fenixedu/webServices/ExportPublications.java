@@ -294,8 +294,8 @@ public class ExportPublications {
                         }
                         for (ResearchResultDocumentFile documentFile : publication.getAllResultDocumentFiles()) {
                             if (!documentFile.getFilename().equals("default.txt")) {
-                                marshaller.insertText(marshaller.insertField(item, Fieldtype.FILE),
-                                        documentFile.getExternalStorageIdentification(), null, null);
+                                marshaller.insertText(marshaller.insertField(item, Fieldtype.FILE), documentFile.getExternalId(),
+                                        null, null);
                             }
                         }
                     } catch (ConversionException e) {

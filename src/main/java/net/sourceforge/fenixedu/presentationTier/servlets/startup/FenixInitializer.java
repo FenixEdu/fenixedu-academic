@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecutionPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.CreateGratuitySituationsForCurrentExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.domain.DSpaceFileStorage;
 import net.sourceforge.fenixedu.domain.Instalation;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.contents.Container;
@@ -95,7 +94,6 @@ public class FenixInitializer implements ServletContextListener {
         registerContentInjectionRewriter();
         registerUncaughtExceptionHandler();
 
-        initializeDSpaceFileStorage();
         initializeFenixAPI();
         initializeBennuManagersGroup();
 
@@ -109,10 +107,6 @@ public class FenixInitializer implements ServletContextListener {
             logger.info("Create managers bennu group to RoleCustomGroup Managers");
             DynamicGroup.initialize("managers", Group.parse("role(MANAGER)"));
         }
-    }
-
-    private static void initializeDSpaceFileStorage() {
-        DSpaceFileStorage.getInstance();
     }
 
     private void initializeFenixAPI() {
