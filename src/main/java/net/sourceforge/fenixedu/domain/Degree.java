@@ -1646,17 +1646,53 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     public PersonFunction getMostSignificantDelegateFunctionForStudent(Student student, ExecutionYear executionYear) {
         if (hasActiveDelegateFunctionForStudent(student, executionYear, FunctionType.DELEGATE_OF_INTEGRATED_MASTER_DEGREE)) {
-            return getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear,
+            final PersonFunction pf = getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear,
                     FunctionType.DELEGATE_OF_INTEGRATED_MASTER_DEGREE);
-        } else if (hasActiveDelegateFunctionForStudent(student, executionYear, FunctionType.DELEGATE_OF_MASTER_DEGREE)) {
-            return getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear,
-                    FunctionType.DELEGATE_OF_MASTER_DEGREE);
-        } else if (hasActiveDelegateFunctionForStudent(student, executionYear, FunctionType.DELEGATE_OF_DEGREE)) {
-            return getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear,
-                    FunctionType.DELEGATE_OF_DEGREE);
-        } else {
-            return getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear, FunctionType.DELEGATE_OF_YEAR);
+            if (pf != null) {
+                return pf;
+            }
         }
+        if (hasActiveDelegateFunctionForStudent(student, executionYear, FunctionType.DELEGATE_OF_MASTER_DEGREE)) {
+            final PersonFunction pf = getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear,
+                    FunctionType.DELEGATE_OF_MASTER_DEGREE);
+            if (pf != null) {
+                return pf;
+            }
+        }
+        if (hasActiveDelegateFunctionForStudent(student, executionYear, FunctionType.DELEGATE_OF_DEGREE)) {
+            final PersonFunction pf = getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear,
+                    FunctionType.DELEGATE_OF_DEGREE);
+            if (pf != null) {
+                return pf;
+            }
+        }
+        return getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear, FunctionType.DELEGATE_OF_YEAR);
+    }
+
+    public PersonFunction getMostSignificantActiveDelegateFunctionForStudent(Student student, ExecutionYear executionYear) {
+        if (hasActiveDelegateFunctionForStudent(student, executionYear, FunctionType.DELEGATE_OF_INTEGRATED_MASTER_DEGREE)) {
+            final PersonFunction pf = getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear,
+                    FunctionType.DELEGATE_OF_INTEGRATED_MASTER_DEGREE);
+            if (pf != null && pf.isActive()) {
+                return pf;
+            }
+        }
+        if (hasActiveDelegateFunctionForStudent(student, executionYear, FunctionType.DELEGATE_OF_MASTER_DEGREE)) {
+            final PersonFunction pf = getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear,
+                    FunctionType.DELEGATE_OF_MASTER_DEGREE);
+            if (pf != null && pf.isActive()) {
+                return pf;
+            }
+        }
+        if (hasActiveDelegateFunctionForStudent(student, executionYear, FunctionType.DELEGATE_OF_DEGREE)) {
+            final PersonFunction pf = getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear,
+                    FunctionType.DELEGATE_OF_DEGREE);
+            if (pf != null && pf.isActive()) {
+                return pf;
+            }
+        }
+        final PersonFunction pf = getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear, FunctionType.DELEGATE_OF_YEAR);
+        return pf != null && pf.isActive() ? pf : null;
     }
 
     public boolean canCreateGratuityEvent() {

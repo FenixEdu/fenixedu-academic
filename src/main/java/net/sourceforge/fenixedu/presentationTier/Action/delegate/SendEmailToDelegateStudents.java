@@ -137,7 +137,7 @@ public class SendEmailToDelegateStudents extends FenixDispatchAction {
             List<Registration> activeRegistrations = new ArrayList<Registration>(student.getActiveRegistrations());
             Collections.sort(activeRegistrations, Registration.COMPARATOR_BY_START_DATE);
             for (Registration registration : activeRegistrations) {
-                delegateFunction = registration.getDegree().getMostSignificantDelegateFunctionForStudent(student, executionYear);
+                delegateFunction = registration.getDegree().getMostSignificantActiveDelegateFunctionForStudent(student, executionYear);
                 if (delegateFunction != null && delegateFunction.isActive()) {
                     return delegateFunction;
                 }
