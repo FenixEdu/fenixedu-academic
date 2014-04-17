@@ -32,7 +32,7 @@ public class Vehicle extends Vehicle_Base {
         setInsuranceDeliveryType(parkingRequestVehicle.getInsuranceDeliveryType());
         setOwnerIdDeliveryType(parkingRequestVehicle.getOwnerIdDeliveryType());
         setAuthorizationDeclarationDeliveryType(parkingRequestVehicle.getAuthorizationDeclarationDeliveryType());
-        for (NewParkingDocument parkingDocument : parkingRequestVehicle.getNewParkingDocuments()) {
+        for (NewParkingDocument parkingDocument : parkingRequestVehicle.getNewParkingDocumentsSet()) {
             parkingDocument.copyParkingDocument(this);
         }
     }
@@ -50,13 +50,13 @@ public class Vehicle extends Vehicle_Base {
         setInsuranceDeliveryType(parkingRequestVehicle.getInsuranceDeliveryType());
         setOwnerIdDeliveryType(parkingRequestVehicle.getOwnerIdDeliveryType());
         setAuthorizationDeclarationDeliveryType(parkingRequestVehicle.getAuthorizationDeclarationDeliveryType());
-        for (NewParkingDocument parkingDocument : parkingRequestVehicle.getNewParkingDocuments()) {
+        for (NewParkingDocument parkingDocument : parkingRequestVehicle.getNewParkingDocumentsSet()) {
             parkingDocument.copyParkingDocument(this);
         }
     }
 
     public NewParkingDocument getParkingDocument(NewParkingDocumentType parkingDocumentType) {
-        for (NewParkingDocument parkingDocument : getNewParkingDocuments()) {
+        for (NewParkingDocument parkingDocument : getNewParkingDocumentsSet()) {
             if (parkingDocument.getParkingDocumentType() == parkingDocumentType) {
                 return parkingDocument;
             }
@@ -65,7 +65,7 @@ public class Vehicle extends Vehicle_Base {
     }
 
     public String getPropertyRegistryFileName() {
-        for (NewParkingDocument parkingDocument : getNewParkingDocuments()) {
+        for (NewParkingDocument parkingDocument : getNewParkingDocumentsSet()) {
             if (parkingDocument.getParkingDocumentType().equals(NewParkingDocumentType.VEHICLE_PROPERTY_REGISTER)) {
                 return parkingDocument.getParkingFile().getFilename();
             }
@@ -74,7 +74,7 @@ public class Vehicle extends Vehicle_Base {
     }
 
     public String getInsuranceFileName() {
-        for (NewParkingDocument parkingDocument : getNewParkingDocuments()) {
+        for (NewParkingDocument parkingDocument : getNewParkingDocumentsSet()) {
             if (parkingDocument.getParkingDocumentType().equals(NewParkingDocumentType.VEHICLE_INSURANCE)) {
                 return parkingDocument.getParkingFile().getFilename();
             }
@@ -83,7 +83,7 @@ public class Vehicle extends Vehicle_Base {
     }
 
     public String getOwnerIdFileName() {
-        for (NewParkingDocument parkingDocument : getNewParkingDocuments()) {
+        for (NewParkingDocument parkingDocument : getNewParkingDocumentsSet()) {
             if (parkingDocument.getParkingDocumentType().equals(NewParkingDocumentType.VEHICLE_OWNER_ID)) {
                 return parkingDocument.getParkingFile().getFilename();
             }
@@ -92,7 +92,7 @@ public class Vehicle extends Vehicle_Base {
     }
 
     public String getAuthorizationDeclarationFileName() {
-        for (NewParkingDocument parkingDocument : getNewParkingDocuments()) {
+        for (NewParkingDocument parkingDocument : getNewParkingDocumentsSet()) {
             if (parkingDocument.getParkingDocumentType().equals(NewParkingDocumentType.DECLARATION_OF_AUTHORIZATION)) {
                 return parkingDocument.getParkingFile().getFilename();
             }
@@ -101,7 +101,7 @@ public class Vehicle extends Vehicle_Base {
     }
 
     public String getPropertyRegistryFileNameToDisplay() {
-        for (NewParkingDocument parkingDocument : getNewParkingDocuments()) {
+        for (NewParkingDocument parkingDocument : getNewParkingDocumentsSet()) {
             if (parkingDocument.getParkingDocumentType().equals(NewParkingDocumentType.VEHICLE_PROPERTY_REGISTER)) {
                 return parkingDocument.getParkingFile().getFilename();
             }
@@ -114,7 +114,7 @@ public class Vehicle extends Vehicle_Base {
     }
 
     public String getInsuranceFileNameToDisplay() {
-        for (NewParkingDocument parkingDocument : getNewParkingDocuments()) {
+        for (NewParkingDocument parkingDocument : getNewParkingDocumentsSet()) {
             if (parkingDocument.getParkingDocumentType().equals(NewParkingDocumentType.VEHICLE_INSURANCE)) {
                 return parkingDocument.getParkingFile().getFilename();
             }
@@ -127,7 +127,7 @@ public class Vehicle extends Vehicle_Base {
     }
 
     public String getOwnerIdFileNameToDisplay() {
-        for (NewParkingDocument parkingDocument : getNewParkingDocuments()) {
+        for (NewParkingDocument parkingDocument : getNewParkingDocumentsSet()) {
             if (parkingDocument.getParkingDocumentType().equals(NewParkingDocumentType.VEHICLE_OWNER_ID)) {
                 return parkingDocument.getParkingFile().getFilename();
             }
@@ -140,7 +140,7 @@ public class Vehicle extends Vehicle_Base {
     }
 
     public String getAuthorizationDeclarationFileNameToDisplay() {
-        for (NewParkingDocument parkingDocument : getNewParkingDocuments()) {
+        for (NewParkingDocument parkingDocument : getNewParkingDocumentsSet()) {
             if (parkingDocument.getParkingDocumentType().equals(NewParkingDocumentType.DECLARATION_OF_AUTHORIZATION)) {
                 return parkingDocument.getParkingFile().getFilename();
             }
@@ -176,7 +176,7 @@ public class Vehicle extends Vehicle_Base {
     }
 
     public void delete() {
-        for (; getNewParkingDocuments().size() != 0; getNewParkingDocuments().iterator().next().delete()) {
+        for (; getNewParkingDocumentsSet().size() != 0; getNewParkingDocumentsSet().iterator().next().delete()) {
             ;
         }
         setVehicleMake(null);
@@ -189,11 +189,6 @@ public class Vehicle extends Vehicle_Base {
         setParkingRequest(null);
         setRootDomainObject(null);
         deleteDomainObject();
-    }
-
-    @Deprecated
-    public java.util.Set<NewParkingDocument> getNewParkingDocuments() {
-        return getNewParkingDocumentsSet();
     }
 
     @Deprecated

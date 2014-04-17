@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.QueueJob.Priority;
 import net.sourceforge.fenixedu.domain.QueueJobResult;
 
 import org.apache.commons.lang.StringUtils;
@@ -117,7 +118,7 @@ public class ParkingDataReportFile extends ParkingDataReportFile_Base {
         String vehicle1PlateNumber = StringUtils.EMPTY;
         String vehicle2PlateNumber = StringUtils.EMPTY;
         int counter = 1;
-        for (Vehicle vehicle : parkingParty.getVehicles()) {
+        for (Vehicle vehicle : parkingParty.getVehiclesSet()) {
             if (counter == 1) {
                 vehicle1PlateNumber = vehicle.getPlateNumber();
             } else if (counter == 2) {
@@ -149,8 +150,7 @@ public class ParkingDataReportFile extends ParkingDataReportFile_Base {
     }
 
     private String getName(String name) {
-        if (name.length() > 59) { // max size of the other parking application
-            // DB
+        if (name.length() > 59) { // max size of the other parking application DB
             StringBuilder resultName = new StringBuilder();
             resultName = new StringBuilder();
             String[] names = name.split("\\p{Space}+");
@@ -169,7 +169,6 @@ public class ParkingDataReportFile extends ParkingDataReportFile_Base {
         } else {
             return name;
         }
-
     }
 
     private List<ParkingParty> getValidParkingParties() {

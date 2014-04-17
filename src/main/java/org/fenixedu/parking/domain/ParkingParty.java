@@ -343,9 +343,9 @@ public class ParkingParty extends ParkingParty_Base {
 
                         }
                         stringBuilder.append("\n").append(scp.getDegreeCurricularPlan().getName());
-                        stringBuilder.append("\n (").append(registration.getCurricularYear()).append("� ano");
+                        stringBuilder.append("\n (").append(registration.getCurricularYear()).append("º ano");
                         if (isFirstTimeEnrolledInCurrentYear(registration)) {
-                            stringBuilder.append(" - 1� vez)");
+                            stringBuilder.append(" - 1ª vez)");
                         } else {
                             stringBuilder.append(")");
                         }
@@ -419,9 +419,9 @@ public class ParkingParty extends ParkingParty_Base {
                     StudentCurricularPlan scp = registration.getLastStudentCurricularPlan();
                     if (scp != null) {
                         stringBuilder.append(scp.getDegreeCurricularPlan().getName());
-                        stringBuilder.append(" ").append(registration.getCurricularYear()).append("� ano");
+                        stringBuilder.append(" ").append(registration.getCurricularYear()).append("º ano");
                         if (isFirstTimeEnrolledInCurrentYear(registration)) {
-                            stringBuilder.append(" - 1� vez");
+                            stringBuilder.append(" - 1ª vez");
                         }
                         stringBuilder.append(" - ").append(registration.getAverage());
                         result.add(stringBuilder.toString());
@@ -434,7 +434,7 @@ public class ParkingParty extends ParkingParty_Base {
 
     public boolean hasVehicleContainingPlateNumber(String plateNumber) {
         String plateNumberLowerCase = plateNumber.toLowerCase();
-        for (Vehicle vehicle : getVehicles()) {
+        for (Vehicle vehicle : getVehiclesSet()) {
             if (vehicle.getPlateNumber().toLowerCase().contains(plateNumberLowerCase)) {
                 return true;
             }
@@ -447,7 +447,7 @@ public class ParkingParty extends ParkingParty_Base {
             setParty(null);
             setParkingGroup(null);
             deleteDriverLicenseDocument();
-            for (; getVehicles().size() != 0; getVehicles().iterator().next().delete()) {
+            for (; getVehiclesSet().size() != 0; getVehiclesSet().iterator().next().delete()) {
                 ;
             }
             for (; getParkingRequests().size() != 0; getParkingRequests().iterator().next().delete()) {
@@ -466,7 +466,7 @@ public class ParkingParty extends ParkingParty_Base {
     }
 
     private boolean canBeDeleted() {
-        return getVehicles().isEmpty();
+        return getVehiclesSet().isEmpty();
     }
 
     public boolean hasFirstTimeRequest() {
@@ -590,7 +590,7 @@ public class ParkingParty extends ParkingParty_Base {
     public void edit(ParkingRequest parkingRequest) {
         setDriverLicenseDeliveryType(parkingRequest.getDriverLicenseDeliveryType());
         setDriverLicenseDocument(parkingRequest.getDriverLicenseDocument());
-        for (Vehicle vehicle : parkingRequest.getVehicles()) {
+        for (Vehicle vehicle : parkingRequest.getVehiclesSet()) {
             Vehicle partyVehicle = geVehicleByPlateNumber(vehicle.getPlateNumber());
             if (partyVehicle != null) {
                 vehicle.deleteUnnecessaryDocuments();
@@ -604,7 +604,7 @@ public class ParkingParty extends ParkingParty_Base {
     }
 
     private Vehicle geVehicleByPlateNumber(String plateNumber) {
-        for (Vehicle vehicle : getVehicles()) {
+        for (Vehicle vehicle : getVehiclesSet()) {
             if (vehicle.getPlateNumber().equalsIgnoreCase(plateNumber)) {
                 return vehicle;
             }
@@ -803,13 +803,13 @@ public class ParkingParty extends ParkingParty_Base {
     }
 
     public Vehicle getFirstVehicle() {
-        List<Vehicle> vehicles = new ArrayList<Vehicle>(getVehicles());
+        List<Vehicle> vehicles = new ArrayList<Vehicle>(getVehiclesSet());
         Collections.sort(vehicles, new BeanComparator("plateNumber"));
         return vehicles.size() > 0 ? vehicles.iterator().next() : null;
     }
 
     public Vehicle getSecondVehicle() {
-        List<Vehicle> vehicles = new ArrayList<Vehicle>(getVehicles());
+        List<Vehicle> vehicles = new ArrayList<Vehicle>(getVehiclesSet());
         Collections.sort(vehicles, new BeanComparator("plateNumber"));
         return vehicles.size() > 1 ? vehicles.get(1) : null;
     }
@@ -822,11 +822,6 @@ public class ParkingParty extends ParkingParty_Base {
     @Deprecated
     public boolean hasAnyParkingRequests() {
         return !getParkingRequestsSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<Vehicle> getVehicles() {
-        return getVehiclesSet();
     }
 
     @Deprecated

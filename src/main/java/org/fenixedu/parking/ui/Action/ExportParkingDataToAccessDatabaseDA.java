@@ -110,11 +110,7 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
         row.setCell(((Short) accessTableRow.get("Garage")).toString());
         row.setCell(parkingParty.getCardNumber().toString()); // cardNumber
         row.setCell(((Short) accessTableRow.get("Type")).toString());
-        row.setCell(getBooleanString(accessTableRow.get("Access"))); // if
-        // the
-        // card is
-        // active
-        // or not
+        row.setCell(getBooleanString(accessTableRow.get("Access"))); // if the card is active or not
         row.setCell(convertParkingGroupToAccessDB(parkingParty.getParkingGroup())); // accessGroup
         row.setCell(((Short) accessTableRow.get("Fee")).toString());
         row.setCell(((Short) accessTableRow.get("SAC")).toString());
@@ -126,7 +122,7 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
         String vehicle1PlateNumber = "";
         String vehicle2PlateNumber = "";
         int counter = 1;
-        for (Vehicle vehicle : parkingParty.getVehicles()) {
+        for (Vehicle vehicle : parkingParty.getVehiclesSet()) {
             if (counter == 1) {
                 vehicle1PlateNumber = vehicle.getPlateNumber();
             } else if (counter == 2) {
@@ -150,24 +146,10 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
         row.setCell(endValidityDate);
         row.setCell(DateFormatUtil.format("dd/MM/yyyy HH:mm:ss", (Date) accessTableRow.get("LastUsedDate")));
         row.setCell(getBooleanString(accessTableRow.get("Invoice")));
-        row.setCell(parkingParty.getCardEndDate() != null ? "FALSE" : "TRUE"); // if
-        // true
-        // ,
-        // start
-        // and
-        // end
-        // validity
-        // dates
-        // are
-        // ignored
+        row.setCell(parkingParty.getCardEndDate() != null ? "FALSE" : "TRUE"); // if true, start and end validity dates are ignored
         row.setCell(getBooleanString(accessTableRow.get("Present")));
         row.setCell(getBooleanString(accessTableRow.get("PayDirect")));
-        row.setCell(getBooleanString(accessTableRow.get("APBCorrect"))); // if
-        // it's
-        // already
-        // in
-        // the
-        // park
+        row.setCell(getBooleanString(accessTableRow.get("APBCorrect"))); // if it's already in the park
         String startValidityDate =
                 parkingParty.getCardStartDate() == null ? "" : parkingParty.getCardStartDate().toString("dd/MM/yyyy HH:mm:ss");
         row.setCell(startValidityDate);
@@ -196,7 +178,7 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
         String vehicle1PlateNumber = "";
         String vehicle2PlateNumber = "";
         int counter = 1;
-        for (Vehicle vehicle : parkingParty.getVehicles()) {
+        for (Vehicle vehicle : parkingParty.getVehiclesSet()) {
             if (counter == 1) {
                 vehicle1PlateNumber = vehicle.getPlateNumber();
             } else if (counter == 2) {
@@ -219,16 +201,7 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
         row.setCell(endValidityDate);
         row.setCell("1/1/2000"); // lastUsedDate
         row.setCell("FALSE"); // invoice
-        row.setCell(parkingParty.getCardStartDate() != null ? "FALSE" : "TRUE"); // if
-        // true
-        // ,
-        // start
-        // and
-        // end
-        // validity
-        // dates
-        // are
-        // ignored
+        row.setCell(parkingParty.getCardStartDate() != null ? "FALSE" : "TRUE"); // if true, start and end validity dates are ignored
         row.setCell("FALSE"); // present
         row.setCell("FALSE"); // payDirect
         row.setCell("FALSE"); // apbCorrect (if it's already in the park)
@@ -239,8 +212,7 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
     }
 
     private String getName(String name) {
-        if (name.length() > 59) { // max size of the other parking application
-            // DB
+        if (name.length() > 59) { // max size of the other parking application DB
             StringBuilder resultName = new StringBuilder();
             resultName = new StringBuilder();
             String[] names = name.split("\\p{Space}+");
@@ -422,7 +394,7 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
         String vehicle1PlateNumber = "";
         String vehicle2PlateNumber = "";
         int counter = 1;
-        for (Vehicle vehicle : parkingParty.getVehicles()) {
+        for (Vehicle vehicle : parkingParty.getVehiclesSet()) {
             if (counter == 1) {
                 vehicle1PlateNumber = vehicle.getPlateNumber();
             } else if (counter == 2) {
@@ -475,7 +447,7 @@ public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
         String vehicle1PlateNumber = "";
         String vehicle2PlateNumber = "";
         int counter = 1;
-        for (Vehicle vehicle : parkingParty.getVehicles()) {
+        for (Vehicle vehicle : parkingParty.getVehiclesSet()) {
             if (counter == 1) {
                 vehicle1PlateNumber = vehicle.getPlateNumber();
             } else if (counter == 2) {

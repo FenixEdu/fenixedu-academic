@@ -143,11 +143,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         request.setAttribute("parkingRequest", parkingRequest);
         request.setAttribute("parkingPartyBean", new ParkingPartyBean(parkingRequest.getParkingParty()));
         DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
-        if (!StringUtils.isEmpty(dynaActionForm.getString("cardAlwaysValid"))) { // in
-            // case
-            // of
-            // error
-            // validation
+        if (!StringUtils.isEmpty(dynaActionForm.getString("cardAlwaysValid"))) { // in case of error validation
             dynaActionForm.set("cardAlwaysValid", dynaActionForm.getString("cardAlwaysValid"));
         } else {
             dynaActionForm.set("cardAlwaysValid", "no");
@@ -529,11 +525,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
         if (parkingParty.hasAnyVehicles()) {
             if (!StringUtils.isEmpty(dynaActionForm.getString("cardAlwaysValid"))) {
-                dynaActionForm.set("cardAlwaysValid", dynaActionForm.getString("cardAlwaysValid")); // in
-                // case
-                // of
-                // error
-                // validation
+                dynaActionForm.set("cardAlwaysValid", dynaActionForm.getString("cardAlwaysValid")); // in case of error validation
             } else {
                 if (parkingParty.getCardStartDate() == null) {
                     dynaActionForm.set("cardAlwaysValid", "yes");
@@ -542,11 +534,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
                 }
             }
         } else {
-            if (!StringUtils.isEmpty(dynaActionForm.getString("cardAlwaysValid"))) { // in
-                // case
-                // of
-                // error
-                // validation
+            if (!StringUtils.isEmpty(dynaActionForm.getString("cardAlwaysValid"))) { // in case of error validation
                 dynaActionForm.set("cardAlwaysValid", dynaActionForm.getString("cardAlwaysValid"));
             } else {
                 dynaActionForm.set("cardAlwaysValid", "no");
@@ -614,6 +602,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
             HttpServletResponse response) throws IOException {
         ParkingRequestSearch parkingRequestSearch = new ParkingRequestSearch();
         setSearchCriteria(request, parkingRequestSearch);
+        parkingRequestSearch.doSearch();
         List<ParkingRequest> parkingRequestList = parkingRequestSearch.getSearchResult();
         StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("Pedidos_Parque", 15);
         spreadsheet.newHeaderRow();
