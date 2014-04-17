@@ -10,6 +10,8 @@ import java.util.ResourceBundle;
 
 import javax.faces.context.FacesContext;
 
+import org.fenixedu.commons.i18n.I18N;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -25,7 +27,7 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class CoordinatorStudentsBackingBean extends FenixBackingBean {
 
@@ -302,7 +304,7 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
     }
 
     public String getApplicationResourcesString(String name) {
-        return ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale()).getString(name);
+        return ResourceBundle.getBundle("resources/ApplicationResources", I18N.getLocale()).getString(name);
     }
 
     public String getSerializedFilteredStudents() {
@@ -400,7 +402,7 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
     }
 
     private String getFilename() {
-        return ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale()).getString(
+        return ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale()).getString(
                 "label.students.lowercase");
     }
 
@@ -420,7 +422,7 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
     }
 
     private Spreadsheet createSpreadSheet() {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
         final Spreadsheet spreadsheet = new Spreadsheet(bundle.getString("list.students"));
 
         spreadsheet.setHeaders(new String[] {

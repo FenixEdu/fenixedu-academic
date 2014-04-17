@@ -23,10 +23,11 @@ import net.sourceforge.fenixedu.domain.util.email.ReplyTo;
 import net.sourceforge.fenixedu.domain.util.email.UnitBasedSender;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.DomainObject;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class AlertService {
 
@@ -42,7 +43,7 @@ public class AlertService {
     }
 
     static public String getMessageFromResource(String key) {
-        return ResourceBundle.getBundle(PHD_RESOURCES, Language.getLocale()).getString(key);
+        return ResourceBundle.getBundle(PHD_RESOURCES, I18N.getLocale()).getString(key);
     }
 
     static private String getBodyCommonText(final PhdIndividualProgramProcess process) {

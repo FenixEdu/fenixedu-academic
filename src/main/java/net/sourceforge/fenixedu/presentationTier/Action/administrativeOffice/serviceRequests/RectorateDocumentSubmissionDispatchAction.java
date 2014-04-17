@@ -36,6 +36,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -44,7 +45,7 @@ import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
 import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
 import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 @StrutsFunctionality(app = AcademicAdminServicesApp.class, path = "rectorate-submission", titleKey = "link.rectorateSubmission",
         accessGroup = "academic(SERVICE_REQUESTS_RECTORAL_SENDING)")
@@ -187,8 +188,8 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
             protected void makeLine(AcademicServiceRequest academicServiceRequest) {
                 IDocumentRequest document = (IDocumentRequest) academicServiceRequest;
 
-                ResourceBundle enumeration = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
-                ResourceBundle phdBundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
+                ResourceBundle enumeration = ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
+                ResourceBundle phdBundle = ResourceBundle.getBundle("resources.PhdResources", I18N.getLocale());
                 addCell("Código", document.getRegistryCode().getCode());
                 addCell("Tipo de Documento", enumeration.getString(document.getDocumentRequestType().name()));
                 switch (document.getDocumentRequestType()) {

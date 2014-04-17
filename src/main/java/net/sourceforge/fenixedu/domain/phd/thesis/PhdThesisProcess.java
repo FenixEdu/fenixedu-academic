@@ -67,7 +67,6 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdThesisProcess extends PhdThesisProcess_Base {
@@ -102,7 +101,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
                             ResourceBundle.getBundle("resources.PhdResources", new Locale("en", "EN")).getString(
                                     "message.phd.thesis.president.title.default"), Unit.getInstitutionAcronym());
 
-            result.setPresidentTitle(new MultiLanguageString(Language.pt, presidentTitlePt).with(Language.en, presidentTitleEn));
+            result.setPresidentTitle(new MultiLanguageString(MultiLanguageString.pt, presidentTitlePt).with(MultiLanguageString.en, presidentTitleEn));
 
             if (!result.getIndividualProgramProcess().isMigratedProcess()) {
                 new PhdThesisRequestFee(bean.getProcess());

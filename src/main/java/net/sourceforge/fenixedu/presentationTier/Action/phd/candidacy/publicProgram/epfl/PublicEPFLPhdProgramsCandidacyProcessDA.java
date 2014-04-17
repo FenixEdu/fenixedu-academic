@@ -74,7 +74,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 @Mapping(path = "/applications/epfl/phdProgramCandidacyProcess", module = "publico")
 @Forwards(tileProperties = @Tile(extend = "definition.candidacy.process"), value = {
@@ -257,7 +257,7 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
     }
 
     private void sendSubmissionEmailForCandidacy(final PublicCandidacyHashCode hashCode, final HttpServletRequest request) {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", I18N.getLocale());
         final String subject = bundle.getString("message.phd.epfl.application.email.subject.send.link.to.submission");
         final String body = bundle.getString("message.phd.epfl.email.body.send.link.to.submission");
         hashCode.sendEmail(subject, String.format(body, EPFLPhdCandidacyProcessProperties.getConfiguration()
@@ -295,7 +295,7 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
     }
 
     private void sendRecoveryEmailForCandidate(PhdProgramPublicCandidacyHashCode candidacyHashCode, HttpServletRequest request) {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", I18N.getLocale());
         final String subject =
                 MessageFormat.format(bundle.getString("message.phd.email.subject.recovery.access"), Unit.getInstitutionAcronym());
         final String body = bundle.getString("message.phd.epfl.email.body.recovery.access");
@@ -668,7 +668,7 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
         // TODO: if candidacy period exists, then change body message to send
         // candidacy limit end date
 
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", I18N.getLocale());
         final String subject = bundle.getString("message.phd.epfl.email.subject.application.submited");
         final String body = bundle.getString("message.phd.epfl.email.body.application.submited");
         hashCode.sendEmail(subject, String.format(body, hashCode.getPhdProgramCandidacyProcess().getProcessNumber(),

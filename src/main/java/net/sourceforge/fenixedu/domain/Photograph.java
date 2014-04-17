@@ -8,6 +8,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -31,13 +32,13 @@ import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.I18N;
 import org.imgscalr.Scalr;
 import org.imgscalr.Scalr.Method;
 import org.imgscalr.Scalr.Mode;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import com.google.common.io.ByteStreams;
 
@@ -129,7 +130,7 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
                 }
                 final EmailAddress institutionalOrDefaultEmailAddress = getPerson().getInstitutionalOrDefaultEmailAddress();
                 if (institutionalOrDefaultEmailAddress != null) {
-                    ResourceBundle bundle = ResourceBundle.getBundle(RESOURCE_BUNDLE_NAME, Language.getDefaultLocale());
+                    ResourceBundle bundle = ResourceBundle.getBundle(RESOURCE_BUNDLE_NAME, Locale.getDefault());
                     Set<String> sendTo = Collections.singleton(institutionalOrDefaultEmailAddress.getValue());
 
                     SystemSender systemSender = getRootDomainObject().getSystemSender();
@@ -376,7 +377,7 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
         try {
             image =
                     Picture.readImage(ByteStreams.toByteArray(Photograph.class.getClassLoader().getResourceAsStream(
-                            "images/photo_placer01_" + Language.getDefaultLanguage().name() + ".gif")));
+                            "images/photo_placer01_" + I18N.getLocale().getLanguage() + ".gif")));
             return processImage(image, xRatio, yRatio, width, height, pictureMode);
         } catch (IOException e) {
             return null;

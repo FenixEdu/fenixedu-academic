@@ -4,7 +4,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 
-<%@page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
+<%@page import="org.fenixedu.commons.i18n.I18N"%>
 <%@page import="org.joda.time.LocalDate"%>
 <%@page import="net.sourceforge.fenixedu.domain.candidacy.MeasurementTestRoom"%>
 <%@page import="java.util.Locale"%>

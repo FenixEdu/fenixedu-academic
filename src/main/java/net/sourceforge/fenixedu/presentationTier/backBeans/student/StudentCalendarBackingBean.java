@@ -35,8 +35,9 @@ import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.struts.util.MessageResources;
+import org.fenixedu.commons.i18n.I18N;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class StudentCalendarBackingBean extends FenixBackingBean {
 
@@ -269,7 +270,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
                         if (evaluationTypeClassname == null || evaluationTypeClassname.length() == 0
                                 || evaluationTypeClassname.equals(writtenEvaluation.getClass().getName())) {
                             CalendarLink calendarLink =
-                                    new CalendarLink(executionCourse, writtenEvaluation, Language.getLocale());
+                                    new CalendarLink(executionCourse, writtenEvaluation, I18N.getLocale());
                             calendarLinks.add(calendarLink);
                             calendarLink.setLinkParameters(constructLinkParameters(executionCourse));
                         }

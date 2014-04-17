@@ -5,13 +5,15 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import org.fenixedu.commons.i18n.I18N;
+
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyOperationType;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacySituation;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class PHDProgramCandidacy extends PHDProgramCandidacy_Base {
 
@@ -28,7 +30,7 @@ public class PHDProgramCandidacy extends PHDProgramCandidacy_Base {
 
     @Override
     public String getDescription() {
-        return ResourceBundle.getBundle("resources.PhdResources", Language.getLocale()).getString("label.phd") + " - "
+        return ResourceBundle.getBundle("resources.PhdResources", I18N.getLocale()).getString("label.phd") + " - "
                 + getDegreeInformation();
     }
 

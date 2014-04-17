@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.accounting.events.specializationDegree.Sp
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.student.EnrolmentModel;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class EventWrapper implements Wrapper {
     private final Event event;
@@ -72,7 +72,7 @@ public class EventWrapper implements Wrapper {
     @Override
     public String getDegreeName() {
         if (hasRegistration()) {
-            return getRegistration().getDegree().getNameI18N().getContent(Language.pt);
+            return getRegistration().getDegree().getNameI18N().getContent(MultiLanguageString.pt);
         }
 
         return "--";

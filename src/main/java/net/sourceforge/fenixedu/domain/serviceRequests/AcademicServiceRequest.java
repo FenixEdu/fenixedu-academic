@@ -32,11 +32,12 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base {
 
@@ -177,7 +178,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     protected String getDescription(final AcademicServiceRequestType academicServiceRequestType, final String specificServiceType) {
         final ResourceBundle enumerationResources =
-                ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+                ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
         final StringBuilder result = new StringBuilder();
         result.append(enumerationResources.getString(academicServiceRequestType.getQualifiedName()));
         if (specificServiceType != null) {

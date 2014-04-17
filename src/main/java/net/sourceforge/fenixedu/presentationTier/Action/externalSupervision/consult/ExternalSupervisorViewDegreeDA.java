@@ -23,6 +23,7 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -31,7 +32,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 @StrutsFunctionality(app = ExternalSupervisionConsultApp.class, path = "degree", titleKey = "label.selectDegree.executionDegree")
 @Mapping(path = "/viewDegree", module = "externalSupervision")
@@ -128,7 +129,7 @@ public class ExternalSupervisorViewDegreeDA extends FenixDispatchAction {
 
     private String getFilename(ExternalSupervisorViewsBean bean) {
         StringBuilder strBuilder = new StringBuilder();
-        strBuilder.append(ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale()).getString(
+        strBuilder.append(ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale()).getString(
                 "label.students.lowercase"));
         strBuilder.append("_");
         strBuilder.append(bean.getProtocol().getRegistrationAgreement().getName());
@@ -181,7 +182,7 @@ public class ExternalSupervisorViewDegreeDA extends FenixDispatchAction {
     }
 
     private Spreadsheet createSpreadSheet() {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
         final Spreadsheet spreadsheet = new Spreadsheet(bundle.getString("list.students"));
 
         spreadsheet.setHeaders(new String[] {

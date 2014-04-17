@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CycleCourseGroupInformation extends CycleCourseGroupInformation_Base {
@@ -34,7 +33,7 @@ public class CycleCourseGroupInformation extends CycleCourseGroupInformation_Bas
 
         setExecutionYear(executionYear);
         setCycleCourseGroup(cycleCourseGroup);
-        setGraduatedTitle(new MultiLanguageString(Language.pt, graduatedTitle).with(Language.en, graduatedTitleEn));
+        setGraduatedTitle(new MultiLanguageString(MultiLanguageString.pt, graduatedTitle).with(MultiLanguageString.en, graduatedTitleEn));
         checkParameters();
     }
 
@@ -49,11 +48,11 @@ public class CycleCourseGroupInformation extends CycleCourseGroupInformation_Bas
     }
 
     public String getGraduatedTitlePt() {
-        return getGraduatedTitle().getContent(Language.pt);
+        return getGraduatedTitle().getContent(MultiLanguageString.pt);
     }
 
     public String getGraduatedTitleEn() {
-        return getGraduatedTitle().getContent(Language.en);
+        return getGraduatedTitle().getContent(MultiLanguageString.en);
     }
 
     @Atomic
@@ -61,7 +60,7 @@ public class CycleCourseGroupInformation extends CycleCourseGroupInformation_Bas
         this.setExecutionYear(editExecutionYear);
         MultiLanguageString mls = this.getGraduatedTitle();
 
-        this.setGraduatedTitle(mls.with(Language.pt, editGraduatedTitle).with(Language.en, editGraduatedTitleEn));
+        this.setGraduatedTitle(mls.with(MultiLanguageString.pt, editGraduatedTitle).with(MultiLanguageString.en, editGraduatedTitleEn));
         checkParameters();
     }
 

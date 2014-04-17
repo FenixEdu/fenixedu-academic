@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ExportEPFLPhdProgramCandidacies {
 
@@ -91,7 +91,7 @@ public class ExportEPFLPhdProgramCandidacies {
         writer.println(addTabs(3)
                 + String.format(
                         "<lieuPersonne action=\"AUTO\" type=\"LIEUNAI\" identificationLieu=\"iso\" iso=\"%s\" typeLieu=\"PAYS\">%s</lieuPersonne>",
-                        person.getCountry().getCode(), person.getCountry().getCountryNationality().getContent(Language.en)));
+                        person.getCountry().getCode(), person.getCountry().getCountryNationality().getContent(MultiLanguageString.en)));
 
         writer.println(addTabs(3)
                 + String.format("<lieuPersonne action=\"AUTO\" type=\"LIEUNAIETRA\" "
@@ -101,7 +101,7 @@ public class ExportEPFLPhdProgramCandidacies {
         writer.println(addTabs(3)
                 + String.format("<lieuPersonne action=\"AUTO\" type=\"LIEUORI\" identificationLieu=\"iso\" iso=\"%s\" "
                         + "typeLieu=\"PAYS\">%s</lieuPersonne>", person.getCountry().getCode(), person.getCountry()
-                        .getLocalizedName().getContent(Language.en)));
+                        .getLocalizedName().getContent(MultiLanguageString.en)));
 
         writer.println(addTabs(3) + "<adresse type=\"ADR_ECH\" action=\"AUTO\">");
 
@@ -115,7 +115,7 @@ public class ExportEPFLPhdProgramCandidacies {
             writer.println(addTabs(4)
                     + String.format("<pays identificationLieu=\"iso\" iso=\"%s\" b_returnfirst=\"1\">%s</pays>", person
                             .getCountryOfResidence().getCode(),
-                            person.getCountryOfResidence().getLocalizedName().getContent(Language.en)));
+                            person.getCountryOfResidence().getLocalizedName().getContent(MultiLanguageString.en)));
         } else {
             writer.println(addTabs(4) + "<pays identificationLieu=\"iso\" iso=\"\" b_returnfirst=\"1\"></pays>");
         }

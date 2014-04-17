@@ -16,9 +16,10 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.YearMonthDay;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class DFACandidacy extends DFACandidacy_Base {
 
@@ -103,7 +104,7 @@ public class DFACandidacy extends DFACandidacy_Base {
 
     @Override
     public String getDescription() {
-        return ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale()).getString("label.dfaCandidacy")
+        return ResourceBundle.getBundle("resources.CandidateResources", I18N.getLocale()).getString("label.dfaCandidacy")
                 + " - " + getExecutionDegree().getDegreeCurricularPlan().getName() + " - "
                 + getExecutionDegree().getExecutionYear().getYear();
     }

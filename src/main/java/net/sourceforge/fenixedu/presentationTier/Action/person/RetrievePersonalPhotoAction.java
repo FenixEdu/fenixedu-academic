@@ -19,12 +19,12 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionServlet;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.commons.i18n.I18N;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import com.google.common.io.ByteStreams;
 
@@ -114,7 +114,7 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
             response.setContentType("image/gif");
             InputStream stream =
                     RetrievePersonalPhotoAction.class.getClassLoader().getResourceAsStream(
-                            "images/photo_placer01_" + Language.getDefaultLanguage().name() + ".gif");
+                            "images/photo_placer01_" + I18N.getLocale().getLanguage() + ".gif");
             ByteStreams.copy(stream, response.getOutputStream());
             stream.close();
         } catch (IOException e) {

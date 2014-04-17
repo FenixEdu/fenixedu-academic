@@ -47,7 +47,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.loaders.IFileLine;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class StudentLine implements IFileLine, java.io.Serializable {
 
@@ -409,7 +409,7 @@ public class StudentLine implements IFileLine, java.io.Serializable {
 
     public String getDegreeName() {
         if (getRegistration() != null) {
-            return getRegistration().getDegree().getNameI18N().getContent(Language.pt);
+            return getRegistration().getDegree().getNameI18N().getContent(MultiLanguageString.pt);
         }
 
         return degreeName;

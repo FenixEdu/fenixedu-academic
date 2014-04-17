@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -22,7 +21,6 @@ import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 
 import org.joda.time.DateTime;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurriculumGroup_Base {
@@ -70,9 +68,9 @@ public abstract class NoCourseGroupCurriculumGroup extends NoCourseGroupCurricul
 
     @Override
     public MultiLanguageString getName() {
-        return new MultiLanguageString(Language.pt, getNoCourseGroupCurriculumGroupType().getLocalizedName(
-                new Locale(Language.pt.name()))).with(Language.en,
-                getNoCourseGroupCurriculumGroupType().getLocalizedName(new Locale(Language.en.name())));
+        return new MultiLanguageString(MultiLanguageString.pt, getNoCourseGroupCurriculumGroupType().getLocalizedName(
+                MultiLanguageString.pt)).with(MultiLanguageString.en,
+                getNoCourseGroupCurriculumGroupType().getLocalizedName(MultiLanguageString.en));
     }
 
     @Override

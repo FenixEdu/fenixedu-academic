@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import org.fenixedu.commons.i18n.I18N;
+
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
@@ -15,7 +17,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.student.Student;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class DelegatesGroup extends LeafGroup {
 
@@ -74,7 +76,7 @@ public class DelegatesGroup extends LeafGroup {
 
     @Override
     public String getName() {
-        final ResourceBundle resourceBundle = ResourceBundle.getBundle(getPresentationNameBundle(), Language.getLocale());
+        final ResourceBundle resourceBundle = ResourceBundle.getBundle(getPresentationNameBundle(), I18N.getLocale());
         if (hasDegree()) {
             return resourceBundle.getString("label." + getClass().getSimpleName()) + " " + resourceBundle.getString("label.of")
                     + " " + getDegree().getSigla();

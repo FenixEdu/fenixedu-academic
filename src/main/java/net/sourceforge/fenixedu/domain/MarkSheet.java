@@ -34,11 +34,12 @@ import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class MarkSheet extends MarkSheet_Base {
 
@@ -632,7 +633,7 @@ public class MarkSheet extends MarkSheet_Base {
         parameters.put("checkSum", FenixDigestUtils.getPrettyCheckSum(markSheet.getCheckSum()));
         parameters.put("rectification", rectification);
         parameters.put("rectified", rectification.getRectified());
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.ReportsResources", Language.getLocale());
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.ReportsResources", I18N.getLocale());
 
         boolean result =
                 ReportsUtils.printReport("markSheetRectification", parameters, bundle, Collections.emptyList(), printerName);
@@ -645,7 +646,7 @@ public class MarkSheet extends MarkSheet_Base {
         Map<String, Object> parameters = new HashMap<String, Object>();
         parameters.put("markSheet", markSheet);
         parameters.put("checkSum", FenixDigestUtils.getPrettyCheckSum(markSheet.getCheckSum()));
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.ReportsResources", Language.getLocale());
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.ReportsResources", I18N.getLocale());
         List<EnrolmentEvaluation> evaluations = new ArrayList<EnrolmentEvaluation>(markSheet.getEnrolmentEvaluations());
         Collections.sort(evaluations, EnrolmentEvaluation.SORT_BY_STUDENT_NUMBER);
 
@@ -961,11 +962,11 @@ public class MarkSheet extends MarkSheet_Base {
     public String getStateDiscription() {
         StringBuilder stringBuilder = new StringBuilder();
         final ResourceBundle enumerationResources =
-                ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+                ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
         stringBuilder.append(enumerationResources.getString(getMarkSheetState().getName()).trim());
         if (getSubmittedByTeacher()) {
             final ResourceBundle academicResources =
-                    ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale());
+                    ResourceBundle.getBundle("resources.AcademicAdminOffice", I18N.getLocale());
             stringBuilder.append(" (").append(academicResources.getString("label.markSheet.submittedByTeacher").trim())
                     .append(")");
         }

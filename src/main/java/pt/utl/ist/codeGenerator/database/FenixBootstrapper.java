@@ -45,7 +45,6 @@ import org.joda.time.YearMonthDay;
 import pt.ist.standards.geographic.Planet;
 import pt.utl.ist.codeGenerator.database.CreateTestData.CreateOrganizationalStructure;
 import pt.utl.ist.codeGenerator.database.FenixBootstrapper.SchoolSetupSection;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.google.common.collect.Lists;
@@ -103,7 +102,7 @@ public class FenixBootstrapper {
 
     private static void createRoles() {
         for (RoleType roleType : RoleType.values()) {
-                new Role(roleType);
+            new Role(roleType);
         }
     }
 
@@ -169,15 +168,16 @@ public class FenixBootstrapper {
                 }
             }
 
-            final MultiLanguageString countryName = new MultiLanguageString(Language.pt, localizedNamePT);
-            countryName.append(new MultiLanguageString(Language.en, localizedNameEN));
+            final MultiLanguageString countryName = new MultiLanguageString(MultiLanguageString.pt, localizedNamePT);
+            countryName.append(new MultiLanguageString(MultiLanguageString.en, localizedNameEN));
 
             final String code = metaData.alpha2;
             final String threeLetterCode = metaData.alpha3;
 
             final Country country =
-                    new Country(countryName, new MultiLanguageString(Language.pt, nationalityPT).append(new MultiLanguageString(
-                            Language.en, nationalityEN)), code, threeLetterCode);
+                    new Country(countryName,
+                            new MultiLanguageString(MultiLanguageString.pt, nationalityPT).append(new MultiLanguageString(
+                                    MultiLanguageString.en, nationalityEN)), code, threeLetterCode);
             if (StringUtils.equals(threeLetterCode, schoolSection.getCountryCode())) {
                 defaultCountry = country;
             }
@@ -228,7 +228,7 @@ public class FenixBootstrapper {
 
     private static void createAccountabilityTypeEnums() {
         for (final AccountabilityTypeEnum accountabilityTypeEnum : AccountabilityTypeEnum.values()) {
-            new AccountabilityType(accountabilityTypeEnum, new MultiLanguageString(Language.getDefaultLanguage(),
+            new AccountabilityType(accountabilityTypeEnum, new MultiLanguageString(Locale.getDefault(),
                     accountabilityTypeEnum.getName()));
         }
     }
@@ -236,7 +236,7 @@ public class FenixBootstrapper {
     private static void createOrganizationalStructure() {
         final Bennu rootDomainObject = Bennu.getInstance();
         final PlanetUnit planetUnit =
-                PlanetUnit.createNewPlanetUnit(new MultiLanguageString(Language.getDefaultLanguage(), "Earth"), null, null, "E",
+                PlanetUnit.createNewPlanetUnit(new MultiLanguageString(Locale.getDefault(), "Earth"), null, null, "E",
                         new YearMonthDay(), null, null, null, null, false, null);
         rootDomainObject.setEarthUnit(planetUnit);
 
@@ -245,8 +245,8 @@ public class FenixBootstrapper {
 
     private static void createCountryUnits(final Bennu rootDomainObject, final PlanetUnit planetUnit) {
         for (final Country country : Country.readDistinctCountries()) {
-            CountryUnit.createNewCountryUnit(new MultiLanguageString(Language.getDefaultLanguage(), country.getName()), null,
-                    null, country.getCode(), new YearMonthDay(), null, planetUnit, null, null, false, null);
+            CountryUnit.createNewCountryUnit(new MultiLanguageString(Locale.getDefault(), country.getName()), null, null,
+                    country.getCode(), new YearMonthDay(), null, planetUnit, null, null, false, null);
         }
     }
 

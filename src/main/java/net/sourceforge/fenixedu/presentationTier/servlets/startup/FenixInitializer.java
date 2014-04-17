@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.servlets.startup;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -45,7 +44,6 @@ import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumF
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 import pt.ist.fenixframework.plugins.remote.domain.RemoteSystem;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @WebListener
 public class FenixInitializer implements ServletContextListener {
@@ -57,10 +55,6 @@ public class FenixInitializer implements ServletContextListener {
     public void contextInitialized(ServletContextEvent event) {
 
         logger.info("Initializing Fenix");
-
-        //Hack: to set the proper language at startup - the Language from tools should be properly implemented
-        CoreConfiguration.getConfiguration();
-        Language.setDefaultLocale(Locale.getDefault());
 
         RemoteSystem.init();
 

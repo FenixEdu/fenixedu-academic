@@ -4,7 +4,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
 
-<%@ page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
+<%@ page import="org.fenixedu.commons.i18n.I18N"%>
 <html:xhtml/>
 
 <link href="${pageContext.request.contextPath}/javaScript/sviz/sviz.css" rel="stylesheet" type="text/css" />
@@ -28,7 +28,7 @@ var data = <bean:write name="progress" filter="false" />;
 
 var overtime = <bean:write name="curricularCoursesOvertime" filter="false" />;
 
-SViz.init({ "lang": "<%= Language.getLanguage() %>", "localesBasePath": '<%= request.getContextPath() + "/javaScript/sviz" %>' });
+SViz.init({ "lang": "<%= I18N.getLocale().getLanguage() %>", "localesBasePath": '<%= request.getContextPath() + "/javaScript/sviz" %>' });
 SViz.loadViz("showStudentProgress", data, "#visualization");
 SViz.loadViz("showCurricularCoursesOvertime", overtime, "#overtime-visualization");
 

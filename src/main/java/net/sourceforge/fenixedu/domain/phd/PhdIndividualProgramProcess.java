@@ -118,7 +118,6 @@ import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 
 import pt.utl.ist.fenix.tools.predicates.Predicate;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Base {
 
@@ -1308,7 +1307,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     public String getGraduateTitle(Locale locale) {
         ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", locale);
         StringBuilder stringBuilder = new StringBuilder(bundle.getString("label.phd.graduated.title.in")).append(" ");
-        stringBuilder.append(getPhdProgram().getName().getContent(Language.valueOf(locale.getLanguage())));
+        stringBuilder.append(getPhdProgram().getName().getContent(locale));
 
         return stringBuilder.toString();
     }

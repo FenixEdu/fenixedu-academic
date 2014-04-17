@@ -56,6 +56,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.commons.i18n.I18N;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,7 +66,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 /**
  *
@@ -517,7 +518,7 @@ public class EditCandidateDA extends FenixDispatchAction {
         editCandidateForm.set("motherName", infoPerson.getNomeMae());
 
         if (infoPerson.getInfoPais() == null) {
-            editCandidateForm.set("nationality", ResourceBundle.getBundle("resources.GlobalResources", Language.getLocale())
+            editCandidateForm.set("nationality", ResourceBundle.getBundle("resources.GlobalResources", I18N.getLocale())
                     .getString("default.nationality"));
         } else {
             editCandidateForm.set("nationality", infoPerson.getInfoPais().getNationality());

@@ -6,7 +6,9 @@ package net.sourceforge.fenixedu.domain.student;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import org.fenixedu.commons.i18n.I18N;
+
+import java.util.Locale;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -25,7 +27,7 @@ public enum EnrolmentModel {
     }
 
     protected String localizedName() {
-        return localizedName(Language.getLocale());
+        return localizedName(I18N.getLocale());
     }
 
     public String getLocalizedName() {

@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationExceptio
 import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ThesisSubject extends ThesisSubject_Base {
@@ -50,7 +49,7 @@ public class ThesisSubject extends ThesisSubject_Base {
             }
         }
 
-        if (!name.hasContent(Language.en)) {
+        if (!name.hasContent(MultiLanguageString.en)) {
             throw new PhdDomainOperationException(
                     "error.net.sourceforge.fenixedu.domain.phd.ThesisSubject.name.in.english.required");
         }

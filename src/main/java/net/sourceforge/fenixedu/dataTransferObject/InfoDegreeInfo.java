@@ -4,7 +4,7 @@ import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
  * @author T�nia Pous�o Created on 30/Out/2003
@@ -96,32 +96,32 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent {
         if (degreeInfo != null) {
             setInfoDegree(InfoDegree.newInfoFromDomain(degreeInfo.getDegree()));
 
-            setDescription((degreeInfo.getDescription() != null) ? degreeInfo.getDescription().getContent(Language.pt) : null);
-            setHistory((degreeInfo.getHistory() != null) ? degreeInfo.getHistory().getContent(Language.pt) : null);
-            setObjectives((degreeInfo.getObjectives() != null) ? degreeInfo.getObjectives().getContent(Language.pt) : null);
-            setDesignedFor((degreeInfo.getDesignedFor() != null) ? degreeInfo.getDesignedFor().getContent(Language.pt) : null);
+            setDescription((degreeInfo.getDescription() != null) ? degreeInfo.getDescription().getContent(MultiLanguageString.pt) : null);
+            setHistory((degreeInfo.getHistory() != null) ? degreeInfo.getHistory().getContent(MultiLanguageString.pt) : null);
+            setObjectives((degreeInfo.getObjectives() != null) ? degreeInfo.getObjectives().getContent(MultiLanguageString.pt) : null);
+            setDesignedFor((degreeInfo.getDesignedFor() != null) ? degreeInfo.getDesignedFor().getContent(MultiLanguageString.pt) : null);
             setProfessionalExits((degreeInfo.getProfessionalExits() != null) ? degreeInfo.getProfessionalExits().getContent(
-                    Language.pt) : null);
+                    MultiLanguageString.pt) : null);
             setOperationalRegime((degreeInfo.getOperationalRegime() != null) ? degreeInfo.getOperationalRegime().getContent(
-                    Language.pt) : null);
-            setGratuity((degreeInfo.getGratuity() != null) ? degreeInfo.getGratuity().getContent(Language.pt) : null);
-            setSchoolCalendar((degreeInfo.getSchoolCalendar() != null) ? degreeInfo.getSchoolCalendar().getContent(Language.pt) : null);
+                    MultiLanguageString.pt) : null);
+            setGratuity((degreeInfo.getGratuity() != null) ? degreeInfo.getGratuity().getContent(MultiLanguageString.pt) : null);
+            setSchoolCalendar((degreeInfo.getSchoolCalendar() != null) ? degreeInfo.getSchoolCalendar().getContent(MultiLanguageString.pt) : null);
             setCandidacyPeriod((degreeInfo.getCandidacyPeriod() != null) ? degreeInfo.getCandidacyPeriod()
-                    .getContent(Language.pt) : null);
+                    .getContent(MultiLanguageString.pt) : null);
             setSelectionResultDeadline((degreeInfo.getSelectionResultDeadline() != null) ? degreeInfo
-                    .getSelectionResultDeadline().getContent(Language.pt) : null);
+                    .getSelectionResultDeadline().getContent(MultiLanguageString.pt) : null);
             setEnrolmentPeriod((degreeInfo.getEnrolmentPeriod() != null) ? degreeInfo.getEnrolmentPeriod()
-                    .getContent(Language.pt) : null);
-            setAdditionalInfo((degreeInfo.getAdditionalInfo() != null) ? degreeInfo.getAdditionalInfo().getContent(Language.pt) : null);
-            setLinks((degreeInfo.getLinks() != null) ? degreeInfo.getLinks().getContent(Language.pt) : null);
+                    .getContent(MultiLanguageString.pt) : null);
+            setAdditionalInfo((degreeInfo.getAdditionalInfo() != null) ? degreeInfo.getAdditionalInfo().getContent(MultiLanguageString.pt) : null);
+            setLinks((degreeInfo.getLinks() != null) ? degreeInfo.getLinks().getContent(MultiLanguageString.pt) : null);
 
-            setTestIngression((degreeInfo.getTestIngression() != null) ? degreeInfo.getTestIngression().getContent(Language.pt) : null);
+            setTestIngression((degreeInfo.getTestIngression() != null) ? degreeInfo.getTestIngression().getContent(MultiLanguageString.pt) : null);
             setClassifications((degreeInfo.getClassifications() != null) ? degreeInfo.getClassifications()
-                    .getContent(Language.pt) : null);
+                    .getContent(MultiLanguageString.pt) : null);
             setAccessRequisites((degreeInfo.getAccessRequisites() != null) ? degreeInfo.getAccessRequisites().getContent(
-                    Language.pt) : null);
+                    MultiLanguageString.pt) : null);
             setCandidacyDocuments((degreeInfo.getCandidacyDocuments() != null) ? degreeInfo.getCandidacyDocuments().getContent(
-                    Language.pt) : null);
+                    MultiLanguageString.pt) : null);
             setDriftsInitial(degreeInfo.getDriftsInitial());
             setDriftsFirst(degreeInfo.getDriftsFirst());
             setDriftsSecond(degreeInfo.getDriftsSecond());
@@ -130,40 +130,40 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent {
             setMarkAverage(degreeInfo.getMarkAverage());
 
             setQualificationLevel((degreeInfo.getQualificationLevel() != null) ? degreeInfo.getQualificationLevel().getContent(
-                    Language.pt) : null);
-            setRecognitions((degreeInfo.getRecognitions() != null) ? degreeInfo.getRecognitions().getContent(Language.pt) : null);
+                    MultiLanguageString.pt) : null);
+            setRecognitions((degreeInfo.getRecognitions() != null) ? degreeInfo.getRecognitions().getContent(MultiLanguageString.pt) : null);
 
             // in english
-            setDescriptionEn((degreeInfo.getDescription() != null) ? degreeInfo.getDescription().getContent(Language.en) : null);
-            setHistoryEn((degreeInfo.getHistory() != null) ? degreeInfo.getHistory().getContent(Language.en) : null);
-            setObjectivesEn((degreeInfo.getObjectives() != null) ? degreeInfo.getObjectives().getContent(Language.en) : null);
-            setDesignedForEn((degreeInfo.getDesignedFor() != null) ? degreeInfo.getDesignedFor().getContent(Language.en) : null);
+            setDescriptionEn((degreeInfo.getDescription() != null) ? degreeInfo.getDescription().getContent(MultiLanguageString.en) : null);
+            setHistoryEn((degreeInfo.getHistory() != null) ? degreeInfo.getHistory().getContent(MultiLanguageString.en) : null);
+            setObjectivesEn((degreeInfo.getObjectives() != null) ? degreeInfo.getObjectives().getContent(MultiLanguageString.en) : null);
+            setDesignedForEn((degreeInfo.getDesignedFor() != null) ? degreeInfo.getDesignedFor().getContent(MultiLanguageString.en) : null);
             setProfessionalExitsEn((degreeInfo.getProfessionalExits() != null) ? degreeInfo.getProfessionalExits().getContent(
-                    Language.en) : null);
+                    MultiLanguageString.en) : null);
             setOperationalRegimeEn((degreeInfo.getOperationalRegime() != null) ? degreeInfo.getOperationalRegime().getContent(
-                    Language.en) : null);
-            setGratuityEn((degreeInfo.getGratuity() != null) ? degreeInfo.getGratuity().getContent(Language.en) : null);
-            setSchoolCalendarEn((degreeInfo.getSchoolCalendar() != null) ? degreeInfo.getSchoolCalendar().getContent(Language.en) : null);
+                    MultiLanguageString.en) : null);
+            setGratuityEn((degreeInfo.getGratuity() != null) ? degreeInfo.getGratuity().getContent(MultiLanguageString.en) : null);
+            setSchoolCalendarEn((degreeInfo.getSchoolCalendar() != null) ? degreeInfo.getSchoolCalendar().getContent(MultiLanguageString.en) : null);
             setCandidacyPeriodEn((degreeInfo.getCandidacyPeriod() != null) ? degreeInfo.getCandidacyPeriod().getContent(
-                    Language.en) : null);
+                    MultiLanguageString.en) : null);
             setSelectionResultDeadlineEn((degreeInfo.getSelectionResultDeadline() != null) ? degreeInfo
-                    .getSelectionResultDeadline().getContent(Language.en) : null);
+                    .getSelectionResultDeadline().getContent(MultiLanguageString.en) : null);
             setEnrolmentPeriodEn((degreeInfo.getEnrolmentPeriod() != null) ? degreeInfo.getEnrolmentPeriod().getContent(
-                    Language.en) : null);
-            setAdditionalInfoEn((degreeInfo.getAdditionalInfo() != null) ? degreeInfo.getAdditionalInfo().getContent(Language.en) : null);
-            setLinksEn((degreeInfo.getLinks() != null) ? degreeInfo.getLinks().getContent(Language.en) : null);
+                    MultiLanguageString.en) : null);
+            setAdditionalInfoEn((degreeInfo.getAdditionalInfo() != null) ? degreeInfo.getAdditionalInfo().getContent(MultiLanguageString.en) : null);
+            setLinksEn((degreeInfo.getLinks() != null) ? degreeInfo.getLinks().getContent(MultiLanguageString.en) : null);
 
-            setTestIngressionEn((degreeInfo.getTestIngression() != null) ? degreeInfo.getTestIngression().getContent(Language.en) : null);
+            setTestIngressionEn((degreeInfo.getTestIngression() != null) ? degreeInfo.getTestIngression().getContent(MultiLanguageString.en) : null);
             setClassificationsEn((degreeInfo.getClassifications() != null) ? degreeInfo.getClassifications().getContent(
-                    Language.en) : null);
+                    MultiLanguageString.en) : null);
             setAccessRequisitesEn((degreeInfo.getAccessRequisites() != null) ? degreeInfo.getAccessRequisites().getContent(
-                    Language.en) : null);
+                    MultiLanguageString.en) : null);
             setCandidacyDocumentsEn((degreeInfo.getCandidacyDocuments() != null) ? degreeInfo.getCandidacyDocuments().getContent(
-                    Language.en) : null);
+                    MultiLanguageString.en) : null);
 
             setQualificationLevelEn((degreeInfo.getQualificationLevel() != null) ? degreeInfo.getQualificationLevel().getContent(
-                    Language.en) : null);
-            setRecognitionsEn((degreeInfo.getRecognitions() != null) ? degreeInfo.getRecognitions().getContent(Language.en) : null);
+                    MultiLanguageString.en) : null);
+            setRecognitionsEn((degreeInfo.getRecognitions() != null) ? degreeInfo.getRecognitions().getContent(MultiLanguageString.en) : null);
         }
     }
 

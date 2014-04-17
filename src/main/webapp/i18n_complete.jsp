@@ -7,7 +7,7 @@
 <%@page import="pt.ist.fenixWebFramework.servlets.filters.RequestReconstructor"%>
 
 <%@page import="pt.utl.ist.fenix.tools.util.Pair"%>
-<%@page import="pt.utl.ist.fenix.tools.util.i18n.Language"%><html:xhtml/>
+<%@page import="org.fenixedu.commons.i18n.I18N"%><html:xhtml/>
 
 <div id="version">
 		<%
@@ -24,10 +24,10 @@
 				}
 			%>
 
-		 	<enum:labelValues id="values" enumeration="pt.utl.ist.fenix.tools.util.i18n.Language" bundle="ENUMERATION_RESOURCES" />
-		 	<html:select bundle="HTMLALT_RESOURCES" property="locale" onchange="this.form.submit();" value="<%= Language.getLocale().toString() %>">
+		 	<enum:labelValues id="values" enumeration="org.fenixedu.commons.i18n.I18N" bundle="ENUMERATION_RESOURCES" />
+		 	<html:select bundle="HTMLALT_RESOURCES" property="locale" onchange="this.form.submit();" value="<%= I18N.getLocale().toString() %>">
 		 		<logic:iterate id="value" name="values">
-		 			<bean:define id="optionValue" type="java.lang.String"><bean:write name="value" property="value"/>_<%= Language.getLocale().getCountry() %></bean:define>
+		 			<bean:define id="optionValue" type="java.lang.String"><bean:write name="value" property="value"/>_<%= I18N.getLocale().getCountry() %></bean:define>
 		 			<html:option value="<%= optionValue %>"><bean:write name="value" property="label"/></html:option>
 		 		</logic:iterate>
 			</html:select>

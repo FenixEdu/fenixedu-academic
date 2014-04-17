@@ -17,21 +17,22 @@ import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.I18N;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class AlumniNotificationService {
 
     static ResourceBundle getAlumniBundle() {
-        return ResourceBundle.getBundle("resources.AlumniResources", Language.getLocale());
+        return ResourceBundle.getBundle("resources.AlumniResources", I18N.getLocale());
     }
 
     static ResourceBundle getGlobalBundle() {
-        return ResourceBundle.getBundle("resources.GlobalResources", Language.getLocale());
+        return ResourceBundle.getBundle("resources.GlobalResources", I18N.getLocale());
     }
 
     static ResourceBundle getManagerBundle() {
-        return ResourceBundle.getBundle("resources.ManagerResources", Language.getLocale());
+        return ResourceBundle.getBundle("resources.ManagerResources", I18N.getLocale());
     }
 
     private static void sendEmail(final Collection<Recipient> recipients, final String subject, final String body,

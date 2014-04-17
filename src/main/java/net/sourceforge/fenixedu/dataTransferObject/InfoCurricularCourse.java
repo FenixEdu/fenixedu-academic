@@ -18,7 +18,10 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.util.CurricularCourseExecutionScope;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+
+import org.fenixedu.commons.i18n.I18N;
+
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
  * @author tfc130
@@ -35,7 +38,7 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
 
     private final CurricularCourse curricularCourse;
 
-    private final boolean showEnVersion = (Language.getUserLanguage() == Language.en);
+    private final boolean showEnVersion = I18N.getLocale().equals(MultiLanguageString.en);
 
     private List<InfoCurricularCourseScope> infoScopes;
 

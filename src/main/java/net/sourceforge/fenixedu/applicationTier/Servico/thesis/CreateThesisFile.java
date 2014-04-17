@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.thesis;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeScientificCommissionMembersGroup;
@@ -15,11 +16,9 @@ import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
 
 import org.fenixedu.bennu.core.security.Authenticate;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
-
 public abstract class CreateThesisFile {
 
-    public ThesisFile run(Thesis thesis, byte[] bytes, String fileName, String title, String subTitle, Language language)
+    public ThesisFile run(Thesis thesis, byte[] bytes, String fileName, String title, String subTitle, Locale language)
             throws FenixServiceException, IOException {
 
         if (!thesis.isWaitingConfirmation() && !Authenticate.getUser().getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
@@ -52,7 +51,7 @@ public abstract class CreateThesisFile {
 
     protected abstract void removePreviousFile(Thesis thesis);
 
-    protected abstract void updateThesis(Thesis thesis, ThesisFile file, String title, String subTitle, Language language,
+    protected abstract void updateThesis(Thesis thesis, ThesisFile file, String title, String subTitle, Locale language,
             String fileName, byte[] bytes) throws FenixServiceException, IOException;
 
 }

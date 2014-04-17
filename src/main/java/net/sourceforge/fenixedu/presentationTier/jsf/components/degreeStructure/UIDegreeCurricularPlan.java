@@ -11,6 +11,8 @@ import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.fenixedu.commons.i18n.I18N;
+
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -18,7 +20,7 @@ import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class UIDegreeCurricularPlan extends UIInput {
     public static final String COMPONENT_TYPE =
@@ -289,7 +291,7 @@ public class UIDegreeCurricularPlan extends UIInput {
     }
 
     private String getBundleValue(String bundleName, String bundleKey) {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources/" + bundleName, Language.getLocale());
+        ResourceBundle bundle = ResourceBundle.getBundle("resources/" + bundleName, I18N.getLocale());
         return bundle.getString(bundleKey);
     }
 

@@ -24,8 +24,7 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.groups.NobodyGroup;
 import org.fenixedu.bennu.core.domain.groups.UserGroup;
-
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import org.fenixedu.commons.i18n.I18N;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
@@ -472,7 +471,7 @@ public class SearchDegreeStudentsGroup extends Group {
     }
 
     public String getApplicationResourcesString(String name) {
-        return ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale()).getString(name);
+        return ResourceBundle.getBundle("resources/ApplicationResources", I18N.getLocale()).getString(name);
     }
 
     public String getLabel() {

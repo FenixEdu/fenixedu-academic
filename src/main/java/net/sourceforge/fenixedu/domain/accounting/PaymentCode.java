@@ -13,11 +13,11 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public abstract class PaymentCode extends PaymentCode_Base {
 
@@ -222,8 +222,7 @@ public abstract class PaymentCode extends PaymentCode_Base {
     }
 
     public String getDescription() {
-        final ResourceBundle enumerationResources =
-                ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+        final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
         return enumerationResources.getString(getType().getQualifiedName());
     }
 

@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.cms.CmsContent;
 import net.sourceforge.fenixedu.domain.cms.TemplatedSection;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public abstract class UnitSiteMenuRenderer extends SiteMenuRenderer {
@@ -39,7 +38,7 @@ public abstract class UnitSiteMenuRenderer extends SiteMenuRenderer {
     }
 
     protected MultiLanguageString i18n(String pt, String en) {
-        return new MultiLanguageString(Language.pt, pt).with(Language.en, en);
+        return new MultiLanguageString(MultiLanguageString.pt, pt).with(MultiLanguageString.en, en);
     }
 
     protected abstract MultiLanguageString getTargetSectionName();

@@ -11,6 +11,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -55,12 +56,12 @@ import net.sourceforge.fenixedu.util.EvaluationType;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class Thesis extends Thesis_Base {
@@ -186,8 +187,8 @@ public class Thesis extends Thesis_Base {
         if (dissertation == null) {
             return getTitle();
         } else {
-            final Language dlanguage = dissertation.getLanguage();
-            final Language language = dlanguage == null ? Language.getDefaultLanguage() : dlanguage;
+            final Locale dlanguage = dissertation.getLanguage();
+            final Locale language = dlanguage == null ? Locale.getDefault() : dlanguage;
             return new MultiLanguageString(language, dissertation.getTitle());
         }
     }
@@ -213,14 +214,14 @@ public class Thesis extends Thesis_Base {
         setTitle(finalTitle);
         final ThesisFile dissertation = getDissertation();
         if (dissertation != null) {
-            final Language language = dissertation.getLanguage();
+            final Locale language = dissertation.getLanguage();
             if (language == null) {
-                dissertation.setLanguage(finalTitle.getContentLanguage());
+                dissertation.setLanguage(finalTitle.getContentLocale());
                 dissertation.setTitle(finalTitle.getContent());
             } else {
                 final String content = finalTitle.getContent(language);
                 if (content == null) {
-                    dissertation.setLanguage(finalTitle.getContentLanguage());
+                    dissertation.setLanguage(finalTitle.getContentLocale());
                     dissertation.setTitle(finalTitle.getContent());
                 } else {
                     dissertation.setTitle(content);
@@ -232,14 +233,14 @@ public class Thesis extends Thesis_Base {
     public void setFinalSubtitle(final MultiLanguageString finalSubtitle) {
         final ThesisFile dissertation = getDissertation();
         if (dissertation != null) {
-            final Language language = dissertation.getLanguage();
+            final Locale language = dissertation.getLanguage();
             if (language == null) {
-                dissertation.setLanguage(finalSubtitle.getContentLanguage());
+                dissertation.setLanguage(finalSubtitle.getContentLocale());
                 dissertation.setSubTitle(finalSubtitle.getContent());
             } else {
                 final String content = finalSubtitle.getContent(language);
                 if (content == null) {
-                    dissertation.setLanguage(finalSubtitle.getContentLanguage());
+                    dissertation.setLanguage(finalSubtitle.getContentLocale());
                     dissertation.setSubTitle(finalSubtitle.getContent());
                 } else {
                     dissertation.setSubTitle(content);
@@ -248,7 +249,7 @@ public class Thesis extends Thesis_Base {
         }
     }
 
-    public Language getLanguage() {
+    public Locale getLanguage() {
         ThesisFile dissertation = getDissertation();
         return dissertation == null ? null : dissertation.getLanguage();
     }
@@ -262,7 +263,7 @@ public class Thesis extends Thesis_Base {
             final StringBuilder result = new StringBuilder();
             result.append(dissertation.getTitle());
             result.append(StringUtils.isEmpty(dissertation.getSubTitle()) ? "" : ": " + dissertation.getSubTitle());
-            final Language language = dissertation.getLanguage();
+            final Locale language = dissertation.getLanguage();
             return language == null ? new MultiLanguageString(result.toString()) : new MultiLanguageString(language,
                     result.toString());
         }
@@ -674,7 +675,7 @@ public class Thesis extends Thesis_Base {
     }
 
     protected String getMessage(final String key, final Object... args) {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.ScientificCouncilResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.ScientificCouncilResources", I18N.getLocale());
         final String message = bundle.getString(key);
         return MessageFormat.format(message, args);
     }
@@ -1382,7 +1383,7 @@ public class Thesis extends Thesis_Base {
         if (thesisAbstract == null) {
             return null;
         } else {
-            Language realLanguage = Language.valueOf(language);
+            Locale realLanguage = new Locale.Builder().setLanguageTag(language).build();
             String value = thesisAbstract.getContent(realLanguage);
 
             if (value == null || value.length() == 0) {
@@ -1395,7 +1396,7 @@ public class Thesis extends Thesis_Base {
 
     public void setThesisAbstractLanguage(String language, String text) {
         MultiLanguageString thesisAbstract = getThesisAbstract();
-        Language realLanguage = Language.valueOf(language);
+        Locale realLanguage = new Locale.Builder().setLanguageTag(language).build();
 
         if (thesisAbstract == null) {
             setThesisAbstract(new MultiLanguageString(realLanguage, text));
@@ -1455,7 +1456,7 @@ public class Thesis extends Thesis_Base {
         if (thesisAbstract == null) {
             return null;
         } else {
-            Language realLanguage = Language.valueOf(language);
+            Locale realLanguage = new Locale.Builder().setLanguageTag(language).build();
             String value = thesisAbstract.getContent(realLanguage);
 
             if (value == null || value.length() == 0) {
@@ -1481,7 +1482,7 @@ public class Thesis extends Thesis_Base {
         }
 
         MultiLanguageString keywords = getKeywords();
-        Language realLanguage = Language.valueOf(language);
+        Locale realLanguage = new Locale.Builder().setLanguageTag(language).build();
 
         if (keywords == null) {
             setKeywords(new MultiLanguageString(realLanguage, text));
@@ -1664,8 +1665,8 @@ public class Thesis extends Thesis_Base {
         return false;
     }
 
-    public List<Language> getLanguages() {
-        final List<Language> result = new ArrayList<Language>();
+    public List<Locale> getLanguages() {
+        final List<Locale> result = new ArrayList<Locale>();
 
         add(result, getKeywords());
         add(result, getThesisAbstract());
@@ -1683,20 +1684,20 @@ public class Thesis extends Thesis_Base {
         return result;
     }
 
-    private void add(final List<Language> result, final MultiLanguageString mls) {
+    private void add(final List<Locale> result, final MultiLanguageString mls) {
         if (mls != null) {
-            for (final Language language : mls.getAllLanguages()) {
+            for (final Locale language : mls.getAllLocales()) {
                 add(result, language);
             }
         }
     }
 
-    private void add(final List<Language> result, final Language language) {
+    private void add(final List<Locale> result, final Locale language) {
         if (language != null && !result.contains(language)) {
-            if (language == Language.pt) {
+            if (language == MultiLanguageString.pt) {
                 result.add(0, language);
-            } else if (language == Language.en) {
-                if (result.size() > 0 && result.iterator().next() == Language.pt) {
+            } else if (language == MultiLanguageString.en) {
+                if (result.size() > 0 && result.iterator().next() == MultiLanguageString.pt) {
                     result.add(1, language);
                 } else if (result.size() > 0) {
                     result.add(0, language);

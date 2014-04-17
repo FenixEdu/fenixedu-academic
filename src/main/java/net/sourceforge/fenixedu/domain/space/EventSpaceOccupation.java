@@ -19,12 +19,13 @@ import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
 
@@ -36,7 +37,7 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
 
     private static int SATURDAY_IN_JODA_TIME = 6, SUNDAY_IN_JODA_TIME = 7;
 
-    private static transient Locale locale = Language.getLocale();
+    private static transient Locale locale = I18N.getLocale();
 
     public abstract Boolean getDailyFrequencyMarkSaturday();
 

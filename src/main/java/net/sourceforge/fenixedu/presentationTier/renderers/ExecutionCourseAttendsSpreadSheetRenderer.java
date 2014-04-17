@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import org.fenixedu.commons.i18n.I18N;
+
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean.StudentAttendsStateType;
 import net.sourceforge.fenixedu.domain.Attends;
@@ -27,14 +29,14 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlTableHeader;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableRow;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class ExecutionCourseAttendsSpreadSheetRenderer extends OutputRenderer {
 
     private final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources",
-            Language.getLocale());
+            I18N.getLocale());
     private final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources",
-            Language.getLocale());
+            I18N.getLocale());
 
     private String attendsListTableClasses;
     private String summaryClasses;

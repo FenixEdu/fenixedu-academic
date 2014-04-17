@@ -16,9 +16,10 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.period.MobilityApplicationPeriod;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class DegreeOfficePublicCandidacyHashCode extends DegreeOfficePublicCandidacyHashCode_Base {
 
@@ -85,13 +86,13 @@ public class DegreeOfficePublicCandidacyHashCode extends DegreeOfficePublicCandi
 
     private void sendEmailForApplicationSubmissionCandidacyForm(
             Class<? extends IndividualCandidacyProcess> individualCandidadyProcessClass) {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", I18N.getLocale());
         String subject =
                 bundle.getString(individualCandidadyProcessClass.getSimpleName() + SEND_LINK_TO_ACCESS_SUBMISSION_FORM_SUBJECT);
         String body =
                 bundle.getString(individualCandidadyProcessClass.getSimpleName() + SEND_LINK_TO_ACCESS_SUBMISSION_FORM_BODY);
         String link = bundle.getString(individualCandidadyProcessClass.getSimpleName() + APPLICATION_SUBMISSION_LINK);
-        link = String.format(link, this.getValue(), Language.getLocale());
+        link = String.format(link, this.getValue(), I18N.getLocale());
         body = String.format(body, link);
         this.sendEmail(subject, body);
     }
@@ -115,7 +116,7 @@ public class DegreeOfficePublicCandidacyHashCode extends DegreeOfficePublicCandi
             return;
         }
 
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", I18N.getLocale());
         String subject =
                 MessageFormat.format(bundle.getString(this.getIndividualCandidacyProcess().getClass().getSimpleName()
                         + INFORM_APPLICATION_SUCCESS_SUBJECT), Unit.getInstitutionAcronym(), Unit.getInstitutionName()
@@ -141,7 +142,7 @@ public class DegreeOfficePublicCandidacyHashCode extends DegreeOfficePublicCandi
     private static final String RECOVERY_APPLICATION_BODY = ".message.email.body.recovery.access";
 
     public void sendEmailFoAccessLinkRecovery() {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", I18N.getLocale());
         String subject =
                 bundle.getString(this.getIndividualCandidacyProcess().getClass().getSimpleName() + RECOVERY_APPLICATION_SUBJECT);
         String body =
@@ -154,10 +155,10 @@ public class DegreeOfficePublicCandidacyHashCode extends DegreeOfficePublicCandi
     }
 
     public String getDefaultPublicLink() {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", I18N.getLocale());
         return String.format(
                 bundle.getString(this.getIndividualCandidacyProcess().getClass().getSimpleName() + APPLICATION_ACCESS_LINK),
-                this.getValue(), Language.getLocale().getLanguage());
+                this.getValue(), I18N.getLocale().getLanguage());
     }
 
     /**

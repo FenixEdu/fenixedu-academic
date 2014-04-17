@@ -4,7 +4,10 @@ import java.util.StringTokenizer;
 
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+
+import org.fenixedu.commons.i18n.I18N;
+
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
  * @author dcs-rjao
@@ -21,7 +24,7 @@ public class InfoBranch extends InfoObject {
         return branch;
     }
 
-    private final boolean showEnVersion = (Language.getUserLanguage() == Language.en);
+    private final boolean showEnVersion = I18N.getLocale().equals(MultiLanguageString.en);
 
     public InfoBranch(final Branch branch) {
         this.branch = branch;

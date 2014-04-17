@@ -7,11 +7,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import org.fenixedu.commons.i18n.I18N;
+
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import pt.utl.ist.fenix.tools.predicates.AndPredicate;
 import pt.utl.ist.fenix.tools.predicates.InlinePredicate;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class SearchPhdMigrationProcessBean implements Serializable {
 
@@ -25,7 +27,7 @@ public class SearchPhdMigrationProcessBean implements Serializable {
         FILTER_MIGRATED, FILTER_NOT_MIGRATED, NO_FILTER;
 
         public String getLocalizedName() {
-            return getLocalizedName(Language.getLocale());
+            return getLocalizedName(I18N.getLocale());
         }
 
         public String getLocalizedName(final Locale locale) {

@@ -28,13 +28,14 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.YearMonthDay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class AlumniReportFile extends AlumniReportFile_Base {
 
@@ -86,7 +87,7 @@ public class AlumniReportFile extends AlumniReportFile_Base {
 
     @Override
     public String getFilename() {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources/GEPResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources/GEPResources", I18N.getLocale());
         return MessageFormat.format(
                 getFullReport() ? bundle.getString("alumni.full.reports.name") : bundle.getString("alumni.partial.reports.name"),
                 getRequestDate());

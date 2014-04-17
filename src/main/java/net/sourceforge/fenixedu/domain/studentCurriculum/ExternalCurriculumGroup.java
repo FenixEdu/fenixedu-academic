@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -83,13 +82,13 @@ public class ExternalCurriculumGroup extends ExternalCurriculumGroup_Base {
 
         if (!StringUtils.isEmpty(getDegreeModule().getName())) {
             multiLanguageString =
-                    multiLanguageString.with(Language.pt, getDegreeModule().getName() + " ("
+                    multiLanguageString.with(MultiLanguageString.pt, getDegreeModule().getName() + " ("
                             + getDegreeCurricularPlanOfDegreeModule().getName() + ")");
         }
 
         if (!StringUtils.isEmpty(getDegreeModule().getNameEn())) {
             multiLanguageString =
-                    multiLanguageString.with(Language.en, getDegreeModule().getNameEn() + " ("
+                    multiLanguageString.with(MultiLanguageString.en, getDegreeModule().getNameEn() + " ("
                             + getDegreeCurricularPlanOfDegreeModule().getName() + ")");
         }
 

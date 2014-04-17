@@ -6,10 +6,11 @@
 
 package net.sourceforge.fenixedu.util;
 
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 /**
  * 
@@ -64,19 +65,19 @@ public class DiaSemana extends FenixUtil {
         int diaSemana = this.diaSemana.intValue();
         switch (diaSemana) {
         case SEGUNDA_FEIRA:
-            return new DateTime().withDayOfWeek(1).dayOfWeek().getAsShortText(Language.getLocale());
+            return new DateTime().withDayOfWeek(1).dayOfWeek().getAsShortText(I18N.getLocale());
         case TERCA_FEIRA:
-            return new DateTime().withDayOfWeek(2).dayOfWeek().getAsShortText(Language.getLocale());
+            return new DateTime().withDayOfWeek(2).dayOfWeek().getAsShortText(I18N.getLocale());
         case QUARTA_FEIRA:
-            return new DateTime().withDayOfWeek(3).dayOfWeek().getAsShortText(Language.getLocale());
+            return new DateTime().withDayOfWeek(3).dayOfWeek().getAsShortText(I18N.getLocale());
         case QUINTA_FEIRA:
-            return new DateTime().withDayOfWeek(4).dayOfWeek().getAsShortText(Language.getLocale());
+            return new DateTime().withDayOfWeek(4).dayOfWeek().getAsShortText(I18N.getLocale());
         case SEXTA_FEIRA:
-            return new DateTime().withDayOfWeek(5).dayOfWeek().getAsShortText(Language.getLocale());
+            return new DateTime().withDayOfWeek(5).dayOfWeek().getAsShortText(I18N.getLocale());
         case SABADO:
-            return new DateTime().withDayOfWeek(6).dayOfWeek().getAsShortText(Language.getLocale());
+            return new DateTime().withDayOfWeek(6).dayOfWeek().getAsShortText(I18N.getLocale());
         case DOMINGO:
-            return new DateTime().withDayOfWeek(7).dayOfWeek().getAsShortText(Language.getLocale());
+            return new DateTime().withDayOfWeek(7).dayOfWeek().getAsShortText(I18N.getLocale());
         }
         return "Error: Invalid week day";
     }

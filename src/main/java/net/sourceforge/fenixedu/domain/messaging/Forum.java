@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.messaging;
 
+import java.util.Locale;
+
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -7,7 +9,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import org.fenixedu.commons.StringNormalizer;
 import org.joda.time.DateTime;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public abstract class Forum extends Forum_Base {
@@ -131,7 +132,7 @@ public abstract class Forum extends Forum_Base {
             return null;
         }
         MultiLanguageString result = new MultiLanguageString();
-        for (final Language language : multiLanguageString.getAllLanguages()) {
+        for (final Locale language : multiLanguageString.getAllLocales()) {
             result = result.with(language, normalize(multiLanguageString.getContent(language)));
         }
         return result;

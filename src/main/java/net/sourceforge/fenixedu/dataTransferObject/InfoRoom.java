@@ -12,7 +12,6 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Building;
 import net.sourceforge.fenixedu.domain.space.RoomClassification;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class InfoRoom extends InfoObject implements Comparable {
 
@@ -37,7 +36,7 @@ public class InfoRoom extends InfoObject implements Comparable {
 
     public String getTipo() {
         RoomClassification roomClassification = getRoom().getRoomClassification();
-        return roomClassification != null ? roomClassification.getName().getContent(Language.getLanguage()) : "";
+        return roomClassification != null ? roomClassification.getName().getContent() : "";
     }
 
     public Integer getCapacidadeNormal() {

@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.rendererExtensions.controllers.CopyCheckBoxValuesController;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyArrayConverter;
@@ -50,7 +51,6 @@ import pt.ist.fenixWebFramework.renderers.model.MetaObject;
 import pt.ist.fenixWebFramework.renderers.model.MetaObjectFactory;
 import pt.ist.fenixWebFramework.renderers.schemas.Schema;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class BolonhaStudentEnrolmentLayout extends Layout {
 
@@ -414,7 +414,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
         for (final CurricularRule curricularRule : curricularRules) {
             final HtmlTableCell cellName = rulesTable.createRow().createCell();
             cellName.setStyle("color: #888");
-            cellName.setBody(new HtmlText(CurricularRuleLabelFormatter.getLabel(curricularRule, Language.getLocale())));
+            cellName.setBody(new HtmlText(CurricularRuleLabelFormatter.getLabel(curricularRule, I18N.getLocale())));
         }
     }
 
@@ -510,7 +510,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
             return optionalEnrolment.getOptionalCurricularCourse().getName() + " ("
                     + optionalEnrolment.getCurricularCourse().getName() + ")";
         } else {
-            return enrolment.getName().getContent(Language.getLanguage());
+            return enrolment.getName().getContent();
         }
     }
 

@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.util.email.Sender;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public abstract class PhdEmail extends PhdEmail_Base {
@@ -50,8 +49,8 @@ public abstract class PhdEmail extends PhdEmail_Base {
 
     @Override
     protected void generateMessage() {
-        new Message(getSender(), getReplyTos(), getRecipients(), getSubject().getContent(Language.pt), getBody().getContent(
-                Language.pt), getBccs());
+        new Message(getSender(), getReplyTos(), getRecipients(), getSubject().getContent(MultiLanguageString.pt), getBody().getContent(
+                MultiLanguageString.pt), getBccs());
     }
 
     @Override

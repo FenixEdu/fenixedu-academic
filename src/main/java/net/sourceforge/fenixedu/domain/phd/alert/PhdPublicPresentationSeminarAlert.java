@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.util.email.ReplyTo;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSeminarAlert_Base {
@@ -40,13 +40,13 @@ public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSemi
     }
 
     private MultiLanguageString buildSubject(final PhdIndividualProgramProcess process) {
-        return new MultiLanguageString(Language.getDefaultLanguage(), AlertService.getSubjectPrefixed(process,
+        return new MultiLanguageString(Locale.getDefault(), AlertService.getSubjectPrefixed(process,
                 AlertMessage.create("message.phd.alert.public.presentation.seminar.subject")));
     }
 
     private MultiLanguageString buildBody(final PhdIndividualProgramProcess process) {
         int days = getDaysUntilNow(process.getWhenStartedStudies());
-        return new MultiLanguageString(Language.getDefaultLanguage(), AlertService.getBodyText(process, AlertMessage.create(
+        return new MultiLanguageString(Locale.getDefault(), AlertService.getBodyText(process, AlertMessage.create(
                 "message.phd.alert.public.presentation.seminar.body", process.getWhenStartedStudies().toString("dd/MM/yyyy"),
                 String.valueOf(days < 1 ? 1 : days), getGuidersNames(process))));
     }

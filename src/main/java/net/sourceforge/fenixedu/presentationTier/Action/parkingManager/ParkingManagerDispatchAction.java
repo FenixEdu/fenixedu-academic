@@ -55,6 +55,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -64,7 +65,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 @Mapping(path = "/parking", module = "parkingManager", formBean = "parkingForm")
 @Forwards({
@@ -618,7 +619,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         spreadsheet.addHeader("Data Pedido");
         spreadsheet.addHeader("Outras Informações", 6000);
 
-        final ResourceBundle enumerationBundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+        final ResourceBundle enumerationBundle = ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
         for (ParkingRequest parkingRequest : parkingRequestList) {
             if (parkingRequest.getParkingParty().getParty().isPerson()) {
                 Person person = (Person) parkingRequest.getParkingParty().getParty();

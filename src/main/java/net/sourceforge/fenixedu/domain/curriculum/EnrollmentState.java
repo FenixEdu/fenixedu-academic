@@ -2,7 +2,9 @@ package net.sourceforge.fenixedu.domain.curriculum;
 
 import java.util.ResourceBundle;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import org.fenixedu.commons.i18n.I18N;
+
+import java.util.Locale;
 
 /**
  * @author Luis Cruz
@@ -31,7 +33,7 @@ public enum EnrollmentState {
     }
 
     public String getDescription() {
-        return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(getQualifiedName());
+        return ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale()).getString(getQualifiedName());
     }
 
 }

@@ -14,7 +14,7 @@
 <%@page import="java.util.Set"%>
 <%@page
 	import="net.sourceforge.fenixedu.presentationTier.Action.coordinator.xviews.Inar"%>
-<%@page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
+<%@page import="org.fenixedu.commons.i18n.I18N"%>
 
 <html:xhtml />
 
@@ -46,7 +46,7 @@
 <h2><bean:message bundle="COORDINATOR_RESOURCES" key="title.analysisByExecutionYears" /></h2>
 
 <fr:form id="searchForm"
-	action="<%= "/xYear.do?method=showYearInformation&degreeCurricularPlanID=" + degreeCurricularPlanID.toString() + "&locale=" + Language.getLocale().getLanguage() %>">
+	action="<%= "/xYear.do?method=showYearInformation&degreeCurricularPlanID=" + degreeCurricularPlanID.toString() + "&locale=" + I18N.getLocale().getLanguage() %>">
 	<fr:edit id="searchFormBean" name="searchFormBean">
 		<fr:schema
 			type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.xviews.YearViewBean"

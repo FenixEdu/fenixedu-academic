@@ -137,8 +137,7 @@ public class ManageHomepageDA extends SiteManagementDA {
 
         final MultiLanguageString researchUnitMultiLanguageString;
         if (researchUnit != null && researchUnit.length() > 0) {
-            researchUnitMultiLanguageString = new MultiLanguageString();
-            researchUnitMultiLanguageString.setContent(researchUnit);
+            researchUnitMultiLanguageString = new MultiLanguageString(researchUnit);
         } else {
             researchUnitMultiLanguageString = null;
         }

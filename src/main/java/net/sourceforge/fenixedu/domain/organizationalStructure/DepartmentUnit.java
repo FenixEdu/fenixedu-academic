@@ -29,7 +29,7 @@ import net.sourceforge.fenixedu.injectionCode.IGroup;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class DepartmentUnit extends DepartmentUnit_Base {
@@ -59,7 +59,7 @@ public class DepartmentUnit extends DepartmentUnit_Base {
             final String departmentAcronym, final Unit parentUnit) {
 
         final DepartmentUnit departmentUnit = new DepartmentUnit();
-        departmentUnit.init(new MultiLanguageString(Language.getDefaultLanguage(), departmentName), null, null,
+        departmentUnit.init(new MultiLanguageString(Locale.getDefault(), departmentName), null, null,
                 departmentAcronym, new YearMonthDay(), null, null, null, null, null, null);
         if (parentUnit.isCountryUnit()) {
             departmentUnit.addParentUnit(parentUnit, AccountabilityType.readByType(AccountabilityTypeEnum.GEOGRAPHIC));

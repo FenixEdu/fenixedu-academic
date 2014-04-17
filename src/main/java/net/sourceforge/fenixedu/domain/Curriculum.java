@@ -10,7 +10,6 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -55,10 +54,10 @@ public class Curriculum extends Curriculum_Base {
     public MultiLanguageString getGeneralObjectivesI18N() {
         MultiLanguageString multiLanguageString = new MultiLanguageString();
         if (getGeneralObjectives() != null && getGeneralObjectives().length() > 0) {
-            multiLanguageString = multiLanguageString.with(Language.pt, getGeneralObjectives());
+            multiLanguageString = multiLanguageString.with(MultiLanguageString.pt, getGeneralObjectives());
         }
         if (getGeneralObjectivesEn() != null && getGeneralObjectivesEn().length() > 0) {
-            multiLanguageString = multiLanguageString.with(Language.en, getGeneralObjectivesEn());
+            multiLanguageString = multiLanguageString.with(MultiLanguageString.en, getGeneralObjectivesEn());
         }
         return multiLanguageString;
     }
@@ -66,10 +65,10 @@ public class Curriculum extends Curriculum_Base {
     public MultiLanguageString getOperacionalObjectivesI18N() {
         MultiLanguageString multiLanguageString = new MultiLanguageString();
         if (getOperacionalObjectives() != null && getOperacionalObjectives().length() > 0) {
-            multiLanguageString = multiLanguageString.with(Language.pt, getOperacionalObjectives());
+            multiLanguageString = multiLanguageString.with(MultiLanguageString.pt, getOperacionalObjectives());
         }
         if (getOperacionalObjectivesEn() != null && getOperacionalObjectivesEn().length() > 0) {
-            multiLanguageString = multiLanguageString.with(Language.en, getOperacionalObjectivesEn());
+            multiLanguageString = multiLanguageString.with(MultiLanguageString.en, getOperacionalObjectivesEn());
         }
         return multiLanguageString;
     }
@@ -77,10 +76,10 @@ public class Curriculum extends Curriculum_Base {
     public MultiLanguageString getProgramI18N() {
         MultiLanguageString multiLanguageString = new MultiLanguageString();
         if (getProgram() != null && getProgram().length() > 0) {
-            multiLanguageString = multiLanguageString.with(Language.pt, getProgram());
+            multiLanguageString = multiLanguageString.with(MultiLanguageString.pt, getProgram());
         }
         if (getProgramEn() != null && getProgramEn().length() > 0) {
-            multiLanguageString = multiLanguageString.with(Language.en, getProgramEn());
+            multiLanguageString = multiLanguageString.with(MultiLanguageString.en, getProgramEn());
         }
         return multiLanguageString;
     }

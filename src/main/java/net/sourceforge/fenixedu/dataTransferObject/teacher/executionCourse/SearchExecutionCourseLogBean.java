@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.ResourceBundle;
 
+import org.fenixedu.commons.i18n.I18N;
+
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseLog;
 import net.sourceforge.fenixedu.domain.ExecutionCourseLog.ExecutionCourseLogTypes;
@@ -13,7 +15,7 @@ import net.sourceforge.fenixedu.util.Month;
 import pt.utl.ist.fenix.tools.predicates.AndPredicate;
 import pt.utl.ist.fenix.tools.predicates.InlinePredicate;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class SearchExecutionCourseLogBean implements Serializable {
 
@@ -26,11 +28,11 @@ public class SearchExecutionCourseLogBean implements Serializable {
     private Collection<ExecutionCourseLog> executionCourseLogs;
 
     public String getEnumerationResourcesString(String name) {
-        return ResourceBundle.getBundle("resources/EnumerationResources", Language.getLocale()).getString(name);
+        return ResourceBundle.getBundle("resources/EnumerationResources", I18N.getLocale()).getString(name);
     }
 
     public String getApplicationResourcesString(String name) {
-        return ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale()).getString(name);
+        return ResourceBundle.getBundle("resources/ApplicationResources", I18N.getLocale()).getString(name);
     }
 
     public SearchExecutionCourseLogBean(ExecutionCourse executionCourse) {

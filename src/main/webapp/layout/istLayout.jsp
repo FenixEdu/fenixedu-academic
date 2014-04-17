@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
-<%@page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
+<%@page import="org.fenixedu.commons.i18n.I18N"%>
 <%@page import="org.fenixedu.bennu.core.security.Authenticate"%>
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
@@ -68,7 +68,7 @@
 
 <body>
 <% if (FenixConfigurationManager.isBarraAsAuthenticationBroker()) { %>
-<script id="ist-bar" data-logout="https://fenix.tecnico.ulisboa.pt/logoff.do" data-login="https://fenix.tecnico.ulisboa.pt/loginPage.jsp" data-fluid="true" data-lang="<%= Language.getLocale().getLanguage() %>" <% if(Authenticate.getUser() == null) {%> data-use-offline="true" <%} %> data-next-param="service" src="https://barra.tecnico.ulisboa.pt/site_media/static/js/barra.js"></script>
+<script id="ist-bar" data-logout="https://fenix.tecnico.ulisboa.pt/logoff.do" data-login="https://fenix.tecnico.ulisboa.pt/loginPage.jsp" data-fluid="true" data-lang="<%= I18N.getLocale().getLanguage() %>" <% if(Authenticate.getUser() == null) {%> data-use-offline="true" <%} %> data-next-param="service" src="https://barra.tecnico.ulisboa.pt/site_media/static/js/barra.js"></script>
 <% } %>
 
 

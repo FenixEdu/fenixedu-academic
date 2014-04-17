@@ -22,6 +22,7 @@ import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -29,7 +30,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 @StrutsFunctionality(app = ManagerStudentsApp.class, path = "special-season-enrolments",
         titleKey = "label.course.specialSeasonEnrolments")
@@ -112,7 +113,7 @@ public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
 
     private String getFilename(SpecialSeasonStatusTrackerBean bean) {
         StringBuilder strBuilder = new StringBuilder();
-        strBuilder.append(ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale()).getString(
+        strBuilder.append(ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale()).getString(
                 "special.season.filename"));
         if (bean.getCompetenceCourse() != null) {
             strBuilder.append("_");
@@ -124,7 +125,7 @@ public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
         strBuilder.append("_");
         strBuilder.append(bean.getExecutionSemester().getSemester());
         strBuilder.append("_");
-        strBuilder.append(ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale()).getString(
+        strBuilder.append(ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale()).getString(
                 "special.season.semester"));
         strBuilder.append("_");
         strBuilder.append(bean.getExecutionSemester().getExecutionYear().getName());
@@ -150,7 +151,7 @@ public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
     }
 
     private Spreadsheet createSpreadSheet() {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
         final Spreadsheet spreadsheet = new Spreadsheet(bundle.getString("list.students"));
 
         spreadsheet.setHeaders(new String[] {

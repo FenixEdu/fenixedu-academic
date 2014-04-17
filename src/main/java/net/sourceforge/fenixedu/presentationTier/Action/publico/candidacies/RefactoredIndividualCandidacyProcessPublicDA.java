@@ -42,12 +42,13 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.util.Pair;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
@@ -71,7 +72,7 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
     }
 
     protected String getStringFromDefaultBundle(String key) {
-        return ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale()).getString(key);
+        return ResourceBundle.getBundle("resources.CandidateResources", I18N.getLocale()).getString(key);
     }
 
     @Override
@@ -160,11 +161,11 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
                             .getUnusedOrCreateNewHashCodeAndSendEmailForApplicationSubmissionToCandidate(getProcessType(),
                                     getCurrentOpenParentProcess(), email);
 
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", I18N.getLocale());
             String link =
                     String.format(
                             bundle.getString(getProcessType().getSimpleName() + ".const.public.application.submission.link"),
-                            hash.getValue(), Language.getLocale().getLanguage());
+                            hash.getValue(), I18N.getLocale().getLanguage());
 
             request.setAttribute("link", link);
 
@@ -227,7 +228,7 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
     }
 
     private boolean isInEnglishLocale() {
-        Locale locale = Language.getLocale();
+        Locale locale = I18N.getLocale();
         return locale.getLanguage().equals(Locale.ENGLISH.getLanguage());
     }
 
@@ -438,9 +439,9 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
     protected String getFormattedApplicationSubmissionEndDate() {
         DateTime end = getCurrentOpenParentProcess().getCandidacyEnd();
         if (isInEnglishLocale()) {
-            return end.toString("dd', 'MMMM' of 'yyyy", Language.getLocale());
+            return end.toString("dd', 'MMMM' of 'yyyy", I18N.getLocale());
         }
-        return end.toString("dd' de 'MMMM' de 'yyyy", Language.getLocale());
+        return end.toString("dd' de 'MMMM' de 'yyyy", I18N.getLocale());
     }
 
     @Override
@@ -641,7 +642,7 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 
     public ActionForward candidaciesTypesInformationIntro(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        Locale locale = Language.getLocale();
+        Locale locale = I18N.getLocale();
         String countryCode = readCountryCode(locale);
 
         String institutionalURL = Installation.getInstance().getInstituitionURL();

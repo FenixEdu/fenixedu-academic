@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.util.email.ReplyTo;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdReporterReviewAlert extends PhdReporterReviewAlert_Base {
@@ -85,12 +85,12 @@ public class PhdReporterReviewAlert extends PhdReporterReviewAlert_Base {
     }
 
     private MultiLanguageString buildSubject(final PhdIndividualProgramProcess process) {
-        return new MultiLanguageString(Language.getDefaultLanguage(), AlertMessage.get(
+        return new MultiLanguageString(Locale.getDefault(), AlertMessage.get(
                 "message.phd.request.jury.reviews.external.access.subject", process.getPhdProgram().getName()));
     }
 
     private MultiLanguageString buildBody(final PhdIndividualProgramProcess process, PhdParticipant participant) {
-        return new MultiLanguageString(Language.getDefaultLanguage(), AlertMessage.get(
+        return new MultiLanguageString(Locale.getDefault(), AlertMessage.get(
                 "message.phd.request.reminder.jury.reviews.reporter.body", process.getPerson().getName(),
                 process.getProcessNumber(), getDaysLeftUntilDeadline(process))
                 + "\n\n"

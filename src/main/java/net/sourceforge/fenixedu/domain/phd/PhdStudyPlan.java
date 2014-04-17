@@ -13,10 +13,11 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class PhdStudyPlan extends PhdStudyPlan_Base {
 
@@ -186,7 +187,7 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
 
     public String getDescription() {
         if (getExempted().booleanValue()) {
-            return ResourceBundle.getBundle("resources.PhdResources", Language.getLocale()).getString(
+            return ResourceBundle.getBundle("resources.PhdResources", I18N.getLocale()).getString(
                     "label.PhdStudyPlan.description.exempted");
         } else {
             return getDegree().getPresentationName(getProcess().getExecutionYear());

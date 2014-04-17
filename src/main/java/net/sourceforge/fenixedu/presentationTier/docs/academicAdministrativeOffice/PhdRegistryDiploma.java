@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumen
 
 import org.joda.time.DateTime;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdRegistryDiploma extends RegistryDiploma {
@@ -69,8 +68,8 @@ public class PhdRegistryDiploma extends RegistryDiploma {
     }
 
     private MultiLanguageString getThesisTitleI18N() {
-        return new MultiLanguageString(Language.pt, getDocumentRequest().getPhdIndividualProgramProcess().getThesisTitle()).with(
-                Language.en, getDocumentRequest().getPhdIndividualProgramProcess().getThesisTitleEn());
+        return new MultiLanguageString(MultiLanguageString.pt, getDocumentRequest().getPhdIndividualProgramProcess().getThesisTitle()).with(
+                MultiLanguageString.en, getDocumentRequest().getPhdIndividualProgramProcess().getThesisTitleEn());
     }
 
     @Override

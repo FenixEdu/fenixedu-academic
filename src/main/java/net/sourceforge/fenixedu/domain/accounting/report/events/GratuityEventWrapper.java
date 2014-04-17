@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.student.EnrolmentModel;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class GratuityEventWrapper implements Wrapper {
 
@@ -51,7 +51,7 @@ public class GratuityEventWrapper implements Wrapper {
 
     @Override
     public String getDegreeName() {
-        return event.getRegistration().getDegree().getNameI18N().getContent(Language.pt);
+        return event.getRegistration().getDegree().getNameI18N().getContent(MultiLanguageString.pt);
     }
 
     @Override

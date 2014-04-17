@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.util.MarkType;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class EmptyDegree extends EmptyDegree_Base {
@@ -214,12 +213,12 @@ public class EmptyDegree extends EmptyDegree_Base {
 
     @Override
     final public String getPresentationName(ExecutionYear executionYear) {
-        return getNameFor((ExecutionYear) null).getContent(Language.pt);
+        return getNameFor((ExecutionYear) null).getContent(MultiLanguageString.pt);
     }
 
     @Override
     final public String getFilteredName(final ExecutionYear executionYear, final Locale locale) {
-        return getNameFor(executionYear).getContent(Language.valueOf(locale.getLanguage()));
+        return getNameFor(executionYear).getContent(locale);
     }
 
     @Override

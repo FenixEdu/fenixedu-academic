@@ -31,13 +31,14 @@ import net.sourceforge.fenixedu.domain.space.LessonSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.TimeOfDay;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom {
 
@@ -162,10 +163,10 @@ public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom {
 
                             Calendar endOfInterval = null;
                             if (intervalStartDay.isEqual(intervalEndDay)) {
-                                endOfInterval = interval.getEnd().toCalendar(Language.getLocale());
+                                endOfInterval = interval.getEnd().toCalendar(I18N.getLocale());
 
                             } else {
-                                endOfInterval = pointer.toCalendar(Language.getLocale());
+                                endOfInterval = pointer.toCalendar(I18N.getLocale());
                                 endOfInterval.set(Calendar.HOUR_OF_DAY, 23);
                                 endOfInterval.set(Calendar.MINUTE, 59);
                                 endOfInterval.set(Calendar.SECOND, 59);
@@ -173,7 +174,7 @@ public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom {
                             }
 
                             infoShowOccupations.add(new InfoGenericEvent(genericEvent, DiaSemana.getDiaSemana(pointer), pointer
-                                    .toCalendar(Language.getLocale()), endOfInterval));
+                                    .toCalendar(I18N.getLocale()), endOfInterval));
 
                             pointer = pointer.plusDays(1);
                             intervalStartDay = pointer.toYearMonthDay();

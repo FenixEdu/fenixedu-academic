@@ -17,10 +17,11 @@ import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class UpdateParkingParty {
 
@@ -59,7 +60,7 @@ public class UpdateParkingParty {
         }
 
         if (note != null && note.trim().length() != 0 && email != null) {
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", Language.getLocale());
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", I18N.getLocale());
             Sender sender = Bennu.getInstance().getSystemSender();
             ConcreteReplyTo replyTo = new ConcreteReplyTo(bundle.getString("label.fromAddress"));
             new Message(sender, replyTo.asCollection(), Collections.EMPTY_LIST, bundle.getString("label.subject"), note, email);

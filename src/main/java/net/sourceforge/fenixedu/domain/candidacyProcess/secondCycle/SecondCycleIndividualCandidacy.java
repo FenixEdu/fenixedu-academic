@@ -29,9 +29,10 @@ import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.LocalDate;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandidacy_Base {
 
@@ -325,8 +326,8 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
     public void exportValues(StringBuilder result) {
         super.exportValues(result);
 
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale());
-        final ResourceBundle candidateBundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", I18N.getLocale());
+        final ResourceBundle candidateBundle = ResourceBundle.getBundle("resources.CandidateResources", I18N.getLocale());
 
         Formatter formatter = new Formatter(result);
 

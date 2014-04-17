@@ -6,7 +6,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryWithInstallmentDTO;
@@ -52,7 +51,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class DgesStudentImportationProcess extends DgesStudentImportationProcess_Base {
 
@@ -123,7 +121,6 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 
     public void importCandidates() {
 
-        Language.setDefaultLocale(new Locale("pt", "PT"));
         final List<DegreeCandidateDTO> degreeCandidateDTOs =
                 parseDgesFile(getDgesStudentImportationFile().getContents(), getUniversityAcronym(), getEntryPhase());
 

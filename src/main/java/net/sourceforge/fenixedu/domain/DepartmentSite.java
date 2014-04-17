@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class DepartmentSite extends DepartmentSite_Base {
@@ -60,7 +59,7 @@ public class DepartmentSite extends DepartmentSite_Base {
 
     @Override
     public MultiLanguageString getName() {
-        return new MultiLanguageString().with(Language.pt, getUnit().getAcronym());
+        return new MultiLanguageString().with(MultiLanguageString.pt, getUnit().getAcronym());
     }
 
     @Override

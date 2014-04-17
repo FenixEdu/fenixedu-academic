@@ -42,7 +42,6 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class Department extends Department_Base {
@@ -357,7 +356,7 @@ public class Department extends Department_Base {
      *         the department's name
      */
     public MultiLanguageString getNameI18n() {
-        return new MultiLanguageString().with(Language.pt, getRealName()).with(Language.en, getRealNameEn());
+        return new MultiLanguageString().with(MultiLanguageString.pt, getRealName()).with(MultiLanguageString.en, getRealNameEn());
     }
 
     public Integer getCompetenceCourseInformationChangeRequestsCount() {

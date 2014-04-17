@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.CurricularYear;
@@ -20,7 +21,7 @@ import org.apache.poi.hssf.util.Region;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class YearDelegateElection extends YearDelegateElection_Base {
 
@@ -278,7 +279,7 @@ public class YearDelegateElection extends YearDelegateElection_Base {
             throws IOException {
         StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet();
         final ResourceBundle BUNDLE =
-                ResourceBundle.getBundle("resources.PedagogicalCouncilResources", Language.getDefaultLocale());
+                ResourceBundle.getBundle("resources.PedagogicalCouncilResources", Locale.getDefault());
 
         for (Degree degree : degrees) {
             spreadsheet.getSheet(degree.getSigla());

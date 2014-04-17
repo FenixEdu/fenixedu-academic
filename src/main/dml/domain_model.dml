@@ -163,7 +163,6 @@ enum net.sourceforge.fenixedu.util.Month                                        
 enum net.sourceforge.fenixedu.util.RegimeType                                                                             as RegimeType;
 enum net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice                                                 as StudentPersonalDataAuthorizationChoice;
 enum net.sourceforge.fenixedu.util.WeekDay                                                                                as WeekDay;
-enum pt.utl.ist.fenix.tools.util.i18n.Language                                                                            as Language;
 enum net.sourceforge.fenixedu.domain.messaging.AnnouncementCategoryType                                                   as AnnouncementCategoryType;
 enum net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState                                                 as PhdIndividualProgramProcessState;
 enum net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType                                            as PhdIndividualProgramCollaborationType;
@@ -1337,7 +1336,7 @@ valueType net.sourceforge.fenixedu.domain.cms.SiteTemplateController as SiteTemp
         }
 
         class thesis.ThesisFile extends File {
-            Language language;
+            Locale language;
             String subTitle;
             String title;
         }
@@ -4662,7 +4661,7 @@ valueType net.sourceforge.fenixedu.domain.cms.SiteTemplateController as SiteTemp
         Boolean urgentRequest;
         Integer serviceRequestNumber;
         DateTime requestDate;
-        Language language;
+        Locale language;
     }
         
         class serviceRequests.RegistrationAcademicServiceRequest extends serviceRequests.AcademicServiceRequest {

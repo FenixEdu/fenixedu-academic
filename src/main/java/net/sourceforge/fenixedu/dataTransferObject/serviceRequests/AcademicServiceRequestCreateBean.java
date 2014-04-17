@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.dataTransferObject.serviceRequests;
 
+import java.util.Locale;
+
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationSelectExecutionYearBean;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.joda.time.DateTime;
-
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class AcademicServiceRequestCreateBean extends RegistrationSelectExecutionYearBean {
 
@@ -15,7 +15,7 @@ public class AcademicServiceRequestCreateBean extends RegistrationSelectExecutio
 
     private Boolean freeProcessed = Boolean.FALSE;
 
-    private Language language = Language.getDefaultLanguage();
+    private Locale language = Locale.getDefault();
 
     public AcademicServiceRequestCreateBean(Registration registration) {
         super(registration);
@@ -45,11 +45,11 @@ public class AcademicServiceRequestCreateBean extends RegistrationSelectExecutio
         this.freeProcessed = freeProcessed;
     }
 
-    final public Language getLanguage() {
+    final public Locale getLanguage() {
         return language;
     }
 
-    final public void setLanguage(final Language language) {
+    final public void setLanguage(final Locale language) {
         this.language = language;
     }
 

@@ -14,10 +14,11 @@ import net.sourceforge.fenixedu.domain.util.email.ReplyTo;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class PhdProgramEmail extends PhdProgramEmail_Base {
 
@@ -72,7 +73,7 @@ public class PhdProgramEmail extends PhdProgramEmail_Base {
 
     @Atomic
     static public void validateEmailBean(PhdProgramEmailBean bean) {
-        final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
+        final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
 
         if (bean.getSelectedElements().isEmpty() && StringUtils.isEmpty(bean.getBccs())) {
             throw new DomainException(resourceBundle.getString("error.email.validation.no.recipients"));

@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class EctsLabelDegreeReportFile extends EctsLabelDegreeReportFile_Base {
 
@@ -101,8 +101,8 @@ public class EctsLabelDegreeReportFile extends EctsLabelDegreeReportFile_Base {
         final Row row = spreadsheet.addRow();
         final Degree degree = degreeCurricularPlan.getDegree();
 
-        row.setCell(normalize(degree.getNameFor(executionYear).getContent(Language.pt)));
-        row.setCell(normalize(degree.getNameFor(executionYear).getContent(Language.en)));
+        row.setCell(normalize(degree.getNameFor(executionYear).getContent(MultiLanguageString.pt)));
+        row.setCell(normalize(degree.getNameFor(executionYear).getContent(MultiLanguageString.en)));
 
         row.setCell(degree.getDegreeType().getLocalizedName());
         row.setCell(degree.getDegreeType().getYears());
@@ -111,17 +111,17 @@ public class EctsLabelDegreeReportFile extends EctsLabelDegreeReportFile_Base {
 
         final DegreeInfo degreeInfo = degree.getMostRecentDegreeInfo(executionYear);
         if (degreeInfo != null) {
-            row.setCell(normalize(degreeInfo.getDesignedFor(Language.pt)));
-            row.setCell(normalize(degreeInfo.getDesignedFor(Language.en)));
-            row.setCell(normalize(degreeInfo.getObjectives(Language.pt)));
-            row.setCell(normalize(degreeInfo.getObjectives(Language.en)));
-            row.setCell(normalize(degreeInfo.getProfessionalExits(Language.pt)));
-            row.setCell(normalize(degreeInfo.getProfessionalExits(Language.en)));
-            row.setCell(normalize(degreeInfo.getOperationalRegime(Language.pt)));
-            row.setCell(normalize(degreeInfo.getOperationalRegime(Language.en)));
+            row.setCell(normalize(degreeInfo.getDesignedFor(MultiLanguageString.pt)));
+            row.setCell(normalize(degreeInfo.getDesignedFor(MultiLanguageString.en)));
+            row.setCell(normalize(degreeInfo.getObjectives(MultiLanguageString.pt)));
+            row.setCell(normalize(degreeInfo.getObjectives(MultiLanguageString.en)));
+            row.setCell(normalize(degreeInfo.getProfessionalExits(MultiLanguageString.pt)));
+            row.setCell(normalize(degreeInfo.getProfessionalExits(MultiLanguageString.en)));
+            row.setCell(normalize(degreeInfo.getOperationalRegime(MultiLanguageString.pt)));
+            row.setCell(normalize(degreeInfo.getOperationalRegime(MultiLanguageString.en)));
             row.setCell(normalize(getResponsibleCoordinatorNames(degreeCurricularPlan, executionYear)));
-            row.setCell(normalize(degreeInfo.getAdditionalInfo(Language.pt)));
-            row.setCell(normalize(degreeInfo.getAdditionalInfo(Language.en)));
+            row.setCell(normalize(degreeInfo.getAdditionalInfo(MultiLanguageString.pt)));
+            row.setCell(normalize(degreeInfo.getAdditionalInfo(MultiLanguageString.en)));
         }
     }
 

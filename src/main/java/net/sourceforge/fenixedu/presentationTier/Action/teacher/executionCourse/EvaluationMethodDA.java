@@ -21,7 +21,6 @@ import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.struts.annotations.Input;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 @Mapping(path = "/manageEvaluationMethod", module = "teacher", functionality = ManageExecutionCourseDA.class,
@@ -50,7 +49,7 @@ public class EvaluationMethodDA extends ManageExecutionCourseDA {
                 final String pt = competenceCourse.getEvaluationMethod();
                 final String en = competenceCourse.getEvaluationMethodEn();
                 evaluationMethodMls =
-                        evaluationMethodMls.with(Language.pt, pt == null ? "" : pt).with(Language.en, en == null ? "" : en);
+                        evaluationMethodMls.with(MultiLanguageString.pt, pt == null ? "" : pt).with(MultiLanguageString.en, en == null ? "" : en);
             }
             EditEvaluation.runEditEvaluation(executionCourse, evaluationMethodMls);
             evaluationMethod = executionCourse.getEvaluationMethod();
@@ -64,8 +63,8 @@ public class EvaluationMethodDA extends ManageExecutionCourseDA {
         final String evaluationMethod = request.getParameter("evaluationMethod");
         final String evaluationMethodEn = dynaActionForm.getString("evaluationMethodEn");
         MultiLanguageString multiLanguageString = new MultiLanguageString();
-        multiLanguageString = multiLanguageString.with(Language.pt, evaluationMethod);
-        multiLanguageString = multiLanguageString.with(Language.en, evaluationMethodEn);
+        multiLanguageString = multiLanguageString.with(MultiLanguageString.pt, evaluationMethod);
+        multiLanguageString = multiLanguageString.with(MultiLanguageString.en, evaluationMethodEn);
 
         final ExecutionCourse executionCourse = (ExecutionCourse) request.getAttribute("executionCourse");
 

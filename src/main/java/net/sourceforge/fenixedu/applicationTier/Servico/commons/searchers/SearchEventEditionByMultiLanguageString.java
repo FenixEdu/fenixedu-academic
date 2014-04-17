@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -16,7 +17,6 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
 import org.fenixedu.commons.StringNormalizer;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class SearchEventEditionByMultiLanguageString implements AutoCompleteProvider<EventEdition> {
@@ -41,7 +41,7 @@ public class SearchEventEditionByMultiLanguageString implements AutoCompleteProv
                         continue;
                     }
 
-                    for (Language language : objectMLS.getAllLanguages()) {
+                    for (Locale language : objectMLS.getAllLocales()) {
                         String objectValue = objectMLS.getContent(language);
 
                         String normalizedValue = StringNormalizer.normalize(objectValue);

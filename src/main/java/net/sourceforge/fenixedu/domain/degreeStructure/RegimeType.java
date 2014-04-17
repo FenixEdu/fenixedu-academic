@@ -6,7 +6,9 @@ package net.sourceforge.fenixedu.domain.degreeStructure;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import org.fenixedu.commons.i18n.I18N;
+
+import java.util.Locale;
 
 public enum RegimeType {
 
@@ -19,7 +21,7 @@ public enum RegimeType {
     }
 
     public String getLocalizedName() {
-        return getLocalizedName(Language.getLocale());
+        return getLocalizedName(I18N.getLocale());
     }
 
     public String getLocalizedName(final Locale locale) {
@@ -27,7 +29,7 @@ public enum RegimeType {
     }
 
     public String getAcronym() {
-        return getAcronym(Language.getLocale());
+        return getAcronym(I18N.getLocale());
     }
 
     private String getAcronym(final Locale locale) {

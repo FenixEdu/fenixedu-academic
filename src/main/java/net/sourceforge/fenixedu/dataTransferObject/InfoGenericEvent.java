@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
 
 import org.joda.time.Interval;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class InfoGenericEvent extends InfoShowOccupation implements GanttDiagramEvent {
@@ -56,12 +55,12 @@ public class InfoGenericEvent extends InfoShowOccupation implements GanttDiagram
 
     public String getTitle() {
         final GenericEvent genericEvent = getGenericEvent();
-        return genericEvent == null ? null : genericEvent.getTitle().getContent(Language.getLanguage());
+        return genericEvent == null ? null : genericEvent.getTitle().getContent();
     }
 
     public String getDescription() {
         final GenericEvent genericEvent = getGenericEvent();
-        return genericEvent == null ? null : genericEvent.getDescription().getContent(Language.getLanguage());
+        return genericEvent == null ? null : genericEvent.getDescription().getContent();
     }
 
     @Override

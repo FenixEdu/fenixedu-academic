@@ -171,7 +171,7 @@ import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class Person extends Person_Base {
@@ -227,8 +227,8 @@ public class Person extends Person_Base {
 
         MultiLanguageString partyName = super.getPartyName();
         partyName =
-                partyName == null ? new MultiLanguageString(Language.getDefaultLanguage(), formattedName) : partyName.with(
-                        Language.getDefaultLanguage(), formattedName);
+                partyName == null ? new MultiLanguageString(Locale.getDefault(), formattedName) : partyName.with(
+                        Locale.getDefault(), formattedName);
 
         super.setPartyName(partyName);
 

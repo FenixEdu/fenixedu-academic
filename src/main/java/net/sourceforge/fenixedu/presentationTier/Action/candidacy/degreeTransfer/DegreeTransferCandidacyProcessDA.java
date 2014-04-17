@@ -33,6 +33,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -40,7 +41,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
@@ -223,7 +224,7 @@ public class DegreeTransferCandidacyProcessDA extends CandidacyProcessDA {
     }
 
     private String getLabel(final String key) {
-        return ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale()).getString(key);
+        return ResourceBundle.getBundle("resources/ApplicationResources", I18N.getLocale()).getString(key);
     }
 
     private void createSpreadsheet(final StyledExcelSpreadsheet excelSpreadsheet, final Degree degree,
@@ -234,7 +235,7 @@ public class DegreeTransferCandidacyProcessDA extends CandidacyProcessDA {
     }
 
     private void createHeader(final StyledExcelSpreadsheet spreadsheet, final Degree degree) {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", I18N.getLocale());
 
         // title
         spreadsheet.newHeaderRow();
@@ -309,7 +310,7 @@ public class DegreeTransferCandidacyProcessDA extends CandidacyProcessDA {
             excelSpreadsheet.addCell(getValue(calculateB(process, true)));
             excelSpreadsheet.addCell(getValue(calculateC(process)));
             if (process.isCandidacyAccepted() || process.isCandidacyRejected()) {
-                excelSpreadsheet.addCell(ResourceBundle.getBundle("resources/EnumerationResources", Language.getLocale())
+                excelSpreadsheet.addCell(ResourceBundle.getBundle("resources/EnumerationResources", I18N.getLocale())
                         .getString(process.getCandidacyState().getQualifiedName()).toUpperCase());
             } else {
                 excelSpreadsheet.addCell("");
@@ -393,7 +394,7 @@ public class DegreeTransferCandidacyProcessDA extends CandidacyProcessDA {
 
     @Override
     protected List<Object> getCandidacyHeader() {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources/CandidateResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources/CandidateResources", I18N.getLocale());
         final List<Object> result = new ArrayList<Object>();
 
         result.add(bundle.getString("label.spreadsheet.processCode"));
@@ -415,8 +416,8 @@ public class DegreeTransferCandidacyProcessDA extends CandidacyProcessDA {
             final IndividualCandidacyProcess individualCandidacyProcess) {
         DegreeTransferIndividualCandidacyProcess degreeTransferIndividualCandidacyProcess =
                 (DegreeTransferIndividualCandidacyProcess) individualCandidacyProcess;
-        ResourceBundle enumerationBundle = ResourceBundle.getBundle("resources/EnumerationResources", Language.getLocale());
-        ResourceBundle candidateBundle = ResourceBundle.getBundle("resources/CandidateResources", Language.getLocale());
+        ResourceBundle enumerationBundle = ResourceBundle.getBundle("resources/EnumerationResources", I18N.getLocale());
+        ResourceBundle candidateBundle = ResourceBundle.getBundle("resources/CandidateResources", I18N.getLocale());
 
         final Row row = spreadsheet.addRow();
         row.setCell(degreeTransferIndividualCandidacyProcess.getProcessCode());

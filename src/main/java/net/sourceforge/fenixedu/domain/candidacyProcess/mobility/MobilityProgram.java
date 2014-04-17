@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class MobilityProgram extends MobilityProgram_Base implements Comparable<MobilityProgram> {
@@ -63,7 +62,7 @@ public class MobilityProgram extends MobilityProgram_Base implements Comparable<
         Locale localePT = new Locale("pt", "PT");
         String portugueseDescription = registrationAgreement.getDescription(localePT);
 
-        return (new MultiLanguageString(Language.pt, portugueseDescription)).with(Language.en, englishDescription);
+        return (new MultiLanguageString(MultiLanguageString.pt, portugueseDescription)).with(MultiLanguageString.en, englishDescription);
     }
 
     @Override

@@ -28,7 +28,6 @@ import org.joda.time.YearMonthDay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class GanttDiagramTagLib extends TagSupport {
@@ -436,9 +435,7 @@ public class GanttDiagramTagLib extends TagSupport {
                 String eventUrl =
                         getRequest().getContextPath() + getEventUrl() + "&amp;" + getEventParameter() + "="
                                 + event.getGanttDiagramEventIdentifier();
-                String eventName =
-                        event.getGanttDiagramEventName().getContent(
-                                Language.valueOf(getGanttDiagramObject().getLocale().getLanguage()));
+                String eventName = event.getGanttDiagramEventName().getContent(getGanttDiagramObject().getLocale());
                 String paddingStyle = "padding-left:" + event.getGanttDiagramEventOffset() * PADDING_LEFT_MULTIPLIER + "px";
 
                 if (event.getGanttDiagramEventIdentifier().equals(selectedEvent)

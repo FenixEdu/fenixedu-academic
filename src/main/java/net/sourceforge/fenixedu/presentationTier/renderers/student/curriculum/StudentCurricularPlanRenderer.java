@@ -34,6 +34,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -52,7 +53,7 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlTableRow;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.contexts.InputContext;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class StudentCurricularPlanRenderer extends InputRenderer {
 
@@ -122,13 +123,13 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
     }
 
-    private final ResourceBundle studentResources = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
+    private final ResourceBundle studentResources = ResourceBundle.getBundle("resources.StudentResources", I18N.getLocale());
 
     private final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources",
-            Language.getLocale());
+            I18N.getLocale());
 
     private final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources",
-            Language.getLocale());
+            I18N.getLocale());
 
     private OrganizationType organizedBy = OrganizationType.GROUPS;
 

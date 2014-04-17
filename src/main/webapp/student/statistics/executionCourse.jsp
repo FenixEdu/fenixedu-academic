@@ -4,15 +4,12 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
 
-<%@ page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
+<%@ page import="org.fenixedu.commons.i18n.I18N"%>
 
 <html:xhtml/>
 
 <link href="${pageContext.request.contextPath}/javaScript/sviz/sviz.css" rel="stylesheet" type="text/css" />
 
-<script type="text/javascript">
-	$.noConflict();
-</script>
 <script type="text/javascript" src="../javaScript/sviz/d3.min.js"></script>
 <script type="text/javascript" src="../javaScript/sviz/qtip.min.js"></script>
 <script type="text/javascript" src="../javaScript/sviz/i18next.min.js"></script>
@@ -46,7 +43,7 @@
 		$("#evaluation-select").append("<option class=\"evaluation-option\" value=\""+i+"\">"+evaluation.name+"</option>");
 	});
 
-	SViz.init({ lang: "<%= Language.getLanguage() %>", localesBasePath: "../javaScript/sviz" });	
+	SViz.init({ lang: "<%= I18N.getLocale().getLanguage() %>", localesBasePath: "../javaScript/sviz" });	
 	var currentChart = SViz.loadViz("showEvaluationSunburst", data.evaluations[0], "#visualization");
 	SViz.loadViz("showCourseOvertime", overtime, "#visualization-overall-years");
 	

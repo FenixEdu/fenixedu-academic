@@ -29,9 +29,10 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class CourseGroupManagementBackingBean extends CurricularCourseManagementBackingBean {
 
@@ -184,7 +185,7 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
         if (isBranch()) {
             return "<p class=\"mtop25\">" + BundleUtil.getMessageFromModuleOrApplication("BolonhaManager", "branchType") + ": "
                     + "<em><strong>"
-                    + ((BranchCourseGroup) getCourseGroup()).getBranchType().getDescription(Language.getLocale())
+                    + ((BranchCourseGroup) getCourseGroup()).getBranchType().getDescription(I18N.getLocale())
                     + "</strong></em>" + "</p>";
         }
         return "";

@@ -29,6 +29,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -37,7 +38,7 @@ import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.excel.SpreadsheetXLSExporter;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 @StrutsFunctionality(app = ScientificApplicationsApp.class, path = "second-cycle",
         titleKey = "title.application.name.secondCycle")
@@ -227,7 +228,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
             row.setCell(process.getCandidacyInterviewGrade() != null ? process.getCandidacyInterviewGrade() : " ");
             row.setCell(process.getCandidacySeriesGrade());
             if (process.isCandidacyAccepted() || process.isCandidacyRejected()) {
-                row.setCell(ResourceBundle.getBundle("resources/EnumerationResources", Language.getLocale()).getString(
+                row.setCell(ResourceBundle.getBundle("resources/EnumerationResources", I18N.getLocale()).getString(
                         process.getCandidacyState().getQualifiedName()));
             } else {
                 row.setCell(" ");
@@ -238,7 +239,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
     }
 
     private List<Object> getHeader() {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", I18N.getLocale());
         final List<Object> result = new ArrayList<Object>();
         result.add(bundle.getString("label.name"));
         result.add(bundle.getString("label.candidacy.mfc"));

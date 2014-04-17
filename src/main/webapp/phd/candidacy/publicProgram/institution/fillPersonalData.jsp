@@ -3,7 +3,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
-<%@ page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
+<%@ page import="org.fenixedu.commons.i18n.I18N"%>
 <%@ page import="java.util.Locale"%>
 
 
@@ -13,7 +13,7 @@
 
 <div class="breadcumbs">
 	<% 
-		Locale locale = Language.getLocale();
+		Locale locale = I18N.getLocale();
 		if(!locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {
 	%>
 		<a href="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>en/"><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%></a> &gt;

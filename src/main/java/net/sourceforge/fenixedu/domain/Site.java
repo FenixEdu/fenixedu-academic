@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.injectionCode.IGroup;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.google.common.collect.FluentIterable;
@@ -140,7 +139,7 @@ public abstract class Site extends Site_Base {
     }
 
     public MultiLanguageString getName() {
-        return new MultiLanguageString().with(Language.pt, String.valueOf(getExternalId()));
+        return new MultiLanguageString().with(MultiLanguageString.pt, String.valueOf(getExternalId()));
     }
 
     public void delete() {

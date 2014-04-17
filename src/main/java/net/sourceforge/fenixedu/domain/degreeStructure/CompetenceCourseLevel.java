@@ -3,7 +3,9 @@ package net.sourceforge.fenixedu.domain.degreeStructure;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import org.fenixedu.commons.i18n.I18N;
+
+import java.util.Locale;
 
 public enum CompetenceCourseLevel {
 
@@ -24,7 +26,7 @@ public enum CompetenceCourseLevel {
     }
 
     public String getLocalizedName() {
-        return getLocalizedName(Language.getLocale());
+        return getLocalizedName(I18N.getLocale());
     }
 
     public String getLocalizedName(final Locale locale) {

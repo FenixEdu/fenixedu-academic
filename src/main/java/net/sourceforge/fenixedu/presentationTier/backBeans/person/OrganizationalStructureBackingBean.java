@@ -39,10 +39,11 @@ import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.commons.StringNormalizer;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
@@ -62,7 +63,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         if (getRequestParameter("unitID") != null) {
             getUnitIDHidden().setValue(getRequestParameter("unitID"));
         }
-        this.bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+        this.bundle = ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
     }
 
     public List<SelectItem> getExecutionYears() throws FenixServiceException {

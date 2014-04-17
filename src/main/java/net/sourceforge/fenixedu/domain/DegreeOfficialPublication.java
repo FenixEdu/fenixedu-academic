@@ -5,7 +5,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class DegreeOfficialPublication extends DegreeOfficialPublication_Base {
@@ -23,7 +22,7 @@ public class DegreeOfficialPublication extends DegreeOfficialPublication_Base {
     @Atomic
     public DegreeSpecializationArea createSpecializationArea(String nameEn, String namePt) {
 
-        MultiLanguageString area = new MultiLanguageString(Language.en, nameEn).with(Language.pt, namePt);
+        MultiLanguageString area = new MultiLanguageString(MultiLanguageString.en, nameEn).with(MultiLanguageString.pt, namePt);
 
         return new DegreeSpecializationArea(this, area);
     }

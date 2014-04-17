@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class Homepage extends Homepage_Base {
@@ -113,7 +112,7 @@ public class Homepage extends Homepage_Base {
 
     @Override
     public MultiLanguageString getName() {
-        return new MultiLanguageString().with(Language.pt, String.valueOf(getPerson().getIstUsername()));
+        return new MultiLanguageString().with(MultiLanguageString.pt, String.valueOf(getPerson().getIstUsername()));
     }
 
     @Override

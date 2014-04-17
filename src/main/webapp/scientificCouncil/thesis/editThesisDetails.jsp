@@ -2,7 +2,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant"%>
 <%@page import="net.sourceforge.fenixedu.domain.thesis.ThesisFile"%>
 <%@page import="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString"%>
-<%@page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
+<%@page import="org.fenixedu.commons.i18n.I18N"%>
 <%@page import="java.util.List"%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState"%>
 <%@page import="net.sourceforge.fenixedu.domain.Degree"%>

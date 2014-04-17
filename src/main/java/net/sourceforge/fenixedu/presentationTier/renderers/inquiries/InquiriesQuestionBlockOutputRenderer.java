@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.RadioGroupQuesti
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.TextBoxQuestion;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
@@ -30,7 +31,7 @@ import pt.ist.fenixWebFramework.renderers.model.MetaObject;
 import pt.ist.fenixWebFramework.renderers.model.MetaObjectFactory;
 import pt.ist.fenixWebFramework.renderers.model.MetaSlot;
 import pt.ist.fenixWebFramework.renderers.utils.RenderKit;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -39,7 +40,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 public class InquiriesQuestionBlockOutputRenderer extends OutputRenderer {
 
     private final ResourceBundle inquiriesResources = ResourceBundle.getBundle("resources.InquiriesResources",
-            Language.getLocale());
+            I18N.getLocale());
 
     private String columnClasses;
 

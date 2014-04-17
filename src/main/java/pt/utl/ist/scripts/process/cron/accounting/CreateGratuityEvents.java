@@ -10,10 +10,11 @@ import net.sourceforge.fenixedu.util.InvocationResult;
 
 import org.fenixedu.bennu.scheduler.CronTask;
 import org.fenixedu.bennu.scheduler.annotation.Task;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 @Task(englishTitle = "CreateGratuityEvents", readOnly = true)
 public class CreateGratuityEvents extends CronTask {
@@ -56,7 +57,7 @@ public class CreateGratuityEvents extends CronTask {
 
     @Override
     public void runTask() {
-        Language.setLocale(new Locale("PT", "pt"));
+        I18N.setLocale(new Locale("PT", "pt"));
         generateGratuityEventsForAllStudents(ExecutionYear.readCurrentExecutionYear());
         taskLog("Created %s GratuityEvent events\n", GratuityEvent_TOTAL_CREATED);
     }

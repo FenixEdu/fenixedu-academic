@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import org.fenixedu.commons.i18n.I18N;
+
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public enum RoleType implements IPresentableEnum {
 
@@ -197,7 +199,7 @@ public enum RoleType implements IPresentableEnum {
 
     @Override
     public String getLocalizedName() {
-        return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(name());
+        return ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale()).getString(name());
     }
 
 }

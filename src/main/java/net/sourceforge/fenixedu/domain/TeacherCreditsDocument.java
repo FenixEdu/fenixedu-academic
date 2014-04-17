@@ -36,8 +36,9 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.commons.i18n.I18N;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
 
@@ -72,7 +73,7 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
 
     private String getTeacherCreditsFile(Teacher teacher, ExecutionSemester executionSemester, TeacherService teacherService)
             throws ParseException {
-        ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+        ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
         CreditLineDTO creditLineDTO = ReadAllTeacherCredits.readCreditLineDTO(executionSemester, teacher);
         Unit lastWorkingUnit =
                 teacher.getLastWorkingUnit(executionSemester.getBeginDateYearMonthDay(),

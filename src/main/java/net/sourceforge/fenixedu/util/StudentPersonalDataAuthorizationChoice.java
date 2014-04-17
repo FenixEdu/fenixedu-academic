@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import org.fenixedu.commons.i18n.I18N;
+
+import java.util.Locale;
 
 /**
  * @author Ricardo Rodrigues
@@ -48,7 +50,7 @@ public enum StudentPersonalDataAuthorizationChoice {
 
     public String getDescription() {
         final ResourceBundle ENUMERATION_RESOURCES =
-                ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+                ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
         return ENUMERATION_RESOURCES.getString(getQualifiedName());
     }
 

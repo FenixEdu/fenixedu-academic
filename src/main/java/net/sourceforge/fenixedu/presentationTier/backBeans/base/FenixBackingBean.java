@@ -17,9 +17,10 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class FenixBackingBean {
 
@@ -33,7 +34,7 @@ public class FenixBackingBean {
 
     public FenixBackingBean() {
         final FacesContext facesContext = FacesContext.getCurrentInstance();
-        final Locale locale = Language.getLocale();
+        final Locale locale = I18N.getLocale();
         facesContext.getViewRoot().setLocale(locale);
     }
 

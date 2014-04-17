@@ -64,10 +64,10 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
@@ -1237,11 +1237,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public String getPresentationName() {
-        return getPresentationName(ExecutionYear.readCurrentExecutionYear(), Language.getLocale());
+        return getPresentationName(ExecutionYear.readCurrentExecutionYear(), I18N.getLocale());
     }
 
     public String getPresentationName(final ExecutionYear executionYear) {
-        return getPresentationName(executionYear, Language.getLocale());
+        return getPresentationName(executionYear, I18N.getLocale());
     }
 
     public String getPresentationName(final ExecutionYear executionYear, final Locale locale) {
@@ -1632,7 +1632,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public String getGraduateTitle() {
-        return getGraduateTitle(ExecutionYear.readCurrentExecutionYear(), Language.getLocale());
+        return getGraduateTitle(ExecutionYear.readCurrentExecutionYear(), I18N.getLocale());
     }
 
     public String getGraduateTitle(final ExecutionYear executionYear, final Locale locale) {
@@ -1988,10 +1988,10 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         MultiLanguageString result = new MultiLanguageString();
 
         if (!StringUtils.isEmpty(getDescription())) {
-            result = result.with(Language.pt, getDescription());
+            result = result.with(MultiLanguageString.pt, getDescription());
         }
         if (!StringUtils.isEmpty(getDescriptionEn())) {
-            result = result.with(Language.en, getDescriptionEn());
+            result = result.with(MultiLanguageString.en, getDescriptionEn());
         }
 
         return result;

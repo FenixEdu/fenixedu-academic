@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ProfessionalCategory extends ProfessionalCategory_Base implements Comparable<ProfessionalCategory> {
@@ -65,7 +64,7 @@ public class ProfessionalCategory extends ProfessionalCategory_Base implements C
     }
 
     public boolean isTeacherMonitorCategory() {
-        return isTeacherCategoryType() && getName().getContent(Language.pt).matches("(?i).*Monitor.*");
+        return isTeacherCategoryType() && getName().getContent(MultiLanguageString.pt).matches("(?i).*Monitor.*");
     }
 
     public boolean isTeacherProfessorCategory() {
@@ -75,7 +74,7 @@ public class ProfessionalCategory extends ProfessionalCategory_Base implements C
     public boolean isTeacherInvitedCategory() {
         return isTeacherCategoryType()
                 && !isTeacherMonitorCategory()
-                && (getName().getContent(Language.pt).matches("(?i).*Convidado.*") || getName().getContent(Language.pt).matches(
+                && (getName().getContent(MultiLanguageString.pt).matches("(?i).*Convidado.*") || getName().getContent(MultiLanguageString.pt).matches(
                         "(?i).*Equip.*"));
     }
 
@@ -95,7 +94,7 @@ public class ProfessionalCategory extends ProfessionalCategory_Base implements C
 
     public boolean isTeacherAssistantCategory() {
         return isTeacherCategoryType() && !isTeacherMonitorCategory() && !isTeacherInvitedCategory()
-                && getName().getContent(Language.pt).matches("(?i).*Assistente.*");
+                && getName().getContent(MultiLanguageString.pt).matches("(?i).*Assistente.*");
     }
 
     public static ProfessionalCategory find(final String string, final CategoryType categoryType) {

@@ -56,7 +56,6 @@ import org.json.simple.JSONValue;
 
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
 import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class A3ESDegreeProcess implements Serializable {
@@ -306,14 +305,14 @@ public class A3ESDegreeProcess implements Serializable {
 
                 JSONObject q6214 = new JSONObject();
                 MultiLanguageString objectives = competence.getObjectivesI18N(executionSemester);
-                q6214.put("en", cut("objectivos em ingles", objectives.getContent(Language.en), output, 1000));
-                q6214.put("pt", cut("objectivos em portugues", objectives.getContent(Language.pt), output, 1000));
+                q6214.put("en", cut("objectivos em ingles", objectives.getContent(MultiLanguageString.en), output, 1000));
+                q6214.put("pt", cut("objectivos em portugues", objectives.getContent(MultiLanguageString.pt), output, 1000));
                 json.put("q-6.2.1.4", q6214);
 
                 JSONObject q6215 = new JSONObject();
                 MultiLanguageString program = competence.getProgramI18N(executionSemester);
-                q6215.put("en", cut("programa em ingles", program.getContent(Language.en), output, 1000));
-                q6215.put("pt", cut("programa em portugues", program.getContent(Language.pt), output, 1000));
+                q6215.put("en", cut("programa em ingles", program.getContent(MultiLanguageString.en), output, 1000));
+                q6215.put("pt", cut("programa em portugues", program.getContent(MultiLanguageString.pt), output, 1000));
                 json.put("q-6.2.1.5", q6215);
 
                 JSONObject q6216 = new JSONObject();

@@ -39,7 +39,6 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.StringNormalizer;
 import org.joda.time.YearMonthDay;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CompetenceCourse extends CompetenceCourse_Base {
@@ -1059,11 +1058,11 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         MultiLanguageString multiLanguageString = new MultiLanguageString();
         String name = getName(semester);
         if (name != null && name.length() > 0) {
-            multiLanguageString = multiLanguageString.with(Language.pt, name);
+            multiLanguageString = multiLanguageString.with(MultiLanguageString.pt, name);
         }
         String nameEn = getNameEn(semester);
         if (nameEn != null && nameEn.length() > 0) {
-            multiLanguageString = multiLanguageString.with(Language.en, nameEn);
+            multiLanguageString = multiLanguageString.with(MultiLanguageString.en, nameEn);
         }
         return multiLanguageString;
     }
@@ -1076,11 +1075,11 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         MultiLanguageString multiLanguageString = new MultiLanguageString();
         String objectives = getObjectives(semester);
         if (objectives != null && objectives.length() > 0) {
-            multiLanguageString = multiLanguageString.with(Language.pt, objectives);
+            multiLanguageString = multiLanguageString.with(MultiLanguageString.pt, objectives);
         }
         String objectivesEn = getObjectivesEn(semester);
         if (objectivesEn != null && objectivesEn.length() > 0) {
-            multiLanguageString = multiLanguageString.with(Language.en, objectivesEn);
+            multiLanguageString = multiLanguageString.with(MultiLanguageString.en, objectivesEn);
         }
         return multiLanguageString;
     }
@@ -1093,11 +1092,11 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         MultiLanguageString multiLanguageString = new MultiLanguageString();
         String program = getProgram(semester);
         if (program != null && program.length() > 0) {
-            multiLanguageString = multiLanguageString.with(Language.pt, program);
+            multiLanguageString = multiLanguageString.with(MultiLanguageString.pt, program);
         }
         String programEn = getProgramEn(semester);
         if (programEn != null && programEn.length() > 0) {
-            multiLanguageString = multiLanguageString.with(Language.en, programEn);
+            multiLanguageString = multiLanguageString.with(MultiLanguageString.en, programEn);
         }
         return multiLanguageString;
     }

@@ -47,7 +47,7 @@ import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Teacher;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
  * @author Jo�o Mota
@@ -418,7 +418,7 @@ public class ExecutionCourseSiteComponentBuilder {
         if (section != null) {
             infoSection = new InfoSection();
             infoSection.setExternalId(section.getExternalId());
-            infoSection.setName(section.getName().getContent(Language.pt));
+            infoSection.setName(section.getName().getContent(MultiLanguageString.pt));
             infoSection.setSectionOrder(section.getOrder());
             infoSection.setSuperiorInfoSection(copyISection2InfoSection(section.getSuperiorSection()));
             infoSection.setInfoSite(copyISite2InfoSite((ExecutionCourseSite) section.getOwnerSite()));

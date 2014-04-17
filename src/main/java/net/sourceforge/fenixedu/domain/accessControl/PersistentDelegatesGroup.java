@@ -15,11 +15,12 @@ import org.fenixedu.bennu.core.annotation.CustomGroupArgument;
 import org.fenixedu.bennu.core.annotation.CustomGroupOperator;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.groups.Group;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
@@ -79,7 +80,7 @@ public class PersistentDelegatesGroup extends PersistentDelegatesGroup_Base {
 
     @Override
     public String getPresentationName() {
-        final ResourceBundle resourceBundle = ResourceBundle.getBundle(getPresentationNameBundle(), Language.getLocale());
+        final ResourceBundle resourceBundle = ResourceBundle.getBundle(getPresentationNameBundle(), I18N.getLocale());
         if (getDegree() != null) {
             return resourceBundle.getString("label." + getClass().getSimpleName()) + " " + resourceBundle.getString("label.of")
                     + " " + getDegree().getSigla();

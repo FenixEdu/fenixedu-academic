@@ -33,9 +33,10 @@ import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.util.MessageResources;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class PublicEvaluationsBackingBean extends FenixBackingBean {
 
@@ -251,7 +252,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
                                 if (!(evaluation instanceof Exam) || ((Exam) evaluation).isExamsMapPublished()) {
                                     final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
                                     CalendarLink calendarLink =
-                                            new CalendarLink(executionCourse, writtenEvaluation, Language.getLocale());
+                                            new CalendarLink(executionCourse, writtenEvaluation, I18N.getLocale());
                                     calendarLinks.add(calendarLink);
                                     calendarLink.setLinkParameters(constructLinkParameters(executionCourse));
                                 }

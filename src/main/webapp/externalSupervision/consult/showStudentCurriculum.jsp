@@ -7,7 +7,7 @@
 <%@ page language="java" %>
 <%@page import="net.sourceforge.fenixedu.domain.degree.DegreeType"%>
 <%@page import="org.apache.struts.util.LabelValueBean"%>
-<%@ page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
+<%@ page import="org.fenixedu.commons.i18n.I18N"%>
 
 <html:xhtml/>
 
@@ -201,7 +201,6 @@
 
 <link href="../javaScript/sviz/sviz.css" rel="stylesheet" type="text/css" />
 
-<script type="text/javascript">	$.noConflict(); </script>
 <script type="text/javascript" src="../javaScript/sviz/d3.min.js"></script>
 <script type="text/javascript" src="../javaScript/sviz/qtip.min.js"></script>
 <script type="text/javascript" src="../javaScript/sviz/i18next.min.js"></script>
@@ -211,7 +210,7 @@
 
 <script type="text/javascript">
 	var data = <bean:write name="registrationApprovalRateJSON" filter="false" />;
-	SViz.init({ lang: "<%= Language.getLanguage() %>", localesBasePath: "../javaScript/sviz" });
+	SViz.init({ lang: "<%= I18N.getLocale().getLanguage() %>", localesBasePath: "../javaScript/sviz" });
 	var chart = SViz.loadViz("showApprovalRate", data, "#graph", {classic:true, width:650, blockWidth:50, blockPadding:7, barWidth:0.85, margin:{left:0}, titleclass:'h1'});
 </script>
 

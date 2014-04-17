@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.commons.i18n.I18N;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 /**
  * This is used to set the language in the FenixAPI.
@@ -50,7 +50,7 @@ public class FenixAPILanguageFilter implements Filter {
                 final Locale locale = new Builder().setLanguageTag(localeTag).build();
                 if (CoreConfiguration.supportedLocales().contains(locale)) {
                     I18N.setLocale(locale);
-                    Language.setLocale(locale);
+                    I18N.setLocale(locale);
                 }
             } catch (IllformedLocaleException e) {
             }

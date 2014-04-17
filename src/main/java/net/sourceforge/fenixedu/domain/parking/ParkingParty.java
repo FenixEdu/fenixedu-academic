@@ -35,12 +35,13 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class ParkingParty extends ParkingParty_Base {
 
@@ -118,7 +119,7 @@ public class ParkingParty extends ParkingParty_Base {
     }
 
     public String getParkingAcceptedRegulationMessage() {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", Language.getLocale());
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", I18N.getLocale());
         String name = getParty().getName();
         String number = "";
         if (getParty().isPerson()) {
@@ -160,7 +161,7 @@ public class ParkingParty extends ParkingParty_Base {
         if (driverLicenseDocument != null) {
             return driverLicenseDocument.getParkingFile().getFilename();
         } else if (getDriverLicenseDeliveryType() != null) {
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", Language.getLocale());
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", I18N.getLocale());
             return bundle.getString(getDriverLicenseDeliveryType().name());
         }
         return "";

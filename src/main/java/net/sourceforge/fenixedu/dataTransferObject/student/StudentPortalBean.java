@@ -24,12 +24,13 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.LocalTime;
 import org.joda.time.YearMonthDay;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class StudentPortalBean implements Serializable {
 
@@ -71,7 +72,7 @@ public class StudentPortalBean implements Serializable {
             }
 
             public EvaluationAnnouncement(Grouping grouping) {
-                ResourceBundle resource = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
+                ResourceBundle resource = ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
                 setEvaluationType(resource.getString("label.grouping"));
                 setIdentification(grouping.getName());
                 setRegister(isStudentEnrolled(grouping));
@@ -250,7 +251,7 @@ public class StudentPortalBean implements Serializable {
 
                 this.enrolmentElapsing = interval.containsNow();
 
-                ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
+                ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", I18N.getLocale());
                 if (writtenEvaluation.getEnrollmentBeginDayDateYearMonthDay() != null
                         && writtenEvaluation.getEnrollmentEndDayDateYearMonthDay() != null) {
                     this.enrolment =
@@ -269,7 +270,7 @@ public class StudentPortalBean implements Serializable {
                         new DateTime(grouping.getEnrolmentBeginDay()).isBeforeNow()
                                 && new DateTime(grouping.getEnrolmentEndDay()).isAfterNow();
 
-                ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
+                ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", I18N.getLocale());
                 this.enrolment =
                         YearMonthDay.fromDateFields(grouping.getEnrolmentBeginDayDate()).toString() + " "
                                 + resource.getString("message.out.until") + " "
@@ -277,7 +278,7 @@ public class StudentPortalBean implements Serializable {
             }
 
             public void setRoom(WrittenEvaluation writtenEvaluation) {
-                ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
+                ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", I18N.getLocale());
                 for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : writtenEvaluation
                         .getWrittenEvaluationEnrolments()) {
                     if (writtenEvaluationEnrolment.getStudent() != null
@@ -302,7 +303,7 @@ public class StudentPortalBean implements Serializable {
             }
 
             public void setRegister(Boolean registered) {
-                ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
+                ResourceBundle resource = ResourceBundle.getBundle("resources.StudentResources", I18N.getLocale());
                 if (registered) {
                     this.register = resource.getString("label.enroled");
                     setRegistered(true);

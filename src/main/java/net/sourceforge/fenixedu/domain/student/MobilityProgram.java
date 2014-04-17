@@ -3,8 +3,10 @@ package net.sourceforge.fenixedu.domain.student;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import org.fenixedu.commons.i18n.I18N;
+
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public enum MobilityProgram {
 
@@ -20,7 +22,7 @@ public enum MobilityProgram {
 
         @Override
         protected String getSpecificDescription(final Locale locale) {
-            return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(getQualifiedName())
+            return ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale()).getString(getQualifiedName())
                     + UniversityUnit.getInstitutionsUniversityUnit().getName();
         }
 
@@ -40,7 +42,7 @@ public enum MobilityProgram {
     }
 
     public String getDescription() {
-        return getSpecificDescription(Language.getLocale());
+        return getSpecificDescription(I18N.getLocale());
     }
 
     public String getDescription(final Locale locale) {

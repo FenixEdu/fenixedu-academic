@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffi
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Base implements IDiplomaSupplementRequest,
         IRectorateSubmissionBatchDocumentEntry {
@@ -174,7 +174,7 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
 
     @Override
     public String getPrevailingScientificArea(final Locale locale) {
-        return getPhdIndividualProgramProcess().getPhdProgram().getName().getContent(Language.valueOf(locale.getLanguage()));
+        return getPhdIndividualProgramProcess().getPhdProgram().getName().getContent(locale);
     }
 
     @Override

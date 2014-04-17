@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.util.email.Recipient;
 
 import org.joda.time.LocalDate;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdFinalProofRequestAlert extends PhdFinalProofRequestAlert_Base {
@@ -26,12 +26,12 @@ public class PhdFinalProofRequestAlert extends PhdFinalProofRequestAlert_Base {
     }
 
     private MultiLanguageString buildSubject(final PhdIndividualProgramProcess process) {
-        return new MultiLanguageString(Language.getDefaultLanguage(), AlertService.getSubjectPrefixed(process,
+        return new MultiLanguageString(Locale.getDefault(), AlertService.getSubjectPrefixed(process,
                 "message.phd.alert.final.proof.request.subject"));
     }
 
     private MultiLanguageString buildBody(final PhdIndividualProgramProcess process) {
-        return new MultiLanguageString(Language.getDefaultLanguage(), AlertService.getBodyText(process,
+        return new MultiLanguageString(Locale.getDefault(), AlertService.getBodyText(process,
                 "message.phd.alert.final.proof.request.body"));
     }
 

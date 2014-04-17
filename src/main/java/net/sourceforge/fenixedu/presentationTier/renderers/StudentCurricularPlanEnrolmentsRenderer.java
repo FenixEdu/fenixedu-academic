@@ -36,7 +36,6 @@ import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.ist.fenixWebFramework.renderers.model.MetaObject;
 import pt.ist.fenixWebFramework.renderers.model.MetaObjectFactory;
 import pt.ist.fenixWebFramework.renderers.schemas.Schema;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 
@@ -373,7 +372,7 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
             HtmlTableRow htmlTableRow = groupTable.createRow();
             HtmlTableCell cellName = htmlTableRow.createCell();
             cellName.setClasses(getEnrolmentNameClasses());
-            cellName.setBody(new HtmlText(enrolment.getName().getContent(Language.getLanguage())));
+            cellName.setBody(new HtmlText(enrolment.getName().getContent()));
 
             // Year
             final HtmlTableCell yearCell = htmlTableRow.createCell();

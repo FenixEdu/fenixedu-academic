@@ -118,6 +118,7 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.ReadableInstant;
@@ -128,7 +129,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class Registration extends Registration_Base {
 
@@ -2020,11 +2021,11 @@ public class Registration extends Registration_Base {
     }
 
     final public String getDegreeDescription(final CycleType cycleType) {
-        return getDegreeDescription(cycleType, Language.getLocale());
+        return getDegreeDescription(cycleType, I18N.getLocale());
     }
 
     final public String getDegreeDescription(ExecutionYear executionYear, final CycleType cycleType) {
-        return getDegreeDescription(executionYear, cycleType, Language.getLocale());
+        return getDegreeDescription(executionYear, cycleType, I18N.getLocale());
     }
 
     final public String getDegreeDescription(final CycleType cycleType, final Locale locale) {
@@ -2632,7 +2633,7 @@ public class Registration extends Registration_Base {
     }
 
     final public String getGraduateTitle() {
-        return getGraduateTitle((CycleType) null, Language.getLocale());
+        return getGraduateTitle((CycleType) null, I18N.getLocale());
     }
 
     final public String getGraduateTitle(final CycleType cycleType, final Locale locale) {
@@ -3952,7 +3953,7 @@ public class Registration extends Registration_Base {
     }
 
     public void exportValues(StringBuilder result) {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", I18N.getLocale());
 
         Formatter formatter = new Formatter(result);
         final Student student = getStudent();

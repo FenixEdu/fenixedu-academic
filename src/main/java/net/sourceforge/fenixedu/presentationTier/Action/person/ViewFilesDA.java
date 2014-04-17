@@ -30,7 +30,6 @@ import org.fenixedu.bennu.portal.StrutsFunctionality;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 @StrutsFunctionality(app = MessagingFilesApp.class, path = "view", titleKey = "label.files.view")
@@ -55,7 +54,7 @@ public class ViewFilesDA extends UnitFunctionalities {
         List<PersonFileSource> result = new ArrayList<PersonFileSource>();
 
         MultiLanguageString departmentsName =
-                new MultiLanguageString().with(Language.pt, "Departamentos").with(Language.en, "Departments");
+                new MultiLanguageString().with(MultiLanguageString.pt, "Departamentos").with(MultiLanguageString.en, "Departments");
         PersonFileSourceGroupBean departmentsGroup = new PersonFileSourceGroupBean(departmentsName);
 
         SortedSet<Department> departments = new TreeSet<Department>(Department.COMPARATOR_BY_NAME);
@@ -65,7 +64,7 @@ public class ViewFilesDA extends UnitFunctionalities {
         }
 
         MultiLanguageString researchUnitsName =
-                new MultiLanguageString().with(Language.pt, "Unidades de Investigação").with(Language.en, "Research Units");
+                new MultiLanguageString().with(MultiLanguageString.pt, "Unidades de Investigação").with(MultiLanguageString.en, "Research Units");
         PersonFileSourceGroupBean researchUnitsGroup = new PersonFileSourceGroupBean(researchUnitsName);
 
         SortedSet<Unit> researchUnits = new TreeSet<Unit>(Unit.COMPARATOR_BY_NAME_AND_ID);
@@ -75,7 +74,7 @@ public class ViewFilesDA extends UnitFunctionalities {
         }
 
         MultiLanguageString scientificAreaName =
-                new MultiLanguageString().with(Language.pt, "Áreas Ciêntificas").with(Language.en, "Scientific Areas");
+                new MultiLanguageString().with(MultiLanguageString.pt, "Áreas Ciêntificas").with(MultiLanguageString.en, "Scientific Areas");
         PersonFileSourceGroupBean scientificAreaUnits = new PersonFileSourceGroupBean(scientificAreaName);
 
         SortedSet<Unit> scientificAreas = new TreeSet<Unit>(Unit.COMPARATOR_BY_NAME_AND_ID);

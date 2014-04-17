@@ -68,6 +68,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.StringNormalizer;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
@@ -80,7 +81,6 @@ import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 import pt.utl.ist.fenix.tools.util.CollectionUtils;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ExecutionCourse extends ExecutionCourse_Base {
@@ -1648,7 +1648,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     @Override
     public String getNome() {
-        if (Language.getUserLanguage() == Language.en && hasAnyAssociatedCurricularCourses()) {
+        if (I18N.getLocale().equals(MultiLanguageString.en) && hasAnyAssociatedCurricularCourses()) {
             final StringBuilder stringBuilder = new StringBuilder();
 
             final Set<String> names = new HashSet<String>();
@@ -2066,9 +2066,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         if (hasEvaluationMethod()) {
             final MultiLanguageString evaluationElements = getEvaluationMethod().getEvaluationElements();
 
-            return evaluationElements != null && evaluationElements.hasContent(Language.pt) ? evaluationElements
-                    .getContent(Language.pt) : !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator().next()
-                    .getEvaluationMethod() : "";
+            return evaluationElements != null && evaluationElements.hasContent(MultiLanguageString.pt) ? evaluationElements
+                    .getContent(MultiLanguageString.pt) : !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator()
+                    .next().getEvaluationMethod() : "";
         } else {
             return !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator().next().getEvaluationMethod() : "";
         }
@@ -2078,9 +2078,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         if (hasEvaluationMethod()) {
             final MultiLanguageString evaluationElements = getEvaluationMethod().getEvaluationElements();
 
-            return evaluationElements != null && evaluationElements.hasContent(Language.en) ? evaluationElements
-                    .getContent(Language.en) : !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator().next()
-                    .getEvaluationMethod() : "";
+            return evaluationElements != null && evaluationElements.hasContent(MultiLanguageString.en) ? evaluationElements
+                    .getContent(MultiLanguageString.en) : !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator()
+                    .next().getEvaluationMethod() : "";
         } else {
             return !getCompetenceCourses().isEmpty() ? getCompetenceCourses().iterator().next().getEvaluationMethod() : "";
         }
@@ -2377,7 +2377,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
      */
     public MultiLanguageString getNameI18N() {
         MultiLanguageString nameI18N = new MultiLanguageString();
-        nameI18N = nameI18N.with(Language.pt, super.getNome());
+        nameI18N = nameI18N.with(MultiLanguageString.pt, super.getNome());
 
         final StringBuilder stringBuilder = new StringBuilder();
 
@@ -2397,7 +2397,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         }
 
         if (stringBuilder.length() > 0) {
-            nameI18N = nameI18N.with(Language.en, stringBuilder.toString());
+            nameI18N = nameI18N.with(MultiLanguageString.en, stringBuilder.toString());
             return nameI18N;
         }
 
@@ -2412,10 +2412,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         }
 
         if (unique) {
-            nameI18N = nameI18N.with(Language.en, nameEn);
+            nameI18N = nameI18N.with(MultiLanguageString.en, nameEn);
             return nameI18N;
         } else {
-            nameI18N = nameI18N.with(Language.en, super.getNome());
+            nameI18N = nameI18N.with(MultiLanguageString.en, super.getNome());
             return nameI18N;
         }
     }

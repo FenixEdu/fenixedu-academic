@@ -21,9 +21,8 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.StorkAttributesL
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.MobilityApplicationPeriod;
 
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.LocalDate;
-
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class MobilityIndividualApplicationProcessBean extends IndividualCandidacyProcessBean {
 
@@ -304,10 +303,10 @@ public class MobilityIndividualApplicationProcessBean extends IndividualCandidac
     }
 
     public String getSelectedCourseNameForView() {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", I18N.getLocale());
         try {
             MobilityQuota quota = determineMobilityQuota();
-            return quota.getDegree().getNameI18N().getContent(Language.getLanguage());
+            return quota.getDegree().getNameI18N().getContent();
         } catch (DomainException e) {
             return bundle.getString(e.getMessage());
         }

@@ -14,8 +14,6 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.bennu.core.domain.Bennu;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
-
 public class Util {
 
     public static List<LabelValueBean> readExistingBuldings(String name, String value) throws FenixServiceException {
@@ -45,8 +43,9 @@ public class Util {
         Collection<RoomClassification> roomClassifications = Bennu.getInstance().getRoomClassificationSet();
         for (RoomClassification classification : RoomClassification.sortByRoomClassificationAndCode(roomClassifications)) {
             if (classification.hasParentRoomClassification()) {
-                tipos.add(new LabelValueBean(classification.getPresentationCode() + " - "
-                        + classification.getName().getContent(Language.getLanguage()), classification.getExternalId().toString()));
+                tipos.add(new LabelValueBean(
+                        classification.getPresentationCode() + " - " + classification.getName().getContent(), classification
+                                .getExternalId().toString()));
             }
         }
 

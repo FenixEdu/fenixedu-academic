@@ -11,7 +11,9 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.TreeSet;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import org.fenixedu.commons.i18n.I18N;
+
+import java.util.Locale;
 
 public enum CycleType {
 
@@ -70,7 +72,7 @@ public enum CycleType {
     }
 
     public String getDescription() {
-        return getDescription(Language.getLocale());
+        return getDescription(I18N.getLocale());
     }
 
     public String getDescription(final Locale locale) {

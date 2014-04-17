@@ -30,13 +30,14 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 @StrutsFunctionality(app = AcademicAdminDocumentsApp.class, path = "generated-documents", titleKey = "label.documents",
         accessGroup = "academic(MANAGE_DOCUMENTS)")
@@ -182,7 +183,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
 
         return ReportsUtils.exportToPdfFileAsByteArray(customDeclaration.getReportTemplateKey(),
                 customDeclaration.getParameters(),
-                ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale()),
+                ResourceBundle.getBundle("resources.AcademicAdminOffice", I18N.getLocale()),
                 customDeclaration.getDataSource());
     }
 

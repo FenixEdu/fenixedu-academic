@@ -24,13 +24,14 @@ import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.ByteArray;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.FileUtils;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class ParkingRequest extends ParkingRequest_Base {
 
@@ -897,7 +898,7 @@ public class ParkingRequest extends ParkingRequest_Base {
         if (driverLicenseDocument != null) {
             return driverLicenseDocument.getParkingFile().getFilename();
         } else if (getDriverLicenseDeliveryType() != null) {
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", Language.getLocale());
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", I18N.getLocale());
             return bundle.getString(getDriverLicenseDeliveryType().name());
         }
         return "";

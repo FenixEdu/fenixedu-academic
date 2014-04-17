@@ -5,7 +5,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ExtraCurricularActivityType extends ExtraCurricularActivityType_Base {
@@ -28,26 +27,26 @@ public class ExtraCurricularActivityType extends ExtraCurricularActivityType_Bas
     }
 
     public String getNamePt() {
-        return getName().getContent(Language.pt);
+        return getName().getContent(MultiLanguageString.pt);
     }
 
     public void setNamePt(String name) {
         if (getName() == null) {
-            setName(new MultiLanguageString(Language.pt, name));
+            setName(new MultiLanguageString(MultiLanguageString.pt, name));
         } else {
-            setName(getName().with(Language.pt, name));
+            setName(getName().with(MultiLanguageString.pt, name));
         }
     }
 
     public String getNameEn() {
-        return getName().getContent(Language.en);
+        return getName().getContent(MultiLanguageString.en);
     }
 
     public void setNameEn(String name) {
         if (getName() == null) {
-            setName(new MultiLanguageString(Language.en, name));
+            setName(new MultiLanguageString(MultiLanguageString.en, name));
         } else {
-            setName(getName().with(Language.en, name));
+            setName(getName().with(MultiLanguageString.en, name));
         }
     }
 

@@ -19,9 +19,10 @@ import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class VoteYearDelegateElections {
 
@@ -30,7 +31,7 @@ public class VoteYearDelegateElections {
             throws FenixServiceException {
         check(RolePredicates.STUDENT_PREDICATE);
 
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.DelegateResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.DelegateResources", I18N.getLocale());
         DelegateElectionVotingPeriod votingPeriod = yearDelegateElection.getCurrentVotingPeriod();
 
         try {

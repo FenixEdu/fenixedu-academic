@@ -57,11 +57,12 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.InvocationResult;
 import net.sourceforge.fenixedu.util.Money;
 
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class SeparationCyclesManagement {
 
@@ -69,7 +70,7 @@ public class SeparationCyclesManagement {
             DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
 
     private final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("resources.ApplicationResources",
-            Language.getLocale());
+            I18N.getLocale());
 
     public SeparationCyclesManagement() {
     }

@@ -1,4 +1,4 @@
-<%@page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
+<%@page import="org.fenixedu.commons.i18n.I18N"%>
 <%@ page language="java" %>
 <%@ page import="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"%>
 <%@ page import="net.sourceforge.fenixedu.domain.UnitSite"%>
@@ -17,7 +17,7 @@
     request.setAttribute("site", site);
 	
     if (site != null && site.isDefaultLogoUsed()) {
-		final String finalLanguage = Language.getLanguage().name();
+		final String finalLanguage = I18N.getLocale().getLanguage();
     	//String finalLanguage = language == null ? "pt" : String.valueOf(language);
         request.setAttribute("siteDefaultLogo", 
         	String.format("%s/images/newImage2012/%s_%s.png", request.getContextPath(), unit.getAcronym(), finalLanguage));

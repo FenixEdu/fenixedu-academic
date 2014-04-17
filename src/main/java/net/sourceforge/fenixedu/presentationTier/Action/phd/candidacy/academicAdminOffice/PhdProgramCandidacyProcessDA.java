@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -50,7 +51,6 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(path = "/phdProgramCandidacyProcess", module = "academicAdministration",
         functionality = PhdIndividualProgramProcessDA.class)
@@ -393,8 +393,8 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 
     }
 
-    private Language getLanguage(HttpServletRequest request) {
-        return Language.valueOf(request.getParameter("language"));
+    private Locale getLanguage(HttpServletRequest request) {
+        return new Locale.Builder().setLanguageTag(request.getParameter("language")).build();
     }
 
     public ActionForward markNotificationAsSent(ActionMapping mapping, ActionForm form, HttpServletRequest request,

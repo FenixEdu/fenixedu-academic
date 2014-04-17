@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import org.fenixedu.commons.i18n.I18N;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -31,7 +33,7 @@ import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
 import net.sourceforge.fenixedu.util.tests.TestType;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class ChangeStudentTestQuestionMark {
     protected void run(String executionCourseId, String distributedTestId, Double newMark, String questionId, String studentId,
@@ -98,7 +100,7 @@ public class ChangeStudentTestQuestionMark {
                     mark.setPublishedMark(markValue);
                 }
             }
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
             String event =
                     MessageFormat.format(bundle.getString("message.changeStudentMarkLogMessage"), new Object[] { newMark });
 

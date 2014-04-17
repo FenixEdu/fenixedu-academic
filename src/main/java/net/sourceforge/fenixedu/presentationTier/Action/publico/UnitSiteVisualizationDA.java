@@ -30,16 +30,15 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class UnitSiteVisualizationDA extends SiteVisualizationDA {
 
     public static final int ANNOUNCEMENTS_NUMBER = 3;
 
-    public static final MultiLanguageString ANNOUNCEMENTS_NAME = new MultiLanguageString().with(Language.pt, "Anúncios");
+    public static final MultiLanguageString ANNOUNCEMENTS_NAME = new MultiLanguageString().with(MultiLanguageString.pt, "Anúncios");
 
-    public static final MultiLanguageString EVENTS_NAME = new MultiLanguageString().with(Language.pt, "Eventos");
+    public static final MultiLanguageString EVENTS_NAME = new MultiLanguageString().with(MultiLanguageString.pt, "Eventos");
 
     @Override
     protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form, HttpServletRequest request,

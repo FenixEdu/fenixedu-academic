@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.cms;
 
 import java.util.Collection;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -15,7 +16,6 @@ import org.fenixedu.bennu.core.domain.groups.AnyoneGroup;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.commons.StringNormalizer;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.google.common.base.Predicate;
@@ -139,7 +139,7 @@ public class CmsContent extends CmsContent_Base implements Comparable<CmsContent
             return null;
         }
         MultiLanguageString result = new MultiLanguageString();
-        for (final Language language : multiLanguageString.getAllLanguages()) {
+        for (final Locale language : multiLanguageString.getAllLocales()) {
             result = result.with(language, normalize(multiLanguageString.getContent(language)));
         }
         return result;

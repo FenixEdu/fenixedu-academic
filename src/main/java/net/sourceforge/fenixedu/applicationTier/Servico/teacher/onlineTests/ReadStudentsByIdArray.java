@@ -22,10 +22,11 @@ import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 /**
  * @author Susana Fernandes
@@ -80,7 +81,7 @@ public class ReadStudentsByIdArray {
 
     private List<InfoStudent> returnStudentsFromShiftsArray(DistributedTest distributedTest, String[] shifts)
             throws FenixServiceException {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
         List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
         for (String shift2 : shifts) {
             if (shift2.equals(bundle.getString("label.allShifts"))) {
@@ -103,7 +104,7 @@ public class ReadStudentsByIdArray {
 
     private List<InfoStudent> returnStudentsFromStudentsArray(DistributedTest distributedTest, String[] students,
             String executionCourseId) throws FenixServiceException {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
         List<InfoStudent> studentsList = new ArrayList<InfoStudent>();
         ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
 

@@ -23,11 +23,11 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdProgram extends PhdProgram_Base {
@@ -100,7 +100,7 @@ public class PhdProgram extends PhdProgram_Base {
     }
 
     public String getPresentationName() {
-        return getPresentationName(Language.getLocale());
+        return getPresentationName(I18N.getLocale());
     }
 
     private String getPresentationName(final Locale locale) {
@@ -108,8 +108,7 @@ public class PhdProgram extends PhdProgram_Base {
     }
 
     private String getNameFor(final Locale locale) {
-        final Language language = Language.valueOf(locale.getLanguage());
-        return getName().hasContent(language) ? getName().getContent(language) : getName().getPreferedContent();
+        return getName().hasContent(locale) ? getName().getContent(locale) : getName().getPreferedContent();
     }
 
     private String getPrefix(final Locale locale) {

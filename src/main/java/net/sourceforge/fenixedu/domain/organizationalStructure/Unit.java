@@ -67,7 +67,7 @@ import org.fenixedu.commons.StringNormalizer;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class Unit extends Unit_Base {
@@ -126,8 +126,8 @@ public class Unit extends Unit_Base {
         MultiLanguageString partyName = getPartyName();
 
         partyName =
-                partyName == null ? new MultiLanguageString(Language.getDefaultLanguage(), name) : partyName.with(
-                        Language.getDefaultLanguage(), name);
+                partyName == null ? new MultiLanguageString(Locale.getDefault(), name) : partyName.with(
+                        Locale.getDefault(), name);
 
         super.setPartyName(partyName);
 
@@ -840,7 +840,7 @@ public class Unit extends Unit_Base {
     public static Unit createNewNoOfficialExternalInstitution(String unitName, Country country) {
         Unit externalInstitutionUnit = UnitUtils.readExternalInstitutionUnit();
         Unit noOfficialExternalInstitutionUnit = new Unit();
-        noOfficialExternalInstitutionUnit.init(new MultiLanguageString(Language.getDefaultLanguage(), unitName), null, null,
+        noOfficialExternalInstitutionUnit.init(new MultiLanguageString(Locale.getDefault(), unitName), null, null,
                 null, new YearMonthDay(), null, null, null, null, null, null);
         noOfficialExternalInstitutionUnit.addParentUnit(externalInstitutionUnit,
                 AccountabilityType.readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
@@ -1303,7 +1303,7 @@ public class Unit extends Unit_Base {
         }
         if (result.isEmpty()) {
             result =
-                    result.with(Language.getDefaultLanguage(),
+                    result.with(Locale.getDefault(),
                             BundleUtil.getStringFromResourceBundle("resources/GlobalResources", "institution.name"));
         }
 

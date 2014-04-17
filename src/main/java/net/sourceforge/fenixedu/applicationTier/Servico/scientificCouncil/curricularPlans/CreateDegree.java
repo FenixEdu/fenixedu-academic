@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateDegree {
 
@@ -35,8 +35,8 @@ public class CreateDegree {
             }
             ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
-            if ((degree.getNameFor(currentExecutionYear).getContent(Language.pt).equalsIgnoreCase(name) || degree
-                    .getNameFor(currentExecutionYear).getContent(Language.en).equalsIgnoreCase(nameEn))
+            if ((degree.getNameFor(currentExecutionYear).getContent(MultiLanguageString.pt).equalsIgnoreCase(name) || degree
+                    .getNameFor(currentExecutionYear).getContent(MultiLanguageString.en).equalsIgnoreCase(nameEn))
                     && degree.getDegreeType().equals(degreeType)) {
                 throw new FenixServiceException("error.existing.degree.name.and.type");
             }

@@ -25,6 +25,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.commons.i18n.I18N;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +34,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.EMail;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 import com.octo.captcha.module.struts.CaptchaServicePlugin;
 
@@ -54,7 +55,7 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
 
     private static final Logger logger = LoggerFactory.getLogger(AlumniPublicAccessDA.class);
 
-    final ResourceBundle RESOURCES = ResourceBundle.getBundle("resources.AlumniResources", Language.getLocale());
+    final ResourceBundle RESOURCES = ResourceBundle.getBundle("resources.AlumniResources", I18N.getLocale());
 
     public ActionForward initFenixPublicAccess(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
@@ -186,7 +187,7 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
 
     public ActionForward sendEmailReportingError(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.AlumniResources", Language.getLocale());
+        final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.AlumniResources", I18N.getLocale());
 
         final AlumniErrorSendingMailBean alumniBean = getRenderedObject();
         StringBuilder mailBody = new StringBuilder();

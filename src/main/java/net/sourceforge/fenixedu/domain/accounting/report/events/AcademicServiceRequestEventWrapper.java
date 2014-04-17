@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceReq
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class AcademicServiceRequestEventWrapper implements Wrapper {
 
@@ -58,7 +58,7 @@ public class AcademicServiceRequestEventWrapper implements Wrapper {
     public String getDegreeName() {
         if (request.isRequestForRegistration()) {
             return ((RegistrationAcademicServiceRequest) request).getRegistration().getDegree().getNameI18N()
-                    .getContent(Language.pt);
+                    .getContent(MultiLanguageString.pt);
         }
 
         return "--";
@@ -77,7 +77,7 @@ public class AcademicServiceRequestEventWrapper implements Wrapper {
     public String getPhdProgramName() {
         if (request.isRequestForPhd()) {
             return ((PhdAcademicServiceRequest) request).getPhdIndividualProgramProcess().getPhdProgram().getName()
-                    .getContent(Language.pt);
+                    .getContent(MultiLanguageString.pt);
         }
 
         return "--";

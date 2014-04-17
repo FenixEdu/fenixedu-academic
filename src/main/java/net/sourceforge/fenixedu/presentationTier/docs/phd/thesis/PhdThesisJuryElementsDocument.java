@@ -10,9 +10,10 @@ import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class PhdThesisJuryElementsDocument extends FenixReport {
 
@@ -106,7 +107,7 @@ public class PhdThesisJuryElementsDocument extends FenixReport {
         }
 
         protected ResourceBundle getBundle() {
-            return ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
+            return ResourceBundle.getBundle("resources.PhdResources", I18N.getLocale());
         }
 
     }

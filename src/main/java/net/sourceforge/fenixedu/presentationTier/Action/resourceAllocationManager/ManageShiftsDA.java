@@ -36,6 +36,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.commons.i18n.I18N;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,7 +45,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -83,7 +84,7 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
 
         if (infoExecutionCourse != null) {
             final List<LabelValueBean> tiposAula = new ArrayList<LabelValueBean>();
-            final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+            final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
 
             for (final ShiftType shiftType : infoExecutionCourse.getExecutionCourse().getShiftTypes()) {
                 tiposAula.add(new LabelValueBean(bundle.getString(shiftType.getName()), shiftType.name()));

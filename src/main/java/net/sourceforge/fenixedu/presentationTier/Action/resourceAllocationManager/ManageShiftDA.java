@@ -49,6 +49,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
@@ -56,7 +57,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -322,7 +323,7 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 
     private void readAndSetShiftTypes(HttpServletRequest request, InfoExecutionCourse infoExecutionCourse) {
         final List<LabelValueBean> tiposAula = new ArrayList<LabelValueBean>();
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
         for (final ShiftType shiftType : infoExecutionCourse.getExecutionCourse().getShiftTypes()) {
             tiposAula.add(new LabelValueBean(bundle.getString(shiftType.getName()), shiftType.name()));
         }

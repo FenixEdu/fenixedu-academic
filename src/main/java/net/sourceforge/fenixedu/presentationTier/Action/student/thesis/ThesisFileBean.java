@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.student.thesis;
 
 import java.io.InputStream;
 import java.io.Serializable;
+import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ThesisFileBean implements Serializable {
 
@@ -15,7 +15,7 @@ public class ThesisFileBean implements Serializable {
 
     private String title;
     private String subTitle;
-    private Language language;
+    private Locale language;
     private String fileName;
     private Long fileSize;
 
@@ -27,7 +27,7 @@ public class ThesisFileBean implements Serializable {
     public ThesisFileBean(final Thesis thesis) {
         title = thesis.getFinalTitle().getContent();
         subTitle = thesis.getFinalSubtitle() != null ? thesis.getFinalSubtitle().getContent() : null;
-        language = thesis.getFinalFullTitle().getContentLanguage();
+        language = thesis.getFinalFullTitle().getContentLocale();
     }
 
     public String getTitle() {
@@ -70,11 +70,11 @@ public class ThesisFileBean implements Serializable {
         this.fileSize = fileSize;
     }
 
-    public Language getLanguage() {
+    public Locale getLanguage() {
         return this.language;
     }
 
-    public void setLanguage(Language language) {
+    public void setLanguage(Locale language) {
         this.language = language;
     }
 

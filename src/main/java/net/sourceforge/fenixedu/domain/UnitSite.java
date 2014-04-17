@@ -18,18 +18,17 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.predicates.UnitSitePredicates;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.google.common.collect.Ordering;
 
 public class UnitSite extends UnitSite_Base {
 
-    private static MultiLanguageString TOP_SECTION_NAME = new MultiLanguageString().with(Language.pt, "Topo").with(Language.en,
+    private static MultiLanguageString TOP_SECTION_NAME = new MultiLanguageString().with(MultiLanguageString.pt, "Topo").with(MultiLanguageString.en,
             "Top");
 
-    private static MultiLanguageString SIDE_SECTION_NAME = new MultiLanguageString().with(Language.pt, "Lateral").with(
-            Language.en, "Side");
+    private static MultiLanguageString SIDE_SECTION_NAME = new MultiLanguageString().with(MultiLanguageString.pt, "Lateral").with(
+            MultiLanguageString.en, "Side");
 
     static {
         getRelationUnitSiteManagers().addListener(new ManageWebsiteManagerRole());
@@ -244,8 +243,8 @@ public class UnitSite extends UnitSite_Base {
     }
 
     private boolean isSideSection(Section section) {
-        String pt = section.getName().getContent(Language.pt);
-        String en = section.getName().getContent(Language.en);
+        String pt = section.getName().getContent(MultiLanguageString.pt);
+        String en = section.getName().getContent(MultiLanguageString.en);
 
         return (pt != null && pt.equalsIgnoreCase("lateral")) || (en != null && en.equalsIgnoreCase("side"));
     }

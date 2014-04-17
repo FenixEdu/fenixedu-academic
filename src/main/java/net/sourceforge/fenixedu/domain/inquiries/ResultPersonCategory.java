@@ -2,8 +2,10 @@ package net.sourceforge.fenixedu.domain.inquiries;
 
 import java.util.ResourceBundle;
 
+import org.fenixedu.commons.i18n.I18N;
+
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public enum ResultPersonCategory implements IPresentableEnum {
 
@@ -25,7 +27,7 @@ public enum ResultPersonCategory implements IPresentableEnum {
 
     @Override
     public String getLocalizedName() {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
         return bundle.getString(this.getClass().getName() + "." + name());
     }
 

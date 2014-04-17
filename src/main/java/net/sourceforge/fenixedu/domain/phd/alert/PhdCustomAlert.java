@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import org.joda.time.LocalDate;
 
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdCustomAlert extends PhdCustomAlert_Base {
@@ -30,8 +30,8 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
     }
 
     public PhdCustomAlert(PhdCustomAlertBean bean) {
-        this(bean.getProcess(), bean.calculateTargetGroup(), new MultiLanguageString(Language.getDefaultLanguage(),
-                bean.getSubject()), new MultiLanguageString(Language.getDefaultLanguage(), bean.getBody()), bean.isToSendEmail(),
+        this(bean.getProcess(), bean.calculateTargetGroup(), new MultiLanguageString(Locale.getDefault(),
+                bean.getSubject()), new MultiLanguageString(Locale.getDefault(), bean.getBody()), bean.isToSendEmail(),
                 bean.getFireDate(), bean.getUserDefined(), bean.getShared());
     }
 

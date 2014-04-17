@@ -3,7 +3,9 @@ package net.sourceforge.fenixedu.domain.accounting;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import org.fenixedu.commons.i18n.I18N;
+
+import java.util.Locale;
 
 public enum PaymentCodeType {
 
@@ -83,7 +85,7 @@ public enum PaymentCodeType {
     }
 
     protected String localizedName() {
-        return localizedName(Language.getLocale());
+        return localizedName(I18N.getLocale());
     }
 
     public String getLocalizedName() {

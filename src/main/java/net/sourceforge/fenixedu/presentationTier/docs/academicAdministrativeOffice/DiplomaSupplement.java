@@ -91,7 +91,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
     }
 
     protected void fillGroup8() {
-        addParameter("langSuffix", getLanguage().name());
+        addParameter("langSuffix", getLanguage().getLanguage());
     }
 
     protected void fillGroup7() {

@@ -19,8 +19,9 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import org.apache.struts.Globals;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.util.MessageResources;
+import org.fenixedu.commons.i18n.I18N;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 /**
  * @author Tânia Pousão
@@ -39,7 +40,7 @@ public class ExecutionDegreesFormat extends FenixUtil {
             String degreeType = null;
 
             if (messageResources != null) {
-                final Locale locale = Language.getLocale();
+                final Locale locale = I18N.getLocale();
                 degreeType =
                         messageResources.getMessage(locale, infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
                                 .getDegreeType().name());

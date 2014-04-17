@@ -7,10 +7,11 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import org.apache.struts.taglib.TagUtils;
+import org.fenixedu.commons.i18n.I18N;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class CollectionPagerTag extends TagSupport {
 
@@ -136,9 +137,9 @@ public class CollectionPagerTag extends TagSupport {
     }
 
     private String getMessageFromBundle(String key) throws JspException {
-        return (getBundle() != null) ? ((TagUtils.getInstance().present(this.pageContext, getBundle(), Language.getLocale()
+        return (getBundle() != null) ? ((TagUtils.getInstance().present(this.pageContext, getBundle(), I18N.getLocale()
                 .toString(), key)) ? TagUtils.getInstance().message(this.pageContext, getBundle(),
-                Language.getLocale().toString(), key) : null) : null;
+                I18N.getLocale().toString(), key) : null) : null;
     }
 
     private Boolean hasModule() {

@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
 import net.sourceforge.fenixedu.util.FenixStringTools;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class LearningAgreementDocument extends FenixReport {
 
@@ -29,7 +29,7 @@ public class LearningAgreementDocument extends FenixReport {
 
     @Override
     protected void fillReport() {
-        addParameter("mobilityProgram", process.getMobilityProgram().getName().getContent(Language.en));
+        addParameter("mobilityProgram", process.getMobilityProgram().getName().getContent(MultiLanguageString.en));
         addParameter("academicYear", process.getCandidacyExecutionInterval().getName());
         addParameter("studentName", process.getPersonalDetails().getName());
         addParameter("sendingInstitution", process.getCandidacy().getMobilityStudentData().getSelectedOpening()
@@ -43,7 +43,7 @@ public class LearningAgreementDocument extends FenixReport {
 
         for (CurricularCourse course : process.getCandidacy().getCurricularCourses()) {
             result.append(
-                    FenixStringTools.multipleLineRightPadWithSuffix(course.getNameI18N().getContent(Language.en), LINE_LENGTH,
+                    FenixStringTools.multipleLineRightPadWithSuffix(course.getNameI18N().getContent(MultiLanguageString.en), LINE_LENGTH,
                             END_CHAR, course.getEctsCredits().toString())).append(LINE_BREAK);
         }
 

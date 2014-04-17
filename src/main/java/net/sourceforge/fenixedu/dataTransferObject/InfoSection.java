@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.domain.Section;
 
 import org.joda.time.DateTime;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
  * This is the view class that contains information about the seccao domain
@@ -253,7 +253,7 @@ public class InfoSection extends InfoObject implements Comparable, ISiteComponen
     public void copyFromDomain(Section section) {
         super.copyFromDomain(section);
         if (section != null) {
-            setName(section.getName().getContent(Language.pt));
+            setName(section.getName().getContent(MultiLanguageString.pt));
             setSectionOrder(section.getOrder());
             setLastModifiedDate(section.getModificationDate());
             setSectionDepth(calculateDepth());

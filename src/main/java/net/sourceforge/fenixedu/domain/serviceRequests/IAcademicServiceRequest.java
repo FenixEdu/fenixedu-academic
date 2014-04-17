@@ -1,12 +1,13 @@
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
+import java.util.Locale;
+
 import net.sourceforge.fenixedu.domain.Person;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public interface IAcademicServiceRequest {
     public String getDescription();
 
-    public Language getLanguage();
+    public Locale getLanguage();
 
     public Person getPerson();
 

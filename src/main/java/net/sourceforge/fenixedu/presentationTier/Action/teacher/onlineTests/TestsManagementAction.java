@@ -92,6 +92,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.util.Base64;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -100,7 +101,7 @@ import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumR
 import pt.ist.fenixWebFramework.struts.annotations.Input;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 /**
  * @author Susana Fernandes
@@ -1425,7 +1426,7 @@ public class TestsManagementAction extends ExecutionCourseBaseAction {
     }
 
     private String createDefaultDistributedInquiryInfo() {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
         return bundle.getString("message.distributeTest.inquiry");
     }
 }

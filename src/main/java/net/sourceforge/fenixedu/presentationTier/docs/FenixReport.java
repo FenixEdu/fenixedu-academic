@@ -12,11 +12,10 @@ import net.sourceforge.fenixedu.util.DateI18NUtil;
 import net.sourceforge.fenixedu.util.JasperPrintProcessor;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 abstract public class FenixReport implements Serializable {
 
@@ -35,7 +34,7 @@ abstract public class FenixReport implements Serializable {
 
     private final Locale locale;
 
-    private final Language language;
+    private final Locale language;
 
     static final protected String EMPTY_STR = StringUtils.EMPTY;
 
@@ -50,7 +49,7 @@ abstract public class FenixReport implements Serializable {
     static final protected String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
 
     protected FenixReport() {
-        this(null, Language.getLocale());
+        this(null, I18N.getLocale());
     }
 
     protected FenixReport(final Locale locale) {
@@ -62,7 +61,7 @@ abstract public class FenixReport implements Serializable {
         this.enumerationBundle = ResourceBundle.getBundle("resources.EnumerationResources", locale);
         this.applicationBundle = ResourceBundle.getBundle("resources.ApplicationResources", locale);
         this.locale = locale;
-        this.language = Language.valueOf(locale.getLanguage());
+        this.language = locale;
     }
 
     public final Collection<?> getDataSource() {
@@ -93,7 +92,7 @@ abstract public class FenixReport implements Serializable {
         return locale;
     }
 
-    public Language getLanguage() {
+    public Locale getLanguage() {
         return language;
     }
 

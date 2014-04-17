@@ -15,9 +15,10 @@ import net.sourceforge.fenixedu.domain.util.workflow.Operation;
 import net.sourceforge.fenixedu.domain.util.workflow.StateBean;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 // FIXME: Rename to CandidacyState
 public abstract class CandidacySituation extends CandidacySituation_Base implements IStateWithOperations {
@@ -77,7 +78,7 @@ public abstract class CandidacySituation extends CandidacySituation_Base impleme
     }
 
     public String getDescription() {
-        return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(
+        return ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale()).getString(
                 getCandidacySituationType().getQualifiedName());
     }
 

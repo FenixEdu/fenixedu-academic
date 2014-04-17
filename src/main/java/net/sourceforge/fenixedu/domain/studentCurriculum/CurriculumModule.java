@@ -31,12 +31,12 @@ import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 import pt.utl.ist.fenix.tools.predicates.ResultCollection;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 abstract public class CurriculumModule extends CurriculumModule_Base {
@@ -161,10 +161,10 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
         MultiLanguageString multiLanguageString = new MultiLanguageString();
 
         if (this.getDegreeModule().getName() != null && this.getDegreeModule().getName().length() > 0) {
-            multiLanguageString = multiLanguageString.with(Language.pt, this.getDegreeModule().getName());
+            multiLanguageString = multiLanguageString.with(MultiLanguageString.pt, this.getDegreeModule().getName());
         }
         if (this.getDegreeModule().getNameEn() != null && this.getDegreeModule().getNameEn().length() > 0) {
-            multiLanguageString = multiLanguageString.with(Language.en, this.getDegreeModule().getNameEn());
+            multiLanguageString = multiLanguageString.with(MultiLanguageString.en, this.getDegreeModule().getNameEn());
         }
         return multiLanguageString;
     }
@@ -418,7 +418,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
         }
 
         public String getLocalizedName() {
-            return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(
+            return ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale()).getString(
                     ConclusionValue.class.getSimpleName() + "." + name());
         }
     }

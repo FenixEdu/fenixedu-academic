@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ExecutionCourseSite extends ExecutionCourseSite_Base {
@@ -27,7 +26,7 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
     public ExecutionCourseSite(ExecutionCourse course) {
         this();
 
-        course.addForum(new ExecutionCourseForum(new MultiLanguageString().with(Language.pt, course.getNome().replace('?', ' ')
+        course.addForum(new ExecutionCourseForum(new MultiLanguageString().with(MultiLanguageString.pt, course.getNome().replace('?', ' ')
                 .replace('/', ' ')), new MultiLanguageString("")));
         setSiteExecutionCourse(course);
     }
@@ -104,7 +103,7 @@ public class ExecutionCourseSite extends ExecutionCourseSite_Base {
     public MultiLanguageString getName() {
         final ExecutionSemester executionSemester = getSiteExecutionCourse().getExecutionPeriod();
         return new MultiLanguageString().with(
-                Language.pt,
+                MultiLanguageString.pt,
                 new Formatter().format("%s/%s/%d-semestre", getSiteExecutionCourse().getSigla(),
                         executionSemester.getExecutionYear().getYear().replace('/', '-'), executionSemester.getSemester())
                         .toString());
