@@ -104,9 +104,9 @@ public class ExportPhdIndividualProgramProcessesInHtml {
                     continue;
                 }
 
-                if (phdHashCode.getPhdProgramCandidacyProcess().isValidatedByCandidate()) {
+//                if (phdHashCode.getPhdProgramCandidacyProcess().isValidatedByCandidate()) {
                     addCandidate(unfocusAreaCandidates, candidates, phdHashCode);
-                }
+//                }
             }
         }
         return candidates;

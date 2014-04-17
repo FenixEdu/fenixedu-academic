@@ -46,9 +46,9 @@ public class ExportEPFLPhdProgramCandidacies {
                                         return false;
                                     }
 
-                                    if (!t.getCandidacyProcess().getValidatedByCandidate()) {
-                                        return false;
-                                    }
+//                                    if (!t.getCandidacyProcess().getValidatedByCandidate()) {
+//                                        return false;
+//                                    }
 
                                     return true;
                                 }

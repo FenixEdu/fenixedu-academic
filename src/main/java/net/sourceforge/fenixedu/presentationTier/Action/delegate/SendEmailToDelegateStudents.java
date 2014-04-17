@@ -137,7 +137,8 @@ public class SendEmailToDelegateStudents extends FenixDispatchAction {
             List<Registration> activeRegistrations = new ArrayList<Registration>(student.getActiveRegistrations());
             Collections.sort(activeRegistrations, Registration.COMPARATOR_BY_START_DATE);
             for (Registration registration : activeRegistrations) {
-                delegateFunction = registration.getDegree().getMostSignificantDelegateFunctionForStudent(student, executionYear);
+                delegateFunction =
+                        registration.getDegree().getMostSignificantActiveDelegateFunctionForStudent(student, executionYear);
                 if (delegateFunction != null && delegateFunction.isActive()) {
                     return delegateFunction;
                 }
@@ -160,7 +161,9 @@ public class SendEmailToDelegateStudents extends FenixDispatchAction {
     public ActionForward sendToStudentsFromSelectedCurricularCourses(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        final List<String> selectedCurricularCourses = Arrays.asList(request.getParameterValues("selectedCurricularCourses"));
+        final String[] parameterValues = request.getParameterValues("selectedCurricularCourses");
+        final List<String> selectedCurricularCourses =
+                parameterValues == null || parameterValues.length == 0 ? Collections.EMPTY_LIST : Arrays.asList(parameterValues);
         List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
         for (String curricularCourseId : selectedCurricularCourses) {
             CurricularCourse curricularCourse = (CurricularCourse) FenixFramework.getDomainObject(curricularCourseId);
