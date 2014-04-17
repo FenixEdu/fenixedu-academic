@@ -4,30 +4,11 @@ import java.util.Collections;
 import java.util.Hashtable;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.domain.accessControl.ActiveAssistantCoordinatorCycle1Group;
-import net.sourceforge.fenixedu.domain.accessControl.ActiveAssistantCoordinatorCycle2Group;
-import net.sourceforge.fenixedu.domain.accessControl.ActiveAssistantCoordinatorCycle3Group;
-import net.sourceforge.fenixedu.domain.accessControl.ActiveAssistantCoordinatorDFAGroup;
-import net.sourceforge.fenixedu.domain.accessControl.ActiveAssistantCoordinatorGroup;
-import net.sourceforge.fenixedu.domain.accessControl.ActiveAssistantCoordinatorIntegradedMasterDegreeGroup;
-import net.sourceforge.fenixedu.domain.accessControl.ActiveCoordinatorCycle1Group;
-import net.sourceforge.fenixedu.domain.accessControl.ActiveCoordinatorCycle2Group;
-import net.sourceforge.fenixedu.domain.accessControl.ActiveCoordinatorCycle3Group;
-import net.sourceforge.fenixedu.domain.accessControl.ActiveCoordinatorDFAGroup;
-import net.sourceforge.fenixedu.domain.accessControl.ActiveCoordinatorGroup;
-import net.sourceforge.fenixedu.domain.accessControl.ActiveCoordinatorIntegradedMasterDegreeGroup;
 import net.sourceforge.fenixedu.domain.accessControl.AllDegreesStudentsGroup;
-import net.sourceforge.fenixedu.domain.accessControl.AllEmployeesByCampus;
-import net.sourceforge.fenixedu.domain.accessControl.AllEmployeesGroup;
-import net.sourceforge.fenixedu.domain.accessControl.AllFirstCycleStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.AllMasterDegreesStudents;
 import net.sourceforge.fenixedu.domain.accessControl.AllResearchersGroup;
-import net.sourceforge.fenixedu.domain.accessControl.AllSecondCycleStudentsGroup;
-import net.sourceforge.fenixedu.domain.accessControl.AllStudentsByCampus;
 import net.sourceforge.fenixedu.domain.accessControl.AllStudentsGroup;
-import net.sourceforge.fenixedu.domain.accessControl.AllTeachersByCampus;
 import net.sourceforge.fenixedu.domain.accessControl.AllTeachersGroup;
-import net.sourceforge.fenixedu.domain.accessControl.AlumniDegreeGroup;
 import net.sourceforge.fenixedu.domain.accessControl.CompetenceCourseGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ConclusionYearDegreesStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeCoordinatorsGroup;
@@ -52,12 +33,9 @@ import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseResponsibles
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersAndStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup;
-import net.sourceforge.fenixedu.domain.accessControl.ExternalTeachersForCurrentSemester;
-import net.sourceforge.fenixedu.domain.accessControl.ExternalTeachersForCurrentYear;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupingGroup;
-import net.sourceforge.fenixedu.domain.accessControl.IfTrueGroup;
 import net.sourceforge.fenixedu.domain.accessControl.InstitutionSiteManagers;
 import net.sourceforge.fenixedu.domain.accessControl.InternalPersonGroup;
 import net.sourceforge.fenixedu.domain.accessControl.MasterDegreeCoordinatorsGroup;
@@ -68,15 +46,9 @@ import net.sourceforge.fenixedu.domain.accessControl.PersistentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersonsInFunctionGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PhdProcessGuidingsGroup;
-import net.sourceforge.fenixedu.domain.accessControl.ProfessorshipsForCurrentSemester;
-import net.sourceforge.fenixedu.domain.accessControl.ProfessorshipsForCurrentYear;
 import net.sourceforge.fenixedu.domain.accessControl.ProjectDepartmentAccessGroup;
-import net.sourceforge.fenixedu.domain.accessControl.RegisteredAlumniGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ResearchUnitElementGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ResearchUnitMembersGroup;
-import net.sourceforge.fenixedu.domain.accessControl.ResearchersGroup;
-import net.sourceforge.fenixedu.domain.accessControl.ResponsibleProfessorshipsForCurrentSemester;
-import net.sourceforge.fenixedu.domain.accessControl.ResponsibleProfessorshipsForCurrentYear;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ScientificAreaMemberGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ScientificCouncilMembersGroup;
@@ -91,12 +63,8 @@ import net.sourceforge.fenixedu.domain.accessControl.VigilancyGroup;
 import net.sourceforge.fenixedu.domain.accessControl.WebSiteManagersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup.AcademicAuthorizationGroupBuilder;
-import net.sourceforge.fenixedu.domain.accessControl.groups.ActiveStudentsFromDegreeTypeGroup;
-import net.sourceforge.fenixedu.domain.accessControl.groups.DepartmentAdministrativeOfficeGroup;
 import net.sourceforge.fenixedu.domain.accessControl.groups.DepartmentPresidentGroup;
-import net.sourceforge.fenixedu.domain.accessControl.groups.InternalOrExternalTeacherGroup;
 import net.sourceforge.fenixedu.domain.accessControl.groups.StudentsByDegreeAndCurricularYear;
-import net.sourceforge.fenixedu.domain.accessControl.groups.StudentsFromDegreeTypeGroup;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupBuilderNameTakenException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.NoSuchGroupBuilderException;
 import net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryGroup;
@@ -235,11 +203,9 @@ public class GroupBuilderRegistry {
                 new DepartmentTeachersByExecutionYearGroup.Builder());
         register("curricularCourseStudentsByPeriod", CurricularCourseStudentsByExecutionPeriodGroup.class,
                 new CurricularCourseStudentsByExecutionPeriodGroup.Builder());
-        register("ifTrue", IfTrueGroup.class, new IfTrueGroup.Builder());
         register("currentDegreeCoordinators", CurrentDegreeCoordinatorsGroup.class, new CurrentDegreeCoordinatorsGroup.Builder());
         register("departmentEmployees", DepartmentEmployeesGroup.class, new DepartmentEmployeesGroup.Builder());
         register("thesisFileReaders", ThesisFileReadersGroup.class, new ThesisFileReadersGroup.Builder());
-        register("researchers", ResearchersGroup.class, new ResearchersGroup.Builder());
         register("unitSiteManagers", WebSiteManagersGroup.class, new WebSiteManagersGroup.Builder());
         register("researchUnitMembers", ResearchUnitMembersGroup.class, new ResearchUnitMembersGroup.Builder());
         register("persistentGroup", PersistentGroup.class, new PersistentGroup.Builder());
@@ -248,10 +214,6 @@ public class GroupBuilderRegistry {
         register("currentDegreeScientificComissionMembers", CurrentDegreeScientificCommissionMembersGroup.class,
                 new CurrentDegreeScientificCommissionMembersGroup.Builder());
         register("scientificAreaMembers", ScientificAreaMemberGroup.class, new ScientificAreaMemberGroup.Builder());
-        register("allStudentsByCampus", AllStudentsByCampus.class, new AllStudentsByCampus.Builder());
-        register("allTeachersByCampus", AllTeachersByCampus.class, new AllTeachersByCampus.Builder());
-        register("allEmployeesByCampus", AllEmployeesByCampus.class, new AllEmployeesByCampus.Builder());
-        register("studentsFromDegreeType", StudentsFromDegreeTypeGroup.class, new StudentsFromDegreeTypeGroup.Builder());
         register("delegates", DelegatesGroup.class, new DelegatesGroup.Builder());
         register("studentsByDegreeAndCurricularYear", StudentsByDegreeAndCurricularYear.class,
                 new StudentsByDegreeAndCurricularYear.Builder());
@@ -265,17 +227,12 @@ public class GroupBuilderRegistry {
         register("delegateStudentsGroup", DelegateStudentsGroup.class, new DelegateStudentsGroup.Builder());
         register("unitMembersGroup", UnitMembersGroup.class, new UnitMembersGroup.Builder());
         register("departmentPresidentGroup", DepartmentPresidentGroup.class, new DepartmentPresidentGroup.Builder());
-        register("departmentAdministrativeOfficeGroup", DepartmentAdministrativeOfficeGroup.class,
-                new DepartmentAdministrativeOfficeGroup.Builder());
         register("vigilancyGroup", VigilancyGroup.class, new VigilancyGroup.Builder());
-        register("activeStudentsFromDegreeTypeGroup", ActiveStudentsFromDegreeTypeGroup.class,
-                new ActiveStudentsFromDegreeTypeGroup.Builder());
         register("cerimonyInquiryGroup", CerimonyInquiryGroup.class, new CerimonyInquiryGroup.Builder());
         register("conclusionYearDegreesStudentsGroup", ConclusionYearDegreesStudentsGroup.class,
                 new ConclusionYearDegreesStudentsGroup.Builder());
         register("notUpdatedAlumniInfoForSpecificTimeGroup", NotUpdatedAlumniInfoForSpecificTimeGroup.class,
                 new NotUpdatedAlumniInfoForSpecificTimeGroup.Builder());
-        register("alumniDegreeGroup", AlumniDegreeGroup.class, new AlumniDegreeGroup.Builder());
         register("author", AuthorGroup.class, new AuthorGroup.AuthorGroupBuilder());
         register("projectDepartmentAccessGroup", ProjectDepartmentAccessGroup.class, new ProjectDepartmentAccessGroup.Builder());
 
@@ -291,18 +248,8 @@ public class GroupBuilderRegistry {
                         DegreeCoordinatorsGroup.class, AllMasterDegreesStudents.class, AllDegreesStudentsGroup.class,
                         InternalPersonGroup.class, ExecutionCourseResponsiblesGroup.class, InstitutionSiteManagers.class,
                         TeachersAndInstitutionSiteManagersGroup.class, PedagogicalCouncilMembersGroup.class,
-                        ScientificCouncilMembersGroup.class, AllTeachersGroup.class, AllEmployeesGroup.class,
-                        AllStudentsGroup.class, AllResearchersGroup.class, InternalOrExternalTeacherGroup.class,
-                        AllSecondCycleStudentsGroup.class, AllFirstCycleStudentsGroup.class, ActiveCoordinatorGroup.class,
-                        ActiveCoordinatorCycle1Group.class, ActiveCoordinatorCycle2Group.class,
-                        ActiveCoordinatorCycle3Group.class, ActiveCoordinatorDFAGroup.class,
-                        ActiveCoordinatorIntegradedMasterDegreeGroup.class, ActiveAssistantCoordinatorGroup.class,
-                        ActiveAssistantCoordinatorCycle1Group.class, ActiveAssistantCoordinatorCycle2Group.class,
-                        ActiveAssistantCoordinatorCycle3Group.class, ActiveAssistantCoordinatorDFAGroup.class,
-                        ActiveAssistantCoordinatorIntegradedMasterDegreeGroup.class, RegisteredAlumniGroup.class,
-                        ExternalTeachersForCurrentSemester.class, ExternalTeachersForCurrentYear.class,
-                        ProfessorshipsForCurrentSemester.class, ProfessorshipsForCurrentYear.class,
-                        ResponsibleProfessorshipsForCurrentSemester.class, ResponsibleProfessorshipsForCurrentYear.class };
+                        ScientificCouncilMembersGroup.class, AllTeachersGroup.class, AllStudentsGroup.class,
+                        AllResearchersGroup.class };
         for (Class groupClass : groups) {
             String className = groupClass.getSimpleName();
 
