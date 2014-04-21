@@ -1190,16 +1190,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         super.setCurricularPlanMembersGroup(curricularPlanMembersGroup);
     }
 
-    /**
-     * Delete after group migration
-     * 
-     * @param curricularPlanMembersGroup
-     */
-    @Deprecated
-    public void setCurricularPlanMembersGroupWithoutCheckingPermissions(Group curricularPlanMembersGroup) {
-        super.setCurricularPlanMembersGroup(curricularPlanMembersGroup);
-    }
-
     @Override
     public void setCurricularStage(CurricularStage curricularStage) {
         check(this, DegreeCurricularPlanPredicates.scientificCouncilWritePredicate);
