@@ -14,7 +14,6 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 
 import pt.ist.fenix.giafsync.GiafSync.MetadataProcessor;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 class ImportProfessionalRegimesFromGiaf implements MetadataProcessor {
@@ -52,7 +51,7 @@ class ImportProfessionalRegimesFromGiaf implements MetadataProcessor {
             }
 
             ProfessionalRegime professionalRegime = metadata.regime(giafId);
-            MultiLanguageString name = new MultiLanguageString(Language.pt, regimeName);
+            MultiLanguageString name = new MultiLanguageString(MultiLanguageString.pt, regimeName);
             if (professionalRegime != null) {
                 if (!isEqual(professionalRegime, name, weighting, fullTimeEquivalent, categoryType)) {
                     professionalRegime.edit(name, weighting, fullTimeEquivalent, categoryType);
