@@ -37,3 +37,13 @@
 </logic:notPresent>
 <h3>Associate Person to Unit</h3>
 <html:link page="/manageAssociatedObjects.do?method=prepareAssociatePersonUnit">Create</html:link><br/>
+<h3>Create empty degree</h3>
+<logic:notEmpty name="emptyDegree">
+<bean:define id="emptyDegree" type="net.sourceforge.fenixedu.domain.EmptyDegree" name="emptyDegree"></bean:define>
+	Empty degree associated with : <%= emptyDegree.getAdministrativeOffice().getAdministrativeOfficeType().getDescription() %></br>
+	<html:link page="/manageAssociatedObjects.do?method=prepareEmptyDegree">Change</html:link><br/>
+</logic:notEmpty>
+<logic:empty name="emptyDegree">
+	There is no empty degree.</br>
+<html:link page="/manageAssociatedObjects.do?method=prepareEmptyDegree">Create</html:link><br/>
+</logic:empty>
