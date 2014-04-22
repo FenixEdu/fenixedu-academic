@@ -16,9 +16,185 @@ update ROLE_OPERATION_LOG set OID_ROLE = (select @newOid) where OID_ROLE = (sele
 update FF$DOMAIN_CLASS_INFO set DOMAIN_CLASS_NAME = 'net.sourceforge.fenixedu.domain.Installation' where DOMAIN_CLASS_NAME = 'net.sourceforge.fenixedu.domain.Instalation';
 RENAME TABLE INSTALATION to INSTALLATION;
 alter table BENNU change OID_INSTALATION OID_INSTALLATION bigint unsigned;
+
+delete from FILE_STORAGE where OID = (SELECT OID_D_SPACE_FILE_STORAGE from BENNU);
+
+DROP TABLE MENU_ITEM;
+DROP TABLE PORTAL_CONFIGURATION;
+UPDATE BENNU SET OID_CONFIGURATION = NULL;
+
+DELETE FROM GENERIC_FILE where OID >> 32 in (SELECT DOMAIN_CLASS_ID from FF$DOMAIN_CLASS_INFO where DOMAIN_CLASS_NAME in ('net.sourceforge.fenixedu.domain.documents.LibraryMissingCardsDocument', 'net.sourceforge.fenixedu.domain.documents.LibraryMissingLettersDocument'));
+
 ```
 
-TEMPORARY: For the IST Database, run `delete from PERSON_ROLE where OID_ROLE = 2899102924804;`
+Run this before migration:
+
+```java
+package pt.ist.fenix;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.contents.Container;
+import net.sourceforge.fenixedu.domain.contents.ExplicitOrderNode;
+import net.sourceforge.fenixedu.domain.contents.FunctionalityCall;
+import net.sourceforge.fenixedu.domain.contents.Node;
+import net.sourceforge.fenixedu.util.ConnectionManager;
+
+import org.fenixedu.bennu.scheduler.custom.CustomTask;
+
+import pt.ist.fenixframework.Atomic.TxMode;
+import pt.ist.fenixframework.DomainModelUtil;
+import pt.ist.fenixframework.FenixFramework;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
+public class ExportFunctionalityCalls extends CustomTask {
+
+    private int calls = 0;
+
+    @Override
+    public void runTask() throws Exception {
+        int sites = 0;
+        JsonArray json = new JsonArray();
+        for (String id : getSiteIds()) {
+            sites++;
+            Container container = FenixFramework.getDomainObject(id);
+            add(container, json);
+            if (sites % 1000 == 0) {
+                taskLog("Processed %s sites\n", sites);
+            }
+        }
+        taskLog("Done. Exported %s calls\n", calls);
+        taskLog(json.toString());
+    }
+
+    private void add(Container container, JsonArray json) {
+        for (Node node : container.getChildrenSet()) {
+            if (node.getChild() instanceof FunctionalityCall) {
+                calls++;
+                JsonObject obj = new JsonObject();
+                obj.addProperty("parent", node.getParent().getExternalId());
+                obj.addProperty("order", ((ExplicitOrderNode) node).getNodeOrder());
+                obj.addProperty("path", ((FunctionalityCall) node.getChild()).getFunctionality().getPath());
+                json.add(obj);
+            } else if (node.getChild() instanceof Container) {
+                add((Container) node.getChild(), json);
+            }
+        }
+    }
+
+    private List<String> getSiteIds() throws SQLException {
+        List<String> ids = new ArrayList<>();
+        Connection conn = ConnectionManager.getCurrentSQLConnection();
+        StringBuilder builder = new StringBuilder();
+        for (Class<?> clazz : DomainModelUtil.getDomainClassHierarchy(Site.class, true)) {
+            if (builder.length() > 0) {
+                builder.append(',');
+            }
+            builder.append("'").append(clazz.getName()).append("'");
+        }
+        String query =
+                "SELECT OID FROM CONTENT "
+                        + "WHERE OID >> 32 IN (SELECT DOMAIN_CLASS_ID FROM FF$DOMAIN_CLASS_INFO WHERE DOMAIN_CLASS_NAME IN ("
+                        + builder.toString() + "))";
+        taskLog("Running query: '%s'\n", query);
+        try (Statement stmt = conn.createStatement()) {
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                ids.add(rs.getString("OID"));
+            }
+            rs.close();
+        }
+        taskLog("Returning %s sites\n", ids.size());
+        return ids;
+    }
+
+    @Override
+    public TxMode getTxMode() {
+        return TxMode.READ;
+    }
+
+}
+```
+
+```java
+package pt.ist.fenix;
+
+import java.io.FileReader;
+
+import net.sourceforge.fenixedu.domain.Section;
+import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.cms.SiteTemplate;
+import net.sourceforge.fenixedu.domain.cms.TemplatedSection;
+import net.sourceforge.fenixedu.domain.cms.TemplatedSectionInstance;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.scheduler.custom.CustomTask;
+
+import pt.ist.fenixframework.DomainObject;
+import pt.ist.fenixframework.FenixFramework;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+public class ImportFunctionalityCalls extends CustomTask {
+
+    @Override
+    public void runTask() throws Exception {
+        JsonArray array = new JsonParser().parse(new FileReader("/path/to/json")).getAsJsonArray();
+
+        int count = 0;
+
+        for (JsonElement element : array) {
+            JsonObject json = element.getAsJsonObject();
+            String path = json.get("path").getAsString();
+            TemplatedSection template = findTemplate(path);
+            if (template == null) {
+                taskLog("Could not find template for path %s\n", path);
+                continue;
+            }
+
+            int order = json.get("order").getAsInt();
+
+            DomainObject parent = FenixFramework.getDomainObject(json.get("parent").getAsString());
+            if (parent instanceof Site) {
+                Site site = (Site) parent;
+                new TemplatedSectionInstance(template, site).setOrder(0);
+            } else {
+                Section section = (Section) parent;
+                new TemplatedSectionInstance(template, section).setOrder(order);
+            }
+            count++;
+
+            if (count % 100 == 0) {
+                taskLog("Imported %s calls\n", count);
+            }
+        }
+        taskLog("Done\nImported %s calls\n", count);
+    }
+
+    private TemplatedSection findTemplate(String path) {
+        for (SiteTemplate template : Bennu.getInstance().getSiteTemplateSet()) {
+            for (TemplatedSection section : template.getTemplatedSectionSet()) {
+                if (section.getCustomPath().equals(path)) {
+                    return section;
+                }
+            }
+        }
+        return null;
+    }
+}
+```
+
 
 ## Migrating from 1.x to 2.0
 
