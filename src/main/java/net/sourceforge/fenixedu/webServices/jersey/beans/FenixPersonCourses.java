@@ -8,18 +8,28 @@ public class FenixPersonCourses {
 
     public static class FenixEnrolment extends FenixCourse {
         String grade;
+        double ects;
 
-        public FenixEnrolment(ExecutionCourse course, String grade) {
+        public FenixEnrolment(ExecutionCourse course, String grade, double ects) {
             super(course);
             setGrade(grade);
+            setEcts(ects);
         }
 
         public String getGrade() {
             return grade;
         }
 
+        public double getEcts() {
+            return ects;
+        }
+
         public void setGrade(String grade) {
             this.grade = grade;
+        }
+
+        public void setEcts(double ects) {
+            this.ects = ects;
         }
 
     }
