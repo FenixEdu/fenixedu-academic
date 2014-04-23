@@ -1,7 +1,5 @@
 package pt.utl.ist.codeGenerator.database;
 
-import org.fenixedu.bennu.core.domain.Bennu;
-
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
@@ -15,7 +13,9 @@ import net.sourceforge.fenixedu.domain.contents.Portal;
 import net.sourceforge.fenixedu.domain.functionalities.ExpressionGroupAvailability;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
-import pt.ist.fenixframework.Atomic;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -499,44 +499,57 @@ public class CreateFunctionallityTree {
         x914.setNormalizedName(MultiLanguageString.importFromString("pt7:manager"));
         x914.setExecutionPath("/manager/index.do");
         x914.setVisible(true);
-        Functionality x913 = new Functionality(MultiLanguageString.importFromString("pt16:Página Principal"));
+        Functionality x913 = new Functionality(MultiLanguageString.importFromString("en8:Homepagept16:Página Principal"));
         x914.addChild(x913);
-        x913.setNormalizedName(MultiLanguageString.importFromString("pt16:pagina-principal"));
+        x913.setNormalizedName(MultiLanguageString.importFromString("en8:homepagept16:pagina-principal"));
         x913.setExecutionPath("/index.do");
         x913.setVisible(true);
-        Module x916 = new Module(MultiLanguageString.importFromString("pt18:Mensagens e Avisos"), "/");
+        Module x916 = new Module(MultiLanguageString.importFromString("en21:Messages and Warningspt18:Mensagens e Avisos"), "/");
         x914.addChild(x916);
-        x916.setNormalizedName(MultiLanguageString.importFromString("pt18:mensagens-e-avisos"));
+        x916.setNormalizedName(MultiLanguageString.importFromString("en21:messages-and-warningspt18:mensagens-e-avisos"));
         x916.setExecutionPath("");
         x916.setVisible(true);
-        Functionality x915 = new Functionality(MultiLanguageString.importFromString("pt16:Envio de E-mails"));
+        Functionality x915 = new Functionality(MultiLanguageString.importFromString("en12:Sending Mailpt16:Envio de E-mails"));
         x916.addChild(x915);
-        x915.setNormalizedName(MultiLanguageString.importFromString("pt16:envio-de-e-mails"));
+        x915.setNormalizedName(MultiLanguageString.importFromString("en12:sending-mailpt16:envio-de-e-mails"));
         x915.setExecutionPath("/sendEmail.do?method=prepare&amp;allowChangeSender=true");
         x915.setVisible(true);
-        Functionality x917 = new Functionality(MultiLanguageString.importFromString("pt16:Gestão de Avisos"));
+        Functionality x917 =
+                new Functionality(MultiLanguageString.importFromString("en18:Warning Managementpt16:Gestão de Avisos"));
         x916.addChild(x917);
-        x917.setNormalizedName(MultiLanguageString.importFromString("pt16:gestao-de-avisos"));
+        x917.setNormalizedName(MultiLanguageString.importFromString("en18:warning-managementpt16:gestao-de-avisos"));
         x917.setExecutionPath("/manageAdvisories.do?method=start");
         x917.setVisible(true);
-        Functionality x918 = new Functionality(MultiLanguageString.importFromString("pt16:Gestão de Boards"));
+        Functionality x918 =
+                new Functionality(MultiLanguageString.importFromString("en17:Boards Managementpt16:Gestão de Boards"));
         x916.addChild(x918);
-        x918.setNormalizedName(MultiLanguageString.importFromString("pt16:gestao-de-boards"));
+        x918.setNormalizedName(MultiLanguageString.importFromString("en17:boards-managementpt16:gestao-de-boards"));
         x918.setExecutionPath("/announcements/announcementBoardsManagement.do?method=start");
         x918.setVisible(true);
-        Module x921 = new Module(MultiLanguageString.importFromString("pt34:Gestão da Estrutura Organizacional"), "/");
+        Module x921 =
+                new Module(
+                        MultiLanguageString
+                                .importFromString("en35:Organizational Structure Managementpt34:Gestão da Estrutura Organizacional"),
+                        "/");
         x914.addChild(x921);
-        x921.setNormalizedName(MultiLanguageString.importFromString("pt34:gestao-da-estrutura-organizacional"));
+        x921.setNormalizedName(MultiLanguageString
+                .importFromString("en35:organizational-strucutre-managementpt34:gestao-da-estrutura-organizacional"));
         x921.setExecutionPath("");
         x921.setVisible(true);
-        Functionality x920 = new Functionality(MultiLanguageString.importFromString("pt27:Gestão de Unidades e Cargos"));
+        Functionality x920 =
+                new Functionality(
+                        MultiLanguageString
+                                .importFromString("en30:Units and Functions Managementpt27:Gestão de Unidades e Cargos"));
         x921.addChild(x920);
-        x920.setNormalizedName(MultiLanguageString.importFromString("pt27:gestao-de-unidades-e-cargos"));
+        x920.setNormalizedName(MultiLanguageString
+                .importFromString("en30:units-and-functions-managementpt27:gestao-de-unidades-e-cargos"));
         x920.setExecutionPath("/organizationalStructureManagament/listAllUnits.faces");
         x920.setVisible(true);
-        Functionality x922 = new Functionality(MultiLanguageString.importFromString("pt26:Merge de Unidades Externas"));
+        Functionality x922 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en20:External Units Mergept26:Merge de Unidades Externas"));
         x921.addChild(x922);
-        x922.setNormalizedName(MultiLanguageString.importFromString("pt26:merge-de-unidades-externas"));
+        x922.setNormalizedName(MultiLanguageString.importFromString("en20:external-units-mergept26:merge-de-unidades-externas"));
         x922.setExecutionPath("/unitsMerge.do?method=chooseUnitToStart");
         x922.setVisible(true);
         Functionality x923 =
@@ -547,200 +560,261 @@ public class CreateFunctionallityTree {
         x923.setExecutionPath("/unitSiteManagement.do?method=prepare");
         x923.setVisible(true);
         Module x925 =
-                new Module(MultiLanguageString.importFromString("pt27:Gestão de Unidades e Cargos"),
+                new Module(
+                        MultiLanguageString
+                                .importFromString("en30:Units and Functions Managementpt27:Gestão de Unidades e Cargos"),
                         "/organizationalStructureManagament");
         x921.addChild(x925);
-        x925.setNormalizedName(MultiLanguageString.importFromString("pt27:gestao-de-unidades-e-cargos"));
+        x925.setNormalizedName(MultiLanguageString
+                .importFromString("en30:units-and-functions-managementpt27:gestao-de-unidades-e-cargos"));
         x925.setExecutionPath("/organizationalStructureManagament/listAllUnits.faces");
         x925.setVisible(false);
-        Functionality x924 = new Functionality(MultiLanguageString.importFromString("pt23:Ver Detalhes de Unidade"));
+        Functionality x924 =
+                new Functionality(MultiLanguageString.importFromString("en17:View Unit Detailspt23:Ver Detalhes de Unidade"));
         x925.addChild(x924);
-        x924.setNormalizedName(MultiLanguageString.importFromString("pt23:ver-detalhes-de-unidade"));
+        x924.setNormalizedName(MultiLanguageString.importFromString("en17:view-unit-detailspt23:ver-detalhes-de-unidade"));
         x924.setExecutionPath("/unitDetails.faces");
         x924.setVisible(true);
-        Functionality x926 = new Functionality(MultiLanguageString.importFromString("pt14:Editar Unidade"));
+        Functionality x926 = new Functionality(MultiLanguageString.importFromString("en9:Edit Unitpt14:Editar Unidade"));
         x925.addChild(x926);
-        x926.setNormalizedName(MultiLanguageString.importFromString("pt14:editar-unidade"));
+        x926.setNormalizedName(MultiLanguageString.importFromString("en9:edit-unitpt14:editar-unidade"));
         x926.setExecutionPath("/editUnit.faces");
         x926.setVisible(true);
-        Functionality x927 = new Functionality(MultiLanguageString.importFromString("pt20:Escolher Unidade Pai"));
+        Functionality x927 =
+                new Functionality(MultiLanguageString.importFromString("en18:Choose Parent Unitpt20:Escolher Unidade Pai"));
         x925.addChild(x927);
-        x927.setNormalizedName(MultiLanguageString.importFromString("pt20:escolher-unidade-pai"));
+        x927.setNormalizedName(MultiLanguageString.importFromString("en18:choose-parent-unitpt20:escolher-unidade-pai"));
         x927.setExecutionPath("/listUnitParentUnits.faces");
         x927.setVisible(true);
-        Functionality x928 = new Functionality(MultiLanguageString.importFromString("pt16:Criar Novo Cargo"));
+        Functionality x928 =
+                new Functionality(MultiLanguageString.importFromString("en19:Create New Functionpt16:Criar Novo Cargo"));
         x925.addChild(x928);
-        x928.setNormalizedName(MultiLanguageString.importFromString("pt16:criar-novo-cargo"));
+        x928.setNormalizedName(MultiLanguageString.importFromString("en19:create-new-functionpt16:criar-novo-cargo"));
         x928.setExecutionPath("/createNewFunction.faces");
         x928.setVisible(true);
-        Functionality x929 = new Functionality(MultiLanguageString.importFromString("pt12:Editar Cargo"));
+        Functionality x929 = new Functionality(MultiLanguageString.importFromString("en13:Edit Functionpt12:Editar Cargo"));
         x925.addChild(x929);
-        x929.setNormalizedName(MultiLanguageString.importFromString("pt12:editar-cargo"));
+        x929.setNormalizedName(MultiLanguageString.importFromString("en13:edit-functionpt12:editar-cargo"));
         x929.setExecutionPath("/editFunction.faces");
         x929.setVisible(true);
-        Functionality x930 = new Functionality(MultiLanguageString.importFromString("pt16:Escolha do Cargo"));
+        Functionality x930 = new Functionality(MultiLanguageString.importFromString("en15:Choose Functionpt16:Escolha do Cargo"));
         x925.addChild(x930);
-        x930.setNormalizedName(MultiLanguageString.importFromString("pt16:escolha-do-cargo"));
+        x930.setNormalizedName(MultiLanguageString.importFromString("en15:choose-functionpt16:escolha-do-cargo"));
         x930.setExecutionPath("/chooseFunction.faces");
         x930.setVisible(true);
-        Functionality x931 = new Functionality(MultiLanguageString.importFromString("pt20:Escolher Unidade Pai"));
+        Functionality x931 =
+                new Functionality(MultiLanguageString.importFromString("en18:Choose Parent Unitpt20:Escolher Unidade Pai"));
         x925.addChild(x931);
-        x931.setNormalizedName(MultiLanguageString.importFromString("pt20:escolher-unidade-pai"));
+        x931.setNormalizedName(MultiLanguageString.importFromString("en18:choose-parent-unitpt20:escolher-unidade-pai"));
         x931.setExecutionPath("/chooseParentUnit.faces");
         x931.setVisible(true);
-        Functionality x932 = new Functionality(MultiLanguageString.importFromString("pt20:Escolher Unidade Pai"));
+        Functionality x932 =
+                new Functionality(MultiLanguageString.importFromString("en18:Choose Parent Unitpt20:Escolher Unidade Pai"));
         x925.addChild(x932);
-        x932.setNormalizedName(MultiLanguageString.importFromString("pt20:escolher-unidade-pai"));
+        x932.setNormalizedName(MultiLanguageString.importFromString("en18:choose-parent-unitpt20:escolher-unidade-pai"));
         x932.setExecutionPath("/listAllUnitsToChooseParentUnit.faces");
         x932.setVisible(true);
-        Functionality x933 = new Functionality(MultiLanguageString.importFromString("pt18:Criar Nova Unidade"));
+        Functionality x933 =
+                new Functionality(MultiLanguageString.importFromString("en15:Create New Unitpt18:Criar Nova Unidade"));
         x925.addChild(x933);
-        x933.setNormalizedName(MultiLanguageString.importFromString("pt18:criar-nova-unidade"));
+        x933.setNormalizedName(MultiLanguageString.importFromString("en15:create-new-unitpt18:criar-nova-unidade"));
         x933.setExecutionPath("/createNewUnit.faces");
         x933.setVisible(true);
-        Functionality x934 = new Functionality(MultiLanguageString.importFromString("pt21:Criar Nova SubUnidade"));
+        Functionality x934 =
+                new Functionality(MultiLanguageString.importFromString("en19:Create New Sub Unitpt21:Criar Nova SubUnidade"));
         x925.addChild(x934);
-        x934.setNormalizedName(MultiLanguageString.importFromString("pt21:criar-nova-subunidade"));
+        x934.setNormalizedName(MultiLanguageString.importFromString("en19:create-new-sub-unitpt21:criar-nova-subunidade"));
         x934.setExecutionPath("/createNewSubUnit.faces");
         x934.setVisible(true);
-        Module x938 = new Module(MultiLanguageString.importFromString("pt29:Gestão da Estrutura de Ensino"), "/");
+        Module x938 =
+                new Module(
+                        MultiLanguageString
+                                .importFromString("en32:Educational Structure Managementpt29:Gestão da Estrutura de Ensino"),
+                        "/");
         x914.addChild(x938);
-        x938.setNormalizedName(MultiLanguageString.importFromString("pt29:gestao-da-estrutura-de-ensino"));
+        x938.setNormalizedName(MultiLanguageString
+                .importFromString("en32:educational-structure-managementpt29:gestao-da-estrutura-de-ensino"));
         x938.setExecutionPath("");
         x938.setVisible(true);
-        Functionality x937 = new Functionality(MultiLanguageString.importFromString("pt26:Estrutura de Cursos Antiga"));
+        Functionality x937 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en20:Old Degree Structurept26:Estrutura de Cursos Antiga"));
         x938.addChild(x937);
-        x937.setNormalizedName(MultiLanguageString.importFromString("pt26:estrutura-de-cursos-antiga"));
+        x937.setNormalizedName(MultiLanguageString.importFromString("en20:old-degree-structurept26:estrutura-de-cursos-antiga"));
         x937.setExecutionPath("/readDegrees.do");
         x937.setVisible(true);
-        Functionality x939 = new Functionality(MultiLanguageString.importFromString("pt23:Competência Pré-Bolonha"));
+        Functionality x939 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en25:Before Bolonha Competencypt23:Competência Pré-Bolonha"));
         x938.addChild(x939);
-        x939.setNormalizedName(MultiLanguageString.importFromString("pt23:competencia-pre-bolonha"));
+        x939.setNormalizedName(MultiLanguageString.importFromString("en25:before-bolonha-competencypt23:competencia-pre-bolonha"));
         x939.setExecutionPath("/competenceCourseManagement.do?method=prepare");
         x939.setVisible(true);
-        Functionality x940 = new Functionality(MultiLanguageString.importFromString("pt19:Estrutura de Cursos"));
+        Functionality x940 =
+                new Functionality(MultiLanguageString.importFromString("en16:Degree Structurept19:Estrutura de Cursos"));
         x938.addChild(x940);
-        x940.setNormalizedName(MultiLanguageString.importFromString("pt19:estrutura-de-cursos"));
+        x940.setNormalizedName(MultiLanguageString.importFromString("en16:degree-structurept19:estrutura-de-cursos"));
         x940.setExecutionPath("/bolonha/curricularPlans/curricularPlansManagement.faces");
         x940.setVisible(true);
-        Functionality x941 = new Functionality(MultiLanguageString.importFromString("pt20:Competências Bolonha"));
+        Functionality x941 =
+                new Functionality(MultiLanguageString.importFromString("en20:Bolonha Competenciespt20:Competências Bolonha"));
         x938.addChild(x941);
-        x941.setNormalizedName(MultiLanguageString.importFromString("pt20:competencias-bolonha"));
+        x941.setNormalizedName(MultiLanguageString.importFromString("en20:bolonha-competenciespt20:competencias-bolonha"));
         x941.setExecutionPath("/bolonha/competenceCourses/competenceCoursesManagement.faces");
         x941.setVisible(true);
-        Functionality x942 = new Functionality(MultiLanguageString.importFromString("pt29:Gerir Cursos de Departamentos"));
+        Functionality x942 =
+                new Functionality(
+                        MultiLanguageString
+                                .importFromString("en29:Department Degrees Managementpt29:Gerir Cursos de Departamentos"));
         x938.addChild(x942);
-        x942.setNormalizedName(MultiLanguageString.importFromString("pt29:gerir-cursos-de-departamentos"));
+        x942.setNormalizedName(MultiLanguageString
+                .importFromString("en29:department-degrees-managementpt29:gerir-cursos-de-departamentos"));
         x942.setExecutionPath("/manageDepartmentDegrees.do?method=prepare");
         x942.setVisible(true);
-        Module x944 = new Module(MultiLanguageString.importFromString("pt26:Estrutura de Cursos Antiga"), "/");
+        Module x944 =
+                new Module(MultiLanguageString.importFromString("en20:Old Degree Structurept26:Estrutura de Cursos Antiga"), "/");
         x938.addChild(x944);
-        x944.setNormalizedName(MultiLanguageString.importFromString("pt26:estrutura-de-cursos-antiga"));
+        x944.setNormalizedName(MultiLanguageString.importFromString("en20:old-degree-structurept26:estrutura-de-cursos-antiga"));
         x944.setExecutionPath("/readDegrees.do");
         x944.setVisible(false);
-        Functionality x943 = new Functionality(MultiLanguageString.importFromString("pt13:Inserir curso"));
+        Functionality x943 = new Functionality(MultiLanguageString.importFromString("en13:Insert Degreept13:Inserir curso"));
         x944.addChild(x943);
-        x943.setNormalizedName(MultiLanguageString.importFromString("pt13:inserir-curso"));
+        x943.setNormalizedName(MultiLanguageString.importFromString("en13:insert-degreept13:inserir-curso"));
         x943.setExecutionPath("/insertDegree.do?method=prepareInsert");
         x943.setVisible(true);
-        Functionality x945 = new Functionality(MultiLanguageString.importFromString("pt13:Apagar Cursos"));
+        Functionality x945 = new Functionality(MultiLanguageString.importFromString("en14:Delete Degreespt13:Apagar Cursos"));
         x944.addChild(x945);
-        x945.setNormalizedName(MultiLanguageString.importFromString("pt13:apagar-cursos"));
+        x945.setNormalizedName(MultiLanguageString.importFromString("en14:delete-degreespt13:apagar-cursos"));
         x945.setExecutionPath("/deleteDegrees.do");
         x945.setVisible(true);
-        Module x947 = new Module(MultiLanguageString.importFromString("pt17:Administrar Curso"), "/");
+        Module x947 = new Module(MultiLanguageString.importFromString("en21:Degree Administrationpt17:Administrar Curso"), "/");
         x944.addChild(x947);
-        x947.setNormalizedName(MultiLanguageString.importFromString("pt17:administrar-curso"));
+        x947.setNormalizedName(MultiLanguageString.importFromString("en21:degree-administrationpt17:administrar-curso"));
         x947.setExecutionPath("/readDegree.do");
         x947.setVisible(true);
-        Functionality x946 = new Functionality(MultiLanguageString.importFromString("pt12:Editar Curso"));
+        Functionality x946 = new Functionality(MultiLanguageString.importFromString("en11:Edit Degreept12:Editar Curso"));
         x947.addChild(x946);
-        x946.setNormalizedName(MultiLanguageString.importFromString("pt12:editar-curso"));
+        x946.setNormalizedName(MultiLanguageString.importFromString("en11:edit-degreept12:editar-curso"));
         x946.setExecutionPath("/editDegree.do?method=prepareEdit");
         x946.setVisible(true);
-        Functionality x948 = new Functionality(MultiLanguageString.importFromString("pt24:Inserir plano curricular"));
+        Functionality x948 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en22:Insert curricular planpt24:Inserir plano curricular"));
         x947.addChild(x948);
-        x948.setNormalizedName(MultiLanguageString.importFromString("pt24:inserir-plano-curricular"));
+        x948.setNormalizedName(MultiLanguageString.importFromString("en22:insert-curricular-planpt24:inserir-plano-curricular"));
         x948.setExecutionPath("/insertDegreeCurricularPlan.do?method=prepareInsert");
         x948.setVisible(true);
-        Functionality x949 = new Functionality(MultiLanguageString.importFromString("pt26:Apagar Planos Curriculares"));
+        Functionality x949 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en23:Delete Curricular Planspt26:Apagar Planos Curriculares"));
         x947.addChild(x949);
-        x949.setNormalizedName(MultiLanguageString.importFromString("pt26:apagar-planos-curriculares"));
+        x949.setNormalizedName(MultiLanguageString
+                .importFromString("en23:delete-curricular-planspt26:apagar-planos-curriculares"));
         x949.setExecutionPath("/deleteDegreeCurricularPlans.do");
         x949.setVisible(true);
-        Module x951 = new Module(MultiLanguageString.importFromString("pt28:Administrar Plano Curricular"), "/");
+        Module x951 =
+                new Module(
+                        MultiLanguageString
+                                .importFromString("en30:Curricular Plan Administrationpt28:Administrar Plano Curricular"),
+                        "/");
         x947.addChild(x951);
-        x951.setNormalizedName(MultiLanguageString.importFromString("pt28:administrar-plano-curricular"));
+        x951.setNormalizedName(MultiLanguageString
+                .importFromString("en30:curricular-plan-administrationpt28:administrar-plano-curricular"));
         x951.setExecutionPath("/readDegreeCurricularPlan.do");
         x951.setVisible(true);
-        Functionality x950 = new Functionality(MultiLanguageString.importFromString("pt23:Editar plano curricular"));
+        Functionality x950 =
+                new Functionality(MultiLanguageString.importFromString("en20:Edit Curricular Planpt23:Editar plano curricular"));
         x951.addChild(x950);
-        x950.setNormalizedName(MultiLanguageString.importFromString("pt23:editar-plano-curricular"));
+        x950.setNormalizedName(MultiLanguageString.importFromString("en20:edit-curricular-planpt23:editar-plano-curricular"));
         x950.setExecutionPath("/editDegreeCurricularPlan.do?method=prepareEdit");
         x950.setVisible(true);
-        Functionality x952 = new Functionality(MultiLanguageString.importFromString("pt29:Inserir disciplina curricular"));
+        Functionality x952 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en24:Insert curricular coursept29:Inserir disciplina curricular"));
         x951.addChild(x952);
-        x952.setNormalizedName(MultiLanguageString.importFromString("pt29:inserir-disciplina-curricular"));
+        x952.setNormalizedName(MultiLanguageString
+                .importFromString("en24:insert-curricular-coursept29:inserir-disciplina-curricular"));
         x952.setExecutionPath("/insertCurricularCourse.do?method=prepareInsert");
         x952.setVisible(true);
-        Functionality x953 = new Functionality(MultiLanguageString.importFromString("pt15:Gestão de Ramos"));
+        Functionality x953 =
+                new Functionality(MultiLanguageString.importFromString("en17:Branch Managementpt15:Gestão de Ramos"));
         x951.addChild(x953);
-        x953.setNormalizedName(MultiLanguageString.importFromString("pt15:gestao-de-ramos"));
+        x953.setNormalizedName(MultiLanguageString.importFromString("en17:branch-managementpt15:gestao-de-ramos"));
         x953.setExecutionPath("/manageBranches.do?method=showBranches");
         x953.setVisible(true);
         Functionality x954 =
-                new Functionality(MultiLanguageString.importFromString("pt44:Gestão de Grupos de Disciplinas Curriculares"));
+                new Functionality(
+                        MultiLanguageString
+                                .importFromString("en34:Curricular Course Group Managementpt44:Gestão de Grupos de Disciplinas Curriculares"));
         x951.addChild(x954);
-        x954.setNormalizedName(MultiLanguageString.importFromString("pt44:gestao-de-grupos-de-disciplinas-curriculares"));
+        x954.setNormalizedName(MultiLanguageString
+                .importFromString("en34:curricular-course-group-managementpt44:gestao-de-grupos-de-disciplinas-curriculares"));
         x954.setExecutionPath("/manageCurricularCourseGroups.do?method=viewCurricularCourseGroups");
         x954.setVisible(true);
-        Module x956 = new Module(MultiLanguageString.importFromString("pt22:Gestão de Precedências"), "/");
+        Module x956 =
+                new Module(MultiLanguageString.importFromString("en21:Precedence Managementpt22:Gestão de Precedências"), "/");
         x951.addChild(x956);
-        x956.setNormalizedName(MultiLanguageString.importFromString("pt22:gestao-de-precedencias"));
+        x956.setNormalizedName(MultiLanguageString.importFromString("en21:precedence-managementpt22:gestao-de-precedencias"));
         x956.setExecutionPath("/managePrecedences.do?method=showMenu");
         x956.setVisible(true);
-        Functionality x955 = new Functionality(MultiLanguageString.importFromString("pt25:Criar Precedência Simples"));
+        Functionality x955 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en24:Create Simple Precedencept25:Criar Precedência Simples"));
         x956.addChild(x955);
-        x955.setNormalizedName(MultiLanguageString.importFromString("pt25:criar-precedencia-simples"));
+        x955.setNormalizedName(MultiLanguageString
+                .importFromString("en24:create-simple-precedencept25:criar-precedencia-simples"));
         x955.setExecutionPath("makeSimplePrecedence.do?method=showAllRestrictions&page=0");
         x955.setVisible(true);
-        Functionality x957 = new Functionality(MultiLanguageString.importFromString("pt31:Criar Conjunção de Precedências"));
+        Functionality x957 =
+                new Functionality(
+                        MultiLanguageString
+                                .importFromString("en29:Create Precedence Conjunctionpt31:Criar Conjunção de Precedências"));
         x956.addChild(x957);
-        x957.setNormalizedName(MultiLanguageString.importFromString("pt31:criar-conjuncao-de-precedencias"));
+        x957.setNormalizedName(MultiLanguageString
+                .importFromString("en29:create-precedence-conjunctionpt31:criar-conjuncao-de-precedencias"));
         x957.setExecutionPath("/makePrecedenceConjunction.do?method=showFirstPage");
         x957.setVisible(true);
-        Functionality x958 = new Functionality(MultiLanguageString.importFromString("pt18:Apagar Precedência"));
+        Functionality x958 =
+                new Functionality(MultiLanguageString.importFromString("en17:Delete Precedencept18:Apagar Precedência"));
         x956.addChild(x958);
-        x958.setNormalizedName(MultiLanguageString.importFromString("pt18:apagar-precedencia"));
+        x958.setNormalizedName(MultiLanguageString.importFromString("en17:delete-precedencept18:apagar-precedencia"));
         x958.setExecutionPath("/deletePrecedence.do");
         x958.setVisible(false);
-        Module x961 = new Module(MultiLanguageString.importFromString("pt33:Administrar Disciplina Curricular"), "/");
+        Module x961 =
+                new Module(
+                        MultiLanguageString
+                                .importFromString("en32:Curricular Course Administrationpt33:Administrar Disciplina Curricular"),
+                        "/");
         x951.addChild(x961);
-        x961.setNormalizedName(MultiLanguageString.importFromString("pt33:administrar-disciplina-curricular"));
+        x961.setNormalizedName(MultiLanguageString
+                .importFromString("en32:curricular-course-administrationpt33:administrar-disciplina-curricular"));
         x961.setExecutionPath("/readCurricularCourse.do");
         x961.setVisible(true);
-        Functionality x960 = new Functionality(MultiLanguageString.importFromString("pt28:Editar Disciplina Curricular"));
+        Functionality x960 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en22:Edit Curricular Coursept28:Editar Disciplina Curricular"));
         x961.addChild(x960);
-        x960.setNormalizedName(MultiLanguageString.importFromString("pt28:editar-disciplina-curricular"));
+        x960.setNormalizedName(MultiLanguageString
+                .importFromString("en22:edit-curricular-coursept28:editar-disciplina-curricular"));
         x960.setExecutionPath("/editCurricularCourse.do?method=prepareEdit");
         x960.setVisible(true);
-        Functionality x962 = new Functionality(MultiLanguageString.importFromString("pt14:Inserir âmbito"));
+        Functionality x962 = new Functionality(MultiLanguageString.importFromString("en12:Insert Scopept14:Inserir âmbito"));
         x961.addChild(x962);
-        x962.setNormalizedName(MultiLanguageString.importFromString("pt14:inserir-ambito"));
+        x962.setNormalizedName(MultiLanguageString.importFromString("en12:insert-scopept14:inserir-ambito"));
         x962.setExecutionPath("/insertCurricularCourseScope.do?method=prepareInsert");
         x962.setVisible(true);
         Functionality x963 =
                 new Functionality(
                         MultiLanguageString
-                                .importFromString("en30:Editing Curricular Informationpt31:Edição de Informação Curricular"));
+                                .importFromString("en27:Edit Curricular Informationpt31:Edição de Informação Curricular"));
         x961.addChild(x963);
         x963.setNormalizedName(MultiLanguageString
-                .importFromString("en30:editing-curricular-informationpt31:edicao-de-informacao-curricular"));
+                .importFromString("en27:edit-curricular-informationpt31:edicao-de-informacao-curricular"));
         x963.setExecutionPath("/editCurriculum.do?method=prepareEdit");
         x963.setVisible(true);
-        Functionality x964 = new Functionality(MultiLanguageString.importFromString("pt11:Criar Sitio"));
+        Functionality x964 = new Functionality(MultiLanguageString.importFromString("en11:Create Sitept11:Criar Sitio"));
         x961.addChild(x964);
-        x964.setNormalizedName(MultiLanguageString.importFromString("pt11:criar-sitio"));
+        x964.setNormalizedName(MultiLanguageString.importFromString("en11:create-sitept11:criar-sitio"));
         x964.setExecutionPath("/createSite.do");
         x964.setVisible(true);
         Functionality x965 = new Functionality(MultiLanguageString.importFromString("pt13:Editar âmbito"));
@@ -748,376 +822,489 @@ public class CreateFunctionallityTree {
         x965.setNormalizedName(MultiLanguageString.importFromString("pt13:editar-ambito"));
         x965.setExecutionPath("/editCurricularCourseScope.do?method=prepareEdit");
         x965.setVisible(true);
-        Functionality x966 = new Functionality(MultiLanguageString.importFromString("pt14:Inserir âmbito"));
+        Functionality x966 = new Functionality(MultiLanguageString.importFromString("en12:Insert Scopept14:Inserir âmbito"));
         x961.addChild(x966);
-        x966.setNormalizedName(MultiLanguageString.importFromString("pt14:inserir-ambito"));
+        x966.setNormalizedName(MultiLanguageString.importFromString("en12:insert-scopept14:inserir-ambito"));
         x966.setExecutionPath("/insertCurricularCourseScopeFromAnother.do?method=prepareInsert");
         x966.setVisible(true);
-        Functionality x967 = new Functionality(MultiLanguageString.importFromString("pt15:Terminar âmbito"));
+        Functionality x967 = new Functionality(MultiLanguageString.importFromString("en9:End Scopept15:Terminar âmbito"));
         x961.addChild(x967);
-        x967.setNormalizedName(MultiLanguageString.importFromString("pt15:terminar-ambito"));
+        x967.setNormalizedName(MultiLanguageString.importFromString("en9:end-scopept15:terminar-ambito"));
         x967.setExecutionPath("/endCurricularCourseScope.do?method=prepareEnd");
         x967.setVisible(true);
-        Functionality x968 = new Functionality(MultiLanguageString.importFromString("pt13:Apagar âmbito"));
+        Functionality x968 = new Functionality(MultiLanguageString.importFromString("en12:Delete Scopept13:Apagar âmbito"));
         x961.addChild(x968);
-        x968.setNormalizedName(MultiLanguageString.importFromString("pt13:apagar-ambito"));
+        x968.setNormalizedName(MultiLanguageString.importFromString("en12:delete-scopept13:apagar-ambito"));
         x968.setExecutionPath("/deleteCurricularCourseScope.do");
         x968.setVisible(true);
-        Functionality x969 = new Functionality(MultiLanguageString.importFromString("pt27:Visualizar todos os Âmbitos"));
+        Functionality x969 =
+                new Functionality(MultiLanguageString.importFromString("en15:View All Scopespt27:Visualizar todos os Âmbitos"));
         x961.addChild(x969);
-        x969.setNormalizedName(MultiLanguageString.importFromString("pt27:visualizar-todos-os-ambitos"));
+        x969.setNormalizedName(MultiLanguageString.importFromString("en15:view-all-scopespt27:visualizar-todos-os-ambitos"));
         x969.setExecutionPath("/readAllCurricularCourseScopes.do");
         x969.setVisible(true);
-        Module x971 = new Module(MultiLanguageString.importFromString("pt28:Associar disciplina execução"), "/");
+        Module x971 =
+                new Module(
+                        MultiLanguageString.importFromString("en26:Associate Execution Coursept28:Associar disciplina execução"),
+                        "/");
         x961.addChild(x971);
-        x971.setNormalizedName(MultiLanguageString.importFromString("pt28:associar-disciplina-execucao"));
+        x971.setNormalizedName(MultiLanguageString
+                .importFromString("en26:associate-execution-coursept28:associar-disciplina-execucao"));
         x971.setExecutionPath("");
         x971.setVisible(true);
-        Functionality x970 = new Functionality(MultiLanguageString.importFromString("pt28:Escolher Periodo de Execução"));
+        Functionality x970 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en23:Choose Execution Periodpt28:Escolher Periodo de Execução"));
         x971.addChild(x970);
-        x970.setNormalizedName(MultiLanguageString.importFromString("pt28:escolher-periodo-de-execucao"));
+        x970.setNormalizedName(MultiLanguageString
+                .importFromString("en23:choose-execution-periodpt28:escolher-periodo-de-execucao"));
         x970.setExecutionPath("/readExecutionPeriodToAssociateExecutionCoursesAction.do");
         x970.setVisible(true);
-        Functionality x972 = new Functionality(MultiLanguageString.importFromString("pt28:Escolher Disciplina Execução"));
+        Functionality x972 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en23:Choose Execution Coursept28:Escolher Disciplina Execução"));
         x971.addChild(x972);
-        x972.setNormalizedName(MultiLanguageString.importFromString("pt28:escolher-disciplina-execucao"));
+        x972.setNormalizedName(MultiLanguageString
+                .importFromString("en23:choose-execution-coursept28:escolher-disciplina-execucao"));
         x972.setExecutionPath("/associateExecutionCourseToCurricularCourse.do?method=prepare");
         x972.setVisible(true);
-        Module x975 = new Module(MultiLanguageString.importFromString("pt20:Editar Corpo Docente"), "/");
+        Module x975 = new Module(MultiLanguageString.importFromString("en12:Edit Facultypt20:Editar Corpo Docente"), "/");
         x961.addChild(x975);
-        x975.setNormalizedName(MultiLanguageString.importFromString("pt20:editar-corpo-docente"));
+        x975.setNormalizedName(MultiLanguageString.importFromString("en12:edit-facultypt20:editar-corpo-docente"));
         x975.setExecutionPath("/readTeacherInCharge.do");
         x975.setVisible(true);
-        Functionality x974 = new Functionality(MultiLanguageString.importFromString("pt16:Associar Docente"));
+        Functionality x974 =
+                new Functionality(MultiLanguageString.importFromString("en19:Associate Professorpt16:Associar Docente"));
         x975.addChild(x974);
-        x974.setNormalizedName(MultiLanguageString.importFromString("pt16:associar-docente"));
+        x974.setNormalizedName(MultiLanguageString.importFromString("en19:associate-professorpt16:associar-docente"));
         x974.setExecutionPath("/insertProfessorShipByNumber.do?method=prepareInsert");
         x974.setVisible(true);
         Functionality x976 =
-                new Functionality(MultiLanguageString.importFromString("pt37:Associar docente não vinculado ao IST"));
+                new Functionality(
+                        MultiLanguageString
+                                .importFromString("en34:Associate non affiliated professorpt30:Associar docente não vinculado"));
         x975.addChild(x976);
-        x976.setNormalizedName(MultiLanguageString.importFromString("pt37:associar-docente-nao-vinculado-ao-ist"));
+        x976.setNormalizedName(MultiLanguageString
+                .importFromString("en34:Associate non affiliated professorpt30:associar-docente-nao-vinculado"));
         x976.setExecutionPath("/insertProfessorShipNonAffiliatedTeacher.do?method=prepare");
         x976.setVisible(true);
-        Functionality x977 = new Functionality(MultiLanguageString.importFromString("pt18:Guardar Alterações"));
+        Functionality x977 = new Functionality(MultiLanguageString.importFromString("en12:Save Changespt18:Guardar Alterações"));
         x975.addChild(x977);
-        x977.setNormalizedName(MultiLanguageString.importFromString("pt18:guardar-alteracoes"));
+        x977.setNormalizedName(MultiLanguageString.importFromString("en12:save-changespt18:guardar-alteracoes"));
         x977.setExecutionPath("/saveTeachersBody.do");
         x977.setVisible(true);
-        Module x984 = new Module(MultiLanguageString.importFromString("pt23:Competência Pré-Bolonha"), "/");
+        Module x984 =
+                new Module(MultiLanguageString.importFromString("en25:Before Bolonha Competencypt23:Competência Pré-Bolonha"),
+                        "/");
         x938.addChild(x984);
-        x984.setNormalizedName(MultiLanguageString.importFromString("pt23:competencia-pre-bolonha"));
+        x984.setNormalizedName(MultiLanguageString.importFromString("en25:before-bolonha-competencypt23:competencia-pre-bolonha"));
         x984.setExecutionPath("/competenceCourseManagement.do?method=prepare");
         x984.setVisible(false);
         Functionality x983 =
-                new Functionality(MultiLanguageString.importFromString("pt37:Inserir-Editar Disciplina Competencia"));
+                new Functionality(
+                        MultiLanguageString
+                                .importFromString("en29:Insert-Edit Competence Coursept37:Inserir-Editar Disciplina Competencia"));
         x984.addChild(x983);
-        x983.setNormalizedName(MultiLanguageString.importFromString("pt37:inserir-editar-disciplina-competencia"));
+        x983.setNormalizedName(MultiLanguageString
+                .importFromString("en29:insert-edit-competence-coursept37:inserir-editar-disciplina-competencia"));
         x983.setExecutionPath("/createEditCompetenceCourse.do?method=prepareCreate");
         x983.setVisible(true);
-        Functionality x985 = new Functionality(MultiLanguageString.importFromString("pt33:Criar Nova Disciplina Competência"));
+        Functionality x985 =
+                new Functionality(
+                        MultiLanguageString
+                                .importFromString("en28:Create New Competence Coursept33:Criar Nova Disciplina Competência"));
         x984.addChild(x985);
-        x985.setNormalizedName(MultiLanguageString.importFromString("pt33:criar-nova-disciplina-competencia"));
+        x985.setNormalizedName(MultiLanguageString
+                .importFromString("en28:create-new-competence-coursept33:criar-nova-disciplina-competencia"));
         x985.setExecutionPath("/curricularCoursesCompetenceCourse.do?method=readDegrees");
         x985.setVisible(true);
         Module x988 =
-                new Module(MultiLanguageString.importFromString("pt20:Competências Bolonha"), "/bolonha/competenceCourses/");
+                new Module(MultiLanguageString.importFromString("en20:Bolonha Competenciespt20:Competências Bolonha"),
+                        "/bolonha/competenceCourses/");
         x938.addChild(x988);
-        x988.setNormalizedName(MultiLanguageString.importFromString("pt20:competencias-bolonha"));
+        x988.setNormalizedName(MultiLanguageString.importFromString("en20:bolonha-competenciespt20:competencias-bolonha"));
         x988.setExecutionPath("/bolonha/competenceCourses/competenceCoursesManagement.faces");
         x988.setVisible(false);
-        Functionality x987 = new Functionality(MultiLanguageString.importFromString("pt26:Ver Disciplina Competência"));
+        Functionality x987 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en22:View Competence Coursept26:Ver Disciplina Competência"));
         x988.addChild(x987);
-        x987.setNormalizedName(MultiLanguageString.importFromString("pt26:ver-disciplina-competencia"));
+        x987.setNormalizedName(MultiLanguageString.importFromString("en22:view-competence-coursept26:ver-disciplina-competencia"));
         x987.setExecutionPath("/showCompetenceCourse.faces?action=ccm");
         x987.setVisible(true);
-        Functionality x989 = new Functionality(MultiLanguageString.importFromString("pt29:Editar Disciplina Competência"));
+        Functionality x989 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en22:Edit Competence Coursept29:Editar Disciplina Competência"));
         x988.addChild(x989);
-        x989.setNormalizedName(MultiLanguageString.importFromString("pt29:editar-disciplina-competencia"));
+        x989.setNormalizedName(MultiLanguageString
+                .importFromString("en22:edit-competence-coursept29:editar-disciplina-competencia"));
         x989.setExecutionPath("/editCompetenceCourseMainPage.faces");
         x989.setVisible(true);
-        Functionality x990 = new Functionality(MultiLanguageString.importFromString("pt29:Editar Disciplina Competência"));
+        Functionality x990 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en22:Edit Competence Coursept29:Editar Disciplina Competência"));
         x988.addChild(x990);
-        x990.setNormalizedName(MultiLanguageString.importFromString("pt29:editar-disciplina-competencia"));
+        x990.setNormalizedName(MultiLanguageString
+                .importFromString("en22:edit-competence-coursept29:editar-disciplina-competencia"));
         x990.setExecutionPath("/editCompetenceCourse.faces?&action=viewccm");
         x990.setVisible(true);
-        Module x994 = new Module(MultiLanguageString.importFromString("pt19:Gestão de Execuções"), "/");
+        Module x994 = new Module(MultiLanguageString.importFromString("en20:Execution Managementpt19:Gestão de Execuções"), "/");
         x914.addChild(x994);
-        x994.setNormalizedName(MultiLanguageString.importFromString("pt19:gestao-de-execucoes"));
+        x994.setNormalizedName(MultiLanguageString.importFromString("en20:execution-managementpt19:gestao-de-execucoes"));
         x994.setExecutionPath("");
         x994.setVisible(true);
-        Functionality x993 = new Functionality(MultiLanguageString.importFromString("pt17:Periodos Execução"));
+        Functionality x993 =
+                new Functionality(MultiLanguageString.importFromString("en17:Execution Periodspt17:Periodos Execução"));
         x994.addChild(x993);
-        x993.setNormalizedName(MultiLanguageString.importFromString("pt17:periodos-execucao"));
+        x993.setNormalizedName(MultiLanguageString.importFromString("en17:execution-periodspt17:periodos-execucao"));
         x993.setExecutionPath("/manageExecutionPeriods.do?method=prepare");
         x993.setVisible(true);
-        Functionality x995 = new Functionality(MultiLanguageString.importFromString("pt19:Currículos Execução"));
+        Functionality x995 =
+                new Functionality(MultiLanguageString.importFromString("en20:Execution Curriculumpt19:Currículos Execução"));
         x994.addChild(x995);
-        x995.setNormalizedName(MultiLanguageString.importFromString("pt19:curriculos-execucao"));
+        x995.setNormalizedName(MultiLanguageString.importFromString("en20:execution-curriculumpt19:curriculos-execucao"));
         x995.setExecutionPath("/executionDegreesManagementMainPage.do");
         x995.setVisible(true);
-        Functionality x996 = new Functionality(MultiLanguageString.importFromString("pt35:Página Inicial Disciplinas Execução"));
+        Functionality x996 =
+                new Functionality(
+                        MultiLanguageString
+                                .importFromString("en25:Execution Course Homepagept35:Página Inicial Disciplinas Execução"));
         x994.addChild(x996);
-        x996.setNormalizedName(MultiLanguageString.importFromString("pt35:pagina-inicial-disciplinas-execucao"));
+        x996.setNormalizedName(MultiLanguageString
+                .importFromString("en25:execution-course-homepagept35:pagina-inicial-disciplinas-execucao"));
         x996.setExecutionPath("/executionCourseManagement.do?method=firstPage");
         x996.setVisible(true);
-        Functionality x997 = new Functionality(MultiLanguageString.importFromString("pt22:Periodos de Inscrições"));
+        Functionality x997 =
+                new Functionality(MultiLanguageString.importFromString("en17:Enrolment Periodspt22:Periodos de Inscrições"));
         x994.addChild(x997);
-        x997.setNormalizedName(MultiLanguageString.importFromString("pt22:periodos-de-inscricoes"));
+        x997.setNormalizedName(MultiLanguageString.importFromString("en17:enrolment-periodspt22:periodos-de-inscricoes"));
         x997.setExecutionPath("/manageEnrolementPeriods.do?method=prepare");
         x997.setVisible(true);
-        Module x999 = new Module(MultiLanguageString.importFromString("pt19:Currículos Execução"), "/");
+        Module x999 = new Module(MultiLanguageString.importFromString("en20:Execution Curriculumpt19:Currículos Execução"), "/");
         x994.addChild(x999);
-        x999.setNormalizedName(MultiLanguageString.importFromString("pt19:curriculos-execucao"));
+        x999.setNormalizedName(MultiLanguageString.importFromString("en20:execution-curriculumpt19:curriculos-execucao"));
         x999.setExecutionPath("/executionDegreesManagementMainPage.do");
         x999.setVisible(false);
-        Functionality x998 = new Functionality(MultiLanguageString.importFromString("pt16:Página Principal"));
+        Functionality x998 = new Functionality(MultiLanguageString.importFromString("en8:Homepagept16:Página Principal"));
         x999.addChild(x998);
-        x998.setNormalizedName(MultiLanguageString.importFromString("pt16:pagina-principal"));
+        x998.setNormalizedName(MultiLanguageString.importFromString("en8:homepagept16:pagina-principal"));
         x998.setExecutionPath("/index.do");
         x998.setVisible(true);
-        Module x1001 = new Module(MultiLanguageString.importFromString("pt29:Gestão de Currículos Execução"), "/");
+        Module x1001 =
+                new Module(
+                        MultiLanguageString
+                                .importFromString("en31:Execution Curriculum Managementpt29:Gestão de Currículos Execução"),
+                        "/");
         x999.addChild(x1001);
-        x1001.setNormalizedName(MultiLanguageString.importFromString("pt29:gestao-de-curriculos-execucao"));
+        x1001.setNormalizedName(MultiLanguageString
+                .importFromString("en31:execution-curriculum-managementpt29:gestao-de-curriculos-execucao"));
         x1001.setExecutionPath("");
         x1001.setVisible(true);
-        Functionality x1000 = new Functionality(MultiLanguageString.importFromString("pt25:Criar Currículos Execução"));
+        Functionality x1000 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en27:Create Execution Curriculumpt25:Criar Currículos Execução"));
         x1001.addChild(x1000);
-        x1000.setNormalizedName(MultiLanguageString.importFromString("pt25:criar-curriculos-execucao"));
+        x1000.setNormalizedName(MultiLanguageString
+                .importFromString("en27:create-execution-curriculumpt25:criar-curriculos-execucao"));
         x1000.setExecutionPath("/degree/chooseDegreeType.faces");
         x1000.setVisible(true);
-        Functionality x1002 = new Functionality(MultiLanguageString.importFromString("pt26:Editar Currículos Execução"));
+        Functionality x1002 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en25:Edit Execution Curriculumpt26:Editar Currículos Execução"));
         x1001.addChild(x1002);
-        x1002.setNormalizedName(MultiLanguageString.importFromString("pt26:editar-curriculos-execucao"));
+        x1002.setNormalizedName(MultiLanguageString
+                .importFromString("en25:edit-execution-curriculumpt26:editar-curriculos-execucao"));
         x1002.setExecutionPath("/executionDegreesManagement.do?method=readDegreeCurricularPlans");
         x1002.setVisible(true);
-        Functionality x1003 = new Functionality(MultiLanguageString.importFromString("pt28:Escolher Planos Curriculares"));
+        Functionality x1003 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en23:Choose Curricular Planspt28:Escolher Planos Curriculares"));
         x1001.addChild(x1003);
-        x1003.setNormalizedName(MultiLanguageString.importFromString("pt28:escolher-planos-curriculares"));
+        x1003.setNormalizedName(MultiLanguageString
+                .importFromString("en23:choose-curricular-planspt28:escolher-planos-curriculares"));
         x1003.setExecutionPath("/degree/chooseDegreeCurricularPlans.faces");
         x1003.setVisible(false);
-        Functionality x1004 = new Functionality(MultiLanguageString.importFromString("pt25:Currículo Execução Criado"));
+        Functionality x1004 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en28:Execution Curriculum Createdpt25:Currículo Execução Criado"));
         x1001.addChild(x1004);
-        x1004.setNormalizedName(MultiLanguageString.importFromString("pt25:curriculo-execucao-criado"));
+        x1004.setNormalizedName(MultiLanguageString
+                .importFromString("en28:execution-curriculum-createdpt25:curriculo-execucao-criado"));
         x1004.setExecutionPath("/degree/insertExecutionDegreesSuccess.faces");
         x1004.setVisible(false);
-        Module x1008 = new Module(MultiLanguageString.importFromString("pt20:Disciplinas Execução"), "/");
+        Module x1008 = new Module(MultiLanguageString.importFromString("en17:Execution Coursespt20:Disciplinas Execução"), "/");
         x994.addChild(x1008);
-        x1008.setNormalizedName(MultiLanguageString.importFromString("pt20:disciplinas-execucao"));
+        x1008.setNormalizedName(MultiLanguageString.importFromString("en17:execution-coursespt20:disciplinas-execucao"));
         x1008.setExecutionPath("/executionCourseManagement.do?method=firstPage");
         x1008.setVisible(false);
-        Functionality x1007 = new Functionality(MultiLanguageString.importFromString("pt14:Página Inicial"));
+        Functionality x1007 = new Functionality(MultiLanguageString.importFromString("en8:Homepagept14:Página Inicial"));
         x1008.addChild(x1007);
-        x1007.setNormalizedName(MultiLanguageString.importFromString("pt14:pagina-inicial"));
+        x1007.setNormalizedName(MultiLanguageString.importFromString("en8:homepagept14:pagina-inicial"));
         x1007.setExecutionPath("/index.do");
         x1007.setVisible(true);
-        Module x1010 = new Module(MultiLanguageString.importFromString("pt20:Disciplinas Execução"), "/");
+        Module x1010 = new Module(MultiLanguageString.importFromString("en17:Execution Coursespt20:Disciplinas Execução"), "/");
         x1008.addChild(x1010);
-        x1010.setNormalizedName(MultiLanguageString.importFromString("pt20:disciplinas-execucao"));
+        x1010.setNormalizedName(MultiLanguageString.importFromString("en17:execution-coursespt20:disciplinas-execucao"));
         x1010.setExecutionPath("");
         x1010.setVisible(true);
-        Functionality x1009 = new Functionality(MultiLanguageString.importFromString("pt27:Inserir Disciplina Execução"));
+        Functionality x1009 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en23:Insert Execution Coursept27:Inserir Disciplina Execução"));
         x1010.addChild(x1009);
-        x1009.setNormalizedName(MultiLanguageString.importFromString("pt27:inserir-disciplina-execucao"));
+        x1009.setNormalizedName(MultiLanguageString
+                .importFromString("en23:insert-execution-coursept27:inserir-disciplina-execucao"));
         x1009.setExecutionPath("/insertExecutionCourse.do?method=prepareInsertExecutionCourse");
         x1009.setVisible(true);
-        Functionality x1011 = new Functionality(MultiLanguageString.importFromString("pt26:Editar Disciplina Execução"));
+        Functionality x1011 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en21:Edit Execution Coursept26:Editar Disciplina Execução"));
         x1010.addChild(x1011);
-        x1011.setNormalizedName(MultiLanguageString.importFromString("pt26:editar-disciplina-execucao"));
+        x1011.setNormalizedName(MultiLanguageString.importFromString("en21:edit-execution-coursept26:editar-disciplina-execucao"));
         x1011.setExecutionPath("/editExecutionCourseChooseExPeriod.do?method=prepareEditExecutionCourse");
         x1011.setVisible(true);
-        Functionality x1012 = new Functionality(MultiLanguageString.importFromString("pt27:Juntar Disciplinas Execução"));
+        Functionality x1012 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en23:Merge Execution Coursespt27:Juntar Disciplinas Execução"));
         x1010.addChild(x1012);
-        x1012.setNormalizedName(MultiLanguageString.importFromString("pt27:juntar-disciplinas-execucao"));
+        x1012.setNormalizedName(MultiLanguageString
+                .importFromString("en23:merge-execution-coursespt27:juntar-disciplinas-execucao"));
         x1012.setExecutionPath("/chooseDegreesForExecutionCourseMerge.do?method=prepareChooseDegreesAndExecutionPeriod");
         x1012.setVisible(true);
-        Functionality x1013 = new Functionality(MultiLanguageString.importFromString("pt28:Criar Relatórios de Docência"));
+        Functionality x1013 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en23:Create Teaching Reportspt28:Criar Relatórios de Docência"));
         x1010.addChild(x1013);
-        x1013.setNormalizedName(MultiLanguageString.importFromString("pt28:criar-relatorios-de-docencia"));
+        x1013.setNormalizedName(MultiLanguageString
+                .importFromString("en23:create-teaching-reportspt28:criar-relatorios-de-docencia"));
         x1013.setExecutionPath("/executionCourseManagement/createCourseReportsForExecutionPeriod.faces");
         x1013.setVisible(true);
-        Functionality x1014 = new Functionality(MultiLanguageString.importFromString("pt29:Criar Disciplinas de Execução"));
+        Functionality x1014 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en24:Create Execution Coursespt29:Criar Disciplinas de Execução"));
         x1010.addChild(x1014);
-        x1014.setNormalizedName(MultiLanguageString.importFromString("pt29:criar-disciplinas-de-execucao"));
+        x1014.setNormalizedName(MultiLanguageString
+                .importFromString("en24:create-execution-coursespt29:criar-disciplinas-de-execucao"));
         x1014.setExecutionPath("/createExecutionCourses.do?method=chooseDegreeType");
         x1014.setVisible(true);
-        Functionality x1015 = new Functionality(MultiLanguageString.importFromString("pt28:Editar Disciplina Execução 1"));
+        Functionality x1015 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en23:Edit Execution Course 1pt28:Editar Disciplina Execução 1"));
         x1010.addChild(x1015);
-        x1015.setNormalizedName(MultiLanguageString.importFromString("pt28:editar-disciplina-execucao-1"));
+        x1015.setNormalizedName(MultiLanguageString
+                .importFromString("en23:edit-execution-course-1pt28:editar-disciplina-execucao-1"));
         x1015.setExecutionPath("/editExecutionCourseChooseExDegree.do");
         x1015.setVisible(false);
-        Functionality x1016 = new Functionality(MultiLanguageString.importFromString("pt28:Editar Disciplina Execução 2"));
+        Functionality x1016 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en23:Edit Execution Course 2pt28:Editar Disciplina Execução 2"));
         x1010.addChild(x1016);
-        x1016.setNormalizedName(MultiLanguageString.importFromString("pt28:editar-disciplina-execucao-2"));
+        x1016.setNormalizedName(MultiLanguageString
+                .importFromString("en23:edit-execution-course-2pt28:editar-disciplina-execucao-2"));
         x1016.setExecutionPath("/editExecutionCourse.do?method=editExecutionCourse");
         x1016.setVisible(false);
-        Functionality x1017 = new Functionality(MultiLanguageString.importFromString("pt30:Associar Disciplina Curricular"));
+        Functionality x1017 =
+                new Functionality(
+                        MultiLanguageString
+                                .importFromString("en27:Associate Curricular Coursept30:Associar Disciplina Curricular"));
         x1010.addChild(x1017);
-        x1017.setNormalizedName(MultiLanguageString.importFromString("pt30:associar-disciplina-curricular"));
+        x1017.setNormalizedName(MultiLanguageString
+                .importFromString("en27:associate-curricular-coursept30:associar-disciplina-curricular"));
         x1017.setExecutionPath("editExecutionCourseManageCurricularCourses.do?method=prepareAssociateCurricularCourseChooseDegreeCurricularPlan");
         x1017.setVisible(false);
-        Functionality x1018 = new Functionality(MultiLanguageString.importFromString("pt27:Separar Disciplina Execução"));
+        Functionality x1018 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en25:Separate Execution Coursept27:Separar Disciplina Execução"));
         x1010.addChild(x1018);
-        x1018.setNormalizedName(MultiLanguageString.importFromString("pt27:separar-disciplina-execucao"));
+        x1018.setNormalizedName(MultiLanguageString
+                .importFromString("en25:separate-execution-coursept27:separar-disciplina-execucao"));
         x1018.setExecutionPath("/seperateExecutionCourse.do?method=prepareTransfer");
         x1018.setVisible(false);
-        Functionality x1019 = new Functionality(MultiLanguageString.importFromString("pt29:Juntar Disciplinas Execução 2"));
+        Functionality x1019 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en25:Merge Execution Courses 2pt29:Juntar Disciplinas Execução 2"));
         x1010.addChild(x1019);
-        x1019.setNormalizedName(MultiLanguageString.importFromString("pt29:juntar-disciplinas-execucao-2"));
+        x1019.setNormalizedName(MultiLanguageString
+                .importFromString("en25:merge-execution-courses-2pt29:juntar-disciplinas-execucao-2"));
         x1019.setExecutionPath("/mergeExecutionCoursesForm.do");
         x1019.setVisible(false);
-        Module x1024 = new Module(MultiLanguageString.importFromString("pt17:Gestão de Pessoal"), "/");
+        Module x1024 = new Module(MultiLanguageString.importFromString("en19:Personal Managementpt17:Gestão de Pessoal"), "/");
         x914.addChild(x1024);
-        x1024.setNormalizedName(MultiLanguageString.importFromString("pt17:gestao-de-pessoal"));
+        x1024.setNormalizedName(MultiLanguageString.importFromString("en19:personal-managementpt17:gestao-de-pessoal"));
         x1024.setExecutionPath("");
         x1024.setVisible(true);
-        Functionality x1023 = new Functionality(MultiLanguageString.importFromString("pt18:Gestão de Docentes"));
+        Functionality x1023 =
+                new Functionality(MultiLanguageString.importFromString("en18:Teacher Managementpt18:Gestão de Docentes"));
         x1024.addChild(x1023);
-        x1023.setNormalizedName(MultiLanguageString.importFromString("pt18:gestao-de-docentes"));
+        x1023.setNormalizedName(MultiLanguageString.importFromString("en18:teacher-managementpt18:gestao-de-docentes"));
         x1023.setExecutionPath("/teachersManagement.do?method=firstPage");
         x1023.setVisible(true);
-        Functionality x1025 = new Functionality(MultiLanguageString.importFromString("pt16:Gestão de Alunos"));
+        Functionality x1025 =
+                new Functionality(MultiLanguageString.importFromString("en18:Student Managementpt16:Gestão de Alunos"));
         x1024.addChild(x1025);
-        x1025.setNormalizedName(MultiLanguageString.importFromString("pt16:gestao-de-alunos"));
+        x1025.setNormalizedName(MultiLanguageString.importFromString("en18:student-managementpt16:gestao-de-alunos"));
         x1025.setExecutionPath("/studentsManagement.do?method=show");
         x1025.setVisible(true);
-        Functionality x1026 = new Functionality(MultiLanguageString.importFromString("pt17:Gestão de Pessoas"));
+        Functionality x1026 =
+                new Functionality(MultiLanguageString.importFromString("en17:People Managementpt17:Gestão de Pessoas"));
         x1024.addChild(x1026);
-        x1026.setNormalizedName(MultiLanguageString.importFromString("pt17:gestao-de-pessoas"));
+        x1026.setNormalizedName(MultiLanguageString.importFromString("en17:people-managementpt17:gestao-de-pessoas"));
         x1026.setExecutionPath("/personManagement.do?method=firstPage");
         x1026.setVisible(true);
-        Functionality x1027 = new Functionality(MultiLanguageString.importFromString("pt18:Gestão de Feriados"));
+        Functionality x1027 =
+                new Functionality(MultiLanguageString.importFromString("en18:Holiday Managementpt18:Gestão de Feriados"));
         x1024.addChild(x1027);
-        x1027.setNormalizedName(MultiLanguageString.importFromString("pt18:gestao-de-feriados"));
+        x1027.setNormalizedName(MultiLanguageString.importFromString("en18:holiday-managementpt18:gestao-de-feriados"));
         x1027.setExecutionPath("/manageHolidays.do?method=prepare&page=0");
         x1027.setVisible(true);
-        Module x1029 = new Module(MultiLanguageString.importFromString("pt18:Gestão de Docentes"), "/");
+        Module x1029 = new Module(MultiLanguageString.importFromString("en18:Teacher Managementpt18:Gestão de Docentes"), "/");
         x1024.addChild(x1029);
-        x1029.setNormalizedName(MultiLanguageString.importFromString("pt18:gestao-de-docentes"));
+        x1029.setNormalizedName(MultiLanguageString.importFromString("en18:teacher-managementpt18:gestao-de-docentes"));
         x1029.setExecutionPath("/teachersManagement.do?method=firstPage");
         x1029.setVisible(false);
-        Functionality x1028 = new Functionality(MultiLanguageString.importFromString("pt14:Página Inicial"));
+        Functionality x1028 = new Functionality(MultiLanguageString.importFromString("en8:Homepagept14:Página Inicial"));
         x1029.addChild(x1028);
-        x1028.setNormalizedName(MultiLanguageString.importFromString("pt14:pagina-inicial"));
+        x1028.setNormalizedName(MultiLanguageString.importFromString("en8:homepagept14:pagina-inicial"));
         x1028.setExecutionPath("/index.do");
         x1028.setVisible(true);
-        Module x1031 = new Module(MultiLanguageString.importFromString("pt18:Gestão de Docentes"), "/");
+        Module x1031 = new Module(MultiLanguageString.importFromString("en18:Teacher Managementpt18:Gestão de Docentes"), "/");
         x1029.addChild(x1031);
-        x1031.setNormalizedName(MultiLanguageString.importFromString("pt18:gestao-de-docentes"));
+        x1031.setNormalizedName(MultiLanguageString.importFromString("en18:teacher-managementpt18:gestao-de-docentes"));
         x1031.setExecutionPath("");
         x1031.setVisible(true);
-        Functionality x1030 = new Functionality(MultiLanguageString.importFromString("pt17:Editar Categorias"));
+        Functionality x1030 =
+                new Functionality(MultiLanguageString.importFromString("en15:Edit Categoriespt17:Editar Categorias"));
         x1031.addChild(x1030);
-        x1030.setNormalizedName(MultiLanguageString.importFromString("pt17:editar-categorias"));
+        x1030.setNormalizedName(MultiLanguageString.importFromString("en15:edit-categoriespt17:editar-categorias"));
         x1030.setExecutionPath("/teacherCategoriesManagement.do?method=prepareEdit");
         x1030.setVisible(true);
-        Functionality x1032 = new Functionality(MultiLanguageString.importFromString("pt32:Desassociar Disciplinas Execução"));
+        Functionality x1032 =
+                new Functionality(
+                        MultiLanguageString
+                                .importFromString("en30:Disassociate Execution Coursespt32:Desassociar Disciplinas Execução"));
         x1031.addChild(x1032);
-        x1032.setNormalizedName(MultiLanguageString.importFromString("pt32:desassociar-disciplinas-execucao"));
+        x1032.setNormalizedName(MultiLanguageString
+                .importFromString("en30:disassociate-execution-coursespt32:desassociar-disciplinas-execucao"));
         x1032.setExecutionPath("/dissociateProfShipsAndRespFor.do?method=prepareDissociateEC");
         x1032.setVisible(true);
-        Module x1036 = new Module(MultiLanguageString.importFromString("pt16:Gestão de Alunos"), "/");
+        Module x1036 = new Module(MultiLanguageString.importFromString("en18:Student Managementpt16:Gestão de Alunos"), "/");
         x1024.addChild(x1036);
-        x1036.setNormalizedName(MultiLanguageString.importFromString("pt16:gestao-de-alunos"));
+        x1036.setNormalizedName(MultiLanguageString.importFromString("en18:student-managementpt16:gestao-de-alunos"));
         x1036.setExecutionPath("/studentsManagement.do?method=show");
         x1036.setVisible(false);
-        Functionality x1035 = new Functionality(MultiLanguageString.importFromString("pt20:Criar Classificações"));
+        Functionality x1035 =
+                new Functionality(MultiLanguageString.importFromString("en22:Create Classificationspt20:Criar Classificações"));
         x1036.addChild(x1035);
-        x1035.setNormalizedName(MultiLanguageString.importFromString("pt20:criar-classificacoes"));
+        x1035.setNormalizedName(MultiLanguageString.importFromString("en22:create-classificationspt20:criar-classificacoes"));
         x1035.setExecutionPath("/createClassificationsForStudents.do?method=prepare");
         x1035.setVisible(true);
-        Module x1039 = new Module(MultiLanguageString.importFromString("pt17:Gestão de Pessoas"), "/");
+        Module x1039 = new Module(MultiLanguageString.importFromString("en17:People Managementpt17:Gestão de Pessoas"), "/");
         x1024.addChild(x1039);
-        x1039.setNormalizedName(MultiLanguageString.importFromString("pt17:gestao-de-pessoas"));
+        x1039.setNormalizedName(MultiLanguageString.importFromString("en17:people-managementpt17:gestao-de-pessoas"));
         x1039.setExecutionPath("/personManagement.do?method=firstPage");
         x1039.setVisible(false);
-        Functionality x1038 = new Functionality(MultiLanguageString.importFromString("pt14:Página Inicial"));
+        Functionality x1038 = new Functionality(MultiLanguageString.importFromString("en8:Homepagept14:Página Inicial"));
         x1039.addChild(x1038);
-        x1038.setNormalizedName(MultiLanguageString.importFromString("pt14:pagina-inicial"));
+        x1038.setNormalizedName(MultiLanguageString.importFromString("en8:homepagept14:pagina-inicial"));
         x1038.setExecutionPath("/index.do");
         x1038.setVisible(true);
-        Module x1041 = new Module(MultiLanguageString.importFromString("pt17:Gestão de Pessoas"), "/");
+        Module x1041 = new Module(MultiLanguageString.importFromString("en17:People Managementpt17:Gestão de Pessoas"), "/");
         x1039.addChild(x1041);
-        x1041.setNormalizedName(MultiLanguageString.importFromString("pt17:gestao-de-pessoas"));
+        x1041.setNormalizedName(MultiLanguageString.importFromString("en17:people-managementpt17:gestao-de-pessoas"));
         x1041.setExecutionPath("");
         x1041.setVisible(true);
-        Functionality x1040 = new Functionality(MultiLanguageString.importFromString("pt13:Criar Pessoas"));
+        Functionality x1040 = new Functionality(MultiLanguageString.importFromString("en13:Create Peoplept13:Criar Pessoas"));
         x1041.addChild(x1040);
-        x1040.setNormalizedName(MultiLanguageString.importFromString("pt13:criar-pessoas"));
+        x1040.setNormalizedName(MultiLanguageString.importFromString("en13:create-peoplept13:criar-pessoas"));
         x1040.setExecutionPath("/personManagement/createPerson.do?method=prepare");
         x1040.setVisible(false);
-        Functionality x1042 = new Functionality(MultiLanguageString.importFromString("pt15:Procurar Pessoa"));
+        Functionality x1042 = new Functionality(MultiLanguageString.importFromString("en13:Search Personpt15:Procurar Pessoa"));
         x1041.addChild(x1042);
-        x1042.setNormalizedName(MultiLanguageString.importFromString("pt15:procurar-pessoa"));
+        x1042.setNormalizedName(MultiLanguageString.importFromString("en13:search-personpt15:procurar-pessoa"));
         x1042.setExecutionPath("/findPerson.do?method=prepareFindPerson");
         x1042.setVisible(true);
-        Functionality x1043 = new Functionality(MultiLanguageString.importFromString("pt21:Gestão de Privilégios"));
+        Functionality x1043 =
+                new Functionality(MultiLanguageString.importFromString("en15:Role Managementpt21:Gestão de Privilégios"));
         x1041.addChild(x1043);
-        x1043.setNormalizedName(MultiLanguageString.importFromString("pt21:gestao-de-privilegios"));
+        x1043.setNormalizedName(MultiLanguageString.importFromString("en15:role-managementpt21:gestao-de-privilegios"));
         x1043.setExecutionPath("/manageRoles.do?method=prepare");
         x1043.setVisible(true);
-        Functionality x1044 = new Functionality(MultiLanguageString.importFromString("pt14:Gerar Password"));
+        Functionality x1044 =
+                new Functionality(MultiLanguageString.importFromString("en17:Generate Passwordpt14:Gerar Password"));
         x1041.addChild(x1044);
-        x1044.setNormalizedName(MultiLanguageString.importFromString("pt14:gerar-password"));
+        x1044.setNormalizedName(MultiLanguageString.importFromString("en17:generate-passwordpt14:gerar-password"));
         x1044.setExecutionPath("/generateNewPassword.do?method=prepare&page=0");
         x1044.setVisible(true);
-        Functionality x1045 = new Functionality(MultiLanguageString.importFromString("pt16:Cargos de Gestão"));
+        Functionality x1045 =
+                new Functionality(MultiLanguageString.importFromString("en20:Management Functionspt16:Cargos de Gestão"));
         x1041.addChild(x1045);
-        x1045.setNormalizedName(MultiLanguageString.importFromString("pt16:cargos-de-gestao"));
+        x1045.setNormalizedName(MultiLanguageString.importFromString("en20:management-functionspt16:cargos-de-gestao"));
         x1045.setExecutionPath("/functionsManagement/personSearchForFunctionsManagement.faces");
         x1045.setVisible(true);
-        Functionality x1046 = new Functionality(MultiLanguageString.importFromString("pt16:Cargos de Gestão"));
+        Functionality x1046 =
+                new Functionality(MultiLanguageString.importFromString("en20:Management Functionspt16:Cargos de Gestão"));
         x1041.addChild(x1046);
-        x1046.setNormalizedName(MultiLanguageString.importFromString("pt16:cargos-de-gestao"));
+        x1046.setNormalizedName(MultiLanguageString.importFromString("en20:management-functionspt16:cargos-de-gestao"));
         x1046.setExecutionPath("/functionsManagement/listPersonFunctions.faces");
         x1046.setVisible(false);
-        Functionality x1047 = new Functionality(MultiLanguageString.importFromString("pt16:Cargos de Gestão"));
+        Functionality x1047 =
+                new Functionality(MultiLanguageString.importFromString("en20:Management Functionspt16:Cargos de Gestão"));
         x1041.addChild(x1047);
-        x1047.setNormalizedName(MultiLanguageString.importFromString("pt16:cargos-de-gestao"));
+        x1047.setNormalizedName(MultiLanguageString.importFromString("en20:management-functionspt16:cargos-de-gestao"));
         x1047.setExecutionPath("/functionsManagement/editFunction.faces");
         x1047.setVisible(false);
-        Functionality x1048 = new Functionality(MultiLanguageString.importFromString("pt14:Activar Pessoa"));
+        Functionality x1048 = new Functionality(MultiLanguageString.importFromString("en15:Activate Personpt14:Activar Pessoa"));
         x1041.addChild(x1048);
-        x1048.setNormalizedName(MultiLanguageString.importFromString("pt14:activar-pessoa"));
+        x1048.setNormalizedName(MultiLanguageString.importFromString("en15:activate-personpt14:activar-pessoa"));
         x1048.setExecutionPath("/recoverInactivePerson.do?method=prepare&page=0");
         x1048.setVisible(true);
-        Functionality x1049 = new Functionality(MultiLanguageString.importFromString("pt16:Cargos de Gestão"));
+        Functionality x1049 =
+                new Functionality(MultiLanguageString.importFromString("en20:Management Functionspt16:Cargos de Gestão"));
         x1041.addChild(x1049);
         x1049.setTitle(MultiLanguageString.importFromString("pt14:Escolher Cargo"));
-        x1049.setNormalizedName(MultiLanguageString.importFromString("pt16:cargos-de-gestao"));
+        x1049.setNormalizedName(MultiLanguageString.importFromString("en20:management-functionspt16:cargos-de-gestao"));
         x1049.setExecutionPath("functionsManagement/chooseFunction.faces");
         x1049.setVisible(false);
-        Functionality x1050 = new Functionality(MultiLanguageString.importFromString("pt16:Cargos de Gestão"));
+        Functionality x1050 =
+                new Functionality(MultiLanguageString.importFromString("en20:Management Functionspt16:Cargos de Gestão"));
         x1041.addChild(x1050);
         x1050.setTitle(MultiLanguageString.importFromString("pt11:Confirmação"));
-        x1050.setNormalizedName(MultiLanguageString.importFromString("pt16:cargos-de-gestao"));
+        x1050.setNormalizedName(MultiLanguageString.importFromString("en20:management-functionspt16:cargos-de-gestao"));
         x1050.setExecutionPath("functionsManagement/confirmation.faces");
         x1050.setVisible(false);
-        Functionality x1051 = new Functionality(MultiLanguageString.importFromString("pt16:Cargos de Gestão"));
+        Functionality x1051 =
+                new Functionality(MultiLanguageString.importFromString("en20:Management Functionspt16:Cargos de Gestão"));
         x1041.addChild(x1051);
         x1051.setTitle(MultiLanguageString.importFromString("pt22:Apagar Cargo de Gestão"));
-        x1051.setNormalizedName(MultiLanguageString.importFromString("pt16:cargos-de-gestao"));
+        x1051.setNormalizedName(MultiLanguageString.importFromString("en20:management-functionspt16:cargos-de-gestao"));
         x1051.setExecutionPath("functionsManagement/deletePersonFunction.faces");
         x1051.setVisible(false);
-        Functionality x1052 = new Functionality(MultiLanguageString.importFromString("pt13:Editar Pessoa"));
+        Functionality x1052 = new Functionality(MultiLanguageString.importFromString("en11:Edit Personpt13:Editar Pessoa"));
         x1041.addChild(x1052);
-        x1052.setNormalizedName(MultiLanguageString.importFromString("pt13:editar-pessoa"));
+        x1052.setNormalizedName(MultiLanguageString.importFromString("en11:edit-personpt13:editar-pessoa"));
         x1052.setExecutionPath("/editPerson.do?method=prepareSearchPersonToEdit");
         x1052.setVisible(true);
-        Module x1054 = new Module(MultiLanguageString.importFromString("pt27:Pessoas Externas-Convidadas"), "/");
+        Module x1054 =
+                new Module(MultiLanguageString.importFromString("en23:External Invited Peoplept27:Pessoas Externas-Convidadas"),
+                        "/");
         x1041.addChild(x1054);
-        x1054.setNormalizedName(MultiLanguageString.importFromString("pt27:pessoas-externas-convidadas"));
+        x1054.setNormalizedName(MultiLanguageString
+                .importFromString("en23:external-invited-peoplept27:pessoas-externas-convidadas"));
         x1054.setExecutionPath("");
         x1054.setVisible(true);
-        Functionality x1053 = new Functionality(MultiLanguageString.importFromString("pt30:Criar Pessoa Externa-Convidada"));
+        Functionality x1053 =
+                new Functionality(
+                        MultiLanguageString
+                                .importFromString("en30:Create External Invited Personpt30:Criar Pessoa Externa-Convidada"));
         x1054.addChild(x1053);
         x1053.setTitle(MultiLanguageString.importFromString("pt20:Criar Pessoa Externa"));
-        x1053.setNormalizedName(MultiLanguageString.importFromString("pt30:criar-pessoa-externa-convidada"));
+        x1053.setNormalizedName(MultiLanguageString
+                .importFromString("en30:create-external-invited-personpt30:criar-pessoa-externa-convidada"));
         x1053.setExecutionPath("createInvitedPerson.do?method=prepareSearchExistentPersonBeforeCreateNewInvitedPerson");
         x1053.setVisible(true);
-        Functionality x1055 = new Functionality(MultiLanguageString.importFromString("pt18:Gestão de Convites"));
+        Functionality x1055 =
+                new Functionality(MultiLanguageString.importFromString("en22:Invitations Managementpt18:Gestão de Convites"));
         x1054.addChild(x1055);
-        x1055.setNormalizedName(MultiLanguageString.importFromString("pt18:gestao-de-convites"));
+        x1055.setNormalizedName(MultiLanguageString.importFromString("en22:invitations-managementpt18:gestao-de-convites"));
         x1055.setExecutionPath("/invitationsManagement.do?method=prepareSearchPersonForManageInvitations");
         x1055.setVisible(true);
         Functionality x1059 = new Functionality(MultiLanguageString.importFromString("en15:Role Managementpt15:Gestão de Roles"));
@@ -1125,488 +1312,568 @@ public class CreateFunctionallityTree {
         x1059.setTitle(MultiLanguageString.importFromString("en15:Role Managementpt15:Gestão de Roles"));
         x1059.setNormalizedName(MultiLanguageString.importFromString("en15:role-managementpt15:gestao-de-roles"));
         x1059.setExecutionPath("/viewPersonsWithRole.do?method=prepare");
-        Module x1062 = new Module(MultiLanguageString.importFromString("pt13:Equivalências"), "/");
+        Module x1062 = new Module(MultiLanguageString.importFromString("en12:Equivalencespt13:Equivalências"), "/");
         x914.addChild(x1062);
-        x1062.setNormalizedName(MultiLanguageString.importFromString("pt13:equivalencias"));
+        x1062.setNormalizedName(MultiLanguageString.importFromString("en12:equivalencespt13:equivalencias"));
         x1062.setExecutionPath("");
         x1062.setVisible(true);
-        Functionality x1061 = new Functionality(MultiLanguageString.importFromString("pt22:Não necessita de fazer"));
+        Functionality x1061 =
+                new Functionality(MultiLanguageString.importFromString("en17:No need to enrollpt22:Não necessita de fazer"));
         x1062.addChild(x1061);
-        x1061.setNormalizedName(MultiLanguageString.importFromString("pt22:nao-necessita-de-fazer"));
+        x1061.setNormalizedName(MultiLanguageString.importFromString("en17:no-need-to-enrollpt22:nao-necessita-de-fazer"));
         x1061.setExecutionPath("/prepareNotNeedToEnroll.do");
         x1061.setVisible(true);
-        Functionality x1063 = new Functionality(MultiLanguageString.importFromString("pt13:Equivalências"));
+        Functionality x1063 = new Functionality(MultiLanguageString.importFromString("en12:Equivalencespt13:Equivalências"));
         x1062.addChild(x1063);
-        x1063.setNormalizedName(MultiLanguageString.importFromString("pt13:equivalencias"));
+        x1063.setNormalizedName(MultiLanguageString.importFromString("en12:equivalencespt13:equivalencias"));
         x1063.setExecutionPath("/curricularCourseEquivalencies.do?method=prepare");
         x1063.setVisible(true);
-        Module x1066 = new Module(MultiLanguageString.importFromString("pt19:Gestão de Ficheiros"), "/");
+        Module x1066 = new Module(MultiLanguageString.importFromString("en15:File Managementpt19:Gestão de Ficheiros"), "/");
         x914.addChild(x1066);
-        x1066.setNormalizedName(MultiLanguageString.importFromString("pt19:gestao-de-ficheiros"));
+        x1066.setNormalizedName(MultiLanguageString.importFromString("en15:file-managementpt19:gestao-de-ficheiros"));
         x1066.setExecutionPath("");
         x1066.setVisible(false);
-        Functionality x1065 = new Functionality(MultiLanguageString.importFromString("pt20:Geração de Ficheiros"));
+        Functionality x1065 =
+                new Functionality(MultiLanguageString.importFromString("en15:File Generationpt20:Geração de Ficheiros"));
         x1066.addChild(x1065);
-        x1065.setNormalizedName(MultiLanguageString.importFromString("pt20:geracao-de-ficheiros"));
+        x1065.setNormalizedName(MultiLanguageString.importFromString("en15:file-generationpt20:geracao-de-ficheiros"));
         x1065.setExecutionPath("/generateFiles.do?method=firstPage");
         x1065.setVisible(true);
-        Functionality x1067 = new Functionality(MultiLanguageString.importFromString("pt19:Upload de Ficheiros"));
+        Functionality x1067 = new Functionality(MultiLanguageString.importFromString("en11:File Uploadpt19:Upload de Ficheiros"));
         x1066.addChild(x1067);
-        x1067.setNormalizedName(MultiLanguageString.importFromString("pt19:upload-de-ficheiros"));
+        x1067.setNormalizedName(MultiLanguageString.importFromString("en11:file-uploadpt19:upload-de-ficheiros"));
         x1067.setExecutionPath("/uploadFiles.do?method=firstPage");
         x1067.setVisible(true);
-        Module x1069 = new Module(MultiLanguageString.importFromString("pt20:Geração de Ficheiros"), "/");
+        Module x1069 = new Module(MultiLanguageString.importFromString("en15:File Generationpt20:Geração de Ficheiros"), "/");
         x1066.addChild(x1069);
-        x1069.setNormalizedName(MultiLanguageString.importFromString("pt20:geracao-de-ficheiros"));
+        x1069.setNormalizedName(MultiLanguageString.importFromString("en15:file-generationpt20:geracao-de-ficheiros"));
         x1069.setExecutionPath("/generateFiles.do?method=firstPage");
         x1069.setVisible(false);
-        Functionality x1068 = new Functionality(MultiLanguageString.importFromString("pt16:Página Principal"));
+        Functionality x1068 = new Functionality(MultiLanguageString.importFromString("en8:Homepagept16:Página Principal"));
         x1069.addChild(x1068);
-        x1068.setNormalizedName(MultiLanguageString.importFromString("pt16:pagina-principal"));
+        x1068.setNormalizedName(MultiLanguageString.importFromString("en8:homepagept16:pagina-principal"));
         x1068.setExecutionPath("/index.do");
         x1068.setVisible(true);
-        Module x1071 = new Module(MultiLanguageString.importFromString("pt20:Geração de Ficheiros"), "/");
+        Module x1071 = new Module(MultiLanguageString.importFromString("en15:File Generationpt20:Geração de Ficheiros"), "/");
         x1069.addChild(x1071);
-        x1071.setNormalizedName(MultiLanguageString.importFromString("pt20:geracao-de-ficheiros"));
+        x1071.setNormalizedName(MultiLanguageString.importFromString("en15:file-generationpt20:geracao-de-ficheiros"));
         x1071.setExecutionPath("");
         x1071.setVisible(true);
-        Functionality x1070 = new Functionality(MultiLanguageString.importFromString("pt20:Ficheiro para a SIBS"));
+        Functionality x1070 =
+                new Functionality(MultiLanguageString.importFromString("en13:File for SIBSpt20:Ficheiro para a SIBS"));
         x1071.addChild(x1070);
-        x1070.setNormalizedName(MultiLanguageString.importFromString("pt20:ficheiro-para-a-sibs"));
+        x1070.setNormalizedName(MultiLanguageString.importFromString("en13:file-for-sibspt20:ficheiro-para-a-sibs"));
         x1070.setExecutionPath("/generateFiles.do?method=prepareChooseForGenerateFiles&file=sibs");
         x1070.setVisible(true);
-        Functionality x1072 = new Functionality(MultiLanguageString.importFromString("pt20:Ficheiro para Cartas"));
+        Functionality x1072 =
+                new Functionality(MultiLanguageString.importFromString("en16:File for Letterspt20:Ficheiro para Cartas"));
         x1071.addChild(x1072);
-        x1072.setNormalizedName(MultiLanguageString.importFromString("pt20:ficheiro-para-cartas"));
+        x1072.setNormalizedName(MultiLanguageString.importFromString("en16:file-for-letterspt20:ficheiro-para-cartas"));
         x1072.setExecutionPath("/generateFiles.do?method=prepareChooseForGenerateFiles&file=letters");
         x1072.setVisible(true);
-        Module x1076 = new Module(MultiLanguageString.importFromString("pt19:Upload de Ficheiros"), "/");
+        Module x1076 = new Module(MultiLanguageString.importFromString("en11:File Uploadpt19:Upload de Ficheiros"), "/");
         x1066.addChild(x1076);
-        x1076.setNormalizedName(MultiLanguageString.importFromString("pt19:upload-de-ficheiros"));
+        x1076.setNormalizedName(MultiLanguageString.importFromString("en11:file-uploadpt19:upload-de-ficheiros"));
         x1076.setExecutionPath("/uploadFiles.do?method=firstPage");
         x1076.setVisible(false);
-        Functionality x1075 = new Functionality(MultiLanguageString.importFromString("pt16:Página Principal"));
+        Functionality x1075 = new Functionality(MultiLanguageString.importFromString("en8:Homepagept16:Página Principal"));
         x1076.addChild(x1075);
-        x1075.setNormalizedName(MultiLanguageString.importFromString("pt16:pagina-principal"));
+        x1075.setNormalizedName(MultiLanguageString.importFromString("en8:homepagept16:pagina-principal"));
         x1075.setExecutionPath("/index.do");
         x1075.setVisible(true);
-        Module x1078 = new Module(MultiLanguageString.importFromString("pt19:Gestão de Ficheiros"), "/");
+        Module x1078 = new Module(MultiLanguageString.importFromString("en15:File Managementpt19:Gestão de Ficheiros"), "/");
         x1076.addChild(x1078);
-        x1078.setNormalizedName(MultiLanguageString.importFromString("pt19:gestao-de-ficheiros"));
+        x1078.setNormalizedName(MultiLanguageString.importFromString("en15:file-managementpt19:gestao-de-ficheiros"));
         x1078.setExecutionPath("");
         x1078.setVisible(true);
-        Functionality x1077 = new Functionality(MultiLanguageString.importFromString("pt16:Ficheiro da SIBS"));
+        Functionality x1077 = new Functionality(MultiLanguageString.importFromString("en9:SIBS Filept16:Ficheiro da SIBS"));
         x1078.addChild(x1077);
-        x1077.setNormalizedName(MultiLanguageString.importFromString("pt16:ficheiro-da-sibs"));
+        x1077.setNormalizedName(MultiLanguageString.importFromString("en9:sibs-filept16:ficheiro-da-sibs"));
         x1077.setExecutionPath("/uploadFiles.do?method=prepareChooseForUploadFiles&file=sibs");
         x1077.setVisible(true);
-        Module x1083 = new Module(MultiLanguageString.importFromString("pt17:Gestão Financeira"), "/");
+        Module x1083 = new Module(MultiLanguageString.importFromString("en20:Finalcial Managementpt17:Gestão Financeira"), "/");
         x914.addChild(x1083);
-        x1083.setNormalizedName(MultiLanguageString.importFromString("pt17:gestao-financeira"));
+        x1083.setNormalizedName(MultiLanguageString.importFromString("en20:financial-managementpt17:gestao-financeira"));
         x1083.setExecutionPath("");
         x1083.setVisible(true);
-        Functionality x1082 = new Functionality(MultiLanguageString.importFromString("pt15:Gestão de Guias"));
+        Functionality x1082 =
+                new Functionality(MultiLanguageString.importFromString("en16:Guide Managementpt15:Gestão de Guias"));
         x1083.addChild(x1082);
-        x1082.setNormalizedName(MultiLanguageString.importFromString("pt15:gestao-de-guias"));
+        x1082.setNormalizedName(MultiLanguageString.importFromString("en16:guide-managementpt15:gestao-de-guias"));
         x1082.setExecutionPath("/guideManagement.do?method=firstPage");
         x1082.setVisible(true);
-        Functionality x1084 = new Functionality(MultiLanguageString.importFromString("pt31:Actualizar Situações de Propina"));
+        Functionality x1084 =
+                new Functionality(
+                        MultiLanguageString
+                                .importFromString("en25:Update Tuition Situationspt31:Actualizar Situações de Propina"));
         x1083.addChild(x1084);
-        x1084.setNormalizedName(MultiLanguageString.importFromString("pt31:actualizar-situacoes-de-propina"));
+        x1084.setNormalizedName(MultiLanguageString
+                .importFromString("en25:update-tuition-situationspt31:actualizar-situacoes-de-propina"));
         x1084.setExecutionPath("/gratuity/updateGratuitySituations.faces");
         x1084.setVisible(true);
-        Module x1086 = new Module(MultiLanguageString.importFromString("pt15:Gestão de Guias"), "/");
+        Module x1086 = new Module(MultiLanguageString.importFromString("en16:Guide Managementpt15:Gestão de Guias"), "/");
         x1083.addChild(x1086);
-        x1086.setNormalizedName(MultiLanguageString.importFromString("pt15:gestao-de-guias"));
+        x1086.setNormalizedName(MultiLanguageString.importFromString("en16:guide-managementpt15:gestao-de-guias"));
         x1086.setExecutionPath("/guideManagement.do?method=firstPage");
         x1086.setVisible(false);
-        Functionality x1085 = new Functionality(MultiLanguageString.importFromString("pt16:Página Principal"));
+        Functionality x1085 = new Functionality(MultiLanguageString.importFromString("en8:Homepagept16:Página Principal"));
         x1086.addChild(x1085);
-        x1085.setNormalizedName(MultiLanguageString.importFromString("pt16:pagina-principal"));
+        x1085.setNormalizedName(MultiLanguageString.importFromString("en8:homepagept16:pagina-principal"));
         x1085.setExecutionPath("/index.do");
         x1085.setVisible(true);
-        Module x1088 = new Module(MultiLanguageString.importFromString("pt15:Gestão de Guias"), "/");
+        Module x1088 = new Module(MultiLanguageString.importFromString("en16:Guide Managementpt15:Gestão de Guias"), "/");
         x1086.addChild(x1088);
-        x1088.setNormalizedName(MultiLanguageString.importFromString("pt15:gestao-de-guias"));
+        x1088.setNormalizedName(MultiLanguageString.importFromString("en16:guide-managementpt15:gestao-de-guias"));
         x1088.setExecutionPath("");
         x1088.setVisible(true);
-        Functionality x1087 = new Functionality(MultiLanguageString.importFromString("pt15:Edição de Guias"));
+        Functionality x1087 = new Functionality(MultiLanguageString.importFromString("en13:Guide Editionpt15:Edição de Guias"));
         x1088.addChild(x1087);
-        x1087.setNormalizedName(MultiLanguageString.importFromString("pt15:edicao-de-guias"));
+        x1087.setNormalizedName(MultiLanguageString.importFromString("en13:guide-editionpt15:edicao-de-guias"));
         x1087.setExecutionPath("/guideManagement.do?method=prepareChooseGuide");
         x1087.setVisible(true);
-        Module x1093 = new Module(MultiLanguageString.importFromString("pt13:Gestão de CMS"), "/");
+        Module x1093 = new Module(MultiLanguageString.importFromString("en14:CMS Managementpt13:Gestão de CMS"), "/");
         x914.addChild(x1093);
-        x1093.setNormalizedName(MultiLanguageString.importFromString("pt13:gestao-de-cms"));
+        x1093.setNormalizedName(MultiLanguageString.importFromString("en14:cms-managementpt13:gestao-de-cms"));
         x1093.setExecutionPath("");
         x1093.setVisible(true);
-        Functionality x1092 = new Functionality(MultiLanguageString.importFromString("pt22:Grupos de Utilizadores"));
+        Functionality x1092 =
+                new Functionality(MultiLanguageString.importFromString("en11:User Groupspt22:Grupos de Utilizadores"));
         x1093.addChild(x1092);
-        x1092.setNormalizedName(MultiLanguageString.importFromString("pt22:grupos-de-utilizadores"));
+        x1092.setNormalizedName(MultiLanguageString.importFromString("en11:user-groupspt22:grupos-de-utilizadores"));
         x1092.setExecutionPath("/cms/personalGroupsManagement.do?method=prepare");
         x1092.setVisible(true);
-        Functionality x1094 = new Functionality(MultiLanguageString.importFromString("pt13:Configurações"));
+        Functionality x1094 = new Functionality(MultiLanguageString.importFromString("en14:Configurationspt13:Configurações"));
         x1093.addChild(x1094);
-        x1094.setNormalizedName(MultiLanguageString.importFromString("pt13:configuracoes"));
+        x1094.setNormalizedName(MultiLanguageString.importFromString("en14:configurationspt13:configuracoes"));
         x1094.setExecutionPath("/cms/cmsConfigurationManagement.do?method=prepare");
         x1094.setVisible(true);
-        Functionality x1095 = new Functionality(MultiLanguageString.importFromString("pt22:Páginas de Disciplinas"));
+        Functionality x1095 =
+                new Functionality(MultiLanguageString.importFromString("en14:Course Websitept22:Páginas de Disciplinas"));
         x1093.addChild(x1095);
-        x1095.setNormalizedName(MultiLanguageString.importFromString("pt22:paginas-de-disciplinas"));
+        x1095.setNormalizedName(MultiLanguageString.importFromString("en14:course-websitept22:paginas-de-disciplinas"));
         x1095.setExecutionPath("/cms/executionCourseWebsiteManagement.do?method=viewAll");
         x1095.setVisible(true);
-        Module x1098 = new Module(MultiLanguageString.importFromString("pt17:Gestão do Suporte"), "/");
+        Module x1098 = new Module(MultiLanguageString.importFromString("en18:Support Managementpt17:Gestão do Suporte"), "/");
         x914.addChild(x1098);
-        x1098.setNormalizedName(MultiLanguageString.importFromString("pt17:gestao-do-suporte"));
+        x1098.setNormalizedName(MultiLanguageString.importFromString("en18:support-managementpt17:gestao-do-suporte"));
         x1098.setExecutionPath("");
         x1098.setVisible(true);
-        Functionality x1097 = new Functionality(MultiLanguageString.importFromString("pt19:Gestão de Glossário"));
+        Functionality x1097 =
+                new Functionality(MultiLanguageString.importFromString("en19:Glossary Managementpt19:Gestão de Glossário"));
         x1098.addChild(x1097);
-        x1097.setNormalizedName(MultiLanguageString.importFromString("pt19:gestao-de-glossario"));
+        x1097.setNormalizedName(MultiLanguageString.importFromString("en19:glossary-managementpt19:gestao-de-glossario"));
         x1097.setExecutionPath("/manageGlossary.do?method=prepare");
         x1097.setVisible(true);
-        Functionality x1099 = new Functionality(MultiLanguageString.importFromString("pt15:Gestão de FAQ s"));
+        Functionality x1099 = new Functionality(MultiLanguageString.importFromString("en14:FAQ Managementpt15:Gestão de FAQ s"));
         x1098.addChild(x1099);
-        x1099.setNormalizedName(MultiLanguageString.importFromString("pt15:gestao-de-faq s"));
+        x1099.setNormalizedName(MultiLanguageString.importFromString("en14:faq-managementpt15:gestao-de-faq-s"));
         x1099.setExecutionPath("/manageFAQs.do?method=prepare");
         x1099.setVisible(true);
-        Functionality x1100 = new Functionality(MultiLanguageString.importFromString("pt15:Gestão de FAQ s"));
+        Functionality x1100 = new Functionality(MultiLanguageString.importFromString("en14:FAQ Managementpt15:Gestão de FAQ s"));
         x1098.addChild(x1100);
-        x1100.setNormalizedName(MultiLanguageString.importFromString("pt15:gestao-de-faq s"));
+        x1100.setNormalizedName(MultiLanguageString.importFromString("en14:faq-managementpt15:gestao-de-faq-s"));
         x1100.setExecutionPath("/manageFAQSections.do?page=1&method=createFAQSection");
         x1100.setVisible(false);
-        Module x1103 = new Module(MultiLanguageString.importFromString("pt18:Gestão de Objectos"), "/");
+        Module x1103 = new Module(MultiLanguageString.importFromString("en17:Object Managementpt18:Gestão de Objectos"), "/");
         x914.addChild(x1103);
-        x1103.setNormalizedName(MultiLanguageString.importFromString("pt18:gestao-de-objectos"));
+        x1103.setNormalizedName(MultiLanguageString.importFromString("en17:object-managementpt18:gestao-de-objectos"));
         x1103.setExecutionPath("");
         x1103.setVisible(true);
-        Functionality x1102 = new Functionality(MultiLanguageString.importFromString("pt15:Gestão da Cache"));
+        Functionality x1102 =
+                new Functionality(MultiLanguageString.importFromString("en16:Cache Managementpt15:Gestão da Cache"));
         x1103.addChild(x1102);
-        x1102.setNormalizedName(MultiLanguageString.importFromString("pt15:gestao-da-cache"));
+        x1102.setNormalizedName(MultiLanguageString.importFromString("en16:cache-managementpt15:gestao-da-cache"));
         x1102.setExecutionPath("/manageCache.do?method=prepare");
         x1102.setVisible(true);
-        Functionality x1104 = new Functionality(MultiLanguageString.importFromString("pt26:Formatação de Propriedades"));
+        Functionality x1104 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en21:Properties Formattingpt26:Formatação de Propriedades"));
         x1103.addChild(x1104);
-        x1104.setNormalizedName(MultiLanguageString.importFromString("pt26:formatacao-de-propriedades"));
+        x1104.setNormalizedName(MultiLanguageString.importFromString("en21:properties-formattingpt26:formatacao-de-propriedades"));
         x1104.setExecutionPath("/domainObjectStringPropertyFormatter.do?method=prepare");
         x1104.setVisible(true);
-        Functionality x1105 = new Functionality(MultiLanguageString.importFromString("pt17:Fusão de Objectos"));
+        Functionality x1105 = new Functionality(MultiLanguageString.importFromString("en13:Merge Objectspt17:Fusão de Objectos"));
         x1103.addChild(x1105);
-        x1105.setNormalizedName(MultiLanguageString.importFromString("pt17:fusao-de-objectos"));
+        x1105.setNormalizedName(MultiLanguageString.importFromString("en13:merge-objectspt17:fusao-de-objectos"));
         x1105.setExecutionPath("/mergeObjects.do?method=prepare");
         x1105.setVisible(true);
-        Functionality x1106 = new Functionality(MultiLanguageString.importFromString("pt18:Edição de Objectos"));
+        Functionality x1106 =
+                new Functionality(MultiLanguageString.importFromString("en14:Object Editionpt18:Edição de Objectos"));
         x1103.addChild(x1106);
-        x1106.setNormalizedName(MultiLanguageString.importFromString("pt18:edicao-de-objectos"));
+        x1106.setNormalizedName(MultiLanguageString.importFromString("en14:object-editionpt18:edicao-de-objectos"));
         x1106.setExecutionPath("/domainObjectManager.do?method=prepare");
         x1106.setVisible(true);
-        Functionality x1107 = new Functionality(MultiLanguageString.importFromString("pt16:Fusão de Pessoas"));
+        Functionality x1107 = new Functionality(MultiLanguageString.importFromString("en12:Merge Peoplept16:Fusão de Pessoas"));
         x1103.addChild(x1107);
-        x1107.setTitle(MultiLanguageString.importFromString("pt16:Fusão de Pessoas"));
-        x1107.setDescription(MultiLanguageString.importFromString("pt16:Fusão de Pessoas"));
-        x1107.setNormalizedName(MultiLanguageString.importFromString("pt16:fusao-de-pessoas"));
+        x1107.setTitle(MultiLanguageString.importFromString("en12:Merge Peoplept16:Fusão de Pessoas"));
+        x1107.setDescription(MultiLanguageString.importFromString("en12:Merge Peoplept16:Fusão de Pessoas"));
+        x1107.setNormalizedName(MultiLanguageString.importFromString("en12:merge-peoplept16:fusao-de-pessoas"));
         x1107.setExecutionPath("mergePersons.do?method=prepare");
-        Module x1110 = new Module(MultiLanguageString.importFromString("pt17:Gestão do Sistema"), "/");
+        Module x1110 = new Module(MultiLanguageString.importFromString("en17:System Managementpt17:Gestão do Sistema"), "/");
         x914.addChild(x1110);
-        x1110.setNormalizedName(MultiLanguageString.importFromString("pt17:gestao-do-sistema"));
+        x1110.setNormalizedName(MultiLanguageString.importFromString("en17:system-managementpt17:gestao-do-sistema"));
         x1110.setExecutionPath("");
         x1110.setVisible(true);
-        Functionality x1109 = new Functionality(MultiLanguageString.importFromString("pt25:Monitorização de Serviços"));
+        Functionality x1109 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en23:Services Monitorizationpt25:Monitorização de Serviços"));
         x1110.addChild(x1109);
-        x1109.setNormalizedName(MultiLanguageString.importFromString("pt25:monitorizacao-de-servicos"));
+        x1109.setNormalizedName(MultiLanguageString
+                .importFromString("en23:services-monitorizationpt25:monitorizacao-de-servicos"));
         x1109.setExecutionPath("/monitorServices.do?method=monitor");
         x1109.setVisible(true);
-        Functionality x1111 = new Functionality(MultiLanguageString.importFromString("pt24:Monitorização de Pedidos"));
+        Functionality x1111 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en23:Requests Monitorizationpt24:Monitorização de Pedidos"));
         x1110.addChild(x1111);
-        x1111.setNormalizedName(MultiLanguageString.importFromString("pt24:monitorizacao-de-pedidos"));
+        x1111.setNormalizedName(MultiLanguageString.importFromString("en23:requests-monitorizationpt24:monitorizacao-de-pedidos"));
         x1111.setExecutionPath("/monitorRequestLogs.do?method=listFiles");
         x1111.setVisible(true);
-        Functionality x1112 = new Functionality(MultiLanguageString.importFromString("pt29:Monitorização de Utilizadores"));
+        Functionality x1112 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en20:Users Monitorizationpt29:Monitorização de Utilizadores"));
         x1110.addChild(x1112);
-        x1112.setNormalizedName(MultiLanguageString.importFromString("pt29:monitorizacao-de-utilizadores"));
+        x1112.setNormalizedName(MultiLanguageString
+                .importFromString("en20:users-monitorizationpt29:monitorizacao-de-utilizadores"));
         x1112.setExecutionPath("/monitorUsers.do?method=monitor");
         x1112.setVisible(true);
-        Functionality x1113 = new Functionality(MultiLanguageString.importFromString("pt22:Informações do Sistema"));
+        Functionality x1113 =
+                new Functionality(MultiLanguageString.importFromString("en18:System Informationpt22:Informações do Sistema"));
         x1110.addChild(x1113);
-        x1113.setNormalizedName(MultiLanguageString.importFromString("pt22:informacoes-do-sistema"));
+        x1113.setNormalizedName(MultiLanguageString.importFromString("en18:system-informationpt22:informacoes-do-sistema"));
         x1113.setExecutionPath("/monitorSystem.do?method=monitor");
         x1113.setVisible(true);
-        Functionality x1114 = new Functionality(MultiLanguageString.importFromString("pt13:Kerberos Test"));
+        Functionality x1114 = new Functionality(MultiLanguageString.importFromString("en13:Kerberos Testpt14:Teste Kerberos"));
         x1110.addChild(x1114);
-        x1114.setNormalizedName(MultiLanguageString.importFromString("pt13:kerberos-test"));
+        x1114.setNormalizedName(MultiLanguageString.importFromString("en13:kerberos-testpt14:teste-kerberos"));
         x1114.setExecutionPath("/changePasswordForward.do");
         x1114.setVisible(true);
-        Functionality x1115 = new Functionality(MultiLanguageString.importFromString("pt4:Cron"));
+        Functionality x1115 = new Functionality(MultiLanguageString.importFromString("en4:Cronpt4:Cron"));
         x1110.addChild(x1115);
-        x1115.setNormalizedName(MultiLanguageString.importFromString("pt4:cron"));
+        x1115.setNormalizedName(MultiLanguageString.importFromString("en4:Cronpt4:cron"));
         x1115.setExecutionPath("/cron.do?method=showScripts&page=0");
         x1115.setVisible(true);
-        Functionality x1116 = new Functionality(MultiLanguageString.importFromString("pt13:Kerberos Test"));
+        Functionality x1116 = new Functionality(MultiLanguageString.importFromString("en13:Kerberos Testpt14:Teste Kerberos"));
         x1110.addChild(x1116);
-        x1116.setNormalizedName(MultiLanguageString.importFromString("pt13:kerberos-test"));
+        x1116.setNormalizedName(MultiLanguageString.importFromString("en13:kerberos-testpt14:teste-kerberos"));
         x1116.setExecutionPath("/changePasswordForm.do");
         x1116.setVisible(false);
-        Functionality x1117 = new Functionality(MultiLanguageString.importFromString("pt22:Sistema de Transacções"));
+        Functionality x1117 =
+                new Functionality(MultiLanguageString.importFromString("en18:Transaction Systempt22:Sistema de Transacções"));
         x1110.addChild(x1117);
-        x1117.setNormalizedName(MultiLanguageString.importFromString("pt22:sistema-de-transaccoes"));
+        x1117.setNormalizedName(MultiLanguageString.importFromString("en18:transaction-systempt22:sistema-de-transaccoes"));
         x1117.setExecutionPath("/transactionSystem.do?method=view");
         x1117.setVisible(true);
-        Functionality x1118 = new Functionality(MultiLanguageString.importFromString("pt16:Gestão de Logins"));
+        Functionality x1118 =
+                new Functionality(MultiLanguageString.importFromString("en16:Login Managementpt16:Gestão de Logins"));
         x1110.addChild(x1118);
-        x1118.setNormalizedName(MultiLanguageString.importFromString("pt16:gestao-de-logins"));
+        x1118.setNormalizedName(MultiLanguageString.importFromString("en16:login-managementpt16:gestao-de-logins"));
         x1118.setExecutionPath("/loginsManagement.do?method=prepareSearchPerson");
         x1118.setVisible(true);
-        Functionality x1119 = new Functionality(MultiLanguageString.importFromString("pt10:Queue jobs"));
+        Functionality x1119 = new Functionality(MultiLanguageString.importFromString("en10:Queue jobspt10:Queue jobs"));
         x1110.addChild(x1119);
-        x1119.setTitle(MultiLanguageString.importFromString("pt10:Queue jobs"));
-        x1119.setNormalizedName(MultiLanguageString.importFromString("pt10:queue-jobs"));
+        x1119.setTitle(MultiLanguageString.importFromString("en10:Queue jobspt10:Queue jobs"));
+        x1119.setNormalizedName(MultiLanguageString.importFromString("en10:queue-jobspt10:queue-jobs"));
         x1119.setExecutionPath("/undoneQueueJobs.do?method=prepareUndoneQueueJobList");
-        Module x1122 = new Module(MultiLanguageString.importFromString("pt25:Gestão de Funcionalidades"), "/functionalities");
+        Module x1122 =
+                new Module(MultiLanguageString.importFromString("en26:Functionalities Managementpt25:Gestão de Funcionalidades"),
+                        "/functionalities");
         x914.addChild(x1122);
-        x1122.setNormalizedName(MultiLanguageString.importFromString("pt25:gestao-de-funcionalidades"));
+        x1122.setNormalizedName(MultiLanguageString
+                .importFromString("en26:functionalities-managementpt25:gestao-de-funcionalidades"));
         x1122.setExecutionPath("");
         x1122.setVisible(true);
-        Functionality x1121 = new Functionality(MultiLanguageString.importFromString("pt19:Ver Funcionalidades"));
+        Functionality x1121 =
+                new Functionality(MultiLanguageString.importFromString("en20:View Functionalitiespt19:Ver Funcionalidades"));
         x1122.addChild(x1121);
-        x1121.setNormalizedName(MultiLanguageString.importFromString("pt19:ver-funcionalidades"));
+        x1121.setNormalizedName(MultiLanguageString.importFromString("en20:view-functionalitiespt19:ver-funcionalidades"));
         x1121.setExecutionPath("/toplevel/view.do");
         x1121.setVisible(true);
-        Functionality x1123 = new Functionality(MultiLanguageString.importFromString("pt13:Testar Filtro"));
+        Functionality x1123 = new Functionality(MultiLanguageString.importFromString("en11:Test Filterpt13:Testar Filtro"));
         x1122.addChild(x1123);
-        x1123.setNormalizedName(MultiLanguageString.importFromString("pt13:testar-filtro"));
+        x1123.setNormalizedName(MultiLanguageString.importFromString("en11:test-filterpt13:testar-filtro"));
         x1123.setExecutionPath("/filter/index.do");
         x1123.setVisible(true);
-        Functionality x1124 = new Functionality(MultiLanguageString.importFromString("pt20:Resultados do Filtro"));
+        Functionality x1124 =
+                new Functionality(MultiLanguageString.importFromString("en14:Filter Resultspt20:Resultados do Filtro"));
         x1122.addChild(x1124);
-        x1124.setNormalizedName(MultiLanguageString.importFromString("pt20:resultados-do-filtro"));
+        x1124.setNormalizedName(MultiLanguageString.importFromString("en14:filter-resultspt20:resultados-do-filtro"));
         x1124.setExecutionPath("/filter/results.do");
         x1124.setVisible(false);
-        Functionality x1125 = new Functionality(MultiLanguageString.importFromString("pt19:Linguagem de Grupos"));
+        Functionality x1125 =
+                new Functionality(MultiLanguageString.importFromString("pt14:Group Languagept19:Linguagem de Grupos"));
         x1122.addChild(x1125);
-        x1125.setNormalizedName(MultiLanguageString.importFromString("pt19:linguagem-de-grupos"));
+        x1125.setNormalizedName(MultiLanguageString.importFromString("en14:group-languagept19:linguagem-de-grupos"));
         x1125.setExecutionPath("/groupLanguage.do");
         x1125.setVisible(true);
-        Module x1128 = new Module(MultiLanguageString.importFromString("pt18:Outros mapeamentos"), "/");
+        Module x1128 = new Module(MultiLanguageString.importFromString("en14:Other Mappingspt18:Outros mapeamentos"), "/");
         x1122.addChild(x1128);
-        x1128.setNormalizedName(MultiLanguageString.importFromString("pt18:outros-mapeamentos"));
+        x1128.setNormalizedName(MultiLanguageString.importFromString("en14:other-mappingspt18:outros-mapeamentos"));
         x1128.setExecutionPath("");
         x1128.setVisible(false);
-        Module x1127 = new Module(MultiLanguageString.importFromString("pt6:Modulo"), "/module");
+        Module x1127 = new Module(MultiLanguageString.importFromString("en6:Modulept6:Modulo"), "/module");
         x1128.addChild(x1127);
-        x1127.setNormalizedName(MultiLanguageString.importFromString("pt6:modulo"));
+        x1127.setNormalizedName(MultiLanguageString.importFromString("en6:modulept6:modulo"));
         x1127.setExecutionPath("");
         x1127.setVisible(true);
-        Functionality x1126 = new Functionality(MultiLanguageString.importFromString("pt3:Ver"));
+        Functionality x1126 = new Functionality(MultiLanguageString.importFromString("en4:Viewpt3:Ver"));
         x1127.addChild(x1126);
-        x1126.setNormalizedName(MultiLanguageString.importFromString("pt3:ver"));
+        x1126.setNormalizedName(MultiLanguageString.importFromString("en4:viewpt3:ver"));
         x1126.setExecutionPath("/view.do");
         x1126.setVisible(true);
-        Functionality x1129 = new Functionality(MultiLanguageString.importFromString("pt6:Editar"));
+        Functionality x1129 = new Functionality(MultiLanguageString.importFromString("en4:Editpt6:Editar"));
         x1127.addChild(x1129);
-        x1129.setNormalizedName(MultiLanguageString.importFromString("pt6:editar"));
+        x1129.setNormalizedName(MultiLanguageString.importFromString("en4:editpt6:editar"));
         x1129.setExecutionPath("/edit.do");
         x1129.setVisible(true);
-        Functionality x1130 = new Functionality(MultiLanguageString.importFromString("pt5:Criar"));
+        Functionality x1130 = new Functionality(MultiLanguageString.importFromString("en6:Creatept5:Criar"));
         x1127.addChild(x1130);
-        x1130.setNormalizedName(MultiLanguageString.importFromString("pt5:criar"));
+        x1130.setNormalizedName(MultiLanguageString.importFromString("en6:creatept5:criar"));
         x1130.setExecutionPath("/create.do");
         x1130.setVisible(true);
-        Functionality x1131 = new Functionality(MultiLanguageString.importFromString("pt19:Organizar Estrutura"));
+        Functionality x1131 =
+                new Functionality(MultiLanguageString.importFromString("en20:Structure Managementpt19:Organizar Estrutura"));
         x1127.addChild(x1131);
-        x1131.setNormalizedName(MultiLanguageString.importFromString("pt19:organizar-estrutura"));
+        x1131.setNormalizedName(MultiLanguageString.importFromString("en20:structure-managementpt19:organizar-estrutura"));
         x1131.setExecutionPath("/organize.do");
         x1131.setVisible(true);
-        Functionality x1132 = new Functionality(MultiLanguageString.importFromString("pt18:Exportar estrutura"));
+        Functionality x1132 =
+                new Functionality(MultiLanguageString.importFromString("en16:Export Structurept18:Exportar estrutura"));
         x1127.addChild(x1132);
-        x1132.setNormalizedName(MultiLanguageString.importFromString("pt18:exportar-estrutura"));
+        x1132.setNormalizedName(MultiLanguageString.importFromString("en16:export-structurept18:exportar-estrutura"));
         x1132.setExecutionPath("/exportStructure.do");
         x1132.setVisible(true);
-        Functionality x1133 = new Functionality(MultiLanguageString.importFromString("pt18:Importar Estrutura"));
+        Functionality x1133 =
+                new Functionality(MultiLanguageString.importFromString("en16:Import Structurept18:Importar Estrutura"));
         x1127.addChild(x1133);
-        x1133.setNormalizedName(MultiLanguageString.importFromString("pt18:importar-estrutura"));
+        x1133.setNormalizedName(MultiLanguageString.importFromString("en16:import-structurept18:importar-estrutura"));
         x1133.setExecutionPath("/uploadStructure.do");
         x1133.setVisible(true);
-        Functionality x1134 = new Functionality(MultiLanguageString.importFromString("pt18:Importar Estrutura"));
+        Functionality x1134 =
+                new Functionality(MultiLanguageString.importFromString("en16:Import Structurept18:Importar Estrutura"));
         x1127.addChild(x1134);
-        x1134.setNormalizedName(MultiLanguageString.importFromString("pt18:importar-estrutura"));
+        x1134.setNormalizedName(MultiLanguageString.importFromString("en16:import-structurept18:importar-estrutura"));
         x1134.setExecutionPath("/importStructure.do");
         x1134.setVisible(true);
-        Module x1137 = new Module(MultiLanguageString.importFromString("pt15:Functionalidade"), "/functionality");
+        Module x1137 =
+                new Module(MultiLanguageString.importFromString("en13:Functionalitypt15:Functionalidade"), "/functionality");
         x1128.addChild(x1137);
-        x1137.setNormalizedName(MultiLanguageString.importFromString("pt15:functionalidade"));
+        x1137.setNormalizedName(MultiLanguageString.importFromString("en13:functionalitypt15:functionalidade"));
         x1137.setExecutionPath("");
         x1137.setVisible(true);
-        Functionality x1136 = new Functionality(MultiLanguageString.importFromString("pt3:Ver"));
+        Functionality x1136 = new Functionality(MultiLanguageString.importFromString("en4:Viewpt3:Ver"));
         x1137.addChild(x1136);
-        x1136.setNormalizedName(MultiLanguageString.importFromString("pt3:ver"));
+        x1136.setNormalizedName(MultiLanguageString.importFromString("en4:viewpt3:ver"));
         x1136.setExecutionPath("/view.do");
         x1136.setVisible(true);
-        Functionality x1138 = new Functionality(MultiLanguageString.importFromString("pt6:Editar"));
+        Functionality x1138 = new Functionality(MultiLanguageString.importFromString("en4:Editpt6:Editar"));
         x1137.addChild(x1138);
-        x1138.setNormalizedName(MultiLanguageString.importFromString("pt6:editar"));
+        x1138.setNormalizedName(MultiLanguageString.importFromString("en4:editpt6:editar"));
         x1138.setExecutionPath("/edit.do");
         x1138.setVisible(true);
-        Functionality x1139 = new Functionality(MultiLanguageString.importFromString("pt5:Criar"));
+        Functionality x1139 = new Functionality(MultiLanguageString.importFromString("en6:Creatept5:Criar"));
         x1137.addChild(x1139);
-        x1139.setNormalizedName(MultiLanguageString.importFromString("pt5:criar"));
+        x1139.setNormalizedName(MultiLanguageString.importFromString("en6:creatept5:criar"));
         x1139.setExecutionPath("/create.do");
         x1139.setVisible(true);
-        Functionality x1140 = new Functionality(MultiLanguageString.importFromString("pt16:Confirmar Apagar"));
+        Functionality x1140 = new Functionality(MultiLanguageString.importFromString("en14:Confirm Deletept16:Confirmar Apagar"));
         x1137.addChild(x1140);
-        x1140.setNormalizedName(MultiLanguageString.importFromString("pt16:confirmar-apagar"));
+        x1140.setNormalizedName(MultiLanguageString.importFromString("en14:confirm-deletept16:confirmar-apagar"));
         x1140.setExecutionPath("/confirm.do");
         x1140.setVisible(true);
-        Functionality x1141 = new Functionality(MultiLanguageString.importFromString("pt6:Apagar"));
+        Functionality x1141 = new Functionality(MultiLanguageString.importFromString("en6:Deletept6:Apagar"));
         x1137.addChild(x1141);
-        x1141.setNormalizedName(MultiLanguageString.importFromString("pt6:apagar"));
+        x1141.setNormalizedName(MultiLanguageString.importFromString("en6:deletept6:dpagar"));
         x1141.setExecutionPath("/delete.do");
         x1141.setVisible(true);
-        Functionality x1142 = new Functionality(MultiLanguageString.importFromString("pt21:Gerir Disponibilidade"));
+        Functionality x1142 =
+                new Functionality(MultiLanguageString.importFromString("en19:Manage Availabilitypt21:Gerir Disponibilidade"));
         x1137.addChild(x1142);
-        x1142.setNormalizedName(MultiLanguageString.importFromString("pt21:gerir-disponibilidade"));
+        x1142.setNormalizedName(MultiLanguageString.importFromString("en19:manage-availabilitypt21:gerir-disponibilidade"));
         x1142.setExecutionPath("/manage.do");
         x1142.setVisible(true);
         Functionality x1143 =
-                new Functionality(MultiLanguageString.importFromString("pt40:Interpretar expressão de disponibilidade"));
+                new Functionality(
+                        MultiLanguageString
+                                .importFromString("en33:Interpret Availability Expressionpt40:Interpretar expressão de disponibilidade"));
         x1137.addChild(x1143);
-        x1143.setNormalizedName(MultiLanguageString.importFromString("pt40:interpretar-expressao-de-disponibilidade"));
+        x1143.setNormalizedName(MultiLanguageString
+                .importFromString("en33:interpret-availability-expressionpt40:interpretar-expressao-de-disponibilidade"));
         x1143.setExecutionPath("/parse.do");
         x1143.setVisible(true);
-        Functionality x1144 = new Functionality(MultiLanguageString.importFromString("pt10:Desactivar"));
+        Functionality x1144 = new Functionality(MultiLanguageString.importFromString("en7:Disablept10:Desactivar"));
         x1137.addChild(x1144);
-        x1144.setNormalizedName(MultiLanguageString.importFromString("pt10:desactivar"));
+        x1144.setNormalizedName(MultiLanguageString.importFromString("en7:disablept10:desactivar"));
         x1144.setExecutionPath("/disable.do");
         x1144.setVisible(true);
-        Functionality x1145 = new Functionality(MultiLanguageString.importFromString("pt7:Activar"));
+        Functionality x1145 = new Functionality(MultiLanguageString.importFromString("en6:Enablept7:Activar"));
         x1137.addChild(x1145);
-        x1145.setNormalizedName(MultiLanguageString.importFromString("pt7:activar"));
+        x1145.setNormalizedName(MultiLanguageString.importFromString("en6:enablept7:activar"));
         x1145.setExecutionPath("/enable.do");
         x1145.setVisible(true);
-        Module x1148 = new Module(MultiLanguageString.importFromString("pt4:Topo"), "/toplevel");
+        Module x1148 = new Module(MultiLanguageString.importFromString("en3:Toppt4:Topo"), "/toplevel");
         x1128.addChild(x1148);
-        x1148.setNormalizedName(MultiLanguageString.importFromString("pt4:topo"));
+        x1148.setNormalizedName(MultiLanguageString.importFromString("en3:toppt4:topo"));
         x1148.setExecutionPath("");
         x1148.setVisible(true);
-        Functionality x1147 = new Functionality(MultiLanguageString.importFromString("pt3:Ver"));
+        Functionality x1147 = new Functionality(MultiLanguageString.importFromString("en4:Viewpt3:Ver"));
         x1148.addChild(x1147);
-        x1147.setNormalizedName(MultiLanguageString.importFromString("pt3:ver"));
+        x1147.setNormalizedName(MultiLanguageString.importFromString("en4:viewpt3:ver"));
         x1147.setExecutionPath("/view.do");
         x1147.setVisible(true);
-        Functionality x1149 = new Functionality(MultiLanguageString.importFromString("pt19:Organizar Estrutura"));
+        Functionality x1149 =
+                new Functionality(MultiLanguageString.importFromString("en20:Structure Managementpt19:Organizar Estrutura"));
         x1148.addChild(x1149);
-        x1149.setNormalizedName(MultiLanguageString.importFromString("pt19:organizar-estrutura"));
+        x1149.setNormalizedName(MultiLanguageString.importFromString("en20:structure-managementpt19:organizar-estrutura"));
         x1149.setExecutionPath("/organize.do");
         x1149.setVisible(true);
-        Functionality x1150 = new Functionality(MultiLanguageString.importFromString("pt18:Importar Estrutura"));
+        Functionality x1150 =
+                new Functionality(MultiLanguageString.importFromString("en16:Import Structurept18:Importar Estrutura"));
         x1148.addChild(x1150);
-        x1150.setNormalizedName(MultiLanguageString.importFromString("pt18:importar-estrutura"));
+        x1150.setNormalizedName(MultiLanguageString.importFromString("en16:import-structurept18:importar-estrutura"));
         x1150.setExecutionPath("/upload.do");
         x1150.setVisible(true);
-        Module x1155 = new Module(MultiLanguageString.importFromString("pt10:Frameworks"), "/");
+        Module x1155 = new Module(MultiLanguageString.importFromString("en10:Frameworkspt10:Frameworks"), "/");
         x914.addChild(x1155);
-        x1155.setNormalizedName(MultiLanguageString.importFromString("pt10:frameworks"));
+        x1155.setNormalizedName(MultiLanguageString.importFromString("en10:frameworkspt10:frameworks"));
         x1155.setExecutionPath("");
         x1155.setVisible(true);
-        Functionality x1154 = new Functionality(MultiLanguageString.importFromString("pt25:Java Server Faces Example"));
+        Functionality x1154 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en25:Java Server Faces Examplept27:Exemplo Servidor Java Faces"));
         x1155.addChild(x1154);
-        x1154.setNormalizedName(MultiLanguageString.importFromString("pt25:java-server-faces-example"));
+        x1154.setNormalizedName(MultiLanguageString
+                .importFromString("en25:java-server-faces-examplept27:exemplo-servidor-java-faces"));
         x1154.setExecutionPath("/somePage.faces");
         x1154.setVisible(true);
-        Module x1157 = new Module(MultiLanguageString.importFromString("pt6:Struts"), "/");
+        Module x1157 = new Module(MultiLanguageString.importFromString("en6:Strutspt6:Struts"), "/");
         x1155.addChild(x1157);
-        x1157.setNormalizedName(MultiLanguageString.importFromString("pt6:struts"));
+        x1157.setNormalizedName(MultiLanguageString.importFromString("en6:strutspt6:struts"));
         x1157.setExecutionPath("");
         x1157.setVisible(true);
-        Functionality x1156 = new Functionality(MultiLanguageString.importFromString("pt14:Struts Example"));
+        Functionality x1156 = new Functionality(MultiLanguageString.importFromString("en14:Struts Examplept14:Exemplo Struts"));
         x1157.addChild(x1156);
-        x1156.setNormalizedName(MultiLanguageString.importFromString("pt14:struts-example"));
+        x1156.setNormalizedName(MultiLanguageString.importFromString("en14:struts-examplept14:exemplo-struts"));
         x1156.setExecutionPath("/someStrutsPage.do?method=showFirstPage");
         x1156.setVisible(true);
-        Functionality x1158 = new Functionality(MultiLanguageString.importFromString("pt27:Reload Struts Configuration"));
+        Functionality x1158 =
+                new Functionality(
+                        MultiLanguageString
+                                .importFromString("en27:Reload Struts Configurationpt30:Recarregar Configuração Struts"));
         x1157.addChild(x1158);
-        x1158.setNormalizedName(MultiLanguageString.importFromString("pt27:reload-struts-configuration"));
+        x1158.setNormalizedName(MultiLanguageString
+                .importFromString("en27:reload-struts-configurationpt30:recarregar-configuracao-struts"));
         x1158.setExecutionPath("/reloadStruts.do");
         x1158.setVisible(true);
-        Module x1161 = new Module(MultiLanguageString.importFromString("pt9:Renderers"), "/renderers");
+        Module x1161 = new Module(MultiLanguageString.importFromString("en9:Rendererspt9:Renderers"), "/renderers");
         x1155.addChild(x1161);
-        x1161.setNormalizedName(MultiLanguageString.importFromString("pt9:renderers"));
+        x1161.setNormalizedName(MultiLanguageString.importFromString("en9:rendererspt9:renderers"));
         x1161.setExecutionPath("");
         x1161.setVisible(true);
-        Functionality x1160 = new Functionality(MultiLanguageString.importFromString("pt18:Exemplos Renderers"));
+        Functionality x1160 =
+                new Functionality(MultiLanguageString.importFromString("en18:Renderers Examplespt18:Exemplos Renderers"));
         x1161.addChild(x1160);
-        x1160.setNormalizedName(MultiLanguageString.importFromString("pt18:exemplos-renderers"));
+        x1160.setNormalizedName(MultiLanguageString.importFromString("en18:renderers-examplespt18:exemplos-renderers"));
         x1160.setExecutionPath("/index.do");
         x1160.setVisible(true);
-        Functionality x1162 = new Functionality(MultiLanguageString.importFromString("pt28:Reler Configuração Renderers"));
+        Functionality x1162 =
+                new Functionality(
+                        MultiLanguageString
+                                .importFromString("en30:Reload Renderers Configurationpt28:Reler Configuração Renderers"));
         x1161.addChild(x1162);
-        x1162.setNormalizedName(MultiLanguageString.importFromString("pt28:reler-configuracao-renderers"));
+        x1162.setNormalizedName(MultiLanguageString
+                .importFromString("en30:reload-renderers-configurationpt28:reler-configuracao-renderers"));
         x1162.setExecutionPath("/reload.do");
         x1162.setVisible(true);
-        Functionality x1163 = new Functionality(MultiLanguageString.importFromString("pt30:Exemplo 1: Input from the user"));
+        Functionality x1163 =
+                new Functionality(
+                        MultiLanguageString
+                                .importFromString("en30:Example 1: Input from the userpt30:Exemplo 1: Input do utilizador"));
         x1161.addChild(x1163);
-        x1163.setNormalizedName(MultiLanguageString.importFromString("pt30:exemplo-1:-input-from-the-user"));
+        x1163.setNormalizedName(MultiLanguageString
+                .importFromString("en29:example-1-input-from-the-userpt29:exemplo-1-input-do-utilizador"));
         x1163.setExecutionPath("/searchPersons.do?method=prepare");
         x1163.setVisible(true);
-        Module x1165 = new Module(MultiLanguageString.importFromString("pt6:Partes"), "/");
+        Module x1165 = new Module(MultiLanguageString.importFromString("en5:Partspt6:Partes"), "/");
         x1161.addChild(x1165);
-        x1165.setNormalizedName(MultiLanguageString.importFromString("pt6:partes"));
+        x1165.setNormalizedName(MultiLanguageString.importFromString("en5:partspt6:partes"));
         x1165.setExecutionPath("");
         x1165.setVisible(false);
         Functionality x1164 =
-                new Functionality(MultiLanguageString.importFromString("pt41:The first situation: presenting the world"));
+                new Functionality(
+                        MultiLanguageString
+                                .importFromString("en41:The first situation: presenting the worldpt37:Primeira situação: apresentar o mundo"));
         x1165.addChild(x1164);
-        x1164.setNormalizedName(MultiLanguageString.importFromString("pt41:the-first-situation:-presenting-the-world"));
+        x1164.setNormalizedName(MultiLanguageString
+                .importFromString("en40:the-first-situation-presenting-the-worldpt36:primeira-situacao-apresentar-o-mundo"));
         x1164.setExecutionPath("/output.do");
         x1164.setVisible(true);
-        Functionality x1166 = new Functionality(MultiLanguageString.importFromString("pt35:The second situation: give me input"));
+        Functionality x1166 =
+                new Functionality(
+                        MultiLanguageString
+                                .importFromString("en35:The second situation: give me inputpt29:Segunda situação: dá-me input"));
         x1165.addChild(x1166);
-        x1166.setNormalizedName(MultiLanguageString.importFromString("pt35:the-second-situation:-give-me-input"));
+        x1166.setNormalizedName(MultiLanguageString
+                .importFromString("en34:the-second-situation-give-me-inputpt28:segunda-situacao-da-me-input"));
         x1166.setExecutionPath("/input.do");
         x1166.setVisible(true);
         Functionality x1167 =
-                new Functionality(MultiLanguageString.importFromString("pt38:The third situation: input on steroids"));
+                new Functionality(
+                        MultiLanguageString
+                                .importFromString("en38:The third situation: input on steroidspt39:Terceira situação: input sob esteróides"));
         x1165.addChild(x1167);
-        x1167.setNormalizedName(MultiLanguageString.importFromString("pt38:the-third-situation:-input-on-steroids"));
+        x1167.setNormalizedName(MultiLanguageString
+                .importFromString("en37:the-third-situation-input-on-steroidspt38:terceira-situacao-input-sob-esteroides"));
         x1167.setExecutionPath("/steroids.do");
         x1167.setVisible(true);
         Functionality x1168 =
-                new Functionality(MultiLanguageString.importFromString("pt44:The fourth situation: renderers meet actions"));
+                new Functionality(
+                        MultiLanguageString
+                                .importFromString("en44:The fourth situation: renderers meet actionspt39:Quarta situação: renderers meet actions"));
         x1165.addChild(x1168);
-        x1168.setNormalizedName(MultiLanguageString.importFromString("pt44:the-fourth-situation:-renderers-meet-actions"));
+        x1168.setNormalizedName(MultiLanguageString
+                .importFromString("en43:the-fourth-situation-renderers-meet-actionspt38:quarta-situacao-renderers-meet-actions"));
         x1168.setExecutionPath("/actions.do");
         x1168.setVisible(true);
-        Functionality x1169 = new Functionality(MultiLanguageString.importFromString("pt35:The fifth situation: a new renderer"));
+        Functionality x1169 =
+                new Functionality(
+                        MultiLanguageString
+                                .importFromString("en35:The fifth situation: a new rendereren33:Quinta situação: um novo renderer"));
         x1165.addChild(x1169);
-        x1169.setNormalizedName(MultiLanguageString.importFromString("pt35:the-fifth-situation:-a-new-renderer"));
+        x1169.setNormalizedName(MultiLanguageString
+                .importFromString("en34:the-fifth-situation-a-new-rendererpt32:quinta-situacao-um-novo-renderer"));
         x1169.setExecutionPath("/new.do");
         x1169.setVisible(true);
-        Functionality x1170 = new Functionality(MultiLanguageString.importFromString("pt19:Appendix A: Schemas"));
+        Functionality x1170 =
+                new Functionality(MultiLanguageString.importFromString("en19:Appendix A: Schemaspt20:Apêndice A: Esquemas"));
         x1165.addChild(x1170);
-        x1170.setNormalizedName(MultiLanguageString.importFromString("pt19:appendix-a:-schemas"));
+        x1170.setNormalizedName(MultiLanguageString.importFromString("en18:appendix-a-schemaspt19:apendice-a-esquemas"));
         x1170.setExecutionPath("/schemas.do");
         x1170.setVisible(true);
-        Module x1175 = new Module(MultiLanguageString.importFromString("pt10:Pagamentos"), "/");
+        Module x1175 = new Module(MultiLanguageString.importFromString("en8:Paymentspt10:Pagamentos"), "/");
         x914.addChild(x1175);
-        x1175.setNormalizedName(MultiLanguageString.importFromString("pt10:pagamentos"));
+        x1175.setNormalizedName(MultiLanguageString.importFromString("en8:paymentspt10:pagamentos"));
         x1175.setExecutionPath("");
         x1175.setVisible(true);
-        Functionality x1174 = new Functionality(MultiLanguageString.importFromString("pt18:Upload de Ficheiro"));
+        Functionality x1174 = new Functionality(MultiLanguageString.importFromString("en11:File Uploadpt18:Upload de Ficheiro"));
         x1175.addChild(x1174);
-        x1174.setNormalizedName(MultiLanguageString.importFromString("pt18:upload-de-ficheiro"));
+        x1174.setNormalizedName(MultiLanguageString.importFromString("en11:file-uploadpt18:upload-de-ficheiro"));
         x1174.setExecutionPath("/SIBSPayments.do?method=prepareUploadSIBSPaymentFiles");
         x1174.setVisible(true);
-        Functionality x1176 = new Functionality(MultiLanguageString.importFromString("pt16:Gerir Pagamentos"));
+        Functionality x1176 =
+                new Functionality(MultiLanguageString.importFromString("en15:Manage Paymentspt16:Gerir Pagamentos"));
         x1175.addChild(x1176);
-        x1176.setTitle(MultiLanguageString.importFromString("pt16:Gerir Pagamentos"));
-        x1176.setNormalizedName(MultiLanguageString.importFromString("pt16:gerir-pagamentos"));
+        x1176.setTitle(MultiLanguageString.importFromString("en15:Manage Paymentspt16:Gerir Pagamentos"));
+        x1176.setNormalizedName(MultiLanguageString.importFromString("en15:manage-paymentspt16:gerir-pagamentos"));
         x1176.setExecutionPath("/payments.do?method=prepareSearchPerson");
         x1176.setVisible(true);
         ExpressionGroupAvailability x1628 = new ExpressionGroupAvailability(x1176, "role(MANAGER)");
         x1628.setTargetGroup(Group.fromString("role(MANAGER)"));
         x1176.setAvailabilityPolicy(x1628);
-        Functionality x1177 = new Functionality(MultiLanguageString.importFromString("pt20:Regras de Pagamentos"));
+        Functionality x1177 =
+                new Functionality(MultiLanguageString.importFromString("en13:Payment Rulespt20:Regras de Pagamentos"));
         x1175.addChild(x1177);
-        x1177.setTitle(MultiLanguageString.importFromString("pt20:Regras de Pagamentos"));
+        x1177.setTitle(MultiLanguageString.importFromString("en13:Payment Rulespt20:Regras de Pagamentos"));
         x1177.setNormalizedName(MultiLanguageString.importFromString("pt20:regras-de-pagamentos"));
         x1177.setExecutionPath("/postingRules.do?method=prepare");
         x1177.setVisible(true);
@@ -1620,261 +1887,314 @@ public class CreateFunctionallityTree {
         x1179.setTitle(MultiLanguageString.importFromString("en20:Sibs payment reportspt28:Relatórios de pagamento sibs"));
         x1179.setNormalizedName(MultiLanguageString.importFromString("en7:reportspt10:relatorios"));
         x1179.setExecutionPath("/sibsReports.do?method=prepareReportByYearAndMonth");
-        Functionality x1180 = new Functionality(MultiLanguageString.importFromString("pt21:Relatório de propinas"));
+        Functionality x1180 =
+                new Functionality(MultiLanguageString.importFromString("en14:Tuition reportpt21:Relatório de propinas"));
         x1175.addChild(x1180);
-        x1180.setTitle(MultiLanguageString.importFromString("pt21:Relatório de propinas"));
-        x1180.setDescription(MultiLanguageString.importFromString("pt21:Relatório de propinas"));
-        x1180.setNormalizedName(MultiLanguageString.importFromString("pt21:relatorio-de-propinas"));
+        x1180.setTitle(MultiLanguageString.importFromString("en14:Tuition reportpt21:Relatório de propinas"));
+        x1180.setDescription(MultiLanguageString.importFromString("en14:Tuition reportpt21:Relatório de propinas"));
+        x1180.setNormalizedName(MultiLanguageString.importFromString("en14:tuition-reportpt21:relatorio-de-propinas"));
         x1180.setExecutionPath("/gratuityReports.do?method=listReports");
-        Functionality x1181 = new Functionality(MultiLanguageString.importFromString("pt25:Exportação de Referências"));
+        Functionality x1181 =
+                new Functionality(MultiLanguageString.importFromString("en16:Reference Exportpt25:Exportação de Referências"));
         x1175.addChild(x1181);
-        x1181.setTitle(MultiLanguageString.importFromString("pt25:Exportação de Referências"));
-        x1181.setDescription(MultiLanguageString.importFromString("pt25:Exportação de Referências"));
-        x1181.setNormalizedName(MultiLanguageString.importFromString("pt25:exportacao-de-referencias"));
+        x1181.setTitle(MultiLanguageString.importFromString("en16:Reference Exportpt25:Exportação de Referências"));
+        x1181.setDescription(MultiLanguageString.importFromString("en16:Reference Exportpt25:Exportação de Referências"));
+        x1181.setNormalizedName(MultiLanguageString.importFromString("en16:reference-reportpt25:exportacao-de-referencias"));
         x1181.setExecutionPath("exportSIBSPayments.do?method=listOutgoingPaymentsFile");
-        Functionality x1182 = new Functionality(MultiLanguageString.importFromString("pt20:Relatório de Dividas"));
+        Functionality x1182 =
+                new Functionality(MultiLanguageString.importFromString("en11:Debt Reportpt20:Relatório de Dividas"));
         x1175.addChild(x1182);
-        x1182.setTitle(MultiLanguageString.importFromString("pt20:Relatório de Dividas"));
-        x1182.setDescription(MultiLanguageString.importFromString("pt20:Relatório de Dividas"));
-        x1182.setNormalizedName(MultiLanguageString.importFromString("pt20:relatorio-de-dividas"));
+        x1182.setTitle(MultiLanguageString.importFromString("en11:Debt Reportpt20:Relatório de Dividas"));
+        x1182.setDescription(MultiLanguageString.importFromString("en11:Debt Reportpt20:Relatório de Dividas"));
+        x1182.setNormalizedName(MultiLanguageString.importFromString("en11:debt-reportpt20:relatorio-de-dividas"));
         x1182.setExecutionPath("/eventReports.do?method=listReports");
         ExpressionGroupAvailability x1629 = new ExpressionGroupAvailability(x1175, "role(MANAGER)");
         x1629.setTargetGroup(Group.fromString("role(MANAGER)"));
         x1175.setAvailabilityPolicy(x1629);
-        Module x1185 = new Module(MultiLanguageString.importFromString("pt21:Gestão de Calendários"), "/");
+        Module x1185 =
+                new Module(MultiLanguageString.importFromString("en19:Calendar Managementpt21:Gestão de Calendários"), "/");
         x914.addChild(x1185);
-        x1185.setNormalizedName(MultiLanguageString.importFromString("pt21:gestao-de-calendarios"));
+        x1185.setNormalizedName(MultiLanguageString.importFromString("en19:calendar-managementpt21:gestao-de-calendarios"));
         x1185.setExecutionPath("");
         x1185.setVisible(true);
-        Functionality x1184 = new Functionality(MultiLanguageString.importFromString("pt22:Calendários Académicos"));
+        Functionality x1184 =
+                new Functionality(MultiLanguageString.importFromString("en18:Academic Calendarspt22:Calendários Académicos"));
         x1185.addChild(x1184);
-        x1184.setNormalizedName(MultiLanguageString.importFromString("pt22:calendarios-academicos"));
+        x1184.setNormalizedName(MultiLanguageString.importFromString("en18:academic-calendarspt22:calendarios-academicos"));
         x1184.setExecutionPath("/academicCalendarsManagement.do?method=prepareChooseCalendar");
         x1184.setVisible(true);
-        Functionality x1186 = new Functionality(MultiLanguageString.importFromString("pt26:Criar Calendário Académico"));
+        Functionality x1186 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en24:Create Academic Calendarpt26:Criar Calendário Académico"));
         x1185.addChild(x1186);
-        x1186.setNormalizedName(MultiLanguageString.importFromString("pt26:criar-calendario-academico"));
+        x1186.setNormalizedName(MultiLanguageString
+                .importFromString("en24:create-academic-calendarpt26:criar-calendario-academico"));
         x1186.setExecutionPath("/prepareCreateAcademicCalendar.do");
         x1186.setVisible(false);
-        Module x1189 = new Module(MultiLanguageString.importFromString("pt23:Actividades Científicas"), "/");
+        Module x1189 =
+                new Module(MultiLanguageString.importFromString("en21:Scientific Activitiespt23:Actividades Científicas"), "/");
         x914.addChild(x1189);
-        x1189.setTitle(MultiLanguageString.importFromString("pt23:Actividades Científicas"));
-        x1189.setNormalizedName(MultiLanguageString.importFromString("pt23:actividades-cientificas"));
+        x1189.setTitle(MultiLanguageString.importFromString("en21:Scientific Activitiespt23:Actividades Científicas"));
+        x1189.setNormalizedName(MultiLanguageString.importFromString("en21:scientific-activitiespt23:actividades-cientificas"));
         x1189.setExecutionPath("");
         x1189.setVisible(true);
-        Functionality x1188 = new Functionality(MultiLanguageString.importFromString("pt14:Editar Revista"));
+        Functionality x1188 = new Functionality(MultiLanguageString.importFromString("en12:Edit Journalpt14:Editar Revista"));
         x1189.addChild(x1188);
-        x1188.setTitle(MultiLanguageString.importFromString("pt14:Editar Revista"));
-        x1188.setNormalizedName(MultiLanguageString.importFromString("pt14:editar-revista"));
+        x1188.setTitle(MultiLanguageString.importFromString("en12:Edit Journalpt14:Editar Revista"));
+        x1188.setNormalizedName(MultiLanguageString.importFromString("en12:edit-journalpt14:editar-revista"));
         x1188.setExecutionPath("/editScientificJournal.do?method=prepare");
         x1188.setVisible(true);
-        Functionality x1190 = new Functionality(MultiLanguageString.importFromString("pt13:Editar Evento"));
+        Functionality x1190 = new Functionality(MultiLanguageString.importFromString("en10:Edit Eventpt13:Editar Evento"));
         x1189.addChild(x1190);
-        x1190.setTitle(MultiLanguageString.importFromString("pt13:Editar Evento"));
-        x1190.setNormalizedName(MultiLanguageString.importFromString("pt13:editar-evento"));
+        x1190.setTitle(MultiLanguageString.importFromString("en10:Edit Eventpt13:Editar Evento"));
+        x1190.setNormalizedName(MultiLanguageString.importFromString("en10:edit-eventpt13:editar-evento"));
         x1190.setExecutionPath("/editEvent.do?method=prepare");
         x1190.setVisible(true);
-        Functionality x1191 = new Functionality(MultiLanguageString.importFromString("pt15:Juntar Revistas"));
+        Functionality x1191 = new Functionality(MultiLanguageString.importFromString("en14:Merge Journalspt15:Juntar Revistas"));
         x1189.addChild(x1191);
-        x1191.setTitle(MultiLanguageString.importFromString("pt15:Juntar Revistas"));
-        x1191.setNormalizedName(MultiLanguageString.importFromString("pt15:juntar-revistas"));
+        x1191.setTitle(MultiLanguageString.importFromString("en14:Merge Journalspt15:Juntar Revistas"));
+        x1191.setNormalizedName(MultiLanguageString.importFromString("en14:merge-journalspt15:juntar-revistas"));
         x1191.setExecutionPath("/mergeScientificJournal.do?method=prepare");
         x1191.setVisible(true);
-        Functionality x1192 = new Functionality(MultiLanguageString.importFromString("pt14:Juntar Eventos"));
+        Functionality x1192 = new Functionality(MultiLanguageString.importFromString("en12:Merge Eventspt14:Juntar Eventos"));
         x1189.addChild(x1192);
-        x1192.setTitle(MultiLanguageString.importFromString("pt14:Juntar Eventos"));
-        x1192.setNormalizedName(MultiLanguageString.importFromString("pt14:juntar-eventos"));
+        x1192.setTitle(MultiLanguageString.importFromString("en12:Merge Eventspt14:Juntar Eventos"));
+        x1192.setNormalizedName(MultiLanguageString.importFromString("en12:merge-eventspt14:juntar-eventos"));
         x1192.setExecutionPath("/mergeEvents.do?method=prepare");
         x1192.setVisible(true);
-        Functionality x1193 = new Functionality(MultiLanguageString.importFromString("pt25:Juntar Volumes de Revista"));
+        Functionality x1193 =
+                new Functionality(MultiLanguageString.importFromString("en20:Merge Journal Issuespt25:Juntar Volumes de Revista"));
         x1189.addChild(x1193);
-        x1193.setTitle(MultiLanguageString.importFromString("pt25:Juntar Volumes de Revista"));
-        x1193.setNormalizedName(MultiLanguageString.importFromString("pt25:juntar-volumes-de-revista"));
+        x1193.setTitle(MultiLanguageString.importFromString("en20:Merge Journal Issuespt25:Juntar Volumes de Revista"));
+        x1193.setNormalizedName(MultiLanguageString.importFromString("en20:merge-journal-issuespt25:juntar-volumes-de-revista"));
         x1193.setExecutionPath("/editScientificJournalMergeJournalIssues.do?method=prepare");
         x1193.setVisible(true);
-        Functionality x1194 = new Functionality(MultiLanguageString.importFromString("pt24:Juntar Edições de Evento"));
+        Functionality x1194 =
+                new Functionality(MultiLanguageString.importFromString("en20:Merge Event Editionspt24:Juntar Edições de Evento"));
         x1189.addChild(x1194);
-        x1194.setTitle(MultiLanguageString.importFromString("pt24:Juntar Edições de Evento"));
-        x1194.setNormalizedName(MultiLanguageString.importFromString("pt24:juntar-edicoes-de-evento"));
+        x1194.setTitle(MultiLanguageString.importFromString("en20:Merge Event Editionspt24:Juntar Edições de Evento"));
+        x1194.setNormalizedName(MultiLanguageString.importFromString("en20:merge-event-editionspt24:juntar-edicoes-de-evento"));
         x1194.setExecutionPath("/editEventMergeEventEditions.do?method=prepare");
         x1194.setVisible(true);
-        Functionality x1195 = new Functionality(MultiLanguageString.importFromString("pt25:Juntar Volumes de Revista"));
+        Functionality x1195 =
+                new Functionality(MultiLanguageString.importFromString("en20:Merge Journal Issuespt25:Juntar Volumes de Revista"));
         x1189.addChild(x1195);
-        x1195.setNormalizedName(MultiLanguageString.importFromString("pt25:juntar-volumes-de-revista"));
+        x1195.setNormalizedName(MultiLanguageString.importFromString("en20:merge-journal-issuespt25:juntar-volumes-de-revista"));
         x1195.setExecutionPath("/mergeJournalIssues.do");
         x1195.setVisible(false);
-        Functionality x1196 = new Functionality(MultiLanguageString.importFromString("pt24:Juntar Edições de Evento"));
+        Functionality x1196 =
+                new Functionality(MultiLanguageString.importFromString("en20:Merge Event Editionspt24:Juntar Edições de Evento"));
         x1189.addChild(x1196);
-        x1196.setNormalizedName(MultiLanguageString.importFromString("pt24:juntar-edicoes-de-evento"));
+        x1196.setNormalizedName(MultiLanguageString.importFromString("en20:merge-event-editionspt24:juntar-edicoes-de-evento"));
         x1196.setExecutionPath("/mergeEventEditions.do");
         x1196.setVisible(false);
-        Module x1199 = new Module(MultiLanguageString.importFromString("pt40:Grupos Persistentes (Controlo de Acesso)"), "/");
+        Module x1199 =
+                new Module(
+                        MultiLanguageString
+                                .importFromString("en34:Persistent Groups (Access Control)pt40:Grupos Persistentes (Controlo de Acesso)"),
+                        "/");
         x914.addChild(x1199);
-        x1199.setNormalizedName(MultiLanguageString.importFromString("pt40:grupos-persistentes-(controlo-de-acesso)"));
+        x1199.setNormalizedName(MultiLanguageString
+                .importFromString("en32:persistent-groups-access-controlpt38:grupos-persistentes-controlo-de-acesso"));
         x1199.setExecutionPath("");
         x1199.setVisible(true);
-        Functionality x1198 = new Functionality(MultiLanguageString.importFromString("pt12:Gerir Grupos"));
+        Functionality x1198 = new Functionality(MultiLanguageString.importFromString("en13:Manage Groupspt12:Gerir Grupos"));
         x1199.addChild(x1198);
-        x1198.setNormalizedName(MultiLanguageString.importFromString("pt12:gerir-grupos"));
+        x1198.setNormalizedName(MultiLanguageString.importFromString("en13:manage-groupspt12:gerir-grupos"));
         x1198.setExecutionPath("/accessControlPersistentGroupsManagement.do?method=listAllGroups");
         x1198.setVisible(true);
-        Module x1202 = new Module(MultiLanguageString.importFromString("pt20:Transição de Bolonha"), "/");
+        Module x1202 = new Module(MultiLanguageString.importFromString("en18:Bolonha Transitionpt20:Transição de Bolonha"), "/");
         x914.addChild(x1202);
-        x1202.setNormalizedName(MultiLanguageString.importFromString("pt20:transicao-de-bolonha"));
+        x1202.setNormalizedName(MultiLanguageString.importFromString("en18:bolonha-transitionpt20:transicao-de-bolonha"));
         x1202.setExecutionPath("");
         x1202.setVisible(true);
-        Functionality x1201 = new Functionality(MultiLanguageString.importFromString("pt30:Planos de Equivalência Globais"));
+        Functionality x1201 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en24:Global Equivalence Planspt30:Planos de Equivalência Globais"));
         x1202.addChild(x1201);
-        x1201.setNormalizedName(MultiLanguageString.importFromString("pt30:planos-de-equivalencia-globais"));
+        x1201.setNormalizedName(MultiLanguageString
+                .importFromString("en24:global-equivalence-planspt30:planos-de-equivalencia-globais"));
         x1201.setExecutionPath("/degreeCurricularPlan/equivalencyPlan.do?method=showPlan");
         x1201.setVisible(true);
-        Functionality x1203 = new Functionality(MultiLanguageString.importFromString("pt29:Planos de Equivalência Locais"));
+        Functionality x1203 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en23:Local Equivalence Planspt29:Planos de Equivalência Locais"));
         x1202.addChild(x1203);
-        x1203.setNormalizedName(MultiLanguageString.importFromString("pt29:planos-de-equivalencia-locais"));
+        x1203.setNormalizedName(MultiLanguageString
+                .importFromString("en23:local-equivalence-planspt29:planos-de-equivalencia-locais"));
         x1203.setExecutionPath("/degreeCurricularPlan/studentEquivalencyPlan.do?method=showPlan");
         x1203.setVisible(true);
-        Functionality x1204 = new Functionality(MultiLanguageString.importFromString("pt18:Currículo do Aluno"));
+        Functionality x1204 =
+                new Functionality(MultiLanguageString.importFromString("en18:Student Curriculumpt18:Currículo do Aluno"));
         x1202.addChild(x1204);
-        x1204.setNormalizedName(MultiLanguageString.importFromString("pt18:curriculo-do-aluno"));
+        x1204.setNormalizedName(MultiLanguageString.importFromString("en18:student-curriculumpt18:curriculo-do-aluno"));
         x1204.setExecutionPath("/bolonhaTransitionManagement.do?method=prepareChooseStudent");
         x1204.setVisible(true);
-        Module x1207 = new Module(MultiLanguageString.importFromString("pt6:Alunos"), "/");
+        Module x1207 = new Module(MultiLanguageString.importFromString("en8:Studentspt6:Alunos"), "/");
         x914.addChild(x1207);
-        x1207.setNormalizedName(MultiLanguageString.importFromString("pt6:alunos"));
+        x1207.setNormalizedName(MultiLanguageString.importFromString("en8:studentspt6:alunos"));
         x1207.setExecutionPath("");
         x1207.setVisible(true);
-        Functionality x1206 = new Functionality(MultiLanguageString.importFromString("pt5:Gerir"));
+        Functionality x1206 = new Functionality(MultiLanguageString.importFromString("en6:Managept5:Gerir"));
         x1207.addChild(x1206);
-        x1206.setNormalizedName(MultiLanguageString.importFromString("pt5:gerir"));
+        x1206.setNormalizedName(MultiLanguageString.importFromString("en6:managept5:gerir"));
         x1206.setExecutionPath("/bolonhaStudentEnrolment.do?method=prepareSearchStudent");
         x1206.setVisible(true);
-        Functionality x1208 = new Functionality(MultiLanguageString.importFromString("pt16:Mover Inscrições"));
+        Functionality x1208 =
+                new Functionality(MultiLanguageString.importFromString("en15:Move Enrolmentspt16:Mover Inscrições"));
         x1207.addChild(x1208);
-        x1208.setNormalizedName(MultiLanguageString.importFromString("pt16:mover-inscricoes"));
+        x1208.setNormalizedName(MultiLanguageString.importFromString("en15:move-enrolmentspt16:mover-inscricoes"));
         x1208.setExecutionPath("/curriculumLinesLocationManagement.do?method=prepare");
         x1208.setVisible(false);
-        Functionality x1209 = new Functionality(MultiLanguageString.importFromString("pt19:Gestão de Dispensas"));
+        Functionality x1209 =
+                new Functionality(MultiLanguageString.importFromString("en20:Dismissal Managementpt19:Gestão de Dispensas"));
         x1207.addChild(x1209);
-        x1209.setNormalizedName(MultiLanguageString.importFromString("pt19:gestao-de-dispensas"));
+        x1209.setNormalizedName(MultiLanguageString.importFromString("en20:dismissal-managementpt19:gestao-de-dispensas"));
         x1209.setExecutionPath("/studentDismissals.do?method=manage");
         x1209.setVisible(false);
-        Functionality x1210 = new Functionality(MultiLanguageString.importFromString("pt23:Gestão de Substituições"));
+        Functionality x1210 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en23:Substitution Managementpt23:Gestão de Substituições"));
         x1207.addChild(x1210);
-        x1210.setNormalizedName(MultiLanguageString.importFromString("pt23:gestao-de-substituicoes"));
+        x1210.setNormalizedName(MultiLanguageString.importFromString("en23:substitution-managementpt23:gestao-de-substituicoes"));
         x1210.setExecutionPath("/studentSubstitutions.do?method=prepare");
         x1210.setVisible(false);
-        Functionality x1211 = new Functionality(MultiLanguageString.importFromString("pt23:Gestão de Equivalências"));
+        Functionality x1211 =
+                new Functionality(MultiLanguageString.importFromString("en22:Equivalence Managementpt23:Gestão de Equivalências"));
         x1207.addChild(x1211);
-        x1211.setNormalizedName(MultiLanguageString.importFromString("pt23:gestao-de-equivalencias"));
+        x1211.setNormalizedName(MultiLanguageString.importFromString("en22:equivalence-managementpt23:gestao-de-equivalencias"));
         x1211.setExecutionPath("/studentEquivalences.do?method=prepare");
         x1211.setVisible(false);
-        Functionality x1212 = new Functionality(MultiLanguageString.importFromString("pt18:Gestão de Créditos"));
+        Functionality x1212 =
+                new Functionality(MultiLanguageString.importFromString("en17:Credit Managementpt18:Gestão de Créditos"));
         x1207.addChild(x1212);
-        x1212.setNormalizedName(MultiLanguageString.importFromString("pt18:gestao-de-creditos"));
+        x1212.setNormalizedName(MultiLanguageString.importFromString("en17:credit-managementpt18:gestao-de-creditos"));
         x1212.setExecutionPath("/studentCredits.do?method=prepare");
         x1212.setVisible(false);
-        Functionality x1213 = new Functionality(MultiLanguageString.importFromString("pt20:Gestão de Apuramento"));
+        Functionality x1213 =
+                new Functionality(MultiLanguageString.importFromString("en21:Conclusion Managementpt20:Gestão de Apuramento"));
         x1207.addChild(x1213);
-        x1213.setNormalizedName(MultiLanguageString.importFromString("pt20:gestao-de-apuramento"));
+        x1213.setNormalizedName(MultiLanguageString.importFromString("en21:conclusion-managementpt20:gestao-de-apuramento"));
         x1213.setExecutionPath("/registrationConclusion.do?method=show");
         x1213.setVisible(false);
-        Functionality x1214 = new Functionality(MultiLanguageString.importFromString("pt17:Gestão de Estados"));
+        Functionality x1214 =
+                new Functionality(MultiLanguageString.importFromString("en16:State Managementpt17:Gestão de Estados"));
         x1207.addChild(x1214);
-        x1214.setNormalizedName(MultiLanguageString.importFromString("pt17:gestao-de-estados"));
+        x1214.setNormalizedName(MultiLanguageString.importFromString("en16:state-management"));
         x1214.setExecutionPath("/manageRegistrationState.do?method=prepare");
         x1214.setVisible(false);
-        Functionality x1215 = new Functionality(MultiLanguageString.importFromString("pt17:Ver EnrolmentLogs"));
+        Functionality x1215 =
+                new Functionality(MultiLanguageString.importFromString("en19:View Enrolment Logspt21:Ver Logs de Inscrição"));
         x1207.addChild(x1215);
-        x1215.setNormalizedName(MultiLanguageString.importFromString("pt17:ver-enrolmentlogs"));
+        x1215.setNormalizedName(MultiLanguageString.importFromString("en19:view-enrolment-logspt21:ver-logs-de-inscricao"));
         x1215.setExecutionPath("/curriculumLineLogs.do?method=prepareViewCurriculumLineLogs");
-        Functionality x1216 = new Functionality(MultiLanguageString.importFromString("pt18:Importação da DGES"));
+        Functionality x1216 = new Functionality(MultiLanguageString.importFromString("en11:DGES Importpt18:Importação da DGES"));
         x1207.addChild(x1216);
-        x1216.setTitle(MultiLanguageString.importFromString("pt18:Importação da DGES"));
-        x1216.setDescription(MultiLanguageString.importFromString("pt18:Importação da DGES"));
-        x1216.setNormalizedName(MultiLanguageString.importFromString("pt18:importacao-da-dges"));
+        x1216.setTitle(MultiLanguageString.importFromString("en11:DGES Importpt18:Importação da DGES"));
+        x1216.setDescription(MultiLanguageString.importFromString("en11:DGES Importpt18:Importação da DGES"));
+        x1216.setNormalizedName(MultiLanguageString.importFromString("en11:dges-importpt18:importacao-da-dges"));
         x1216.setExecutionPath("/dgesStudentImportationProcess.do?method=list");
-        Functionality x1217 = new Functionality(MultiLanguageString.importFromString("pt28:Inscrições em Época Especial"));
+        Functionality x1217 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en25:Special Season Enrolmentspt28:Inscrições em Época Especial"));
         x1207.addChild(x1217);
-        x1217.setNormalizedName(MultiLanguageString.importFromString("pt28:inscricoes-em-epoca-especial"));
+        x1217.setNormalizedName(MultiLanguageString
+                .importFromString("en25:special-season-enrolmentspt28:inscricoes-em-epoca-especial"));
         x1217.setExecutionPath("/specialSeason/specialSeasonStatusTracker.do?method=selectCourses");
-        Functionality x1218 = new Functionality(MultiLanguageString.importFromString("pt27:Sumário Candidaturas 1ª vez"));
+        Functionality x1218 =
+                new Functionality(
+                        MultiLanguageString
+                                .importFromString("en29:1st Time Applications Summarypt27:Sumário Candidaturas 1ª vez"));
         x1207.addChild(x1218);
-        x1218.setTitle(MultiLanguageString.importFromString("pt27:Sumário Candidaturas 1ª vez"));
-        x1218.setNormalizedName(MultiLanguageString.importFromString("pt26:sumario-candidaturas-1-vez"));
+        x1218.setTitle(MultiLanguageString.importFromString("en29:1st Time Applications Summarypt27:Sumário Candidaturas 1ª vez"));
+        x1218.setNormalizedName(MultiLanguageString
+                .importFromString("en29:1st-time-applications-summarypt26:sumario-candidaturas-1-vez"));
         x1218.setExecutionPath("/candidacySummary.do?method=prepare");
-        Module x1221 = new Module(MultiLanguageString.importFromString("pt6:Pautas"), "/");
+        Module x1221 = new Module(MultiLanguageString.importFromString("en11:Mark Sheetspt6:Pautas"), "/");
         x914.addChild(x1221);
-        x1221.setNormalizedName(MultiLanguageString.importFromString("pt6:pautas"));
+        x1221.setNormalizedName(MultiLanguageString.importFromString("en11:mark-sheetspt6:pautas"));
         x1221.setExecutionPath("");
         x1221.setVisible(true);
-        Functionality x1220 = new Functionality(MultiLanguageString.importFromString("pt12:Anular Pauta"));
+        Functionality x1220 = new Functionality(MultiLanguageString.importFromString("en17:Cancel Mark Sheet"));
         x1221.addChild(x1220);
-        x1220.setNormalizedName(MultiLanguageString.importFromString("pt12:anular-pauta"));
+        x1220.setNormalizedName(MultiLanguageString.importFromString("en17:cancel-mark-sheetpt12:anular-pauta"));
         x1220.setExecutionPath("/markSheetManagement.do?method=prepareSearchMarkSheet");
         x1220.setVisible(true);
-        Module x1224 = new Module(MultiLanguageString.importFromString("pt13:EnrolmentLogs"), "/");
+        Module x1224 = new Module(MultiLanguageString.importFromString("en14:Enrolment Logspt17:Logs de Inscrição"), "/");
         x914.addChild(x1224);
-        x1224.setNormalizedName(MultiLanguageString.importFromString("pt13:enrolmentlogs"));
-        Functionality x1223 = new Functionality(MultiLanguageString.importFromString("pt17:Ver EnrolmentLogs"));
+        x1224.setNormalizedName(MultiLanguageString.importFromString("en14:enrolment-logspt17:logs-de-inscricao"));
+        Functionality x1223 =
+                new Functionality(MultiLanguageString.importFromString("en19:View Enrolment Logspt21:Ver Logs de Inscrição"));
         x1224.addChild(x1223);
-        x1223.setNormalizedName(MultiLanguageString.importFromString("pt17:ver-enrolmentlogs"));
+        x1223.setNormalizedName(MultiLanguageString.importFromString("en19:view-enrolment-logspt21:ver-logs-de-inscricao"));
         x1223.setExecutionPath("/curriculumLineLogs.do?method=prepareViewCurriculumLineLogs");
-        Module x1227 = new Module(MultiLanguageString.importFromString("pt28:Gestao de Documentos Gerados"), "/");
+        Module x1227 =
+                new Module(
+                        MultiLanguageString
+                                .importFromString("en30:Generated Documents Managementpt28:Gestao de Documentos Gerados"),
+                        "/");
         x914.addChild(x1227);
-        x1227.setTitle(MultiLanguageString.importFromString("pt28:Gestao de Documentos Gerados"));
-        x1227.setNormalizedName(MultiLanguageString.importFromString("pt28:gestao-de-documentos-gerados"));
-        Functionality x1226 = new Functionality(MultiLanguageString.importFromString("pt19:Procurar Documentos"));
+        x1227.setTitle(MultiLanguageString
+                .importFromString("en30:Generated Documents Managementpt28:Gestao de Documentos Gerados"));
+        x1227.setNormalizedName(MultiLanguageString
+                .importFromString("en30:generated-documents-managementpt28:gestao-de-documentos-gerados"));
+        Functionality x1226 =
+                new Functionality(MultiLanguageString.importFromString("en16:Search Documentspt19:Procurar Documentos"));
         x1227.addChild(x1226);
-        x1226.setTitle(MultiLanguageString.importFromString("pt19:Procurar Documentos"));
-        x1226.setNormalizedName(MultiLanguageString.importFromString("pt19:procurar-documentos"));
+        x1226.setTitle(MultiLanguageString.importFromString("en16:Search Documentspt19:Procurar Documentos"));
+        x1226.setNormalizedName(MultiLanguageString.importFromString("en16:search-documentspt19:procurar-documentos"));
         x1226.setExecutionPath("/generatedDocuments.do?method=prepare");
-        Module x1230 = new Module(MultiLanguageString.importFromString("pt11:Fotografias"), "/photographs");
+        Module x1230 = new Module(MultiLanguageString.importFromString("en11:Photographspt11:Fotografias"), "/photographs");
         x914.addChild(x1230);
-        x1230.setTitle(MultiLanguageString.importFromString("pt11:Fotografias"));
-        x1230.setNormalizedName(MultiLanguageString.importFromString("pt11:fotografias"));
-        Functionality x1229 = new Functionality(MultiLanguageString.importFromString("pt9:Historial"));
+        x1230.setTitle(MultiLanguageString.importFromString("en11:Photographspt11:Fotografias"));
+        x1230.setNormalizedName(MultiLanguageString.importFromString("en11:photographspt11:fotografias"));
+        Functionality x1229 = new Functionality(MultiLanguageString.importFromString("en7:Historypt9:Historial"));
         x1230.addChild(x1229);
-        x1229.setTitle(MultiLanguageString.importFromString("pt9:Historial"));
-        x1229.setNormalizedName(MultiLanguageString.importFromString("pt9:historial"));
+        x1229.setTitle(MultiLanguageString.importFromString("en7:Historypt9:Historial"));
+        x1229.setNormalizedName(MultiLanguageString.importFromString("en7:historypt9:historial"));
         x1229.setExecutionPath("/history.do?method=history");
-        Functionality x1231 = new Functionality(MultiLanguageString.importFromString("pt9:Rejeicoes"));
+        Functionality x1231 = new Functionality(MultiLanguageString.importFromString("en10:Rejectionspt9:Rejeicoes"));
         x1230.addChild(x1231);
-        x1231.setTitle(MultiLanguageString.importFromString("pt9:Rejeicoes"));
-        x1231.setNormalizedName(MultiLanguageString.importFromString("pt9:rejeicoes"));
+        x1231.setTitle(MultiLanguageString.importFromString("en10:Rejectionspt9:Rejeicoes"));
+        x1231.setNormalizedName(MultiLanguageString.importFromString("en10:rejectionspt9:rejeicoes"));
         x1231.setExecutionPath("/history.do?method=rejections");
-        Functionality x1232 = new Functionality(MultiLanguageString.importFromString("pt10:Aprovacoes"));
+        Functionality x1232 = new Functionality(MultiLanguageString.importFromString("en9:Approvalspt10:Aprovacoes"));
         x1230.addChild(x1232);
-        x1232.setTitle(MultiLanguageString.importFromString("pt10:Aprovacoes"));
-        x1232.setNormalizedName(MultiLanguageString.importFromString("pt10:aprovacoes"));
+        x1232.setTitle(MultiLanguageString.importFromString("en9:Approvalspt10:Aprovacoes"));
+        x1232.setNormalizedName(MultiLanguageString.importFromString("en9:approvalspt10:aprovacoes"));
         x1232.setExecutionPath("/history.do?method=approvals");
         Module x1235 = new Module(MultiLanguageString.importFromString("pt23:Núcleo de Pós Graduação"), "/");
         x914.addChild(x1235);
         x1235.setTitle(MultiLanguageString.importFromString("pt23:Núcleo de Pós Graduação"));
         x1235.setDescription(MultiLanguageString.importFromString("pt23:Núcleo de Pós Graduação"));
         x1235.setNormalizedName(MultiLanguageString.importFromString("pt23:nucleo-de-pos-graduacao"));
-        Functionality x1234 = new Functionality(MultiLanguageString.importFromString("pt25:Processos de doutoramento"));
+        Functionality x1234 =
+                new Functionality(MultiLanguageString.importFromString("en13:PhD Processespt25:Processos de doutoramento"));
         x1235.addChild(x1234);
-        x1234.setTitle(MultiLanguageString.importFromString("pt25:Processos de doutoramento"));
-        x1234.setDescription(MultiLanguageString.importFromString("pt25:Processos de doutoramento"));
-        x1234.setNormalizedName(MultiLanguageString.importFromString("pt25:processos-de-doutoramento"));
+        x1234.setTitle(MultiLanguageString.importFromString("en13:PhD Processespt25:Processos de doutoramento"));
+        x1234.setDescription(MultiLanguageString.importFromString("en13:PhD Processespt25:Processos de doutoramento"));
+        x1234.setNormalizedName(MultiLanguageString.importFromString("en13:phd-processespt25:processos-de-doutoramento"));
         x1234.setExecutionPath("/phdIndividualProgramProcess.do?method=manageProcesses");
-        Module x1238 = new Module(MultiLanguageString.importFromString("pt15:Bolsas Externas"), "/");
+        Module x1238 = new Module(MultiLanguageString.importFromString("en21:External Scholarshipspt15:Bolsas Externas"), "/");
         x914.addChild(x1238);
-        x1238.setNormalizedName(MultiLanguageString.importFromString("pt15:bolsas-externas"));
-        Functionality x1237 = new Functionality(MultiLanguageString.importFromString("pt16:Listar Entidades"));
+        x1238.setNormalizedName(MultiLanguageString.importFromString("en21:external-scholarshipspt15:bolsas-externas"));
+        Functionality x1237 = new Functionality(MultiLanguageString.importFromString("en13:List Entitiespt16:Listar Entidades"));
         x1238.addChild(x1237);
-        x1237.setNormalizedName(MultiLanguageString.importFromString("pt16:listar-entidades"));
+        x1237.setNormalizedName(MultiLanguageString.importFromString("en13:list-entitiespt16:listar-entidades"));
         x1237.setExecutionPath("/externalScholarshipProvider.do?method=list");
-        Functionality x1239 = new Functionality(MultiLanguageString.importFromString("pt18:Adicionar Entidade"));
+        Functionality x1239 = new Functionality(MultiLanguageString.importFromString("en10:Add Entitypt18:Adicionar Entidade"));
         x1238.addChild(x1239);
-        x1239.setNormalizedName(MultiLanguageString.importFromString("pt18:adicionar-entidade"));
+        x1239.setNormalizedName(MultiLanguageString.importFromString("en10:add-entitypt18:adicionar-entidade"));
         x1239.setExecutionPath("/externalScholarshipProvider.do?method=add");
-        Module x12380 = new Module(MultiLanguageString.importFromString("pt19:Objectos Associados"), "/");
+        Module x12380 = new Module(MultiLanguageString.importFromString("en18:Associated Objectspt19:Objectos Associados"), "/");
         x914.addChild(x12380);
-        x12380.setNormalizedName(MultiLanguageString.importFromString("pt19:objectos-associados"));
-        Functionality x12370 = new Functionality(MultiLanguageString.importFromString("pt25:Gerir Objectos Associados"));
+        x12380.setNormalizedName(MultiLanguageString.importFromString("en18:associated-objectspt19:objectos-associados"));
+        Functionality x12370 =
+                new Functionality(
+                        MultiLanguageString.importFromString("en25:Manage Associated Objectspt25:Gerir Objectos Associados"));
         x12380.addChild(x12370);
-        x12370.setNormalizedName(MultiLanguageString.importFromString("pt25:gerir-objectos-associados"));
+        x12370.setNormalizedName(MultiLanguageString
+                .importFromString("en25:manage-associated-objectspt25:gerir-objectos-associados"));
         x12370.setExecutionPath("/manageAssociatedObjects.do?method=list");
         ExpressionGroupAvailability x1630 = new ExpressionGroupAvailability(x914, "role(MANAGER)");
         x1630.setTargetGroup(Group.fromString("role(MANAGER)"));
@@ -2179,9 +2499,10 @@ public class CreateFunctionallityTree {
         x1301.setNormalizedName(MultiLanguageString.importFromString("pt19:disciplina-execucao"));
         x1301.setExecutionPath("");
         x1301.setVisible(false);
-        Functionality x1300 = new Functionality(MultiLanguageString.importFromString("en12:Initial Pagept14:Página Inicial"));
+        Functionality x1300 =
+                new Functionality(MultiLanguageString.importFromString("en12:Initial Pageen8:Homepagept14:Página Inicial"));
         x1301.addChild(x1300);
-        x1300.setNormalizedName(MultiLanguageString.importFromString("en12:initial-pagept14:pagina-inicial"));
+        x1300.setNormalizedName(MultiLanguageString.importFromString("en12:initial-pageen8:homepagept14:pagina-inicial"));
         x1300.setExecutionPath("/executionCourse.do?method=firstPage");
         x1300.setVisible(true);
         Functionality x1304 = new Functionality(MultiLanguageString.importFromString("en13:Announcementspt8:Anuncios"));
@@ -2561,10 +2882,10 @@ public class CreateFunctionallityTree {
         Module x1383 = new Module(MultiLanguageString.importFromString("pt9:Alunos CD"), "/studentsSite");
         x1302.addChild(x1383);
         x1383.setNormalizedName(MultiLanguageString.importFromString("pt9:alunos-cd"));
-        Functionality x1382 = new Functionality(MultiLanguageString.importFromString("pt14:Página Inicial"));
+        Functionality x1382 = new Functionality(MultiLanguageString.importFromString("en8:Homepagept14:Página Inicial"));
         x1383.addChild(x1382);
-        x1382.setTitle(MultiLanguageString.importFromString("pt14:Página Inicial"));
-        x1382.setNormalizedName(MultiLanguageString.importFromString("pt14:pagina-inicial"));
+        x1382.setTitle(MultiLanguageString.importFromString("en8:Homepagept14:Página Inicial"));
+        x1382.setNormalizedName(MultiLanguageString.importFromString("en8:homepagept14:pagina-inicial"));
         x1382.setExecutionPath("viewSite.do?method=presentation");
         Module x1386 = new Module(MultiLanguageString.importFromString("pt12:Dissertacoes"), "/theses");
         x1302.addChild(x1386);
@@ -2999,15 +3320,16 @@ public class CreateFunctionallityTree {
         x1483.setNormalizedName(MultiLanguageString.importFromString("pt20:portal-da-tesouraria"));
         x1483.setExecutionPath("/treasury/index.do");
         x1483.setVisible(true);
-        Functionality x1482 = new Functionality(MultiLanguageString.importFromString("en12:Initial Pagept14:Página Inicial"));
+        Functionality x1482 =
+                new Functionality(MultiLanguageString.importFromString("en12:Initial Pageen8:Homepagept14:Página Inicial"));
         x1483.addChild(x1482);
-        x1482.setTitle(MultiLanguageString.importFromString("en12:Initial Pagept14:Página Inicial"));
-        x1482.setNormalizedName(MultiLanguageString.importFromString("en12:initial-pagept14:pagina-inicial"));
+        x1482.setTitle(MultiLanguageString.importFromString("en12:Initial Pageen8:Homepagept14:Página Inicial"));
+        x1482.setNormalizedName(MultiLanguageString.importFromString("en12:initial-pageen8:homepagept14:pagina-inicial"));
         x1482.setExecutionPath("/index.do");
-        Functionality x1484 = new Functionality(MultiLanguageString.importFromString("pt10:Pagamentos"));
+        Functionality x1484 = new Functionality(MultiLanguageString.importFromString("en8:Paymentspt10:Pagamentos"));
         x1483.addChild(x1484);
-        x1484.setTitle(MultiLanguageString.importFromString("pt10:Pagamentos"));
-        x1484.setNormalizedName(MultiLanguageString.importFromString("pt10:pagamentos"));
+        x1484.setTitle(MultiLanguageString.importFromString("en8:Paymentspt10:Pagamentos"));
+        x1484.setNormalizedName(MultiLanguageString.importFromString("en8:paymentspt10:pagamentos"));
         x1484.setExecutionPath("/paymentManagement.do?method=searchPeople");
         ExpressionGroupAvailability x1651 = new ExpressionGroupAvailability(x1483, "role(TREASURY)");
         x1651.setTargetGroup(Group.fromString("role(TREASURY)"));
@@ -3221,9 +3543,9 @@ public class CreateFunctionallityTree {
                         "/identificationCardManager");
         x823.addChild(x1532);
         x1532.setNormalizedName(MultiLanguageString.importFromString("pt35:gestao-da-cartoes-de-indentificacao"));
-        Functionality x1531 = new Functionality(MultiLanguageString.importFromString("pt14:Página Inicial"));
+        Functionality x1531 = new Functionality(MultiLanguageString.importFromString("en8:Homepagept14:Página Inicial"));
         x1532.addChild(x1531);
-        x1531.setNormalizedName(MultiLanguageString.importFromString("pt14:pagina-inicial"));
+        x1531.setNormalizedName(MultiLanguageString.importFromString("en8:homepagept14:pagina-inicial"));
         x1531.setExecutionPath("/index.do");
         x1531.setVisible(true);
         Functionality x1533 = new Functionality(MultiLanguageString.importFromString("pt9:Pesquisar"));
@@ -3279,10 +3601,10 @@ public class CreateFunctionallityTree {
         x823.addChild(x1548);
         x1548.setTitle(MultiLanguageString.importFromString("pt21:Núcleo de Alojamentos"));
         x1548.setNormalizedName(MultiLanguageString.importFromString("pt21:nucleo-de-alojamentos"));
-        Functionality x1547 = new Functionality(MultiLanguageString.importFromString("pt14:Página Inicial"));
+        Functionality x1547 = new Functionality(MultiLanguageString.importFromString("en8:Homepagept14:Página Inicial"));
         x1548.addChild(x1547);
-        x1547.setTitle(MultiLanguageString.importFromString("pt14:Página Inicial"));
-        x1547.setNormalizedName(MultiLanguageString.importFromString("pt14:pagina-inicial"));
+        x1547.setTitle(MultiLanguageString.importFromString("en8:Homepagept14:Página Inicial"));
+        x1547.setNormalizedName(MultiLanguageString.importFromString("en8:homepagept14:pagina-inicial"));
         x1547.setExecutionPath("/index.do");
         Functionality x1549 = new Functionality(MultiLanguageString.importFromString("pt13:Gerir Dúvidas"));
         x1548.addChild(x1549);
@@ -3309,9 +3631,9 @@ public class CreateFunctionallityTree {
         Module x1556 = new Module(MultiLanguageString.importFromString("pt18:Supervisão Externa"), "/externalSupervision");
         x823.addChild(x1556);
         x1556.setNormalizedName(MultiLanguageString.importFromString("pt18:supervisao-externa"));
-        Functionality x1555 = new Functionality(MultiLanguageString.importFromString("pt14:Página Inicial"));
+        Functionality x1555 = new Functionality(MultiLanguageString.importFromString("en8:Homepagept14:Página Inicial"));
         x1556.addChild(x1555);
-        x1555.setNormalizedName(MultiLanguageString.importFromString("pt14:pagina-inicial"));
+        x1555.setNormalizedName(MultiLanguageString.importFromString("en8:homepagept14:pagina-inicial"));
         x1555.setExecutionPath("/welcome.do?method=welcome");
         Module x1558 = new Module(MultiLanguageString.importFromString("pt9:Consultar"), "/");
         x1556.addChild(x1558);
@@ -3755,259 +4077,339 @@ public class CreateFunctionallityTree {
         x96.setName(MultiLanguageString.importFromString("en13:Administratorpt13:Administrador"));
         x96.setNormalizedName(MultiLanguageString.importFromString("en13:administratorpt13:administrador"));
         x96.setMaximizable(false);
-        Section x95 = new Section(x96, MultiLanguageString.importFromString("pt18:Mensagens e Avisos"));
-        x95.setName(MultiLanguageString.importFromString("pt18:Mensagens e Avisos"));
-        x95.setNormalizedName(MultiLanguageString.importFromString("pt18:mensagens-e-avisos"));
+        Section x95 = new Section(x96, MultiLanguageString.importFromString("en21:Messages and Warningspt18:Mensagens e Avisos"));
+        x95.setName(MultiLanguageString.importFromString("en21:Messages and Warningspt18:Mensagens e Avisos"));
+        x95.setNormalizedName(MultiLanguageString.importFromString("en21:messages-and-warningspt18:mensagens-e-avisos"));
         FunctionalityCall x94 =
-                makeFunctionalityCall(x95, x915, "pt16:Envio de E-mails", null, null, null, "pt16:envio-de-e-mails");
+                makeFunctionalityCall(x95, x915, "en12:Sending Mailpt16:Envio de E-mails", null, null, null,
+                        "en12:sending-mailpt16:envio-de-e-mails");
         FunctionalityCall x97 =
-                makeFunctionalityCall(x95, x917, "pt16:Gestão de Avisos", null, null, null, "pt16:gestao-de-avisos");
+                makeFunctionalityCall(x95, x917, "en18:Warning Managementpt16:Gestão de Avisos", null, null, null,
+                        "en18:warning-managementpt16:gestao-de-avisos");
         FunctionalityCall x98 =
-                makeFunctionalityCall(x95, x918, "pt16:Gestão de Boards", null, null, null, "pt16:gestao-de-boards");
-        Section x102 = new Section(x96, MultiLanguageString.importFromString("pt34:Gestão da Estrutura Organizacional"));
-        x102.setName(MultiLanguageString.importFromString("pt34:Gestão da Estrutura Organizacional"));
-        x102.setNormalizedName(MultiLanguageString.importFromString("pt34:gestao-da-estrutura-organizacional"));
-        Section x101 = new Section(x102, MultiLanguageString.importFromString("pt27:Gestão de Unidades e Cargos"));
-        x101.setName(MultiLanguageString.importFromString("pt27:Gestão de Unidades e Cargos"));
-        x101.setNormalizedName(MultiLanguageString.importFromString("pt27:gestao-de-unidades-e-cargos"));
+                makeFunctionalityCall(x95, x918, "en17:Boards Managementpt16:Gestão de Boards", null, null, null,
+                        "en17:boards-managementpt16:gestao-de-boards");
+        Section x102 =
+                new Section(
+                        x96,
+                        MultiLanguageString
+                                .importFromString("en35:Organizational Structure Managementpt34:Gestão da Estrutura Organizacional"));
+        x102.setName(MultiLanguageString
+                .importFromString("en35:Organizational Structure Managementpt34:Gestão da Estrutura Organizacional"));
+        x102.setNormalizedName(MultiLanguageString
+                .importFromString("en35:organizational-structure-managementpt34:gestao-da-estrutura-organizacional"));
+        Section x101 =
+                new Section(x102,
+                        MultiLanguageString
+                                .importFromString("en30:Units and Functions Managementpt27:Gestão de Unidades e Cargos"));
+        x101.setName(MultiLanguageString.importFromString("en30:Units and Functions Managementpt27:Gestão de Unidades e Cargos"));
+        x101.setNormalizedName(MultiLanguageString
+                .importFromString("en30:units-and-functions-managementpt27:gestao-de-unidades-e-cargos"));
         x101.setMaximizable(true);
         FunctionalityCall x112 =
-                makeFunctionalityCall(x101, x920, "pt27:Gestão de Unidades e Cargos", null, null, null,
-                        "pt27:gestao-de-unidades-e-cargos");
+                makeFunctionalityCall(x101, x920, "en30:Units and Functions Managementpt27:Gestão de Unidades e Cargos", null,
+                        null, null, "en30:units-and-functions-managementpt27:gestao-de-unidades-e-cargos");
         FunctionalityCall x100 =
-                makeFunctionalityCall(x101, x924, "pt23:Ver Detalhes de Unidade", null, null, null,
-                        "pt23:ver-detalhes-de-unidade");
+                makeFunctionalityCall(x101, x924, "en17:View Unit Detailspt23:Ver Detalhes de Unidade", null, null, null,
+                        "en17:view-unit-detailspt23:ver-detalhes-de-unidade");
         FunctionalityCall x103 =
-                makeFunctionalityCall(x101, x926, "pt14:Editar Unidade", null, null, null, "pt14:editar-unidade");
+                makeFunctionalityCall(x101, x926, "en9:Edit Unitpt14:Editar Unidade", null, null, null,
+                        "en9:edit-unitpt14:editar-unidade");
         FunctionalityCall x104 =
-                makeFunctionalityCall(x101, x927, "pt20:Escolher Unidade Pai", null, null, null, "pt20:escolher-unidade-pai");
+                makeFunctionalityCall(x101, x927, "en18:Choose Parent Unitpt20:Escolher Unidade Pai", null, null, null,
+                        "en18:choose-parent-unitpt20:escolher-unidade-pai");
         FunctionalityCall x105 =
-                makeFunctionalityCall(x101, x928, "pt16:Criar Novo Cargo", null, null, null, "pt16:criar-novo-cargo");
-        FunctionalityCall x106 = makeFunctionalityCall(x101, x929, "pt12:Editar Cargo", null, null, null, "pt12:editar-cargo");
+                makeFunctionalityCall(x101, x928, "en19:Create New Functionpt16:Criar Novo Cargo", null, null, null,
+                        "en19:create-new-functionpt16:criar-novo-cargo");
+        FunctionalityCall x106 =
+                makeFunctionalityCall(x101, x929, "en13:Edit Functionpt12:Editar Cargo", null, null, null,
+                        "en13:edit-functionpt12:editar-cargo");
         FunctionalityCall x107 =
-                makeFunctionalityCall(x101, x930, "pt16:Escolha do Cargo", null, null, null, "pt16:escolha-do-cargo");
+                makeFunctionalityCall(x101, x930, "en15:Choose Functionpt16:Escolha do Cargo", null, null, null,
+                        "en15:choose-functionpt16:escolha-do-cargo");
         FunctionalityCall x108 =
-                makeFunctionalityCall(x101, x931, "pt20:Escolher Unidade Pai", null, null, null, "pt20:escolher-unidade-pai");
+                makeFunctionalityCall(x101, x931, "en18:Choose Parent Unitpt20:Escolher Unidade Pai", null, null, null,
+                        "en18:choose-parent-unitpt20:escolher-unidade-pai");
         FunctionalityCall x109 =
-                makeFunctionalityCall(x101, x932, "pt20:Escolher Unidade Pai", null, null, null, "pt20:escolher-unidade-pai");
+                makeFunctionalityCall(x101, x932, "en18:Choose Parent Unitpt20:Escolher Unidade Pai", null, null, null,
+                        "en18:choose-parent-unitpt20:escolher-unidade-pai");
         FunctionalityCall x110 =
-                makeFunctionalityCall(x101, x933, "pt18:Criar Nova Unidade", null, null, null, "pt18:criar-nova-unidade");
+                makeFunctionalityCall(x101, x933, "en15:Create New Unitpt18:Criar Nova Unidade", null, null, null,
+                        "en15:create-new-unitpt18:criar-nova-unidade");
         FunctionalityCall x111 =
-                makeFunctionalityCall(x101, x934, "pt21:Criar Nova SubUnidade", null, null, null, "pt21:criar-nova-subunidade");
+                makeFunctionalityCall(x101, x934, "en19:Create New Sub Unitpt21:Criar Nova SubUnidade", null, null, null,
+                        "en19:create-new-sub-unitpt21:criar-nova-subunidade");
         FunctionalityCall x114 =
-                makeFunctionalityCall(x102, x922, "pt26:Merge de Unidades Externas", null, null, null,
-                        "pt26:merge-de-unidades-externas");
+                makeFunctionalityCall(x102, x922, "en20:External Units Mergept26:Merge de Unidades Externas", null, null, null,
+                        "en20:external-units-mergept26:merge-de-unidades-externas");
         FunctionalityCall x115 =
                 makeFunctionalityCall(x102, x923, "en20:Unit Site Managementpt26:Gestão de Sites de Unidade", null, null, null,
                         "en20:unit-site-managementpt26:gestao-de-sites-de-unidade");
-        Section x122 = new Section(x96, MultiLanguageString.importFromString("pt29:Gestão da Estrutura de Ensino"));
-        x122.setName(MultiLanguageString.importFromString("pt29:Gestão da Estrutura de Ensino"));
-        x122.setNormalizedName(MultiLanguageString.importFromString("pt29:gestao-da-estrutura-de-ensino"));
-        Section x121 = new Section(x122, MultiLanguageString.importFromString("pt26:Estrutura de Cursos Antiga"));
-        x121.setName(MultiLanguageString.importFromString("pt26:Estrutura de Cursos Antiga"));
-        x121.setNormalizedName(MultiLanguageString.importFromString("pt26:estrutura-de-cursos-antiga"));
+        Section x122 =
+                new Section(x96,
+                        MultiLanguageString
+                                .importFromString("en32:Educational Structure Managementpt29:Gestão da Estrutura de Ensino"));
+        x122.setName(MultiLanguageString
+                .importFromString("en32:Educational Structure Managementpt29:Gestão da Estrutura de Ensino"));
+        x122.setNormalizedName(MultiLanguageString
+                .importFromString("en32:educational-structure-managementpt29:gestao-da-estrutura-de-ensino"));
+        Section x121 =
+                new Section(x122,
+                        MultiLanguageString.importFromString("en20:Old Degree Structurept26:Estrutura de Cursos Antiga"));
+        x121.setName(MultiLanguageString.importFromString("en20:Old Degree Structurept26:Estrutura de Cursos Antiga"));
+        x121.setNormalizedName(MultiLanguageString.importFromString("en20:old-degree-structurept26:estrutura-de-cursos-antiga"));
         x121.setMaximizable(true);
-        Section x120 = new Section(x121, MultiLanguageString.importFromString("pt17:Administrar Curso"));
-        x120.setName(MultiLanguageString.importFromString("pt17:Administrar Curso"));
-        x120.setNormalizedName(MultiLanguageString.importFromString("pt17:administrar-curso"));
-        Section x119 = new Section(x120, MultiLanguageString.importFromString("pt28:Administrar Plano Curricular"));
-        x119.setName(MultiLanguageString.importFromString("pt28:Administrar Plano Curricular"));
-        x119.setNormalizedName(MultiLanguageString.importFromString("pt28:administrar-plano-curricular"));
-        Section x118 = new Section(x119, MultiLanguageString.importFromString("pt22:Gestão de Precedências"));
-        x118.setName(MultiLanguageString.importFromString("pt22:Gestão de Precedências"));
-        x118.setNormalizedName(MultiLanguageString.importFromString("pt22:gestao-de-precedencias"));
+        Section x120 =
+                new Section(x121, MultiLanguageString.importFromString("en21:Degree Administrationpt17:Administrar Curso"));
+        x120.setName(MultiLanguageString.importFromString("en21:Degree Administrationpt17:Administrar Curso"));
+        x120.setNormalizedName(MultiLanguageString.importFromString("en21:degree-administrationpt17:administrar-curso"));
+        Section x119 =
+                new Section(x120,
+                        MultiLanguageString
+                                .importFromString("en30:Curricular Plan Administrationpt28:Administrar Plano Curricular"));
+        x119.setName(MultiLanguageString.importFromString("en30:Curricular Plan Administrationpt28:Administrar Plano Curricular"));
+        x119.setNormalizedName(MultiLanguageString
+                .importFromString("en30:curricular-plan-administrationpt28:administrar-plano-curricular"));
+        Section x118 =
+                new Section(x119, MultiLanguageString.importFromString("en21:Precedence Managementpt22:Gestão de Precedências"));
+        x118.setName(MultiLanguageString.importFromString("en21:Precedence Managementpt22:Gestão de Precedências"));
+        x118.setNormalizedName(MultiLanguageString.importFromString("en21:precedence-managementpt22:gestao-de-precedencias"));
         FunctionalityCall x117 =
-                makeFunctionalityCall(x118, x955, "pt25:Criar Precedência Simples", null, null, null,
-                        "pt25:criar-precedencia-simples");
+                makeFunctionalityCall(x118, x955, "en24:Create Simple Precedencept25:Criar Precedência Simples", null, null,
+                        null, "en24:create-simple-precedencept25:criar-precedencia-simples");
         FunctionalityCall x123 =
-                makeFunctionalityCall(x118, x957, "pt31:Criar Conjunção de Precedências", null, null, null,
-                        "pt31:criar-conjuncao-de-precedencias");
+                makeFunctionalityCall(x118, x957, "en29:Create Precedence Conjunctionpt31:Criar Conjunção de Precedências", null,
+                        null, null, "en29:create-precedence-conjunctionpt31:criar-conjuncao-de-precedencias");
         FunctionalityCall x124 =
-                makeFunctionalityCall(x118, x958, "pt18:Apagar Precedência", null, null, null, "pt18:apagar-precedencia");
-        Section x128 = new Section(x119, MultiLanguageString.importFromString("pt33:Administrar Disciplina Curricular"));
-        x128.setName(MultiLanguageString.importFromString("pt33:Administrar Disciplina Curricular"));
-        x128.setNormalizedName(MultiLanguageString.importFromString("pt33:administrar-disciplina-curricular"));
-        Section x127 = new Section(x128, MultiLanguageString.importFromString("pt28:Associar disciplina execução"));
-        x127.setName(MultiLanguageString.importFromString("pt28:Associar disciplina execução"));
-        x127.setNormalizedName(MultiLanguageString.importFromString("pt28:associar-disciplina-execucao"));
+                makeFunctionalityCall(x118, x958, "en17:Delete Precedencept18:Apagar Precedência", null, null, null,
+                        "en17:delete-precedencept18:apagar-precedencia");
+        Section x128 =
+                new Section(x119,
+                        MultiLanguageString
+                                .importFromString("en32:Curricular Course Administrationpt33:Administrar Disciplina Curricular"));
+        x128.setName(MultiLanguageString
+                .importFromString("en32:Curricular Course Administrationpt33:Administrar Disciplina Curricular"));
+        x128.setNormalizedName(MultiLanguageString
+                .importFromString("en32:curricular-course-administrationpt33:administrar-disciplina-curricular"));
+        Section x127 =
+                new Section(x128,
+                        MultiLanguageString.importFromString("en26:Associate Execution Coursept28:Associar disciplina execução"));
+        x127.setName(MultiLanguageString.importFromString("en26:Associate Execution Coursept28:Associar disciplina execução"));
+        x127.setNormalizedName(MultiLanguageString
+                .importFromString("en26:associate-execution-coursept28:associar-disciplina-execucao"));
         FunctionalityCall x126 =
-                makeFunctionalityCall(x127, x970, "pt28:Escolher Periodo de Execução", null, null, null,
-                        "pt28:escolher-periodo-de-execucao");
+                makeFunctionalityCall(x127, x970, "en23:Choose Execution Periodpt28:Escolher Periodo de Execução", null, null,
+                        null, "en23:choose-execution-periodpt28:escolher-periodo-de-execucao");
         FunctionalityCall x129 =
-                makeFunctionalityCall(x127, x972, "pt28:Escolher Disciplina Execução", null, null, null,
-                        "pt28:escolher-disciplina-execucao");
-        Section x132 = new Section(x128, MultiLanguageString.importFromString("pt20:Editar Corpo Docente"));
-        x132.setName(MultiLanguageString.importFromString("pt20:Editar Corpo Docente"));
-        x132.setNormalizedName(MultiLanguageString.importFromString("pt20:editar-corpo-docente"));
+                makeFunctionalityCall(x127, x972, "en23:Choose Execution Coursept28:Escolher Disciplina Execução", null, null,
+                        null, "en23:choose-execution-coursept28:escolher-disciplina-execucao");
+        Section x132 = new Section(x128, MultiLanguageString.importFromString("en12:Edit Facultypt20:Editar Corpo Docente"));
+        x132.setName(MultiLanguageString.importFromString("en12:Edit Facultypt20:Editar Corpo Docente"));
+        x132.setNormalizedName(MultiLanguageString.importFromString("en12:edit-facultypt20:editar-corpo-docente"));
         FunctionalityCall x131 =
-                makeFunctionalityCall(x132, x974, "pt16:Associar Docente", null, null, null, "pt16:associar-docente");
+                makeFunctionalityCall(x132, x974, "en19:Associate Professorpt16:Associar Docente", null, null, null,
+                        "en19:associate-professorpt16:associar-docente");
         FunctionalityCall x133 =
-                makeFunctionalityCall(x132, x976, "pt37:Associar docente não vinculado ao IST", null, null, null,
-                        "pt37:associar-docente-nao-vinculado-ao-ist");
+                makeFunctionalityCall(x132, x976, "en34:Associate non affiliated professorpt30:Associar docente não vinculado",
+                        null, null, null, "en34:associate-non-affiliated-professorpt30:associar-docente-nao-vinculado");
         FunctionalityCall x134 =
-                makeFunctionalityCall(x132, x977, "pt18:Guardar Alterações", null, null, null, "pt18:guardar-alteracoes");
+                makeFunctionalityCall(x132, x977, "en12:Save Changespt18:Guardar Alterações", null, null, null,
+                        "en12:save-changespt18:guardar-alteracoes");
         FunctionalityCall x136 =
-                makeFunctionalityCall(x128, x960, "pt28:Editar Disciplina Curricular", null, null, null,
-                        "pt28:editar-disciplina-curricular");
+                makeFunctionalityCall(x128, x960, "en22:Edit Curricular Coursept28:Editar Disciplina Curricular", null, null,
+                        null, "en22:edit-curricular-coursept28:editar-disciplina-curricular");
         FunctionalityCall x137 =
-                makeFunctionalityCall(x128, x962, "pt14:Inserir âmbito", null, null, null, "pt14:inserir-ambito");
+                makeFunctionalityCall(x128, x962, "en12:Insert Scopept14:Inserir âmbito", null, null, null,
+                        "en12:insert-scopept14:inserir-ambito");
         FunctionalityCall x138 =
-                makeFunctionalityCall(x128, x963, "en30:Editing Curricular Informationpt31:Edição de Informação Curricular",
-                        null, null, null, "en30:editing-curricular-informationpt31:edicao-de-informacao-curricular");
-        FunctionalityCall x139 = makeFunctionalityCall(x128, x964, "pt11:Criar Sitio", null, null, null, "pt11:criar-sitio");
+                makeFunctionalityCall(x128, x963, "en27:Edit Curricular Informationpt31:Edição de Informação Curricular", null,
+                        null, null, "en27:edit-curricular-informationpt31:edicao-de-informacao-curricular");
+        FunctionalityCall x139 =
+                makeFunctionalityCall(x128, x964, "en11:Create Sitept11:Criar Sitio", null, null, null,
+                        "en11:create-sitept11:criar-sitio");
         FunctionalityCall x140 = makeFunctionalityCall(x128, x965, "pt13:Editar âmbito", null, null, null, "pt13:editar-ambito");
         FunctionalityCall x141 =
-                makeFunctionalityCall(x128, x966, "pt14:Inserir âmbito", null, null, null, "pt14:inserir-ambito");
+                makeFunctionalityCall(x128, x966, "en12:Insert Scopept14:Inserir âmbito", null, null, null,
+                        "en12:insert-scopept14:inserir-ambito");
         FunctionalityCall x142 =
-                makeFunctionalityCall(x128, x967, "pt15:Terminar âmbito", null, null, null, "pt15:terminar-ambito");
-        FunctionalityCall x143 = makeFunctionalityCall(x128, x968, "pt13:Apagar âmbito", null, null, null, "pt13:apagar-ambito");
+                makeFunctionalityCall(x128, x967, "en9:End Scopept15:Terminar âmbito", null, null, null,
+                        "en9:end-scopept15:terminar-ambito");
+        FunctionalityCall x143 =
+                makeFunctionalityCall(x128, x968, "en12:Delete Scopept13:Apagar âmbito", null, null, null,
+                        "en12:delete-scopept13:apagar-ambito");
         FunctionalityCall x144 =
-                makeFunctionalityCall(x128, x969, "pt27:Visualizar todos os Âmbitos", null, null, null,
-                        "pt27:visualizar-todos-os-ambitos");
+                makeFunctionalityCall(x128, x969, "en15:View All Scopespt27:Visualizar todos os Âmbitos", null, null, null,
+                        "en15:view-all-scopespt27:visualizar-todos-os-ambitos");
         FunctionalityCall x146 =
-                makeFunctionalityCall(x119, x950, "pt23:Editar plano curricular", null, null, null,
-                        "pt23:editar-plano-curricular");
+                makeFunctionalityCall(x119, x950, "en20:Edit Curricular Planpt23:Editar plano curricular", null, null, null,
+                        "en20:edit-curricular-planpt23:editar-plano-curricular");
         FunctionalityCall x147 =
-                makeFunctionalityCall(x119, x952, "pt29:Inserir disciplina curricular", null, null, null,
-                        "pt29:inserir-disciplina-curricular");
+                makeFunctionalityCall(x119, x952, "en24:Insert curricular coursept29:Inserir disciplina curricular", null, null,
+                        null, "en24:insert-curricular-coursept29:inserir-disciplina-curricular");
         FunctionalityCall x148 =
-                makeFunctionalityCall(x119, x953, "pt15:Gestão de Ramos", null, null, null, "pt15:gestao-de-ramos");
+                makeFunctionalityCall(x119, x953, "en17:Branch Managementpt15:Gestão de Ramos", null, null, null,
+                        "en17:branch-managementpt15:gestao-de-ramos");
         FunctionalityCall x149 =
-                makeFunctionalityCall(x119, x954, "pt44:Gestão de Grupos de Disciplinas Curriculares", null, null, null,
-                        "pt44:gestao-de-grupos-de-disciplinas-curriculares");
-        FunctionalityCall x151 = makeFunctionalityCall(x120, x946, "pt12:Editar Curso", null, null, null, "pt12:editar-curso");
+                makeFunctionalityCall(x119, x954,
+                        "en34:Curricular Course Group Managementpt44:Gestão de Grupos de Disciplinas Curriculares", null, null,
+                        null, "en34:curricular-course-group-managementpt44:gestao-de-grupos-de-disciplinas-curriculares");
+        FunctionalityCall x151 =
+                makeFunctionalityCall(x120, x946, "en11:Edit Degreept12:Editar Curso", null, null, null,
+                        "en11:edit-degreept12:editar-curso");
         FunctionalityCall x152 =
-                makeFunctionalityCall(x120, x948, "pt24:Inserir plano curricular", null, null, null,
-                        "pt24:inserir-plano-curricular");
+                makeFunctionalityCall(x120, x948, "en22:Insert curricular planpt24:Inserir plano curricular", null, null, null,
+                        "en22:insert-curricular-planpt24:inserir-plano-curricular");
         FunctionalityCall x153 =
-                makeFunctionalityCall(x120, x949, "pt26:Apagar Planos Curriculares", null, null, null,
-                        "pt26:apagar-planos-curriculares");
-        FunctionalityCall x155 = makeFunctionalityCall(x121, x943, "pt13:Inserir curso", null, null, null, "pt13:inserir-curso");
-        FunctionalityCall x156 = makeFunctionalityCall(x121, x945, "pt13:Apagar Cursos", null, null, null, "pt13:apagar-cursos");
+                makeFunctionalityCall(x120, x949, "en23:Delete Curricular Planspt26:Apagar Planos Curriculares", null, null,
+                        null, "en23:delete-curricular-planspt26:apagar-planos-curriculares");
+        FunctionalityCall x155 =
+                makeFunctionalityCall(x121, x943, "en13:Insert Degreept13:Inserir curso", null, null, null,
+                        "en13:insert-degreept13:inserir-curso");
+        FunctionalityCall x156 =
+                makeFunctionalityCall(x121, x945, "en14:Delete Degreespt13:Apagar Cursos", null, null, null,
+                        "en14:delete-degreespt13:apagar-cursos");
         FunctionalityCall x157 =
-                makeFunctionalityCall(x121, x937, "pt26:Estrutura de Cursos Antiga", null, null, null,
-                        "pt26:estrutura-de-cursos-antiga");
-        Section x160 = new Section(x122, MultiLanguageString.importFromString("pt23:Competência Pré-Bolonha"));
-        x160.setName(MultiLanguageString.importFromString("pt23:Competência Pré-Bolonha"));
-        x160.setNormalizedName(MultiLanguageString.importFromString("pt23:competencia-pre-bolonha"));
+                makeFunctionalityCall(x121, x937, "en20:Old Degree Structurept26:Estrutura de Cursos Antiga", null, null, null,
+                        "en20:old-degree-structurept26:estrutura-de-cursos-antiga");
+        Section x160 =
+                new Section(x122,
+                        MultiLanguageString.importFromString("en25:Before Bolonha Competencypt23:Competência Pré-Bolonha"));
+        x160.setName(MultiLanguageString.importFromString("en25:Before Bolonha Competencypt23:Competência Pré-Bolonha"));
+        x160.setNormalizedName(MultiLanguageString.importFromString("en25:before-bolonha-competencypt23:competencia-pre-bolonha"));
         x160.setMaximizable(true);
         FunctionalityCall x159 =
-                makeFunctionalityCall(x160, x983, "pt37:Inserir-Editar Disciplina Competencia", null, null, null,
-                        "pt37:inserir-editar-disciplina-competencia");
+                makeFunctionalityCall(x160, x983, "en29:Insert-Edit Competence Coursept37:Inserir-Editar Disciplina Competencia",
+                        null, null, null, "en29:insert-edit-competence-coursept37:inserir-editar-disciplina-competencia");
         FunctionalityCall x161 =
-                makeFunctionalityCall(x160, x985, "pt33:Criar Nova Disciplina Competência", null, null, null,
-                        "pt33:criar-nova-disciplina-competencia");
+                makeFunctionalityCall(x160, x985, "en28:Create New Competence Coursept33:Criar Nova Disciplina Competência",
+                        null, null, null, "en28:create-new-competence-coursept33:criar-nova-disciplina-competencia");
         FunctionalityCall x162 =
-                makeFunctionalityCall(x160, x939, "pt23:Competência Pré-Bolonha", null, null, null,
-                        "pt23:competencia-pre-bolonha");
-        Section x165 = new Section(x122, MultiLanguageString.importFromString("pt20:Competências Bolonha"));
-        x165.setName(MultiLanguageString.importFromString("pt20:Competências Bolonha"));
-        x165.setNormalizedName(MultiLanguageString.importFromString("pt20:competencias-bolonha"));
+                makeFunctionalityCall(x160, x939, "en25:Before Bolonha Competencypt23:Competência Pré-Bolonha", null, null, null,
+                        "en25:before-bolonha-competencypt23:competencia-pre-bolonha");
+        Section x165 =
+                new Section(x122, MultiLanguageString.importFromString("en20:Bolonha Competenciespt20:Competências Bolonha"));
+        x165.setName(MultiLanguageString.importFromString("en20:Bolonha Competenciespt20:Competências Bolonha"));
+        x165.setNormalizedName(MultiLanguageString.importFromString("en20:bolonha-competenciespt20:competencias-bolonha"));
         x165.setMaximizable(true);
         FunctionalityCall x164 =
-                makeFunctionalityCall(x165, x987, "pt26:Ver Disciplina Competência", null, null, null,
-                        "pt26:ver-disciplina-competencia");
+                makeFunctionalityCall(x165, x987, "en22:View Competence Coursept26:Ver Disciplina Competência", null, null, null,
+                        "en22:view-competence-coursept26:ver-disciplina-competencia");
         FunctionalityCall x166 =
-                makeFunctionalityCall(x165, x989, "pt29:Editar Disciplina Competência", null, null, null,
-                        "pt29:editar-disciplina-competencia");
+                makeFunctionalityCall(x165, x989, "en22:Edit Competence Coursept29:Editar Disciplina Competência", null, null,
+                        null, "en22:edit-competence-coursept29:editar-disciplina-competencia");
         FunctionalityCall x167 =
-                makeFunctionalityCall(x165, x990, "pt29:Editar Disciplina Competência", null, null, null,
-                        "pt29:editar-disciplina-competencia");
+                makeFunctionalityCall(x165, x990, "en22:Edit Competence Coursept29:Editar Disciplina Competência", null, null,
+                        null, "en22:edit-competence-coursept29:editar-disciplina-competencia");
         FunctionalityCall x168 =
-                makeFunctionalityCall(x165, x941, "pt20:Competências Bolonha", null, null, null, "pt20:competencias-bolonha");
+                makeFunctionalityCall(x165, x941, "en20:Bolonha Competenciespt20:Competências Bolonha", null, null, null,
+                        "en20:bolonha-competenciespt20:competencias-bolonha");
         FunctionalityCall x170 =
-                makeFunctionalityCall(x122, x942, "pt29:Gerir Cursos de Departamentos", null, null, null,
-                        "pt29:gerir-cursos-de-departamentos");
+                makeFunctionalityCall(x122, x942, "en29:Department Degrees Managementpt29:Gerir Cursos de Departamentos", null,
+                        null, null, "en29:department-degrees-managementpt29:gerir-cursos-de-departamentos");
         FunctionalityCall x171 =
-                makeFunctionalityCall(x122, x940, "pt19:Estrutura de Cursos", null, null, null, "pt19:estrutura-de-cursos");
-        Section x176 = new Section(x96, MultiLanguageString.importFromString("pt19:Gestão de Execuções"));
-        x176.setName(MultiLanguageString.importFromString("pt19:Gestão de Execuções"));
-        x176.setNormalizedName(MultiLanguageString.importFromString("pt19:gestao-de-execucoes"));
-        Section x175 = new Section(x176, MultiLanguageString.importFromString("pt19:Currículos Execução"));
-        x175.setName(MultiLanguageString.importFromString("pt19:Currículos Execução"));
-        x175.setNormalizedName(MultiLanguageString.importFromString("pt19:curriculos-execucao"));
+                makeFunctionalityCall(x122, x940, "en16:Degree Structurept19:Estrutura de Cursos", null, null, null,
+                        "en16:degree-structurept19:estrutura-de-cursos");
+        Section x176 =
+                new Section(x96, MultiLanguageString.importFromString("en20:Execution Managementpt19:Gestão de Execuções"));
+        x176.setName(MultiLanguageString.importFromString("en20:Execution Managementpt19:Gestão de Execuções"));
+        x176.setNormalizedName(MultiLanguageString.importFromString("en20:execution-managementpt19:gestao-de-execucoes"));
+        Section x175 =
+                new Section(x176, MultiLanguageString.importFromString("en20:Execution Curriculumpt19:Currículos Execução"));
+        x175.setName(MultiLanguageString.importFromString("en20:Execution Curriculumpt19:Currículos Execução"));
+        x175.setNormalizedName(MultiLanguageString.importFromString("en20:execution-curriculumpt19:curriculos-execucao"));
         x175.setMaximizable(true);
-        Section x174 = new Section(x175, MultiLanguageString.importFromString("pt29:Gestão de Currículos Execução"));
-        x174.setName(MultiLanguageString.importFromString("pt29:Gestão de Currículos Execução"));
-        x174.setNormalizedName(MultiLanguageString.importFromString("pt29:gestao-de-curriculos-execucao"));
+        Section x174 =
+                new Section(x175,
+                        MultiLanguageString
+                                .importFromString("en31:Execution Curriculum Managementpt29:Gestão de Currículos Execução"));
+        x174.setName(MultiLanguageString
+                .importFromString("en31:Execution Curriculum Managementpt29:Gestão de Currículos Execução"));
+        x174.setNormalizedName(MultiLanguageString
+                .importFromString("en31:execution-curriculum-managementpt29:gestao-de-curriculos-execucao"));
         FunctionalityCall x173 =
-                makeFunctionalityCall(x174, x1000, "pt25:Criar Currículos Execução", null, null, null,
-                        "pt25:criar-curriculos-execucao");
+                makeFunctionalityCall(x174, x1000, "en27:Create Execution Curriculumpt25:Criar Currículos Execução", null, null,
+                        null, "en27:create-execution-curriculumpt25:criar-curriculos-execucao");
         FunctionalityCall x177 =
-                makeFunctionalityCall(x174, x1002, "pt26:Editar Currículos Execução", null, null, null,
-                        "pt26:editar-curriculos-execucao");
+                makeFunctionalityCall(x174, x1002, "en25:Edit Execution Curriculumpt26:Editar Currículos Execução", null, null,
+                        null, "en25:edit-execution-curriculumpt26:editar-curriculos-execucao");
         FunctionalityCall x178 =
-                makeFunctionalityCall(x174, x1003, "pt28:Escolher Planos Curriculares", null, null, null,
-                        "pt28:escolher-planos-curriculares");
+                makeFunctionalityCall(x174, x1003, "en23:Choose Curricular Planspt28:Escolher Planos Curriculares", null, null,
+                        null, "en23:choose-curricular-planspt28:escolher-planos-curriculares");
         FunctionalityCall x179 =
-                makeFunctionalityCall(x174, x1004, "pt25:Currículo Execução Criado", null, null, null,
-                        "pt25:curriculo-execucao-criado");
+                makeFunctionalityCall(x174, x1004, "en28:Execution Curriculum Createdpt25:Currículo Execução Criado", null, null,
+                        null, "en28:execution-curriculum-createdpt25:curriculo-execucao-criado");
         FunctionalityCall x181 =
-                makeFunctionalityCall(x175, x998, "pt16:Página Principal", null, null, null, "pt16:pagina-principal");
+                makeFunctionalityCall(x175, x998, "en8:Homepagept16:Página Principal", null, null, null,
+                        "en8:homepagept16:pagina-principal");
         FunctionalityCall x182 =
-                makeFunctionalityCall(x175, x995, "pt19:Currículos Execução", null, null, null, "pt19:curriculos-execucao");
-        Section x186 = new Section(x176, MultiLanguageString.importFromString("pt20:Disciplinas Execução"));
-        x186.setName(MultiLanguageString.importFromString("pt20:Disciplinas Execução"));
-        x186.setNormalizedName(MultiLanguageString.importFromString("pt20:disciplinas-execucao"));
+                makeFunctionalityCall(x175, x995, "en20:Execution Curriculumpt19:Currículos Execução", null, null, null,
+                        "en20:execution-curriculumpt19:curriculos-execucao");
+        Section x186 = new Section(x176, MultiLanguageString.importFromString("en17:Execution Coursespt20:Disciplinas Execução"));
+        x186.setName(MultiLanguageString.importFromString("en17:Execution Coursespt20:Disciplinas Execução"));
+        x186.setNormalizedName(MultiLanguageString.importFromString("en17:execution-coursespt20:disciplinas-execucao"));
         x186.setMaximizable(true);
-        Section x185 = new Section(x186, MultiLanguageString.importFromString("pt20:Disciplinas Execução"));
-        x185.setName(MultiLanguageString.importFromString("pt20:Disciplinas Execução"));
-        x185.setNormalizedName(MultiLanguageString.importFromString("pt20:disciplinas-execucao"));
+        Section x185 = new Section(x186, MultiLanguageString.importFromString("en17:Execution Coursespt20:Disciplinas Execução"));
+        x185.setName(MultiLanguageString.importFromString("en17:Execution Coursespt20:Disciplinas Execução"));
+        x185.setNormalizedName(MultiLanguageString.importFromString("en17:execution-coursespt20:disciplinas-execucao"));
         x185.setMaximizable(false);
         FunctionalityCall x184 =
-                makeFunctionalityCall(x185, x1009, "pt27:Inserir Disciplina Execução", null, null, null,
-                        "pt27:inserir-disciplina-execucao");
+                makeFunctionalityCall(x185, x1009, "en23:Insert Execution Coursept27:Inserir Disciplina Execução", null, null,
+                        null, "en23:insert-execution-coursept27:inserir-disciplina-execucao");
         FunctionalityCall x187 =
-                makeFunctionalityCall(x185, x1011, "pt26:Editar Disciplina Execução", null, null, null,
-                        "pt26:editar-disciplina-execucao");
+                makeFunctionalityCall(x185, x1011, "en21:Edit Execution Coursept26:Editar Disciplina Execução", null, null, null,
+                        "en21:edit-execution-coursept26:editar-disciplina-execucao");
         FunctionalityCall x188 =
-                makeFunctionalityCall(x185, x1012, "pt27:Juntar Disciplinas Execução", null, null, null,
-                        "pt27:juntar-disciplinas-execucao");
+                makeFunctionalityCall(x185, x1012, "en23:Merge Execution Coursespt27:Juntar Disciplinas Execução", null, null,
+                        null, "en23:merge-execution-coursespt27:juntar-disciplinas-execucao");
         FunctionalityCall x189 =
-                makeFunctionalityCall(x185, x1013, "pt28:Criar Relatórios de Docência", null, null, null,
-                        "pt28:criar-relatorios-de-docencia");
+                makeFunctionalityCall(x185, x1013, "en23:Create Teaching Reportspt28:Criar Relatórios de Docência", null, null,
+                        null, "en23:create-teaching-reportspt28:criar-relatorios-de-docencia");
         FunctionalityCall x190 =
-                makeFunctionalityCall(x185, x1014, "pt29:Criar Disciplinas de Execução", null, null, null,
-                        "pt29:criar-disciplinas-de-execucao");
+                makeFunctionalityCall(x185, x1014, "en24:Create Execution Coursespt29:Criar Disciplinas de Execução", null, null,
+                        null, "en24:create-execution-coursespt29:criar-disciplinas-de-execucao");
         FunctionalityCall x191 =
-                makeFunctionalityCall(x185, x1015, "pt28:Editar Disciplina Execução 1", null, null, null,
-                        "pt28:editar-disciplina-execucao-1");
+                makeFunctionalityCall(x185, x1015, "en23:Edit Execution Course 1pt28:Editar Disciplina Execução 1", null, null,
+                        null, "en23:edit-execution-course-1pt28:editar-disciplina-execucao-1");
         FunctionalityCall x192 =
-                makeFunctionalityCall(x185, x1016, "pt28:Editar Disciplina Execução 2", null, null, null,
-                        "pt28:editar-disciplina-execucao-2");
+                makeFunctionalityCall(x185, x1016, "en23:Edit Execution Course 2pt28:Editar Disciplina Execução 2", null, null,
+                        null, "en23:edit-execution-course-2pt28:editar-disciplina-execucao-2");
         FunctionalityCall x193 =
-                makeFunctionalityCall(x185, x1017, "pt30:Associar Disciplina Curricular", null, null, null,
-                        "pt30:associar-disciplina-curricular");
+                makeFunctionalityCall(x185, x1017, "en27:Associate Curricular Coursept30:Associar Disciplina Curricular", null,
+                        null, null, "en27:associate-curricular-coursept30:associar-disciplina-curricular");
         FunctionalityCall x194 =
-                makeFunctionalityCall(x185, x1018, "pt27:Separar Disciplina Execução", null, null, null,
-                        "pt27:separar-disciplina-execucao");
+                makeFunctionalityCall(x185, x1018, "en25:Separate Execution Coursept27:Separar Disciplina Execução", null, null,
+                        null, "en25:separate-execution-coursept27:separar-disciplina-execucao");
         FunctionalityCall x195 =
-                makeFunctionalityCall(x185, x1019, "pt29:Juntar Disciplinas Execução 2", null, null, null,
-                        "pt29:juntar-disciplinas-execucao-2");
+                makeFunctionalityCall(x185, x1019, "en25:Merge Execution Courses 2pt29:Juntar Disciplinas Execução 2", null,
+                        null, null, "en25:merge-execution-courses-2pt29:juntar-disciplinas-execucao-2");
         FunctionalityCall x197 =
-                makeFunctionalityCall(x186, x1007, "pt14:Página Inicial", null, null, null, "pt14:pagina-inicial");
+                makeFunctionalityCall(x186, x1007, "en8:Homepagept14:Página Inicial", null, null, null,
+                        "en8:homepagept14:pagina-inicial");
         FunctionalityCall x198 =
-                makeFunctionalityCall(x186, x996, "pt35:Página Inicial Disciplinas Execução", null, null, null,
-                        "pt35:pagina-inicial-disciplinas-execucao");
+                makeFunctionalityCall(x186, x996, "en25:Execution Course Homepagept35:Página Inicial Disciplinas Execução", null,
+                        null, null, "en25:execution-course-homepagept35:pagina-inicial-disciplinas-execucao");
         FunctionalityCall x200 =
-                makeFunctionalityCall(x176, x993, "pt17:Periodos Execução", null, null, null, "pt17:periodos-execucao");
+                makeFunctionalityCall(x176, x993, "en17:Execution Periodspt17:Periodos Execução", null, null, null,
+                        "en17:execution-periodspt17:periodos-execucao");
         FunctionalityCall x201 =
-                makeFunctionalityCall(x176, x997, "pt22:Periodos de Inscrições", null, null, null, "pt22:periodos-de-inscricoes");
-        Section x206 = new Section(x96, MultiLanguageString.importFromString("pt17:Gestão de Pessoal"));
-        x206.setName(MultiLanguageString.importFromString("pt17:Gestão de Pessoal"));
-        x206.setNormalizedName(MultiLanguageString.importFromString("pt17:gestao-de-pessoal"));
-        Section x205 = new Section(x206, MultiLanguageString.importFromString("pt18:Gestão de Docentes"));
-        x205.setName(MultiLanguageString.importFromString("pt18:Gestão de Docentes"));
-        x205.setNormalizedName(MultiLanguageString.importFromString("pt18:gestao-de-docentes"));
+                makeFunctionalityCall(x176, x997, "en17:Enrolment Periodspt22:Periodos de Inscrições", null, null, null,
+                        "en17:enrolment-periodspt22:periodos-de-inscricoes");
+        Section x206 = new Section(x96, MultiLanguageString.importFromString("en19:Personal Managementpt17:Gestão de Pessoal"));
+        x206.setName(MultiLanguageString.importFromString("en19:Personal Managementpt17:Gestão de Pessoal"));
+        x206.setNormalizedName(MultiLanguageString.importFromString("en19:personal-managementpt17:gestao-de-pessoal"));
+        Section x205 = new Section(x206, MultiLanguageString.importFromString("en18:Teacher Managementpt18:Gestão de Docentes"));
+        x205.setName(MultiLanguageString.importFromString("en18:Teacher Managementpt18:Gestão de Docentes"));
+        x205.setNormalizedName(MultiLanguageString.importFromString("en18:teacher-managementpt18:gestao-de-docentes"));
         x205.setMaximizable(true);
-        Section x204 = new Section(x205, MultiLanguageString.importFromString("pt18:Gestão de Docentes"));
-        x204.setName(MultiLanguageString.importFromString("pt18:Gestão de Docentes"));
-        x204.setNormalizedName(MultiLanguageString.importFromString("pt18:gestao-de-docentes"));
+        Section x204 = new Section(x205, MultiLanguageString.importFromString("en18:Teacher Managementpt18:Gestão de Docentes"));
+        x204.setName(MultiLanguageString.importFromString("en18:Teacher Managementpt18:Gestão de Docentes"));
+        x204.setNormalizedName(MultiLanguageString.importFromString("en18:teacher-managementpt18:gestao-de-docentes"));
         FunctionalityCall x203 =
-                makeFunctionalityCall(x204, x1030, "pt17:Editar Categorias", null, null, null, "pt17:editar-categorias");
+                makeFunctionalityCall(x204, x1030, "en15:Edit Categoriespt17:Editar Categorias", null, null, null,
+                        "en15:edit-categoriespt17:editar-categorias");
         FunctionalityCall x207 =
-                makeFunctionalityCall(x204, x1032, "pt32:Desassociar Disciplinas Execução", null, null, null,
-                        "pt32:desassociar-disciplinas-execucao");
+                makeFunctionalityCall(x204, x1032, "en30:Disassociate Execution Coursespt32:Desassociar Disciplinas Execução",
+                        null, null, null, "en30:disassociate-execution-coursespt32:desassociar-disciplinas-execucao");
         FunctionalityCall x208 =
                 makeFunctionalityCall(x204, x1286, "pt21:Avaliação de Docentes", null, null, null, "pt21:avaliacao-de-docentes");
         ExpressionGroupAvailability x1692 = new ExpressionGroupAvailability(x208, "noOne()");
@@ -4017,400 +4419,533 @@ public class CreateFunctionallityTree {
         x1693.setTargetGroup(Group.fromString("everyone()"));
         x204.setAvailabilityPolicy(x1693);
         FunctionalityCall x210 =
-                makeFunctionalityCall(x205, x1028, "pt14:Página Inicial", null, null, null, "pt14:pagina-inicial");
+                makeFunctionalityCall(x205, x1028, "en8:Homepagept14:Página Inicial", null, null, null,
+                        "en8:homepagept14:pagina-inicial");
         FunctionalityCall x211 =
-                makeFunctionalityCall(x205, x1023, "pt18:Gestão de Docentes", null, null, null, "pt18:gestao-de-docentes");
-        Section x214 = new Section(x206, MultiLanguageString.importFromString("pt16:Gestão de Alunos"));
-        x214.setName(MultiLanguageString.importFromString("pt16:Gestão de Alunos"));
-        x214.setNormalizedName(MultiLanguageString.importFromString("pt16:gestao-de-alunos"));
+                makeFunctionalityCall(x205, x1023, "en18:Teacher Managementpt18:Gestão de Docentes", null, null, null,
+                        "en18:teacher-managementpt18:gestao-de-docentes");
+        Section x214 = new Section(x206, MultiLanguageString.importFromString("en18:Student Managementpt16:Gestão de Alunos"));
+        x214.setName(MultiLanguageString.importFromString("en18:Student Managementpt16:Gestão de Alunos"));
+        x214.setNormalizedName(MultiLanguageString.importFromString("en18:student-managementpt16:gestao-de-alunos"));
         x214.setMaximizable(true);
         FunctionalityCall x213 =
-                makeFunctionalityCall(x214, x1035, "pt20:Criar Classificações", null, null, null, "pt20:criar-classificacoes");
+                makeFunctionalityCall(x214, x1035, "en22:Create Classificationspt20:Criar Classificações", null, null, null,
+                        "en22:create-classificationspt20:criar-classificacoes");
         FunctionalityCall x215 =
-                makeFunctionalityCall(x214, x1025, "pt16:Gestão de Alunos", null, null, null, "pt16:gestao-de-alunos");
-        Section x220 = new Section(x206, MultiLanguageString.importFromString("pt17:Gestão de Pessoas"));
-        x220.setName(MultiLanguageString.importFromString("pt17:Gestão de Pessoas"));
-        x220.setNormalizedName(MultiLanguageString.importFromString("pt17:gestao-de-pessoas"));
+                makeFunctionalityCall(x214, x1025, "en18:Student Managementpt16:Gestão de Alunos", null, null, null,
+                        "en18:student-managementpt16:gestao-de-alunos");
+        Section x220 = new Section(x206, MultiLanguageString.importFromString("en17:People Managementpt17:Gestão de Pessoas"));
+        x220.setName(MultiLanguageString.importFromString("en17:People Managementpt17:Gestão de Pessoas"));
+        x220.setNormalizedName(MultiLanguageString.importFromString("en17:people-managementpt17:gestao-de-pessoas"));
         x220.setMaximizable(true);
-        Section x219 = new Section(x220, MultiLanguageString.importFromString("pt17:Gestão de Pessoas"));
-        x219.setName(MultiLanguageString.importFromString("pt17:Gestão de Pessoas"));
-        x219.setNormalizedName(MultiLanguageString.importFromString("pt17:gestao-de-pessoas"));
-        Section x218 = new Section(x219, MultiLanguageString.importFromString("pt27:Pessoas Externas-Convidadas"));
-        x218.setName(MultiLanguageString.importFromString("pt27:Pessoas Externas-Convidadas"));
-        x218.setNormalizedName(MultiLanguageString.importFromString("pt27:pessoas-externas-convidadas"));
+        Section x219 = new Section(x220, MultiLanguageString.importFromString("en17:People Managementpt17:Gestão de Pessoas"));
+        x219.setName(MultiLanguageString.importFromString("en17:People Managementpt17:Gestão de Pessoas"));
+        x219.setNormalizedName(MultiLanguageString.importFromString("en17:people-managementpt17:gestao-de-pessoas"));
+        Section x218 =
+                new Section(x219,
+                        MultiLanguageString.importFromString("en23:External Invited Peoplept27:Pessoas Externas-Convidadas"));
+        x218.setName(MultiLanguageString.importFromString("en23:External Invited Peoplept27:Pessoas Externas-Convidadas"));
+        x218.setNormalizedName(MultiLanguageString
+                .importFromString("en23:external-invited-peoplept27:pessoas-externas-convidadas"));
         FunctionalityCall x217 =
-                makeFunctionalityCall(x218, x1053, "pt30:Criar Pessoa Externa-Convidada", null, null, null,
-                        "pt30:criar-pessoa-externa-convidada");
+                makeFunctionalityCall(x218, x1053, "en30:Create External Invited Personpt30:Criar Pessoa Externa-Convidada",
+                        null, null, null, "en30:create-external-invited-personpt30:criar-pessoa-externa-convidada");
         FunctionalityCall x221 =
-                makeFunctionalityCall(x218, x1055, "pt18:Gestão de Convites", null, null, null, "pt18:gestao-de-convites");
-        FunctionalityCall x223 = makeFunctionalityCall(x219, x1040, "pt13:Criar Pessoas", null, null, null, "pt13:criar-pessoas");
+                makeFunctionalityCall(x218, x1055, "en22:Invitations Managementpt18:Gestão de Convites", null, null, null,
+                        "en22:invitations-managementpt18:gestao-de-convites");
+        FunctionalityCall x223 =
+                makeFunctionalityCall(x219, x1040, "en13:Create Peoplept13:Criar Pessoas", null, null, null,
+                        "en13:create-peoplept13:criar-pessoas");
         FunctionalityCall x224 =
-                makeFunctionalityCall(x219, x1042, "pt15:Procurar Pessoa", null, null, null, "pt15:procurar-pessoa");
+                makeFunctionalityCall(x219, x1042, "en13:Search Personpt15:Procurar Pessoa", null, null, null,
+                        "en13:search-personpt15:procurar-pessoa");
         FunctionalityCall x225 =
-                makeFunctionalityCall(x219, x1043, "pt21:Gestão de Privilégios", null, null, null, "pt21:gestao-de-privilegios");
+                makeFunctionalityCall(x219, x1043, "en15:Role Managementpt21:Gestão de Privilégios", null, null, null,
+                        "en15:role-managementpt21:gestao-de-privilegios");
         FunctionalityCall x226 =
-                makeFunctionalityCall(x219, x1044, "pt14:Gerar Password", null, null, null, "pt14:gerar-password");
+                makeFunctionalityCall(x219, x1044, "en17:Generate Passwordpt14:Gerar Password", null, null, null,
+                        "en17:generate-passwordpt14:gerar-password");
         FunctionalityCall x227 =
-                makeFunctionalityCall(x219, x1045, "pt16:Cargos de Gestão", null, null, null, "pt16:cargos-de-gestao");
+                makeFunctionalityCall(x219, x1045, "en20:Management Functionspt16:Cargos de Gestão", null, null, null,
+                        "en20:management-functionspt16:cargos-de-gestao");
         FunctionalityCall x228 =
-                makeFunctionalityCall(x219, x1046, "pt16:Cargos de Gestão", null, null, null, "pt16:cargos-de-gestao");
+                makeFunctionalityCall(x219, x1046, "en20:Management Functionspt16:Cargos de Gestão", null, null, null,
+                        "en20:management-functionspt16:cargos-de-gestao");
         FunctionalityCall x229 =
-                makeFunctionalityCall(x219, x1047, "pt16:Cargos de Gestão", null, null, null, "pt16:cargos-de-gestao");
+                makeFunctionalityCall(x219, x1047, "en20:Management Functionspt16:Cargos de Gestão", null, null, null,
+                        "en20:management-functionspt16:cargos-de-gestao");
         FunctionalityCall x230 =
-                makeFunctionalityCall(x219, x1048, "pt14:Activar Pessoa", null, null, null, "pt14:activar-pessoa");
+                makeFunctionalityCall(x219, x1048, "en15:Activate Personpt14:Activar Pessoa", null, null, null,
+                        "en15:activate-personpt14:activar-pessoa");
         FunctionalityCall x231 =
-                makeFunctionalityCall(x219, x1049, "pt16:Cargos de Gestão", null, null, null, "pt16:cargos-de-gestao");
+                makeFunctionalityCall(x219, x1049, "en20:Management Functionspt16:Cargos de Gestão", null, null, null,
+                        "en20:management-functionspt16:cargos-de-gestao");
         FunctionalityCall x232 =
-                makeFunctionalityCall(x219, x1050, "pt16:Cargos de Gestão", null, null, null, "pt16:cargos-de-gestao");
+                makeFunctionalityCall(x219, x1050, "en20:Management Functionspt16:Cargos de Gestão", null, null, null,
+                        "en20:management-functionspt16:cargos-de-gestao");
         FunctionalityCall x233 =
-                makeFunctionalityCall(x219, x1051, "pt16:Cargos de Gestão", null, null, null, "pt16:cargos-de-gestao");
-        FunctionalityCall x234 = makeFunctionalityCall(x219, x1052, "pt13:Editar Pessoa", null, null, null, "pt13:editar-pessoa");
+                makeFunctionalityCall(x219, x1051, "en20:Management Functionspt16:Cargos de Gestão", null, null, null,
+                        "en20:management-functionspt16:cargos-de-gestao");
+        FunctionalityCall x234 =
+                makeFunctionalityCall(x219, x1052, "en11:Edit Personpt13:Editar Pessoa", null, null, null,
+                        "en11:edit-personpt13:editar-pessoa");
         FunctionalityCall x236 =
-                makeFunctionalityCall(x220, x1038, "pt14:Página Inicial", null, null, null, "pt14:pagina-inicial");
+                makeFunctionalityCall(x220, x1038, "en8:Homepagept14:Página Inicial", null, null, null,
+                        "en8:homepagept14:pagina-inicial");
         FunctionalityCall x237 =
-                makeFunctionalityCall(x220, x1026, "pt17:Gestão de Pessoas", null, null, null, "pt17:gestao-de-pessoas");
+                makeFunctionalityCall(x220, x1026, "en17:People Managementpt17:Gestão de Pessoas", null, null, null,
+                        "en17:people-managementpt17:gestao-de-pessoas");
         FunctionalityCall x239 =
-                makeFunctionalityCall(x206, x1027, "pt18:Gestão de Feriados", null, null, null, "pt18:gestao-de-feriados");
+                makeFunctionalityCall(x206, x1027, "en18:Holiday Managementpt18:Gestão de Feriados", null, null, null,
+                        "en18:holiday-managementpt18:gestao-de-feriados");
         FunctionalityCall x240 =
                 makeFunctionalityCall(x206, x1059, "en15:Role Managementpt15:Gestão de Roles", null, null, null,
                         "en15:role-managementpt15:gestao-de-roles");
-        Section x243 = new Section(x96, MultiLanguageString.importFromString("pt13:Equivalências"));
-        x243.setName(MultiLanguageString.importFromString("pt13:Equivalências"));
-        x243.setNormalizedName(MultiLanguageString.importFromString("pt13:equivalencias"));
+        Section x243 = new Section(x96, MultiLanguageString.importFromString("en12:Equivalencespt13:Equivalências"));
+        x243.setName(MultiLanguageString.importFromString("en12:Equivalencespt13:Equivalências"));
+        x243.setNormalizedName(MultiLanguageString.importFromString("en12:equivalencespt13:equivalencias"));
         FunctionalityCall x242 =
-                makeFunctionalityCall(x243, x1061, "pt22:Não necessita de fazer", null, null, null, "pt22:nao-necessita-de-fazer");
-        FunctionalityCall x244 = makeFunctionalityCall(x243, x1063, "pt13:Equivalências", null, null, null, "pt13:equivalencias");
-        Section x249 = new Section(x96, MultiLanguageString.importFromString("pt19:Gestão de Ficheiros"));
-        x249.setName(MultiLanguageString.importFromString("pt19:Gestão de Ficheiros"));
-        x249.setNormalizedName(MultiLanguageString.importFromString("pt19:gestao-de-ficheiros"));
-        Section x248 = new Section(x249, MultiLanguageString.importFromString("pt20:Geração de Ficheiros"));
-        x248.setName(MultiLanguageString.importFromString("pt20:Geração de Ficheiros"));
-        x248.setNormalizedName(MultiLanguageString.importFromString("pt20:geracao-de-ficheiros"));
+                makeFunctionalityCall(x243, x1061, "en17:No need to enrollpt22:Não necessita de fazer", null, null, null,
+                        "en17:no-need-to-enrollpt22:nao-necessita-de-fazer");
+        FunctionalityCall x244 =
+                makeFunctionalityCall(x243, x1063, "en12:Equivalencespt13:Equivalências", null, null, null,
+                        "en12:equivalencespt13:equivalencias");
+        Section x249 = new Section(x96, MultiLanguageString.importFromString("en15:File Managementpt19:Gestão de Ficheiros"));
+        x249.setName(MultiLanguageString.importFromString("en15:File Managementpt19:Gestão de Ficheiros"));
+        x249.setNormalizedName(MultiLanguageString.importFromString("en15:file-managementpt19:gestao-de-ficheiros"));
+        Section x248 = new Section(x249, MultiLanguageString.importFromString("en15:File Generationpt20:Geração de Ficheiros"));
+        x248.setName(MultiLanguageString.importFromString("en15:File Generationpt20:Geração de Ficheiros"));
+        x248.setNormalizedName(MultiLanguageString.importFromString("en15:file-generationpt20:geracao-de-ficheiros"));
         x248.setMaximizable(true);
-        Section x247 = new Section(x248, MultiLanguageString.importFromString("pt20:Geração de Ficheiros"));
-        x247.setName(MultiLanguageString.importFromString("pt20:Geração de Ficheiros"));
-        x247.setNormalizedName(MultiLanguageString.importFromString("pt20:geracao-de-ficheiros"));
+        Section x247 = new Section(x248, MultiLanguageString.importFromString("en15:File Generationpt20:Geração de Ficheiros"));
+        x247.setName(MultiLanguageString.importFromString("en15:File Generationpt20:Geração de Ficheiros"));
+        x247.setNormalizedName(MultiLanguageString.importFromString("en15:file-generationpt20:geracao-de-ficheiros"));
         FunctionalityCall x246 =
-                makeFunctionalityCall(x247, x1070, "pt20:Ficheiro para a SIBS", null, null, null, "pt20:ficheiro-para-a-sibs");
+                makeFunctionalityCall(x247, x1070, "en13:File for SIBSpt20:Ficheiro para a SIBS", null, null, null,
+                        "en13:file-for-sibspt20:ficheiro-para-a-sibs");
         FunctionalityCall x250 =
-                makeFunctionalityCall(x247, x1072, "pt20:Ficheiro para Cartas", null, null, null, "pt20:ficheiro-para-cartas");
+                makeFunctionalityCall(x247, x1072, "en16:File for Letterspt20:Ficheiro para Cartas", null, null, null,
+                        "en16:file-for-letterspt20:ficheiro-para-cartas");
         FunctionalityCall x252 =
-                makeFunctionalityCall(x248, x1068, "pt16:Página Principal", null, null, null, "pt16:pagina-principal");
+                makeFunctionalityCall(x248, x1068, "en8:Homepagept16:Página Principal", null, null, null,
+                        "en8:homepagept16:pagina-principal");
         FunctionalityCall x253 =
-                makeFunctionalityCall(x248, x1065, "pt20:Geração de Ficheiros", null, null, null, "pt20:geracao-de-ficheiros");
-        Section x257 = new Section(x249, MultiLanguageString.importFromString("pt19:Upload de Ficheiros"));
-        x257.setName(MultiLanguageString.importFromString("pt19:Upload de Ficheiros"));
-        x257.setNormalizedName(MultiLanguageString.importFromString("pt19:upload-de-ficheiros"));
+                makeFunctionalityCall(x248, x1065, "en15:File Generationpt20:Geração de Ficheiros", null, null, null,
+                        "en15:file-generationpt20:geracao-de-ficheiros");
+        Section x257 = new Section(x249, MultiLanguageString.importFromString("en11:File Uploadpt19:Upload de Ficheiros"));
+        x257.setName(MultiLanguageString.importFromString("en11:File Uploadpt19:Upload de Ficheiros"));
+        x257.setNormalizedName(MultiLanguageString.importFromString("en11:file-uploadpt19:upload-de-ficheiros"));
         x257.setMaximizable(true);
-        Section x256 = new Section(x257, MultiLanguageString.importFromString("pt19:Gestão de Ficheiros"));
-        x256.setName(MultiLanguageString.importFromString("pt19:Gestão de Ficheiros"));
-        x256.setNormalizedName(MultiLanguageString.importFromString("pt19:gestao-de-ficheiros"));
+        Section x256 = new Section(x257, MultiLanguageString.importFromString("en15:File Managementpt19:Gestão de Ficheiros"));
+        x256.setName(MultiLanguageString.importFromString("en15:File Managementpt19:Gestão de Ficheiros"));
+        x256.setNormalizedName(MultiLanguageString.importFromString("en15:file-managementpt19:gestao-de-ficheiros"));
         FunctionalityCall x255 =
-                makeFunctionalityCall(x256, x1077, "pt16:Ficheiro da SIBS", null, null, null, "pt16:ficheiro-da-sibs");
+                makeFunctionalityCall(x256, x1077, "en9:SIBS Filept16:Ficheiro da SIBS", null, null, null,
+                        "en9:sibs-filept16:ficheiro-da-sibs");
         FunctionalityCall x259 =
-                makeFunctionalityCall(x257, x1075, "pt16:Página Principal", null, null, null, "pt16:pagina-principal");
+                makeFunctionalityCall(x257, x1075, "en8:Homepagept16:Página Principal", null, null, null,
+                        "en8:homepagept16:pagina-principal");
         FunctionalityCall x260 =
-                makeFunctionalityCall(x257, x1067, "pt19:Upload de Ficheiros", null, null, null, "pt19:upload-de-ficheiros");
-        Section x266 = new Section(x96, MultiLanguageString.importFromString("pt17:Gestão Financeira"));
-        x266.setName(MultiLanguageString.importFromString("pt17:Gestão Financeira"));
-        x266.setNormalizedName(MultiLanguageString.importFromString("pt17:gestao-financeira"));
-        Section x265 = new Section(x266, MultiLanguageString.importFromString("pt15:Gestão de Guias"));
-        x265.setName(MultiLanguageString.importFromString("pt15:Gestão de Guias"));
-        x265.setNormalizedName(MultiLanguageString.importFromString("pt15:gestao-de-guias"));
+                makeFunctionalityCall(x257, x1067, "en11:File Uploadpt19:Upload de Ficheiros", null, null, null,
+                        "en11:file-uploadpt19:upload-de-ficheiros");
+        Section x266 = new Section(x96, MultiLanguageString.importFromString("en20:Finalcial Managementpt17:Gestão Financeira"));
+        x266.setName(MultiLanguageString.importFromString("en20:Finalcial Managementpt17:Gestão Financeira"));
+        x266.setNormalizedName(MultiLanguageString.importFromString("en20:financial-managementpt17:gestao-financeira"));
+        Section x265 = new Section(x266, MultiLanguageString.importFromString("en16:Guide Managementpt15:Gestão de Guias"));
+        x265.setName(MultiLanguageString.importFromString("en16:Guide Managementpt15:Gestão de Guias"));
+        x265.setNormalizedName(MultiLanguageString.importFromString("en16:guide-managementpt15:gestao-de-guias"));
         x265.setMaximizable(true);
-        Section x264 = new Section(x265, MultiLanguageString.importFromString("pt15:Gestão de Guias"));
-        x264.setName(MultiLanguageString.importFromString("pt15:Gestão de Guias"));
-        x264.setNormalizedName(MultiLanguageString.importFromString("pt15:gestao-de-guias"));
+        Section x264 = new Section(x265, MultiLanguageString.importFromString("en16:Guide Managementpt15:Gestão de Guias"));
+        x264.setName(MultiLanguageString.importFromString("en16:Guide Managementpt15:Gestão de Guias"));
+        x264.setNormalizedName(MultiLanguageString.importFromString("en16:guide-managementpt15:gestao-de-guias"));
         FunctionalityCall x263 =
-                makeFunctionalityCall(x264, x1087, "pt15:Edição de Guias", null, null, null, "pt15:edicao-de-guias");
+                makeFunctionalityCall(x264, x1087, "en13:Guide Editionpt15:Edição de Guias", null, null, null,
+                        "en13:guide-editionpt15:edicao-de-guias");
         FunctionalityCall x268 =
-                makeFunctionalityCall(x265, x1085, "pt16:Página Principal", null, null, null, "pt16:pagina-principal");
+                makeFunctionalityCall(x265, x1085, "en8:Homepagept16:Página Principal", null, null, null,
+                        "en8:homepagept16:pagina-principal");
         FunctionalityCall x269 =
-                makeFunctionalityCall(x265, x1082, "pt15:Gestão de Guias", null, null, null, "pt15:gestao-de-guias");
+                makeFunctionalityCall(x265, x1082, "en16:Guide Managementpt15:Gestão de Guias", null, null, null,
+                        "en16:guide-managementpt15:gestao-de-guias");
         FunctionalityCall x271 =
-                makeFunctionalityCall(x266, x1084, "pt31:Actualizar Situações de Propina", null, null, null,
-                        "pt31:actualizar-situacoes-de-propina");
-        Section x274 = new Section(x96, MultiLanguageString.importFromString("pt13:Gestão de CMS"));
-        x274.setName(MultiLanguageString.importFromString("pt13:Gestão de CMS"));
-        x274.setNormalizedName(MultiLanguageString.importFromString("pt13:gestao-de-cms"));
+                makeFunctionalityCall(x266, x1084, "en25:Update Tuition Situationspt31:Actualizar Situações de Propina", null,
+                        null, null, "en25:update-tuition-situationspt31:actualizar-situacoes-de-propina");
+        Section x274 = new Section(x96, MultiLanguageString.importFromString("en14:CMS Managementpt13:Gestão de CMS"));
+        x274.setName(MultiLanguageString.importFromString("en14:CMS Managementpt13:Gestão de CMS"));
+        x274.setNormalizedName(MultiLanguageString.importFromString("en14:cms-managementpt13:gestao-de-cms"));
         FunctionalityCall x273 =
-                makeFunctionalityCall(x274, x1092, "pt22:Grupos de Utilizadores", null, null, null, "pt22:grupos-de-utilizadores");
-        FunctionalityCall x275 = makeFunctionalityCall(x274, x1094, "pt13:Configurações", null, null, null, "pt13:configuracoes");
+                makeFunctionalityCall(x274, x1092, "en11:User Groupspt22:Grupos de Utilizadores", null, null, null,
+                        "en11:user-groupspt22:grupos-de-utilizadores");
+        FunctionalityCall x275 =
+                makeFunctionalityCall(x274, x1094, "en14:Configurationspt13:Configurações", null, null, null,
+                        "en14:configurationspt13:configuracoes");
         FunctionalityCall x276 =
-                makeFunctionalityCall(x274, x1095, "pt22:Páginas de Disciplinas", null, null, null, "pt22:paginas-de-disciplinas");
-        Section x279 = new Section(x96, MultiLanguageString.importFromString("pt17:Gestão do Suporte"));
-        x279.setName(MultiLanguageString.importFromString("pt17:Gestão do Suporte"));
-        x279.setNormalizedName(MultiLanguageString.importFromString("pt17:gestao-do-suporte"));
+                makeFunctionalityCall(x274, x1095, "en14:Course Websitept22:Páginas de Disciplinaspt22:Páginas de Disciplinas",
+                        null, null, null, "en14:course-websiteptpt22:paginas-de-disciplinas");
+        Section x279 = new Section(x96, MultiLanguageString.importFromString("en18:Support Managementpt17:Gestão do Suporte"));
+        x279.setName(MultiLanguageString.importFromString("en18:Support Managementpt17:Gestão do Suporte"));
+        x279.setNormalizedName(MultiLanguageString.importFromString("en18:support-managementpt17:gestao-do-suporte"));
         FunctionalityCall x278 =
-                makeFunctionalityCall(x279, x1097, "pt19:Gestão de Glossário", null, null, null, "pt19:gestao-de-glossario");
+                makeFunctionalityCall(x279, x1097, "en19:Glossary Managementpt19:Gestão de Glossário", null, null, null,
+                        "en19:glossary-managementpt19:gestao-de-glossario");
         FunctionalityCall x280 =
-                makeFunctionalityCall(x279, x1099, "pt15:Gestão de FAQ s", null, null, null, "pt15:gestao-de-faq s");
+                makeFunctionalityCall(x279, x1099, "en14:FAQ Managementpt15:Gestão de FAQ s", null, null, null,
+                        "en14:faq-managementpt15:gestao-de-faq-s");
         FunctionalityCall x281 =
-                makeFunctionalityCall(x279, x1100, "pt15:Gestão de FAQ s", null, null, null, "pt15:gestao-de-faq s");
-        Section x284 = new Section(x96, MultiLanguageString.importFromString("pt18:Gestão de Objectos"));
-        x284.setName(MultiLanguageString.importFromString("pt18:Gestão de Objectos"));
-        x284.setNormalizedName(MultiLanguageString.importFromString("pt18:gestao-de-objectos"));
+                makeFunctionalityCall(x279, x1100, "en14:FAQ Managementpt15:Gestão de FAQ s", null, null, null,
+                        "en14:faq-managementpt15:gestao-de-faq-s");
+        Section x284 = new Section(x96, MultiLanguageString.importFromString("en17:Object Managementpt18:Gestão de Objectos"));
+        x284.setName(MultiLanguageString.importFromString("en17:Object Managementpt18:Gestão de Objectos"));
+        x284.setNormalizedName(MultiLanguageString.importFromString("en17:object-managementpt18:gestao-de-objectos"));
         FunctionalityCall x283 =
-                makeFunctionalityCall(x284, x1102, "pt15:Gestão da Cache", null, null, null, "pt15:gestao-da-cache");
+                makeFunctionalityCall(x284, x1102, "en16:Cache Managementpt15:Gestão da Cache", null, null, null,
+                        "en16:cache-managementpt15:gestao-da-cache");
         FunctionalityCall x285 =
-                makeFunctionalityCall(x284, x1104, "pt26:Formatação de Propriedades", null, null, null,
-                        "pt26:formatacao-de-propriedades");
+                makeFunctionalityCall(x284, x1104, "en21:Properties Formattingpt26:Formatação de Propriedades", null, null, null,
+                        "en21:properties-formattingpt26:formatacao-de-propriedades");
         FunctionalityCall x286 =
-                makeFunctionalityCall(x284, x1105, "pt17:Fusão de Objectos", null, null, null, "pt17:fusao-de-objectos");
+                makeFunctionalityCall(x284, x1105, "en13:Merge Objectspt17:Fusão de Objectos", null, null, null,
+                        "en13:merge-objectspt17:fusao-de-objectos");
         FunctionalityCall x287 =
-                makeFunctionalityCall(x284, x1106, "pt18:Edição de Objectos", null, null, null, "pt18:edicao-de-objectos");
+                makeFunctionalityCall(x284, x1106, "en14:Object Editionpt18:Edição de Objectos", null, null, null,
+                        "en14:object-editionpt18:edicao-de-objectos");
         FunctionalityCall x288 =
-                makeFunctionalityCall(x284, x1107, "pt16:Fusão de Pessoas", null, null, null, "pt16:fusao-de-pessoas");
-        Section x291 = new Section(x96, MultiLanguageString.importFromString("pt17:Gestão do Sistema"));
-        x291.setName(MultiLanguageString.importFromString("pt17:Gestão do Sistema"));
-        x291.setNormalizedName(MultiLanguageString.importFromString("pt17:gestao-do-sistema"));
+                makeFunctionalityCall(x284, x1107, "en12:Merge Peoplept16:Fusão de Pessoas", null, null, null,
+                        "en12:merge-peoplept16:fusao-de-pessoas");
+        Section x291 = new Section(x96, MultiLanguageString.importFromString("en17:System Managementpt17:Gestão do Sistema"));
+        x291.setName(MultiLanguageString.importFromString("en17:System Managementpt17:Gestão do Sistema"));
+        x291.setNormalizedName(MultiLanguageString.importFromString("en17:system-managementpt17:gestao-do-sistema"));
         FunctionalityCall x290 =
-                makeFunctionalityCall(x291, x1109, "pt25:Monitorização de Serviços", null, null, null,
-                        "pt25:monitorizacao-de-servicos");
+                makeFunctionalityCall(x291, x1109, "en23:Services Monitorizationpt25:Monitorização de Serviços", null, null,
+                        null, "en23:services-monitorizationpt25:monitorizacao-de-servicos");
         FunctionalityCall x292 =
-                makeFunctionalityCall(x291, x1111, "pt24:Monitorização de Pedidos", null, null, null,
-                        "pt24:monitorizacao-de-pedidos");
+                makeFunctionalityCall(x291, x1111, "en23:Requests Monitorizationpt24:Monitorização de Pedidos", null, null, null,
+                        "en23:requests-monitorizationpt24:monitorizacao-de-pedidos");
         FunctionalityCall x293 =
-                makeFunctionalityCall(x291, x1112, "pt29:Monitorização de Utilizadores", null, null, null,
-                        "pt29:monitorizacao-de-utilizadores");
+                makeFunctionalityCall(x291, x1112, "en20:Users Monitorizationpt29:Monitorização de Utilizadores", null, null,
+                        null, "en20:users-monitorizationpt29:monitorizacao-de-utilizadores");
         FunctionalityCall x294 =
-                makeFunctionalityCall(x291, x1113, "pt22:Informações do Sistema", null, null, null, "pt22:informacoes-do-sistema");
-        FunctionalityCall x295 = makeFunctionalityCall(x291, x1114, "pt13:Kerberos Test", null, null, null, "pt13:kerberos-test");
-        FunctionalityCall x296 = makeFunctionalityCall(x291, x1115, "pt4:Cron", null, null, null, "pt4:cron");
-        FunctionalityCall x297 = makeFunctionalityCall(x291, x1116, "pt13:Kerberos Test", null, null, null, "pt13:kerberos-test");
+                makeFunctionalityCall(x291, x1113, "en18:System Informationpt22:Informações do Sistema", null, null, null,
+                        "en18:system-informationpt22:informacoes-do-sistema");
+        FunctionalityCall x295 =
+                makeFunctionalityCall(x291, x1114, "en13:Kerberos Testpt14:Teste Kerberos", null, null, null,
+                        "en13:kerberos-testpt14:teste-kerberos");
+        FunctionalityCall x296 = makeFunctionalityCall(x291, x1115, "en4:Cronpt4:Cron", null, null, null, "en4:cronpt4:cron");
+        FunctionalityCall x297 =
+                makeFunctionalityCall(x291, x1116, "en13:Kerberos Testpt14:Teste Kerberos", null, null, null,
+                        "en13:kerberos-testpt14:teste-kerberos");
         FunctionalityCall x298 =
-                makeFunctionalityCall(x291, x1117, "pt22:Sistema de Transacções", null, null, null, "pt22:sistema-de-transaccoes");
+                makeFunctionalityCall(x291, x1117, "en18:Transaction Systempt22:Sistema de Transacções", null, null, null,
+                        "en18:transaction-systempt22:sistema-de-transaccoes");
         FunctionalityCall x299 =
-                makeFunctionalityCall(x291, x1118, "pt16:Gestão de Logins", null, null, null, "pt16:gestao-de-logins");
-        FunctionalityCall x300 = makeFunctionalityCall(x291, x1119, "pt10:Queue jobs", null, null, null, "pt10:queue-jobs");
-        Section x305 = new Section(x96, MultiLanguageString.importFromString("pt25:Gestão de Funcionalidades"));
-        x305.setName(MultiLanguageString.importFromString("pt25:Gestão de Funcionalidades"));
-        x305.setNormalizedName(MultiLanguageString.importFromString("pt25:gestao-de-funcionalidades"));
-        Section x304 = new Section(x305, MultiLanguageString.importFromString("pt18:Outros mapeamentos"));
-        x304.setName(MultiLanguageString.importFromString("pt18:Outros mapeamentos"));
-        x304.setNormalizedName(MultiLanguageString.importFromString("pt18:outros-mapeamentos"));
-        Section x303 = new Section(x304, MultiLanguageString.importFromString("pt6:Modulo"));
-        x303.setName(MultiLanguageString.importFromString("pt6:Modulo"));
-        x303.setNormalizedName(MultiLanguageString.importFromString("pt6:modulo"));
-        FunctionalityCall x302 = makeFunctionalityCall(x303, x1126, "pt3:Ver", null, null, null, "pt3:ver");
-        FunctionalityCall x306 = makeFunctionalityCall(x303, x1129, "pt6:Editar", null, null, null, "pt6:editar");
-        FunctionalityCall x307 = makeFunctionalityCall(x303, x1130, "pt5:Criar", null, null, null, "pt5:criar");
+                makeFunctionalityCall(x291, x1118, "en16:Login Managementpt16:Gestão de Logins", null, null, null,
+                        "en16:login-managementpt16:gestao-de-logins");
+        FunctionalityCall x300 =
+                makeFunctionalityCall(x291, x1119, "en10:Queue jobspt10:Queue jobs", null, null, null,
+                        "en10:queue-jobspt10:queue-jobs");
+        Section x305 =
+                new Section(x96,
+                        MultiLanguageString.importFromString("en26:Functionalities Managementpt25:Gestão de Funcionalidades"));
+        x305.setName(MultiLanguageString.importFromString("en26:Functionalities Managementpt25:Gestão de Funcionalidades"));
+        x305.setNormalizedName(MultiLanguageString
+                .importFromString("en26:functionalities-managementpt25:gestao-de-funcionalidades"));
+        Section x304 = new Section(x305, MultiLanguageString.importFromString("en14:Other Mappingspt18:Outros mapeamentos"));
+        x304.setName(MultiLanguageString.importFromString("en14:Other Mappingspt18:Outros mapeamentos"));
+        x304.setNormalizedName(MultiLanguageString.importFromString("en14:other-mappingspt18:outros-mapeamentos"));
+        Section x303 = new Section(x304, MultiLanguageString.importFromString("en6:Modulept6:Modulo"));
+        x303.setName(MultiLanguageString.importFromString("en6:Modulept6:Modulo"));
+        x303.setNormalizedName(MultiLanguageString.importFromString("en6:modulept6:modulo"));
+        FunctionalityCall x302 = makeFunctionalityCall(x303, x1126, "en4:Viewpt3:Ver", null, null, null, "en4:viewpt3:ver");
+        FunctionalityCall x306 = makeFunctionalityCall(x303, x1129, "en4:Editpt6:Editar", null, null, null, "en4:editpt6:editar");
+        FunctionalityCall x307 =
+                makeFunctionalityCall(x303, x1130, "en6:Creatept5:Criar", null, null, null, "en6:creatept5:criar");
         FunctionalityCall x308 =
-                makeFunctionalityCall(x303, x1131, "pt19:Organizar Estrutura", null, null, null, "pt19:organizar-estrutura");
+                makeFunctionalityCall(x303, x1131, "en20:Structure Managementpt19:Organizar Estrutura", null, null, null,
+                        "en20:structure-managementpt19:organizar-estrutura");
         FunctionalityCall x309 =
-                makeFunctionalityCall(x303, x1132, "pt18:Exportar estrutura", null, null, null, "pt18:exportar-estrutura");
+                makeFunctionalityCall(x303, x1132, "en16:Export Structurept18:Exportar estrutura", null, null, null,
+                        "en16:export-structurept18:exportar-estrutura");
         FunctionalityCall x310 =
-                makeFunctionalityCall(x303, x1133, "pt18:Importar Estrutura", null, null, null, "pt18:importar-estrutura");
+                makeFunctionalityCall(x303, x1133, "en16:Import Structurept18:Importar Estrutura", null, null, null,
+                        "en16:import-structurept18:importar-estrutura");
         FunctionalityCall x311 =
-                makeFunctionalityCall(x303, x1134, "pt18:Importar Estrutura", null, null, null, "pt18:importar-estrutura");
-        Section x314 = new Section(x304, MultiLanguageString.importFromString("pt15:Functionalidade"));
-        x314.setName(MultiLanguageString.importFromString("pt15:Functionalidade"));
-        x314.setNormalizedName(MultiLanguageString.importFromString("pt15:functionalidade"));
-        FunctionalityCall x313 = makeFunctionalityCall(x314, x1136, "pt3:Ver", null, null, null, "pt3:ver");
-        FunctionalityCall x315 = makeFunctionalityCall(x314, x1138, "pt6:Editar", null, null, null, "pt6:editar");
-        FunctionalityCall x316 = makeFunctionalityCall(x314, x1139, "pt5:Criar", null, null, null, "pt5:criar");
+                makeFunctionalityCall(x303, x1134, "en16:Import Structurept18:Importar Estrutura", null, null, null,
+                        "en16:import-structurept18:importar-estrutura");
+        Section x314 = new Section(x304, MultiLanguageString.importFromString("en13:Functionalitypt15:Functionalidade"));
+        x314.setName(MultiLanguageString.importFromString("en13:Functionalitypt15:Functionalidade"));
+        x314.setNormalizedName(MultiLanguageString.importFromString("en13:functionalitypt15:functionalidade"));
+        FunctionalityCall x313 = makeFunctionalityCall(x314, x1136, "en4:Viewpt3:Ver", null, null, null, "en4:viewpt3:ver");
+        FunctionalityCall x315 = makeFunctionalityCall(x314, x1138, "en4:Editpt6:Editar", null, null, null, "en4:editpt6:editar");
+        FunctionalityCall x316 =
+                makeFunctionalityCall(x314, x1139, "en6:Creatept5:Criar", null, null, null, "en6:creatept5:criar");
         FunctionalityCall x317 =
-                makeFunctionalityCall(x314, x1140, "pt16:Confirmar Apagar", null, null, null, "pt16:confirmar-apagar");
-        FunctionalityCall x318 = makeFunctionalityCall(x314, x1141, "pt6:Apagar", null, null, null, "pt6:apagar");
+                makeFunctionalityCall(x314, x1140, "en14:Confirm Deletept16:Confirmar Apagar", null, null, null,
+                        "en14:confirm-deletept16:confirmar-apagar");
+        FunctionalityCall x318 =
+                makeFunctionalityCall(x314, x1141, "en6:Deletept6:Apagar", null, null, null, "en6:deletept6:dpagar");
         FunctionalityCall x319 =
-                makeFunctionalityCall(x314, x1142, "pt21:Gerir Disponibilidade", null, null, null, "pt21:gerir-disponibilidade");
+                makeFunctionalityCall(x314, x1142, "en19:Manage Availabilitypt21:Gerir Disponibilidade", null, null, null,
+                        "en19:manage-availabilitypt21:gerir-disponibilidade");
         FunctionalityCall x320 =
-                makeFunctionalityCall(x314, x1143, "pt40:Interpretar expressão de disponibilidade", null, null, null,
-                        "pt40:interpretar-expressao-de-disponibilidade");
-        FunctionalityCall x321 = makeFunctionalityCall(x314, x1144, "pt10:Desactivar", null, null, null, "pt10:desactivar");
-        FunctionalityCall x322 = makeFunctionalityCall(x314, x1145, "pt7:Activar", null, null, null, "pt7:activar");
-        Section x325 = new Section(x304, MultiLanguageString.importFromString("pt4:Topo"));
-        x325.setName(MultiLanguageString.importFromString("pt4:Topo"));
-        x325.setNormalizedName(MultiLanguageString.importFromString("pt4:topo"));
-        FunctionalityCall x324 = makeFunctionalityCall(x325, x1147, "pt3:Ver", null, null, null, "pt3:ver");
+                makeFunctionalityCall(x314, x1143,
+                        "en33:Interpret Availability Expressionpt40:Interpretar expressão de disponibilidade", null, null, null,
+                        "en33:interpret-availability-expressionpt40:interpretar-expressao-de-disponibilidade");
+        FunctionalityCall x321 =
+                makeFunctionalityCall(x314, x1144, "en7:Disablept10:Desactivar", null, null, null, "en7:disablept10:desactivar");
+        FunctionalityCall x322 =
+                makeFunctionalityCall(x314, x1145, "en6:Enablept7:Activar", null, null, null, "en6:enablept7:activar");
+        Section x325 = new Section(x304, MultiLanguageString.importFromString("en3:Toppt4:Topo"));
+        x325.setName(MultiLanguageString.importFromString("en3:Toppt4:Topo"));
+        x325.setNormalizedName(MultiLanguageString.importFromString("en3:toppt4:topo"));
+        FunctionalityCall x324 = makeFunctionalityCall(x325, x1147, "en4:Viewpt3:Ver", null, null, null, "en4:viewpt3:ver");
         FunctionalityCall x326 =
-                makeFunctionalityCall(x325, x1149, "pt19:Organizar Estrutura", null, null, null, "pt19:organizar-estrutura");
+                makeFunctionalityCall(x325, x1149, "en20:Structure Managementpt19:Organizar Estrutura", null, null, null,
+                        "en20:structure-managementpt19:organizar-estrutura");
         FunctionalityCall x327 =
-                makeFunctionalityCall(x325, x1150, "pt18:Importar Estrutura", null, null, null, "pt18:importar-estrutura");
+                makeFunctionalityCall(x325, x1150, "en16:Import Structurept18:Importar Estrutura", null, null, null,
+                        "en16:import-structurept18:importar-estrutura");
         FunctionalityCall x330 =
-                makeFunctionalityCall(x305, x1121, "pt19:Ver Funcionalidades", null, null, null, "pt19:ver-funcionalidades");
-        FunctionalityCall x331 = makeFunctionalityCall(x305, x1123, "pt13:Testar Filtro", null, null, null, "pt13:testar-filtro");
+                makeFunctionalityCall(x305, x1121, "en20:View Functionalitiespt19:Ver Funcionalidades", null, null, null,
+                        "en20:view-functionalitiespt19:ver-funcionalidades");
+        FunctionalityCall x331 =
+                makeFunctionalityCall(x305, x1123, "en11:Test Filterpt13:Testar Filtro", null, null, null,
+                        "en11:test-filterpt13:testar-filtro");
         FunctionalityCall x332 =
-                makeFunctionalityCall(x305, x1124, "pt20:Resultados do Filtro", null, null, null, "pt20:resultados-do-filtro");
+                makeFunctionalityCall(x305, x1124, "en14:Filter Resultspt20:Resultados do Filtro", null, null, null,
+                        "en14:filter-resultspt20:resultados-do-filtro");
         FunctionalityCall x333 =
-                makeFunctionalityCall(x305, x1125, "pt19:Linguagem de Grupos", null, null, null, "pt19:linguagem-de-grupos");
-        Section x337 = new Section(x96, MultiLanguageString.importFromString("pt10:Frameworks"));
-        x337.setName(MultiLanguageString.importFromString("pt10:Frameworks"));
-        x337.setNormalizedName(MultiLanguageString.importFromString("pt10:frameworks"));
-        Section x336 = new Section(x337, MultiLanguageString.importFromString("pt6:Struts"));
-        x336.setName(MultiLanguageString.importFromString("pt6:Struts"));
-        x336.setNormalizedName(MultiLanguageString.importFromString("pt6:struts"));
+                makeFunctionalityCall(x305, x1125, "pt14:Group Languagept19:Linguagem de Grupos", null, null, null,
+                        "en14:group-languagept19:linguagem-de-grupos");
+        Section x337 = new Section(x96, MultiLanguageString.importFromString("en10:Frameworkspt10:Frameworks"));
+        x337.setName(MultiLanguageString.importFromString("en10:Frameworkspt10:Frameworks"));
+        x337.setNormalizedName(MultiLanguageString.importFromString("en10:frameworkspt10:frameworks"));
+        Section x336 = new Section(x337, MultiLanguageString.importFromString("en6:Strutspt6:Struts"));
+        x336.setName(MultiLanguageString.importFromString("en6:Strutspt6:Struts"));
+        x336.setNormalizedName(MultiLanguageString.importFromString("en6:strutspt6:struts"));
         FunctionalityCall x335 =
-                makeFunctionalityCall(x336, x1156, "pt14:Struts Example", null, null, null, "pt14:struts-example");
+                makeFunctionalityCall(x336, x1156, "en14:Struts Examplept14:Exemplo Struts", null, null, null,
+                        "en14:struts-examplept14:exemplo-struts");
         FunctionalityCall x338 =
-                makeFunctionalityCall(x336, x1158, "pt27:Reload Struts Configuration", null, null, null,
-                        "pt27:reload-struts-configuration");
-        Section x342 = new Section(x337, MultiLanguageString.importFromString("pt9:Renderers"));
-        x342.setName(MultiLanguageString.importFromString("pt9:Renderers"));
-        x342.setNormalizedName(MultiLanguageString.importFromString("pt9:renderers"));
-        Section x341 = new Section(x342, MultiLanguageString.importFromString("pt6:Partes"));
-        x341.setName(MultiLanguageString.importFromString("pt6:Partes"));
-        x341.setNormalizedName(MultiLanguageString.importFromString("pt6:partes"));
+                makeFunctionalityCall(x336, x1158, "en27:Reload Struts Configurationpt30:Recarregar Configuração Struts", null,
+                        null, null, "en27:reload-struts-configurationpt30:recarregar-configuracao-struts");
+        Section x342 = new Section(x337, MultiLanguageString.importFromString("en9:Rendererspt9:Renderers"));
+        x342.setName(MultiLanguageString.importFromString("en9:Rendererspt9:Renderers"));
+        x342.setNormalizedName(MultiLanguageString.importFromString("en9:rendererspt9:renderers"));
+        Section x341 = new Section(x342, MultiLanguageString.importFromString("en5:Partspt6:Partes"));
+        x341.setName(MultiLanguageString.importFromString("en5:Partspt6:Partes"));
+        x341.setNormalizedName(MultiLanguageString.importFromString("en5:partspt6:partes"));
         FunctionalityCall x340 =
-                makeFunctionalityCall(x341, x1164, "pt41:The first situation: presenting the world", null, null, null,
-                        "pt41:the-first-situation:-presenting-the-world");
+                makeFunctionalityCall(x341, x1164,
+                        "en41:The first situation: presenting the worldpt37:Primeira situação: apresentar o mundo", null, null,
+                        null, "en40:the-first-situation-presenting-the-worldpt36:primeira-situacao-apresentar-o-mundo");
         FunctionalityCall x343 =
-                makeFunctionalityCall(x341, x1166, "pt35:The second situation: give me input", null, null, null,
-                        "pt35:the-second-situation:-give-me-input");
+                makeFunctionalityCall(x341, x1166, "en35:The second situation: give me inputpt29:Segunda situação: dá-me input",
+                        null, null, null, "en34:the-second-situation-give-me-inputpt28:segunda-situacao-da-me-input");
         FunctionalityCall x344 =
-                makeFunctionalityCall(x341, x1167, "pt38:The third situation: input on steroids", null, null, null,
-                        "pt38:the-third-situation:-input-on-steroids");
+                makeFunctionalityCall(x341, x1167,
+                        "en38:The third situation: input on steroidspt39:Terceira situação: input sob esteróides", null, null,
+                        null, "en37:the-third-situation-input-on-steroidspt38:terceira-situacao-input-sob-esteroides");
         FunctionalityCall x345 =
-                makeFunctionalityCall(x341, x1168, "pt44:The fourth situation: renderers meet actions", null, null, null,
-                        "pt44:the-fourth-situation:-renderers-meet-actions");
+                makeFunctionalityCall(x341, x1168,
+                        "en44:The fourth situation: renderers meet actionspt39:Quarta situação: renderers meet actions", null,
+                        null, null, "en43:the-fourth-situation-renderers-meet-actionspt38:quarta-situacao-renderers-meet-actions");
         FunctionalityCall x346 =
-                makeFunctionalityCall(x341, x1169, "pt35:The fifth situation: a new renderer", null, null, null,
-                        "pt35:the-fifth-situation:-a-new-renderer");
+                makeFunctionalityCall(x341, x1169,
+                        "en35:The fifth situation: a new rendereren33:Quinta situação: um novo renderer", null, null, null,
+                        "en34:the-fifth-situation-a-new-rendererpt32:quinta-situacao-um-novo-renderer");
         FunctionalityCall x347 =
-                makeFunctionalityCall(x341, x1170, "pt19:Appendix A: Schemas", null, null, null, "pt19:appendix-a:-schemas");
+                makeFunctionalityCall(x341, x1170, "en19:Appendix A: Schemaspt20:Apêndice A: Esquemas", null, null, null,
+                        "en18:appendix-a-schemaspt19:apendice-a-esquemas");
         FunctionalityCall x349 =
-                makeFunctionalityCall(x342, x1160, "pt18:Exemplos Renderers", null, null, null, "pt18:exemplos-renderers");
+                makeFunctionalityCall(x342, x1160, "en18:Renderers Examplespt18:Exemplos Renderers", null, null, null,
+                        "en18:renderers-examplespt18:exemplos-renderers");
         FunctionalityCall x350 =
-                makeFunctionalityCall(x342, x1162, "pt28:Reler Configuração Renderers", null, null, null,
-                        "pt28:reler-configuracao-renderers");
+                makeFunctionalityCall(x342, x1162, "en30:Reload Renderers Configurationpt28:Reler Configuração Renderers", null,
+                        null, null, "en30:reload-renderers-configurationpt28:reler-configuracao-renderers");
         FunctionalityCall x351 =
-                makeFunctionalityCall(x342, x1163, "pt30:Exemplo 1: Input from the user", null, null, null,
-                        "pt30:exemplo-1:-input-from-the-user");
+                makeFunctionalityCall(x342, x1163, "en30:Example 1: Input from the userpt30:Exemplo 1: Input do utilizador",
+                        null, null, null, "en29:example-1-input-from-the-userpt29:exemplo-1-input-do-utilizador");
         FunctionalityCall x353 =
-                makeFunctionalityCall(x337, x1154, "pt25:Java Server Faces Example", null, null, null,
-                        "pt25:java-server-faces-example");
-        Section x356 = new Section(x96, MultiLanguageString.importFromString("pt10:Pagamentos"));
-        x356.setName(MultiLanguageString.importFromString("pt10:Pagamentos"));
-        x356.setNormalizedName(MultiLanguageString.importFromString("pt10:pagamentos"));
+                makeFunctionalityCall(x337, x1154, "en25:Java Server Faces Examplept27:Exemplo Servidor Java Faces", null, null,
+                        null, "en25:java-server-faces-examplept27:exemplo-servidor-java-faces");
+        Section x356 = new Section(x96, MultiLanguageString.importFromString("en8:Paymentspt10:Pagamentos"));
+        x356.setName(MultiLanguageString.importFromString("en8:Paymentspt10:Pagamentos"));
+        x356.setNormalizedName(MultiLanguageString.importFromString("en8:paymentspt10:pagamentos"));
         FunctionalityCall x355 =
-                makeFunctionalityCall(x356, x1174, "pt18:Upload de Ficheiro", null, null, null, "pt18:upload-de-ficheiro");
+                makeFunctionalityCall(x356, x1174, "en11:File Uploadpt18:Upload de Ficheiro", null, null, null,
+                        "en11:file-uploadpt18:upload-de-ficheiro");
         FunctionalityCall x357 =
-                makeFunctionalityCall(x356, x1176, "pt16:Gerir Pagamentos", null, null, null, "pt16:gerir-pagamentos");
+                makeFunctionalityCall(x356, x1176, "en15:Manage Paymentspt16:Gerir Pagamentos", null, null, null,
+                        "en15:manage-paymentspt16:gerir-pagamentos");
         FunctionalityCall x358 =
-                makeFunctionalityCall(x356, x1177, "pt20:Regras de Pagamentos", null, null, null, "pt20:regras-de-pagamentos");
+                makeFunctionalityCall(x356, x1177, "en13:Payment Rulespt20:Regras de Pagamentos", null, null, null,
+                        "pt20:regras-de-pagamentos");
         FunctionalityCall x359 =
                 makeFunctionalityCall(x356, x1178, "en13:Payment Codespt7:Códigos", null, null, null,
-                        "en13:payment-codespt21:mapeamento-de-codigos");
+                        "en13:payment-codespt7:codigos");
         FunctionalityCall x360 =
                 makeFunctionalityCall(x356, x1179, "en7:Reportspt10:Relatórios", null, null, null, "en7:reportspt10:relatorios");
         FunctionalityCall x361 =
-                makeFunctionalityCall(x356, x1180, "pt21:Relatório de propinas", null, null, null, "pt21:relatorio-de-propinas");
+                makeFunctionalityCall(x356, x1180, "en14:Tuition reportpt21:Relatório de propinas", null, null, null,
+                        "en14:tuition-reportpt21:relatorio-de-propinas");
         FunctionalityCall x362 =
-                makeFunctionalityCall(x356, x1181, "pt25:Exportação de Referências", null, null, null,
-                        "pt25:exportacao-de-referencias");
+                makeFunctionalityCall(x356, x1181, "en16:Reference Exportpt25:Exportação de Referências", null, null, null,
+                        "en16:reference-reportpt25:exportacao-de-referencias");
         FunctionalityCall x363 =
-                makeFunctionalityCall(x356, x1182, "pt20:Relatório de Dividas", null, null, null, "pt20:relatorio-de-dividas");
-        Section x366 = new Section(x96, MultiLanguageString.importFromString("pt21:Gestão de Calendários"));
-        x366.setName(MultiLanguageString.importFromString("pt21:Gestão de Calendários"));
-        x366.setNormalizedName(MultiLanguageString.importFromString("pt21:gestao-de-calendarios"));
+                makeFunctionalityCall(x356, x1182, "en11:Debt Reportpt20:Relatório de Dividas", null, null, null,
+                        "en11:debt-reportpt20:relatorio-de-dividas");
+        Section x366 =
+                new Section(x96, MultiLanguageString.importFromString("en19:Calendar Managementpt21:Gestão de Calendários"));
+        x366.setName(MultiLanguageString.importFromString("en19:Calendar Managementpt21:Gestão de Calendários"));
+        x366.setNormalizedName(MultiLanguageString.importFromString("en19:calendar-managementpt21:gestao-de-calendarios"));
         FunctionalityCall x365 =
-                makeFunctionalityCall(x366, x1184, "pt22:Calendários Académicos", null, null, null, "pt22:calendarios-academicos");
+                makeFunctionalityCall(x366, x1184, "en18:Academic Calendarspt22:Calendários Académicos", null, null, null,
+                        "en18:academic-calendarspt22:calendarios-academicos");
         FunctionalityCall x367 =
-                makeFunctionalityCall(x366, x1186, "pt26:Criar Calendário Académico", null, null, null,
-                        "pt26:criar-calendario-academico");
-        Section x370 = new Section(x96, MultiLanguageString.importFromString("pt23:Actividades Científicas"));
-        x370.setName(MultiLanguageString.importFromString("pt23:Actividades Científicas"));
-        x370.setNormalizedName(MultiLanguageString.importFromString("pt23:actividades-cientificas"));
+                makeFunctionalityCall(x366, x1186, "en24:Create Academic Calendarpt26:Criar Calendário Académico", null, null,
+                        null, "en24:create-academic-calendarpt26:criar-calendario-academico");
+        Section x370 =
+                new Section(x96, MultiLanguageString.importFromString("en21:Scientific Activitiespt23:Actividades Científicas"));
+        x370.setName(MultiLanguageString.importFromString("en21:Scientific Activitiespt23:Actividades Científicas"));
+        x370.setNormalizedName(MultiLanguageString.importFromString("en21:scientific-activitiespt23:actividades-cientificas"));
         FunctionalityCall x369 =
-                makeFunctionalityCall(x370, x1188, "pt14:Editar Revista", null, null, null, "pt14:editar-revista");
-        FunctionalityCall x371 = makeFunctionalityCall(x370, x1190, "pt13:Editar Evento", null, null, null, "pt13:editar-evento");
+                makeFunctionalityCall(x370, x1188, "en12:Edit Journalpt14:Editar Revista", null, null, null,
+                        "en12:edit-journalpt14:editar-revista");
+        FunctionalityCall x371 =
+                makeFunctionalityCall(x370, x1190, "en10:Edit Eventpt13:Editar Evento", null, null, null,
+                        "en10:edit-eventpt13:editar-evento");
         FunctionalityCall x372 =
-                makeFunctionalityCall(x370, x1191, "pt15:Juntar Revistas", null, null, null, "pt15:juntar-revistas");
+                makeFunctionalityCall(x370, x1191, "en14:Merge Journalspt15:Juntar Revistas", null, null, null,
+                        "en14:merge-journalspt15:juntar-revistas");
         FunctionalityCall x373 =
-                makeFunctionalityCall(x370, x1192, "pt14:Juntar Eventos", null, null, null, "pt14:juntar-eventos");
+                makeFunctionalityCall(x370, x1192, "en12:Merge Eventspt14:Juntar Eventos", null, null, null,
+                        "en12:merge-eventspt14:juntar-eventos");
         FunctionalityCall x374 =
-                makeFunctionalityCall(x370, x1193, "pt25:Juntar Volumes de Revista", null, null, null,
-                        "pt25:juntar-volumes-de-revista");
+                makeFunctionalityCall(x370, x1193, "en20:Merge Journal Issuespt25:Juntar Volumes de Revista", null, null, null,
+                        "en20:merge-journal-issuespt25:juntar-volumes-de-revista");
         FunctionalityCall x375 =
-                makeFunctionalityCall(x370, x1194, "pt24:Juntar Edições de Evento", null, null, null,
-                        "pt24:juntar-edicoes-de-evento");
+                makeFunctionalityCall(x370, x1194, "en20:Merge Event Editionspt24:Juntar Edições de Evento", null, null, null,
+                        "en20:merge-event-editionspt24:juntar-edicoes-de-evento");
         FunctionalityCall x376 =
-                makeFunctionalityCall(x370, x1195, "pt25:Juntar Volumes de Revista", null, null, null,
-                        "pt25:juntar-volumes-de-revista");
+                makeFunctionalityCall(x370, x1195, "en20:Merge Journal Issuespt25:Juntar Volumes de Revista", null, null, null,
+                        "en20:merge-journal-issuespt25:juntar-volumes-de-revista");
         FunctionalityCall x377 =
-                makeFunctionalityCall(x370, x1196, "pt24:Juntar Edições de Evento", null, null, null,
-                        "pt24:juntar-edicoes-de-evento");
-        Section x380 = new Section(x96, MultiLanguageString.importFromString("pt40:Grupos Persistentes (Controlo de Acesso)"));
-        x380.setName(MultiLanguageString.importFromString("pt40:Grupos Persistentes (Controlo de Acesso)"));
-        x380.setNormalizedName(MultiLanguageString.importFromString("pt40:grupos-persistentes-(controlo-de-acesso)"));
-        FunctionalityCall x379 = makeFunctionalityCall(x380, x1198, "pt12:Gerir Grupos", null, null, null, "pt12:gerir-grupos");
-        Section x383 = new Section(x96, MultiLanguageString.importFromString("pt20:Transição de Bolonha"));
-        x383.setName(MultiLanguageString.importFromString("pt20:Transição de Bolonha"));
-        x383.setNormalizedName(MultiLanguageString.importFromString("pt20:transicao-de-bolonha"));
+                makeFunctionalityCall(x370, x1196, "en20:Merge Event Editionspt24:Juntar Edições de Evento", null, null, null,
+                        "en20:merge-event-editionspt24:juntar-edicoes-de-evento");
+        Section x380 =
+                new Section(
+                        x96,
+                        MultiLanguageString
+                                .importFromString("en34:Persistent Groups (Access Control)pt40:Grupos Persistentes (Controlo de Acesso)"));
+        x380.setName(MultiLanguageString
+                .importFromString("en34:Persistent Groups (Access Control)pt40:Grupos Persistentes (Controlo de Acesso)"));
+        x380.setNormalizedName(MultiLanguageString
+                .importFromString("en32:persistent-groups-access-controlpt38:grupos-persistentes-controlo-de-acesso"));
+        FunctionalityCall x379 =
+                makeFunctionalityCall(x380, x1198, "en13:Manage Groupspt12:Gerir Grupos", null, null, null,
+                        "en13:manage-groupspt12:gerir-grupos");
+        Section x383 = new Section(x96, MultiLanguageString.importFromString("en18:Bolonha Transitionpt20:Transição de Bolonha"));
+        x383.setName(MultiLanguageString.importFromString("en18:Bolonha Transitionpt20:Transição de Bolonha"));
+        x383.setNormalizedName(MultiLanguageString.importFromString("en18:bolonha-transitionpt20:transicao-de-bolonha"));
         FunctionalityCall x382 =
-                makeFunctionalityCall(x383, x1201, "pt30:Planos de Equivalência Globais", null, null, null,
-                        "pt30:planos-de-equivalencia-globais");
+                makeFunctionalityCall(x383, x1201, "en24:Global Equivalence Planspt30:Planos de Equivalência Globais", null,
+                        null, null, "en24:global-equivalence-planspt30:planos-de-equivalencia-globais");
         FunctionalityCall x384 =
-                makeFunctionalityCall(x383, x1203, "pt29:Planos de Equivalência Locais", null, null, null,
-                        "pt29:planos-de-equivalencia-locais");
+                makeFunctionalityCall(x383, x1203, "en23:Local Equivalence Planspt29:Planos de Equivalência Locais", null, null,
+                        null, "en23:local-equivalence-planspt29:planos-de-equivalencia-locais");
         FunctionalityCall x385 =
-                makeFunctionalityCall(x383, x1204, "pt18:Currículo do Aluno", null, null, null, "pt18:curriculo-do-aluno");
-        Section x388 = new Section(x96, MultiLanguageString.importFromString("pt6:Alunos"));
-        x388.setName(MultiLanguageString.importFromString("pt6:Alunos"));
-        x388.setNormalizedName(MultiLanguageString.importFromString("pt6:alunos"));
+                makeFunctionalityCall(x383, x1204, "en18:Student Curriculumpt18:Currículo do Aluno", null, null, null,
+                        "en18:student-curriculumpt18:curriculo-do-aluno");
+        Section x388 = new Section(x96, MultiLanguageString.importFromString("en8:Studentspt6:Alunos"));
+        x388.setName(MultiLanguageString.importFromString("en8:Studentspt6:Alunos"));
+        x388.setNormalizedName(MultiLanguageString.importFromString("en8:studentspt6:alunos"));
         x388.setMaximizable(false);
-        FunctionalityCall x387 = makeFunctionalityCall(x388, x1206, "pt5:Gerir", null, null, null, "pt5:gerir");
+        FunctionalityCall x387 =
+                makeFunctionalityCall(x388, x1206, "en6:Managept5:Gerir", null, null, null, "en6:managept5:gerir");
         FunctionalityCall x389 =
-                makeFunctionalityCall(x388, x1208, "pt16:Mover Inscrições", null, null, null, "pt16:mover-inscricoes");
+                makeFunctionalityCall(x388, x1208, "en15:Move Enrolmentspt16:Mover Inscrições", null, null, null,
+                        "en15:move-enrolmentspt16:mover-inscricoes");
         FunctionalityCall x390 =
-                makeFunctionalityCall(x388, x1209, "pt19:Gestão de Dispensas", null, null, null, "pt19:gestao-de-dispensas");
+                makeFunctionalityCall(x388, x1209, "en20:Dismissal Managementpt19:Gestão de Dispensas", null, null, null,
+                        "en20:dismissal-managementpt19:gestao-de-dispensas");
         FunctionalityCall x391 =
-                makeFunctionalityCall(x388, x1210, "pt23:Gestão de Substituições", null, null, null,
-                        "pt23:gestao-de-substituicoes");
+                makeFunctionalityCall(x388, x1210, "en23:Substitution Managementpt23:Gestão de Substituições", null, null, null,
+                        "en23:substitution-managementpt23:gestao-de-substituicoes");
         FunctionalityCall x392 =
-                makeFunctionalityCall(x388, x1211, "pt23:Gestão de Equivalências", null, null, null,
-                        "pt23:gestao-de-equivalencias");
+                makeFunctionalityCall(x388, x1211, "en22:Equivalence Managementpt23:Gestão de Equivalências", null, null, null,
+                        "en22:equivalence-managementpt23:gestao-de-equivalencias");
         FunctionalityCall x393 =
-                makeFunctionalityCall(x388, x1212, "pt18:Gestão de Créditos", null, null, null, "pt18:gestao-de-creditos");
+                makeFunctionalityCall(x388, x1212, "en17:Credit Managementpt18:Gestão de Créditos", null, null, null,
+                        "en17:credit-managementpt18:gestao-de-creditos");
         FunctionalityCall x394 =
-                makeFunctionalityCall(x388, x1213, "pt20:Gestão de Apuramento", null, null, null, "pt20:gestao-de-apuramento");
+                makeFunctionalityCall(x388, x1213, "en21:Conclusion Managementpt20:Gestão de Apuramento", null, null, null,
+                        "en21:conclusion-managementpt20:gestao-de-apuramento");
         FunctionalityCall x395 =
-                makeFunctionalityCall(x388, x1214, "pt17:Gestão de Estados", null, null, null, "pt17:gestao-de-estados");
+                makeFunctionalityCall(x388, x1214, "en16:State Managementpt17:Gestão de Estados", null, null, null,
+                        "en16:state-management");
         FunctionalityCall x396 =
-                makeFunctionalityCall(x388, x1223, "pt17:Ver EnrolmentLogs", null, null, null, "pt17:ver-enrolmentlogs");
-        FunctionalityCall x397 = makeFunctionalityCall(x388, x1220, "pt12:Anular Pauta", null, null, null, "pt12:anular-pauta");
+                makeFunctionalityCall(x388, x1223, "en19:View Enrolment Logspt21:Ver Logs de Inscrição", null, null, null,
+                        "en19:view-enrolment-logspt21:ver-logs-de-inscricao");
+        FunctionalityCall x397 =
+                makeFunctionalityCall(x388, x1220, "en17:Cancel Mark Sheet", null, null, null,
+                        "en17:cancel-mark-sheetpt12:anular-pauta");
         FunctionalityCall x398 =
-                makeFunctionalityCall(x388, x1216, "pt18:Importação da DGES", null, null, null, "pt18:importacao-da-dges");
+                makeFunctionalityCall(x388, x1216, "en11:DGES Importpt18:Importação da DGES", null, null, null,
+                        "en11:dges-importpt18:importacao-da-dges");
         FunctionalityCall x399 =
-                makeFunctionalityCall(x388, x1217, "pt28:Inscrições em Época Especial", null, null, null,
-                        "pt28:inscricoes-em-epoca-especial");
+                makeFunctionalityCall(x388, x1217, "en25:Special Season Enrolmentspt28:Inscrições em Época Especial", null, null,
+                        null, "en25:special-season-enrolmentspt28:inscricoes-em-epoca-especial");
         FunctionalityCall x400 =
-                makeFunctionalityCall(x388, x1218, "pt27:Sumário Candidaturas 1ª vez", null, null, null,
-                        "pt26:sumario-candidaturas-1-vez");
+                makeFunctionalityCall(x388, x1218, "en29:1st Time Applications Summarypt27:Sumário Candidaturas 1ª vez", null,
+                        null, null, "en29:1st-time-applications-summarypt26:sumario-candidaturas-1-vez");
         FunctionalityCall x402 =
-                makeFunctionalityCall(x96, x913, "pt16:Página Principal", null, null, null, "pt16:pagina-principal");
-        Section x404 = new Section(x96, MultiLanguageString.importFromString("pt28:Gestao de Documentos Gerados"));
-        x404.setName(MultiLanguageString.importFromString("pt28:Gestao de Documentos Gerados"));
-        x404.setNormalizedName(MultiLanguageString.importFromString("pt28:gestao-de-documentos-gerados"));
+                makeFunctionalityCall(x96, x913, "en8:Homepagept16:Página Principal", null, null, null,
+                        "en8:homepagept16:pagina-principal");
+        Section x404 =
+                new Section(x96,
+                        MultiLanguageString
+                                .importFromString("en30:Generated Documents Managementpt28:Gestao de Documentos Gerados"));
+        x404.setName(MultiLanguageString.importFromString("en30:Generated Documents Managementpt28:Gestao de Documentos Gerados"));
+        x404.setNormalizedName(MultiLanguageString
+                .importFromString("en30:generated-documents-managementpt28:gestao-de-documentos-gerados"));
         x404.setMaximizable(false);
         FunctionalityCall x403 =
-                makeFunctionalityCall(x404, x1226, "pt19:Procurar Documentos", null, null, null, "pt19:procurar-documentos");
-        Section x407 = new Section(x96, MultiLanguageString.importFromString("pt11:Fotografias"));
-        x407.setName(MultiLanguageString.importFromString("pt11:Fotografias"));
-        x407.setNormalizedName(MultiLanguageString.importFromString("pt11:fotografias"));
+                makeFunctionalityCall(x404, x1226, "en16:Search Documentspt19:Procurar Documentos", null, null, null,
+                        "en16:search-documentspt19:procurar-documentos");
+        Section x407 = new Section(x96, MultiLanguageString.importFromString("en11:Photographspt11:Fotografias"));
+        x407.setName(MultiLanguageString.importFromString("en11:Photographspt11:Fotografias"));
+        x407.setNormalizedName(MultiLanguageString.importFromString("en11:photographspt11:fotografias"));
         x407.setMaximizable(false);
-        FunctionalityCall x406 = makeFunctionalityCall(x407, x1229, "pt9:Historial", null, null, null, "pt9:historial");
-        FunctionalityCall x408 = makeFunctionalityCall(x407, x1231, "pt9:Rejeicoes", null, null, null, "pt9:rejeicoes");
-        FunctionalityCall x409 = makeFunctionalityCall(x407, x1232, "pt10:Aprovacoes", null, null, null, "pt10:aprovacoes");
-        Section x412 = new Section(x96, MultiLanguageString.importFromString("pt20:Núcleo Pós Graduação"));
-        x412.setName(MultiLanguageString.importFromString("pt20:Núcleo Pós Graduação"));
-        x412.setNormalizedName(MultiLanguageString.importFromString("pt20:nucleo-pos-graduacao"));
+        FunctionalityCall x406 =
+                makeFunctionalityCall(x407, x1229, "en7:Historypt9:Historial", null, null, null, "en7:historypt9:historial");
+        FunctionalityCall x408 =
+                makeFunctionalityCall(x407, x1231, "en10:Rejectionspt9:Rejeicoes", null, null, null,
+                        "en10:rejectionspt9:rejeicoes");
+        FunctionalityCall x409 =
+                makeFunctionalityCall(x407, x1232, "en9:Approvalspt10:Aprovacoes", null, null, null,
+                        "en9:approvalspt10:aprovacoes");
+        Section x412 =
+                new Section(x96, MultiLanguageString.importFromString("en20:Post Graduation Unitpt20:Núcleo Pós Graduação"));
+        x412.setName(MultiLanguageString.importFromString("en20:Post Graduation Unitpt20:Núcleo Pós Graduação"));
+        x412.setNormalizedName(MultiLanguageString.importFromString("en20:post-graduation-unitpt20:nucleo-pos-graduacao"));
         FunctionalityCall x411 =
-                makeFunctionalityCall(x412, x1234, "pt25:Processos de doutoramento", null, null, null,
-                        "pt25:processos-de-doutoramento");
-        Section x415 = new Section(x96, MultiLanguageString.importFromString("pt15:Bolsas Externas"));
-        x415.setName(MultiLanguageString.importFromString("pt15:Bolsas Externas"));
-        x415.setNormalizedName(MultiLanguageString.importFromString("pt15:bolsas-externas"));
+                makeFunctionalityCall(x412, x1234, "en13:PhD Processespt25:Processos de doutoramento", null, null, null,
+                        "en13:phd-processespt25:processos-de-doutoramento");
+        Section x415 = new Section(x96, MultiLanguageString.importFromString("en21:External Scholarshipspt15:Bolsas Externas"));
+        x415.setName(MultiLanguageString.importFromString("en21:External Scholarshipspt15:Bolsas Externas"));
+        x415.setNormalizedName(MultiLanguageString.importFromString("en21:external-scholarshipspt15:bolsas-externas"));
         FunctionalityCall x414 =
-                makeFunctionalityCall(x415, x1237, "pt16:Listar Entidades", null, null, null, "pt16:listar-entidades");
+                makeFunctionalityCall(x415, x1237, "en13:List Entitiespt16:Listar Entidades", null, null, null,
+                        "en13:list-entitiespt16:listar-entidades");
         FunctionalityCall x416 =
-                makeFunctionalityCall(x415, x1239, "pt18:Adicionar Entidade", null, null, null, "pt18:adicionar-entidade");
-        Section x4150 = new Section(x96, MultiLanguageString.importFromString("pt15:Bolsas Externas"));
-        x4150.setName(MultiLanguageString.importFromString("pt19:Objectos Associados"));
-        x4150.setNormalizedName(MultiLanguageString.importFromString("pt19:objectos-associados"));
+                makeFunctionalityCall(x415, x1239, "en10:Add Entitypt18:Adicionar Entidade", null, null, null,
+                        "en10:add-entitypt18:adicionar-entidade");
+        Section x4150 = new Section(x96, MultiLanguageString.importFromString("en21:External Scholarshipspt15:Bolsas Externas"));
+        x4150.setName(MultiLanguageString.importFromString("en18:Associated Objectspt19:Objectos Associados"));
+        x4150.setNormalizedName(MultiLanguageString.importFromString("en18:associated-objectspt19:objectos-associados"));
         FunctionalityCall x4140 =
-                makeFunctionalityCall(x4150, x12370, "pt25:Gerir Objectos Associados", null, null, null,
-                        "pt25:gerir-objectos-associados");
+                makeFunctionalityCall(x4150, x12370, "en25:Manage Associated Objectspt25:Gerir Objectos Associados", null, null,
+                        null, "en25:manage-associated-objectspt25:gerir-objectos-associados");
         ExpressionGroupAvailability x1694 = new ExpressionGroupAvailability(x96, "role(MANAGER)");
         x1694.setTargetGroup(Group.fromString("role(MANAGER)"));
         x96.setAvailabilityPolicy(x1694);
@@ -4583,8 +5118,8 @@ public class CreateFunctionallityTree {
         x477.setName(MultiLanguageString.importFromString("pt19:Disciplina Execução"));
         x477.setNormalizedName(MultiLanguageString.importFromString("pt19:disciplina-execucao"));
         FunctionalityCall x476 =
-                makeFunctionalityCall(x477, x1300, "en12:Initial Pagept14:Página Inicial", null, null, null,
-                        "en12:initial-pagept14:pagina-inicial");
+                makeFunctionalityCall(x477, x1300, "en12:Initial Pageen8:Homepagept14:Página Inicial", null, null, null,
+                        "en12:initial-pageen8:homepagept14:pagina-inicial");
         FunctionalityCall x480 =
                 makeFunctionalityCall(x477, x1304, "en13:Announcementspt8:Anuncios", null, null, null,
                         "en13:announcementspt8:anuncios");
@@ -4751,7 +5286,8 @@ public class CreateFunctionallityTree {
         Section x552 = new Section(x3, MultiLanguageString.importFromString("pt20:Portal da Tesouraria"));
         x552.setName(MultiLanguageString.importFromString("pt20:Portal da Tesouraria"));
         x552.setNormalizedName(MultiLanguageString.importFromString("pt20:portal-da-tesouraria"));
-        FunctionalityCall x551 = makeFunctionalityCall(x552, x1484, "pt10:Pagamentos", null, null, null, "pt10:pagamentos");
+        FunctionalityCall x551 =
+                makeFunctionalityCall(x552, x1484, "en8:Paymentspt10:Pagamentos", null, null, null, "en8:paymentspt10:pagamentos");
         ExpressionGroupAvailability x1714 = new ExpressionGroupAvailability(x552, "role(TREASURY)");
         x1714.setTargetGroup(Group.fromString("role(TREASURY)"));
         x552.setAvailabilityPolicy(x1714);
@@ -4884,8 +5420,8 @@ public class CreateFunctionallityTree {
                 makeFunctionalityCall(x585, x1304, "en13:Announcementspt8:Anuncios", null, null, null,
                         "en13:announcementspt8:anuncios");
         FunctionalityCall x598 =
-                makeFunctionalityCall(x585, x1300, "en12:Initial Pagept14:Página Inicial", null, null, null,
-                        "en12:initial-pagept14:pagina-inicial");
+                makeFunctionalityCall(x585, x1300, "en12:Initial Pageen8:Homepagept14:Página Inicial", null, null, null,
+                        "en12:initial-pageen8:homepagept14:pagina-inicial");
         FunctionalityCall x599 =
                 makeFunctionalityCall(x585, x1317, "pt14:Resultados QUC", null, null, null, "pt14:resultados-quc");
         MetaDomainObjectPortal x602 = new MetaDomainObjectPortal(null);
@@ -5010,12 +5546,14 @@ public class CreateFunctionallityTree {
         x656.setName(MultiLanguageString.importFromString("pt9:Alunos CD"));
         x656.setNormalizedName(MultiLanguageString.importFromString("pt9:alunos-cd"));
         FunctionalityCall x655 =
-                makeFunctionalityCall(x656, x1382, "pt14:Página Inicial", null, null, null, "pt14:pagina-inicial");
+                makeFunctionalityCall(x656, x1382, "en8:Homepagept14:Página Inicial", null, null, null,
+                        "en8:homepagept14:pagina-inicial");
         Section x659 = new Section(x3, MultiLanguageString.importFromString("pt24:Cartões de Identificação"));
         x659.setName(MultiLanguageString.importFromString("pt24:Cartões de Identificação"));
         x659.setNormalizedName(MultiLanguageString.importFromString("pt24:cartoes-de-identificacao"));
         FunctionalityCall x658 =
-                makeFunctionalityCall(x659, x1531, "pt14:Página Inicial", null, null, null, "pt14:pagina-inicial");
+                makeFunctionalityCall(x659, x1531, "en8:Homepagept14:Página Inicial", null, null, null,
+                        "en8:homepagept14:pagina-inicial");
         FunctionalityCall x660 = makeFunctionalityCall(x659, x1533, "pt9:Pesquisar", null, null, null, "pt9:pesquisar");
         ExpressionGroupAvailability x1727 = new ExpressionGroupAvailability(x659, "role(IDENTIFICATION_CARD_MANAGER)");
         x1727.setTargetGroup(Group.fromString("role(IDENTIFICATION_CARD_MANAGER)"));
@@ -5055,7 +5593,8 @@ public class CreateFunctionallityTree {
         x669.setNormalizedName(MultiLanguageString.importFromString("en18:housing-managementpt21:nucleo-de-alojamentos"));
         x669.setMaximizable(false);
         FunctionalityCall x668 =
-                makeFunctionalityCall(x669, x1547, "pt14:Página Inicial", null, null, null, "pt14:pagina-inicial");
+                makeFunctionalityCall(x669, x1547, "en8:Homepagept14:Página Inicial", null, null, null,
+                        "en8:homepagept14:pagina-inicial");
         FunctionalityCall x670 = makeFunctionalityCall(x669, x1549, "pt13:Gerir Dúvidas", null, null, null, "pt13:gerir-dividas");
         FunctionalityCall x671 =
                 makeFunctionalityCall(x669, x1550, "pt21:Gestão de Previlégios", null, null, null, "pt21:gestao-de-previlegios");
@@ -5217,7 +5756,8 @@ public class CreateFunctionallityTree {
         x761.setNormalizedName(MultiLanguageString.importFromString("pt18:supervisao-externa"));
         x761.setMaximizable(false);
         FunctionalityCall x760 =
-                makeFunctionalityCall(x761, x1555, "pt14:Página Inicial", null, null, null, "pt14:pagina-inicial");
+                makeFunctionalityCall(x761, x1555, "en8:Homepagept14:Página Inicial", null, null, null,
+                        "en8:homepagept14:pagina-inicial");
         Section x763 = new Section(x761, MultiLanguageString.importFromString("pt9:Consultar"));
         x763.setName(MultiLanguageString.importFromString("pt9:Consultar"));
         x763.setNormalizedName(MultiLanguageString.importFromString("pt9:consultar"));
@@ -5303,7 +5843,7 @@ public class CreateFunctionallityTree {
         x3.setRootDomainObject(bennu);
         bennu.setRootPortal(x3);
         bennu.setRootModule(x823);
-        
+
         makePortals();
     }
 
@@ -5353,16 +5893,16 @@ public class CreateFunctionallityTree {
 
     private static final String MANAGE_EXECUTION_COURSES = new AcademicAuthorizationGroup(
             AcademicOperationType.MANAGE_EXECUTION_COURSES).getExpression();
-    
+
     private static final String MANAGE_EXECUTION_COURSES_ADV = new AcademicAuthorizationGroup(
             AcademicOperationType.MANAGE_EXECUTION_COURSES_ADV).getExpression();
-    
+
     private static final String VIEW_SCHEDULING_OVERSIGHT = new AcademicAuthorizationGroup(
             AcademicOperationType.VIEW_SCHEDULING_OVERSIGHT).getExpression();
-    
+
     private static final String MANAGE_ENROLMENT_PERIODS = new AcademicAuthorizationGroup(
             AcademicOperationType.MANAGE_ENROLMENT_PERIODS).getExpression();
-    
+
     private static final String MANAGE_DEGREE_CURRICULAR_PLANS = new AcademicAuthorizationGroup(
             AcademicOperationType.MANAGE_DEGREE_CURRICULAR_PLANS).getExpression();
 
@@ -5601,13 +6141,21 @@ public class CreateFunctionallityTree {
         Section section = makeSection(parentSection, "Gestão das disciplinas de execução", MANAGE_EXECUTION_COURSES);
 
         makeFunctionality(module, section, "Início", "/executionCourseManagement.do?method=index", MANAGE_EXECUTION_COURSES);
-        makeFunctionality(module, section, "Criar Disciplinas de Execução", "/createExecutionCourses.do?method=chooseDegreeType", MANAGE_EXECUTION_COURSES);
-        makeFunctionality(module, section, "Editar Disciplina Execução", "/editExecutionCourseChooseExPeriod.do?method=prepareEditExecutionCourse", MANAGE_EXECUTION_COURSES);
-        makeFunctionality(module, section, "Juntar Disciplinas Execução", "/chooseDegreesForExecutionCourseMerge.do?method=prepareChooseDegreesAndExecutionPeriod", MANAGE_EXECUTION_COURSES_ADV);
-        makeFunctionality(module, section, "Inserir Disciplina Execução", "/insertExecutionCourse.do?method=prepareInsertExecutionCourse", MANAGE_EXECUTION_COURSES);
-        makeFunctionality(module, section, "Supervisão de Cargas Horárias", "/courseLoadOverview.do?method=viewInconsistencies", VIEW_SCHEDULING_OVERSIGHT);
-        makeFunctionality(module, section, "Criar Relatórios de Docência", "/executionCourseManagement/createCourseReportsForExecutionPeriod.faces", MANAGE_EXECUTION_COURSES);
-        makeFunctionality(module, section, "Periodos de Inscrições", "/manageEnrolementPeriods.do?method=prepare", MANAGE_ENROLMENT_PERIODS);
+        makeFunctionality(module, section, "Criar Disciplinas de Execução", "/createExecutionCourses.do?method=chooseDegreeType",
+                MANAGE_EXECUTION_COURSES);
+        makeFunctionality(module, section, "Editar Disciplina Execução",
+                "/editExecutionCourseChooseExPeriod.do?method=prepareEditExecutionCourse", MANAGE_EXECUTION_COURSES);
+        makeFunctionality(module, section, "Juntar Disciplinas Execução",
+                "/chooseDegreesForExecutionCourseMerge.do?method=prepareChooseDegreesAndExecutionPeriod",
+                MANAGE_EXECUTION_COURSES_ADV);
+        makeFunctionality(module, section, "Inserir Disciplina Execução",
+                "/insertExecutionCourse.do?method=prepareInsertExecutionCourse", MANAGE_EXECUTION_COURSES);
+        makeFunctionality(module, section, "Supervisão de Cargas Horárias", "/courseLoadOverview.do?method=viewInconsistencies",
+                VIEW_SCHEDULING_OVERSIGHT);
+        makeFunctionality(module, section, "Criar Relatórios de Docência",
+                "/executionCourseManagement/createCourseReportsForExecutionPeriod.faces", MANAGE_EXECUTION_COURSES);
+        makeFunctionality(module, section, "Periodos de Inscrições", "/manageEnrolementPeriods.do?method=prepare",
+                MANAGE_ENROLMENT_PERIODS);
     }
 
     private static void fillDegreeCurricularPlanManagement(final Module parent, final Section parentSection) {
