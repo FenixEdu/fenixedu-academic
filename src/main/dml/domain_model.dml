@@ -7753,7 +7753,6 @@ class accounting.report.events.EventReportQueueJob extends QueueJobWithFile {
 	Boolean forMasterDegreeAdministrativeOffice;
 	LocalDate beginDate;
 	LocalDate endDate;
-	String errors;
 }
 	class accounting.report.events.EventReportQueueJobFile extends File {
 	}
@@ -20539,6 +20538,13 @@ relation EventReportQueueJobEventExemptionsFile {
 relation EventReportQueueJobEventTransactionsFile {
 	accounting.report.events.EventReportQueueJob playsRole eventReportQueueJobForTransactions;
 	accounting.report.events.EventReportQueueJobFile playsRole transactions {
+		multiplicity 0..1;
+	}
+}
+
+relation EventReportQueueJobEventErrorsFile {
+	accounting.report.events.EventReportQueueJob playsRole eventReportQueueJobForErrors;
+	accounting.report.events.EventReportQueueJobFile playsRole errorsFile {
 		multiplicity 0..1;
 	}
 }

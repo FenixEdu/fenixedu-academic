@@ -66,7 +66,11 @@ public class Money implements Comparable<Money>, Serializable {
     }
 
     public Money subtract(Money money) {
-        return new Money(this.amount.subtract(money.getAmount()));
+        if (money != null) {
+            return new Money(this.amount.subtract(money.getAmount()));
+        } else {
+            return this;
+        }
     }
 
     public Money subtract(BigDecimal amount) {
@@ -74,7 +78,11 @@ public class Money implements Comparable<Money>, Serializable {
     }
 
     public Money multiply(Money money) {
-        return new Money(this.amount.multiply(money.getAmount()));
+        if (money != null) {
+            return new Money(this.amount.multiply(money.getAmount()));
+        } else {
+            return this;
+        }
     }
 
     public Money multiply(BigDecimal amount) {
@@ -86,7 +94,11 @@ public class Money implements Comparable<Money>, Serializable {
     }
 
     public Money divide(Money money) {
-        return new Money(this.amount.divide(money.getAmount()));
+        if (money != null) {
+            return new Money(this.amount.divide(money.getAmount()));
+        } else {
+            return this;
+        }
     }
 
     public Money divide(BigDecimal amount) {

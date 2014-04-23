@@ -49,8 +49,11 @@ public class GratuityExemptionJustificationByDispatch extends GratuityExemptionJ
         final LabelFormatter labelFormatter = new LabelFormatter();
         labelFormatter.appendLabel(getGratuityExemptionJustificationType().getQualifiedName(),
                 LabelFormatter.ENUMERATION_RESOURCES);
+        String gratuityExemptionDate =
+                getGratuityExemptionDispatchDate() != null ? getGratuityExemptionDispatchDate().toString(
+                        DateFormatUtil.DEFAULT_DATE_FORMAT) : "-";
         labelFormatter.appendLabel(" (").appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES).appendLabel(" ")
-                .appendLabel(getGratuityExemptionDispatchDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT)).appendLabel(")");
+                .appendLabel(gratuityExemptionDate).appendLabel(")");
 
         return labelFormatter;
     }
