@@ -26,9 +26,6 @@ import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
-/**
- * TODO Remove cloner deste servi�o...
- */
 public class ReadDegreesClassesLessons {
 
     @Atomic
