@@ -17,7 +17,7 @@ public class LerAulasDeTurma {
     public static List<InfoLessonInstanceAggregation> run(InfoClass infoClass) {
         final SchoolClass schoolClass = FenixFramework.getDomainObject(infoClass.getExternalId());
 
-        final Collection<Shift> shiftList = schoolClass.getAssociatedShifts();
+        final Collection<Shift> shiftList = schoolClass.getAssociatedShiftsSet();
 
         final List<InfoLessonInstanceAggregation> infoLessonList = new ArrayList<InfoLessonInstanceAggregation>();
         for (final Shift shift : shiftList) {

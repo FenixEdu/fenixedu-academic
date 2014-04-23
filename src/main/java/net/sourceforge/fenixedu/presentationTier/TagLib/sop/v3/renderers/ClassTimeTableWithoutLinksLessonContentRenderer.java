@@ -34,9 +34,7 @@ public class ClassTimeTableWithoutLinksLessonContentRenderer extends LessonSlotC
                 strBuffer.append("<br/>");
             }
 
-            if (lessonSlot.isSinleSlot()
-                    || (lessonSlot.getInfoLessonWrapper().isFirstRowAlreadyAppended() && !lessonSlot.getInfoLessonWrapper()
-                            .isSecondRowAlreadyAppended())) {
+            if (lessonSlot.isSinleSlot() || (!lessonSlot.getInfoLessonWrapper().isSecondRowAlreadyAppended())) {
 
                 strBuffer.append("(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append(")&nbsp;");
 
