@@ -38,7 +38,7 @@
 			<bean:message key="label.coordinator.analyticTools"/>
 		</li>
 		<li>
-			<html:link page="<%= "/xYear.do?method=showDisclaimer&degreeCurricularPlanID=" + degreeCurricularPlanID.toString() %>" >
+			<html:link page="<%= "/analytics.do?method=showHome&degreeCurricularPlanID=" + degreeCurricularPlanID.toString() %>" >
 				<bean:message key="link.coordinator.analyticTools.executionYear"/>
 			</html:link>
 		</li>

@@ -20,7 +20,11 @@
   "donuts": {
     "not-evaluated-grades": "Não Avaliados",
     "negative-grades": "Reprovados",
-    "positive-grades": "Aprovados"
+    "positive-grades": "Aprovados",
+    "flunked": "Reprovados",
+    "attending": "A frequentar",
+    "approved": "Aprovados",
+    "not-evaluated": "Não Avaliados"
   },
   "sunburst": {
     "no-eval": "Sem Nota",
@@ -54,5 +58,18 @@
   },
   "bubbles": {
     "approved": "Aprovados"
+  },
+  "simple-donut": {
+    "title": "Título",
+    "cat1": "Não Avaliados",
+    "cat2": "Reprovados",
+    "cat3": "Aprovados"
+  },
+    "stacked-bar": {
+    "title": "Título",
+    "flunked": "Reprovados",
+    "attending": "A frequentar",
+    "approved": "Aprovados",
+    "notEvaluated": "Não Avaliados"
   }
 }
