@@ -45,4 +45,8 @@ public class DegreeAllCoordinatorsGroup extends DegreeGroup {
 
     }
 
+    @Override
+    public PersistentCoordinatorGroup convert() {
+        return PersistentCoordinatorGroup.getInstance(getDegree());
+    }
 }

@@ -129,4 +129,8 @@ public class CompetenceCourseGroup extends ExecutionCourseGroup {
 
     }
 
+    @Override
+    public PersistentStudentSharingDegreeOfCompetenceOfExecutionCourseGroup convert() {
+        return PersistentStudentSharingDegreeOfCompetenceOfExecutionCourseGroup.getInstance(getExecutionCourse());
+    }
 }

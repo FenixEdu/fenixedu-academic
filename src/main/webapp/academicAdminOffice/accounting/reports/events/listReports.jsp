@@ -57,19 +57,19 @@
 				link="/eventReports.do?method=viewRequest&queueJobId=${externalId}" order="1"/>
 			
 			<fr:link label="label.event.reports.file.download,ACADEMIC_OFFICE_RESOURCES" name="download" 
-				link="/downloadQueuedJob.do?method=downloadFile&id=${externalId}" module="" order="2" condition="!brokenInThree"/>
+				link="/downloadQueuedJob.do?method=downloadFile&id=${externalId}" module="" order="2" condition="!debtsReportPresent"/>
 
 			<fr:link label="label.event.reports.file.debts,ACADEMIC_OFFICE_RESOURCES" name="debts" 
-				link="${debts.downloadUrl}" hasContext="false" contextRelative="false" order="2" condition="brokenInThree"/>
+				link="${debts.downloadUrl}" hasContext="false" contextRelative="false" order="2" condition="debtsReportPresent"/>
 
 			<fr:link label="label.event.reports.file.exemptions,ACADEMIC_OFFICE_RESOURCES" name="exemptions" 
-				link="${exemptions.downloadUrl}" hasContext="false" contextRelative="false" order="2" condition="brokenInThree"/>
+				link="${exemptions.downloadUrl}" hasContext="false" contextRelative="false" order="2" condition="exemptionsReportPresent"/>
 
 			<fr:link label="label.event.reports.file.transactions,ACADEMIC_OFFICE_RESOURCES" name="transactions" 
-				link="${transactions.downloadUrl}" hasContext="false" contextRelative="false" order="2" condition="brokenInThree"/>
+				link="${transactions.downloadUrl}" hasContext="false" contextRelative="false" order="2" condition="transactionsReportPresent"/>
 
-			<fr:link label="link.event.reports.file.view.errors,ACADEMIC_OFFICE_RESOURCES" name="errors"
-				link="/eventReports.do?method=viewErrors&queueJobId=${externalId}" order="3"/>
+			<fr:link label="link.event.reports.file.view.errors,ACADEMIC_OFFICE_RESOURCES" name="errorsFile" 
+				link="${errorsFile.downloadUrl}" hasContext="false" contextRelative="false" order="3" condition="errorReportPresent"/>
 		</fr:layout>				
 	</fr:view>
 </logic:notEmpty>

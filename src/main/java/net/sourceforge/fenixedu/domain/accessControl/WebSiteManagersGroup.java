@@ -54,4 +54,9 @@ public class WebSiteManagersGroup extends DomainBackedGroup<UnitSite> {
             return 1;
         }
     }
+
+    @Override
+    public PersistentManagersOfUnitSiteGroup convert() {
+        return PersistentManagersOfUnitSiteGroup.getInstance(getObject());
+    }
 }

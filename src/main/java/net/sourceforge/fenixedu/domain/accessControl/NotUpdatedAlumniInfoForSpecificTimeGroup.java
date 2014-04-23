@@ -234,4 +234,10 @@ public class NotUpdatedAlumniInfoForSpecificTimeGroup extends LeafGroup {
     public void setCheckPersonalDataNotUpdated(boolean checkPersonalDataNotUpdated) {
         this.checkPersonalDataNotUpdated = checkPersonalDataNotUpdated;
     }
+
+    @Override
+    public PersistentNotUpdatedAlumniInfoForSpecificDaysGroup convert() {
+        return PersistentNotUpdatedAlumniInfoForSpecificDaysGroup.getInstance(daysNotUpdated, checkJobNotUpdated,
+                checkFormationNotUpdated, checkPersonalDataNotUpdated);
+    }
 }

@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.OidOperator;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 /**
@@ -93,5 +94,10 @@ public class UnitEmployeesGroup extends DomainBackedGroup<Unit> {
             return 1;
         }
 
+    }
+
+    @Override
+    public PersistentUnitGroup convert() {
+        return PersistentUnitGroup.getInstance(getObject(), AccountabilityTypeEnum.WORKING_CONTRACT, null, true);
     }
 }

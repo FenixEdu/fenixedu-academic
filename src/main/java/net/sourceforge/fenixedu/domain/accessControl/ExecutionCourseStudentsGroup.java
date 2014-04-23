@@ -81,4 +81,9 @@ public class ExecutionCourseStudentsGroup extends ExecutionCourseGroup {
         }
 
     }
+
+    @Override
+    public PersistentStudentGroup convert() {
+        return PersistentStudentGroup.getInstance(getExecutionCourse());
+    }
 }

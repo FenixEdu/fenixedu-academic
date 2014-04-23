@@ -20,7 +20,17 @@ import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
+
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.domain.groups.NobodyGroup;
+import org.fenixedu.bennu.core.domain.groups.UserGroup;
+
 import pt.utl.ist.fenix.tools.util.i18n.Language;
+
+import com.google.common.base.Function;
+import com.google.common.base.Predicate;
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.ImmutableSet;
 
 public class SearchDegreeStudentsGroup extends Group {
 
@@ -523,4 +533,22 @@ public class SearchDegreeStudentsGroup extends Group {
 
     }
 
+    @Override
+    public org.fenixedu.bennu.core.domain.groups.Group convert() {
+        ImmutableSet<User> users = FluentIterable.from(getElements()).filter(new Predicate<Person>() {
+            @Override
+            public boolean apply(Person person) {
+                return person.getUser() != null;
+            }
+        }).transform(new Function<Person, User>() {
+            @Override
+            public User apply(Person person) {
+                return person.getUser();
+            }
+        }).toSet();
+        if (users.isEmpty()) {
+            return NobodyGroup.getInstance();
+        }
+        return UserGroup.getInstance(users);
+    }
 }

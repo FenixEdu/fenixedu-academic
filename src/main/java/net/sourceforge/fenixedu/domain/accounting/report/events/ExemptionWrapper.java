@@ -42,6 +42,8 @@ public class ExemptionWrapper {
             return "-";
         } else if (exemption.isInsuranceExemption()) {
             return "-";
+        } else if (exemption.isForAdministrativeOfficeFee()) {
+            return "-";
         } else if (exemption.isPenaltyExemption()) {
             return "-";
         } else if (exemption.isPhdEventExemption()) {
@@ -68,6 +70,8 @@ public class ExemptionWrapper {
         } else if (exemption.isAdministrativeOfficeFeeAndInsuranceExemption()) {
             return "-";
         } else if (exemption.isInsuranceExemption()) {
+            return "-";
+        } else if (exemption.isForAdministrativeOfficeFee()) {
             return "-";
         } else if (exemption.isPenaltyExemption()) {
             return "-";

@@ -2,49 +2,47 @@ package net.sourceforge.fenixedu.presentationTier.Action.coordinator.xviews;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
-import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.GradeScale;
-import net.sourceforge.fenixedu.domain.degreeStructure.BranchCourseGroup;
-import net.sourceforge.fenixedu.domain.degreeStructure.BranchType;
-import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesCourseResult;
-import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesTeachingResult;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(path = "/xYear", module = "coordinator")
-@Forwards({
-        @Forward(name = "xViewsDisclaimer", path = "/coordinator/xviews/xViewsDisclaimer.jsp", tileProperties = @Tile(
-                title = "private.coordinator.management.courses.analytictools.executionyear")),
-        @Forward(name = "xYearEntry", path = "/coordinator/xviews/xYearEntry.jsp", tileProperties = @Tile(
-                title = "private.coordinator.management.courses.analytictools.executionyear")),
-        @Forward(name = "xYearDisplay", path = "/coordinator/xviews/xYearDisplay.jsp", tileProperties = @Tile(
-                title = "private.coordinator.management.courses.analytictools.executionyear")) })
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
+@Mapping(path = "/analytics", module = "coordinator")
+@Forwards({ @Forward(name = "showHome", path = "/coordinator/analytics/home.jsp", tileProperties = @Tile(
+        title = "private.coordinator.management.courses.analytictools.executionyear")) })
 public class ExecutionYearViewDA extends FenixDispatchAction {
 
     @Override
@@ -54,338 +52,296 @@ public class ExecutionYearViewDA extends FenixDispatchAction {
         return super.execute(mapping, actionForm, request, response);
     }
 
-    public ActionForward showDisclaimer(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
-        String degreeCurricularPlanID = request.getParameter("degreeCurricularPlanID");
-        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-        return mapping.findForward("xViewsDisclaimer");
+    private JsonArray computeExecutionYearsForDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
+        JsonArray executionYears = new JsonArray();
+        //TODO: CHECK IF THIS IS THE VALID WAY TO DO THINGS; IMPORTED FROM PREVIOUS CODE
+        for (ExecutionYear year : Bennu.getInstance().getExecutionYearsSet()) {
+            if (year.isInclusivelyBetween(degreeCurricularPlan.getInauguralExecutionYear(),
+                    degreeCurricularPlan.getLastExecutionYear())) {
+                executionYears.add(executionYearToJson(year));
+            }
+
+        }
+        return executionYears;
     }
 
-    public ActionForward showYearInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
+    private JsonObject executionYearToJson(ExecutionYear year) {
+        JsonObject executionYearJson = new JsonObject();
+        executionYearJson.addProperty("id", year.getExternalId());
+        executionYearJson.addProperty("name", year.getQualifiedName());
+        return executionYearJson;
+    }
 
+    public ActionForward showHome(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         User userView = Authenticate.getUser();
 
-        YearViewBean searchFormBean = (YearViewBean) getRenderedObject("searchFormBean");
-        RenderUtils.invalidateViewState();
+        String degreeCurricularPlanID = request.getParameter("degreeCurricularPlanID");
+        DegreeCurricularPlan degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
 
-        if (searchFormBean == null || searchFormBean.getExecutionYear() == null) {
-            String degreeCurricularPlanID = null;
-            DegreeCurricularPlan degreeCurricularPlan = null;
-            if (request.getParameter("degreeCurricularPlanID") != null) {
-                degreeCurricularPlanID = request.getParameter("degreeCurricularPlanID");
-                request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-                degreeCurricularPlan = FenixFramework.getDomainObject(degreeCurricularPlanID);
-            }
+        JsonArray executionYears = computeExecutionYearsForDegreeCurricularPlan(degreeCurricularPlan);
+        request.setAttribute("executionYears", executionYears);
 
-            searchFormBean = new YearViewBean(degreeCurricularPlan);
-            request.setAttribute("searchFormBean", searchFormBean);
-            return mapping.findForward("xYearEntry");
+        String executionYearId = request.getParameter("executionYear");
 
+        ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+
+        if (executionYearId != null) {
+            currentExecutionYear = FenixFramework.getDomainObject(executionYearId);
         }
 
-        /*
-         * YearViewBean yearViewBean = new
-         * YearViewBean(searchFormBean.getDegreeCurricularPlan());
-         * yearViewBean.setExecutionYear(searchFormBean.getExecutionYear());
-         * yearViewBean.setEnrolments();
-         */
+        request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+        request.setAttribute("currentExecutionYear", computeExecutionYearStatistics(degreeCurricularPlan, currentExecutionYear));
 
-        request.setAttribute("dcpEId", searchFormBean.getDegreeCurricularPlan().getExternalId());
-        request.setAttribute("eyEId", searchFormBean.getExecutionYear().getExternalId());
+        return mapping.findForward("showHome");
 
-        /*
-         * Inar totalInar = generateINAR(yearViewBean);
-         * request.setAttribute("totalInar", totalInar);
-         * 
-         * int years =
-         * yearViewBean.getDegreeCurricularPlan().getDegree().getDegreeType
-         * ().getYears(); request.setAttribute("#years", years);
-         * 
-         * Map<CurricularYear, Inar> mapInarByYear =
-         * generateInarByCurricularYear(yearViewBean); for (int i = 1; i <=
-         * years; i++) { Inar value =
-         * mapInarByYear.get(CurricularYear.readByYear(i)); String label =
-         * "InarFor" + i + "Year"; request.setAttribute(label, value); }
-         * 
-         * Map<CurricularYear, String> mapAveragebyYear =
-         * generateAverageByCurricularYear(yearViewBean); List averageByYear =
-         * new LinkedList(mapAveragebyYear.entrySet());
-         * request.setAttribute("averageByYear", averageByYear);
-         * 
-         * // @Deprecated // if(<3 == true) {you.marry(me) ? super.happy() :
-         * null;} if (yearViewBean.hasBranchesByType(BranchType.MAJOR)) {
-         * Map<BranchCourseGroup, Inar> mapInarByBranches =
-         * generateInarByBranch(yearViewBean, BranchType.MAJOR);
-         * yearViewBean.setHasMajorBranches(true);
-         * yearViewBean.setMajorBranches(
-         * yearViewBean.getDegreeCurricularPlan().getBranchesByType
-         * (BranchType.MAJOR));
-         * yearViewBean.setInarByMajorBranches(mapInarByBranches);
-         * 
-         * Map<BranchCourseGroup, String> mapAverageByBranches =
-         * generateAverageByBranch(yearViewBean, BranchType.MAJOR);
-         * yearViewBean.setAverageByMajorBranches(mapAverageByBranches); }
-         * 
-         * if (yearViewBean.hasBranchesByType(BranchType.MINOR)) {
-         * Map<BranchCourseGroup, Inar> mapInarByBranches =
-         * generateInarByBranch(yearViewBean, BranchType.MINOR);
-         * yearViewBean.setHasMinorBranches(true);
-         * yearViewBean.setMinorBranches(
-         * yearViewBean.getDegreeCurricularPlan().getBranchesByType
-         * (BranchType.MINOR));
-         * yearViewBean.setInarByMinorBranches(mapInarByBranches);
-         * 
-         * Map<BranchCourseGroup, String> mapAverageByBranches =
-         * generateAverageByBranch(yearViewBean, BranchType.MINOR);
-         * yearViewBean.setAverageByMinorBranches(mapAverageByBranches); }
-         * 
-         * String resumedQUC = generateQUCResults(yearViewBean);
-         * yearViewBean.setResumedQUC(resumedQUC);
-         * 
-         * request.setAttribute("yearViewBean", yearViewBean);
-         */
-
-        request.setAttribute("searchFormBean", searchFormBean);
-        return mapping.findForward("xYearDisplay");
     }
 
-    private Inar generateINAR(YearViewBean bean) {
-        Inar inar = new Inar();
-
-        for (Enrolment enrol : bean.getEnrolments()) {
-            inar.incEnrolled();
-            Grade grade = enrol.getGrade();
-            if (grade == null || grade.isEmpty()) {
-                inar.incFrequenting();
-            } else if (grade.isApproved()) {
-                inar.incApproved();
-            } else if (grade.isNotEvaluated()) {
-                inar.incNotEvaluated();
-            } else if (grade.isNotApproved()) {
-                inar.incFlunked();
-            }
-        }
-
-        return inar;
-    }
-
-    private Map<CurricularYear, Inar> generateInarByCurricularYear(YearViewBean bean) {
-        Map<CurricularYear, Inar> result = new TreeMap<CurricularYear, Inar>(new Comparator() {
-            @Override
-            public int compare(Object year1, Object year2) {
-                return ((CurricularYear) year1).getYear().compareTo(((CurricularYear) year2).getYear());
-            }
-        });
-        int years = bean.getDegreeCurricularPlan().getDegree().getDegreeType().getYears();
-        for (int i = 1; i <= years; i++) {
-            Inar inar = new Inar();
-            result.put(CurricularYear.readByYear(i), inar);
-        }
-
-        for (Enrolment enrol : bean.getEnrolments()) {
-            CurricularYear year = CurricularYear.readByYear(enrol.getRegistration().getCurricularYear());
-            result.get(year).incEnrolled();
-            Grade grade = enrol.getGrade();
-            if (grade == null || grade.isEmpty()) {
-                result.get(year).incFrequenting();
-            } else if (grade.isApproved()) {
-                result.get(year).incApproved();
-            } else if (grade.isNotEvaluated()) {
-                result.get(year).incNotEvaluated();
-            } else if (grade.isNotApproved()) {
-                result.get(year).incFlunked();
-            }
-        }
-
-        return result;
-    }
-
-    private Map<CurricularYear, String> generateAverageByCurricularYear(YearViewBean bean) {
-        Map<CurricularYear, String> result = new TreeMap<CurricularYear, String>(new Comparator() {
-            @Override
-            public int compare(Object year1, Object year2) {
-                return ((CurricularYear) year1).getYear().compareTo(((CurricularYear) year2).getYear());
-            }
-        });
-
-        int years = bean.getDegreeCurricularPlan().getDegree().getDegreeType().getYears();
-
-        BigDecimal[] sigma = new BigDecimal[years + 1];
-        BigDecimal[] cardinality = new BigDecimal[years + 1];
-        BigDecimal[] average = new BigDecimal[years + 1];
-
-        for (int i = 1; i <= years; i++) {
-            sigma[i] = new BigDecimal(0);
-            cardinality[i] = new BigDecimal(0);
-            average[i] = new BigDecimal(0);
-        }
-
-        for (Enrolment enrol : bean.getEnrolments()) {
-            CurricularYear year = CurricularYear.readByYear(enrol.getRegistration().getCurricularYear());
-            Grade grade = enrol.getGrade();
-            if (grade.isApproved() && grade.getGradeScale() == GradeScale.TYPE20) {
-                BigDecimal biggy = sigma[year.getYear()];
-                BigDecimal smalls = biggy.add(grade.getNumericValue());
-                sigma[year.getYear()] = smalls;
-
-                BigDecimal notorious = cardinality[year.getYear()];
-                BigDecimal big = notorious.add(BigDecimal.ONE);
-                cardinality[year.getYear()] = big;
-            }
-        }
-
-        for (int i = 1; i <= years; i++) {
-            if (cardinality[i].compareTo(BigDecimal.ZERO) == 0) {
-                result.put(CurricularYear.readByYear(i), "-");
-            } else {
-                result.put(CurricularYear.readByYear(i), sigma[i].divide(cardinality[i], 2, RoundingMode.HALF_EVEN)
-                        .toPlainString());
-            }
-        }
-
-        return result;
-    }
-
-    private Map<BranchCourseGroup, Inar> generateInarByBranch(YearViewBean bean, BranchType bType) {
-        Map<BranchCourseGroup, Inar> result = new TreeMap<BranchCourseGroup, Inar>(BranchCourseGroup.COMPARATOR_BY_NAME);
-        Set<BranchCourseGroup> branches = bean.getDegreeCurricularPlan().getBranchesByType(bType);
-
-        for (BranchCourseGroup branch : branches) {
-            Inar inar = new Inar();
-            result.put(branch, inar);
-        }
-
-        for (Enrolment enrol : bean.getEnrolments()) {
-            BranchCourseGroup branch =
-                    enrol.getParentBranchCurriculumGroup() != null ? enrol.getParentBranchCurriculumGroup().getDegreeModule() : null;
-            if (branch != null && branch.getBranchType() == bType) {
-                result.get(branch).incEnrolled();
-                Grade grade = enrol.getGrade();
-                if (grade == null || grade.isEmpty()) {
-                    result.get(branch).incFrequenting();
-                } else if (grade.isApproved()) {
-                    result.get(branch).incApproved();
-                } else if (grade.isNotEvaluated()) {
-                    result.get(branch).incNotEvaluated();
-                } else if (grade.isNotApproved()) {
-                    result.get(branch).incFlunked();
+    private Set<Enrolment> getDegreeCurricularPlanEnrolmentsForExecutionYear(DegreeCurricularPlan degreeCurricularPlan,
+            ExecutionYear executionYear) {
+        Set<Enrolment> enrolments = new HashSet<Enrolment>();
+        for (StudentCurricularPlan scp : degreeCurricularPlan.getStudentCurricularPlansSet()) {
+            for (Enrolment enrol : scp.getEnrolmentsSet()) {
+                if (enrol.getExecutionPeriod().getExecutionYear() == executionYear
+                        && enrol.getParentCycleCurriculumGroup() != null
+                        && degreeCurricularPlan.getCycleCourseGroup(enrol.getParentCycleCurriculumGroup().getCycleType()) != null) {
+                    enrolments.add(enrol);
                 }
             }
         }
-
-        return result;
-
+        return enrolments;
     }
 
-    private Map<BranchCourseGroup, String> generateAverageByBranch(YearViewBean bean, BranchType bType) {
-        Map<BranchCourseGroup, String> result = new TreeMap<BranchCourseGroup, String>(BranchCourseGroup.COMPARATOR_BY_NAME);
+    private static class CurricularCourseGradeEntry {
 
-        Set<BranchCourseGroup> branches = bean.getDegreeCurricularPlan().getBranchesByType(bType);
+        BigDecimal sum = BigDecimal.ZERO;
 
-        Map<BranchCourseGroup, BigDecimal> sigma = new HashMap<BranchCourseGroup, BigDecimal>();
-        Map<BranchCourseGroup, BigDecimal> cardinality = new HashMap<BranchCourseGroup, BigDecimal>();
-        Map<BranchCourseGroup, BigDecimal> average = new HashMap<BranchCourseGroup, BigDecimal>();
+        Integer notEvaluated = 0;
+        Integer approved = 0;
+        Integer flunked = 0;
+        Integer attending = 0;
 
-        for (BranchCourseGroup branch : branches) {
-            sigma.put(branch, new BigDecimal(0));
-            cardinality.put(branch, new BigDecimal(0));
-            average.put(branch, new BigDecimal(0));
+        List<Enrolment> enrolmentList = new ArrayList<Enrolment>();
+
+        Integer quantity = 0;
+
+        public CurricularCourseGradeEntry(Enrolment enrolment) {
+            plus(enrolment);
         }
 
-        for (Enrolment enrol : bean.getEnrolments()) {
-            BranchCourseGroup branch =
-                    enrol.getParentBranchCurriculumGroup() != null ? enrol.getParentBranchCurriculumGroup().getDegreeModule() : null;
-            if (branch == null || branch.getBranchType() != bType) {
-                continue;
+        public CurricularCourseGradeEntry plus(Enrolment enrolment) {
+            enrolmentList.add(enrolment);
+            Grade grade = enrolment.getGrade();
+            if (grade == null || grade.isEmpty()) {
+                attending++;
+            } else if (grade.isApproved()) {
+                approved++;
+                if (grade.getGradeScale() == GradeScale.TYPE20) {
+                    sum = sum.add(grade.getNumericValue());
+                    quantity++;
+                }
+            } else if (grade.isNotEvaluated()) {
+                notEvaluated++;
+            } else if (grade.isNotApproved()) {
+                flunked++;
             }
-
-            Grade grade = enrol.getGrade();
-            if (grade.isApproved() && grade.getGradeScale() == GradeScale.TYPE20) {
-                BigDecimal biggy = sigma.get(branch);
-                BigDecimal smalls = biggy.add(grade.getNumericValue());
-                sigma.put(branch, smalls);
-
-                BigDecimal notorious = cardinality.get(branch);
-                BigDecimal big = notorious.add(BigDecimal.ONE);
-                cardinality.put(branch, big);
-            }
+            return this;
         }
 
-        for (BranchCourseGroup branch : branches) {
-            if (cardinality.get(branch).compareTo(BigDecimal.ZERO) == 0) {
-                result.put(branch, "-");
+        public BigDecimal getAverage() {
+            if (quantity > 0) {
+                return sum.divide(new BigDecimal(quantity), RoundingMode.HALF_EVEN);
             } else {
-                result.put(branch, (sigma.get(branch)).divide(cardinality.get(branch), 2, RoundingMode.HALF_EVEN).toPlainString());
+                return BigDecimal.ZERO;
             }
+
         }
 
-        return result;
+        public int getTotal() {
+            return notEvaluated + approved + flunked + attending;
+        }
+
     }
 
-    /**
-     * Ver onde sao guardados os StudentInquiries (QUC): ir por
-     * CurricularCourses
-     * 
-     * 1. Extrair o ED 2. A partir do ED extrair duas collections: CourseResults
-     * e TeacherResults 3. Magia para tirar um score desses results (ainda nao
-     * sei o q possa ser esse score. vou extrair o 'average_NDE' e
-     * 'average_P6_1' apenas a titulo de exemplo. nao tem qq valor real. os
-     * values sao em double, passar a BigDecimals e trabalhar sempre neste
-     * format). 4. Aplicar 50% à media do score de todos os CourseResults e 50%
-     * à media do score de todos os TeacherResults 5. Mostrar esse score.
-     */
+    private static class CurricularYearGradeEntry {
 
-    private String generateQUCResults(YearViewBean bean) {
-        ExecutionDegree executionDegree =
-                ExecutionDegree
-                        .getByDegreeCurricularPlanAndExecutionYear(bean.getDegreeCurricularPlan(), bean.getExecutionYear());
+        BigDecimal sum = BigDecimal.ZERO;
 
-        Set<StudentInquiriesCourseResult> courseResults = executionDegree.getStudentInquiriesCourseResultsSet();
-        Set<StudentInquiriesTeachingResult> teachingResults = executionDegree.getStudentInquiriesTeachingResultsSet();
+        Integer notEvaluated = 0;
+        Integer approved = 0;
+        Integer flunked = 0;
+        Integer attending = 0;
 
-        BigDecimal sigmaCR = new BigDecimal(0);
-        BigDecimal cardinalityCR = new BigDecimal(0);
-        BigDecimal averageCR = new BigDecimal(0);
+        Integer quantity = 0;
 
-        BigDecimal sigmaTR = new BigDecimal(0);
-        BigDecimal cardinalityTR = new BigDecimal(0);
-        BigDecimal averageTR = new BigDecimal(0);
-
-        BigDecimal partialCourse = new BigDecimal(0);
-        BigDecimal partialTeaching = new BigDecimal(0);
-
-        String result;
-
-        for (StudentInquiriesCourseResult courseResult : courseResults) {
-            BigDecimal converted = new BigDecimal(courseResult.getAverage_NDE() != null ? courseResult.getAverage_NDE() : 0);
-            sigmaCR = sigmaCR.add(converted);
-            cardinalityCR = cardinalityCR.add(BigDecimal.ONE);
-        }
-        if (cardinalityCR.compareTo(BigDecimal.ZERO) != 0) {
-            averageCR = sigmaCR.divide(cardinalityCR, 4, RoundingMode.HALF_EVEN);
-        } else {
-            averageCR = BigDecimal.ZERO;
+        public CurricularYearGradeEntry(Enrolment enrolment) {
+            plus(enrolment);
         }
 
-        for (StudentInquiriesTeachingResult teachingResult : teachingResults) {
-            BigDecimal converted =
-                    new BigDecimal(teachingResult.getAverage_P6_1() != null ? teachingResult.getAverage_P6_1() : 0);
-            sigmaTR = sigmaTR.add(converted);
-            cardinalityTR = cardinalityTR.add(BigDecimal.ONE);
+        public CurricularYearGradeEntry plus(Enrolment enrolment) {
+            Grade grade = enrolment.getGrade();
+            if (grade == null || grade.isEmpty()) {
+                attending++;
+            } else if (grade.isApproved()) {
+                approved++;
+                if (grade.getGradeScale() == GradeScale.TYPE20) {
+                    sum = sum.add(grade.getNumericValue());
+                    quantity++;
+                }
+            } else if (grade.isNotEvaluated()) {
+                notEvaluated++;
+            } else if (grade.isNotApproved()) {
+                flunked++;
+            }
+            return this;
         }
-        if (cardinalityCR.compareTo(BigDecimal.ZERO) != 0) {
-            averageTR = sigmaTR.divide(cardinalityTR, 4, RoundingMode.HALF_EVEN);
-        } else {
-            averageTR = BigDecimal.ZERO;
+
+        public BigDecimal getAverage() {
+            if (quantity > 0) {
+                return sum.divide(new BigDecimal(quantity), RoundingMode.HALF_EVEN);
+            } else {
+                return BigDecimal.ZERO;
+            }
+
         }
 
-        partialCourse = averageCR.divide(new BigDecimal(2), 2, RoundingMode.HALF_EVEN);
-        partialTeaching = averageTR.divide(new BigDecimal(2), 2, RoundingMode.HALF_EVEN);
+        public int getTotal() {
+            return notEvaluated + approved + flunked + attending;
+        }
+    }
 
-        result = partialCourse.add(partialTeaching).toPlainString();
+    private JsonObject computeExecutionYearStatistics(DegreeCurricularPlan degreeCurricularPlan, ExecutionYear executionYear) {
+        JsonObject result = new JsonObject();
+        result.addProperty("id", executionYear.getExternalId());
+        result.addProperty("name", executionYear.getQualifiedName());
 
+        Map<CurricularYear, CurricularYearGradeEntry> curricularYearGradeMap =
+                new HashMap<CurricularYear, CurricularYearGradeEntry>();
+
+        Map<CurricularCourse, CurricularCourseGradeEntry> curricularCourseGradeMap =
+                new HashMap<CurricularCourse, CurricularCourseGradeEntry>();
+
+        for (Enrolment enrolment : getDegreeCurricularPlanEnrolmentsForExecutionYear(degreeCurricularPlan, executionYear)) {
+            updateCurricularYearGradeMapIfRelevant(curricularYearGradeMap, enrolment);
+            updateCurricularCourseGradeMapIfRelevant(curricularCourseGradeMap, enrolment);
+        }
+
+        int degreeCurricularPlanAttending = 0;
+        int degreeCurricularPlanApproved = 0;
+        int degreeCurricularPlanNotEvaluated = 0;
+        int degreeCurricularPlanFlunked = 0;
+
+        JsonArray curricularYearsJsonArray = new JsonArray();
+        for (Entry<CurricularYear, CurricularYearGradeEntry> entry : curricularYearGradeMap.entrySet()) {
+
+            JsonObject curricularYearJsonObject = new JsonObject();
+            curricularYearJsonObject.addProperty("year", entry.getKey().getYear());
+            curricularYearJsonObject.addProperty("average", entry.getValue().getAverage());
+            curricularYearJsonObject.addProperty("total", entry.getValue().getTotal());
+
+            int curricularYearApproved = entry.getValue().approved;
+            degreeCurricularPlanApproved += curricularYearApproved;
+
+            int curricularYearFlunked = entry.getValue().flunked;
+            degreeCurricularPlanFlunked += curricularYearFlunked;
+
+            int curricularYearNotEvaluated = entry.getValue().notEvaluated;
+            degreeCurricularPlanNotEvaluated += curricularYearNotEvaluated;
+
+            int curricularYearAttending = entry.getValue().attending;
+            degreeCurricularPlanAttending += curricularYearAttending;
+
+            curricularYearJsonObject.addProperty("approved", curricularYearApproved);
+            curricularYearJsonObject.addProperty("flunked", curricularYearFlunked);
+            curricularYearJsonObject.addProperty("not-evaluated", curricularYearNotEvaluated);
+            curricularYearJsonObject.addProperty("attending", curricularYearAttending);
+
+            curricularYearsJsonArray.add(curricularYearJsonObject);
+        }
+
+        result.addProperty("attending", degreeCurricularPlanAttending);
+        result.addProperty("approved", degreeCurricularPlanApproved);
+        result.addProperty("notEvaluated", degreeCurricularPlanNotEvaluated);
+        result.addProperty("flunked", degreeCurricularPlanFlunked);
+
+        result.addProperty("total", degreeCurricularPlanAttending + degreeCurricularPlanApproved
+                + degreeCurricularPlanNotEvaluated + degreeCurricularPlanFlunked);
+
+        JsonArray curricularCoursesJsonArray = new JsonArray();
+
+        int years = degreeCurricularPlan.getDegreeType().getYears();
+        for (int i = 1; i <= years; i++) {
+            JsonObject year = new JsonObject();
+            year.addProperty("year", i);
+            JsonArray curricularCoursesArray = new JsonArray();
+            for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCoursesByExecutionYearAndCurricularYear(
+                    executionYear, i)) {
+                if (curricularCourseGradeMap.containsKey(curricularCourse)) {
+                    CurricularCourseGradeEntry entry = curricularCourseGradeMap.get(curricularCourse);
+
+                    JsonObject curricularCourseJsonObject = new JsonObject();
+                    int curricularCourseApproved = entry.approved;
+                    int curricularCourseFlunked = entry.flunked;
+                    int curricularCourseNotEvaluated = entry.notEvaluated;
+                    int curricularCourseAttending = entry.attending;
+
+                    curricularCourseJsonObject.addProperty("acronym", curricularCourse.getAcronym());
+                    curricularCourseJsonObject.addProperty("name", curricularCourse.getName());
+
+                    curricularCourseJsonObject.addProperty("approved", curricularCourseApproved);
+                    curricularCourseJsonObject.addProperty("flunked", curricularCourseFlunked);
+                    curricularCourseJsonObject.addProperty("not-evaluated", curricularCourseNotEvaluated);
+                    curricularCourseJsonObject.addProperty("attending", curricularCourseAttending);
+
+                    curricularCourseJsonObject.addProperty("average", entry.getAverage());
+
+                    curricularCourseJsonObject.addProperty("total", entry.getTotal());
+
+                    JsonArray gradesArray = new JsonArray();
+                    for (Enrolment enrolment : entry.enrolmentList) {
+                        Grade grade = enrolment.getGrade();
+                        JsonObject enrolmentJson = new JsonObject();
+                        if (grade != null && grade.isApproved()) {
+                            enrolmentJson.addProperty("grade", grade.getIntegerValue());
+                        } else if (grade.isNotEvaluated()) {
+                            enrolmentJson.addProperty("grade", "NA");
+                        } else if (grade.isNotApproved()) {
+                            enrolmentJson.addProperty("grade", "RE");
+                        }
+                        gradesArray.add(enrolmentJson);
+                    }
+                    curricularCourseJsonObject.add("grades", gradesArray);
+
+                    curricularCoursesArray.add(curricularCourseJsonObject);
+                }
+            }
+            year.add("entries", curricularCoursesArray);
+
+            curricularCoursesJsonArray.add(year);
+        }
+
+        result.add("curricular-years", curricularYearsJsonArray);
+        result.add("curricular-courses", curricularCoursesJsonArray);
         return result;
+
+    }
+
+    private void updateCurricularYearGradeMapIfRelevant(Map<CurricularYear, CurricularYearGradeEntry> map, Enrolment enrolment) {
+        CurricularYear year = CurricularYear.readByYear(enrolment.getRegistration().getCurricularYear());
+        if (map.containsKey(year)) {
+            map.get(year).plus(enrolment);
+        } else {
+            map.put(year, new CurricularYearGradeEntry(enrolment));
+        }
+    }
+
+    private void updateCurricularCourseGradeMapIfRelevant(Map<CurricularCourse, CurricularCourseGradeEntry> map,
+            Enrolment enrolment) {
+        CurricularCourse curricularCourse = enrolment.getCurricularCourse();
+        if (map.containsKey(curricularCourse)) {
+            map.get(curricularCourse).plus(enrolment);
+        } else {
+            map.put(curricularCourse, new CurricularCourseGradeEntry(enrolment));
+        }
     }
 
 }

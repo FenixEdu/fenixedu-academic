@@ -48,4 +48,8 @@ public class AllTeachersByCampus extends RoleByCampusGroup {
 
     }
 
+    @Override
+    public PersistentTeacherGroup convert() {
+        return PersistentTeacherGroup.getInstance(getCampus());
+    }
 }

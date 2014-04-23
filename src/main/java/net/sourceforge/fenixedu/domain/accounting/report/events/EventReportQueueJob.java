@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.domain.accounting.report.events;
 
 import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -59,6 +61,8 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
     private static final List<Class<? extends Event>> CANDIDACY_EVENT_TYPES = new ArrayList<Class<? extends Event>>();
     private static final List<Class<? extends AnnualEvent>> ADMIN_OFFICE_AND_INSURANCE_TYPES =
             new ArrayList<Class<? extends AnnualEvent>>();
+    private static final String FIELD_SEPARATOR = "\t";
+    private static final String LINE_BREAK = "\n";
 
     static {
         CANDIDACY_EVENT_TYPES.add(DFACandidacyEvent.class);
@@ -125,8 +129,9 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
         ByteArrayOutputStream byteArrayOSForDebts = new ByteArrayOutputStream();
         ByteArrayOutputStream byteArrayOSForExemptions = new ByteArrayOutputStream();
         ByteArrayOutputStream byteArrayOSForTransactions = new ByteArrayOutputStream();
+        StringBuilder errors = new StringBuilder();
 
-        SheetData[] reports = buildReport();
+        SheetData[] reports = buildReport(errors);
 
         SpreadsheetBuilder spreadsheetBuilderForDebts = new SpreadsheetBuilder();
         SpreadsheetBuilder spreadsheetBuilderForExemptions = new SpreadsheetBuilder();
@@ -153,6 +158,12 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
                 new EventReportQueueJobFile(byteArrayOSForExemptions.toByteArray(), "isencoes.tsv");
         EventReportQueueJobFile fileForTransactions =
                 new EventReportQueueJobFile(byteArrayOSForTransactions.toByteArray(), "transaccoes.tsv");
+        if (!errors.toString().isEmpty()) {
+            StringBuilder headers = buildHeaders();
+            headers.append(errors);
+            EventReportQueueJobFile fileForErrors = new EventReportQueueJobFile(headers.toString().getBytes(), "erros.tsv");
+            this.setErrorsFile(fileForErrors);
+        }
 
         this.setDebts(fileForDebts);
         this.setExemptions(fileForExemptions);
@@ -163,26 +174,13 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
         return queueJobResult;
     }
 
-    private SheetData[] buildReport() {
-        ByteArrayOutputStream byteArrayOutputStream = null;
-        PrintStream stringStream = null;
-        PrintStream defaultErrorStream = System.err;
-        try {
-            byteArrayOutputStream = new ByteArrayOutputStream();
-            stringStream = new PrintStream(byteArrayOutputStream, true);
+    private SheetData[] buildReport(StringBuilder errors) {
 
-            System.setErr(stringStream);
+        final SheetData<EventBean> eventsSheet = allEvents(errors);
+        final SheetData<ExemptionBean> exemptionsSheet = allExemptions(errors);
+        final SheetData<AccountingTransactionBean> transactionsSheet = allTransactions(errors);
 
-            final SheetData<EventBean> eventsSheet = allEvents();
-            final SheetData<ExemptionBean> exemptionsSheet = allExemptions();
-            final SheetData<AccountingTransactionBean> transactionsSheet = allTransactions();
-
-            return new SheetData[] { eventsSheet, exemptionsSheet, transactionsSheet };
-        } finally {
-            stringStream.close();
-            this.setErrors(new String(byteArrayOutputStream.toByteArray()));
-            System.setErr(defaultErrorStream);
-        }
+        return new SheetData[] { eventsSheet, exemptionsSheet, transactionsSheet };
     }
 
     private List<String> getAllEventsExternalIds() {
@@ -206,7 +204,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
     private static final Integer BLOCK = 5000;
 
     /* ALL EVENTS */
-    private SheetData<EventBean> allEvents() {
+    private SheetData<EventBean> allEvents(final StringBuilder errors) {
 
         List<String> allEventsExternalIds = getAllEventsExternalIds();
         logger.info(String.format("%s events to process", allEventsExternalIds.size()));
@@ -234,20 +232,13 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
                         Event event = null;
                         try {
                             event = FenixFramework.getDomainObject(oid);
-
                             if (!isAccountingEventForReport(event)) {
                                 continue;
                             }
-
                             result.add(writeEvent(event));
                         } catch (Throwable e) {
-                            e.printStackTrace(System.err);
-                            logger.error(e.getMessage(), e);
-                            if (event != null) {
-                                System.err.println("Error on event -> " + event.getExternalId());
-                            }
+                            errors.append(getErrorLine(event, e));
                         }
-
                     }
                 }
             };
@@ -405,7 +396,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
         bean.description = event.getDescription().toString(new DefaultResourceBundleProvider(formatterProperties));
         bean.whenOccured = event.getWhenOccured().toString("dd/MM/yyyy");
-        bean.totalAmount = event.getTotalAmountToPay().toPlainString();
+        bean.totalAmount = event.getTotalAmountToPay() != null ? event.getTotalAmountToPay().toPlainString() : "-";
         bean.payedAmount = event.getPayedAmount().toPlainString();
         bean.amountToPay = event.getAmountToPay().toPlainString();
         bean.reimbursableAmount = event.getReimbursableAmount().toPlainString();
@@ -452,9 +443,9 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
     }
 
     /* ALL EXEMPTIONS */
-    private SheetData<ExemptionBean> allExemptions() {
+    private SheetData<ExemptionBean> allExemptions(final StringBuilder errors) {
         List<String> allEventsExternalIds = getAllEventsExternalIds();
-        logger.info(String.format("%s events to process", allEventsExternalIds.size()));
+        logger.info(String.format("%s events (exemptions) to process", allEventsExternalIds.size()));
 
         Integer blockRead = 0;
 
@@ -477,21 +468,14 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
                 public void run() {
                     for (String oid : block) {
                         Event event = FenixFramework.getDomainObject(oid);
-
                         try {
                             if (!isAccountingEventForReport(event)) {
                                 continue;
                             }
-
                             result.addAll(writeExemptionInformation(event));
                         } catch (Throwable e) {
-                            e.printStackTrace(System.err);
-                            logger.error(e.getMessage(), e);
-                            if (event != null) {
-                                System.err.println("Error on event -> " + event.getExternalId());
-                            }
+                            errors.append(getErrorLine(event, e));
                         }
-
                     }
                 }
             };
@@ -510,16 +494,58 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
             @Override
             protected void makeLine(ExemptionBean bean) {
-
                 addCell("Identificador", bean.eventExternalId);
                 addCell("Tipo da Isenção", bean.exemptionTypeDescription);
                 addCell("Valor da Isenção", bean.exemptionValue);
                 addCell("Percentagem da Isenção", bean.percentage);
                 addCell("Motivo da Isenção", bean.justification);
-
             }
-
         };
+    }
+
+    private StringBuilder buildHeaders() {
+        StringBuilder header = new StringBuilder();
+        header.append("ID Evento").append(FIELD_SEPARATOR).append("Username").append(FIELD_SEPARATOR).append("Nome")
+                .append(FIELD_SEPARATOR);
+        header.append("Data evento").append(FIELD_SEPARATOR).append("Descrição").append(FIELD_SEPARATOR);
+        header.append("Valor Total").append(FIELD_SEPARATOR).append("Excepção").append(LINE_BREAK);
+        return header;
+    }
+
+    private StringBuilder getErrorLine(Event event, Throwable e) {
+        Properties formatterProperties = new Properties();
+        formatterProperties.put(LabelFormatter.ENUMERATION_RESOURCES, "resources.EnumerationResources");
+        formatterProperties.put(LabelFormatter.APPLICATION_RESOURCES, "resources.ApplicationResources");
+
+        StringBuilder errorLine = new StringBuilder();
+        try {
+            if (event != null) {
+                errorLine.append(event.getExternalId()).append(FIELD_SEPARATOR).append(event.getPerson().getUsername())
+                        .append(FIELD_SEPARATOR);
+                errorLine.append(event.getPerson().getName()).append(FIELD_SEPARATOR).append(event.getWhenOccured())
+                        .append(FIELD_SEPARATOR);
+                errorLine.append(event.getDescription().toString(new DefaultResourceBundleProvider(formatterProperties)))
+                        .append(FIELD_SEPARATOR).append(event.getOriginalAmountToPay()).append(FIELD_SEPARATOR);
+            } else {
+                errorLine.append(FIELD_SEPARATOR).append(FIELD_SEPARATOR).append(FIELD_SEPARATOR).append(FIELD_SEPARATOR)
+                        .append(FIELD_SEPARATOR);
+                errorLine.append(FIELD_SEPARATOR).append(FIELD_SEPARATOR).append(FIELD_SEPARATOR);
+            }
+        } catch (Exception e2) {
+            errorLine.append(getExceptionLine(e2)).append(FIELD_SEPARATOR);
+        }
+        errorLine.append(getExceptionLine(e)).append(LINE_BREAK);
+        return errorLine;
+    }
+
+    private StringBuilder getExceptionLine(Throwable e) {
+        StringBuilder exceptionLine = new StringBuilder();
+        final Writer result = new StringWriter();
+        final PrintWriter printWriter = new PrintWriter(result);
+        e.printStackTrace(printWriter);
+        String[] exceptionLines = result.toString().split(LINE_BREAK);
+        exceptionLine.append(exceptionLines[0]).append(" - ").append(exceptionLines[1].replace(FIELD_SEPARATOR, ""));
+        return exceptionLine;
     }
 
     // write Exemption Information
@@ -561,10 +587,10 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
     /* ALL TRANSACTIONS */
 
-    private SheetData<AccountingTransactionBean> allTransactions() {
+    private SheetData<AccountingTransactionBean> allTransactions(final StringBuilder errors) {
 
         List<String> allEventsExternalIds = getAllEventsExternalIds();
-        logger.info(String.format("%s events to process", allEventsExternalIds.size()));
+        logger.info(String.format("%s events (transactions) to process", allEventsExternalIds.size()));
 
         Integer blockRead = 0;
 
@@ -587,21 +613,14 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
                 public void run() {
                     for (String oid : block) {
                         Event event = FenixFramework.getDomainObject(oid);
-
                         try {
                             if (!isAccountingEventForReport(event)) {
                                 continue;
                             }
-
                             result.addAll(writeTransactionInformation(event));
                         } catch (Throwable e) {
-                            e.printStackTrace(System.err);
-                            logger.error(e.getMessage(), e);
-                            if (event != null) {
-                                System.err.println("Error on event -> " + event.getExternalId());
-                            }
+                            errors.append(getErrorLine(event, e));
                         }
-
                     }
                 }
             };
@@ -853,8 +872,24 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
         return obj.toString();
     }
 
+    public boolean isDebtsReportPresent() {
+        return getDebts() != null;
+    }
+
+    public boolean isTransactionsReportPresent() {
+        return getTransactions() != null;
+    }
+
+    public boolean isExemptionsReportPresent() {
+        return getExemptions() != null;
+    }
+
     public boolean isBrokenInThree() {
         return hasDebts();
+    }
+
+    public boolean isErrorReportPresent() {
+        return getErrorsFile() != null;
     }
 
     @Deprecated
@@ -900,11 +935,6 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
     @Deprecated
     public boolean hasTransactions() {
         return getTransactions() != null;
-    }
-
-    @Deprecated
-    public boolean hasErrors() {
-        return getErrors() != null;
     }
 
     @Deprecated

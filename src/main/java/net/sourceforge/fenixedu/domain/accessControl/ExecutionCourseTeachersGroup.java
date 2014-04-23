@@ -13,6 +13,8 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilde
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.OidOperator;
 
+import org.apache.commons.collections.CollectionUtils;
+
 public class ExecutionCourseTeachersGroup extends AbstractExecutionCourseTeachersGroup {
 
     private static final long serialVersionUID = 1L;
@@ -56,6 +58,23 @@ public class ExecutionCourseTeachersGroup extends AbstractExecutionCourseTeacher
     }
 
     @Override
+    public Set<Person> getElements() {
+        final Set<Person> elements = super.buildSet();
+        if (hasExecutionCourse()) {
+            final Collection<Professorship> professorships = getProfessorships();
+            final Collection<Person> persons = CollectionUtils.collect(professorships, new ProfessorshipPersonTransformer());
+            elements.addAll(persons);
+            for (ExecutionDegree executionDegree : getExecutionCourse().getExecutionDegrees()) {
+                for (Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
+                    elements.add(coordinator.getPerson());
+                }
+            }
+        }
+
+        return super.freezeSet(elements);
+    }
+
+    @Override
     public Collection<Professorship> getProfessorships() {
         return getExecutionCourse().getProfessorships();
     }
@@ -81,4 +100,8 @@ public class ExecutionCourseTeachersGroup extends AbstractExecutionCourseTeacher
         return false;
     }
 
+    @Override
+    public PersistentTeacherGroup convert() {
+        return PersistentTeacherGroup.getInstance(getExecutionCourse());
+    }
 }

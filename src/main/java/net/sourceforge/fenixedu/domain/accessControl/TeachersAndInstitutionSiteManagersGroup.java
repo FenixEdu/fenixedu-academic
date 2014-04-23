@@ -7,6 +7,8 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 
+import org.fenixedu.bennu.core.domain.groups.Group;
+
 /**
  * Specific group that represents the union of all Teachers and the Institution
  * site managers.
@@ -45,4 +47,8 @@ public class TeachersAndInstitutionSiteManagersGroup extends LeafGroup {
         return new Argument[0];
     }
 
+    @Override
+    public Group convert() {
+        return group.convert();
+    }
 }

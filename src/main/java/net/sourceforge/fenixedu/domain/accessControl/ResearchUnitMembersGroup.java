@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.ClassOperator;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.OidOperator;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 
@@ -85,4 +86,8 @@ public class ResearchUnitMembersGroup extends DomainBackedGroup<ResearchUnit> {
 
     }
 
+    @Override
+    public PersistentUnitGroup convert() {
+        return PersistentUnitGroup.getInstance(getObject(), AccountabilityTypeEnum.RESEARCH_CONTRACT, null, false);
+    }
 }

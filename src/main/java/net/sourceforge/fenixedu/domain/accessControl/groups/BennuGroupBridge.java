@@ -4,8 +4,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
 
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.groups.Group;
@@ -20,8 +18,8 @@ public class BennuGroupBridge extends net.sourceforge.fenixedu.domain.accessCont
 
     private final Group bennuGroup;
 
-    private BennuGroupBridge(String bennuExpression) {
-        this.bennuGroup = Group.parse(bennuExpression);
+    public BennuGroupBridge(Group group) {
+        this.bennuGroup = group;
     }
 
     @Override
@@ -36,16 +34,15 @@ public class BennuGroupBridge extends net.sourceforge.fenixedu.domain.accessCont
 
     @Override
     public int getElementsCount() {
-        return bennuGroup.getMembers().size();
+        return getElements().size();
     }
 
     @Override
     public boolean isMember(Person person) {
-        if (person.getUser() == null) {
-            return false;
-        } else {
+        if (person != null) {
             return bennuGroup.isMember(person.getUser());
         }
+        return bennuGroup.isMember(null);
     }
 
     @Override
@@ -54,24 +51,12 @@ public class BennuGroupBridge extends net.sourceforge.fenixedu.domain.accessCont
     }
 
     @Override
-    protected Argument[] getExpressionArguments() {
-        return new Argument[] { new StaticArgument(bennuGroup.expression()) };
+    public String getExpression() {
+        return bennuGroup.getExternalId();
     }
 
-    public static class Builder implements GroupBuilder {
-        @Override
-        public net.sourceforge.fenixedu.domain.accessControl.Group build(Object[] arguments) {
-            return new BennuGroupBridge((String) arguments[0]);
-        }
-
-        @Override
-        public int getMinArguments() {
-            return 1;
-        }
-
-        @Override
-        public int getMaxArguments() {
-            return 1;
-        }
+    @Override
+    protected Argument[] getExpressionArguments() {
+        return new Argument[] {};
     }
 }

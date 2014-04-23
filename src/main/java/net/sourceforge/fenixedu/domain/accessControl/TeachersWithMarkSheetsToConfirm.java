@@ -68,4 +68,9 @@ public class TeachersWithMarkSheetsToConfirm extends TeachersByExecutionPeriodDe
         }
 
     }
+
+    @Override
+    public PersistentTeachersWithMarkSheetsToConfirmGroup convert() {
+        return PersistentTeachersWithMarkSheetsToConfirmGroup.getInstance(getExecutionPeriod(), getDegreeCurricularPlan());
+    }
 }

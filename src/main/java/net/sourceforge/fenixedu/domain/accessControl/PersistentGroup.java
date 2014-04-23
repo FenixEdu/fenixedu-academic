@@ -71,4 +71,9 @@ public class PersistentGroup extends DomainBackedGroup<PersistentGroupMembers> {
             return 1;
         }
     }
+
+    @Override
+    public org.fenixedu.bennu.core.domain.groups.Group convert() {
+        return PersistentMembersLinkGroup.getInstance(getObject());
+    }
 }

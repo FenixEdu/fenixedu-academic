@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.OidOperator;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 
 public class DepartmentEmployeesGroup extends DomainBackedGroup<Department> {
 
@@ -54,5 +55,11 @@ public class DepartmentEmployeesGroup extends DomainBackedGroup<Department> {
             return 1;
         }
 
+    }
+
+    @Override
+    public PersistentUnitGroup convert() {
+        return PersistentUnitGroup.getInstance(getObject().getDepartmentUnit(), AccountabilityTypeEnum.WORKING_CONTRACT, null,
+                true);
     }
 }

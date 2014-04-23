@@ -43,8 +43,9 @@ public class InsuranceExemptionJustificationByDispatch extends InsuranceExemptio
     public LabelFormatter getDescription() {
         final LabelFormatter labelFormatter = new LabelFormatter();
         labelFormatter.appendLabel(getJustificationType().getQualifiedName(), LabelFormatter.ENUMERATION_RESOURCES);
+        String formatedDate = getDispatchDate() != null ? getDispatchDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT) : "-";
         labelFormatter.appendLabel(" (").appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES).appendLabel(" ")
-                .appendLabel(getDispatchDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT)).appendLabel(")");
+                .appendLabel(formatedDate).appendLabel(")");
 
         return labelFormatter;
     }

@@ -92,10 +92,6 @@ public class InfoExecutionPeriod extends InfoObject implements Comparable {
      */
     public String getDescription() {
         StringBuilder buffer = new StringBuilder();
-
-        // these ifs are needed due to cloner converting strategy (it looks to
-        // all
-        // properties).
         if (getName() != null) {
             buffer.append(getName());
         }

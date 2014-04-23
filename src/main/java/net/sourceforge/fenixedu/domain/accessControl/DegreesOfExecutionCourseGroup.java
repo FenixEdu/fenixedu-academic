@@ -48,6 +48,14 @@ public class DegreesOfExecutionCourseGroup extends ExecutionCourseGroup {
                     elements.add(registration.getPerson());
                 }
             }
+            for (ExecutionDegree executionDegree : getExecutionCourse().getExecutionDegrees()) {
+                for (Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
+                    elements.add(coordinator.getPerson());
+                }
+            }
+            for (Attends attends : getExecutionCourse().getAttendsSet()) {
+                elements.add(attends.getRegistration().getPerson());
+            }
         }
         return elements;
     }
@@ -126,5 +134,10 @@ public class DegreesOfExecutionCourseGroup extends ExecutionCourseGroup {
             return 1;
         }
 
+    }
+
+    @Override
+    public PersistentStudentSharingDegreeOfExecutionCourseGroup convert() {
+        return PersistentStudentSharingDegreeOfExecutionCourseGroup.getInstance(getExecutionCourse());
     }
 }

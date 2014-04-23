@@ -70,4 +70,9 @@ public class RoleTypeGroup extends Group {
     public int hashCode() {
         return super.hashCode() + this.roleType.hashCode();
     }
+
+    @Override
+    public RoleCustomGroup convert() {
+        return RoleCustomGroup.getInstance(getRoleType());
+    }
 }

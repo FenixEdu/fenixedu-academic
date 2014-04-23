@@ -1427,7 +1427,7 @@ public class Student extends Student_Base {
         return getDelegateFunction(ExecutionYear.readCurrentExecutionYear());
     }
 
-    private PersonFunction getDelegateFunction(ExecutionYear executionYear) {
+    public PersonFunction getDelegateFunction(ExecutionYear executionYear) {
         PersonFunction delegateFunction = null;
         List<Registration> activeRegistrations = new ArrayList<Registration>(getActiveRegistrations());
         Collections.sort(activeRegistrations, Registration.COMPARATOR_BY_START_DATE);

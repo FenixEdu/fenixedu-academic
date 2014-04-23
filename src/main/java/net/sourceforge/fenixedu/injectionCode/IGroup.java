@@ -41,4 +41,5 @@ public interface IGroup {
 
     public String[] getPresentationNameKeyArgs();
 
+    public org.fenixedu.bennu.core.domain.groups.Group convert();
 }

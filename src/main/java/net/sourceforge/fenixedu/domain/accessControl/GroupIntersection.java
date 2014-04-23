@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.domain.groups.AnyoneGroup;
 
 /**
  * @deprecated Use Bennu Groups instead
@@ -114,5 +115,14 @@ public final class GroupIntersection extends NodeGroup {
     @Override
     protected String getExpressionOperator() {
         return "&&";
+    }
+
+    @Override
+    public org.fenixedu.bennu.core.domain.groups.Group convert() {
+        org.fenixedu.bennu.core.domain.groups.Group group = AnyoneGroup.getInstance();
+        for (IGroup child : getChildren()) {
+            group = group.and(child.convert());
+        }
+        return group;
     }
 }

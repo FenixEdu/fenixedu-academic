@@ -33,7 +33,7 @@ public class FenixSchedule {
             final ShiftType shiftType = courseLoad.getType();
             type = shiftType == null ? null : shiftType.name();
             totalQuantity = courseLoad.getTotalQuantity();
-            unitQuantity = courseLoad.getUnitQuantity();
+            unitQuantity = courseLoad.getUnitQuantity() == null ? courseLoad.getWeeklyHours() : courseLoad.getUnitQuantity();
         }
 
         public String getType() {
@@ -80,7 +80,7 @@ public class FenixSchedule {
         }
 
         public void setRoom(AllocatableSpace room) {
-            this.room = (Room) (room == null ? null : new FenixSpace.Room(room, false, false, null));
+            this.room = room == null ? null : new FenixSpace.Room(room, false, false, null);
         }
 
     }
@@ -120,7 +120,7 @@ public class FenixSchedule {
         List<String> types = new ArrayList<>();
         List<FenixLessonOccurence> lessons = new ArrayList<>();
         List<FenixSpace.Room> rooms = new ArrayList<>();
-        
+
         public FenixShift(final Shift shift) {
             this.name = shift.getNome();
             setOccupation(new FenixShiftOccupation(shift.getStudentsSet().size(), shift.getLotacao()));
@@ -142,11 +142,11 @@ public class FenixSchedule {
                     lessons.add(new FenixLessonOccurence(interval, lesson.getSala()));
                 }
             }
-            
+
             setRooms(spaces);
-            
+
         }
-        
+
         public void setRooms(Set<AllocatableSpace> rooms) {
             this.rooms = FluentIterable.from(rooms).transform(new Function<AllocatableSpace, FenixSpace.Room>() {
 
@@ -156,7 +156,7 @@ public class FenixSchedule {
                 }
             }).toList();
         }
-        
+
         public String getName() {
             return name;
         }

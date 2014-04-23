@@ -12,10 +12,13 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.groups.Group;
 import org.joda.time.DateTime;
 
+import pt.ist.fenixframework.Atomic;
+import pt.ist.fenixframework.Atomic.TxMode;
+
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
-import com.google.common.base.Supplier;
 import com.google.common.collect.Collections2;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Sets;
 
 @CustomGroupOperator("role")
@@ -28,17 +31,22 @@ public class RoleCustomGroup extends RoleCustomGroup_Base {
 
     @Override
     public String getPresentationName() {
-        return "RoleCustomGroup - " + getRole().getRoleType().getLocalizedName();
+        return getRole().getRoleType().getLocalizedName();
     }
 
     @Override
     public Set<User> getMembers() {
-        return Sets.newHashSet(Collections2.transform(getRole().getAssociatedPersonsSet(), new Function<Person, User>() {
+        return FluentIterable.from(getRole().getAssociatedPersonsSet()).filter(new Predicate<Person>() {
             @Override
-            public User apply(Person input) {
-                return input.getUser();
+            public boolean apply(Person person) {
+                return person.getUser() != null;
             }
-        }));
+        }).transform(new Function<Person, User>() {
+            @Override
+            public User apply(Person person) {
+                return person.getUser();
+            }
+        }).toSet();
     }
 
     /*
@@ -98,18 +106,18 @@ public class RoleCustomGroup extends RoleCustomGroup_Base {
         }));
     }
 
-    public static RoleCustomGroup getInstance(final Role role) {
-        return select(RoleCustomGroup.class, new Predicate<RoleCustomGroup>() {
-            @Override
-            public boolean apply(RoleCustomGroup group) {
-                return group.getRole().equals(role);
-            }
-        }, new Supplier<RoleCustomGroup>() {
-            @Override
-            public RoleCustomGroup get() {
-                return new RoleCustomGroup(role);
-            }
-        });
+    public static RoleCustomGroup getInstance(final RoleType role) {
+        return getInstance(Role.getRoleByRoleType(role));
     }
 
+    public static RoleCustomGroup getInstance(final Role role) {
+        RoleCustomGroup instance = role.getRoleCustomGroup();
+        return instance != null ? instance : create(role);
+    }
+
+    @Atomic(mode = TxMode.WRITE)
+    private static RoleCustomGroup create(final Role role) {
+        RoleCustomGroup instance = role.getRoleCustomGroup();
+        return instance != null ? instance : new RoleCustomGroup(role);
+    }
 }

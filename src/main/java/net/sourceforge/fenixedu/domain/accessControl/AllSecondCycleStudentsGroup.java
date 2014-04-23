@@ -55,4 +55,8 @@ public class AllSecondCycleStudentsGroup extends Group {
         return null;
     }
 
+    @Override
+    public PersistentStudentGroup convert() {
+        return PersistentStudentGroup.getInstance(CycleType.SECOND_CYCLE);
+    }
 }

@@ -51,8 +51,11 @@ public class PenaltyExemptionJustificationByDispatch extends PenaltyExemptionJus
         final LabelFormatter labelFormatter = new LabelFormatter();
         labelFormatter.appendLabel(getPenaltyExemptionJustificationType().getQualifiedName(),
                 LabelFormatter.ENUMERATION_RESOURCES);
+        String penaltyExemptionDate =
+                getPenaltyExemptionDispatchDate() != null ? getPenaltyExemptionDispatchDate().toString(
+                        DateFormatUtil.DEFAULT_DATE_FORMAT) : "-";
         labelFormatter.appendLabel(" (").appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES).appendLabel(" ")
-                .appendLabel(getPenaltyExemptionDispatchDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT)).appendLabel(")");
+                .appendLabel(penaltyExemptionDate).appendLabel(")");
 
         return labelFormatter;
     }

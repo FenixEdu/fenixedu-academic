@@ -9,11 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.EmptyDegree;
+import net.sourceforge.fenixedu.domain.EmptyDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -23,7 +24,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.Bennu;
-import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -36,6 +36,7 @@ import pt.ist.fenixframework.Atomic.TxMode;
 @Forwards({ @Forward(name = "show", path = "/manager/listAssociatedObjects.jsp"),
         @Forward(name = "list", path = "/manager/listAssociatedObjects.jsp"),
         @Forward(name = "createDepartment", path = "/manager/createDepartment.jsp"),
+        @Forward(name = "createEmptyDegree", path = "/manager/createEmptyDegree.jsp"),
         @Forward(name = "associatePersonUnit", path = "/manager/associatePersonUnit.jsp"),
         @Forward(name = "createAcademicOffice", path = "/manager/createAcademicOffice.jsp") })
 public class ManageAssociatedObjects extends FenixDispatchAction {
@@ -48,11 +49,13 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
         private YearMonthDay start;
         private AccountabilityTypeEnum accTypeEnum;
         private AdministrativeOfficeType type;
+        private AdministrativeOffice office;
         private List<Unit> units = new ArrayList<>();
         private Unit unit;
         private String username;
         private boolean teacher;
-        
+        private final List<AdministrativeOffice> offices = new ArrayList<>();
+
         public boolean isActive() {
             return active;
         }
@@ -148,6 +151,22 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
         public void setTeacher(boolean teacher) {
             this.teacher = teacher;
         }
+
+        public AdministrativeOffice getOffice() {
+            return office;
+        }
+
+        public void setOffice(AdministrativeOffice office) {
+            this.office = office;
+        }
+
+        public List<AdministrativeOffice> getOffices() {
+            return offices;
+        }
+
+        public void setOffices(Set<AdministrativeOffice> officesSet) {
+            this.offices.addAll(officesSet);
+        }
     }
 
     public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -157,6 +176,7 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
 
         request.setAttribute("departments", departments);
         request.setAttribute("offices", offices);
+        request.setAttribute("emptyDegree", EmptyDegree.getInstance());
 
         return mapping.findForward("list");
     }
@@ -206,29 +226,63 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
         new AdministrativeOfficeServiceAgreementTemplate(office);
         office.setRootDomainObject(Bennu.getInstance());
     }
-    
+
+    public ActionForward prepareEmptyDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        AssociatedObjectsBean associatedObjectsBean = new AssociatedObjectsBean();
+        associatedObjectsBean.setOffices(Bennu.getInstance().getAdministrativeOfficesSet());
+        request.setAttribute("bean", associatedObjectsBean);
+
+        return mapping.findForward("createEmptyDegree");
+    }
+
+    public ActionForward createEmptyDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        AssociatedObjectsBean bean = getRenderedObject("admOffice");
+
+        createEmptyDegree(bean);
+        return list(mapping, form, request, response);
+    }
+
+    @Atomic(mode = TxMode.WRITE)
+    private void createEmptyDegree(AssociatedObjectsBean bean) {
+        AdministrativeOffice adminOffice = bean.getOffice();
+
+        EmptyDegree emptyDegree = EmptyDegree.getInstance();
+        if (emptyDegree == null) {
+            EmptyDegree.init();
+        }
+        EmptyDegree.getInstance().setAdministrativeOffice(adminOffice);
+
+        EmptyDegreeCurricularPlan emptyDCP = EmptyDegreeCurricularPlan.getInstance();
+        if (emptyDCP == null) {
+            EmptyDegreeCurricularPlan.init();
+        }
+    }
+
     public ActionForward prepareAssociatePersonUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         AssociatedObjectsBean associatedObjectsBean = new AssociatedObjectsBean();
         associatedObjectsBean.setUnits(Unit.readAllUnits());
         request.setAttribute("bean", associatedObjectsBean);
-        
         return mapping.findForward("associatePersonUnit");
     }
-    
+
     public ActionForward associatePersonUnit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         AssociatedObjectsBean bean = getRenderedObject("office");
-        
+
         createAssociationToUnit(bean);
-        
+
         return list(mapping, form, request, response);
     }
-    @Atomic(mode=TxMode.WRITE)
+
+    @Atomic(mode = TxMode.WRITE)
     private void createAssociationToUnit(AssociatedObjectsBean bean) {
         Person person = Person.readPersonByUsername(bean.getUsername());
-        EmployeeContract ec = new EmployeeContract(person, bean.getStart(), null, bean.getUnit(), bean.getAccTypeEnum(), bean.isTeacher());
-        
+        EmployeeContract ec =
+                new EmployeeContract(person, bean.getStart(), null, bean.getUnit(), bean.getAccTypeEnum(), bean.isTeacher());
+
         person.getEmployee().getCurrentDepartmentWorkingPlace();
     }
 }

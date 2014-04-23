@@ -131,6 +131,16 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
         throw new DomainException("error.phd.alert.PhdAlert.cannot.modify.targetGroup");
     }
 
+    /**
+     * Remove once groups are converted
+     * 
+     * @param targetGroup
+     */
+    @Deprecated
+    public void setTargetGroupWithoutCheckingPermissions(Group targetGroup) {
+        super.setTargetGroup(targetGroup);
+    }
+
     @Override
     public void setSendEmail(Boolean sendEmail) {
         throw new DomainException("error.phd.alert.PhdAlert.cannot.modify.sendEmail");

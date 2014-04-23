@@ -64,6 +64,7 @@ enum net.sourceforge.fenixedu.domain.UnitSiteBannerRepeatType                   
 enum net.sourceforge.fenixedu.domain.UnitSiteLayoutType                                                                   as UnitSiteLayoutType;
 enum net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembersType                                             as PersistentGroupMembersType;
 enum net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType				  			  as AcademicOperationType;
+enum net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType.Scope                     as AcademicOperationTypeScope;
 enum net.sourceforge.fenixedu.domain.accounting.AccountType                                                               as AccountType;
 enum net.sourceforge.fenixedu.domain.accounting.CreditNoteState                                                           as CreditNoteState;
 enum net.sourceforge.fenixedu.domain.accounting.EntryType                                                                 as EntryType;
@@ -222,6 +223,7 @@ enum net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemp
 enum net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacySeriesGradeState                                 as IndividualCandidacySeriesGradeState;
 enum net.sourceforge.fenixedu.domain.FileContent.EducationalResourceType                                                  as EducationalResourceType;
 enum net.sourceforge.fenixedu.domain.ExternalApplicationState								                              as ExternalApplicationState;
+
 /*
  * Value types that need special externalization
  */
@@ -1973,8 +1975,6 @@ valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymen
         PersistentGroupMembersType type;
     }
     
-    class accessControl.RoleCustomGroup extends .org.fenixedu.bennu.core.domain.groups.CustomGroup;
-
     class accounting.Account  {
         AccountType accountType;
         DateTime creationDate;
@@ -7213,7 +7213,7 @@ class accessControl.PersistentAccessGroup  {
 
 class accessControl.academicAdministration.PersistentAcademicAuthorizationGroup extends accessControl.PersistentAccessGroup {
 	AcademicOperationType operation;
-    }
+}
 
 class messaging.AnnouncementCategory  {
     MultiLanguageString name;
@@ -7753,7 +7753,6 @@ class accounting.report.events.EventReportQueueJob extends QueueJobWithFile {
 	Boolean forMasterDegreeAdministrativeOffice;
 	LocalDate beginDate;
 	LocalDate endDate;
-	String errors;
 }
 	class accounting.report.events.EventReportQueueJobFile extends File {
 	}
@@ -8195,6 +8194,100 @@ class Instalation {
 	String instalationName;
 	String instalationDomain;
 }
+
+class accessControl.FenixPersistentGroup extends .org.fenixedu.bennu.core.domain.groups.CustomGroup;
+
+class accessControl.RoleCustomGroup extends accessControl.FenixPersistentGroup;
+
+class accessControl.FenixPredicateGroup extends accessControl.FenixPersistentGroup;
+
+class accessControl.PersistentStudentGroup extends accessControl.FenixPredicateGroup {
+    public DegreeType degreeType;
+    public CycleType cycle;
+}
+
+class accessControl.PersistentSpecialCriteriaOverExecutionCourseGroup extends accessControl.FenixPersistentGroup;
+
+class accessControl.PersistentStudentSharingDegreeOfExecutionCourseGroup extends accessControl.PersistentSpecialCriteriaOverExecutionCourseGroup;
+
+class accessControl.PersistentStudentSharingDegreeOfCompetenceOfExecutionCourseGroup extends accessControl.PersistentSpecialCriteriaOverExecutionCourseGroup;
+
+class accessControl.PersistentTeacherResponsibleOfExecutionCourseGroup extends accessControl.PersistentSpecialCriteriaOverExecutionCourseGroup;
+
+class accessControl.PersistentTeacherGroup extends accessControl.FenixPersistentGroup;
+
+class accessControl.PersistentScientificCommissionGroup extends accessControl.FenixPersistentGroup;
+
+class accessControl.PersistentCoordinatorGroup extends accessControl.FenixPredicateGroup {
+    public DegreeType degreeType;
+}
+
+class accessControl.PersistentAcademicOperationGroup extends accessControl.FenixPredicateGroup {
+    public AcademicOperationType operation;
+    public AcademicOperationTypeScope scope;
+}
+
+class accessControl.PersistentResponsibleForExecutionCourseGroup extends accessControl.FenixPredicateGroup;
+
+class accessControl.PersistentResearchAuthorGroup extends accessControl.FenixPredicateGroup;
+
+class accessControl.PersistentNotUpdatedAlumniInfoForSpecificDaysGroup extends accessControl.FenixPredicateGroup {
+    public Integer daysNotUpdated;
+    public Boolean checkJobNotUpdated;
+    public Boolean checkFormationNotUpdated;
+    public Boolean checkPersonalDataNotUpdated;
+}
+
+class accessControl.PersistentStudentGroupGroup extends accessControl.FenixPersistentGroup;
+
+class accessControl.PersistentProjectDepartmentGroup extends accessControl.FenixPersistentGroup;
+
+class accessControl.PersistentGuidingsAndAssistantsOfPhdGroup extends accessControl.FenixPersistentGroup;
+
+class accessControl.PersistentManagersOfUnitSiteGroup extends accessControl.FenixPersistentGroup;
+
+class accessControl.PersistentCerimonyInquiryGroup extends accessControl.FenixPersistentGroup;
+
+class accessControl.PersistentStudentsConcludedInExecutionYearGroup extends accessControl.FenixPersistentGroup;
+
+class accessControl.PersistentGroupingGroup extends accessControl.FenixPersistentGroup;
+
+class accessControl.PersistentDelegatesGroup extends accessControl.FenixPredicateGroup {
+    public FunctionType function;
+}
+
+class accessControl.PersistentDelegateStudentsGroup extends accessControl.FenixPersistentGroup {
+    public FunctionType type;
+}
+
+class accessControl.PersistentTeachersWithIncompleteEvaluationWorkGroup extends accessControl.FenixPersistentGroup;
+
+class accessControl.PersistentTeachersWithGradesToSubmitGroup extends accessControl.PersistentTeachersWithIncompleteEvaluationWorkGroup;
+
+class accessControl.PersistentTeachersWithMarkSheetsToConfirmGroup extends accessControl.PersistentTeachersWithIncompleteEvaluationWorkGroup;
+
+class accessControl.PersistentPersonsInFunctionGroup extends accessControl.FenixPersistentGroup;
+
+class accessControl.PersistentUnitGroup extends accessControl.FenixPersistentGroup {
+    public AccountabilityTypeEnum relationType;
+    public FunctionType relationFunctionType;
+    public Boolean includeSubUnits (REQUIRED);
+}
+
+class accessControl.PersistentVigilancyGroup extends accessControl.FenixPersistentGroup;
+
+class accessControl.PersistentThesisReadersGroup extends accessControl.FenixPersistentGroup;
+
+class accessControl.PersistentCampusEmployeeGroup extends accessControl.FenixPersistentGroup;
+
+class accessControl.PersistentAlumniGroup extends accessControl.FenixPredicateGroup;
+
+class accessControl.PersistentProfessorshipsGroup extends accessControl.FenixPredicateGroup {
+	public Boolean externalAuthorizations (REQUIRED);
+	public AcademicPeriod onCurrentPeriod (REQUIRED);
+}
+
+class accessControl.PersistentMembersLinkGroup extends accessControl.FenixPersistentGroup;
 
 /*
  * Relations definitions
@@ -13062,10 +13155,12 @@ relation PersistentGroupMembersUnit {
 }
 
 relation RoleCustomGroupRole {
-    Role playsRole role {
+    public Role playsRole role {
         multiplicity 1..1;
     }
-    accessControl.RoleCustomGroup playsRole roleCustomGroup;
+    public accessControl.RoleCustomGroup playsRole roleCustomGroup {
+        multiplicity 0..1;
+    }
 }
 
 relation PersonAccountPerson {
@@ -20543,6 +20638,13 @@ relation EventReportQueueJobEventTransactionsFile {
 	}
 }
 
+relation EventReportQueueJobEventErrorsFile {
+	accounting.report.events.EventReportQueueJob playsRole eventReportQueueJobForErrors;
+	accounting.report.events.EventReportQueueJobFile playsRole errorsFile {
+		multiplicity 0..1;
+	}
+}
+
 relation CandidacyProcessDegree {
 	candidacyProcess.CandidacyProcess playsRole candidacyProcess {
 		multiplicity *;
@@ -20806,6 +20908,321 @@ relation RootDomainObjectTeacherEvaluationCoordinatorCouncil {
   	UnitSite playsRole teacherEvaluationCoordinatorCouncil;
 }
 
+
+relation FenixPredicateGroupBennu {
+    public accessControl.FenixPredicateGroup playsRole fenixPredicateGroup {
+        multiplicity *;
+    }
+    protected .org.fenixedu.bennu.core.domain.Bennu playsRole rootForFenixPredicate {
+        multiplicity 0..1;
+    }
+}
+
+relation PersistentStudentGroupCampus {
+    public accessControl.PersistentStudentGroup playsRole studentGroup {
+        multiplicity *;
+    }
+    public space.Campus playsRole campus {
+        multiplicity 0..1;
+    }
+}
+
+relation PersistentStudentGroupDegree {
+    public accessControl.PersistentStudentGroup playsRole studentGroup {
+        multiplicity *;
+    }
+    public Degree playsRole degree {
+        multiplicity 0..1;
+    }
+}
+
+relation PersistentStudentGroupExecutionCourse {
+    public accessControl.PersistentStudentGroup playsRole studentGroup {
+        multiplicity *;
+    }
+    public ExecutionCourse playsRole executionCourse {
+        multiplicity 0..1;
+    }
+}
+
+relation PersistentStudentGroupCurricularYear {
+    public accessControl.PersistentStudentGroup playsRole studentGroup {
+        multiplicity *;
+    }
+    public CurricularYear playsRole curricularYear {
+        multiplicity 0..1;
+    }
+}
+
+relation PersistentStudentGroupExecutionYear {
+    public accessControl.PersistentStudentGroup playsRole studentGroup {
+        multiplicity *;
+    }
+    public ExecutionYear playsRole executionYear {
+        multiplicity 0..1;
+    }
+}
+
+relation PersistentSpecialCriteriaOverExecutionCourseGroupExecutionCourse {
+    public accessControl.PersistentSpecialCriteriaOverExecutionCourseGroup playsRole specialCriteriaOverExecutionCourseGroup {
+        multiplicity *;
+    }
+    public ExecutionCourse playsRole executionCourse {
+        multiplicity 1..1;
+    }
+}
+
+relation PersistentTeacherGroupDegree {
+    public accessControl.PersistentTeacherGroup playsRole teacherGroup {
+        multiplicity *;
+    }
+    public Degree playsRole degree {
+        multiplicity 0..1;
+    }
+}
+
+relation PersistentTeacherGroupExecutionCourse {
+    public accessControl.PersistentTeacherGroup playsRole teacherGroup {
+        multiplicity *;
+    }
+    public ExecutionCourse playsRole executionCourse {
+        multiplicity 0..1;
+    }
+}
+
+relation PersistentTeacherGroupCampus {
+    public accessControl.PersistentTeacherGroup playsRole teacherGroup {
+        multiplicity *;
+    }
+    public space.Campus playsRole campus {
+        multiplicity 0..1;
+    }
+}
+
+relation PersistentTeacherGroupDepartment {
+    public accessControl.PersistentTeacherGroup playsRole teacherGroup {
+        multiplicity *;
+    }
+    public Department playsRole department {
+        multiplicity 0..1;
+    }
+}
+
+relation PersistentTeacherGroupExecutionYear {
+    public accessControl.PersistentTeacherGroup playsRole teacherGroup {
+        multiplicity *;
+    }
+    public ExecutionYear playsRole executionYear {
+        multiplicity 0..1;
+    }
+}
+
+relation PersistentScientificCommissionGroupDegree {
+    public accessControl.PersistentScientificCommissionGroup playsRole scientificCommissionGroup {
+        multiplicity 0..1;
+    }
+    public Degree playsRole degree {
+        multiplicity 1..1;
+    }
+}
+
+relation PersistentCoordinatorGroupDegree {
+    public accessControl.PersistentCoordinatorGroup playsRole coordinatorGroup {
+        multiplicity *;
+    }
+    public Degree playsRole degree {
+        multiplicity 0..1;
+    }
+}
+
+relation PersistentVigilancyGroupVigilancy {
+    public accessControl.PersistentVigilancyGroup playsRole vigilancyGroup {
+        multiplicity 0..1;
+    }
+    public vigilancy.Vigilancy playsRole vigilancy {
+        multiplicity 1..1;
+    }
+}
+
+relation PersistentUnitGroupUnit {
+    public accessControl.PersistentUnitGroup playsRole unitGroup {
+        multiplicity *;
+    }
+    public organizationalStructure.Unit playsRole unit {
+        multiplicity 1..1;
+    }
+}
+
+relation PersistentTeachersWithIncompleteEvaluationWorkGroupPeriod {
+    public accessControl.PersistentTeachersWithIncompleteEvaluationWorkGroup playsRole teachersWithIncompleteEvaluationWorkGroup {
+        multiplicity *;
+    }
+    public ExecutionSemester playsRole period {
+        multiplicity 1..1;
+    }
+}
+
+relation PersistentTeachersWithIncompleteEvaluationWorkGroupDegreeCurricularPlan {
+    public accessControl.PersistentTeachersWithIncompleteEvaluationWorkGroup playsRole teachersWithIncompleteEvaluationWorkGroup {
+        multiplicity *;
+    }
+    public DegreeCurricularPlan playsRole degreeCurricularPlan {
+        multiplicity 1..1;
+    }
+}
+
+relation PersistentDelegatesGroupDegree {
+    public accessControl.PersistentDelegatesGroup playsRole delegatesGroup {
+        multiplicity *;
+    }
+    public Degree playsRole degree {
+        multiplicity 0..1;
+    }
+}
+
+relation PersistentDelegateStudentsGroupPersonFunction {
+    public accessControl.PersistentDelegateStudentsGroup playsRole delegateStudentsGroup {
+        multiplicity *;
+    }
+    public organizationalStructure.PersonFunction playsRole delegateFunction {
+        multiplicity 1..1;
+    }
+}
+
+relation PersistentPersonsInFunctionGroupFunction {
+    public accessControl.PersistentPersonsInFunctionGroup playsRole personsInFunctionGroup {
+        multiplicity 0..1;
+    }
+    public organizationalStructure.Function playsRole function {
+        multiplicity 1..1;
+    }
+}
+
+relation PersistentGroupingGroupGrouping {
+    public accessControl.PersistentGroupingGroup playsRole groupingGroup {
+        multiplicity 0..1;
+    }
+    public Grouping playsRole grouping {
+        multiplicity 1..1;
+    }
+}
+
+relation PersistentStudentsConcludedInExecutionYearGroupDegrees {
+    public accessControl.PersistentStudentsConcludedInExecutionYearGroup playsRole studentsConcludedInExecutionYearGroup {
+        multiplicity *;
+    }
+    public Degree playsRole degree {
+        multiplicity 1..1;
+    }
+}
+
+relation PersistentStudentsConcludedInExecutionYearExecutionYear {
+    public accessControl.PersistentStudentsConcludedInExecutionYearGroup playsRole studentsConcludedInExecutionYearGroup {
+        multiplicity *;
+    }
+    public ExecutionYear playsRole conclusionYear {
+        multiplicity 1..1;
+    }
+}
+
+relation StudentGroupStudentGroupGroup {
+    public accessControl.PersistentStudentGroupGroup playsRole studentGroupGroup {
+        multiplicity 0..1;
+    }
+    public StudentGroup playsRole studentGroup {
+        multiplicity 1..1;
+    }
+}
+
+relation PersistentProjectDepartmentGroupProject {
+    public accessControl.PersistentProjectDepartmentGroup playsRole projectDepartmentGroup {
+        multiplicity 0..1;
+    }
+    public Project playsRole project {
+        multiplicity 1..1;
+    }
+}
+
+relation AcademicAuthorizationGroupAcademicPrograms {
+    public accessControl.PersistentAcademicOperationGroup playsRole academicAuthorizationGroup {
+        multiplicity *;
+    }
+    public AcademicProgram playsRole program {
+        multiplicity *;
+    }
+}
+
+relation AcademicAuthorizationGroupAdministrativeOffices {
+    public accessControl.PersistentAcademicOperationGroup playsRole academicAuthorizationGroup {
+        multiplicity *;
+    }
+    public administrativeOffice.AdministrativeOffice playsRole office {
+        multiplicity *;
+    }
+}
+
+relation PersistentGuidingsAndAssistantsOfPhdGroupPhdIndividualProgramProcess {
+    public accessControl.PersistentGuidingsAndAssistantsOfPhdGroup playsRole guidingsAndAssistantsGroup {
+        multiplicity 0..1;
+    }
+    public phd.PhdIndividualProgramProcess playsRole phdIndividualProgramProcess {
+        multiplicity 1..1;
+    }
+}
+
+relation PersistentManagersOfUnitSiteGroupUnitSite {
+    public accessControl.PersistentManagersOfUnitSiteGroup playsRole managersOfUnitSiteGroup {
+        multiplicity 0..1;
+    }
+    public UnitSite playsRole unitSite {
+        multiplicity 1..1;
+    }
+}
+
+relation PersistentCerimonyInquiryGroupCerimonyInquiry {
+    public accessControl.PersistentCerimonyInquiryGroup playsRole group {
+        multiplicity 0..1;
+    }
+    public alumni.CerimonyInquiry playsRole cerimonyInquiry {
+        multiplicity 1..1;
+    }
+}
+
+relation PersistentThesisReadersGroupThesis {
+    public accessControl.PersistentThesisReadersGroup playsRole readers {
+        multiplicity 0..1;
+    }
+    public thesis.Thesis playsRole thesis {
+        multiplicity 1..1;
+    }
+}
+
+relation PersistentCampusEmployeeGroupCampus {
+    public accessControl.PersistentCampusEmployeeGroup playsRole campusEmployeeGroup {
+        multiplicity 0..1;
+    }
+    public space.Campus playsRole campus {
+        multiplicity 1..1;
+    }
+}
+
+relation PersistentAlumniGroupDegree {
+	public accessControl.PersistentAlumniGroup playsRole alumniGroup {
+		multiplicity 0..1;
+	}
+	public Degree playsRole degree {
+		multiplicity 0..1;
+	}
+}
+
+relation PersistentMembersLinkGroupPersistentGroupMembers {
+	public accessControl.PersistentMembersLinkGroup playsRole membersLinkGroup {
+		multiplicity 0..1;
+	}
+	public accessControl.PersistentGroupMembers playsRole persistentGroupMembers {
+		multiplicity 1..1;
+	}
+}
 
 /**
  * Former Remote Plugin

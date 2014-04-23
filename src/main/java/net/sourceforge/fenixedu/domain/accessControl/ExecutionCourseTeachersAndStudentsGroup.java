@@ -82,4 +82,9 @@ public class ExecutionCourseTeachersAndStudentsGroup extends ExecutionCourseGrou
         }
 
     }
+
+    @Override
+    public org.fenixedu.bennu.core.domain.groups.Group convert() {
+        return union.convert();
+    }
 }

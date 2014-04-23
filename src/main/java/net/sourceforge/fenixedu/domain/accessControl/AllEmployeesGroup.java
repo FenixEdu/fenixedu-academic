@@ -55,4 +55,8 @@ public class AllEmployeesGroup extends Group {
         return super.getPresentationNameKey() + "." + RoleType.EMPLOYEE;
     }
 
+    @Override
+    public RoleCustomGroup convert() {
+        return RoleCustomGroup.getInstance(RoleType.EMPLOYEE);
+    }
 }

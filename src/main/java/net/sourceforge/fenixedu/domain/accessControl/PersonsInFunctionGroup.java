@@ -72,4 +72,8 @@ public class PersonsInFunctionGroup extends DomainBackedGroup<Function> {
 
     }
 
+    @Override
+    public PersistentPersonsInFunctionGroup convert() {
+        return PersistentPersonsInFunctionGroup.getInstance(getObject());
+    }
 }

@@ -61,4 +61,8 @@ public class AlumniDegreeGroup extends DegreeGroup {
 
     }
 
+    @Override
+    public PersistentAlumniGroup convert() {
+        return PersistentAlumniGroup.getInstance(getDegree());
+    }
 }

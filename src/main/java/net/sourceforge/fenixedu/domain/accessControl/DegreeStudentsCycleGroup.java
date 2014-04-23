@@ -115,4 +115,9 @@ public class DegreeStudentsCycleGroup extends DegreeStudentsGroup {
     public void setCycleType(CycleType cycleType) {
         this.cycleType = cycleType;
     }
+
+    @Override
+    public PersistentStudentGroup convert() {
+        return PersistentStudentGroup.getInstance(getDegree(), getCycleType());
+    }
 }

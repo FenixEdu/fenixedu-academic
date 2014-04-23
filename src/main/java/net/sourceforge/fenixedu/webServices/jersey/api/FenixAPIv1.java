@@ -91,6 +91,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.util.icalendar.CalendarFactory;
 import net.sourceforge.fenixedu.domain.util.icalendar.ClassEventBean;
@@ -340,7 +341,8 @@ public class FenixAPIv1 {
             for (Enrolment enrolment : registration.getEnrolments(executionSemester)) {
                 final ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
                 String grade = enrolment.getGrade().getValue();
-                enrolments.add(new FenixEnrolment(executionCourse, grade));
+                double ects = enrolment.getEctsCredits();
+                enrolments.add(new FenixEnrolment(executionCourse, grade, ects));
             }
         }
     }
@@ -559,29 +561,31 @@ public class FenixAPIv1 {
 
                 final List<FenixCurriculum.ApprovedCourse> courseInfos = new ArrayList<>();
 
-                for (ICurriculumEntry iCurriculumEntry : icurriculum.getCurriculumEntries()) {
+                for (CycleCurriculumGroup cycleCurriculumGroup : studentCurricularPlan.getInternalCycleCurriculumGrops()) {
+                    for (ICurriculumEntry iCurriculumEntry : cycleCurriculumGroup.getCurriculum().getCurriculumEntries()) {
 
-                    String entryGradeValue = iCurriculumEntry.getGradeValue();
-                    BigDecimal entryEcts = iCurriculumEntry.getEctsCreditsForCurriculum();
+                        String entryGradeValue = iCurriculumEntry.getGradeValue();
+                        BigDecimal entryEcts = iCurriculumEntry.getEctsCreditsForCurriculum();
 
-                    FenixCourse course = null;
-                    if (iCurriculumEntry instanceof Enrolment) {
-                        Enrolment enrolment = (Enrolment) iCurriculumEntry;
-                        ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(enrolment.getExecutionPeriod());
-                        if (executionCourse != null) {
-                            course = new FenixCourse(executionCourse);
+                        FenixCourse course = null;
+                        if (iCurriculumEntry instanceof Enrolment) {
+                            Enrolment enrolment = (Enrolment) iCurriculumEntry;
+                            ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(enrolment.getExecutionPeriod());
+                            if (executionCourse != null) {
+                                course = new FenixCourse(executionCourse);
+                            } else {
+                                String entryName = mls(iCurriculumEntry.getPresentationName());
+                                course = new FenixCourse(null, null, entryName);
+                            }
+
                         } else {
                             String entryName = mls(iCurriculumEntry.getPresentationName());
                             course = new FenixCourse(null, null, entryName);
                         }
 
-                    } else {
-                        String entryName = mls(iCurriculumEntry.getPresentationName());
-                        course = new FenixCourse(null, null, entryName);
+                        courseInfos.add(new FenixCurriculum.ApprovedCourse(course, entryGradeValue, entryEcts));
+
                     }
-
-                    courseInfos.add(new FenixCurriculum.ApprovedCourse(course, entryGradeValue, entryEcts));
-
                 }
                 curriculums.add(new FenixCurriculum(new FenixDegree(studentCurricularPlan.getDegree()), start, end, credits,
                         average, calculatedAverage, isFinished, curricularYear, courseInfos));
@@ -861,6 +865,26 @@ public class FenixAPIv1 {
     @FenixAPIPublic
     public String canteen() {
         return FenixAPICanteen.get();
+    }
+
+    @GET
+    @Produces(JSON_UTF8)
+    @Path("shuttle")
+    @FenixAPIPublic
+    public String shuttle() {
+        return getFileInfo("/api/shuttle.json");
+    }
+
+    private String getFileInfo(String file) {
+        final InputStream resourceAsStream = getClass().getResourceAsStream(file);
+        if (resourceAsStream == null) {
+            return new JsonObject().toString();
+        }
+        try {
+            return Streams.asString(resourceAsStream);
+        } catch (IOException e) {
+            return new JsonObject().toString();
+        }
     }
 
     @GET

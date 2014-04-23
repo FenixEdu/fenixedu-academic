@@ -81,4 +81,9 @@ public class PhdProcessGuidingsGroup extends DomainBackedGroup<PhdIndividualProg
         }
 
     }
+
+    @Override
+    public PersistentGuidingsAndAssistantsOfPhdGroup convert() {
+        return PersistentGuidingsAndAssistantsOfPhdGroup.getInstance(getObject());
+    }
 }

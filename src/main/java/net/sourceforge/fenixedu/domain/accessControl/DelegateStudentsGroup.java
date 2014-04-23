@@ -144,4 +144,8 @@ public class DelegateStudentsGroup extends LeafGroup {
         return getPerson();
     }
 
+    @Override
+    public org.fenixedu.bennu.core.domain.groups.Group convert() {
+        return PersistentDelegateStudentsGroup.getInstance(getPersonFunction(), getFunctionType());
+    }
 }

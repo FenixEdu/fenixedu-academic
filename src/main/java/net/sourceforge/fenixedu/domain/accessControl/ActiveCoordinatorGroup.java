@@ -59,4 +59,8 @@ public class ActiveCoordinatorGroup extends Group {
         return null;
     }
 
+    @Override
+    public org.fenixedu.bennu.core.domain.groups.Group convert() {
+        return PersistentCoordinatorGroup.getInstance();
+    }
 }

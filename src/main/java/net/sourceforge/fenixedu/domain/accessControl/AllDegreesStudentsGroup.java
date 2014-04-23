@@ -28,9 +28,14 @@ public class AllDegreesStudentsGroup extends Group {
         Set<Person> elements = super.buildSet();
         final Role role = Role.getRoleByRoleType(RoleType.STUDENT);
         for (final Person person : role.getAssociatedPersons()) {
-            Registration registration = person.getStudentByType(DegreeType.DEGREE);
-            if (registration != null) {
-                elements.add(person);
+            for (Registration registration : person.getStudent().getRegistrationsSet()) {
+                if (registration.getDegreeType() == DegreeType.DEGREE
+                        || registration.getDegreeType() == DegreeType.BOLONHA_DEGREE
+                        || registration.getDegreeType() == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
+                    if (registration.isActive()) {
+                        elements.add(person);
+                    }
+                }
             }
         }
 
@@ -41,7 +46,7 @@ public class AllDegreesStudentsGroup extends Group {
     public boolean isMember(Person person) {
         if (person != null && person.getStudent() != null) {
             for (final Registration registration : person.getStudent().getRegistrationsSet()) {
-                if (registration.isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree()) {
+                if (registration.isActive() && registration.isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree()) {
                     return true;
                 }
             }
@@ -52,5 +57,12 @@ public class AllDegreesStudentsGroup extends Group {
     @Override
     protected Argument[] getExpressionArguments() {
         return new Argument[0];
+    }
+
+    @Override
+    public org.fenixedu.bennu.core.domain.groups.Group convert() {
+        return PersistentStudentGroup.getInstance(DegreeType.DEGREE)
+                .or(PersistentStudentGroup.getInstance(DegreeType.BOLONHA_DEGREE))
+                .or(PersistentStudentGroup.getInstance(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
     }
 }

@@ -79,4 +79,8 @@ public class AllStudentsByCampus extends Group {
 
     }
 
+    @Override
+    public PersistentStudentGroup convert() {
+        return PersistentStudentGroup.getInstance(getCampus());
+    }
 }

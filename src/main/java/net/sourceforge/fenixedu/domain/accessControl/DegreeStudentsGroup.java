@@ -59,4 +59,8 @@ public class DegreeStudentsGroup extends DegreeGroup {
         }
     }
 
+    @Override
+    public PersistentStudentGroup convert() {
+        return PersistentStudentGroup.getInstance(getDegree(), null);
+    }
 }

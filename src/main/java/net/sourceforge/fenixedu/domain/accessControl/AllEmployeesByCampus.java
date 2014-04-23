@@ -90,4 +90,8 @@ public class AllEmployeesByCampus extends Group {
 
     }
 
+    @Override
+    public PersistentCampusEmployeeGroup convert() {
+        return PersistentCampusEmployeeGroup.getInstance(getCampus());
+    }
 }

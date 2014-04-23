@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
 import pt.ist.fenixframework.DomainObject;
+import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @deprecated Use Bennu Groups instead
@@ -32,6 +33,9 @@ public abstract class DomainBackedGroup<T extends DomainObject> extends LeafGrou
      *         object was deleted
      */
     public T getObject() {
+        if (!FenixFramework.isDomainObjectValid(this.reference)) {
+            throw new InvalidGroupException();
+        }
         return this.reference;
     }
 

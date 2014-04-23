@@ -216,4 +216,12 @@ public abstract class Group implements Serializable, IGroup {
         return ((expr == null) || expr.length() == 0) ? null : (new ExpressionGroup(expr).getGroup());
     }
 
+    public static class InvalidGroupException extends RuntimeException {
+    }
+
+    @Override
+    public org.fenixedu.bennu.core.domain.groups.Group convert() {
+        throw new UnsupportedOperationException(this.getClass().getName() + " expr: " + getExpression()
+                + " has no converter implemented");
+    }
 }

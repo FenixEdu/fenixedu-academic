@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.LeafGroup;
+import net.sourceforge.fenixedu.domain.accessControl.PersistentAcademicOperationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType.Scope;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
@@ -263,5 +264,10 @@ public class AcademicAuthorizationGroup extends LeafGroup {
         public int getMaxArguments() {
             return Integer.MAX_VALUE;
         }
+    }
+
+    @Override
+    public PersistentAcademicOperationGroup convert() {
+        return PersistentAcademicOperationGroup.getInstance(operation, programs, offices, scope);
     }
 }

@@ -44,4 +44,9 @@ public class CurrentDegreeScientificCommissionMembersGroup extends DegreeGroup {
         }
 
     }
+
+    @Override
+    public PersistentScientificCommissionGroup convert() {
+        return PersistentScientificCommissionGroup.getInstance(getDegree());
+    }
 }

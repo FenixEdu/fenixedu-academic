@@ -98,6 +98,12 @@ public class PersonFunctionSender extends PersonFunctionSender_Base {
         return groups;
     }
 
+    @Override
+    public void delete() {
+        setPersonFunction(null);
+        super.delete();
+    }
+
     @Atomic
     public static PersonFunctionSender newInstance(PersonFunction personFunction) {
         PersonFunctionSender sender = personFunction.getSender();

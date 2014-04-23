@@ -61,4 +61,8 @@ public class MasterDegreeCoordinatorsGroup extends Group {
         return new Argument[0];
     }
 
+    @Override
+    public PersistentCoordinatorGroup convert() {
+        return PersistentCoordinatorGroup.getInstance(DegreeType.MASTER_DEGREE);
+    }
 }

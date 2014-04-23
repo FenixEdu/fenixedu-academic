@@ -57,4 +57,9 @@ public class GroupingGroup extends DomainBackedGroup<Grouping> {
         }
 
     }
+
+    @Override
+    public PersistentGroupingGroup convert() {
+        return PersistentGroupingGroup.getInstance(getObject());
+    }
 }

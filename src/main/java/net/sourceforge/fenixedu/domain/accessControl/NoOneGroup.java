@@ -6,6 +6,8 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.domain.groups.Group;
+import org.fenixedu.bennu.core.domain.groups.NobodyGroup;
 
 /**
  * A group that contains no one.
@@ -45,4 +47,8 @@ public class NoOneGroup extends LeafGroup {
         return false;
     }
 
+    @Override
+    public Group convert() {
+        return NobodyGroup.getInstance();
+    }
 }

@@ -69,4 +69,8 @@ public class DepartmentTeachersByExecutionYearGroup extends DepartmentByExecutio
         return new String[] { getDepartment().getName(), getExecutionYear().getYear() };
     }
 
+    @Override
+    public PersistentTeacherGroup convert() {
+        return PersistentTeacherGroup.getInstance(getDepartment(), getExecutionYear());
+    }
 }

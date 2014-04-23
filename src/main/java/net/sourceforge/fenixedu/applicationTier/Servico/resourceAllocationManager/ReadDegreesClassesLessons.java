@@ -26,9 +26,6 @@ import net.sourceforge.fenixedu.predicates.RolePredicates;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
-/**
- * TODO Remove cloner deste servi�o...
- */
 public class ReadDegreesClassesLessons {
 
     @Atomic
@@ -55,13 +52,13 @@ public class ReadDegreesClassesLessons {
             SchoolClass turma = classes.get(i);
 
             // read class lessons
-            Collection<Shift> shiftList = turma.getAssociatedShifts();
+            Collection<Shift> shiftList = turma.getAssociatedShiftsSet();
             Iterator<Shift> iterator = shiftList.iterator();
             List<InfoLesson> infoLessonList = new ArrayList<InfoLesson>();
             while (iterator.hasNext()) {
                 Shift shift = iterator.next();
 
-                final Collection lessons = shift.getAssociatedLessons();
+                final Collection lessons = shift.getAssociatedLessonsSet();
                 for (final Iterator iterator2 = lessons.iterator(); iterator2.hasNext();) {
                     final Lesson lesson = (Lesson) iterator2.next();
                     final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);

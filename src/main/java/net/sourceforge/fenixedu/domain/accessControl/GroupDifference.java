@@ -89,4 +89,8 @@ public final class GroupDifference extends NodeGroup {
         return "-";
     }
 
+    @Override
+    public org.fenixedu.bennu.core.domain.groups.Group convert() {
+        return getIncludeGroup().convert().minus(getExcludeGroup().convert());
+    }
 }
