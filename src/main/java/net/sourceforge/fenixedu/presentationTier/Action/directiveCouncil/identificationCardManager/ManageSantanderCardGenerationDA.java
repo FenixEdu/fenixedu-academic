@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +40,12 @@ import pt.utl.ist.fenix.tools.util.FileUtils;
                 tileProperties = @Tile(title = "private.identificationcards.santander")) })
 public class ManageSantanderCardGenerationDA extends FenixDispatchAction {
 
+    private static final int ERROR_LINE_SIZE = -1;
+    private static final int ERROR_NUMBER_ENTRIES = -2;
+    private static final int ERROR_FILE_ALREADY_SUBMITED = -3;
+    private static final int ERROR_USERNAME_DOESNT_EXIST = -4;
+    private static final int NEW_FILE_SUBMITED = 0;
+
     public ActionForward intro(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
             final HttpServletResponse response) throws Exception {
         request.setAttribute("santanderBean", new ManageSantanderCardGenerationBean());
@@ -65,21 +72,37 @@ public class ManageSantanderCardGenerationDA extends FenixDispatchAction {
         try {
             final String stringResults = readFile(dchpFileBean);
             String[] splitedFile = stringResults.split("\r\n");
-            if (!isFileFormatCorrected(splitedFile)) {
-                addErrorMessage(request, "errors", "message.dchp.file.submit.wrong.format");
-            } else if (!isFileAlreadySubmitted(splitedFile[1])) {
+            int error = isFileFormatCorrected(splitedFile);
+            if (error == ERROR_LINE_SIZE) {
+                addErrorMessage(request, "errors", "message.dchp.file.submit.wrong.line.size");
+            } else if (error == ERROR_NUMBER_ENTRIES) {
+                addErrorMessage(request, "errors", "message.dchp.file.submit.wrong.number.entries");
+            } else if (error == ERROR_FILE_ALREADY_SUBMITED) {
                 addErrorMessage(request, "errors", "message.dchp.file.submit.already.submited");
+            } else if (error == ERROR_USERNAME_DOESNT_EXIST) {
+                addErrorMessage(request, "errors", "message.dchp.file.submit.wrong.username", SantanderCardInformation
+                        .getIdentificationCardNumber(splitedFile[1]).trim(), 2);
             } else {
                 /*store the new entries of the dchp file*/
+                boolean success = true;
                 for (int i = 1; i < splitedFile.length - 1; i++) {
                     String detailedLine = splitedFile[i];
                     /*get Person object*/
                     String username = SantanderCardInformation.getIdentificationCardNumber(detailedLine).trim();
                     Person p = Person.findByUsername(username);
+                    if (p == null) {
+                        addErrorMessage(request, "errors", "message.dchp.file.submit.wrong.username", username, i + 1);
+                        success = false;
+                        continue;
+                    }
                     /*create new CardInformation*/
                     createNewCardInformation(p, detailedLine);
                 }
-                request.setAttribute("success", "true");
+                if (success) {
+                    request.setAttribute("success", "true");
+                } else {
+                    request.setAttribute("someSuccess", "true");
+                }
             }
         } catch (NumberFormatException e) {
             addErrorMessage(request, "errors", "message.dchp.file.submit.wrong.format");
@@ -217,39 +240,34 @@ public class ManageSantanderCardGenerationDA extends FenixDispatchAction {
         return (lastCreatedBatch != null && lastCreatedBatch.getSent() != null);
     }
 
-    private boolean isFileFormatCorrected(String[] splitedFile) {
-        int len = splitedFile.length - 1;
-        for (int i = 0; i < len; ++i) {
-            if (splitedFile[i].length() != 731) {
-                return false;
-            }
-        }
-        if (splitedFile[len].length() != 730) {
-            return false;
-        }
+    private int isFileFormatCorrected(String[] splitedFile) {
+        //FIXME - santander specification says every line should be sized 730, but all lines are 731
+        //       Hence, this verification is commented
+//        int len = splitedFile.length - 1;
+//        for (int i = 0; i < len; ++i) {
+//            if (splitedFile[i].length() != 730) {
+//                return ERROR_LINE_SIZE;
+//            }
+//        }
+
         String firstDetailedLine = (splitedFile.length > 1) ? splitedFile[1] : null;
         int numberOfRegisters = (splitedFile.length > 1) ? Integer.parseInt(splitedFile[0].substring(32, 41)) : 0;
         /*verify the number of registers*/
         if (firstDetailedLine == null || (splitedFile.length - 2) != numberOfRegisters) {
-            return false;
+            return ERROR_NUMBER_ENTRIES;
         }
-        return true;
-    }
-
-    private boolean isFileAlreadySubmitted(String firstDetailedLine) {
         String ist_id = SantanderCardInformation.getIdentificationCardNumber(firstDetailedLine).trim();
         Person person = Person.findByUsername(ist_id);
-        Object[] cards_info = person.getSantanderCardsInformationSet().toArray();
-        SantanderCardInformation test_card_info = createNewCardInformation(person, firstDetailedLine);
-        for (Object obj : cards_info) {
-            SantanderCardInformation card_info = (SantanderCardInformation) obj;
-            if (card_info.getDchpRegisteLine().equals(test_card_info.getDchpRegisteLine())) {
-                deleteCardInformation(test_card_info);
-                return false;
+        if (person == null) {
+            return ERROR_USERNAME_DOESNT_EXIST;
+        }
+        Set<SantanderCardInformation> cards_info = person.getSantanderCardsInformationSet();
+        for (SantanderCardInformation card_info : cards_info) {
+            if (card_info.getDchpRegisteLine().equals(firstDetailedLine)) {
+                return ERROR_FILE_ALREADY_SUBMITED;
             }
         }
-        deleteCardInformation(test_card_info);
-        return true;
+        return NEW_FILE_SUBMITED;
     }
 
     @Atomic
