@@ -22,6 +22,7 @@ import pt.ist.fenixframework.Atomic.TxMode;
 public class PersistentAlumniGroup extends PersistentAlumniGroup_Base {
     protected PersistentAlumniGroup(Degree degree) {
         super();
+        setDegree(degree);
         if (degree != null) {
             setRootForFenixPredicate(null);
         }
