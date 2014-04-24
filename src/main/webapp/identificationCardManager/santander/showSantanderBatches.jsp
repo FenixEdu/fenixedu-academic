@@ -37,6 +37,10 @@ a {border-bottom: none !important;}
     <p><span class="error"><bean:write name="message" /></span></p>
 </html:messages>
 
+<logic:present name="someSuccess">
+	<p><span class="success0"><bean:message key="message.dchp.upload.someSucess" bundle="CARD_GENERATION_RESOURCES"/></span></p>
+</logic:present>
+
 <logic:present name="success">
 	<p><span class="success0"><bean:message key="message.dchp.upload.sucess" bundle="CARD_GENERATION_RESOURCES"/></span></p>
 </logic:present>
