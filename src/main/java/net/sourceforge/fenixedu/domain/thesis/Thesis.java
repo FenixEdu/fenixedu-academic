@@ -1316,20 +1316,30 @@ public class Thesis extends Thesis_Base {
         if (getVowels().size() < 2) {
             conditions.add(new ThesisCondition("thesis.condition.people.vowels.two.required"));
         } else {
-            // check duplicated person
-            Set<Person> vowelsPersons = new HashSet<Person>();
+            // check duplicated person within jury
+            Set<Person> juryPersons = new HashSet<Person>();
+            //only vowels to separate the president's case
             for (ThesisEvaluationParticipant vowel : getVowels()) {
-                vowelsPersons.add(vowel.getPerson());
+                juryPersons.add(vowel.getPerson());
             }
 
-            if (getVowels().size() != vowelsPersons.size()) {
+            if (getVowels().size() != juryPersons.size()) {
                 conditions.add(new ThesisCondition("thesis.condition.people.repeated.vowels"));
             }
 
-            if (president != null && vowelsPersons.contains(president)) {
+            if (president != null && juryPersons.contains(president)) {
                 conditions.add(new ThesisCondition("thesis.condition.people.repeated.vowels.president"));
             }
 
+            // check that one and only one member of the orientation is in the jury
+            Person orientator = getParticipationPerson(getOrientator());
+            Person coorientator = getParticipationPerson(getCoorientator());
+            juryPersons.add(president);  // necessary since there is no express prohibition to the president being an orientation member
+            if (orientator != null) {
+                if (!(juryPersons.contains(orientator) ^ (coorientator != null && juryPersons.contains(coorientator)))) {
+                    conditions.add(new ThesisCondition("thesis.condition.people.jury.orientation.members"));
+                }
+            }
         }
 
         return conditions;
