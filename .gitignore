@@ -12,8 +12,6 @@ build.properties.slave
 fenix-framework.properties
 configuration.properties.fenix
 configuration.properties.localhost
-src/main/resources/fonts/*arial
-src/main/resources/fonts/*Arial
 bin
 .actionAnnotationLog
 /target

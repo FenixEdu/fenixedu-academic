@@ -23,6 +23,11 @@ public class BennuGroupBridge extends net.sourceforge.fenixedu.domain.accessCont
     }
 
     @Override
+    public String getName() {
+        return bennuGroup.getPresentationName();
+    }
+
+    @Override
     public Set<Person> getElements() {
         return Sets.newHashSet(Iterables.transform(bennuGroup.getMembers(), new Function<User, Person>() {
             @Override
