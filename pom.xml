@@ -100,12 +100,6 @@
 		</plugins>
 	</build>
 	<dependencies>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.0.1</version>
-            <scope>provided</scope>
-        </dependency>
 		<dependency>
 			<groupId>net.sourceforge.barbecue</groupId>
 			<artifactId>barbecue</artifactId>
@@ -198,20 +192,9 @@
 			<version>R8</version>
 		</dependency>
 		<dependency>
-			<groupId>com.google.gwt</groupId>
-			<artifactId>gwt-servlet</artifactId>
-			<version>2.3.0</version>
-		</dependency>
-		<dependency>
 			<groupId>com.octo.captcha</groupId>
 			<artifactId>jcaptcha-all</artifactId>
 			<version>1.0-RC-2.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>com.google.gwt</groupId>
-			<artifactId>gwt-user</artifactId>
-			<version>2.3.0</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>pt.ist</groupId>
@@ -425,30 +408,6 @@
 	</dependencies>
 
 	<profiles>
-		<profile>
-			<id>gwtc</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>gwt-maven-plugin</artifactId>
-						<version>2.3.0</version>
-						<executions>
-							<execution>
-								<configuration>
-									<modules>
-										<module>net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.XviewsYear</module>
-									</modules>
-								</configuration>
-								<goals>
-									<goal>compile</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
 		<profile>
 			<id>GenerateFenixAPIDocs</id>
 			<build>

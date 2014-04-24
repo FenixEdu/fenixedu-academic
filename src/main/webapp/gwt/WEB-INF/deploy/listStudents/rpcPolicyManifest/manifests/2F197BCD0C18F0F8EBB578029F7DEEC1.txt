@@ -1,2 +1,0 @@
-serviceClass: net.sourceforge.fenixedu.presentationTier.gwt.manager.UIPlayground.listStudents.client.RetrieveSpecificStudentSet
-path: 8FF3CCD54114D964FA02744951F75A6A.gwt.rpc
