@@ -5,14 +5,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry;
-import net.sourceforge.fenixedu.domain.cardGeneration.SantanderEntry;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.idcards.domain.CardGenerationEntry;
+import org.fenixedu.idcards.domain.SantanderEntry;
 import org.fenixedu.parking.ParkingConfigurationManager;
 import org.fenixedu.parking.domain.ParkingParty;
 import org.slf4j.Logger;

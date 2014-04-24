@@ -23,7 +23,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 import com.google.common.collect.Ordering;
 
-@Mapping(module = "external", path = "/exportParkingData", scope = "request", validate = false)
+@Mapping(module = "external", path = "/exportParkingData")
 public class ExportParkingData extends FenixAction {
 
     @Override

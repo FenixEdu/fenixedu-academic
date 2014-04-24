@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.person.PersonApplication.PersonalAreaApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -19,6 +20,8 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.fenixedu.parking.domain.DocumentDeliveryType;
 import org.fenixedu.parking.domain.ParkingDocumentState;
 import org.fenixedu.parking.domain.ParkingFile;
@@ -34,20 +37,18 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.Atomic;
 
 import com.google.common.io.ByteStreams;
 
-//Those actions should be accessible for RolePerson
+@StrutsFunctionality(app = PersonalAreaApp.class, path = "parking", titleKey = "label.parking", bundle = "ParkingResources")
 @Mapping(module = "parkingManager", path = "/personParking", input = "/parking.do?method=prepareEditParking&page=0",
-        attribute = "personParkingForm", formBean = "personParkingForm", scope = "request", validate = false,
-        parameter = "method")
-@Forwards(value = {
-        @Forward(name = "prepareParking", path = "/person/parkingRequest.jsp", tileProperties = @Tile(
-                title = "private.personal.dspace.parking", bundle = "PARKING_RESOURCES")),
+        formBean = "personParkingForm", validate = false)
+@Forwards({ @Forward(name = "prepareParking", path = "/person/parkingRequest.jsp"),
         @Forward(name = "editParkingRequest", path = "/person/editParkingRequest.jsp") })
 public class PersonParkingDA extends FenixDispatchAction {
+
+    @EntryPoint
     public ActionForward prepareParking(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         User userView = Authenticate.getUser();

@@ -21,6 +21,8 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.fenixedu.parking.domain.ParkingGroup;
 import org.fenixedu.parking.domain.ParkingParty;
 import org.fenixedu.parking.domain.Vehicle;
@@ -30,7 +32,6 @@ import org.joda.time.YearMonthDay;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 import pt.utl.ist.fenix.tools.util.excel.ExcelStyle;
@@ -43,12 +44,13 @@ import com.healthmarketscience.jackcess.DataType;
 import com.healthmarketscience.jackcess.Database;
 import com.healthmarketscience.jackcess.Table;
 
+@StrutsFunctionality(app = ParkingManagerApp.class, path = "export-parking-data", titleKey = "link.mergeFiles")
 @Mapping(module = "parkingManager", path = "/exportParkingDB", input = "/exportParkingDB.do?method=prepareExportFile",
-        attribute = "exportFile", formBean = "exportFile", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "exportFile", path = "/parkingManager/exportFile.jsp", tileProperties = @Tile(
-        title = "private.parking.exportbase", bundle = "PARKING_MANAGER")) })
+        formBean = "exportFile")
+@Forwards(@Forward(name = "exportFile", path = "/parkingManager/exportFile.jsp"))
 public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepareExportFile(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 

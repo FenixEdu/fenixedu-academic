@@ -32,7 +32,6 @@ function addVehicle(){
 // -->
 </script>
 
-<em><bean:message key="label.parking" /></em>
 <h2><bean:message key="title.editUser" /></h2>
 
 <p>

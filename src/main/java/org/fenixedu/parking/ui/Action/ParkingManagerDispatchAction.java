@@ -49,7 +49,10 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.fenixedu.commons.StringNormalizer;
+import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.parking.domain.ParkingGroup;
 import org.fenixedu.parking.domain.ParkingParty;
 import org.fenixedu.parking.domain.ParkingPartyHistory;
@@ -66,25 +69,33 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
+@StrutsFunctionality(app = ParkingManagerApp.class, path = "parking", titleKey = "label.requests")
 @Mapping(path = "/parking", module = "parkingManager", formBean = "parkingForm")
-@Forwards({
-        @Forward(name = "searchParty", path = "/parkingManager/searchParty.jsp", tileProperties = @Tile(
-                title = "private.parking.users", bundle = "PARKING_MANAGER")),
-        @Forward(name = "showParkingPartyRequests", path = "/parkingManager/searchParty.jsp", tileProperties = @Tile(
-                title = "private.parking.users", bundle = "PARKING_MANAGER")),
-        @Forward(name = "showParkingRequests", path = "/parkingManager/showParkingRequests.jsp", tileProperties = @Tile(
-                title = "private.parking.orders", bundle = "PARKING_MANAGER")),
+@Forwards({ @Forward(name = "searchParty", path = "/parkingManager/searchParty.jsp"),
+        @Forward(name = "showParkingPartyRequests", path = "/parkingManager/searchParty.jsp"),
+        @Forward(name = "showParkingRequests", path = "/parkingManager/showParkingRequests.jsp"),
         @Forward(name = "editParkingParty", path = "/parkingManager/editParkingParty.jsp"),
         @Forward(name = "showParkingHistories", path = "/parkingManager/showParkingHistories.jsp"),
         @Forward(name = "showParkingRequest", path = "/parkingManager/showParkingRequest.jsp") })
 public class ParkingManagerDispatchAction extends FenixDispatchAction {
     private static final int MAX_NOTE_LENGTH = 250;
+
+    @EntryPoint
+    public ActionForward entryPoint(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+
+        ParkingRequestSearch parkingRequestSearch = new ParkingRequestSearch();
+        parkingRequestSearch.setParkingRequestState(ParkingRequestState.PENDING);
+        setSearchCriteria(request, parkingRequestSearch);
+
+        request.setAttribute("dontSearch", true);
+        request.setAttribute("parkingRequestSearch", parkingRequestSearch);
+        return mapping.findForward("showParkingRequests");
+    }
 
     public ActionForward showParkingRequests(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
@@ -447,12 +458,6 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         saveMessages(request, actionMessages);
     }
 
-    public ActionForward prepareSearchParty(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        request.setAttribute("searchPartyBean", new SearchParkingPartyBean());
-        return mapping.findForward("searchParty");
-    }
-
     public ActionForward showParkingPartyRequests(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
@@ -613,7 +618,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         spreadsheet.addHeader("Data Pedido");
         spreadsheet.addHeader("Outras Informações", 6000);
 
-        final ResourceBundle enumerationBundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+        final ResourceBundle enumerationBundle = ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
         for (ParkingRequest parkingRequest : parkingRequestList) {
             if (parkingRequest.getParkingParty().getParty().isPerson()) {
                 Person person = (Person) parkingRequest.getParkingParty().getParty();
@@ -722,7 +727,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
         }
 
         if (note != null && note.trim().length() != 0 && email != null) {
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", Language.getLocale());
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", I18N.getLocale());
             Sender sender = Bennu.getInstance().getSystemSender();
             ConcreteReplyTo replyTo = new ConcreteReplyTo(bundle.getString("label.fromAddress"));
             new Message(sender, replyTo.asCollection(), Collections.EMPTY_LIST, bundle.getString("label.subject"), note, email);

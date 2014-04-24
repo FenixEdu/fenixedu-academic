@@ -6,7 +6,6 @@
 <%@ page
 	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
 
-<em><bean:message key="label.person.main.title"  bundle="APPLICATION_RESOURCES" /></em>
 <h2><bean:message key="label.parking" bundle="PARKING_RESOURCES" /></h2>
 
 
@@ -29,7 +28,7 @@
 		<logic:notEqual name="parkingParty"	property="hasAllNecessaryPersonalInfo" value="false">
 			<p>
 				<bean:message key="label.read.parkingRegulation" bundle="PARKING_RESOURCES" />: 
-				<a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>files/viver-IST/gestao-estacionamento/reg_estac.pdf" target="_blank">
+				<a href="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>files/viver-IST/gestao-estacionamento/reg_estac.pdf" target="_blank">
 					<bean:message key="label.parkingRegulation" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="PARKING_RESOURCES" />
 					<bean:message key="label.parkingRegulation.pdf" bundle="PARKING_RESOURCES" />
 				</a>
@@ -71,7 +70,7 @@
 	<logic:notEmpty name="parkingParty" property="parkingRequests">
 		<p>
 			<bean:message key="label.read.parkingRegulation" bundle="PARKING_RESOURCES" />: 
-			<a href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>files/viver-IST/gestao-estacionamento/reg_estac.pdf" target="_blank">
+			<a href="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>files/viver-IST/gestao-estacionamento/reg_estac.pdf" target="_blank">
 				<bean:message key="label.parkingRegulation" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="PARKING_RESOURCES" />
 				<bean:message key="label.parkingRegulation.pdf" bundle="PARKING_RESOURCES" />
 			</a>

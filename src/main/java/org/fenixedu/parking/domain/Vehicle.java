@@ -3,9 +3,8 @@ package org.fenixedu.parking.domain;
 import java.util.ResourceBundle;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.parking.dto.VehicleBean;
-
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class Vehicle extends Vehicle_Base {
 
@@ -107,7 +106,7 @@ public class Vehicle extends Vehicle_Base {
             }
         }
         if (getPropertyRegistryDeliveryType() != null) {
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", Language.getLocale());
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", I18N.getLocale());
             return bundle.getString(getPropertyRegistryDeliveryType().name());
         }
         return "";
@@ -120,7 +119,7 @@ public class Vehicle extends Vehicle_Base {
             }
         }
         if (getInsuranceDeliveryType() != null) {
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", Language.getLocale());
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", I18N.getLocale());
             return bundle.getString(getInsuranceDeliveryType().name());
         }
         return "";
@@ -133,7 +132,7 @@ public class Vehicle extends Vehicle_Base {
             }
         }
         if (getOwnerIdDeliveryType() != null) {
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", Language.getLocale());
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", I18N.getLocale());
             return bundle.getString(getOwnerIdDeliveryType().name());
         }
         return "";
@@ -146,7 +145,7 @@ public class Vehicle extends Vehicle_Base {
             }
         }
         if (getAuthorizationDeclarationDeliveryType() != null) {
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", Language.getLocale());
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", I18N.getLocale());
             return bundle.getString(getAuthorizationDeclarationDeliveryType().name());
         }
         return "";

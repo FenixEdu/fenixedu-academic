@@ -4,8 +4,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<em><bean:message key="label.parking" /></em>
-
 <bean:define id="parkingParty" name="parkingParty" type="org.fenixedu.parking.domain.ParkingParty"/>
 <bean:define id="personID" name="parkingParty" property="party.externalId" />
 
@@ -35,7 +33,7 @@
 	<bean:define id="query" value="<%=query+"&parkingCardSearchPeriod="+ parkingCardSearchPeriod.toString()%>"/>
 </logic:notEmpty>
 <p class="mtop05">
-	<html:link page="<%= "/manageParkingPeriods.do?method=searchCards" + query.toString() %>">
+	<html:link page="<%= "/manageParkingCards.do?method=searchCards" + query.toString() %>">
 		<bean:message key="link.back" bundle="PARKING_RESOURCES"/>
 	</html:link>	
 </p>
@@ -158,7 +156,7 @@
 </logic:iterate>
 
 <p class="mtop05">
-	<html:link page="<%= "/manageParkingPeriods.do?method=searchCards" + query.toString() %>">
+	<html:link page="<%= "/manageParkingCards.do?method=searchCards" + query.toString() %>">
 		<bean:message key="link.back" bundle="PARKING_RESOURCES"/>
 	</html:link>	
 </p>	

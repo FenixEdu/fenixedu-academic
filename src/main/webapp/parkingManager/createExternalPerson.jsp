@@ -6,7 +6,6 @@
 <%@ taglib uri="http://jakarta.apache.org/taglibs/string-1.0.1" prefix="str" %>
 <html:xhtml/>
 
-<em><bean:message key="label.parking"/></em>
 <h2><bean:message key="link.create.external.person"/></h2>
 
 <p>

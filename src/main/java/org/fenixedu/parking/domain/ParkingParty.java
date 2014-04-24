@@ -32,6 +32,7 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.parking.domain.ParkingRequest.ParkingRequestFactoryCreator;
 import org.fenixedu.parking.dto.ParkingPartyBean;
 import org.fenixedu.parking.dto.VehicleBean;
@@ -41,7 +42,8 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+
+import com.google.common.base.Joiner;
 
 public class ParkingParty extends ParkingParty_Base {
 
@@ -134,7 +136,7 @@ public class ParkingParty extends ParkingParty_Base {
     }
 
     public String getParkingAcceptedRegulationMessage() {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", Language.getLocale());
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", I18N.getLocale());
         String name = getParty().getName();
         String number = "";
         if (getParty().isPerson()) {
@@ -176,7 +178,7 @@ public class ParkingParty extends ParkingParty_Base {
         if (driverLicenseDocument != null) {
             return driverLicenseDocument.getParkingFile().getFilename();
         } else if (getDriverLicenseDeliveryType() != null) {
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", Language.getLocale());
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", I18N.getLocale());
             return bundle.getString(getDriverLicenseDeliveryType().name());
         }
         return "";
@@ -488,7 +490,7 @@ public class ParkingParty extends ParkingParty_Base {
                 result.add(student.getNumber().toString());
             }
         }
-        return StringUtils.join(result, "\n");
+        return Joiner.on('\n').join(result);
     }
 
     public Integer getMostSignificantNumber() {

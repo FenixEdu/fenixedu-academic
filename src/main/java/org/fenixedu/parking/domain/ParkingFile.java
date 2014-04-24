@@ -1,6 +1,6 @@
 package org.fenixedu.parking.domain;
 
-import net.sourceforge.fenixedu.domain.accessControl.Group;
+import org.fenixedu.bennu.core.groups.Group;
 
 public class ParkingFile extends ParkingFile_Base {
 

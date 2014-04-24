@@ -4,14 +4,13 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<em><bean:message key="label.parking" /></em>
 <h2><bean:message key="link.parkingCards" /></h2>
 	
 <script type="text/javascript">
 $(function () { $("th a label").map(function(i,e) { var el = $(e); var p = el.parent(); p.html(el.html()); }) })
 </script>
 
-<fr:form action="/manageParkingPeriods.do?method=searchCards">
+<fr:form action="/manageParkingCards.do?method=searchCards">
 	<fr:edit id="parkingCardSearchBean" name="parkingCardSearchBean" schema="edit.parkingCardSearch">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop025" />
@@ -67,7 +66,7 @@ $(function () { $("th a label").map(function(i,e) { var el = $(e); var p = el.pa
 			<fr:layout name="tabular-sortable">
 				<fr:property name="classes" value="tstyle1 tdcenter"/>
 				<fr:property name="columnClasses" value=",,smalltxt color888,,,,aleft"/>
-				<fr:property name="sortUrl" value="<%= "/manageParkingPeriods.do?method=searchCards"+query.toString()%>"/>
+				<fr:property name="sortUrl" value="<%= "/manageParkingCards.do?method=searchCards"+query.toString()%>"/>
 				<fr:property name="sortParameter" value="sortBy"/>
 				<fr:property name="sortBy" value="<%= sortCriteria %>"/>
 				<fr:property name="checkable" value="true"/>
@@ -76,7 +75,7 @@ $(function () { $("th a label").map(function(i,e) { var el = $(e); var p = el.pa
 				<fr:property name="selectAllShown" value="true"/>
 				<fr:property name="selectAllLocation" value="top,bottom"/>
 			</fr:layout>
-			<fr:destination name="parkingDetails" path="<%= "/manageParkingPeriods.do?method=showParkingDetails&parkingPartyID=${externalId}"  + query.toString() %>"/>
+			<fr:destination name="parkingDetails" path="<%= "/manageParkingCards.do?method=showParkingDetails&parkingPartyID=${externalId}"  + query.toString() %>"/>
 		</fr:view>
 		<p><html:submit property="prepareRenewal"><bean:message key="button.renewCards" bundle="PARKING_RESOURCES"/></html:submit></p>
 	</logic:notEmpty>

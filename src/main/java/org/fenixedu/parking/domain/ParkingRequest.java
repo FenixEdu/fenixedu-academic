@@ -10,10 +10,6 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
@@ -24,13 +20,15 @@ import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.ByteArray;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.FileUtils;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ParkingRequest extends ParkingRequest_Base {
 
@@ -504,9 +502,9 @@ public class ParkingRequest extends ParkingRequest_Base {
         }
 
         private Group getGroup(Party party) {
-            final PersonGroup personGroup = new PersonGroup((Person) party);
-            final RoleGroup roleGroup = new RoleGroup(Role.getRoleByRoleType(RoleType.PARKING_MANAGER));
-            return new GroupUnion(personGroup, roleGroup);
+            final Group personGroup = UserGroup.of(((Person) party).getUser());
+            final Group roleGroup = RoleGroup.get(RoleType.PARKING_MANAGER);
+            return personGroup.or(roleGroup);
         }
 
         public long getDriverLicenseFileSize() {
@@ -897,7 +895,7 @@ public class ParkingRequest extends ParkingRequest_Base {
         if (driverLicenseDocument != null) {
             return driverLicenseDocument.getParkingFile().getFilename();
         } else if (getDriverLicenseDeliveryType() != null) {
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", Language.getLocale());
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", I18N.getLocale());
             return bundle.getString(getDriverLicenseDeliveryType().name());
         }
         return "";

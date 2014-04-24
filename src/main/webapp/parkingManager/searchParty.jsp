@@ -4,7 +4,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<em><bean:message key="label.parking" /></em>
 <h2><bean:message key="link.users"/></h2>
 
 <p class="mtop15 mbottom05"><strong><bean:message key="label.searchUser"/></strong></p>

@@ -4,10 +4,9 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<em><bean:message key="label.parking" /></em>
 <h2><bean:message key="title.renewParkingCards"/></h2>
 	
-<fr:form action="/manageParkingPeriods.do?method=renewParkingCards">
+<fr:form action="/manageParkingCards.do?method=renewParkingCards">
 	<fr:edit id="parkingCardSearchBean" name="parkingCardSearchBean" schema="edit.cardsRenewalDate">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop025" />
