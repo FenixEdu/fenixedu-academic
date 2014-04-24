@@ -49,7 +49,7 @@ public class PersistentTeachersWithGradesToSubmitGroup extends PersistentTeacher
 
     @Override
     public boolean isMember(User user) {
-        return getMembers().contains(user);
+        return user != null && getMembers().contains(user);
     }
 
     @Override

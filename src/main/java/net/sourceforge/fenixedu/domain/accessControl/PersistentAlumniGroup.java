@@ -61,7 +61,7 @@ public class PersistentAlumniGroup extends PersistentAlumniGroup_Base {
 
     @Override
     public boolean isMember(User user, DateTime when) {
-        if (user.getPerson().getStudent() == null || user.getPerson().getStudent().getAlumni() == null) {
+        if (user == null || user.getPerson().getStudent() == null || user.getPerson().getStudent().getAlumni() == null) {
             return false;
         }
         if (getDegree() != null) {

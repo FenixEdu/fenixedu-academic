@@ -72,7 +72,7 @@ public class PersistentManagersOfUnitSiteGroup extends PersistentManagersOfUnitS
 
     @Override
     public boolean isMember(User user) {
-        return getUnitSite().getManagersSet().contains(user.getPerson());
+        return user != null && getUnitSite().getManagersSet().contains(user.getPerson());
     }
 
     @Override

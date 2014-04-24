@@ -82,7 +82,7 @@ public class PersistentCampusEmployeeGroup extends PersistentCampusEmployeeGroup
 
     @Override
     public boolean isMember(User user, DateTime when) {
-        return isMember(user.getPerson(), getCampus(), when);
+        return user != null && isMember(user.getPerson(), getCampus(), when);
     }
 
     public boolean isMember(final Person person, final Campus campus, DateTime when) {

@@ -181,6 +181,9 @@ public class PersistentUnitGroup extends PersistentUnitGroup_Base {
 
     @Override
     public boolean isMember(User user, DateTime when) {
+        if (user == null) {
+            return false;
+        }
         for (Accountability accountability : user.getPerson().getParentAccountabilities(getRelationType())) {
             if (accountability.isActive(when.toYearMonthDay())) {
                 if (getIncludeSubUnits() && isAncestor(getUnit(), accountability.getParentParty(), getRelationType(), when)) {

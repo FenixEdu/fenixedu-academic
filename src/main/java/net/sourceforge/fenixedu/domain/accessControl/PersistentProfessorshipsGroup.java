@@ -140,6 +140,9 @@ public class PersistentProfessorshipsGroup extends PersistentProfessorshipsGroup
 
     @Override
     public boolean isMember(User user, DateTime when) {
+        if (user == null) {
+            return false;
+        }
         //TODO: select active 'when'
         AcademicInterval interval = AcademicInterval.readDefaultAcademicInterval(getOnCurrentPeriod());
         if (getExternalAuthorizations()) {

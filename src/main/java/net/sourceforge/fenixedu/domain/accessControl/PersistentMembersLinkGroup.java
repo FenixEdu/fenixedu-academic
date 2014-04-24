@@ -68,7 +68,7 @@ public class PersistentMembersLinkGroup extends PersistentMembersLinkGroup_Base 
 
     @Override
     public boolean isMember(User user) {
-        return getPersistentGroupMembers().getPersonsSet().contains(user.getPerson());
+        return user != null && getPersistentGroupMembers().getPersonsSet().contains(user.getPerson());
     }
 
     @Override

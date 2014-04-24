@@ -110,12 +110,12 @@ public class PersistentDelegateStudentsGroup extends PersistentDelegateStudentsG
 
     @Override
     public boolean isMember(User user) {
-        return getMembers().contains(user);
+        return user != null && getMembers().contains(user);
     }
 
     @Override
     public boolean isMember(User user, DateTime when) {
-        return getMembers().contains(user);
+        return isMember(user);
     }
 
     public ExecutionYear getExecutionYear() {
