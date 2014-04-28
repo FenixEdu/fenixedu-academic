@@ -17,9 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadCurrentExecu
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.CreateGratuitySituationsForCurrentExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Installation;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.cms.OldCmsPortalBackend;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart;
 import net.sourceforge.fenixedu.domain.person.PersonNamePart;
 import net.sourceforge.fenixedu.presentationTier.Action.externalServices.PhoneValidationUtils;
@@ -28,8 +26,7 @@ import net.sourceforge.fenixedu.presentationTier.util.ExceptionInformation;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.webServices.jersey.api.FenixJerseyAPIConfig;
 
-import org.apache.commons.fileupload.FileUpload;
-import org.fenixedu.bennu.core.domain.Bennu;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.User.UserPresentationStrategy;
 import org.fenixedu.bennu.core.presentationTier.servlets.filters.ExceptionHandlerFilter;
@@ -69,10 +66,8 @@ public class FenixInitializer implements ServletContextListener {
         }
 
         Installation.ensureInstallation();
-        loadLogins();
         loadPersonNames();
         loadUnitNames();
-        loadRoles();
         startContactValidationServices();
 
         registerChecksumFilterRules();
@@ -121,13 +116,6 @@ public class FenixInitializer implements ServletContextListener {
         PhoneValidationUtils.getInstance();
     }
 
-    private void loadLogins() {
-        long start = System.currentTimeMillis();
-        User.findByUsername("...PlaceANonExistingLoginHere...");
-        long end = System.currentTimeMillis();
-        logger.info("Load of all users took: " + (end - start) + "ms.");
-    }
-
     private void loadPersonNames() {
         long start = System.currentTimeMillis();
         PersonNamePart.find("...PlaceANonExistingPersonNameHere...");
@@ -140,20 +128,6 @@ public class FenixInitializer implements ServletContextListener {
         UnitNamePart.find("...PlaceANonExistingUnitNameHere...");
         long end = System.currentTimeMillis();
         logger.info("Load of all unit names took: " + (end - start) + "ms.");
-
-        start = System.currentTimeMillis();
-        for (final UnitName unitName : Bennu.getInstance().getUnitNameSet()) {
-            unitName.getName();
-        }
-        end = System.currentTimeMillis();
-        logger.info("Load of all units took: " + (end - start) + "ms.");
-    }
-
-    private void loadRoles() {
-        long start = System.currentTimeMillis();
-        Role.getRoleByRoleType(null);
-        long end = System.currentTimeMillis();
-        logger.info("Load of all roles took: " + (end - start) + "ms.");
     }
 
     private void setScheduleForGratuitySituationCreation() {
@@ -204,32 +178,11 @@ public class FenixInitializer implements ServletContextListener {
 
     }
 
-    static final int APP_CONTEXT_LENGTH = FenixConfigurationManager.getConfiguration().appContext().length() + 1;
-
     private void registerChecksumFilterRules() {
         RequestChecksumFilter.registerFilterRule(new ChecksumPredicate() {
             @Override
             public boolean shouldFilter(HttpServletRequest request) {
-                final String uri = request.getRequestURI().substring(APP_CONTEXT_LENGTH);
-
-                if (uri.indexOf("domainbrowser/") >= 0) {
-                    return false;
-                }
-                if (uri.indexOf("images/") >= 0) {
-                    return false;
-                }
-                if (uri.indexOf("remote/") >= 0) {
-                    return false;
-                }
-                if (uri.indexOf("javaScript/") >= 0) {
-                    return false;
-                }
-                if (uri.indexOf("script/") >= 0) {
-                    return false;
-                }
-                if (uri.indexOf("ajax/") >= 0) {
-                    return false;
-                }
+                final String uri = request.getRequestURI().substring(request.getContextPath().length());
                 if (uri.indexOf("redirect.do") >= 0) {
                     return false;
                 }
@@ -239,36 +192,23 @@ public class FenixInitializer implements ServletContextListener {
                 if (uri.indexOf("/student/fillInquiries.do") >= 0) {
                     return false;
                 }
-                if (uri.indexOf("/google") >= 0 && uri.endsWith(".html")) {
-                    return false;
-                }
                 if ((uri.indexOf("/teacher/executionCourseForumManagement.do") >= 0 || uri
                         .indexOf("/student/viewExecutionCourseForuns.do") >= 0)
                         && request.getQueryString().indexOf("method=viewThread") >= 0) {
                     return false;
                 }
-                if (FileUpload.isMultipartContent(request)) {
+                if (ServletFileUpload.isMultipartContent(request)) {
                     return false;
                 }
                 if (uri.indexOf("notAuthorized.do") >= 0) {
                     return false;
                 }
 
-                return uri.length() > 1 && (uri.indexOf("CSS/") == -1) && (uri.indexOf("ajax/") == -1)
-                        && (uri.indexOf("images/") == -1) && (uri.indexOf("img/") == -1) && (uri.indexOf("download/") == -1)
-                        && (uri.indexOf("external/") == -1) && (uri.indexOf("services/") == -1)
-                        && (uri.indexOf("index.jsp") == -1) && (uri.indexOf("index.html") == -1)
-                        && (uri.indexOf("login.do") == -1) && (uri.indexOf("loginCAS.do") == -1)
-                        && (uri.indexOf("privado") == -1) && (uri.indexOf("loginPage.jsp") == -1)
-                        && (uri.indexOf("loginExpired.jsp") == -1) && (uri.indexOf("loginExpired.do") == -1)
-                        && (uri.indexOf("logoff.do") == -1) && (uri.indexOf("publico/") == -1)
-                        && (uri.indexOf("showErrorPage.do") == -1) && (uri.indexOf("showErrorPageRegistered.do") == -1)
-                        && (uri.indexOf("exceptionHandlingAction.do") == -1) && (uri.indexOf("manager/manageCache.do") == -1)
-                        && (uri.indexOf("checkPasswordKerberos.do") == -1) && (uri.indexOf("siteMap.do") == -1)
-                        && (uri.indexOf("fenixEduIndex.do") == -1) && (uri.indexOf("cms/forwardEmailAction.do") == -1)
-                        && (uri.indexOf("isAlive.do") == -1) && (uri.indexOf("remote/") == -1)
-                        && (uri.indexOf("downloadFile/") == -1) && !(uri.indexOf("google") >= 0 && uri.endsWith(".html"))
-                        && (uri.indexOf("api/fenix") == -1);
+                return (uri.indexOf("external/") == -1) && (uri.indexOf("login.do") == -1) && (uri.indexOf("loginCAS.do") == -1)
+                        && (uri.indexOf("loginExpired.do") == -1) && (uri.indexOf("logoff.do") == -1)
+                        && (uri.indexOf("publico/") == -1) && (uri.indexOf("showErrorPage.do") == -1)
+                        && (uri.indexOf("showErrorPageRegistered.do") == -1) && (uri.indexOf("exceptionHandlingAction.do") == -1)
+                        && (uri.indexOf("siteMap.do") == -1) && (uri.indexOf("fenixEduIndex.do") == -1);
             }
 
         });

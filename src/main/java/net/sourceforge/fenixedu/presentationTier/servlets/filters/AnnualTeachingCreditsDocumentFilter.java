@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.credits.AnnualCreditsState;
 import net.sourceforge.fenixedu.domain.credits.AnnualTeachingCredits;
 import net.sourceforge.fenixedu.domain.credits.AnnualTeachingCreditsDocument;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.lang.StringUtils;
 import org.htmlcleaner.HtmlCleaner;
@@ -191,7 +190,7 @@ public class AnnualTeachingCreditsDocumentFilter implements Filter {
 
     private void patchLinks(Document doc, HttpServletRequest request) {
         // build basePath
-        String appContext = FenixConfigurationManager.getConfiguration().appContext();
+        String appContext = request.getContextPath();
 
         // patch css link nodes
         NodeList linkNodes = doc.getElementsByTagName("link");
@@ -199,8 +198,8 @@ public class AnnualTeachingCreditsDocumentFilter implements Filter {
             Element link = (Element) linkNodes.item(i);
             String href = link.getAttribute("href");
 
-            if (appContext != null && appContext.length() > 0 && href.contains(appContext)) {
-                href = href.substring(appContext.length() + 1);
+            if (appContext.length() > 0 && href.contains(appContext)) {
+                href = href.substring(appContext.length());
             }
 
             try {

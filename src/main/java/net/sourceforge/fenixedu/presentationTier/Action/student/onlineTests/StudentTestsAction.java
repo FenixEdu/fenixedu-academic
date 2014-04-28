@@ -58,7 +58,6 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.util.Base64;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
@@ -67,6 +66,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
+
+import com.google.common.io.BaseEncoding;
 
 /**
  * @author Susana Fernandes
@@ -276,7 +277,7 @@ public class StudentTestsAction extends FenixDispatchAction {
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }
-        byte[] imageData = Base64.decode(img.getBytes());
+        byte[] imageData = BaseEncoding.base64().decode(img);
         try {
             response.reset();
             response.setContentType(imgTypeString);

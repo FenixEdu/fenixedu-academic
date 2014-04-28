@@ -8,6 +8,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  * Since this is wanted behaviour, the header X-XSS-Protection must be set to 0.
  * 
  */
+@WebFilter("*.do")
 public class XSSProtectionFilter implements Filter {
 
     @Override

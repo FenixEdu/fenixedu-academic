@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.lang.StringUtils;
@@ -36,7 +35,6 @@ import org.apache.struts.util.MessageResources;
 import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixframework.FenixFramework;
-import java.util.Locale;
 
 public class PublicEvaluationsBackingBean extends FenixBackingBean {
 
@@ -318,8 +316,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
     }
 
     public String getApplicationContext() {
-        final String appContext = FenixConfigurationManager.getConfiguration().appContext();
-        return (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
+        return getRequest().getContextPath();
     }
 
     public void setCurricularYearID(String curricularYearID) {

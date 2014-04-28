@@ -68,7 +68,6 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.Season;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -849,8 +848,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     protected String getApplicationContext() {
-        final String appContext = FenixConfigurationManager.getConfiguration().appContext();
-        return (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
+        return getRequest().getContextPath();
     }
 
     public String deleteWrittenTest() throws FenixServiceException {

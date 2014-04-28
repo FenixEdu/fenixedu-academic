@@ -17,10 +17,10 @@ import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.rss.RSSAction;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.struts.util.MessageResources;
 import org.apache.struts.util.ModuleUtils;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.DomainObject;
@@ -103,13 +103,11 @@ public class AnnouncementRSS extends RSSAction {
         String scheme = request.getScheme();
         int serverPort = request.getServerPort();
         String serverName = request.getServerName();
-        String appContext = FenixConfigurationManager.getConfiguration().appContext();
-        String context = appContext != null && appContext.length() > 0 ? "/" + appContext : "";
         String module = ModuleUtils.getInstance().getModuleName(request, getServlet().getServletContext());
         String actionPath = "/announcementsRSS.do";
 
         StringBuilder file = new StringBuilder();
-        file.append(context).append(module).append(actionPath);
+        file.append(request.getContextPath()).append(module).append(actionPath);
         try {
             URL url = new URL(scheme, serverName, serverPort, file.toString());
             result = url.toString();
@@ -130,18 +128,11 @@ public class AnnouncementRSS extends RSSAction {
 
         StringBuilder actionPath = new StringBuilder(getDirectAnnouncementBaseUrl(request, announcement));
 
-        String scheme = request.getScheme();
-        int serverPort = request.getServerPort();
-        String serverName = request.getServerName();
-        String appContext = FenixConfigurationManager.getConfiguration().appContext();
-        String context = appContext != null && appContext.length() > 0 ? "/" + appContext : "";
-
         if (actionPath.indexOf("?") == -1) {
             actionPath.append("?");
         }
 
-        return scheme + "://" + serverName + (serverPort == 80 || serverPort == 443 ? "" : ":" + serverPort) + context
-                + actionPath.toString();
+        return CoreConfiguration.getConfiguration().applicationUrl() + actionPath.toString();
     }
 
     protected String getDirectAnnouncementBaseUrl(HttpServletRequest request, Announcement announcement) {

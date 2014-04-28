@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.FenixOAuthToken;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.FenixOAuthToken.FenixOAuthTokenException;
 import net.sourceforge.fenixedu.util.BundleUtil;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import nl.bitwalker.useragentutils.UserAgent;
 
 import org.apache.amber.oauth2.as.issuer.MD5Generator;
@@ -98,7 +97,7 @@ public class OAuthAction extends FenixDispatchAction {
                 response.addCookie(new Cookie(OAUTH_SESSION_KEY, Base64.encodeBase64String(cookieValue.getBytes())));
                 if (CoreConfiguration.casConfig().isCasEnabled()) {
                     response.sendRedirect(CoreConfiguration.casConfig().getCasLoginUrl(
-                            FenixConfigurationManager.getFenixUrl() + "/oauth/userdialog"));
+                            CoreConfiguration.getConfiguration().applicationUrl() + "/oauth/userdialog"));
                 } else {
                     response.sendRedirect(request.getContextPath() + "/oauth/userdialog");
                 }
@@ -114,7 +113,7 @@ public class OAuthAction extends FenixDispatchAction {
                     logger.debug("Cookie can't be null because this a direct request from this action with cookie");
                     return mapping.findForward("oauthErrorPage");
                 }
-                final String sessionClientId = (String) cookie.getValue();
+                final String sessionClientId = cookie.getValue();
                 if (!StringUtils.isEmpty(sessionClientId)) {
                     return redirectToRedirectUrl(mapping, request, response, person, cookie);
                 }

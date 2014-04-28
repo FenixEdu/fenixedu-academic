@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.lang.StringUtils;
@@ -307,8 +306,7 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
     }
 
     public String getApplicationContext() {
-        final String appContext = FenixConfigurationManager.getConfiguration().appContext();
-        return (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
+        return getRequest().getContextPath();
     }
 
     public void setCurricularYearID(String curricularYearID) {

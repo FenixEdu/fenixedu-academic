@@ -11,7 +11,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/collection-pager" prefix="cp"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <html:xhtml />
-<%@ page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
 
 <h2>
 	<bean:message key="label.person.findPerson" />
@@ -256,21 +255,12 @@
 
 					<logic:equal name="personalInfo" property="homePageAvailable"
 						value="true">
-						<%
-						    final String appContext = FenixConfigurationManager.getConfiguration().appContext();
-						%>
-						<%
-						    final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
-						%>
-						<bean:define id="homepageURL" type="java.lang.String"><%=request.getScheme()%>://<%=request.getServerName()%>:<%=request.getServerPort()%><%=context%>/homepage/<bean:write
-								name="personalInfo" property="istUsername" />
-						</bean:define>
 						<tr>
 							<td class="ppleft2"><bean:message key="label.homepage" />
 							</td>
-							<td class="ppright"><html:link href="<%= homepageURL %>"
+							<td class="ppright"><html:link href="${personalInfo.homepage.fullPath}"
 									target="_blank">
-									<bean:write name="homepageURL" />
+									${personalInfo.homepage.fullPath}
 								</html:link></td>
 						</tr>
 					</logic:equal>

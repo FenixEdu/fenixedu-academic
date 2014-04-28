@@ -35,7 +35,6 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.candidacydocfiller.PdfFiller;
 import net.sourceforge.fenixedu.util.BundleUtil;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.lang.StringUtils;
 import org.htmlcleaner.HtmlCleaner;
@@ -160,7 +159,7 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 
     private void patchLinks(Document doc, HttpServletRequest request) {
         // build basePath
-        String appContext = FenixConfigurationManager.getConfiguration().appContext();
+        String appContext = request.getContextPath();
 
         // patch css link nodes
         NodeList linkNodes = doc.getElementsByTagName("link");
@@ -168,8 +167,8 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
             Element link = (Element) linkNodes.item(i);
             String href = link.getAttribute("href");
 
-            if (appContext != null && appContext.length() > 0 && href.contains(appContext)) {
-                href = href.substring(appContext.length() + 1);
+            if (appContext.length() > 0 && href.contains(appContext)) {
+                href = href.substring(appContext.length());
             }
 
             try {

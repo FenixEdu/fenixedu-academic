@@ -26,9 +26,10 @@ import com.twilio.sdk.resource.instance.Account;
 public class PhoneValidationUtils {
     private static final Logger logger = LoggerFactory.getLogger(PhoneValidationUtils.class);
 
+    public final String HOST = CoreConfiguration.getConfiguration().applicationUrl();
+
     private String TWILIO_FROM_NUMBER;
     private TwilioRestClient TWILIO_CLIENT;
-    public String HOST;
     private String CIIST_SMS_GATEWAY_URL;
     private HttpClient CIIST_CLIENT;
 
@@ -56,23 +57,6 @@ public class PhoneValidationUtils {
         }
     }
 
-    private void initHostname() {
-        final String appName = FenixConfigurationManager.getConfiguration().getHTTPHost();
-        final String appContext = FenixConfigurationManager.getConfiguration().appContext();
-        final String httpPort = FenixConfigurationManager.getConfiguration().getHTTPPort();
-        final String httpProtocol = FenixConfigurationManager.getConfiguration().getHTTPProtocol();
-
-        if (StringUtils.isEmpty(httpPort)) {
-            HOST = String.format("%s://%s/", httpProtocol, appName);
-        } else {
-            HOST = String.format("%s://%s:%s/", httpProtocol, appName, httpPort);
-        }
-        if (!StringUtils.isEmpty(appContext)) {
-            HOST += appContext;
-        }
-        HOST = StringUtils.removeEnd(HOST, "/");
-    }
-
     private void initTwilio() {
         final String TWILIO_SID = FenixConfigurationManager.getConfiguration().getTwilioSid();
         final String TWILIO_STOKEN = FenixConfigurationManager.getConfiguration().getTwilioStoken();
@@ -84,7 +68,6 @@ public class PhoneValidationUtils {
 
     private PhoneValidationUtils() {
         initTwilio();
-        initHostname();
         initCIISTSMSGateway();
         if (canRun()) {
             logger.info("Twilio Initialized:\n\tfrom number {} \n\thost: {} \n", TWILIO_FROM_NUMBER, HOST);

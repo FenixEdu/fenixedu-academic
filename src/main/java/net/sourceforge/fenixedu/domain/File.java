@@ -4,9 +4,9 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.FileUtils;
@@ -55,7 +55,7 @@ public abstract class File extends File_Base {
     }
 
     public final static String getFileDownloadPrefix() {
-        return FenixConfigurationManager.getConfiguration().getFileDownloadUrlLocalContent();
+        return CoreConfiguration.getConfiguration().applicationUrl() + "/downloadFile/";
     }
 
     protected void disconnect() {

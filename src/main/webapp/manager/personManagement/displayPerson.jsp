@@ -3,7 +3,6 @@
 <%@page import="net.sourceforge.fenixedu.domain.Employee"%>
 <%@page import="net.sourceforge.fenixedu.domain.student.Student"%>
 <%@page import="org.fenixedu.bennu.core.domain.User"%>
-<%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -222,13 +221,10 @@ function check(e,v){
                     </fr:view>
                     
 					<logic:equal name="personalInfo" property="homePageAvailable" value="true">
-						<% final String appContext = FenixConfigurationManager.getConfiguration().appContext(); %>
-						<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>				
-						<bean:define id="homepageURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/homepage/<bean:write name="personalInfo" property="istUsername"/></bean:define>						
 						<tr>
 							<td class="ppleft2"><bean:message key="label.homepage" bundle="APPLICATION_RESOURCES"/></td>		            
 							<td class="ppright">	            	
-								<html:link href="<%= homepageURL %>" target="_blank"><bean:write name="homepageURL"/></html:link>
+								<html:link href="${personalInfo.homepage.fullPath}" target="_blank">${personalInfo.homepage.fullPath}</html:link>
 							</td>
 						</tr>
 					</logic:equal>					

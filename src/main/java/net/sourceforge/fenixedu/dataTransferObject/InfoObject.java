@@ -9,6 +9,7 @@ import pt.ist.fenixframework.DomainObject;
 /**
  * @author jpvl
  */
+@Deprecated
 public abstract class InfoObject extends DataTranferObject {
     private String externalId;
 

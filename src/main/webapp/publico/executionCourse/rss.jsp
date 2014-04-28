@@ -1,4 +1,3 @@
-<%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <html:xhtml/>
@@ -21,10 +20,7 @@
 	
 <p><bean:message key="message.rss.copy.feeds"/></p>	
 
-<% final String appContext = FenixConfigurationManager.getConfiguration().appContext(); %>
-<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
-
-<bean:define id="linkRSS" type="java.lang.String"><%=request.getScheme()%>://<%=request.getServerName()%>:<%=request.getServerPort()%><%=context%></bean:define>
+<bean:define id="linkRSS" type="java.lang.String"><%=request.getScheme()%>://<%=request.getServerName()%>:<%=request.getServerPort()%><%=request.getContextPath()%></bean:define>
 <table>
 	<tr>
 		<bean:define id="urlA" type="java.lang.String"><%= linkRSS %>/external/announcementsRSS.do?announcementBoardId=<bean:write name="executionCourse" property="board.externalId"/></bean:define>

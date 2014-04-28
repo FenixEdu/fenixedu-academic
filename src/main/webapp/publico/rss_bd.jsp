@@ -4,7 +4,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt" %>
-<%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
 
 <logic:present name="siteView"> 
 	<br/>
@@ -24,11 +23,8 @@
 	<h2><bean:message key="message.rss.7"/></h2>
 	
 	<p>Copie os URL's para o leitor RSS.</p>
-	
-		<% final String appContext = FenixConfigurationManager.getConfiguration().appContext(); %>
-		<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
 
-		<bean:define id="linkRSS" type="java.lang.String"><%=request.getScheme()%>://<%=request.getServerName()%>:<%=request.getServerPort()%><%=context%></bean:define>
+		<bean:define id="linkRSS" type="java.lang.String"><%=request.getScheme()%>://<%=request.getServerName()%>:<%=request.getServerPort()%><%=request.getContextPath()%></bean:define>
 	<table>
 		<tr>
 			<td style="border-bottom: 1px solid #eee; padding: 0.5em 1em;">

@@ -30,7 +30,7 @@ public class RedirectToIdentificationCardInterfaceDA extends FenixDispatchAction
             actionForward.setRedirect(true);
             actionForward.setModule("");
 
-            final String path = "/person/identificationCard.do?method=prepare&contentContextPath_PATH=/pessoal/pessoal";
+            final String path = "/person/identificationCard.do?method=prepare";
 
             actionForward.setPath(path + "&" + GenericChecksumRewriter.CHECKSUM_ATTRIBUTE_NAME + "="
                     + GenericChecksumRewriter.calculateChecksum(path, request.getSession()));

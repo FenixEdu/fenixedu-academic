@@ -31,13 +31,10 @@ import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.struts.util.MessageResources;
 import org.fenixedu.commons.i18n.I18N;
-
-import java.util.Locale;
 
 public class StudentCalendarBackingBean extends FenixBackingBean {
 
@@ -269,8 +266,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
                         final String evaluationTypeClassname = getEvaluationTypeClassname();
                         if (evaluationTypeClassname == null || evaluationTypeClassname.length() == 0
                                 || evaluationTypeClassname.equals(writtenEvaluation.getClass().getName())) {
-                            CalendarLink calendarLink =
-                                    new CalendarLink(executionCourse, writtenEvaluation, I18N.getLocale());
+                            CalendarLink calendarLink = new CalendarLink(executionCourse, writtenEvaluation, I18N.getLocale());
                             calendarLinks.add(calendarLink);
                             calendarLink.setLinkParameters(constructLinkParameters(executionCourse));
                         }
@@ -364,8 +360,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
     }
 
     public String getApplicationContext() {
-        final String appContext = FenixConfigurationManager.getConfiguration().appContext();
-        return (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
+        return getRequest().getContextPath();
     }
 
     public String getExecutionPeriodID() {

@@ -101,11 +101,6 @@
 	</build>
 	<dependencies>
 		<dependency>
-			<groupId>net.sourceforge.barbecue</groupId>
-			<artifactId>barbecue</artifactId>
-			<version>1.5-beta1</version>
-		</dependency>
-		<dependency>
 			<groupId>taglibs</groupId>
 			<artifactId>string</artifactId>
 			<version>1.0.1</version>
@@ -116,16 +111,6 @@
 			<version>2.7.7</version>
 		</dependency>
 		<dependency>
-			<groupId>org.jfree</groupId>
-			<artifactId>jfreechart</artifactId>
-			<version>0.9.18</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jfree</groupId>
-			<artifactId>jcommon</artifactId>
-			<version>0.9.3</version>
-		</dependency>
-		<dependency>
 			<groupId>com.googlecode.json-simple</groupId>
 			<artifactId>json-simple</artifactId>
 			<version>1.1</version>
@@ -133,7 +118,7 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>16.0.1</version>
+			<version>17.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
@@ -229,11 +214,6 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>slide</groupId>
-			<artifactId>slide-kernel</artifactId>
-			<version>1.0.16</version>
-		</dependency>
-		<dependency>
 			<groupId>com.thoughtworks.xstream</groupId>
 			<artifactId>xstream</artifactId>
 			<version>1.1.1</version>
@@ -280,11 +260,6 @@
 			<version>1.0.6</version>
 		</dependency>
 		<dependency>
-			<groupId>org.glassfish.jersey.core</groupId>
-			<artifactId>jersey-client</artifactId>
-			<version>2.4</version>
-		</dependency>
-		<dependency>
 			<groupId>commons-httpclient</groupId>
 			<artifactId>commons-httpclient</artifactId>
 			<version>3.0</version>
@@ -298,16 +273,6 @@
 			<groupId>pt.ist</groupId>
 			<artifactId>standards</artifactId>
 			<version>1.0.2</version>
-		</dependency>
-		<dependency>
-			<groupId>dom4j</groupId>
-			<artifactId>dom4j</artifactId>
-			<version>1.6.1</version>
-		</dependency>
-		<dependency>
-			<groupId>uk.ltd.getahead</groupId>
-			<artifactId>dwr</artifactId>
-			<version>1.1-beta-3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.webjars</groupId>
@@ -373,7 +338,7 @@
 		<dependency>
 			<groupId>org.fenixedu</groupId>
 			<artifactId>fenixedu-commons</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.fenixedu</groupId>
@@ -428,8 +393,6 @@
 			</build>
 		</profile>
 	</profiles>
-
-
 
 	<repositories>
 		<repository>

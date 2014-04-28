@@ -18,8 +18,8 @@ import net.sourceforge.fenixedu.domain.student.GroupEnrolment;
 import net.sourceforge.fenixedu.domain.util.icalendar.EvaluationEventBean;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.EvaluationType;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -326,7 +326,7 @@ public class Project extends Project_Base {
                 .getProjectBeginDateTime(), this.getProjectBeginDateTime().plusHours(1), false, null, null,
                 this.getDescription(), Collections.singleton(executionCourse)));
         if (this.getOnlineSubmissionsAllowed()) {
-            String url = FenixConfigurationManager.getFenixUrl() + "/privado";
+            String url = CoreConfiguration.getConfiguration().applicationUrl() + "/privado";
             result.add(new EvaluationEventBean("Fim " + this.getName() + " : " + executionCourse.getNome(), this
                     .getProjectEndDateTime().minusHours(1), this.getProjectEndDateTime(), false, null, url,
                     this.getDescription(), Collections.singleton(executionCourse)));

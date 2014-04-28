@@ -91,7 +91,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
-import org.apache.util.Base64;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -101,7 +100,8 @@ import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumR
 import pt.ist.fenixWebFramework.struts.annotations.Input;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
-import java.util.Locale;
+
+import com.google.common.io.BaseEncoding;
 
 /**
  * @author Susana Fernandes
@@ -380,7 +380,7 @@ public class TestsManagementAction extends ExecutionCourseBaseAction {
                 throw new FenixActionException(e);
             }
         }
-        byte[] imageData = Base64.decode(img.getBytes());
+        byte[] imageData = BaseEncoding.base64().decode(img);
         try {
             response.reset();
             response.setContentType(imgTypeString);

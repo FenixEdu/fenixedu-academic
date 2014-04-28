@@ -24,13 +24,13 @@ import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.student.ICalStudentTimeTable;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.lang.CharEncoding;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -43,7 +43,7 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
     private Calendar getClassCalendar(User user, DateTime validity, HttpServletRequest request) {
 
         List<EventBean> allEvents = getClasses(user);
-        String url = FenixConfigurationManager.getFenixUrl() + "/privado";
+        String url = CoreConfiguration.getConfiguration().applicationUrl() + "/privado";
         EventBean event =
                 new EventBean("Renovar a chave do calendario.", validity.minusMinutes(30), validity.plusMinutes(30), false, null,
                         url, "A sua chave de sincronização do calendario vai expirar. Diriga-se ao Fénix para gerar nova chave");
@@ -92,7 +92,7 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
 
         List<EventBean> allEvents = getExams(user);
 
-        String url = FenixConfigurationManager.getFenixUrl() + "/privado";
+        String url = CoreConfiguration.getConfiguration().applicationUrl() + "/privado";
         EventBean event =
                 new EventBean("Renovar a chave do calendario.", validity.minusMinutes(30), validity.plusMinutes(30), false, null,
                         url, "A sua chave de sincronização do calendario vai expirar. Diriga-se ao Fénix para gerar nova chave");

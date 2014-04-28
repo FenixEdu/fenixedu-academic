@@ -103,7 +103,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.spaceManager.ManageSpace
 import net.sourceforge.fenixedu.presentationTier.backBeans.student.enrolment.DisplayEvaluationsForStudentToEnrol;
 import net.sourceforge.fenixedu.util.ContentType;
 import net.sourceforge.fenixedu.util.EvaluationType;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.webServices.jersey.beans.FenixCalendar;
 import net.sourceforge.fenixedu.webServices.jersey.beans.FenixCalendar.FenixCalendarEvent;
 import net.sourceforge.fenixedu.webServices.jersey.beans.FenixCalendar.FenixClassEvent;
@@ -142,6 +141,7 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -908,7 +908,7 @@ public class FenixAPIv1 {
 
         String type = degree.getDegreeTypeName();
         String typeName = degree.getDegreeType().getFilteredName();
-        String degreeUrl = FenixConfigurationManager.getFenixUrl() + degree.getSite().getReversePath();
+        String degreeUrl = CoreConfiguration.getConfiguration().applicationUrl() + degree.getSite().getReversePath();
 
         for (Campus campus : degree.getCampus(executionYear)) {
             degreeCampus.add(FenixSpace.getSimpleSpace(campus));
@@ -1035,7 +1035,7 @@ public class FenixAPIv1 {
     }
 
     private String getServerLink() {
-        return FenixConfigurationManager.getFenixUrl();
+        return CoreConfiguration.getConfiguration().applicationUrl();
     }
 
     /**
@@ -1057,7 +1057,7 @@ public class FenixAPIv1 {
         String name = executionCourse.getName();
         String evaluationMethod = executionCourse.getEvaluationMethodText();
         String academicTerm = executionCourse.getExecutionPeriod().getQualifiedName();
-        String courseUrl = FenixConfigurationManager.getFenixUrl() + executionCourse.getSite().getReversePath();
+        String courseUrl = CoreConfiguration.getConfiguration().applicationUrl() + executionCourse.getSite().getReversePath();
 
         Map<CompetenceCourse, Set<CurricularCourse>> curricularCourses =
                 executionCourse.getCurricularCoursesIndexedByCompetenceCourse();
