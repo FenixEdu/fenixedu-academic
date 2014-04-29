@@ -17,6 +17,8 @@ public class DepartmentAdmOfficeApp extends ForwardAction {
     private static final String BUNDLE = "DepartmentAdmOfficeResources";
     private static final String HINT = "Department Admin Office";
     private static final String ACCESS_GROUP = "role(DEPARTMENT_ADMINISTRATIVE_OFFICE)";
+    private static final String CREDITS_ACCESS_GROUP =
+            "role(DEPARTMENT_CREDITS_MANAGER) & role(DEPARTMENT_ADMINISTRATIVE_OFFICE)";
 
     @StrutsApplication(bundle = BUNDLE, path = "view", titleKey = "link.group.view.title", hint = HINT,
             accessGroup = ACCESS_GROUP)
@@ -24,17 +26,17 @@ public class DepartmentAdmOfficeApp extends ForwardAction {
     }
 
     @StrutsApplication(bundle = BUNDLE, path = "teachers", titleKey = "link.group.teacher.title", hint = HINT,
-            accessGroup = "role(DEPARTMENT_CREDITS_MANAGER)")
+            accessGroup = CREDITS_ACCESS_GROUP)
     public static class DepartmentAdmOfficeTeachersApp {
     }
 
     @StrutsApplication(bundle = "TeacherCreditsSheetResources", path = "credits", titleKey = "label.credits", hint = HINT,
-            accessGroup = "role(DEPARTMENT_CREDITS_MANAGER)")
+            accessGroup = CREDITS_ACCESS_GROUP)
     public static class DepartmentAdmOfficeCreditsApp {
     }
 
     @StrutsApplication(bundle = BUNDLE, path = "expectations", titleKey = "link.group.teacherPersonalExpectations.title",
-            hint = HINT, accessGroup = "role(DEPARTMENT_CREDITS_MANAGER)")
+            hint = HINT, accessGroup = CREDITS_ACCESS_GROUP)
     public static class DepartmentAdmOfficeExpectationsApp {
     }
 

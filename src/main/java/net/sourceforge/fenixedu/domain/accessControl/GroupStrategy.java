@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * @author João Carvalho (joao.pedro.carvalho@tecnico.ulisboa.pt)
  *
  */
-public abstract class GroupStrategy extends CustomGroup {
+public abstract class GroupStrategy extends FenixGroup {
 
     private static final Logger logger = LoggerFactory.getLogger(GroupStrategy.class);
 

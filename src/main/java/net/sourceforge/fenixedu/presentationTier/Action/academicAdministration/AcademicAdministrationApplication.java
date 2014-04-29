@@ -8,17 +8,16 @@ import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-// TODO: ACADEMIC_OFFICE_GROUP should be: academic('ADMINISTRATION')
 @StrutsApplication(bundle = "AcademicAdminOffice", path = "academic-administration", titleKey = "portal.academicAdministration",
-        hint = "Academic Administration")
+        hint = "Academic Administration", accessGroup = "academic(scope=ADMINISTRATION)")
 @Mapping(path = "/index", module = "academicAdministration", parameter = "/academicAdministration/indexAdmin.jsp")
 public class AcademicAdministrationApplication extends ForwardAction {
 
     private static final String BUNDLE = "AcademicAdminOffice";
     private static final String HINT = "Academic Administration";
 
-    // TODO: ACADEMIC_OFFICE_GROUP should be: academic('OFFICE')
-    @StrutsApplication(bundle = BUNDLE, path = "academic-admin-office", titleKey = "label.academicAdminOffice", hint = HINT)
+    @StrutsApplication(bundle = BUNDLE, path = "academic-admin-office", titleKey = "label.academicAdminOffice", hint = HINT,
+            accessGroup = "academic(scope=OFFICE)")
     @Mapping(path = "/indexOffice", module = "academicAdministration", parameter = "/academicAdministration/indexOffice.jsp")
     public static class AcademicAdminOfficeApp extends ForwardAction {
     }
@@ -48,8 +47,8 @@ public class AcademicAdministrationApplication extends ForwardAction {
     public static class AcademicAdminScholarshipsApp {
     }
 
-    // TODO: ACADEMIC_OFFICE_GROUP should be: academic('CREATE_REGISTRATION') || academic('OFFICE')
-    @StrutsApplication(bundle = BUNDLE, path = "students", titleKey = "link.studentOperations", hint = HINT)
+    @StrutsApplication(bundle = BUNDLE, path = "students", titleKey = "link.studentOperations", hint = HINT,
+            accessGroup = "academic(CREATE_REGISTRATION) | academic(scope=OFFICE)")
     public static class AcademicAdminStudentsApp {
     }
 

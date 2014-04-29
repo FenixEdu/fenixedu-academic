@@ -10,7 +10,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @StrutsFunctionality(app = TeacherTeachingApp.class, path = "view-curriculum-historic",
-        titleKey = "link.curriculumHistoric.consult", bundle = "CurriculumHistoricResources")
+        titleKey = "link.curriculumHistoric.consult", bundle = "CurriculumHistoricResources", accessGroup = "role(TEACHER)")
 @Mapping(module = "teacher", path = "/chooseExecutionYearAndDegreeCurricularPlan",
         formBean = "executionYearDegreeCurricularPlanForm")
 @Forwards({ @Forward(name = "chooseExecutionYear", path = "/commons/curriculumHistoric/chooseDegreeCPlanExecutionYear.jsp"),

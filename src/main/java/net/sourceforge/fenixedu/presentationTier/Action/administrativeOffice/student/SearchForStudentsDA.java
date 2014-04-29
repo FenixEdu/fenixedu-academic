@@ -21,9 +21,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-// TODO: ACADEMIC_OFFICE_GROUP should be: academic('OFFICE')
 @StrutsFunctionality(app = AcademicAdminStudentsApp.class, path = "search-for-students",
-        titleKey = "link.studentOperations.viewStudents")
+        titleKey = "link.studentOperations.viewStudents", accessGroup = "academic(scope=OFFICE)")
 @Mapping(path = "/students", module = "academicAdministration")
 @Forwards({ @Forward(name = "viewStudentDetails", path = "/academicAdminOffice/student/viewStudentDetails.jsp"),
         @Forward(name = "search", path = "/academicAdminOffice/searchStudents.jsp") })

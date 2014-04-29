@@ -31,9 +31,8 @@ public class DepartmentMemberApp extends ForwardAction {
     public static class DepartmentMemberAccompanimentApp {
     }
 
-    // TODO: Group should be something like departmentPresident()
     @StrutsApplication(bundle = BUNDLE, path = "department-president", titleKey = "title.department.presidency", hint = HINT,
-            accessGroup = ACCESS_GROUP)
+            accessGroup = "departmentPresident")
     public static class DepartmentMemberPresidentApp {
     }
 
