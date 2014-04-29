@@ -73,6 +73,13 @@ public abstract class PersistentTeachersWithIncompleteEvaluationWorkGroup extend
         return new String[] { getDegreeCurricularPlan().getPresentationName(), getPeriod().getName() };
     }
 
+    @Override
+    protected void gc() {
+        setPeriod(null);
+        setDegreeCurricularPlan(null);
+        super.gc();
+    }
+
     protected static <T extends PersistentTeachersWithIncompleteEvaluationWorkGroup> T getInstance(Class<T> type,
             ExecutionSemester period, final DegreeCurricularPlan degreeCurricularPlan, Supplier<T> maker) {
         Optional<T> instance = select(type, period, degreeCurricularPlan);

@@ -44,7 +44,7 @@ public class PersistentTeachersWithMarkSheetsToConfirmGroup extends PersistentTe
 
     @Override
     public boolean isMember(User user) {
-        return getMembers().contains(user);
+        return user != null && getMembers().contains(user);
     }
 
     @Override

@@ -113,6 +113,12 @@ public class PersistentThesisReadersGroup extends PersistentThesisReadersGroup_B
         return Collections.emptySet();
     }
 
+    @Override
+    protected void gc() {
+        setThesis(null);
+        super.gc();
+    }
+
     public static PersistentThesisReadersGroup getInstance(Thesis thesis) {
         PersistentThesisReadersGroup instance = thesis.getReaders();
         return instance != null ? instance : create(thesis);

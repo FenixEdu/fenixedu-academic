@@ -56,7 +56,7 @@ public class PersistentResponsibleForExecutionCourseGroup extends PersistentResp
 
     @Override
     public boolean isMember(User user) {
-        if (user.getPerson().getTeacher() != null) {
+        if (user != null && user.getPerson().getTeacher() != null) {
             for (final Professorship professorship : user.getPerson().getTeacher()
                     .getProfessorships(ExecutionYear.readCurrentExecutionYear())) {
                 if (professorship.isResponsibleFor()) {

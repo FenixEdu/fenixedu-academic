@@ -7,6 +7,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -71,6 +72,9 @@ public class CerimonyInquiry extends CerimonyInquiry_Base implements Comparable<
 
     @Atomic
     public void delete() {
+        if (getGroup() != null) {
+            throw new DomainException("error.cerimonyInquiry.cannotDeleteCerimonyInquiryUsedInAccessControl");
+        }
         for (final CerimonyInquiryAnswer cerimonyInquiryAnswer : getCerimonyInquiryAnswerSet()) {
             cerimonyInquiryAnswer.delete();
         }

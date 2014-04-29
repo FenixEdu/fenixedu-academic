@@ -143,6 +143,12 @@ public class PersistentDelegatesGroup extends PersistentDelegatesGroup_Base {
         return Collections.emptySet();
     }
 
+    @Override
+    protected void gc() {
+        setDegree(null);
+        super.gc();
+    }
+
     public static PersistentDelegatesGroup getInstance(Degree degree, FunctionType function) {
         PersistentDelegatesGroup instance = select(degree, function);
         return instance != null ? instance : create(degree, function);

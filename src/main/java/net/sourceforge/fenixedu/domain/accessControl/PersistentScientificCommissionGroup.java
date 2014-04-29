@@ -86,6 +86,12 @@ public class PersistentScientificCommissionGroup extends PersistentScientificCom
         return Collections.emptySet();
     }
 
+    @Override
+    protected void gc() {
+        setDegree(null);
+        super.gc();
+    }
+
     public static PersistentScientificCommissionGroup getInstance(Degree degree) {
         PersistentScientificCommissionGroup instance = degree.getScientificCommissionGroup();
         return instance != null ? instance : create(degree);

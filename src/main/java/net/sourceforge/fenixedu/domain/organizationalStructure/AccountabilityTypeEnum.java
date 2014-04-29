@@ -4,7 +4,13 @@
  */
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
-public enum AccountabilityTypeEnum {
+import java.util.ResourceBundle;
+
+import org.fenixedu.commons.i18n.I18N;
+
+import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
+
+public enum AccountabilityTypeEnum implements IPresentableEnum {
 
     MANAGEMENT_FUNCTION,
 
@@ -29,5 +35,10 @@ public enum AccountabilityTypeEnum {
 
     public String getFullyQualifiedName() {
         return AccountabilityTypeEnum.class.getName() + "." + name();
+    }
+
+    @Override
+    public String getLocalizedName() {
+        return ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale()).getString(getQualifiedName());
     }
 }

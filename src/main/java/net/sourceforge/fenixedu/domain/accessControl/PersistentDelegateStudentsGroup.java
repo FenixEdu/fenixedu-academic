@@ -110,12 +110,12 @@ public class PersistentDelegateStudentsGroup extends PersistentDelegateStudentsG
 
     @Override
     public boolean isMember(User user) {
-        return getMembers().contains(user);
+        return user != null && getMembers().contains(user);
     }
 
     @Override
     public boolean isMember(User user, DateTime when) {
-        return getMembers().contains(user);
+        return isMember(user);
     }
 
     public ExecutionYear getExecutionYear() {
@@ -125,6 +125,12 @@ public class PersistentDelegateStudentsGroup extends PersistentDelegateStudentsG
 
     public static Set<Group> groupsForUser(User user) {
         return Collections.emptySet();
+    }
+
+    @Override
+    protected void gc() {
+        setDelegateFunction(null);
+        super.gc();
     }
 
     public static PersistentDelegateStudentsGroup getInstance(PersonFunction delegateFunction, FunctionType type) {

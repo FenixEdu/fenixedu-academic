@@ -353,7 +353,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     private Boolean getCanBeDeleted() {
         return canDeleteRoot() && !hasAnyStudentCurricularPlans() && !hasAnyCurricularCourseEquivalences()
                 && !hasAnyEnrolmentPeriods() && !hasAnyCurricularCourses() && !hasAnyExecutionDegrees() && !hasAnyAreas()
-                && canDeleteServiceAgreement();
+                && canDeleteServiceAgreement() && !getTeachersWithIncompleteEvaluationWorkGroupSet().isEmpty();
     }
 
     private boolean canDeleteRoot() {

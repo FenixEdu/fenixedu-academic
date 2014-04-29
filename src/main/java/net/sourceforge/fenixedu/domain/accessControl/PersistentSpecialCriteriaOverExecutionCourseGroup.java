@@ -44,6 +44,12 @@ public abstract class PersistentSpecialCriteriaOverExecutionCourseGroup extends
         return new String[] { getExecutionCourse().getNome() };
     }
 
+    @Override
+    protected void gc() {
+        setExecutionCourse(null);
+        super.gc();
+    }
+
     protected static <T extends PersistentSpecialCriteriaOverExecutionCourseGroup> T select(Class<T> type,
             ExecutionCourse executionCourse) {
         return FluentIterable.from(executionCourse.getSpecialCriteriaOverExecutionCourseGroupSet()).filter(type).first().orNull();

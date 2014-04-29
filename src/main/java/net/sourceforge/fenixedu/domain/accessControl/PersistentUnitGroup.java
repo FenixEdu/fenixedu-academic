@@ -122,9 +122,9 @@ public class PersistentUnitGroup extends PersistentUnitGroup_Base {
     @Override
     public String[] getPresentationNameKeyArgs() {
         if (getRelationType() != null) {
-            return new String[] { getUnit().getName(), getRelationType().getFullyQualifiedName() };
+            return new String[] { getUnit().getNameI18n().getContent(), getRelationType().getLocalizedName() };
         }
-        return new String[] { getUnit().getName(), getRelationFunctionType().getName() };
+        return new String[] { getUnit().getNameI18n().getContent(), getRelationFunctionType().getName() };
     }
 
     @Override
@@ -181,6 +181,9 @@ public class PersistentUnitGroup extends PersistentUnitGroup_Base {
 
     @Override
     public boolean isMember(User user, DateTime when) {
+        if (user == null) {
+            return false;
+        }
         for (Accountability accountability : user.getPerson().getParentAccountabilities(getRelationType())) {
             if (accountability.isActive(when.toYearMonthDay())) {
                 if (getIncludeSubUnits() && isAncestor(getUnit(), accountability.getParentParty(), getRelationType(), when)) {
@@ -211,6 +214,12 @@ public class PersistentUnitGroup extends PersistentUnitGroup_Base {
 
     public static Set<Group> groupsForUser(User user) {
         return Collections.emptySet();
+    }
+
+    @Override
+    protected void gc() {
+        setUnit(null);
+        super.gc();
     }
 
     public static PersistentUnitGroup getInstance(final Unit unit, final AccountabilityTypeEnum relationType,

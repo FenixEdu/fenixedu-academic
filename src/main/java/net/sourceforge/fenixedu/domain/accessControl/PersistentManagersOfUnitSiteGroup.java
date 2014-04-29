@@ -72,7 +72,7 @@ public class PersistentManagersOfUnitSiteGroup extends PersistentManagersOfUnitS
 
     @Override
     public boolean isMember(User user) {
-        return getUnitSite().getManagersSet().contains(user.getPerson());
+        return user != null && getUnitSite().getManagersSet().contains(user.getPerson());
     }
 
     @Override
@@ -82,6 +82,12 @@ public class PersistentManagersOfUnitSiteGroup extends PersistentManagersOfUnitS
 
     public static Set<Group> groupsForUser(User user) {
         return Collections.emptySet();
+    }
+
+    @Override
+    protected void gc() {
+        setUnitSite(null);
+        super.gc();
     }
 
     public static PersistentManagersOfUnitSiteGroup getInstance(final UnitSite site) {

@@ -82,7 +82,7 @@ public class PersistentCampusEmployeeGroup extends PersistentCampusEmployeeGroup
 
     @Override
     public boolean isMember(User user, DateTime when) {
-        return isMember(user.getPerson(), getCampus(), when);
+        return user != null && isMember(user.getPerson(), getCampus(), when);
     }
 
     public boolean isMember(final Person person, final Campus campus, DateTime when) {
@@ -104,6 +104,12 @@ public class PersistentCampusEmployeeGroup extends PersistentCampusEmployeeGroup
 
     public static Set<Group> groupsForUser(User user) {
         return Collections.emptySet();
+    }
+
+    @Override
+    protected void gc() {
+        setCampus(null);
+        super.gc();
     }
 
     public static PersistentCampusEmployeeGroup getInstance(Campus campus) {

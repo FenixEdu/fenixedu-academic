@@ -124,7 +124,7 @@ public class PersistentAcademicOperationGroup extends PersistentAcademicOperatio
 
     @Override
     public boolean isMember(User user) {
-        if (user == null || user.getPerson().getTeacher() == null) {
+        if (user == null) {
             return false;
         }
         if (getScope() != null) {
@@ -140,6 +140,13 @@ public class PersistentAcademicOperationGroup extends PersistentAcademicOperatio
 
     public static Set<Group> groupsForUser(User user) {
         return Collections.emptySet();
+    }
+
+    @Override
+    protected void gc() {
+        getProgramSet().clear();
+        getOfficeSet().clear();
+        super.gc();
     }
 
     public static PersistentAcademicOperationGroup getInstance(final AcademicOperationType operation, final Scope scope) {

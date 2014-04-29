@@ -39,7 +39,7 @@ public class PersistentResearchAuthorGroup extends PersistentResearchAuthorGroup
 
     @Override
     public boolean isMember(User user) {
-        return !user.getPerson().getResultParticipationsSet().isEmpty();
+        return user != null && !user.getPerson().getResultParticipationsSet().isEmpty();
     }
 
     @Override

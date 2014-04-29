@@ -504,6 +504,9 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
         if (!getEnrolmentsSet().isEmpty()) {
             throw new Error("cannot.delete.execution.period.because.enrolments.exist");
         }
+        if (!getTeachersWithIncompleteEvaluationWorkGroupSet().isEmpty()) {
+            throw new DomainException("error.executionPeriod.cannotDeleteExecutionPeriodUsedInAccessControl");
+        }
         super.setExecutionYear(null);
         setRootDomainObjectForExecutionPeriod(null);
         setRootDomainObject(null);

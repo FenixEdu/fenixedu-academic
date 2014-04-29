@@ -37,6 +37,15 @@ public class Campus extends Campus_Base {
     @FenixDomainObjectActionLogAnnotation(actionName = "Deleted campus", parameters = {})
     public void delete() {
         check(this, SpacePredicates.checkPermissionsToManageSpace);
+        if (!getStudentGroupSet().isEmpty()) {
+            throw new DomainException("error.campus.cannotDeleteCampusUsedInAccessControl");
+        }
+        if (!getTeacherGroupSet().isEmpty()) {
+            throw new DomainException("error.campus.cannotDeleteCampusUsedInAccessControl");
+        }
+        if (getCampusEmployeeGroup() != null) {
+            throw new DomainException("error.campus.cannotDeleteCampusUsedInAccessControl");
+        }
         super.delete();
     }
 

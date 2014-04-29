@@ -24,6 +24,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.messaging.DepartmentForum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
@@ -364,6 +365,9 @@ public class Department extends Department_Base {
     }
 
     public void delete() {
+        if (!getTeacherGroupSet().isEmpty()) {
+            throw new DomainException("error.department.cannotDeleteDepartmentUsedInAccessControl");
+        }
         setDepartmentUnit(null);
         setRootDomainObject(null);
         deleteDomainObject();

@@ -74,7 +74,7 @@ public class PersistentPersonsInFunctionGroup extends PersistentPersonsInFunctio
 
     @Override
     public boolean isMember(User user) {
-        return getMembers().contains(user);
+        return user != null && getMembers().contains(user);
     }
 
     @Override
@@ -84,6 +84,12 @@ public class PersistentPersonsInFunctionGroup extends PersistentPersonsInFunctio
 
     public static Set<Group> groupsForUser(User user) {
         return Collections.emptySet();
+    }
+
+    @Override
+    protected void gc() {
+        setFunction(null);
+        super.gc();
     }
 
     public static PersistentPersonsInFunctionGroup getInstance(Function function) {

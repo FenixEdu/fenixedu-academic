@@ -99,7 +99,7 @@ public class Function extends Function_Base {
     }
 
     private boolean canBeDeleted() {
-        return !hasAnyAccountabilities() && !hasAnyInherentFunctions();
+        return !hasAnyAccountabilities() && !hasAnyInherentFunctions() && getPersonsInFunctionGroup() != null;
     }
 
     public List<PersonFunction> getPersonFunctions() {

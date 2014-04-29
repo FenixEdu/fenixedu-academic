@@ -135,7 +135,7 @@ public class UnitSite extends UnitSite_Base {
 
     @Override
     public boolean isDeletable() {
-        return super.isDeletable() && !hasAnyBanners() && !hasLogo();
+        return super.isDeletable() && !hasAnyBanners() && !hasLogo() && getManagersOfUnitSiteGroup() == null;
     }
 
     @Override

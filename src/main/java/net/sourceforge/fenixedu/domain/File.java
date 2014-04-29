@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.regex.Pattern;
 
-import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
@@ -36,7 +35,7 @@ public abstract class File extends File_Base {
     }
 
     public boolean isPrivate() {
-        if (getPermittedGroup() instanceof EveryoneGroup) {
+        if (getPermittedGroup().isMember(null)) {
             return false;
         }
         return true;

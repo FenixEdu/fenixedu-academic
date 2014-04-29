@@ -90,6 +90,12 @@ public class PersistentCerimonyInquiryGroup extends PersistentCerimonyInquiryGro
         return Collections.emptySet();
     }
 
+    @Override
+    protected void gc() {
+        setCerimonyInquiry(null);
+        super.gc();
+    }
+
     public static PersistentCerimonyInquiryGroup getInstance(CerimonyInquiry cerimonyInquiry) {
         PersistentCerimonyInquiryGroup instance = cerimonyInquiry.getGroup();
         return instance != null ? instance : create(cerimonyInquiry);

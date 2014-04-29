@@ -435,6 +435,10 @@ public class Grouping extends Grouping_Base {
             throw new DomainException(this.getClass().getName(), "");
         }
 
+        if (getGroupingGroup() != null) {
+            throw new DomainException("error.grouping.cannotDeleteGroupingUsedInAccessControl");
+        }
+
         List<ExecutionCourse> ecs = getExecutionCourses();
         for (ExecutionCourse ec : ecs) {
             GroupsAndShiftsManagementLog.createLog(ec, "resources.MessagingResources",

@@ -611,6 +611,15 @@ public class ExecutionCourse extends ExecutionCourse_Base {
             }
         }
 
+        if (!getStudentGroupSet().isEmpty()) {
+            throw new DomainException("error.executionCourse.cannotDeleteExecutionCourseUsedInAccessControl");
+        }
+        if (!getSpecialCriteriaOverExecutionCourseGroupSet().isEmpty()) {
+            throw new DomainException("error.executionCourse.cannotDeleteExecutionCourseUsedInAccessControl");
+        }
+        if (!getTeacherGroupSet().isEmpty()) {
+            throw new DomainException("error.executionCourse.cannotDeleteExecutionCourseUsedInAccessControl");
+        }
         return true;
     }
 

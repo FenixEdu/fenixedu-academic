@@ -11,6 +11,12 @@ public abstract class FenixPredicateGroup extends FenixPredicateGroup_Base {
         setRootForFenixPredicate(getRoot());
     }
 
+    @Override
+    protected void gc() {
+        setRootForFenixPredicate(null);
+        super.gc();
+    }
+
     protected static <T extends FenixPredicateGroup> FluentIterable<T> filter(Class<T> type) {
         return FluentIterable.from(Bennu.getInstance().getFenixPredicateGroupSet()).filter(type);
     }

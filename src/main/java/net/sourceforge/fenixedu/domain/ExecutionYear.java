@@ -274,6 +274,15 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
         if (!getExecutionDegreesSet().isEmpty()) {
             throw new Error("cannot.delete.execution.year.because.execution.degrees.exist");
         }
+        if (!getStudentGroupSet().isEmpty()) {
+            throw new DomainException("error.executionYear.cannotDeleteExecutionYearUsedInAccessControl");
+        }
+        if (!getTeacherGroupSet().isEmpty()) {
+            throw new DomainException("error.executionYear.cannotDeleteExecutionYearUsedInAccessControl");
+        }
+        if (!getStudentsConcludedInExecutionYearGroupSet().isEmpty()) {
+            throw new DomainException("error.executionYear.cannotDeleteExecutionYearUsedInAccessControl");
+        }
         for (; hasAnyExecutionPeriods(); getExecutionPeriodsSet().iterator().next().delete()) {
             ;
         }

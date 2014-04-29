@@ -70,7 +70,7 @@ public class PersistentGroupingGroup extends PersistentGroupingGroup_Base {
 
     @Override
     public boolean isMember(User user) {
-        return getMembers().contains(user);
+        return user != null && getMembers().contains(user);
     }
 
     @Override
@@ -80,6 +80,12 @@ public class PersistentGroupingGroup extends PersistentGroupingGroup_Base {
 
     public static Set<Group> groupsForUser(User user) {
         return Collections.emptySet();
+    }
+
+    @Override
+    protected void gc() {
+        setGrouping(null);
+        super.gc();
     }
 
     public static PersistentGroupingGroup getInstance(Grouping grouping) {

@@ -95,6 +95,12 @@ public class PersistentProjectDepartmentGroup extends PersistentProjectDepartmen
         return Collections.emptySet();
     }
 
+    @Override
+    protected void gc() {
+        setProject(null);
+        super.gc();
+    }
+
     public static PersistentProjectDepartmentGroup getInstance(final Project project) {
         PersistentProjectDepartmentGroup instance = project.getProjectDepartmentGroup();
         return instance != null ? instance : create(project);
