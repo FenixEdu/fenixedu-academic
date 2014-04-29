@@ -3,9 +3,12 @@ package net.sourceforge.fenixedu.presentationTier.servlets.startup;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.mail.Session;
+import javax.mail.Transport;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletException;
@@ -31,6 +34,8 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.User.UserPresentationStrategy;
 import org.fenixedu.bennu.core.presentationTier.servlets.filters.ExceptionHandlerFilter;
 import org.fenixedu.bennu.core.presentationTier.servlets.filters.ExceptionHandlerFilter.CustomHandler;
+import org.fenixedu.bennu.core.rest.Healthcheck;
+import org.fenixedu.bennu.core.rest.SystemResource;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.bennu.portal.servlet.PortalBackendRegistry;
 import org.slf4j.Logger;
@@ -41,6 +46,8 @@ import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestChecksumF
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 import pt.ist.fenixframework.plugins.remote.domain.RemoteSystem;
+
+import com.sun.mail.smtp.SMTPTransport;
 
 @WebListener
 public class FenixInitializer implements ServletContextListener {
@@ -76,9 +83,31 @@ public class FenixInitializer implements ServletContextListener {
         initializeFenixAPI();
         registerPresentationStrategy();
 
+        registerHealthchecks();
+
         PortalBackendRegistry.registerPortalBackend(new OldCmsPortalBackend());
 
         logger.info("Fenix initialized successfully");
+    }
+
+    private void registerHealthchecks() {
+        SystemResource.registerHealthcheck(new Healthcheck() {
+            @Override
+            public String getName() {
+                return "SMTP";
+            }
+
+            @Override
+            protected Result check() throws Exception {
+                final Properties properties = new Properties();
+                properties.put("mail.transport.protocol", "smtp");
+                Transport transport = Session.getInstance(properties).getTransport();
+                transport.connect(FenixConfigurationManager.getConfiguration().getMailSmtpHost(), null, null);
+                String response = ((SMTPTransport) transport).getLastServerResponse();
+                transport.close();
+                return Result.healthy("SMTP server returned response: " + response);
+            }
+        });
     }
 
     private void registerPresentationStrategy() {

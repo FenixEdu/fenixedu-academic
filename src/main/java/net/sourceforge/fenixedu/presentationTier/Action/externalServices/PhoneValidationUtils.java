@@ -14,10 +14,16 @@ import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.commons.httpclient.auth.AuthScope;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.rest.Healthcheck;
+import org.fenixedu.bennu.core.rest.SystemResource;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.twilio.sdk.TwilioRestClient;
 import com.twilio.sdk.TwilioRestException;
 import com.twilio.sdk.resource.factory.CallFactory;
@@ -60,9 +66,24 @@ public class PhoneValidationUtils {
     private void initTwilio() {
         final String TWILIO_SID = FenixConfigurationManager.getConfiguration().getTwilioSid();
         final String TWILIO_STOKEN = FenixConfigurationManager.getConfiguration().getTwilioStoken();
+        final String URL = "/" + TwilioRestClient.DEFAULT_VERSION + "/Accounts/" + TWILIO_SID + ".json";
         TWILIO_FROM_NUMBER = FenixConfigurationManager.getConfiguration().getTwilioFromNumber();
         if (!StringUtils.isEmpty(TWILIO_SID) && !StringUtils.isEmpty(TWILIO_STOKEN) && !StringUtils.isEmpty(TWILIO_FROM_NUMBER)) {
             TWILIO_CLIENT = new TwilioRestClient(TWILIO_SID, TWILIO_STOKEN);
+            SystemResource.registerHealthcheck(new Healthcheck() {
+                private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+                @Override
+                public String getName() {
+                    return "Twilio";
+                }
+
+                @Override
+                protected Result check() throws Exception {
+                    JsonElement json = new JsonParser().parse(TWILIO_CLIENT.get(URL).getResponseText());
+                    return Result.healthy(gson.toJson(json));
+                }
+            });
         }
     }
 
