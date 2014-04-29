@@ -7,7 +7,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
-import org.fenixedu.bennu.core.util.CoreConfiguration;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
@@ -27,7 +26,7 @@ public class CASAuthenticationAction extends BaseAuthenticationAction {
     protected ActionForward getAuthenticationFailedForward(ActionMapping mapping, HttpServletRequest request, String actionKey,
             String messageKey) {
         Authenticate.logout(request.getSession());
-        return new ActionForward(CoreConfiguration.casConfig().getCasLogoutUrl(), true);
+        return new ActionForward("/authenticationFailed.jsp");
     }
 
 }

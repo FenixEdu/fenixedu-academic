@@ -58,6 +58,9 @@ public final class ExceptionHandlingAction extends FenixDispatchAction {
         @Override
         public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
                 HttpServletResponse response) throws Exception {
+            if (!response.isCommitted()) {
+                response.reset();
+            }
             PortalLayoutInjector.skipLayoutOn(request);
             if (CoreConfiguration.getConfiguration().developmentMode()) {
                 return new ActionForward("/debugExceptionPage.jsp");
@@ -250,7 +253,7 @@ public final class ExceptionHandlingAction extends FenixDispatchAction {
             message.setText(body);
             Transport.send(message);
         } catch (Exception e) {
-            logger.error("Could not send support email!", e);
+            logger.error("Could not send support email! Original message was: " + body, e);
         }
     }
 }

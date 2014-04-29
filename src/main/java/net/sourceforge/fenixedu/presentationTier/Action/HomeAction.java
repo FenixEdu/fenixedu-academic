@@ -23,7 +23,7 @@ public class HomeAction extends Action {
 
         final MenuItem initialMenuEntry = findTopLevelContainer();
         if (initialMenuEntry == null) {
-            response.sendRedirect(FenixConfigurationManager.getConfiguration().getLoginPage());
+            response.sendRedirect(FenixConfigurationManager.getConfiguration().getIndexPageRedirect());
         } else {
             response.sendRedirect(request.getContextPath() + initialMenuEntry.getFullPath());
         }

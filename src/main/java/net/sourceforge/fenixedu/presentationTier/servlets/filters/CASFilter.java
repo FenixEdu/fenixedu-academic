@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
+import org.fenixedu.bennu.core.filters.CasAuthenticationFilter;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.bennu.core.util.CoreConfiguration.CasConfig;
@@ -40,7 +41,8 @@ public class CASFilter implements Filter {
     }
 
     private boolean shouldRedirectToCas(final HttpServletRequest request) {
-        return !(Authenticate.isLogged() && request.getRequestURI().endsWith("/loginCAS.do"));
+        return !((Authenticate.isLogged() || request.getAttribute(CasAuthenticationFilter.AUTHENTICATION_EXCEPTION_KEY) != null) && request
+                .getRequestURI().endsWith("/loginCAS.do"));
     }
 
     protected String encodeUrl(final String casUrl) throws UnsupportedEncodingException {
