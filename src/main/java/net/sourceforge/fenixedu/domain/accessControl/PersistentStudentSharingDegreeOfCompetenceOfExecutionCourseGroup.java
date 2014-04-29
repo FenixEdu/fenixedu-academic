@@ -6,12 +6,10 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
@@ -57,15 +55,6 @@ public class PersistentStudentSharingDegreeOfCompetenceOfExecutionCourseGroup ex
                 users.add(user);
             }
         }
-        // also include coordinators, this is hidden from the documented semantic of the group and should be taken away in the future
-        for (ExecutionDegree executionDegree : getExecutionCourse().getExecutionDegrees()) {
-            for (Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
-                User user = coordinator.getPerson().getUser();
-                if (user != null) {
-                    users.add(user);
-                }
-            }
-        }
         return users;
     }
 
@@ -93,15 +82,6 @@ public class PersistentStudentSharingDegreeOfCompetenceOfExecutionCourseGroup ex
                 }
                 // students attending the given execution course (most will be in the previous case but some may not)
                 if (registration.getAttendingExecutionCoursesFor().contains(getExecutionCourse())) {
-                    return true;
-                }
-            }
-        }
-        // also include coordinators, this is hidden from the documented semantic of the group and should be taken away in the future
-        if (!user.getPerson().getCoordinatorsSet().isEmpty()) {
-            Set<ExecutionDegree> degrees = getExecutionCourse().getExecutionDegrees();
-            for (Coordinator coordinator : user.getPerson().getCoordinatorsSet()) {
-                if (degrees.contains(coordinator.getExecutionDegree())) {
                     return true;
                 }
             }
