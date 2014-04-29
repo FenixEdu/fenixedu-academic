@@ -16,6 +16,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.groups.BennuGroupBridge;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.ArgumentList;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.ExpressionGroup;
@@ -133,7 +134,12 @@ public abstract class Group implements Serializable, IGroup {
      */
     @Override
     public String getExpression() {
-        return getGroupExpressionName() + getExpressionArgumentsList();
+//        return getGroupExpressionName() + getExpressionArgumentsList();
+        try {
+            return new BennuGroupBridge(convert()).getExpression();
+        } catch (UnsupportedOperationException e) {
+            return getGroupExpressionName() + getExpressionArgumentsList();
+        }
     }
 
     public String getExpressionInHex() {
