@@ -124,7 +124,7 @@ public class PersistentAcademicOperationGroup extends PersistentAcademicOperatio
 
     @Override
     public boolean isMember(User user) {
-        if (user == null || user.getPerson().getTeacher() == null) {
+        if (user == null) {
             return false;
         }
         if (getScope() != null) {
