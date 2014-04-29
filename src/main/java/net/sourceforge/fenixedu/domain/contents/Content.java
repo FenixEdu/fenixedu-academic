@@ -262,8 +262,7 @@ public abstract class Content extends Content_Base {
     }
 
     private boolean isPublicGroup(final Group group) {
-        return group instanceof EveryoneGroup
-                || (group instanceof ExpressionGroup && isPublicGroup(((ExpressionGroup) group).getGroup()));
+        return group.isMember(null) || (group instanceof ExpressionGroup && isPublicGroup(((ExpressionGroup) group).getGroup()));
     }
 
     public Boolean getPublicAvailable() {

@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.research;
 
 import net.sourceforge.fenixedu.domain.UnitFile;
-import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
@@ -23,7 +22,7 @@ public class EditUnitFile {
             return true;
         }
 
-        if (permittedGroup instanceof EveryoneGroup) {
+        if (permittedGroup.isMember(null)) {
             return true;
         }
 

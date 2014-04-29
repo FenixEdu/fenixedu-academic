@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 
 /**
@@ -15,7 +14,7 @@ public abstract class FileContentService {
             return true;
         }
 
-        if (permittedGroup instanceof EveryoneGroup) {
+        if (permittedGroup.isMember(null)) {
             return true;
         }
 

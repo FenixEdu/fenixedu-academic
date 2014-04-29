@@ -31,7 +31,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Summary;
-import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
@@ -409,7 +408,7 @@ public class MergeExecutionCourses {
             Attachment attachment = (Attachment) content;
 
             FileContent file = attachment.getFile();
-            if (file.getPermittedGroup() != null && !(file.getPermittedGroup() instanceof EveryoneGroup)) {
+            if (file.getPermittedGroup() != null && !file.getPermittedGroup().isMember(null)) {
                 file.setPermittedGroup(createExecutionCourseResponsibleTeachersGroup(executionCourseTo));
             }
         }
