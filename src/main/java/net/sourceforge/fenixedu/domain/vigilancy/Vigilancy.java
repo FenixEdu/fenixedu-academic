@@ -164,6 +164,9 @@ public abstract class Vigilancy extends Vigilancy_Base {
     }
 
     public void delete() {
+        if (getVigilancyGroup() != null) {
+            throw new DomainException("error.vigilancy.cannotDeleteVigilancyUsedInAccessControl");
+        }
         setWrittenEvaluation(null);
         setRootDomainObject(null);
         setVigilantWrapper(null);

@@ -106,6 +106,12 @@ public class PersistentCampusEmployeeGroup extends PersistentCampusEmployeeGroup
         return Collections.emptySet();
     }
 
+    @Override
+    protected void gc() {
+        setCampus(null);
+        super.gc();
+    }
+
     public static PersistentCampusEmployeeGroup getInstance(Campus campus) {
         PersistentCampusEmployeeGroup instance = campus.getCampusEmployeeGroup();
         return instance != null ? instance : create(campus);

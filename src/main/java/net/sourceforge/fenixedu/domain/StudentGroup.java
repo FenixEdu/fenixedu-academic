@@ -62,6 +62,9 @@ public class StudentGroup extends StudentGroup_Base {
     }
 
     public void delete() {
+        if (getStudentGroupGroup() != null) {
+            throw new DomainException("error.studentGroup.cannotDeleteStudentGroupUsedInAccessControl");
+        }
         List<ExecutionCourse> ecs = getGrouping().getExecutionCourses();
         for (ExecutionCourse ec : ecs) {
             GroupsAndShiftsManagementLog.createLog(ec, "resources.MessagingResources",

@@ -95,6 +95,12 @@ public class PersistentVigilancyGroup extends PersistentVigilancyGroup_Base {
         return Collections.emptySet();
     }
 
+    @Override
+    protected void gc() {
+        setVigilancy(null);
+        super.gc();
+    }
+
     public static PersistentVigilancyGroup getInstance(Vigilancy vigilancy) {
         PersistentVigilancyGroup instance = vigilancy.getVigilancyGroup();
         return instance != null ? instance : create(vigilancy);

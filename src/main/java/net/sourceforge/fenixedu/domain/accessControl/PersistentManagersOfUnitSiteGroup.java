@@ -84,6 +84,12 @@ public class PersistentManagersOfUnitSiteGroup extends PersistentManagersOfUnitS
         return Collections.emptySet();
     }
 
+    @Override
+    protected void gc() {
+        setUnitSite(null);
+        super.gc();
+    }
+
     public static PersistentManagersOfUnitSiteGroup getInstance(final UnitSite site) {
         PersistentManagersOfUnitSiteGroup instance = site.getManagersOfUnitSiteGroup();
         return instance != null ? instance : create(site);

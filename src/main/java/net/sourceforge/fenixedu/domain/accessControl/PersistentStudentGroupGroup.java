@@ -92,6 +92,12 @@ public class PersistentStudentGroupGroup extends PersistentStudentGroupGroup_Bas
         return Collections.emptySet();
     }
 
+    @Override
+    protected void gc() {
+        setStudentGroup(null);
+        super.gc();
+    }
+
     public static PersistentStudentGroupGroup getInstance(final StudentGroup studentGroup) {
         PersistentStudentGroupGroup instance = studentGroup.getStudentGroupGroup();
         return instance != null ? instance : create(studentGroup);

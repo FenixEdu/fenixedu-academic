@@ -127,6 +127,12 @@ public class PersistentDelegateStudentsGroup extends PersistentDelegateStudentsG
         return Collections.emptySet();
     }
 
+    @Override
+    protected void gc() {
+        setDelegateFunction(null);
+        super.gc();
+    }
+
     public static PersistentDelegateStudentsGroup getInstance(PersonFunction delegateFunction, FunctionType type) {
         PersistentDelegateStudentsGroup instance = select(delegateFunction, type);
         return instance != null ? instance : create(delegateFunction, type);

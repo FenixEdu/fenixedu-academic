@@ -145,6 +145,13 @@ public class PersistentStudentsConcludedInExecutionYearGroup extends PersistentS
         return Collections.emptySet();
     }
 
+    @Override
+    protected void gc() {
+        setDegree(null);
+        setConclusionYear(null);
+        super.gc();
+    }
+
     public static PersistentStudentsConcludedInExecutionYearGroup getInstance(Degree degree, ExecutionYear conclusionYear) {
         PersistentStudentsConcludedInExecutionYearGroup instance = select(degree, conclusionYear);
         return instance != null ? instance : create(degree, conclusionYear);

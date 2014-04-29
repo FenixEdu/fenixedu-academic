@@ -119,6 +119,9 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
         if (hasAnyEventReportQueueJob()) {
             throw new DomainException("error.AdministrativeOffice.cannot.delete");
         }
+        if (!getAcademicAuthorizationGroupSet().isEmpty()) {
+            throw new DomainException("error.administrativeOffice.cannotDeleteAdministrativeOfficeUsedInAccessControl");
+        }
     }
 
     @Deprecated

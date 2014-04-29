@@ -223,6 +223,9 @@ public class PersonFunction extends PersonFunction_Base {
         if (hasSender()) {
             setSender(null);
         }
+        if (!getDelegateStudentsGroupSet().isEmpty()) {
+            throw new DomainException("error.personFunction.cannotDeletePersonFunctionUsedInAccessControl");
+        }
         setExecutionInterval(null);
         super.delete();
     }

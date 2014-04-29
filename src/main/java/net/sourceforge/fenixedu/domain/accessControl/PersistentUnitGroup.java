@@ -216,6 +216,12 @@ public class PersistentUnitGroup extends PersistentUnitGroup_Base {
         return Collections.emptySet();
     }
 
+    @Override
+    protected void gc() {
+        setUnit(null);
+        super.gc();
+    }
+
     public static PersistentUnitGroup getInstance(final Unit unit, final AccountabilityTypeEnum relationType,
             FunctionType relationFunctionType, final Boolean includeSubUnits) {
         PersistentUnitGroup instance = select(unit, relationType, relationFunctionType, includeSubUnits);

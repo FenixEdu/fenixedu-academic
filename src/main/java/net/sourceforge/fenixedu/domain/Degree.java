@@ -227,8 +227,37 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         if (hasSite() && !getSite().isDeletable()) {
             throw new DomainException("error.degree.has.site.undeletable");
         }
+
+        if (!getStudentGroupSet().isEmpty()) {
+            throw new DomainException("error.degree.cannotDeleteDegreeUsedInAccessControl");
+        }
+
+        if (!getTeacherGroupSet().isEmpty()) {
+            throw new DomainException("error.degree.cannotDeleteDegreeUsedInAccessControl");
+        }
+
+        if (getScientificCommissionGroup() != null) {
+            throw new DomainException("error.degree.cannotDeleteDegreeUsedInAccessControl");
+        }
+
+        if (!getCoordinatorGroupSet().isEmpty()) {
+            throw new DomainException("error.degree.cannotDeleteDegreeUsedInAccessControl");
+        }
+
+        if (!getStudentsConcludedInExecutionYearGroupSet().isEmpty()) {
+            throw new DomainException("error.degree.cannotDeleteDegreeUsedInAccessControl");
+        }
+
+        if (!getDelegatesGroupSet().isEmpty()) {
+            throw new DomainException("error.degree.cannotDeleteDegreeUsedInAccessControl");
+        }
+
+        if (getAlumniGroup() != null) {
+            throw new DomainException("error.degree.cannotDeleteDegreeUsedInAccessControl");
+        }
     }
 
+    @Override
     public void delete() {
 
         checkDeletion();
@@ -289,8 +318,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         setUnit(null);
         setPhdProgram(null);
         setRootDomainObject(null);
-
-        deleteDomainObject();
+        super.delete();
     }
 
     public GradeScale getGradeScaleChain() {
@@ -1646,22 +1674,25 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     public PersonFunction getMostSignificantDelegateFunctionForStudent(Student student, ExecutionYear executionYear) {
         if (hasActiveDelegateFunctionForStudent(student, executionYear, FunctionType.DELEGATE_OF_INTEGRATED_MASTER_DEGREE)) {
-            final PersonFunction pf = getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear,
-                    FunctionType.DELEGATE_OF_INTEGRATED_MASTER_DEGREE);
+            final PersonFunction pf =
+                    getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear,
+                            FunctionType.DELEGATE_OF_INTEGRATED_MASTER_DEGREE);
             if (pf != null) {
                 return pf;
             }
         }
         if (hasActiveDelegateFunctionForStudent(student, executionYear, FunctionType.DELEGATE_OF_MASTER_DEGREE)) {
-            final PersonFunction pf = getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear,
-                    FunctionType.DELEGATE_OF_MASTER_DEGREE);
+            final PersonFunction pf =
+                    getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear,
+                            FunctionType.DELEGATE_OF_MASTER_DEGREE);
             if (pf != null) {
                 return pf;
             }
         }
         if (hasActiveDelegateFunctionForStudent(student, executionYear, FunctionType.DELEGATE_OF_DEGREE)) {
-            final PersonFunction pf = getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear,
-                    FunctionType.DELEGATE_OF_DEGREE);
+            final PersonFunction pf =
+                    getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear,
+                            FunctionType.DELEGATE_OF_DEGREE);
             if (pf != null) {
                 return pf;
             }
@@ -1671,27 +1702,31 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     public PersonFunction getMostSignificantActiveDelegateFunctionForStudent(Student student, ExecutionYear executionYear) {
         if (hasActiveDelegateFunctionForStudent(student, executionYear, FunctionType.DELEGATE_OF_INTEGRATED_MASTER_DEGREE)) {
-            final PersonFunction pf = getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear,
-                    FunctionType.DELEGATE_OF_INTEGRATED_MASTER_DEGREE);
+            final PersonFunction pf =
+                    getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear,
+                            FunctionType.DELEGATE_OF_INTEGRATED_MASTER_DEGREE);
             if (pf != null && pf.isActive()) {
                 return pf;
             }
         }
         if (hasActiveDelegateFunctionForStudent(student, executionYear, FunctionType.DELEGATE_OF_MASTER_DEGREE)) {
-            final PersonFunction pf = getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear,
-                    FunctionType.DELEGATE_OF_MASTER_DEGREE);
+            final PersonFunction pf =
+                    getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear,
+                            FunctionType.DELEGATE_OF_MASTER_DEGREE);
             if (pf != null && pf.isActive()) {
                 return pf;
             }
         }
         if (hasActiveDelegateFunctionForStudent(student, executionYear, FunctionType.DELEGATE_OF_DEGREE)) {
-            final PersonFunction pf = getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear,
-                    FunctionType.DELEGATE_OF_DEGREE);
+            final PersonFunction pf =
+                    getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear,
+                            FunctionType.DELEGATE_OF_DEGREE);
             if (pf != null && pf.isActive()) {
                 return pf;
             }
         }
-        final PersonFunction pf = getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear, FunctionType.DELEGATE_OF_YEAR);
+        final PersonFunction pf =
+                getActiveDelegatePersonFunctionByStudentAndFunctionType(student, executionYear, FunctionType.DELEGATE_OF_YEAR);
         return pf != null && pf.isActive() ? pf : null;
     }
 

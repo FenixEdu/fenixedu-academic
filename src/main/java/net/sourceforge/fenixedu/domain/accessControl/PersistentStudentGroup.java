@@ -433,6 +433,16 @@ public class PersistentStudentGroup extends PersistentStudentGroup_Base {
         return Collections.emptySet();
     }
 
+    @Override
+    protected void gc() {
+        setCampus(null);
+        setDegree(null);
+        setExecutionCourse(null);
+        setCurricularYear(null);
+        setExecutionYear(null);
+        super.gc();
+    }
+
     public static PersistentStudentGroup getInstance() {
         return getInstance(filter(PersistentStudentGroup.class), null, null, null, null, null, null, null);
     }

@@ -86,6 +86,12 @@ public class PersistentPersonsInFunctionGroup extends PersistentPersonsInFunctio
         return Collections.emptySet();
     }
 
+    @Override
+    protected void gc() {
+        setFunction(null);
+        super.gc();
+    }
+
     public static PersistentPersonsInFunctionGroup getInstance(Function function) {
         PersistentPersonsInFunctionGroup instance = function.getPersonsInFunctionGroup();
         return instance != null ? instance : create(function);

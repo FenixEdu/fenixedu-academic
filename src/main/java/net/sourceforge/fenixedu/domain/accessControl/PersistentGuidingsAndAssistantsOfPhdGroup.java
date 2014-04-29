@@ -95,6 +95,12 @@ public class PersistentGuidingsAndAssistantsOfPhdGroup extends PersistentGuiding
         return Collections.emptySet();
     }
 
+    @Override
+    protected void gc() {
+        setPhdIndividualProgramProcess(null);
+        super.gc();
+    }
+
     public static PersistentGuidingsAndAssistantsOfPhdGroup getInstance(
             final PhdIndividualProgramProcess phdIndividualProgramProcess) {
         PersistentGuidingsAndAssistantsOfPhdGroup instance = phdIndividualProgramProcess.getGuidingsAndAssistantsGroup();

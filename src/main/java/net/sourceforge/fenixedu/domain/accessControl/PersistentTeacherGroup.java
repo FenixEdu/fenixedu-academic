@@ -275,6 +275,16 @@ public class PersistentTeacherGroup extends PersistentTeacherGroup_Base {
         return Collections.emptySet();
     }
 
+    @Override
+    protected void gc() {
+        setDegree(null);
+        setExecutionCourse(null);
+        setCampus(null);
+        setDepartment(null);
+        setExecutionYear(null);
+        super.gc();
+    }
+
     public static PersistentTeacherGroup getInstance(Degree degree) {
         return getInstance(FluentIterable.from(degree.getTeacherGroupSet()), degree, null, null, null, null);
     }

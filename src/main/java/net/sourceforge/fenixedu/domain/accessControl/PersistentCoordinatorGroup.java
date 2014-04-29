@@ -170,6 +170,12 @@ public class PersistentCoordinatorGroup extends PersistentCoordinatorGroup_Base 
         return Collections.emptySet();
     }
 
+    @Override
+    protected void gc() {
+        setDegree(null);
+        super.gc();
+    }
+
     public static PersistentCoordinatorGroup getInstance() {
         return getInstance(filter(PersistentCoordinatorGroup.class), null, null);
     }

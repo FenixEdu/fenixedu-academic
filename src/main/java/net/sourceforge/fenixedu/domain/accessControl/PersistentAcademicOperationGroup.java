@@ -142,6 +142,13 @@ public class PersistentAcademicOperationGroup extends PersistentAcademicOperatio
         return Collections.emptySet();
     }
 
+    @Override
+    protected void gc() {
+        getProgramSet().clear();
+        getOfficeSet().clear();
+        super.gc();
+    }
+
     public static PersistentAcademicOperationGroup getInstance(final AcademicOperationType operation, final Scope scope) {
         return getInstance(operation, null, null, scope);
     }

@@ -82,6 +82,12 @@ public class PersistentGroupingGroup extends PersistentGroupingGroup_Base {
         return Collections.emptySet();
     }
 
+    @Override
+    protected void gc() {
+        setGrouping(null);
+        super.gc();
+    }
+
     public static PersistentGroupingGroup getInstance(Grouping grouping) {
         PersistentGroupingGroup instance = grouping.getGroupingGroup();
         return instance != null ? instance : create(grouping);

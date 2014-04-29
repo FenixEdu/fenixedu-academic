@@ -219,6 +219,9 @@ public class Project extends Project_Base {
         if (!getProjectSubmissions().isEmpty()) {
             throw new DomainException("error.project.cannotDeleteBecauseHasSubmissionsAssociated");
         }
+        if (getProjectDepartmentGroup() != null) {
+            throw new DomainException("error.project.cannotDeleteProjectUsedInAccessControl");
+        }
 
         logRemove();
         setGrouping(null);

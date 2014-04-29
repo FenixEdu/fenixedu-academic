@@ -31,6 +31,9 @@ public class PersistentGroupMembers extends PersistentGroupMembers_Base {
 
     public void delete() {
         check(this, PersistentGroupMembersPredicates.checkPermissionsToManagePersistentGroups);
+        if (getMembersLinkGroup() != null) {
+            throw new DomainException("error.persistentGroupMembers.cannotDeletePersistentGroupMembersUsedInAccessControl");
+        }
         getPersons().clear();
         if (hasUnit()) {
             getUnit().removeGroupFromUnitFiles(this);

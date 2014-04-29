@@ -223,7 +223,8 @@ public class Unit extends Unit_Base {
                 && (!hasSite() || getSite().isDeletable()) && !hasAnyOwnedReceipts() && !hasAnyPrecedentDegreeInformations()
                 && !hasAnyCandidacyPrecedentDegreeInformations() && !hasAnyUnitSpaceOccupations() && !hasAnyExamCoordinators()
                 && !hasAnyExternalRegistrationDatas() && !hasAnyCooperation() && !hasAnyFiles() && !hasAnyPersistentGroups()
-                && !hasAnyExternalCourseLoadRequests() && !hasAnyExternalProgramCertificateRequests();
+                && !hasAnyExternalCourseLoadRequests() && !hasAnyExternalProgramCertificateRequests()
+                && !getUnitGroupSet().isEmpty();
     }
 
     @Override

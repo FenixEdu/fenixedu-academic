@@ -79,6 +79,12 @@ public class PersistentAlumniGroup extends PersistentAlumniGroup_Base {
         return Collections.emptySet();
     }
 
+    @Override
+    protected void gc() {
+        setDegree(null);
+        super.gc();
+    }
+
     public static PersistentAlumniGroup getInstance() {
         return getInstance(null);
     }

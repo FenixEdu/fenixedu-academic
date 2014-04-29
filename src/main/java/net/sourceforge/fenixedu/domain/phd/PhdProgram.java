@@ -117,6 +117,7 @@ public class PhdProgram extends PhdProgram_Base {
         return bundle.getString("label.php.program") + " " + bundle.getString("label.in") + " ";
     }
 
+    @Override
     @Atomic
     public void delete() {
         if (hasAnyIndividualProgramProcesses()) {
@@ -127,7 +128,7 @@ public class PhdProgram extends PhdProgram_Base {
         setDegree(null);
         setServiceAgreementTemplate(null);
         setRootDomainObject(null);
-        super.deleteDomainObject();
+        super.delete();
     }
 
     public Set<Person> getCoordinatorsFor(ExecutionYear executionYear) {

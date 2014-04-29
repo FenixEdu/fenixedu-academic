@@ -388,7 +388,7 @@ public class Thesis extends Thesis_Base {
     }
 
     public boolean canBeDeleted() {
-        return getState() == ThesisState.DRAFT;
+        return getState() == ThesisState.DRAFT && getReaders() == null;
     }
 
     protected static Collection<Thesis> getThesisInState(Degree degree, ExecutionYear year, ThesisState state) {

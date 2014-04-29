@@ -80,6 +80,12 @@ public class PersistentMembersLinkGroup extends PersistentMembersLinkGroup_Base 
         return Collections.emptySet();
     }
 
+    @Override
+    protected void gc() {
+        setPersistentGroupMembers(null);
+        super.gc();
+    }
+
     public static PersistentMembersLinkGroup getInstance(PersistentGroupMembers persistentGroupMembers) {
         PersistentMembersLinkGroup instance = persistentGroupMembers.getMembersLinkGroup();
         return instance != null ? instance : create(persistentGroupMembers);
