@@ -122,9 +122,9 @@ public class PersistentUnitGroup extends PersistentUnitGroup_Base {
     @Override
     public String[] getPresentationNameKeyArgs() {
         if (getRelationType() != null) {
-            return new String[] { getUnit().getName(), getRelationType().getFullyQualifiedName() };
+            return new String[] { getUnit().getNameI18n().getContent(), getRelationType().getLocalizedName() };
         }
-        return new String[] { getUnit().getName(), getRelationFunctionType().getName() };
+        return new String[] { getUnit().getNameI18n().getContent(), getRelationFunctionType().getName() };
     }
 
     @Override
