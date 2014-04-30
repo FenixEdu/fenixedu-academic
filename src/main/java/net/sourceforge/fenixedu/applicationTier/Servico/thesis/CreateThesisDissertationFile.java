@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFil
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
 
-import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixframework.Atomic;
@@ -50,11 +49,10 @@ public class CreateThesisDissertationFile extends CreateThesisFile {
                     publication.getResultDocumentFilesSet().iterator().next();
 
             final FileResultPermittedGroupType permittedGroupType = researchResultDocumentFile.getFileResultPermittedGroupType();
-            final Group permittedGroup = researchResultDocumentFile.getPermittedGroup();
 
             researchResultDocumentFile.delete();
 
-            publication.addDocumentFile(bytes, fileName, file.getDisplayName(), permittedGroupType, permittedGroup);
+            publication.addDocumentFile(bytes, fileName, file.getDisplayName(), permittedGroupType);
             publication.setThesis(thesis);
 
         }
