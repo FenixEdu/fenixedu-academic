@@ -17,7 +17,6 @@
 		<bean:write name="path"/>.do?method=chooseCandidate<%= "&" %>personID=
 		</bean:define>
 		
-	<em><bean:message key="title.masterDegree.administrativeOffice"/></em>
 	<h2><bean:message name="title"/></h2>
 	
     	<p class="mtop15"><b>Critérios de procura:</b>

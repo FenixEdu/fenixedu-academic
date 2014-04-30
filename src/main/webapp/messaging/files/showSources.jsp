@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ page language="java" %>
 
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
@@ -36,3 +37,7 @@
 	   <fr:destination name="files.view" path="<%= "/viewFiles.do?method=viewFiles&unitId=${unit.externalId}" %>"/>
 	</fr:view>
 </logic:notEmpty>
+
+<script type="text/javascript" src="<%= request.getContextPath() %>/javaScript/drag-drop-folder-tree/js/ajax.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/javaScript/drag-drop-folder-tree/js/drag-drop-folder-tree.js"></script>
+<script type="text/javascript" src="<%= request.getContextPath() %>/javaScript/drag-drop-folder-tree/js/tree-renderer.js"></script>

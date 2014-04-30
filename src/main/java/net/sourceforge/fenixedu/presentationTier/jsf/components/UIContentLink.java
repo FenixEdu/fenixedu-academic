@@ -7,7 +7,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.Site;
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 
 public class UIContentLink extends UIOutput {
 
@@ -32,21 +33,18 @@ public class UIContentLink extends UIOutput {
         }
 
         ResponseWriter writer = context.getResponseWriter();
-        Content content = (Content) this.getAttributes().get("content");
+        Site content = (Site) this.getAttributes().get("content");
         String label = (String) this.getAttributes().get("label");
 
         if (content != null) {
-            final String prefix =
-                    content.isPublic() ? pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX : pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX;
-            writer.append(prefix);
+            writer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
             writer.append("<a href=\"");
-            writer.append(getContextPath(context));
-            writer.append(content.getReversePath());
+            writer.append(content.getFullPath());
             writer.append("\">").append(label).append("</a>");
         }
     }
 
-    private static String getContextPath(FacesContext facesContext) {
-        return ((HttpServletRequest) facesContext.getCurrentInstance().getExternalContext().getRequest()).getContextPath();
+    private static String getContextPath() {
+        return ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getContextPath();
     }
 }

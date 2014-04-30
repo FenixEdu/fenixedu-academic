@@ -18,11 +18,14 @@ import net.sourceforge.fenixedu.domain.log.CurriculumLineLog;
 import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerStudentsApp;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.time.Second;
@@ -34,11 +37,13 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@StrutsFunctionality(app = ManagerStudentsApp.class, path = "curriculum-logs", titleKey = "title.curriculum.line.logs")
 @Mapping(path = "/curriculumLineLogs", module = "manager")
 @Forwards({ @Forward(name = "searchCurriculumLineLogs", path = "/manager/viewCurriculumLineLogs.jsp"),
         @Forward(name = "viewCurriculumLineLogStatistics", path = "/manager/viewCurriculumLineLogStatistics.jsp") })
 public class CurriculumLineLogsDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepareViewCurriculumLineLogs(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         request.setAttribute("bean", new SearchCurriculumLineLog());

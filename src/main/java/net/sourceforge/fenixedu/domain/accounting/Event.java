@@ -1096,16 +1096,6 @@ public abstract class Event extends Event_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.events.InstitutionAffiliationEventTicket> getConsumedTicket() {
-        return getConsumedTicketSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyConsumedTicket() {
-        return !getConsumedTicketSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Discount> getDiscounts() {
         return getDiscountsSet();
     }

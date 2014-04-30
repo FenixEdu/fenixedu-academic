@@ -13,23 +13,18 @@
 	<!ENTITY payments SYSTEM "schemas/payments-schemas.xml">
 	<!ENTITY candidacy SYSTEM "schemas/candidacy-schemas.xml">
 	<!ENTITY execution SYSTEM "schemas/execution-schemas.xml">
-	<!ENTITY cron SYSTEM "schemas/cron-schemas.xml">
 	<!ENTITY prices SYSTEM "schemas/prices-schemas.xml">
 	<!ENTITY serviceRequests SYSTEM "schemas/serviceRequests-schemas.xml">
-    <!ENTITY functionalities SYSTEM "schemas/functionalities-schemas.xml">
     <!ENTITY degreeAdminOffice SYSTEM "schemas/degreeAdministrativeOffice-schemas.xml">    
     <!ENTITY executionCourse SYSTEM "schemas/executionCourse-schemas.xml"> 
-    <!ENTITY parking SYSTEM "schemas/parking-schemas.xml"> 
 	<!ENTITY vigilancy SYSTEM "schemas/vigilancy-schemas.xml">
 	<!ENTITY academicAdminOffice SYSTEM "schemas/academicAdminOffice-schemas.xml">	
 	<!ENTITY tsdProcess SYSTEM "schemas/teacherServiceDistribution-schemas.xml">
-	<!ENTITY tests SYSTEM "schemas/tests-schemas.xml">
     <!ENTITY site SYSTEM "schemas/site-schemas.xml">
     <!ENTITY student SYSTEM "schemas/student-schemas.xml">
     <!ENTITY departmentMember SYSTEM "schemas/departmentMember-schemas.xml">
     <!ENTITY manager SYSTEM "schemas/manager-schemas.xml">
     <!ENTITY resourceAllocationManager SYSTEM "schemas/resourceAllocationManager-schemas.xml">
-    <!ENTITY resourceManager SYSTEM "schemas/resourceManager-schemas.xml">
     <!ENTITY teacher SYSTEM "schemas/teacher-schemas.xml">
     <!ENTITY departmentAdmOffice SYSTEM "schemas/departmentAdmOffice-schemas.xml">
     <!ENTITY coordinator SYSTEM "schemas/coordinator-schemas.xml">
@@ -42,9 +37,6 @@
     <!ENTITY bolonhaManagerSchemas SYSTEM "schemas/bolonhaManager-schemas.xml">
     <!ENTITY pedagogicalCouncilSchemas SYSTEM "schemas/pedagogicalCouncil-schemas.xml">
     <!ENTITY delegatesSchemas SYSTEM "schemas/delegates-schemas.xml">
-    <!ENTITY cardGeneration SYSTEM "schemas/cardGeneration-schemas.xml">
-    <!--ENTITY facultyAdmOffice SYSTEM "facultyAdmOffice-schemas.xml"-->
-	<!ENTITY contentSchemas SYSTEM "schemas/content-schemas.xml">
 	<!ENTITY caseHandlingSchemas SYSTEM "schemas/caseHandling-schemas.xml">
 	<!ENTITY residenceManagement SYSTEM "schemas/residenceManagement-schemas.xml">
     <!ENTITY support SYSTEM "schemas/support-schemas.xml">
@@ -740,23 +732,18 @@
 	&payments;
 	&candidacy;
 	&execution;
-	&cron;
 	&prices;
 	&serviceRequests;
-    &functionalities;
     &degreeAdminOffice;
     &executionCourse;
-    &parking;
 	&vigilancy;
 	&academicAdminOffice;
 	&tsdProcess;
-	&tests;
     &site;
     &student;
     &departmentMember;
     &manager;
     &resourceAllocationManager;
-    &resourceManager;
     &teacher;
     &departmentAdmOffice;
     &coordinator;
@@ -769,8 +756,6 @@
     &bolonhaManagerSchemas;
     &pedagogicalCouncilSchemas;
     &delegatesSchemas;
-    &cardGeneration;
-    &contentSchemas;    
     &caseHandlingSchemas;
     &residenceManagement;
     &support;

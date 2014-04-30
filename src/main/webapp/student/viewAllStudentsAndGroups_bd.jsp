@@ -1,5 +1,6 @@
 <%@ page language="java" %>
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%><html:xhtml/>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
@@ -12,7 +13,6 @@
 <span class="error0"><!-- Error messages go here --><html:errors /></span>
 
 	<logic:empty name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList">
-		<em><bean:message key="title.student.portalTitle"/></em>
 		<h2><bean:message key="title.viewAllStudentsAndGroups"/></h2>
 		<p><span class="warning0"><bean:message key="message.infoSiteStudentsAndGroupsList.not.available" /></span></p>
 		<ul>
@@ -24,7 +24,6 @@
 	</logic:empty>
 	
 	<logic:notEmpty name="infoSiteStudentsAndGroups" property="infoSiteStudentsAndGroupsList">
-		<em><bean:message key="title.student.portalTitle"/></em>
 		<h2><bean:message key="title.viewAllStudentsAndGroups"/></h2>
 		
 		<ul>

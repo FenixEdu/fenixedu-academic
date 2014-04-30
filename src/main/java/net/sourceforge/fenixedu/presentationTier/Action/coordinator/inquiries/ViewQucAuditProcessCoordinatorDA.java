@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex;
 import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.inquiries.ViewQucAuditProcessDA;
 
 import org.apache.struts.action.ActionForm;
@@ -16,7 +16,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(path = "/auditResult", module = "coordinator")
+@Mapping(path = "/auditResult", module = "coordinator", functionality = DegreeCoordinatorIndex.class)
 @Forwards({ @Forward(name = "viewProcessDetails", path = "/pedagogicalCouncil/inquiries/viewProcessDetailsNoAction.jsp") })
 public class ViewQucAuditProcessCoordinatorDA extends ViewQucAuditProcessDA {
 
@@ -25,7 +25,7 @@ public class ViewQucAuditProcessCoordinatorDA extends ViewQucAuditProcessDA {
             HttpServletResponse response) {
         DegreeCurricularPlan dcp = FenixFramework.getDomainObject(request.getParameter("degreeCurricularPlanOID"));
         request.setAttribute("degreeCurricularPlanID", dcp.getExternalId().toString());
-        CoordinatedDegreeInfo.setCoordinatorContext(request);
+        DegreeCoordinatorIndex.setCoordinatorContext(request);
         return super.viewProcessDetails(mapping, form, request, response);
     }
 }

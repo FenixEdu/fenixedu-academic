@@ -15,10 +15,11 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DegreeModuleToEnrolKeyConverter;
 
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class BolonhaStudentEnrollmentBean implements Serializable, IStudentCurricularPlanBean {
 
@@ -135,7 +136,7 @@ public class BolonhaStudentEnrollmentBean implements Serializable, IStudentCurri
     }
 
     public String getFuncionalityTitle() {
-        final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale());
+        final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", I18N.getLocale());
 
         final StringBuilder result = new StringBuilder();
         result.append(resourceBundle.getString("label.student.enrollment.courses")).append(" ");

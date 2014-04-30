@@ -6,7 +6,6 @@
 
 <logic:present role="role(ALUMNI)">
 
-	<em><bean:message key="administrative.office.services" bundle="STUDENT_RESOURCES"/></em>
 	<h2><bean:message key="documents.requirement" bundle="STUDENT_RESOURCES"/></h2>
 
 	<logic:messagesPresent message="true">

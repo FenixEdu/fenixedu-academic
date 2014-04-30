@@ -1,7 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UnionGroup;
+
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlContainer;
@@ -15,17 +16,17 @@ public class GroupRenderer extends OutputRenderer {
     protected Layout getLayout(Object object, Class type) {
         return new Layout() {
 
-            private HtmlComponent processGroupUnion(GroupUnion group) {
+            private HtmlComponent processUnionGroup(UnionGroup object) {
                 HtmlContainer container = new HtmlInlineContainer();
                 container.setIndented(false);
 
-                int i = group.getChildren().size();
+                int i = object.getChildren().size();
 
-                for (IGroup child : group.getChildren()) {
-                    if (child instanceof GroupUnion) {
-                        container.addChild(processGroupUnion((GroupUnion) child));
+                for (Group child : object.getChildren()) {
+                    if (child instanceof UnionGroup) {
+                        container.addChild(processUnionGroup((UnionGroup) child));
                     } else {
-                        container.addChild(new HtmlText(child.getName()));
+                        container.addChild(new HtmlText(child.getPresentationName()));
                     }
                     i--;
                     if (i > 0) {
@@ -41,11 +42,11 @@ public class GroupRenderer extends OutputRenderer {
 
                 HtmlInlineContainer container = new HtmlInlineContainer();
 
-                if (object instanceof GroupUnion) {
-                    container.addChild(processGroupUnion((GroupUnion) object));
+                if (object instanceof UnionGroup) {
+                    container.addChild(processUnionGroup((UnionGroup) object));
                 } else {
-                    IGroup group = (IGroup) object;
-                    container.addChild(new HtmlText(group.getName()));
+                    Group group = (Group) object;
+                    container.addChild(new HtmlText(group.getPresentationName()));
                 }
 
                 return container;

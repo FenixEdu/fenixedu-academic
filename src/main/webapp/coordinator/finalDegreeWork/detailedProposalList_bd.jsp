@@ -4,6 +4,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <logic:iterate id="finalDegreeWorkProposal" name="proposals">
 	<h2><bean:message key="title.finalDegreeWorkProposal"/></h2>
 	<br />

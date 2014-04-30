@@ -6,12 +6,11 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.contents.Content;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
+import net.sourceforge.fenixedu.domain.Site;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.Group;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class Homepage extends Homepage_Base {
@@ -32,8 +31,6 @@ public class Homepage extends Homepage_Base {
 
     public Homepage() {
         super();
-
-        setRootDomainObject(Bennu.getInstance());
 
         setActivated(false);
         setShowUnit(false);
@@ -69,14 +66,14 @@ public class Homepage extends Homepage_Base {
     }
 
     @Override
-    public IGroup getOwner() {
+    public Group getOwner() {
         return getPerson().getPersonGroup();
     }
 
     public static List<Homepage> getAllHomepages() {
         List<Homepage> result = new ArrayList<Homepage>();
 
-        for (Content content : Bennu.getInstance().getContentsSet()) {
+        for (Site content : Bennu.getInstance().getSiteSet()) {
             if (content instanceof Homepage) {
                 result.add((Homepage) content);
             }
@@ -85,8 +82,8 @@ public class Homepage extends Homepage_Base {
     }
 
     @Override
-    public List<IGroup> getContextualPermissionGroups() {
-        List<IGroup> groups = super.getContextualPermissionGroups();
+    public List<Group> getContextualPermissionGroups() {
+        List<Group> groups = super.getContextualPermissionGroups();
         groups.add(getPerson().getPersonGroup());
 
         return groups;
@@ -104,9 +101,9 @@ public class Homepage extends Homepage_Base {
     }
 
     @Override
-    protected void disconnect() {
+    public void delete() {
         setPerson(null);
-        super.disconnect();
+        super.delete();
     }
 
     public boolean isHomepageActivated() {
@@ -115,123 +112,12 @@ public class Homepage extends Homepage_Base {
 
     @Override
     public MultiLanguageString getName() {
-        return new MultiLanguageString().with(Language.pt, String.valueOf(getPerson().getIstUsername()));
+        return new MultiLanguageString().with(MultiLanguageString.pt, String.valueOf(getPerson().getIstUsername()));
     }
 
     @Override
-    public void setNormalizedName(final MultiLanguageString normalizedName) {
-        // unable to optimize because we cannot track changes to name correctly.
-        // don't call super.setNormalizedName() !
-    }
-
-    @Deprecated
-    public boolean hasResearchUnitHomepage() {
-        return getResearchUnitHomepage() != null;
-    }
-
-    @Deprecated
-    public boolean hasShowInterests() {
-        return getShowInterests() != null;
-    }
-
-    @Deprecated
-    public boolean hasShowPublications() {
-        return getShowPublications() != null;
-    }
-
-    @Deprecated
-    public boolean hasShowWorkTelephone() {
-        return getShowWorkTelephone() != null;
-    }
-
-    @Deprecated
-    public boolean hasShowCategory() {
-        return getShowCategory() != null;
-    }
-
-    @Deprecated
-    public boolean hasActivated() {
-        return getActivated() != null;
-    }
-
-    @Deprecated
-    public boolean hasShowPhoto() {
-        return getShowPhoto() != null;
-    }
-
-    @Deprecated
-    public boolean hasShowResearchUnitHomepage() {
-        return getShowResearchUnitHomepage() != null;
-    }
-
-    @Deprecated
-    public boolean hasShowPrizes() {
-        return getShowPrizes() != null;
-    }
-
-    @Deprecated
-    public boolean hasShowUnit() {
-        return getShowUnit() != null;
-    }
-
-    @Deprecated
-    public boolean hasShowTelephone() {
-        return getShowTelephone() != null;
-    }
-
-    @Deprecated
-    public boolean hasShowPatents() {
-        return getShowPatents() != null;
-    }
-
-    @Deprecated
-    public boolean hasShowAlumniDegrees() {
-        return getShowAlumniDegrees() != null;
-    }
-
-    @Deprecated
-    public boolean hasShowCurrentAttendingExecutionCourses() {
-        return getShowCurrentAttendingExecutionCourses() != null;
-    }
-
-    @Deprecated
-    public boolean hasShowAlternativeHomepage() {
-        return getShowAlternativeHomepage() != null;
-    }
-
-    @Deprecated
-    public boolean hasShowCurrentExecutionCourses() {
-        return getShowCurrentExecutionCourses() != null;
-    }
-
-    @Deprecated
-    public boolean hasShowEmail() {
-        return getShowEmail() != null;
-    }
-
-    @Deprecated
-    public boolean hasShowMobileTelephone() {
-        return getShowMobileTelephone() != null;
-    }
-
-    @Deprecated
-    public boolean hasPerson() {
-        return getPerson() != null;
-    }
-
-    @Deprecated
-    public boolean hasShowActiveStudentCurricularPlans() {
-        return getShowActiveStudentCurricularPlans() != null;
-    }
-
-    @Deprecated
-    public boolean hasShowParticipations() {
-        return getShowParticipations() != null;
-    }
-
-    @Deprecated
-    public boolean hasResearchUnit() {
-        return getResearchUnit() != null;
+    public String getReversePath() {
+        return super.getReversePath() + "/" + getPerson().getUsername();
     }
 
 }

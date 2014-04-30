@@ -5,7 +5,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<em><bean:message key="title.resourceAllocationManager.management" /></em>
 <h2><bean:message key="title.manage.firstYearShiftCapacity" /></h2>
 
 

@@ -14,21 +14,26 @@ import net.sourceforge.fenixedu.domain.EquivalencePlanEntry.EquivalencePlanEntry
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
+@Mapping(module = "coordinator", path = "/degreeCurricularPlan/equivalencyPlan", functionality = DegreeCoordinatorIndex.class)
+@Forwards(@Forward(name = "showPlan", path = "/coordinator/degreeCurricularPlan/showEquivalencyPlan.jsp"))
 public class EquivalencyPlanDA extends FenixDispatchAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        CoordinatedDegreeInfo.setCoordinatorContext(request);
+        DegreeCoordinatorIndex.setCoordinatorContext(request);
 
         final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
         if (degreeCurricularPlan == null) {
@@ -43,6 +48,7 @@ public class EquivalencyPlanDA extends FenixDispatchAction {
         return super.execute(mapping, actionForm, request, response);
     }
 
+    @EntryPoint
     public ActionForward showPlan(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         return mapping.findForward("showPlan");

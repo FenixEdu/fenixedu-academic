@@ -6,7 +6,6 @@
 
 <style> .bgcolorgrey { background-color: #fafafa !important; } </style>
 
-<em><bean:message key="title.studentPortal" bundle="INQUIRIES_RESOURCES"/></em>
 <h2><bean:message key="title.inquiries.student.inquiry" bundle="INQUIRIES_RESOURCES"/></h2>
 
 <logic:notPresent name="studentInquiryBean">

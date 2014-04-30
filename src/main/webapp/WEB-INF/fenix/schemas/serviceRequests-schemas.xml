@@ -10,7 +10,7 @@
         <property name="subSchema" value="net.sourceforge.fenixedu.domain.ExecutionYear.view"/>
 	</slot>
 	<slot name="freeProcessed" key="label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.freeProcessed" />
-	<slot name="language"/>	
+	<slot name="language.displayName" key="language" />
 </schema>
 
 <schema name="AcademicServiceRequest.view-short" type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest" bundle="ACADEMIC_OFFICE_RESOURCES">

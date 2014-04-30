@@ -1,9 +1,13 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
-<ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
+<f:view>
+
+	<h:outputText value="#{evaluationManagementBackingBean.hackToStoreExecutionCourse}" />
+	<jsp:include page="/teacher/evaluation/evaluationMenu.jsp" />
+
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
@@ -48,13 +52,11 @@
 						valueChangeListener="#{evaluationManagementBackingBean.changeRoom}" >
 					<f:selectItems value="#{evaluationManagementBackingBean.names}" />
 				</h:selectOneMenu>
-				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID1' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 				<h:outputText value=" #{bundle['label.distribute.position']} " />			
 				<h:selectOneMenu value="#{evaluationManagementBackingBean.newRoomPosition}" onchange="this.form.submit();"
 						valueChangeListener="#{evaluationManagementBackingBean.changePosition}">
 					<f:selectItems value="#{evaluationManagementBackingBean.positions}"/>
 				</h:selectOneMenu>
-				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 			</h:panelGroup>			
 			
 			<h:outputText value="<br/><br/>" escape="false"/>
@@ -74,4 +76,7 @@
 
 		<h:commandButton alt="#{htmlAltBundle['commandButton.goBack']}" action="#{evaluationManagementBackingBean.evaluation.class.getSimpleName}" value="#{bundle['link.goBack']}" styleClass="inputButton" />		
 	</h:form>
-</ft:tilesView>		
+</f:view>		
+
+</div>
+</div>

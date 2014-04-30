@@ -28,7 +28,7 @@
 	
 		<div id="container">
 			<div id="dotist_id">
-				<img alt="<%=net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstalationName() %>"
+				<img alt="<%=org.fenixedu.bennu.portal.domain.PortalConfiguration.getInstance().getApplicationTitle().getContent() %>"
 						src="<bean:message key="dot.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>" />
 			</div>
 
@@ -54,7 +54,7 @@
 				<table>
 					<tr>
 						<td>
-							<fr:form action="<%="/student/payments.do?method=showEvents&" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/student")%>">
+							<fr:form action="/student/payments.do?method=showEvents">
 								<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="APPLICATION_RESOURCES" key="label.view.payments"/></html:submit>
 							</fr:form>
 						</td>

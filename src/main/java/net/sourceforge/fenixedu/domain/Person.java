@@ -26,10 +26,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.Re
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationFromUniqueCardDTO;
-import net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardDTO;
 import net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accounting.AcademicEvent;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
@@ -44,7 +42,6 @@ import net.sourceforge.fenixedu.domain.accounting.ServiceAgreement;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent;
-import net.sourceforge.fenixedu.domain.accounting.events.InstitutionAffiliationEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.PastAdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
@@ -60,10 +57,6 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCa
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacy;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacy;
 import net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneIndividualCandidacy;
-import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch;
-import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry;
-import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationProblem;
-import net.sourceforge.fenixedu.domain.cardGeneration.Category;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
@@ -85,7 +78,6 @@ import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
 import net.sourceforge.fenixedu.domain.inquiries.RegentInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.domain.inquiries.TeacherInquiryTemplate;
-import net.sourceforge.fenixedu.domain.library.LibraryCard;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.domain.messaging.ForumSubscription;
@@ -130,7 +122,6 @@ import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
 import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
-import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
@@ -162,6 +153,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.user.management.UserLoginPeriod;
 import org.fenixedu.bennu.user.management.UserManager;
 import org.fenixedu.commons.StringNormalizer;
@@ -175,13 +168,30 @@ import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+
+import com.google.common.collect.FluentIterable;
 
 public class Person extends Person_Base {
 
     private static HashSet<Role> OPT_OUT_ROLES;
     private static final Integer MAX_VALIDATION_REQUESTS = 5;
+    public static com.google.common.base.Function<User, Person> userToPerson =
+            new com.google.common.base.Function<User, Person>() {
+                @Override
+                public Person apply(User user) {
+                    return user.getPerson();
+                }
+            };
+
+    public static com.google.common.base.Function<Person, User> personToUser =
+            new com.google.common.base.Function<Person, User>() {
+                @Override
+                public User apply(Person person) {
+                    return person.getUser();
+                }
+            };
 
     static {
         Role.getRelationPersonRole().addListener(new PersonRoleListener());
@@ -231,8 +241,8 @@ public class Person extends Person_Base {
 
         MultiLanguageString partyName = super.getPartyName();
         partyName =
-                partyName == null ? new MultiLanguageString(Language.getDefaultLanguage(), formattedName) : partyName.with(
-                        Language.getDefaultLanguage(), formattedName);
+                partyName == null ? new MultiLanguageString(Locale.getDefault(), formattedName) : partyName.with(
+                        Locale.getDefault(), formattedName);
 
         super.setPartyName(partyName);
 
@@ -1217,8 +1227,8 @@ public class Person extends Person_Base {
     /**
      * @return a group that only contains this person
      */
-    public PersonGroup getPersonGroup() {
-        return new PersonGroup(this);
+    public Group getPersonGroup() {
+        return UserGroup.of(this.getUser());
     }
 
     /**
@@ -1254,9 +1264,6 @@ public class Person extends Person_Base {
         }
         if (getPersonalPhotoEvenIfRejected() != null) {
             getPersonalPhotoEvenIfRejected().delete();
-        }
-        if (hasParkingParty()) {
-            getParkingParty().delete();
         }
         if (hasAssociatedPersonAccount()) {
             getAssociatedPersonAccount().delete();
@@ -1315,17 +1322,9 @@ public class Person extends Person_Base {
                 && !hasAnyAssociatedQualifications() && !hasAnyAssociatedAlteredCurriculums() && !hasAnyEnrolmentEvaluations()
                 && !hasAnyExportGroupingSenders() && !hasAnyResponsabilityTransactions() && !hasAnyMasterDegreeCandidates()
                 && !hasAnyGuides() && !hasEmployee() && !hasTeacher() && !hasAnyPayedGuides() && !hasAnyPayedReceipts()
-                && !hasParking() && !hasAnyResearchInterests() && !hasAnyProjectParticipations() && !hasAnyParticipations()
-                && !hasAnyBoards() && !hasAnyPersonFunctions() && (!hasHomepage() || getHomepage().isDeletable())
-                && !hasLibraryCard() && !hasAnyCardGenerationEntries() && !hasAnyInternalParticipants()
-                && !hasAnyCreatedQualifications() && !hasAnyCreateJobs();
-    }
-
-    private boolean hasParking() {
-        if (hasParkingParty()) {
-            return getParkingParty().hasAnyVehicles();
-        }
-        return false;
+                && !hasAnyResearchInterests() && !hasAnyProjectParticipations() && !hasAnyParticipations()
+                && !hasAnyPersonFunctions() && (!hasHomepage() || getHomepage().isDeletable())
+                && !hasAnyInternalParticipants() && !hasAnyCreatedQualifications() && !hasAnyCreateJobs();
     }
 
     public ExternalContract getExternalContract() {
@@ -1456,13 +1455,11 @@ public class Person extends Person_Base {
                 break;
 
             case DIRECTIVE_COUNCIL:
-            case SEMINARIES_COORDINATOR:
             case COORDINATOR:
             case DEGREE_ADMINISTRATIVE_OFFICE:
             case DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER:
             case MASTER_DEGREE_ADMINISTRATIVE_OFFICE:
             case DEPARTMENT_CREDITS_MANAGER:
-            case TREASURY:
             case CREDITS_MANAGER:
             case EXAM_COORDINATOR:
             case DEPARTMENT_ADMINISTRATIVE_OFFICE:
@@ -1509,7 +1506,6 @@ public class Person extends Person_Base {
                 break;
 
             case EMPLOYEE:
-                removeRoleIfPresent(person, RoleType.SEMINARIES_COORDINATOR);
                 if (!person.hasAnyParticipations()) {
                     removeRoleIfPresent(person, RoleType.RESEARCHER);
                 }
@@ -1552,7 +1548,7 @@ public class Person extends Person_Base {
             final Sender sender = Bennu.getInstance().getSystemSender();
 
             if (sender != null) {
-                final Recipient recipient = new Recipient(new RoleGroup(RoleType.MANAGER));
+                final Recipient recipient = new Recipient(RoleGroup.get(RoleType.MANAGER));
                 new Message(sender, recipient, BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
                         subjectKey), BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", bodyKey,
                         person.getPresentationName()));
@@ -2048,15 +2044,6 @@ public class Person extends Person_Base {
         }
 
         return result;
-    }
-
-    public InstitutionAffiliationEvent getOpenAffiliationEvent() {
-        for (final Event event : getEventsByEventType(EventType.INSTITUTION_AFFILIATION)) {
-            if (event.isOpen()) {
-                return (InstitutionAffiliationEvent) event;
-            }
-        }
-        return null;
     }
 
     public Set<AccountingTransaction> getPaymentTransactions(final EventType... type) {
@@ -2941,43 +2928,6 @@ public class Person extends Person_Base {
         return proposals;
     }
 
-    @Override
-    public Set<TSDProcess> getTSDProcessesSet() {
-        final Department department = hasTeacher() ? getTeacher().getCurrentWorkingDepartment() : null;
-        return department == null ? Collections.<TSDProcess> emptySet() : new HashSet<TSDProcess>(CollectionUtils.select(
-                department.getTSDProcesses(), new Predicate() {
-                    @Override
-                    public boolean evaluate(final Object arg0) {
-                        final TSDProcess tsd = (TSDProcess) arg0;
-                        return tsd.hasAnyPermission(Person.this);
-                    }
-                }));
-    }
-
-    public List<TSDProcess> getTSDProcesses(final ExecutionSemester period) {
-        final Department department = hasTeacher() ? getTeacher().getCurrentWorkingDepartment() : null;
-        return department == null ? Collections.EMPTY_LIST : (List<TSDProcess>) CollectionUtils.select(
-                department.getTSDProcessesByExecutionPeriod(period), new Predicate() {
-                    @Override
-                    public boolean evaluate(final Object arg0) {
-                        final TSDProcess tsd = (TSDProcess) arg0;
-                        return tsd.hasAnyPermission(Person.this);
-                    }
-                });
-    }
-
-    public List<TSDProcess> getTSDProcesses(final ExecutionYear year) {
-        final Department department = hasTeacher() ? getTeacher().getCurrentWorkingDepartment() : null;
-        return department == null ? Collections.EMPTY_LIST : (List<TSDProcess>) CollectionUtils.select(
-                department.getTSDProcessesByExecutionYear(year), new Predicate() {
-                    @Override
-                    public boolean evaluate(final Object arg0) {
-                        final TSDProcess tsd = (TSDProcess) arg0;
-                        return tsd.hasAnyPermission(Person.this);
-                    }
-                });
-    }
-
     public List<ResearchUnit> getWorkingResearchUnits() {
         final List<ResearchUnit> units = new ArrayList<ResearchUnit>();
         final Collection<? extends Accountability> parentAccountabilities =
@@ -3308,24 +3258,6 @@ public class Person extends Person_Base {
         return foruns;
     }
 
-    public Set<CardGenerationProblem> getCardGenerationProblems(final CardGenerationBatch cardGenerationBatch) {
-        final Set<CardGenerationProblem> cardGenerationProblems = new HashSet<CardGenerationProblem>();
-        for (final CardGenerationProblem cardGenerationProblem : getCardGenerationProblemsSet()) {
-            if (cardGenerationProblem.getCardGenerationBatch() == cardGenerationBatch) {
-                cardGenerationProblems.add(cardGenerationProblem);
-            }
-        }
-        return cardGenerationProblems;
-    }
-
-    public int getNumberOfCardGenerationEntries() {
-        int result = 0;
-        for (final CardGenerationEntry cardGenerationEntry : getCardGenerationEntriesSet()) {
-            result++;
-        }
-        return result;
-    }
-
     private boolean hasValidIndividualCandidacy(final Class<? extends IndividualCandidacy> clazz,
             final ExecutionInterval executionInterval) {
         for (final IndividualCandidacyPersonalDetails candidacyDetails : getIndividualCandidacies()) {
@@ -3565,24 +3497,6 @@ public class Person extends Person_Base {
         }
 
         return result;
-    }
-
-    public Boolean hasCardGenerationEntryMatchingLine(final String line) {
-        for (final CardGenerationEntry cardGenerationEntry : this.getCardGenerationEntriesSet()) {
-            if (cardGenerationEntry.matches(line)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public Boolean hasCardGenerationEntryLine(final String line) {
-        for (final CardGenerationEntry cardGenerationEntry : this.getCardGenerationEntriesSet()) {
-            final Category category = cardGenerationEntry.getCategory();
-            return category == Category.CODE_73 || category == Category.CODE_83 || category == Category.CODE_96
-                    || cardGenerationEntry.getNormalizedLine().substring(0, 262).equals(line.substring(0, 262));
-        }
-        return false;
     }
 
     public boolean isPhdStudent() {
@@ -4070,15 +3984,6 @@ public class Person extends Person_Base {
         return roleOperationLogList;
     }
 
-    public static Person readPersonByLibraryCardNumber(final String cardNumber) {
-        for (final LibraryCard card : Bennu.getInstance().getLibraryCardsSet()) {
-            if (card.getCardNumber() != null && card.getCardNumber().equals(cardNumber)) {
-                return card.getPerson();
-            }
-        }
-        return null;
-    }
-
     public boolean hasQucGlobalCommentsMadeBy(final Person person, final ExecutionSemester executionSemester,
             final ResultPersonCategory personCategory) {
         final InquiryGlobalComment globalComment = getInquiryGlobalComment(executionSemester);
@@ -4105,20 +4010,6 @@ public class Person extends Person_Base {
     public static Person findByUsername(final String username) {
         final User user = User.findByUsername(username);
         return user == null ? null : user.getPerson();
-    }
-
-    public String getLibraryCardNumber() {
-        if (getLibraryCard() != null) {
-            return getLibraryCard().getCardNumber();
-        }
-        return null;
-    }
-
-    public void setLibraryCardNumber(final String number) {
-        if (getLibraryCard() == null) {
-            new LibraryCard(new LibraryCardDTO(this, getPartyClassification()));
-        }
-        getLibraryCard().setCardNumber(number);
     }
 
     public String getIdentificationDocumentExtraDigitValue() {
@@ -4182,12 +4073,6 @@ public class Person extends Person_Base {
     @Atomic
     public void setNumberOfValidationRequests(final Integer numberOfValidationRequests) {
         super.setNumberOfValidationRequests(numberOfValidationRequests);
-    }
-
-    @Atomic
-    public String generatePaymentTicket() {
-        final InstitutionAffiliationEvent event = getOpenAffiliationEvent();
-        return event == null ? StringUtils.EMPTY : event.generatePaymentTicket();
     }
 
     public boolean getCanValidateContacts() {
@@ -4571,6 +4456,15 @@ public class Person extends Person_Base {
         contact.logRefuse(this);
     }
 
+    public static Set<User> convertToUsers(Iterable<Person> persons) {
+        return FluentIterable.from(persons).filter(new com.google.common.base.Predicate<Person>() {
+            @Override
+            public boolean apply(Person person) {
+                return person.getUser() != null;
+            }
+        }).transform(personToUser).toSet();
+    }
+
     @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.research.result.ResearchResult> getCreatedResults() {
         return getCreatedResultsSet();
@@ -4622,16 +4516,6 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry> getCardGenerationEntries() {
-        return getCardGenerationEntriesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCardGenerationEntries() {
-        return !getCardGenerationEntriesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.candidacy.Candidacy> getCandidacies() {
         return getCandidaciesSet();
     }
@@ -4669,16 +4553,6 @@ public class Person extends Person_Base {
     @Deprecated
     public boolean hasAnyOutboundMobilityCandidacyContestGroup() {
         return !getOutboundMobilityCandidacyContestGroupSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewAnswer> getAnswers() {
-        return getAnswersSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAnswers() {
-        return !getAnswersSet().isEmpty();
     }
 
     @Deprecated
@@ -4802,16 +4676,6 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.support.SupportRequest> getSupportRequests() {
-        return getSupportRequestsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnySupportRequests() {
-        return !getSupportRequestsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.PunctualRoomsOccupationComment> getPunctualRoomsOccupationComments() {
         return getPunctualRoomsOccupationCommentsSet();
     }
@@ -4899,16 +4763,6 @@ public class Person extends Person_Base {
     @Deprecated
     public boolean hasAnyReceipts() {
         return !getReceiptsSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.cardGeneration.SantanderBatchRequester> getSantanderBatchRequesters() {
-        return getSantanderBatchRequestersSet();
-    }
-
-    @Deprecated
-    public boolean hasAnySantanderBatchRequesters() {
-        return !getSantanderBatchRequestersSet().isEmpty();
     }
 
     @Deprecated
@@ -5032,16 +4886,6 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess> getTSDProcesses() {
-        return getTSDProcessesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTSDProcesses() {
-        return !getTSDProcessesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.PaymentCode> getPaymentCodes() {
         return getPaymentCodesSet();
     }
@@ -5069,16 +4913,6 @@ public class Person extends Person_Base {
     @Deprecated
     public boolean hasAnyInternalParticipants() {
         return !getInternalParticipantsSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.PersonalGroup> getPersonalGroups() {
-        return getPersonalGroupsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPersonalGroups() {
-        return !getPersonalGroupsSet().isEmpty();
     }
 
     @Deprecated
@@ -5159,16 +4993,6 @@ public class Person extends Person_Base {
     @Deprecated
     public boolean hasAnyThesisEvaluationParticipants() {
         return !getThesisEvaluationParticipantsSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.contents.Content> getCreatedContents() {
-        return getCreatedContentsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCreatedContents() {
-        return !getCreatedContentsSet().isEmpty();
     }
 
     @Deprecated
@@ -5349,16 +5173,6 @@ public class Person extends Person_Base {
     @Deprecated
     public boolean hasAnyIdentityRequests() {
         return !getIdentityRequestsSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationRegister> getCardGenerationRegister() {
-        return getCardGenerationRegisterSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCardGenerationRegister() {
-        return !getCardGenerationRegisterSet().isEmpty();
     }
 
     @Deprecated
@@ -5592,16 +5406,6 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.cardGeneration.SantanderEntry> getSantanderEntries() {
-        return getSantanderEntriesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnySantanderEntries() {
-        return !getSantanderEntriesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest> getCompetenceCourseInformationChangeRequests() {
         return getCompetenceCourseInformationChangeRequestsSet();
     }
@@ -5672,16 +5476,6 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewTest> getTests() {
-        return getTestsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTests() {
-        return !getTestsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization> getTeacherAuthorizationsAuthorized() {
         return getTeacherAuthorizationsAuthorizedSet();
     }
@@ -5689,16 +5483,6 @@ public class Person extends Person_Base {
     @Deprecated
     public boolean hasAnyTeacherAuthorizationsAuthorized() {
         return !getTeacherAuthorizationsAuthorizedSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.cardGeneration.SantanderBatchSender> getSantanderBatchSenders() {
-        return getSantanderBatchSendersSet();
-    }
-
-    @Deprecated
-    public boolean hasAnySantanderBatchSenders() {
-        return !getSantanderBatchSendersSet().isEmpty();
     }
 
     @Deprecated
@@ -5729,16 +5513,6 @@ public class Person extends Person_Base {
     @Deprecated
     public boolean hasAnyManageableDepartmentCredits() {
         return !getManageableDepartmentCreditsSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationProblem> getCardGenerationProblems() {
-        return getCardGenerationProblemsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCardGenerationProblems() {
-        return !getCardGenerationProblemsSet().isEmpty();
     }
 
     @Deprecated
@@ -5934,11 +5708,6 @@ public class Person extends Person_Base {
     @Deprecated
     public boolean hasDistrictSubdivisionOfBirth() {
         return getDistrictSubdivisionOfBirth() != null;
-    }
-
-    @Deprecated
-    public boolean hasLibraryCard() {
-        return getLibraryCard() != null;
     }
 
     @Deprecated

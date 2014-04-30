@@ -19,11 +19,14 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.DepartmentAdmOfficeApp.DepartmentAdmOfficeExpectationsApp;
 import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.components.converters.ConversionException;
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
@@ -35,15 +38,14 @@ import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
-@Mapping(module = "departmentAdmOffice", path = "/listTeachersPersonalExpectations", scope = "request", parameter = "method")
-@Forwards(
-        value = {
-                @Forward(
-                        name = "seeTeacherPersonalExpectationsByYear",
-                        path = "/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/seeTeacherPersonalExpectations.jsp"),
-                @Forward(
-                        name = "listTeacherPersonalExpectations",
-                        path = "/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/listTeacherPersonalExpectations.jsp") })
+@StrutsFunctionality(app = DepartmentAdmOfficeExpectationsApp.class, path = "list-teachers-personal-expectations",
+        titleKey = "link.see.teachers.personal.expectations")
+@Mapping(module = "departmentAdmOffice", path = "/listTeachersPersonalExpectations")
+@Forwards({
+        @Forward(name = "seeTeacherPersonalExpectationsByYear",
+                path = "/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/seeTeacherPersonalExpectations.jsp"),
+        @Forward(name = "listTeacherPersonalExpectations",
+                path = "/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/listTeacherPersonalExpectations.jsp") })
 public class ListTeachersPersonalExpectationsDA extends FenixDispatchAction {
 
     public ActionForward listTeachersPersonalExpectationsForSelectedExecutionYear(ActionMapping mapping, ActionForm form,
@@ -61,6 +63,7 @@ public class ListTeachersPersonalExpectationsDA extends FenixDispatchAction {
         return readAndSetList(mapping, request, executionYear);
     }
 
+    @EntryPoint
     public ActionForward listTeachersPersonalExpectations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 

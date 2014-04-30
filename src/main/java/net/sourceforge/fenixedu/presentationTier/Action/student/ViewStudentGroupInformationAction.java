@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.student.VerifyGroupingAn
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExportGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentGroup;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
 import org.apache.struts.action.ActionError;
@@ -37,12 +37,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author asnr and scpo
  * 
  */
-@Mapping(module = "student", path = "/viewStudentGroupInformation", attribute = "enroledExecutionCoursesForm",
-        formBean = "enroledExecutionCoursesForm", scope = "request")
+@Mapping(module = "student", path = "/viewStudentGroupInformation", formBean = "enroledExecutionCoursesForm",
+        functionality = ViewEnroledExecutionCoursesAction.class)
 @Forwards(value = { @Forward(name = "sucess", path = "/student/viewStudentGroupInformation_bd.jsp"),
-        @Forward(name = "viewShiftsAndGroups", path = "/viewShiftsAndGroups.do"),
-        @Forward(name = "viewExecutionCourseProjects", path = "/viewExecutionCourseProjects.do") })
-public class ViewStudentGroupInformationAction extends FenixContextAction {
+        @Forward(name = "viewShiftsAndGroups", path = "/student/viewShiftsAndGroups.do"),
+        @Forward(name = "viewExecutionCourseProjects", path = "/student/viewExecutionCourseProjects.do") })
+public class ViewStudentGroupInformationAction extends FenixAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

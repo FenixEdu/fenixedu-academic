@@ -29,17 +29,18 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculum
 import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.commons.i18n.I18N;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ApprovementInfoForEquivalenceProcess {
 
     static final private ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice",
-            Language.getLocale());
+            I18N.getLocale());
 
     static final private ResourceBundle enumBundle = ResourceBundle.getBundle("resources.EnumerationResources",
-            Language.getLocale());
+            I18N.getLocale());
 
     static final protected String[] identifiers = { "*", "#", "+", "**", "***" };
 

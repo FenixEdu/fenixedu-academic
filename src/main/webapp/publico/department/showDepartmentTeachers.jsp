@@ -3,7 +3,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
-<ft:tilesView locale="<%=request.getAttribute(org.apache.struts.Globals.LOCALE_KEY).toString()%>" definition="definition.public.department" attributeName="body-inline">
+<ft:tilesView definition="definition.public.mainPageIST" attributeName="body-inline">
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 	<f:loadBundle basename="resources/PublicDepartmentResources" var="publicDepartmentBundle"/>
@@ -11,7 +11,7 @@
 	
 	
 	<h:outputText value="<div class='breadcumbs mvert0'>" escape="false"/>
-		<h:outputLink value="#{CurricularCourseManagement.instalationUrl}" >
+		<h:outputLink value="#{CurricularCourseManagement.applicationUrl}" >
 			<h:outputText value="#{CurricularCourseManagement.institutionAcronym}"/>
 		</h:outputLink>
 		&nbsp;&gt;&nbsp;
@@ -19,7 +19,7 @@
 			<h:outputText value="#{publicDegreeInfoBundle['structure']}"/>
 		</h:outputLink>
 		&nbsp;&gt;&nbsp;
-		<h:outputLink value="showDepartments.faces">
+		<h:outputLink value="#{facesContext.externalContext.requestContextPath}/publico/department/showDepartments.faces">
 			<h:outputText value="#{publicDepartmentBundle['academic.units']}"/>
 		</h:outputLink>
 		&nbsp;&gt;&nbsp;

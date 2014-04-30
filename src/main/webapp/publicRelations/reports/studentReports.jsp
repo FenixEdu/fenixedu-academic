@@ -5,7 +5,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <html:xhtml/>
 
-<em><bean:message key="label.publicRelationOffice" bundle="APPLICATION_RESOURCES"/></em>
 <h2><bean:message key="title.student.reports" bundle="APPLICATION_RESOURCES"/></h2>
 
 <logic:notEmpty name="queueJobList">

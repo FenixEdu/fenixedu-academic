@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -7,7 +8,6 @@
 
 <logic:present role="role(MANAGER)">
 
-<em>Entidades Externas para Bolsas</em>
 <h2>Adicionar Entidades</h2>
 
 		<fr:form action="/externalScholarshipProvider.do?method=add">

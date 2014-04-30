@@ -8,6 +8,8 @@
 <bean:define id="executionDegreeOID" name="executionDegree" property="externalId" type="String"/>
 <bean:define id="proposalOID" name="proposal" property="externalId" type="String"/>
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <h2><bean:message key="title.teacher.finalWorkInformation"/></h2>
 <span class="error"><!-- Error messages go here -->
 	<html:errors/><br />

@@ -51,7 +51,7 @@ import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent;
@@ -105,7 +105,6 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.domain.studentCurriculum.StandaloneCurriculumGroup;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
-import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -119,6 +118,7 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.ReadableInstant;
@@ -129,7 +129,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class Registration extends Registration_Base {
 
@@ -1852,8 +1852,7 @@ public class Registration extends Registration_Base {
     private void checkIfReachedAttendsLimit() {
         final User userView = Authenticate.getUser();
         if (userView == null
-                || !AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
-                        AcademicOperationType.STUDENT_ENROLMENTS).contains(this.getDegree())) {
+                || !AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(), AcademicOperationType.STUDENT_ENROLMENTS).contains(this.getDegree())) {
             if (readAttendsInCurrentExecutionPeriod().size() >= MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD) {
                 throw new DomainException("error.student.reached.attends.limit",
                         String.valueOf(MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD));
@@ -2021,11 +2020,11 @@ public class Registration extends Registration_Base {
     }
 
     final public String getDegreeDescription(final CycleType cycleType) {
-        return getDegreeDescription(cycleType, Language.getLocale());
+        return getDegreeDescription(cycleType, I18N.getLocale());
     }
 
     final public String getDegreeDescription(ExecutionYear executionYear, final CycleType cycleType) {
-        return getDegreeDescription(executionYear, cycleType, Language.getLocale());
+        return getDegreeDescription(executionYear, cycleType, I18N.getLocale());
     }
 
     final public String getDegreeDescription(final CycleType cycleType, final Locale locale) {
@@ -2092,30 +2091,8 @@ public class Registration extends Registration_Base {
     }
 
     final public boolean isAllowedToManageRegistration() {
-        return AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-                AcademicOperationType.MANAGE_REGISTRATIONS).contains(getDegree())
-                || AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-                        AcademicOperationType.VIEW_FULL_STUDENT_CURRICULUM).contains(getDegree());
-    }
-
-    final public List<NewTestGroup> getPublishedTestGroups() {
-        List<NewTestGroup> testGroups = new ArrayList<NewTestGroup>();
-
-        for (ExecutionCourse executionCourse : this.getAttendingExecutionCoursesForCurrentExecutionPeriod()) {
-            testGroups.addAll(executionCourse.getPublishedTestGroups());
-        }
-
-        return testGroups;
-    }
-
-    final public List<NewTestGroup> getFinishedTestGroups() {
-        List<NewTestGroup> testGroups = new ArrayList<NewTestGroup>();
-
-        for (ExecutionCourse executionCourse : this.getAttendingExecutionCoursesForCurrentExecutionPeriod()) {
-            testGroups.addAll(executionCourse.getFinishedTestGroups());
-        }
-
-        return testGroups;
+        return AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_REGISTRATIONS).contains(getDegree())
+                || AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.VIEW_FULL_STUDENT_CURRICULUM).contains(getDegree());
     }
 
     public boolean isCurricularCourseApproved(final CurricularCourse curricularCourse) {
@@ -2653,7 +2630,7 @@ public class Registration extends Registration_Base {
     }
 
     final public String getGraduateTitle() {
-        return getGraduateTitle((CycleType) null, Language.getLocale());
+        return getGraduateTitle((CycleType) null, I18N.getLocale());
     }
 
     final public String getGraduateTitle(final CycleType cycleType, final Locale locale) {
@@ -3973,7 +3950,7 @@ public class Registration extends Registration_Base {
     }
 
     public void exportValues(StringBuilder result) {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", I18N.getLocale());
 
         Formatter formatter = new Formatter(result);
         final Student student = getStudent();
@@ -4327,16 +4304,6 @@ public class Registration extends Registration_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy> getAssociatedCandidancies() {
-        return getAssociatedCandidanciesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAssociatedCandidancies() {
-        return !getAssociatedCandidanciesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction> getInsuranceTransactions() {
         return getInsuranceTransactionsSet();
     }
@@ -4474,11 +4441,6 @@ public class Registration extends Registration_Base {
     @Deprecated
     public boolean hasExternalRegistrationData() {
         return getExternalRegistrationData() != null;
-    }
-
-    @Deprecated
-    public boolean hasAssociatedGaugingTestResult() {
-        return getAssociatedGaugingTestResult() != null;
     }
 
     @Deprecated

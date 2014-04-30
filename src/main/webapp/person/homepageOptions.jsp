@@ -4,11 +4,9 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app"%>
-<%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
 
 <html:xhtml/>
 
-<em><bean:message key="label.person.main.title" /></em>
 <h2><bean:message key="title.manage.homepage" bundle="HOMEPAGE_RESOURCES"/></h2>
 
 <div class="infoop2">
@@ -45,36 +43,33 @@
         <bean:message key="label.homepage.activated" bundle="HOMEPAGE_RESOURCES"/>
         <html:radio bundle="HTMLALT_RESOURCES" altKey="radio.activated" property="activated" value="true" ondblclick="this.form.submit();" onclick="this.form.submit();"/><bean:message key="label.homepage.activated.yes" bundle="HOMEPAGE_RESOURCES"/>
         <html:radio bundle="HTMLALT_RESOURCES" altKey="radio.activated" property="activated" value="false" ondblclick="this.form.submit();" onclick="this.form.submit();"/><bean:message key="label.homepage.activated.no" bundle="HOMEPAGE_RESOURCES"/>
-        <html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-            <bean:message key="button.submit"/>
-        </html:submit>
     </p>
     
 
-    <% final String appContext = FenixConfigurationManager.getConfiguration().appContext(); %>
-    <% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
 
-    <bean:define id="homepageURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/homepage/<bean:write name="LOGGED_USER_ATTRIBUTE" property="person.user.username"/></bean:define>
     <p>
     <bean:message key="person.homepage.adress" bundle="HOMEPAGE_RESOURCES"/>:
-    <logic:notPresent name="LOGGED_USER_ATTRIBUTE" property="person.homepage">
-        <bean:write name="homepageURL"/>
-    </logic:notPresent>
+
     <logic:present name="LOGGED_USER_ATTRIBUTE" property="person.homepage">
         <logic:notPresent name="LOGGED_USER_ATTRIBUTE" property="person.homepage.activated">
-                <bean:write name="homepageURL"/>
+                ${LOGGED_USER_ATTRIBUTE.person.homepage.fullPath}
         </logic:notPresent>
         <logic:present name="LOGGED_USER_ATTRIBUTE" property="person.homepage.activated">
             <logic:equal name="LOGGED_USER_ATTRIBUTE" property="person.homepage.activated" value="true">
-                <html:link href="<%= homepageURL %>"><bean:write name="homepageURL"/></html:link>
+                <a href="${LOGGED_USER_ATTRIBUTE.person.homepage.fullPath}">${LOGGED_USER_ATTRIBUTE.person.homepage.fullPath}</a>
             </logic:equal>
             <logic:equal name="LOGGED_USER_ATTRIBUTE" property="person.homepage.activated" value="false">
-                <bean:write name="homepageURL"/>
+                ${LOGGED_USER_ATTRIBUTE.person.homepage.fullPath}
             </logic:equal>
         </logic:present>
     </logic:present>
     </p>
 
+    <p>
+	    <h3>
+	    	<a href="${pageContext.request.contextPath}/person/manageHomepage.do?method=sections"><bean:message key="link.manage.homepage.content" /></a>
+	    </h3>
+    </p>
 
 	<p>
         <h3 class="mtop2"><bean:message key="label.homepage.components" bundle="HOMEPAGE_RESOURCES"/></h3>

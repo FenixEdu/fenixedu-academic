@@ -5,7 +5,6 @@
 <html:xhtml />
 <link href="<%= request.getContextPath() %>/CSS/quc_resume_boards.css" rel="stylesheet" type="text/css" />
 
-<em><bean:message key="pedagogical.council" bundle="PEDAGOGICAL_COUNCIL"/></em>
 <h2><bean:message key="title.inquiry.quc.auditProcesses" bundle="INQUIRIES_RESOURCES"/></h2>
 
 <logic:present name="success">

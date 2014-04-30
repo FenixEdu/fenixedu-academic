@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerExecutionsApp;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionError;
@@ -40,12 +41,27 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.fenixedu.commons.i18n.I18N;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
+@StrutsFunctionality(app = ManagerExecutionsApp.class, path = "execution-degrees-management",
+        titleKey = "label.manager.executionDegreeManagement")
+@Mapping(module = "manager", path = "/executionDegreesManagement",
+        input = "/executionDegreesManagement.do?method=readDegreeCurricularPlans", formBean = "executionDegreesManagementForm")
+@Forwards({ @Forward(name = "manageCoordinators", path = "/manager/executionDegreesManagement/manageCoordinators.jsp"),
+        @Forward(name = "insertCoordinator", path = "/manager/executionDegreesManagement/insertCoordinator.jsp"),
+        @Forward(name = "editExecutionDegree", path = "/manager/executionDegreesManagement/editExecutionDegree.jsp"),
+        @Forward(name = "executionDegreeManagement", path = "/manager/executionDegreesManagement/executionDegreesManagement.jsp") })
 public class ExecutionDegreesManagementDispatchAction extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward readDegreeCurricularPlans(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 
@@ -267,8 +283,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
     }
 
     private void readAndSetDegrees(HttpServletRequest request) {
-        final ResourceBundle enumerationResources =
-                ResourceBundle.getBundle("resources/EnumerationResources", request.getLocale());
+        final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources/EnumerationResources", I18N.getLocale());
 
         final List<LabelValueBean> degreeTypes = new ArrayList<LabelValueBean>();
         for (final DegreeType bolonhaDegreeType : DegreeType.values()) {

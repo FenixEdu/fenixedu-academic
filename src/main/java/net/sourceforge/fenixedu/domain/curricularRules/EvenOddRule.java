@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class EvenOddRule extends EvenOddRule_Base {
@@ -85,7 +84,7 @@ public class EvenOddRule extends EvenOddRule_Base {
     }
 
     public String getEvenOddString() {
-        return new MultiLanguageString(Language.pt, ResourceBundle.getBundle("resources/AcademicAdminOffice",
+        return new MultiLanguageString(MultiLanguageString.pt, ResourceBundle.getBundle("resources/AcademicAdminOffice",
                 new Locale("pt", "PT")).getString("label." + (getEven() ? "even" : "odd"))).toString();
     }
 

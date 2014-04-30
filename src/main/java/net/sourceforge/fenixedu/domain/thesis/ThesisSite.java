@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.thesis;
 
-import net.sourceforge.fenixedu.domain.accessControl.NoOneGroup;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.NobodyGroup;
+
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ThesisSite extends ThesisSite_Base {
@@ -13,19 +13,19 @@ public class ThesisSite extends ThesisSite_Base {
     }
 
     @Override
-    public IGroup getOwner() {
-        return new NoOneGroup();
+    public Group getOwner() {
+        return NobodyGroup.get();
     }
 
     @Override
     public MultiLanguageString getName() {
-        return new MultiLanguageString().with(Language.pt, String.valueOf(getThesis().getExternalId()));
+        return new MultiLanguageString().with(MultiLanguageString.pt, String.valueOf(getThesis().getExternalId()));
     }
 
     @Override
-    protected void disconnect() {
+    public void delete() {
         setThesis(null);
-        super.disconnect();
+        super.delete();
 
     }
 

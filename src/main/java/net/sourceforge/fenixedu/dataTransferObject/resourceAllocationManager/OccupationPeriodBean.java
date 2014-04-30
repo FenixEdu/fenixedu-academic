@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.date.IntervalTools;
 
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
@@ -27,7 +28,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
@@ -154,7 +155,7 @@ public class OccupationPeriodBean implements Serializable, Comparable<Occupation
                     "label.periods.no.dates");
         }
 
-        DateTimeFormatter formatter = DateTimeFormat.forPattern("dd MMM").withLocale(Language.getLocale());
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("dd MMM").withLocale(I18N.getLocale());
 
         StringBuilder builder = new StringBuilder();
 
@@ -349,6 +350,10 @@ public class OccupationPeriodBean implements Serializable, Comparable<Occupation
 
     @Atomic
     public OccupationPeriodBean duplicate(int newId, OccupationPeriodType newPeriodType) {
+
+        if (newPeriodType == null) {
+            throw new DomainException("label.occupation.period.duplicate.message");
+        }
 
         OccupationPeriodBean newBean = new OccupationPeriodBean(newId);
 

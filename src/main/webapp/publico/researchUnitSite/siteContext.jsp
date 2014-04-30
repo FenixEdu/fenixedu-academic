@@ -1,8 +1,8 @@
 <%@ page language="java" %>
-<%@page import="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext"%>
 
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 
+<bean:define id="site" name="actual$site" toScope="request" />
 <bean:define id="announcementActionVariable" value="/department/announcements.do" toScope="request"/>
 <bean:define id="eventActionVariable" value="/department/events.do" toScope="request"/>
 <bean:define id="announcementRSSActionVariable" value="/department/announcementsRSS.do" toScope="request"/>
@@ -11,7 +11,5 @@
 <bean:define id="siteActionName" value="/researchSite/viewResearchUnitSite.do" toScope="request"/>
 <bean:define id="siteContextParam" value="siteID" toScope="request"/>
 <bean:define id="siteContextParamValue" name="site" property="externalId" toScope="request"/>
-<bean:define id="site" name="<%= FunctionalityContext.CONTEXT_KEY %>" property="selectedContainer" toScope="request"/>
 <bean:define id="unit" name="site" property="unit" toScope="request"/>
 <bean:define id="researchUnit" name="site" property="unit" toScope="request"/>
-

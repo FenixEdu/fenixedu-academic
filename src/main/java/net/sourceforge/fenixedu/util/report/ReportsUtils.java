@@ -2,10 +2,12 @@ package net.sourceforge.fenixedu.util.report;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,13 +63,25 @@ public class ReportsUtils extends PropertiesManager {
 
     static final private Properties properties = new Properties();
 
-    static final private String reportsPropertiesFile = "/reports.properties";
+    static final private String reportsPropertiesFile = "reports.properties";
 
     static {
         try {
-            loadProperties(properties, reportsPropertiesFile);
+            loadReportsProperties(properties, reportsPropertiesFile);
         } catch (IOException e) {
             throw new RuntimeException("Unable to load properties files.", e);
+        }
+    }
+
+    public static void loadReportsProperties(final Properties properties, final String fileName) throws IOException {
+        final Enumeration<URL> resources = ReportsUtils.class.getClassLoader().getResources(fileName);
+        while (resources.hasMoreElements()) {
+            URL reportsURL = resources.nextElement();
+            final InputStream inputStream = reportsURL.openStream();
+            if (inputStream != null) {
+                logger.debug("loaded resource from: ", reportsURL);
+                properties.load(inputStream);
+            }
         }
     }
 

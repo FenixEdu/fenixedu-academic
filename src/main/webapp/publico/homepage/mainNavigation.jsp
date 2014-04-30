@@ -7,10 +7,9 @@
 <html:xhtml/>
 
 <ul class="treemenu">
-	
-<logic:present name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>">
-	<fr:view name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>" property="selectedContainer" 
-		layout="side-menu">
+
+<logic:present name="actual$site">
+	<fr:view name="actual$site" layout="side-menu">
             <fr:layout>
                 <fr:property name="sectionUrl" value="/viewHomepage.do?method=section"/>
             </fr:layout>
@@ -18,4 +17,3 @@
 </logic:present>
 
 </ul>
-

@@ -22,9 +22,10 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 abstract public class PaymentPlan extends PaymentPlan_Base {
 
@@ -349,7 +350,7 @@ abstract public class PaymentPlan extends PaymentPlan_Base {
     abstract protected Collection<PaymentPlanRule> getSpecificPaymentPlanRules();
 
     public String getDescription() {
-        return ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale()).getString(
+        return ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale()).getString(
                 this.getClass().getSimpleName() + ".description");
     }
 

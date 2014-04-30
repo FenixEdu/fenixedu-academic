@@ -5,8 +5,10 @@ package net.sourceforge.fenixedu.domain.util;
 
 import java.util.ResourceBundle;
 
+import org.fenixedu.commons.i18n.I18N;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public enum LogicOperator {
 
@@ -21,7 +23,7 @@ public enum LogicOperator {
     }
 
     public String getLocalizedName() {
-        return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(name());
+        return ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale()).getString(name());
     }
 
     public boolean isAND() {

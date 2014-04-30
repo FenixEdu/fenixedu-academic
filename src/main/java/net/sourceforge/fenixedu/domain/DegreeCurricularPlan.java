@@ -21,8 +21,6 @@ import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.ID
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
 import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseView;
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
@@ -64,10 +62,13 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.NobodyGroup;
+import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
@@ -187,7 +188,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         if (curricularPeriod == null) {
             throw new DomainException("degreeCurricularPlan.curricularPeriod.not.null");
         }
-        setCurricularPlanMembersGroup(new FixedSetGroup(creator));
+        setCurricularPlanMembersGroup(UserGroup.of(creator.getUser()));
         setDegreeStructure(curricularPeriod);
         setState(DegreeCurricularPlanState.ACTIVE);
 
@@ -1171,7 +1172,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public Boolean getUserCanBuild() {
         Person person = AccessControl.getPerson();
         return AcademicPredicates.MANAGE_DEGREE_CURRICULAR_PLANS.evaluate(this.getDegree())
-                || (this.isBolonhaDegree() ? this.getCurricularPlanMembersGroup().isMember(person) : false);
+                || (this.isBolonhaDegree() ? this.getCurricularPlanMembersGroup().isMember(person.getUser()) : false);
     }
 
     public Boolean getCanModify() {
@@ -1184,20 +1185,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                 || executionDegrees.iterator().next().getExecutionYear().isCurrent();
     }
 
-    @Override
-    public void setCurricularPlanMembersGroup(Group curricularPlanMembersGroup) {
-        check(this, DegreeCurricularPlanPredicates.scientificCouncilWritePredicate);
-        super.setCurricularPlanMembersGroup(curricularPlanMembersGroup);
+    public Group getCurricularPlanMembersGroup() {
+        return getMembersGroup() != null ? getMembersGroup().toGroup() : NobodyGroup.get();
     }
 
-    /**
-     * Delete after group migration
-     * 
-     * @param curricularPlanMembersGroup
-     */
-    @Deprecated
-    public void setCurricularPlanMembersGroupWithoutCheckingPermissions(Group curricularPlanMembersGroup) {
-        super.setCurricularPlanMembersGroup(curricularPlanMembersGroup);
+    public void setCurricularPlanMembersGroup(Group group) {
+        check(this, DegreeCurricularPlanPredicates.scientificCouncilWritePredicate);
+        setMembersGroup(group.toPersistentGroup());
     }
 
     @Override
@@ -1237,11 +1231,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public String getPresentationName() {
-        return getPresentationName(ExecutionYear.readCurrentExecutionYear(), Language.getLocale());
+        return getPresentationName(ExecutionYear.readCurrentExecutionYear(), I18N.getLocale());
     }
 
     public String getPresentationName(final ExecutionYear executionYear) {
-        return getPresentationName(executionYear, Language.getLocale());
+        return getPresentationName(executionYear, I18N.getLocale());
     }
 
     public String getPresentationName(final ExecutionYear executionYear, final Locale locale) {
@@ -1632,7 +1626,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public String getGraduateTitle() {
-        return getGraduateTitle(ExecutionYear.readCurrentExecutionYear(), Language.getLocale());
+        return getGraduateTitle(ExecutionYear.readCurrentExecutionYear(), I18N.getLocale());
     }
 
     public String getGraduateTitle(final ExecutionYear executionYear, final Locale locale) {
@@ -1988,10 +1982,10 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         MultiLanguageString result = new MultiLanguageString();
 
         if (!StringUtils.isEmpty(getDescription())) {
-            result = result.with(Language.pt, getDescription());
+            result = result.with(MultiLanguageString.pt, getDescription());
         }
         if (!StringUtils.isEmpty(getDescriptionEn())) {
-            result = result.with(Language.en, getDescriptionEn());
+            result = result.with(MultiLanguageString.en, getDescriptionEn());
         }
 
         return result;
@@ -2131,16 +2125,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     @Deprecated
     public boolean hasAnyExecutionDegrees() {
         return !getExecutionDegreesSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDVirtualCourseGroup> getTSDVirtualCourseGroups() {
-        return getTSDVirtualCourseGroupsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTSDVirtualCourseGroups() {
-        return !getTSDVirtualCourseGroupsSet().isEmpty();
     }
 
     @Deprecated

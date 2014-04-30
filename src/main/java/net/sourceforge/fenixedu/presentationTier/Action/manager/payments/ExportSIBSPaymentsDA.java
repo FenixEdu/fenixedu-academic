@@ -7,16 +7,21 @@ import net.sourceforge.fenixedu.domain.QueueJob;
 import net.sourceforge.fenixedu.domain.accounting.events.export.SIBSOutgoingPaymentFile;
 import net.sourceforge.fenixedu.domain.accounting.events.export.SIBSOutgoingPaymentQueueJob;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerPaymentsApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@StrutsFunctionality(app = ManagerPaymentsApp.class, path = "export-sibs-payments",
+        titleKey = "label.manager.SIBS.export.payments")
 @Mapping(path = "/exportSIBSPayments", module = "manager")
 @Forwards({
         @Forward(name = "list-outgoing-payment-files", path = "/manager/payments/exportSIBS/listOutgoingPaymentFiles.jsp"),
@@ -48,6 +53,7 @@ public class ExportSIBSPaymentsDA extends FenixDispatchAction {
         return mapping.findForward("prepare-create-outgoing-payments-file");
     }
 
+    @EntryPoint
     public ActionForward listOutgoingPaymentsFile(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 

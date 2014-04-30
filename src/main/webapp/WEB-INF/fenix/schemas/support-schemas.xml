@@ -5,11 +5,6 @@
 			<property name="size" value="30" />
 			<property name="readOnly" value="true" />
 		</slot>
-		<slot name="requestContext" key="label.support.form.requestContext" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.PortalProvider" />
-			<property name="format" value="${name}"/>
-			<property name="sortBy" value="name"/>
-		</slot>
 		<slot name="requestType" key="label.support.form.requestType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 			<property name="excludedValues" value="SUGESTION,EXCEPTION" />
 		</slot>

@@ -262,8 +262,8 @@
 		<property name="destination" value="postBackChooseExecutionYear"/>
 	</slot>
 </schema>
-<schema name="delegates.show.eachGroup" type="net.sourceforge.fenixedu.domain.accessControl.Group">
-	<slot name="name" layout="label"/>
+<schema name="delegates.show.eachGroup" type="org.fenixedu.bennu.core.groups.Group">
+	<slot name="presentationName" layout="label"/>
 </schema>
 
 <schema name="delegates.show.recipients" type="net.sourceforge.fenixedu.presentationTier.Action.delegate.GroupsBean">

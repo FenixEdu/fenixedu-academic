@@ -1,10 +1,12 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 
-<ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications$OrganizationalStructurePage" />
+
+<f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ManagerResources" var="bundle"/>
 	<h:form>	
@@ -19,14 +21,14 @@
 										
 		<h:outputText value="<h2>#{bundle['title.chooseUnit']}</h2><br/>" escape="false" />		
 		
-		<h:panelGrid styleClass="infoselected" columns="2">
+		<span class="alert alert-info">
 			<h:outputText value="<b>#{bundle['message.name']}</b>" escape="false"/>		
 			<h:outputText value="#{organizationalStructureBackingBean.unit.name}" escape="false"/>												
-		</h:panelGrid>
+		</span>
 		
-		<h:outputText value="<br/>" escape="false" />	
+		<h:outputText value="<br/><br/><br/>" escape="false" />	
 		
-		<h:dataTable value="#{organizationalStructureBackingBean.chooseUnit}" var="unit"
+		<h:dataTable value="#{organizationalStructureBackingBean.chooseUnit}" styleClass="table" var="unit"
 			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty organizationalStructureBackingBean.chooseUnit}">
 			<h:column>
 				<f:facet name="header">
@@ -78,4 +80,4 @@
 			 styleClass="inputbutton"/>	
 				
 	</h:form>
-</ft:tilesView>
+</f:view>

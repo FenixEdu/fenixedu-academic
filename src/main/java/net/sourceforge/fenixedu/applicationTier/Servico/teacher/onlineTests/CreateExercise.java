@@ -28,16 +28,12 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class CreateExercise {
 
-    protected Boolean run(String executionCourseId, String metadataId, String author, String description,
+    protected Boolean run(ExecutionCourse executionCourse, String metadataId, String author, String description,
             QuestionDifficultyType questionDifficultyType, String mainSubject, String secondarySubject, Calendar learningTime,
             String level, SubQuestion subQuestion, String questionText, String secondQuestionText, String[] options,
             String[] correctOptions, String[] shuffle, String correctFeedbackText, String wrongFeedbackText,
-            Boolean breakLineBeforeResponseBox, Boolean breakLineAfterResponseBox, String path) throws FenixServiceException {
+            Boolean breakLineBeforeResponseBox, Boolean breakLineAfterResponseBox) throws FenixServiceException {
 
-        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
-        if (executionCourse == null) {
-            throw new InvalidArgumentsServiceException();
-        }
         Metadata metadata = null;
         if (metadataId == null) {
             metadata =
@@ -68,7 +64,7 @@ public class CreateExercise {
         question.setMetadata(metadata);
         ParseSubQuestion parse = new ParseSubQuestion();
         try {
-            question = parse.parseSubQuestion(question, path);
+            question = parse.parseSubQuestion(question);
         } catch (Exception e) {
             throw new FenixServiceException(e);
         }
@@ -92,16 +88,16 @@ public class CreateExercise {
     private static final CreateExercise serviceInstance = new CreateExercise();
 
     @Atomic
-    public static Boolean runCreateExercise(String executionCourseId, String metadataId, String author, String description,
-            QuestionDifficultyType questionDifficultyType, String mainSubject, String secondarySubject, Calendar learningTime,
-            String level, SubQuestion subQuestion, String questionText, String secondQuestionText, String[] options,
-            String[] correctOptions, String[] shuffle, String correctFeedbackText, String wrongFeedbackText,
-            Boolean breakLineBeforeResponseBox, Boolean breakLineAfterResponseBox, String path) throws FenixServiceException,
+    public static Boolean runCreateExercise(ExecutionCourse executionCourse, String metadataId, String author,
+            String description, QuestionDifficultyType questionDifficultyType, String mainSubject, String secondarySubject,
+            Calendar learningTime, String level, SubQuestion subQuestion, String questionText, String secondQuestionText,
+            String[] options, String[] correctOptions, String[] shuffle, String correctFeedbackText, String wrongFeedbackText,
+            Boolean breakLineBeforeResponseBox, Boolean breakLineAfterResponseBox) throws FenixServiceException,
             NotAuthorizedException {
-        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
-        return serviceInstance.run(executionCourseId, metadataId, author, description, questionDifficultyType, mainSubject,
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourse);
+        return serviceInstance.run(executionCourse, metadataId, author, description, questionDifficultyType, mainSubject,
                 secondarySubject, learningTime, level, subQuestion, questionText, secondQuestionText, options, correctOptions,
-                shuffle, correctFeedbackText, wrongFeedbackText, breakLineBeforeResponseBox, breakLineAfterResponseBox, path);
+                shuffle, correctFeedbackText, wrongFeedbackText, breakLineBeforeResponseBox, breakLineAfterResponseBox);
     }
 
 }

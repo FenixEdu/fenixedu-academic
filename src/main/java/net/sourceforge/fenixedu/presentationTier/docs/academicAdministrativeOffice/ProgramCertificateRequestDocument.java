@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
 import org.apache.commons.lang.StringUtils;
 
 import pt.ist.utl.fenix.utils.NumberToWordsConverter;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocument {
 
@@ -131,7 +130,7 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
         return false;
     }
 
-    private void createProgramsList(Language language) {
+    private void createProgramsList(Locale language) {
         final List<ProgramInformation> bolonha = new ArrayList<ProgramInformation>();
         final List<ProgramInformation> preBolonha = new ArrayList<ProgramInformation>();
 
@@ -229,7 +228,7 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
         private final String evaluationMethod;
         private final List<BibliographicInformation> bibliographics;
 
-        public BolonhaProgramInformation(final Enrolment enrolment, Language language) {
+        public BolonhaProgramInformation(final Enrolment enrolment, Locale language) {
             super(enrolment);
 
             final ExecutionSemester executionSemester = enrolment.getExecutionPeriod();
@@ -325,7 +324,7 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
         private final String name;
         private final String period;
 
-        public ContextInformation(final Context context, final Language language, final Locale locale) {
+        public ContextInformation(final Context context, final Locale language, final Locale locale) {
             this.name = context.getParentCourseGroup().getOneFullNameI18N(language);
             this.period = context.getCurricularPeriod().getFullLabel(locale);
 

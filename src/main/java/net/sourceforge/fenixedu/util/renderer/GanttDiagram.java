@@ -9,12 +9,13 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class GanttDiagram {
 
@@ -330,7 +331,7 @@ public class GanttDiagram {
 
     public Locale getLocale() {
         if (locale == null) {
-            locale = Language.getLocale();
+            locale = I18N.getLocale();
         }
         return locale;
     }

@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
@@ -29,12 +29,15 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Academic
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminServicesApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -43,12 +46,15 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 
+@StrutsFunctionality(app = AcademicAdminServicesApp.class, path = "requests-by-degree",
+        titleKey = "lists.serviceRequestsByDegree", accessGroup = "academic(SERVICE_REQUESTS)")
 @Mapping(path = "/requestListByDegree", module = "academicAdministration")
 @Forwards({ @Forward(name = "searchRequests", path = "/academicAdminOffice/lists/searchRequestsByDegree.jsp") })
 public class RequestListByDegreeDA extends FenixDispatchAction {
 
     private static final String DATETIME_FORMAT = "dd-MM-yyyy HH:mm";
 
+    @EntryPoint
     public ActionForward prepareSearch(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 
@@ -72,10 +78,8 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
 
     private DegreeByExecutionYearBean getOrCreateDegreeSearchBean() {
         DegreeByExecutionYearBean bean = getRenderedObject("degreeByExecutionYearBean");
-        return (bean != null) ? bean : new DegreeByExecutionYearBean(AcademicAuthorizationGroup.getDegreeTypesForOperation(
-                AccessControl.getPerson(), AcademicOperationType.SERVICE_REQUESTS),
-                AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
-                        AcademicOperationType.SERVICE_REQUESTS));
+        return (bean != null) ? bean : new DegreeByExecutionYearBean(AcademicAuthorizationGroup.getDegreeTypesForOperation(AccessControl.getPerson(), AcademicOperationType.SERVICE_REQUESTS),
+                AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(), AcademicOperationType.SERVICE_REQUESTS));
     }
 
     private DocumentRequestSearchBean getOrCreateRequestSearchBean() {
@@ -116,11 +120,9 @@ public class RequestListByDegreeDA extends FenixDispatchAction {
             final DocumentRequestSearchBean requestSearchBean, Set<RegistrationAcademicServiceRequest> resultList,
             final ArrayList<AcademicServiceRequest> requestList) {
         Set<AcademicProgram> accessiblePrograms =
-                AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-                        AcademicOperationType.SERVICE_REQUESTS);
+                AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.SERVICE_REQUESTS);
         Set<DegreeType> accessibleDegreeTypes =
-                AcademicAuthorizationGroup.getDegreeTypesForOperation(AccessControl.getPerson(),
-                        AcademicOperationType.SERVICE_REQUESTS);
+                AcademicAuthorizationGroup.getDegreeTypesForOperation(AccessControl.getPerson(), AcademicOperationType.SERVICE_REQUESTS);
 
         final Degree chosenDegree = degreeSearchBean.getDegree();
         final DegreeType chosenDegreeType = degreeSearchBean.getDegreeType();

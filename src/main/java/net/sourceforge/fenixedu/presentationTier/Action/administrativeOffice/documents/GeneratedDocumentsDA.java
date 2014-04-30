@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.documents.AnnualIRSDeclarationDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminDocumentsApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.docs.IRSCustomDeclaration;
@@ -27,25 +28,28 @@ import net.sourceforge.fenixedu.util.report.ReportsUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
+@StrutsFunctionality(app = AcademicAdminDocumentsApp.class, path = "generated-documents", titleKey = "label.documents",
+        accessGroup = "academic(MANAGE_DOCUMENTS)")
 @Mapping(path = "/generatedDocuments", module = "academicAdministration", formBeanClass = FenixActionForm.class)
 @Forwards({
-
         @Forward(name = "searchPerson", path = "/academicAdminOffice/generatedDocuments/searchPerson.jsp"),
         @Forward(name = "showAnnualIRSDocuments", path = "/academicAdminOffice/generatedDocuments/showAnnualIRSDocuments.jsp"),
         @Forward(name = "payments.manageIRSDocuments",
-                path = "/academicAdminOffice/generatedDocuments/payments/manageIRSDocuments.jsp")
-
-})
+                path = "/academicAdminOffice/generatedDocuments/payments/manageIRSDocuments.jsp") })
 public class GeneratedDocumentsDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepareSearchPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 
@@ -179,7 +183,7 @@ public class GeneratedDocumentsDA extends FenixDispatchAction {
 
         return ReportsUtils.exportToPdfFileAsByteArray(customDeclaration.getReportTemplateKey(),
                 customDeclaration.getParameters(),
-                ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale()),
+                ResourceBundle.getBundle("resources.AcademicAdminOffice", I18N.getLocale()),
                 customDeclaration.getDataSource());
     }
 

@@ -24,22 +24,24 @@ import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingServiceCorrection;
 import net.sourceforge.fenixedu.domain.teacher.OtherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.ScientificCouncilApplication.ScientificCreditsApp;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 
-@Mapping(module = "scientificCouncil", path = "/exportCredits", scope = "request", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "exportDepartmentCourses", path = "/credits/export/exportDepartmentCourses.jsp", tileProperties = @Tile(
-                title = "private.department.coursestypes")),
+@StrutsFunctionality(app = ScientificCreditsApp.class, path = "department-credits", titleKey = "label.department.credits",
+        bundle = "TeacherCreditsSheetResources")
+@Mapping(module = "scientificCouncil", path = "/exportCredits")
+@Forwards({ @Forward(name = "exportDepartmentCourses", path = "/credits/export/exportDepartmentCourses.jsp"),
         @Forward(name = "exportDepartmentCredits", path = "/credits/export/exportDepartmentCredits.jsp") })
 public class CreditsReportsDA extends FenixDispatchAction {
 
@@ -51,6 +53,7 @@ public class CreditsReportsDA extends FenixDispatchAction {
         return mapping.findForward("exportDepartmentCourses");
     }
 
+    @EntryPoint
     public ActionForward prepareExportDepartmentCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
         DepartmentCreditsBean departmentCreditsBean = new DepartmentCreditsBean();

@@ -27,7 +27,9 @@ import pt.ist.fenixframework.FenixFramework;
  * 
  */
 
-@Forwards(value = { @Forward(name = "viewAnnualTeachingCredits", path = "/credits.do?method=viewAnnualTeachingCredits"),
+@Forwards({
+        @Forward(name = "viewAnnualTeachingCredits", path = "/credits.do?method=viewAnnualTeachingCredits",
+                contextRelative = false),
         @Forward(name = "edit-institution-work-time", path = "/credits/workingTime/editTeacherInstitutionWorkTime.jsp") })
 public class ManageTeacherInstitutionWorkingTimeDispatchAction extends FenixDispatchAction {
 

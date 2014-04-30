@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -31,22 +30,20 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
-import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.Group;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class Department extends Department_Base {
@@ -218,27 +215,6 @@ public class Department extends Department_Base {
         return this.getRealName().substring(begin + 1, end);
     }
 
-    @SuppressWarnings("unchecked")
-    public List<TSDProcess> getTSDProcessesByExecutionPeriods(final Collection<ExecutionSemester> executionPeriodList) {
-        return (List<TSDProcess>) CollectionUtils.select(getTSDProcesses(), new Predicate() {
-            @Override
-            public boolean evaluate(Object arg0) {
-                TSDProcess tsdProcess = (TSDProcess) arg0;
-                return !CollectionUtils.intersection(tsdProcess.getExecutionPeriods(), executionPeriodList).isEmpty();
-            }
-        });
-    }
-
-    public List<TSDProcess> getTSDProcessesByExecutionPeriod(final ExecutionSemester executionSemester) {
-        List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>();
-        executionPeriodList.add(executionSemester);
-        return getTSDProcessesByExecutionPeriods(executionPeriodList);
-    }
-
-    public List<TSDProcess> getTSDProcessesByExecutionYear(final ExecutionYear executionYear) {
-        return getTSDProcessesByExecutionPeriods(executionYear.getExecutionPeriods());
-    }
-
     public List<VigilantGroup> getVigilantGroupsForGivenExecutionYear(ExecutionYear executionYear) {
         Unit departmentUnit = this.getDepartmentUnit();
         return departmentUnit.getVigilantGroupsForGivenExecutionYear(executionYear);
@@ -382,7 +358,7 @@ public class Department extends Department_Base {
      *         the department's name
      */
     public MultiLanguageString getNameI18n() {
-        return new MultiLanguageString().with(Language.pt, getRealName()).with(Language.en, getRealNameEn());
+        return new MultiLanguageString().with(MultiLanguageString.pt, getRealName()).with(MultiLanguageString.en, getRealNameEn());
     }
 
     public Integer getCompetenceCourseInformationChangeRequestsCount() {
@@ -403,8 +379,20 @@ public class Department extends Department_Base {
         return count;
     }
 
+    public Group getCompetenceCourseMembersGroup() {
+        return getMembersGroup().toGroup();
+    }
+
+    public void setCompetenceCourseMembersGroup(Group group) {
+        setMembersGroup(group.toPersistentGroup());
+    }
+
+    public boolean isUserMemberOfCompetenceCourseMembersGroup(User user) {
+        return getCompetenceCourseMembersGroup().isMember(user);
+    }
+
     public boolean isUserMemberOfCompetenceCourseMembersGroup(Person person) {
-        return getCompetenceCourseMembersGroup().isMember(person);
+        return getCompetenceCourseMembersGroup().isMember(person.getUser());
     }
 
     public boolean isCurrentUserMemberOfCompetenceCourseMembersGroup() {
@@ -417,19 +405,7 @@ public class Department extends Department_Base {
     }
 
     public DepartmentForum getDepartmentForum() {
-        if (hasDepartmentUnit()) {
-            return getForumFromNodes(getDepartmentUnit().getSite().getChildren());
-        }
-        return null;
-    }
-
-    private DepartmentForum getForumFromNodes(Collection<Node> siteNodes) {
-        for (Node node : siteNodes) {
-            if (node.getChild() instanceof DepartmentForum) {
-                return (DepartmentForum) node.getChild();
-            }
-        }
-        return null;
+        return getForum();
     }
 
     public Person getCurrentDepartmentPresident() {
@@ -512,16 +488,6 @@ public class Department extends Department_Base {
     @Deprecated
     public boolean hasAnyDepartmentCreditsPools() {
         return !getDepartmentCreditsPoolsSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess> getTSDProcesses() {
-        return getTSDProcessesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTSDProcesses() {
-        return !getTSDProcessesSet().isEmpty();
     }
 
     @Deprecated

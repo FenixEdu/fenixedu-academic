@@ -5,8 +5,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.fenixedu.bennu.core.groups.Group;
+
 import pt.ist.fenixframework.Atomic;
 
 /**
@@ -14,7 +16,7 @@ import pt.ist.fenixframework.Atomic;
  * 
  * @author naat
  */
-public class EditFilePermissions extends FileContentService {
+public class EditFilePermissions {
 
     protected void run(Site site, FileContent fileContent, Group group) throws FenixServiceException, DomainException {
         fileContent.setPermittedGroup(group);

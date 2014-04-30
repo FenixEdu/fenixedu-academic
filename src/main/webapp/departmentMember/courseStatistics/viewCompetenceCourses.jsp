@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ page language="java"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <html:xhtml />
@@ -6,8 +7,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers"	prefix="fr"%>
 
 <bean:define id="executionSemesterId" name="courseStatisticsBean" property="executionSemester.externalId" />
-
-<em><bean:message key="label.departmentMember" /></em>
 
 <h2>
 	<bean:message key="label.courseStatistics.competenceStatistics" />

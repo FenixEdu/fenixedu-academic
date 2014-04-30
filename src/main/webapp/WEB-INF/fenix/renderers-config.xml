@@ -195,9 +195,6 @@ Documentation:
 		<property name="messageClass" value="warning0"/>
      </renderer>   
 
-    <!--@ The default layout for the a parser report.  -->
-    <renderer type="net.sourceforge.fenixedu.presentationTier.Action.manager.functionalities.ParserReport" class="net.sourceforge.fenixedu.presentationTier.renderers.ParserReportRenderer"/>
-    
     <renderer mode="input" type="java.lang.String" layout="tag-cloud" class="net.sourceforge.fenixedu.presentationTier.renderers.TagInputCloudRenderer">
     	<property name="textClasses" value="smalltxt color888"/>
     </renderer>
@@ -240,28 +237,10 @@ Documentation:
 	<renderer type="net.sourceforge.fenixedu.domain.research.activity.JournalIssue" class="net.sourceforge.fenixedu.presentationTier.renderers.JournalIssueRenderer"/> 
  
     <!--@ Renders one or more (in case of group union) groups names. The group must support getName -->
-    <renderer type="net.sourceforge.fenixedu.domain.accessControl.Group" layout="show-groups" class="net.sourceforge.fenixedu.presentationTier.renderers.GroupRenderer"/>
+    <renderer type="org.fenixedu.bennu.core.groups.Group" layout="show-groups" class="net.sourceforge.fenixedu.presentationTier.renderers.GroupRenderer"/>
     
     <!--@ The tree layout allows a collection to be presented as a tree, that is, were you specify how an hierarchy is
           formed and a structure made by lists inside lists is created. -->
-
-	<renderer type="net.sourceforge.fenixedu.domain.contents.Content" layout="content-tree" class="net.sourceforge.fenixedu.presentationTier.renderers.ContentHierarchyTreeRenderer">
-		<property name="rootDragDisabled" value="true"/>
-		<property name="imageFor(Portal)" value="/images/functionalities/folder-disabled.gif"/>
-		<property name="imageFor(ContentJump)" value="/images/functionalities/folder-disabled.gif"/>
-		<property name="imageFor(Section)" value="/images/functionalities/folder.gif"/>
-		<property name="imageFor(Functionality)" value="/images/functionalities/sheet.gif"/>
-		<property name="imageFor(Module)" value="/images/functionalities/folder.gif"/>
-	</renderer>
-	
-    <renderer type="java.util.Collection" layout="functionalities-tree" class="net.sourceforge.fenixedu.presentationTier.renderers.FunctionalitiesTreeRenderer">
-        <property name="moduleEnabledImage" value="/images/functionalities/folder.gif"/>
-        <property name="moduleDisabledImage" value="/images/functionalities/folder-disabled.gif"/>
-        <property name="functionalityEnabledImage" value="/images/functionalities/sheet.gif"/>
-        <property name="functionalityDisabledImage" value="/images/functionalities/sheet-disabled.gif"/>
-        <property name="enabledClass" value="fEnabled"/>
-        <property name="disabledClass" value="fDisabled"/>
-    </renderer>
 
     <renderer type="java.util.Collection" layout="unit-functions-tree" class="net.sourceforge.fenixedu.presentationTier.renderers.UnitFunctionsTreeRenderer">
         <property name="imageFor(Unit)" value="/javaScript/drag-drop-folder-tree/images/folder.gif"/>
@@ -277,15 +256,6 @@ Documentation:
         <property name="activePersonFunctionImage" value="/images/list-bullet.gif"/>
     </renderer>
 	
-    <renderer mode="input" type="net.sourceforge.fenixedu.domain.functionalities.Functionality" layout="functionalities-tree" class="net.sourceforge.fenixedu.presentationTier.renderers.FunctionalityInputTreeRenderer">
-        <property name="moduleEnabledImage" value="/images/functionalities/folder.gif"/>
-        <property name="moduleDisabledImage" value="/images/functionalities/folder-disabled.gif"/>
-        <property name="functionalityEnabledImage" value="/images/functionalities/sheet.gif"/>
-        <property name="functionalityDisabledImage" value="/images/functionalities/sheet-disabled.gif"/>
-        <property name="enabledClass" value="fEnabled"/>
-        <property name="disabledClass" value="fDisabled"/>
-    </renderer>
-
     <!--@ Special layout to present a vigilant table with a slightly different organization. -->
     <renderer type="net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup" layout="vigilant-table" class="net.sourceforge.fenixedu.presentationTier.renderers.VigilantTableRender">
     	<property name="convokeTitleKey" value="vigilantTable.convoke.title"/> 
@@ -301,34 +271,18 @@ Documentation:
     	<property name="nullLabel" value="-"/>
     </renderer>
 
-    <renderer type="net.sourceforge.fenixedu.domain.functionalities.GroupAvailability" layout="textual" class="pt.ist.fenixWebFramework.renderers.FormatRenderer">
-        <property name="format" value="${expression}"/>
-    </renderer>
-
-    <renderer type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext" layout="side-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.MenuRenderer"/>
-    <renderer type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext" layout="top-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.TopLevelMenuRenderer"/>
-	<renderer type="net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext" layout="bread-crumbs" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.ContextBreadCrumRenderer"/>
-
-    <renderer type="net.sourceforge.fenixedu.domain.contents.Content" layout="manage-content-bread-crumbs" class="net.sourceforge.fenixedu.presentationTier.renderers.functionalities.BreadCrumbsRenderer"/>
-
     <renderer type="net.sourceforge.fenixedu.domain.Site" layout="side-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.SiteMenuRenderer">
-    	<property name="depthStyle" value="margin-left: 1em;"/>
+        <property name="depthStyle" value="margin-left: 1em;"/>
     </renderer>
     <renderer type="net.sourceforge.fenixedu.domain.Site" layout="unit-side-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.UnitSiteSideMenuRenderer" >
-       	<property name="depthStyle" value="margin-left: 1em;"/>
+        <property name="depthStyle" value="margin-left: 1em;"/>
     </renderer>
     <renderer type="net.sourceforge.fenixedu.domain.Site" layout="unit-top-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.UnitSiteTopMenuRenderer"/>
-    <renderer type="net.sourceforge.fenixedu.domain.Section" layout="section-sub-menu" class="net.sourceforge.fenixedu.presentationTier.renderers.SectionMenuRenderer" />
-    
+
 	<!--@ File displayed as an html picture -->
     <renderer type="net.sourceforge.fenixedu.domain.File"
               class="net.sourceforge.fenixedu.presentationTier.renderers.FileAsPictureRenderer"
               layout="image" />
-    
-    <!--@ File displayed as an html picture -->
-    <renderer type="net.sourceforge.fenixedu.domain.tests.NewMathMlMaterial"
-              class="net.sourceforge.fenixedu.presentationTier.renderers.MathMlMaterialRenderer"
-              layout="equation" />
     
     <!--@ Money output -->
     <renderer type="net.sourceforge.fenixedu.util.Money" class="net.sourceforge.fenixedu.presentationTier.renderers.MoneyRenderer"/>
@@ -394,161 +348,6 @@ Documentation:
 
 	<!--@ Layout that allows you to render a list with checkboxes with postback -->
 	<renderer mode="input" type="java.util.Collection" layout="option-select-postback" class="pt.ist.fenixWebFramework.renderers.CheckBoxOptionListRendererWithPostBack"/>
-
-    <renderer type="net.sourceforge.fenixedu.domain.tests.TestsGrade"
-              class="net.sourceforge.fenixedu.presentationTier.renderers.TestGradeInputRenderer"
-              mode="input" />
-
-	<renderer type="net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion"
-	          class="net.sourceforge.fenixedu.presentationTier.renderers.AtomicQuestionForAllGroupRenderer"
-	          layout="sub-question" />
-
-	<renderer type="net.sourceforge.fenixedu.domain.tests.NewCorrector"
-	          class="net.sourceforge.fenixedu.presentationTier.renderers.CorrectorForAllGroupRenderer"
-	          layout="values" />
-
-	<renderer type="net.sourceforge.fenixedu.domain.tests.NewCorrector"
-	          class="net.sourceforge.fenixedu.presentationTier.renderers.CorrectorForTest"
-	          layout="short" />
-
-	<renderer type="net.sourceforge.fenixedu.domain.tests.predicates.Predicate"
-	          class="net.sourceforge.fenixedu.presentationTier.renderers.PredicateRenderer"
-	          layout="values" />
-    
-    <renderer type="net.sourceforge.fenixedu.domain.tests.NewQuestion"
-              class="net.sourceforge.fenixedu.presentationTier.renderers.ShortQuestionRenderer"
-              layout="short" />
-    
-    <renderer type="net.sourceforge.fenixedu.domain.tests.NewTestElement"
-              class="net.sourceforge.fenixedu.presentationTier.renderers.TestElementSummaryRenderer"
-              layout="summary" />
-    
-    <renderer type="net.sourceforge.fenixedu.domain.tests.NewTestElement"
-              class="net.sourceforge.fenixedu.presentationTier.renderers.TestElementDetailsRenderer"
-              layout="details" />
-    
-    <renderer type="net.sourceforge.fenixedu.domain.tests.NewModelRestriction"
-              class="net.sourceforge.fenixedu.presentationTier.renderers.ModelRestrictionDetailsRenderer"
-              layout="template-model-tree" />
-    
-    <renderer type="net.sourceforge.fenixedu.domain.tests.NewModelRestriction"
-              class="net.sourceforge.fenixedu.presentationTier.renderers.ModelRestrictionSelectRenderer"
-              layout="template-select-tree" />
-    
-    <renderer type="net.sourceforge.fenixedu.domain.tests.NewModelRestriction"
-              class="net.sourceforge.fenixedu.presentationTier.renderers.ModelRestrictionSortRenderer"
-              layout="template-sort-tree" />
-    
-    <renderer type="net.sourceforge.fenixedu.domain.tests.NewTestElement"
-              class="net.sourceforge.fenixedu.presentationTier.renderers.TestElementVariationRenderer"
-              layout="template-variations-tree" />
-    
-    <renderer type="net.sourceforge.fenixedu.domain.tests.NewChoice"
-              class="pt.ist.fenixWebFramework.renderers.TemplateRenderer"
-              layout="template-short">
-    	<property name="template"
-    	          value="/teacher/tests/templates/questionBank/shortChoiceTemplate.jsp"/>
-    </renderer>
-    
-    <renderer type="net.sourceforge.fenixedu.domain.tests.NewChoice"
-              class="pt.ist.fenixWebFramework.renderers.ObjectLinkRenderer"
-              layout="short">
-        <property name="subLayout" value="values"/>
-        <property name="subSchema" value="tests.choice.position"/>
-        <property name="linkFormat" value="/tests/questionBank.do?method=editTestElement&amp;oid=${externalId}"/>
-    </renderer>
-    
-    <renderer type="net.sourceforge.fenixedu.domain.tests.NewQuestionGroup"
-              class="pt.ist.fenixWebFramework.renderers.TemplateRenderer"
-              layout="template-tree">
-    	<property name="template"
-    	          value="/teacher/tests/templates/questionBank/treeQuestionGroupTemplate.jsp"/>
-    </renderer>
-    
-    <renderer type="net.sourceforge.fenixedu.domain.tests.NewPresentationMaterial"
-              class="pt.ist.fenixWebFramework.renderers.TemplateRenderer"
-              layout="template-simple">
-    	<property name="template"
-    	          value="/teacher/tests/templates/questionBank/simplePresentationMaterialTemplate.jsp"/>
-    </renderer>
-    
-    <renderer type="net.sourceforge.fenixedu.domain.tests.NewStringMaterial"
-              class="pt.ist.fenixWebFramework.renderers.TemplateRenderer">
-    	<property name="template"
-    	          value="/teacher/tests/templates/presentationMaterial/stringMaterialTemplate.jsp"/>
-    </renderer>
-    
-    <renderer type="net.sourceforge.fenixedu.domain.tests.NewPictureMaterial"
-              class="pt.ist.fenixWebFramework.renderers.TemplateRenderer">
-    	<property name="template"
-    	          value="/teacher/tests/templates/presentationMaterial/pictureMaterialTemplate.jsp"/>
-    </renderer>
-    
-    <renderer type="net.sourceforge.fenixedu.domain.tests.NewMathMlMaterial"
-              class="pt.ist.fenixWebFramework.renderers.TemplateRenderer">
-    	<property name="template"
-    	          value="/teacher/tests/templates/presentationMaterial/mathMlMaterialTemplate.jsp"/>
-    </renderer>
-    
-    <!-- Render templates for Tests and descendants in teacher correctByPerson context -->
-    <renderer type="net.sourceforge.fenixedu.domain.tests.NewTest"
-              class="pt.ist.fenixWebFramework.renderers.TemplateRenderer"
-              layout="template-correctByPerson-tree">
-    	<property name="template"
-    	          value="/teacher/tests/templates/test/correctByPerson/test.jsp"/>
-    </renderer>
-    
-    <renderer type="net.sourceforge.fenixedu.domain.tests.NewSection"
-              class="pt.ist.fenixWebFramework.renderers.TemplateRenderer"
-              layout="template-correctByPerson-tree">
-    	<property name="template"
-    	          value="/teacher/tests/templates/test/correctByPerson/section.jsp"/>
-    </renderer>
-    
-    <renderer type="net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion"
-              class="pt.ist.fenixWebFramework.renderers.TemplateRenderer"
-              layout="template-correctByPerson-tree">
-    	<property name="template"
-    	          value="/teacher/tests/templates/test/correctByPerson/atomicQuestion.jsp"/>
-    </renderer>
-    
-    <!-- Render templates for Tests in student context -->
-    <renderer type="net.sourceforge.fenixedu.domain.tests.NewTest"
-              class="pt.ist.fenixWebFramework.renderers.TemplateRenderer"
-              layout="template-student-tree">
-    	<property name="template"
-    	          value="/student/tests/templates/test.jsp"/>
-    </renderer>
-    
-    <renderer type="net.sourceforge.fenixedu.domain.tests.NewSection"
-              class="pt.ist.fenixWebFramework.renderers.TemplateRenderer"
-              layout="template-student-tree">
-    	<property name="template"
-    	          value="/student/tests/templates/section.jsp"/>
-    </renderer>
-    
-    <renderer type="net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion"
-              class="pt.ist.fenixWebFramework.renderers.TemplateRenderer"
-              layout="template-student-tree">
-    	<property name="template"
-    	          value="/student/tests/templates/atomicQuestion.jsp"/>
-    </renderer>
-    
-    <renderer mode="input"
-              type="net.sourceforge.fenixedu.domain.tests.NewStringMaterial"
-              class="pt.ist.fenixWebFramework.renderers.StandardInputRenderer">
-    </renderer>
-    
-    <renderer mode="input"
-              type="net.sourceforge.fenixedu.domain.tests.NewPictureMaterial"
-              class="pt.ist.fenixWebFramework.renderers.StandardInputRenderer">
-    </renderer>
-    
-    <renderer type="net.sourceforge.fenixedu.domain.tests.TestsGrade"
-              class="pt.ist.fenixWebFramework.renderers.FormatRenderer"
-              layout="format">
-		<property name="format" value="${percentage,.2f}%% (${value,.2f}/${scale,.2f})" />
-	</renderer>
     
     <renderer type="net.sourceforge.fenixedu.domain.Person"
               class="pt.ist.fenixWebFramework.renderers.FormatRenderer"
@@ -556,18 +355,6 @@ Documentation:
 		<property name="format" value="${name}" />
 	</renderer>
     
-    <renderer type="net.sourceforge.fenixedu.domain.tests.NewTest"
-              class="pt.ist.fenixWebFramework.renderers.FormatRenderer"
-              layout="format-as-variation">
-		<property name="format" value="(V. ${position})" />
-	</renderer>
-    
-    <renderer type="net.sourceforge.fenixedu.domain.tests.NewAnswer"
-              class="pt.ist.fenixWebFramework.renderers.FormatRenderer"
-              layout="computed-grade">
-		<property name="format" value="${percentage} x ${atomicQuestion.grade.value} = ${calculatedGrade.value}/${calculatedGrade.scale}" />
-	</renderer>	
-
     <renderer type="net.sourceforge.fenixedu.domain.space.RoomClassification" layout="roomClassification-label" class="pt.ist.fenixWebFramework.renderers.FormatRenderer">
         <property name="format" value="${presentationCode} - ${name}"/>
     </renderer>

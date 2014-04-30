@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
@@ -12,7 +13,6 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -159,11 +159,11 @@ public class DegreeInfo extends DegreeInfo_Base {
         return getDegreeInfoFuture().getDesignedFor();
     }
 
-    public String getDesignedFor(final Language language) {
+    public String getDesignedFor(final Locale language) {
         return hasDesignedFor(language) ? getDesignedFor().getContent(language) : "";
     }
 
-    public boolean hasDesignedFor(final Language language) {
+    public boolean hasDesignedFor(final Locale language) {
         return getDesignedFor() != null && getDesignedFor().hasContent(language);
     }
 
@@ -175,11 +175,11 @@ public class DegreeInfo extends DegreeInfo_Base {
         return getDegreeInfoFuture().getObjectives();
     }
 
-    public boolean hasObjectives(final Language language) {
+    public boolean hasObjectives(final Locale language) {
         return getObjectives() != null && getObjectives().hasContent(language);
     }
 
-    public String getObjectives(final Language language) {
+    public String getObjectives(final Locale language) {
         return hasObjectives(language) ? getObjectives().getContent(language) : "";
     }
 
@@ -187,11 +187,11 @@ public class DegreeInfo extends DegreeInfo_Base {
         return getDegreeInfoFuture().getProfessionalExits();
     }
 
-    public boolean hasProfessionalExits(final Language language) {
+    public boolean hasProfessionalExits(final Locale language) {
         return getProfessionalExits() != null && getProfessionalExits().hasContent(language);
     }
 
-    public String getProfessionalExits(final Language language) {
+    public String getProfessionalExits(final Locale language) {
         return hasProfessionalExits(language) ? getProfessionalExits().getContent(language) : "";
     }
 
@@ -259,19 +259,19 @@ public class DegreeInfo extends DegreeInfo_Base {
         getDegreeInfoCandidacy().setTestIngression(testIngression);
     }
 
-    public boolean hasOperationalRegime(final Language language) {
+    public boolean hasOperationalRegime(final Locale language) {
         return getOperationalRegime() != null && getOperationalRegime().hasContent(language);
     }
 
-    public String getOperationalRegime(final Language language) {
+    public String getOperationalRegime(final Locale language) {
         return hasOperationalRegime(language) ? getOperationalRegime().getContent(language) : "";
     }
 
-    public boolean hasAdditionalInfo(final Language language) {
+    public boolean hasAdditionalInfo(final Locale language) {
         return getAdditionalInfo() != null && getAdditionalInfo().hasContent(language);
     }
 
-    public String getAdditionalInfo(final Language language) {
+    public String getAdditionalInfo(final Locale language) {
         return hasAdditionalInfo(language) ? getAdditionalInfo().getContent(language) : "";
     }
 

@@ -5,7 +5,6 @@
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="date"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<em><bean:message bundle="VIGILANCY_RESOURCES" key="label.navheader.person.examCoordinator"/></em>
 <h2><bean:message bundle="VIGILANCY_RESOURCES" key="label.vigilancy.manageExamCoordinator"/></h2>
 
 
@@ -20,7 +19,6 @@
 <fr:form action="/vigilancy/examCoordinatorManagement.do?method=selectUnitForCoordinator">
 <fr:edit id="selectUnit" type="net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean" layout="tabular"
 name="bean" schema="selectUnitInVigilantGroup"/>
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="switchNone"><bean:message key="label.submit" bundle="VIGILANCY_RESOURCES"/></html:submit>
 </fr:form>
 <!--  selectUnitInVigilantGroup -->
 
@@ -66,8 +64,3 @@ action="/vigilancy/examCoordinatorManagement.do?method=addExamCoordinator"/>
 
 
 </logic:present>
-
-
-<script type="text/javascript" language="javascript">
-switchGlobal();
-</script>

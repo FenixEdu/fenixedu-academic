@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.MarkSheet;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
@@ -38,13 +38,15 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/printMarkSheet", module = "academicAdministration", formBean = "printMarkSheetForm",
-        input = "/printMarkSheet.do?method=choosePrinterMarkSheet&amp;page=0")
+        input = "/printMarkSheet.do?method=choosePrinterMarkSheet&amp;page=0",
+        functionality = MarkSheetSearchDispatchAction.class)
 @Forwards({
-        @Forward(name = "choosePrinterMarkSheet", path = "/academicAdminOffice/gradeSubmission/choosePrinterMarkSheet_bd.jsp"),
+        @Forward(name = "choosePrinterMarkSheet", path = "/academicAdministration/gradeSubmission/choosePrinterMarkSheet_bd.jsp"),
         @Forward(name = "choosePrinterMarkSheetsWeb",
-                path = "/academicAdminOffice/gradeSubmission/choosePrinterMarkSheetsWeb_bd.jsp"),
-        @Forward(name = "searchMarkSheetFilled", path = "/markSheetManagement.do?method=prepareSearchMarkSheetFilled"),
-        @Forward(name = "searchMarkSheet", path = "/markSheetManagement.do?method=prepareSearchMarkSheet") })
+                path = "/academicAdministration/gradeSubmission/choosePrinterMarkSheetsWeb_bd.jsp"),
+        @Forward(name = "searchMarkSheetFilled",
+                path = "/academicAdministration/markSheetManagement.do?method=prepareSearchMarkSheetFilled"),
+        @Forward(name = "searchMarkSheet", path = "/academicAdministration/markSheetManagement.do?method=prepareSearchMarkSheet") })
 public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
 
     public ActionForward searchMarkSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -110,8 +112,7 @@ public class PrintMarkSheetDispatchAction extends MarkSheetDispatchAction {
 
         final List<LabelValueBean> result = new ArrayList<LabelValueBean>();
         Set<Degree> degreesForMarksheets =
-                AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
-                        AcademicOperationType.MANAGE_MARKSHEETS);
+                AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_MARKSHEETS);
 
         for (final DegreeCurricularPlan dcp : dcps) {
             if (degreesForMarksheets.contains(dcp.getDegree())) {

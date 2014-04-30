@@ -8,24 +8,28 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.QueueJob;
 import net.sourceforge.fenixedu.domain.TutorshipStudentLowPerformanceQueueJob;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.PedagogicalCouncilApp.TutorshipApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@StrutsFunctionality(app = TutorshipApp.class, path = "low-performance-students",
+        titleKey = "link.tutorship.students.ListLowPerformance", bundle = "ApplicationResources")
 @Mapping(path = "/studentLowPerformance", module = "pedagogicalCouncil")
-@Forwards({ @Forward(name = "viewStudentsState", path = "/pedagogicalCouncil/tutorship/viewStudentsState.jsp",
-        tileProperties = @Tile(title = "private.pedagogiccouncil.tutoring.studentswithlowperformance")) })
+@Forwards({ @Forward(name = "viewStudentsState", path = "/pedagogicalCouncil/tutorship/viewStudentsState.jsp") })
 public class StudentLowPerformanceDA extends FenixDispatchAction {
 
     protected final String PRESCRIPTION_BEAN = "prescriptionBean";
 
+    @EntryPoint
     public ActionForward viewStudentsState(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 

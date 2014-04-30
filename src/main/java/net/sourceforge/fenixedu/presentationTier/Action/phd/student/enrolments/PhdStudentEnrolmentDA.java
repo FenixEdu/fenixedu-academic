@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.presentationTier.Action.student.enrollment.StudentEnrollmentManagementDA;
 import net.sourceforge.fenixedu.presentationTier.Action.student.enrollment.bolonha.BolonhaStudentEnrollmentDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -22,17 +23,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/phdStudentEnrolment", module = "student")
+@Mapping(path = "/phdStudentEnrolment", module = "student", functionality = StudentEnrollmentManagementDA.class)
 @Forwards({
-
         @Forward(name = "showWelcome", path = "/phd/student/enrolments/showWelcome.jsp"),
-
         @Forward(name = "showDegreeModulesToEnrol", path = "/phd/student/enrolments/showDegreeModulesToEnrol.jsp"),
-
         @Forward(name = "chooseOptionalCurricularCourseToEnrol",
-                path = "/phd/student/enrolments/chooseOptionalCurricularCourseToEnrol.jsp")
-
-})
+                path = "/phd/student/enrolments/chooseOptionalCurricularCourseToEnrol.jsp") })
 public class PhdStudentEnrolmentDA extends BolonhaStudentEnrollmentDispatchAction {
 
     private Registration getRegistration(HttpServletRequest request) {

@@ -7,7 +7,6 @@
 
 <!-- viewIdentityRequestsList.jsp -->
 
-<em><bean:message key="operator.module.title" bundle="MANAGER_RESOURCES"/></em>
 <h2><bean:message key="alumni.identity.requests" bundle="MANAGER_RESOURCES"/></h2>
 
 <logic:present role="role(OPERATOR)">

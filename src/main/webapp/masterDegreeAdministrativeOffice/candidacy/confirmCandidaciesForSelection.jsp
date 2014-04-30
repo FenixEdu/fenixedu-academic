@@ -4,6 +4,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
+<jsp:include page="/commons/renderers/treeRendererHeader.jsp" />
+
 <h2><strong><bean:message key="link.masterDegree.administrativeOffice.dfaCandidacy.selectCandidacies" bundle="ADMIN_OFFICE_RESOURCES"/></strong></h2>
 <br/>
 <fr:form action="/selectDFACandidacies.do?method=confirmCandidacies">

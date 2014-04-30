@@ -1,23 +1,21 @@
 package net.sourceforge.fenixedu.domain.phd;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExternalUser;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeCoordinatorsGroup;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
-import net.sourceforge.fenixedu.domain.accessControl.PhdProcessGuidingsGroup;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.CoordinatorGroup;
+import net.sourceforge.fenixedu.domain.accessControl.GuidingsAndAssistantsOfPhdGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UnionGroup;
+import org.fenixedu.bennu.core.groups.UserGroup;
 
 public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
 
@@ -63,21 +61,21 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
         super.setUploader(uploader);
         super.setDocumentAccepted(true);
 
-        final Collection<IGroup> groups = new ArrayList<IGroup>();
-        groups.add(new AcademicAuthorizationGroup(AcademicOperationType.MANAGE_PHD_PROCESSES));
+        final Set<Group> groups = new HashSet<Group>();
+        groups.add(AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_PHD_PROCESSES));
 
         final PhdIndividualProgramProcess individualProgramProcess = process.getIndividualProgramProcess();
         final PhdProgram phdProgram = individualProgramProcess.getPhdProgram();
         if (phdProgram != null) {
-        	groups.add(new CurrentDegreeCoordinatorsGroup(phdProgram.getDegree()));
+            groups.add(CoordinatorGroup.get(phdProgram.getDegree()));
         }
-        groups.add(new PhdProcessGuidingsGroup(individualProgramProcess));
+        groups.add(GuidingsAndAssistantsOfPhdGroup.get(individualProgramProcess));
         final Person person = getPhdProgramProcess().getPerson();
         if (person != null) {
-            groups.add(new PersonGroup(person));
+            groups.add(UserGroup.of(person.getUser()));
         }
 
-        final Group group = new GroupUnion(groups);
+        final Group group = UnionGroup.of(groups);
         super.init(filename, filename, content, group);
     }
 
@@ -136,14 +134,15 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
     public boolean isPersonAllowedToAccess(Person person) {
         if (person != null) {
             if (getPhdProgramProcess().getPerson() == person
-                    || new AcademicAuthorizationGroup(AcademicOperationType.MANAGE_PHD_PROCESSES).isMember(person)
+                    || AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_PHD_PROCESSES)
+                            .isMember(person.getUser())
                     || getPhdProgramProcess().getIndividualProgramProcess().isCoordinatorForPhdProgram(person)
                     || getPhdProgramProcess().getIndividualProgramProcess().isGuiderOrAssistentGuider(person)
                     || ExternalUser.isExternalUser(person.getUsername())) {
                 return true;
             }
         }
-        
+
         return false;
     }
 

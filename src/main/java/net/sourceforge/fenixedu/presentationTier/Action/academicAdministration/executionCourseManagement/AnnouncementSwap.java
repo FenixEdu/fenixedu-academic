@@ -21,7 +21,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(path = "/announcementSwap", module = "academicAdministration")
+@Mapping(path = "/announcementSwap", module = "academicAdministration", functionality = EditExecutionCourseDA.class)
 @Forwards({ @Forward(name = "chooseExecutionCourse",
         path = "/academicAdministration/executionCourseManagement/chooseExecutionCourse.jsp") })
 public class AnnouncementSwap extends FenixDispatchAction {

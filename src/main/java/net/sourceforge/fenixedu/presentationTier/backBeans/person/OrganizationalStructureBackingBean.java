@@ -34,15 +34,14 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.commons.StringNormalizer;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
@@ -62,7 +61,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         if (getRequestParameter("unitID") != null) {
             getUnitIDHidden().setValue(getRequestParameter("unitID"));
         }
-        this.bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+        this.bundle = ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
     }
 
     public List<SelectItem> getExecutionYears() throws FenixServiceException {
@@ -342,13 +341,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     private String getHomePageUrl(Person person) {
         StringBuilder buffer = new StringBuilder();
-        String appContext = FenixConfigurationManager.getConfiguration().appContext();
-
         if (person.getHomepage() != null && person.getHomepage().getActivated()) {
-            buffer.append(getRequest().getScheme()).append("://").append(getRequest().getServerName()).append(":")
-                    .append(getRequest().getServerPort()).append("/")
-                    .append(!StringUtils.isEmpty(appContext) ? appContext + "/" : "").append("homepage/")
-                    .append(person.getIstUsername());
+            buffer.append(person.getHomepage().getFullPath());
         }
         return buffer.toString();
     }

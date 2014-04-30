@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminExecutionsApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.lang.StringUtils;
@@ -24,6 +25,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -31,9 +34,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.Pair;
 
+@StrutsFunctionality(app = AcademicAdminExecutionsApp.class, path = "create-execution-courses",
+        titleKey = "link.manager.createExecutionCourses", accessGroup = "academic(MANAGE_EXECUTION_COURSES)")
 @Mapping(module = "academicAdministration", path = "/createExecutionCourses",
-        input = "/createExecutionCourses.do?method=chooseDegreeType", attribute = "createExecutionCoursesForm",
-        formBean = "createExecutionCoursesForm", scope = "request", parameter = "method")
+        input = "/createExecutionCourses.do?method=chooseDegreeType", formBean = "createExecutionCoursesForm")
 @Forwards(value = {
         @Forward(name = "chooseDegreeCurricularPlans",
                 path = "/academicAdministration/executionCourseManagement/chooseDegreeCurricularPlans.jsp"),
@@ -42,6 +46,7 @@ import pt.utl.ist.fenix.tools.util.Pair;
                 path = "/academicAdministration/executionCourseManagement/createExecutionCoursesSuccess.jsp") })
 public class CreateExecutionCoursesDispatchAction extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward chooseDegreeType(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 

@@ -13,8 +13,6 @@ import org.apache.commons.collections.Predicate;
 import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.rendererExtensions.MultiLanguageStringRenderer;
-
 public class ExternalUniversityUnitAutoCompleteProvider implements AutoCompleteProvider<Unit> {
 
     @Override

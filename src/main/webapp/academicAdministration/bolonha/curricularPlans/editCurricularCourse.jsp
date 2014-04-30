@@ -1,9 +1,11 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
-<ft:tilesView definition="df.layout.two-column.contents" attributeName="body-inline">
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication$CurricularPlansManagement" />
+
+<f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/ManagerResources" var="managerBundle"/>
@@ -35,13 +37,11 @@
 						valueChangeListener="#{AcademicAdministrationCurricularCourseManagement.resetCompetenceCourse}">
 					<f:selectItems value="#{AcademicAdministrationCurricularCourseManagement.departmentUnits}"/>
 				</fc:selectOneMenu>
-				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 				<h:outputText value="</p>" escape="false"/>			
 				<h:outputText value="<p><label>#{bolonhaBundle['course']}:</label>" escape="false"/>
 				<fc:selectOneMenu value="#{AcademicAdministrationCurricularCourseManagement.competenceCourseID}" onchange="this.form.submit();">
 					<f:selectItems value="#{AcademicAdministrationCurricularCourseManagement.competenceCourses}"/>
 				</fc:selectOneMenu>
-				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 				<h:outputText value="</p>" escape="false"/>		
 				<h:panelGroup rendered="#{(!empty AcademicAdministrationCurricularCourseManagement.competenceCourseID) && (AcademicAdministrationCurricularCourseManagement.competenceCourseID != 0) }">
 					<h:outputText value="<p class='mtop1'><label class='lempty'>.</label>" escape="false"/>
@@ -188,7 +188,7 @@
 		<h:outputText value="<h4 class='first'>#{bolonhaBundle['contexts']}:</h4>" escape="false"/>		
 		
 		<p>
-		<h:outputLink value="editCurricularCourse.faces" rendered="#{AcademicAdministrationCurricularCourseManagement.degreeCurricularPlan.degree.canBeAccessedByUser}">
+		<h:outputLink value="#{facesContext.externalContext.requestContextPath}/academicAdministration/bolonha/curricularPlans/editCurricularCourse.faces" rendered="#{AcademicAdministrationCurricularCourseManagement.degreeCurricularPlan.degree.canBeAccessedByUser}">
 			<h:outputText value="#{bolonhaBundle['newContext']}" />
 			<f:param name="degreeCurricularPlanID" value="#{AcademicAdministrationCurricularCourseManagement.degreeCurricularPlanID}" />
 			<f:param name="curricularCourseID" value="#{AcademicAdministrationCurricularCourseManagement.curricularCourseID}" />
@@ -264,7 +264,7 @@
 					<h:outputText value="#{bolonhaBundle['opened']}</p>" escape="false" rendered="#{empty context.endExecutionPeriod}"/>
 
 					<h:outputText value="<p class='mtop05'><label class='lempty'>.</label>" escape="false"/>
-					<h:outputLink value="editCurricularCourse.faces" rendered="#{AcademicAdministrationCurricularCourseManagement.degreeCurricularPlan.degree.canBeAccessedByUser}">
+					<h:outputLink value="#{facesContext.externalContext.requestContextPath}/academicAdministration/bolonha/curricularPlans/editCurricularCourse.faces" rendered="#{AcademicAdministrationCurricularCourseManagement.degreeCurricularPlan.degree.canBeAccessedByUser}">
 						<h:outputText value="#{bolonhaBundle['edit']}" />
 						<f:param name="degreeCurricularPlanID" value="#{AcademicAdministrationCurricularCourseManagement.degreeCurricularPlanID}" />
 						<f:param name="courseGroupID" value="#{context.parentCourseGroup.externalId}" />
@@ -334,4 +334,4 @@
 		<fc:commandButton alt="#{htmlAltBundle['commandButton.back']}" immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['back']}"
 			action="buildCurricularPlan"/>
 	</h:form>
-</ft:tilesView>
+</f:view>

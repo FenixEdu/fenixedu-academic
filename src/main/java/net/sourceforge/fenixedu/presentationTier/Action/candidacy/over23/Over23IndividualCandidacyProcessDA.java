@@ -29,8 +29,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/caseHandlingOver23IndividualCandidacyProcess", module = "academicAdministration",
-        formBeanClass = Over23IndividualCandidacyProcessDA.CandidacyForm.class)
-@Forwards({ @Forward(name = "intro", path = "/caseHandlingOver23CandidacyProcess.do?method=listProcessAllowedActivities"),
+        formBeanClass = Over23IndividualCandidacyProcessDA.CandidacyForm.class, functionality = Over23CandidacyProcessDA.class)
+@Forwards({
+        @Forward(name = "intro",
+                path = "/academicAdministration/caseHandlingOver23CandidacyProcess.do?method=listProcessAllowedActivities"),
         @Forward(name = "list-allowed-activities", path = "/candidacy/over23/listIndividualCandidacyActivities.jsp"),
         @Forward(name = "prepare-create-new-process", path = "/candidacy/selectPersonForCandidacy.jsp"),
         @Forward(name = "fill-personal-information", path = "/candidacy/fillPersonalInformation.jsp"),

@@ -16,8 +16,6 @@ import net.sourceforge.fenixedu.util.JasperPrintProcessor;
 
 import org.joda.time.DateTime;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
-
 public class StudentThesisIdentificationDocument extends ThesisDocument {
 
     private static final long serialVersionUID = 1L;
@@ -76,13 +74,13 @@ public class StudentThesisIdentificationDocument extends ThesisDocument {
     }
 
     private String getLanguage(ThesisFile file) {
-        Language language = file.getLanguage();
+        Locale language = file.getLanguage();
 
         if (language == null) {
             return EMPTY_STR;
         }
 
-        return getEnumerationBundle().getString(language.name());
+        return getEnumerationBundle().getString(language.getLanguage());
     }
 
     private List<String> splitKeywords(String keywords) {

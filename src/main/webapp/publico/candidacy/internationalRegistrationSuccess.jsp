@@ -1,5 +1,5 @@
 <%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
-<%@page import="net.sourceforge.fenixedu.domain.Instalation"%>
+<%@page import="net.sourceforge.fenixedu.domain.Installation"%>
 <%@page import="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>

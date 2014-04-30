@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <html:xhtml/>
@@ -7,7 +8,6 @@
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorshipPeriodPartialBean"%>
 <%@page import="org.joda.time.Partial"%>
 
-<em><bean:message key="pedagogical.council" bundle="PEDAGOGICAL_COUNCIL" /></em>
 <h2><bean:message key="title.tutorship.edit" bundle="PEDAGOGICAL_COUNCIL" /></h2>
 
 

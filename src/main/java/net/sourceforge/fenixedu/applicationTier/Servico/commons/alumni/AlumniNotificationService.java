@@ -10,28 +10,27 @@ import net.sourceforge.fenixedu.domain.Alumni;
 import net.sourceforge.fenixedu.domain.AlumniIdentityCheckRequest;
 import net.sourceforge.fenixedu.domain.AlumniRequestType;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 
 import org.fenixedu.bennu.core.domain.Bennu;
-
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.commons.i18n.I18N;
 
 public class AlumniNotificationService {
 
     static ResourceBundle getAlumniBundle() {
-        return ResourceBundle.getBundle("resources.AlumniResources", Language.getLocale());
+        return ResourceBundle.getBundle("resources.AlumniResources", I18N.getLocale());
     }
 
     static ResourceBundle getGlobalBundle() {
-        return ResourceBundle.getBundle("resources.GlobalResources", Language.getLocale());
+        return ResourceBundle.getBundle("resources.GlobalResources", I18N.getLocale());
     }
 
     static ResourceBundle getManagerBundle() {
-        return ResourceBundle.getBundle("resources.ManagerResources", Language.getLocale());
+        return ResourceBundle.getBundle("resources.ManagerResources", I18N.getLocale());
     }
 
     private static void sendEmail(final Collection<Recipient> recipients, final String subject, final String body,
@@ -41,7 +40,7 @@ public class AlumniNotificationService {
     }
 
     private static List<Recipient> getAlumniRecipients(Alumni alumni) {
-        return Collections.singletonList(Recipient.newInstance(new PersonGroup(alumni.getStudent().getPerson())));
+        return Collections.singletonList(Recipient.newInstance(UserGroup.of(alumni.getStudent().getPerson().getUser())));
     }
 
     protected static void sendPublicAccessMail(final Alumni alumni, final String alumniEmail) {

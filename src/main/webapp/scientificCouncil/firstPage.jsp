@@ -1,9 +1,6 @@
-<%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
-<tiles:insert definition="df.layout.two-column.teacher" beanName="" flush="true">
-  <tiles:put name="title" value="private.scientificcouncil" />
-  <tiles:put name="serviceName" value="Portal do Conselho Científico" />
-  <tiles:put name="navLocal" value="/scientificCouncil/navigation.jsp" />
-  <tiles:put name="navGeral" value="/scientificCouncil/commonNavGeral.jsp" />
-  <tiles:put name="body" value="/scientificCouncil/firstPage_bd.jsp" />
-  <tiles:put name="footer" value="/copyright.jsp" />
-</tiles:insert>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<h2><bean:message key="title.scientificCouncil.portalTitle" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h2>
+
+<p>
+	<bean:message key="message.scientificCouncil.welcome"/>
+</p>

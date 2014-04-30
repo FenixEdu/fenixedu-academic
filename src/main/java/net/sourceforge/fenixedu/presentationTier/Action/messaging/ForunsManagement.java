@@ -20,8 +20,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.messaging.RemoveForumEma
 import net.sourceforge.fenixedu.dataTransferObject.messaging.CreateConversationMessageBean;
 import net.sourceforge.fenixedu.dataTransferObject.messaging.CreateConversationThreadAndMessageBean;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.contents.Content;
-import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.messaging.ConversationMessage;
 import net.sourceforge.fenixedu.domain.messaging.ConversationThread;
@@ -35,6 +33,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.util.MessageResources;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
@@ -95,8 +94,8 @@ public abstract class ForunsManagement extends FenixDispatchAction {
         request.setAttribute("thread", thread);
 
         request.setAttribute("pageNumber", pageNumber);
-        request.setAttribute("pageNumbers", computeNumberOfPages(DEFAULT_PAGE_SIZE, thread.getChildrenSet().size()));
-        request.setAttribute("messages", getContentToDisplay(thread.getChildren(), pageNumber, DEFAULT_PAGE_SIZE));
+        request.setAttribute("pageNumbers", computeNumberOfPages(DEFAULT_PAGE_SIZE, thread.getMessageSet().size()));
+        request.setAttribute("messages", getContentToDisplay(thread.getMessageSet(), pageNumber, DEFAULT_PAGE_SIZE));
 
         Person loggedPerson = getLoggedPerson(request);
         request.setAttribute("person", loggedPerson);
@@ -104,7 +103,7 @@ public abstract class ForunsManagement extends FenixDispatchAction {
         Forum forum = getRequestedForum(request);
         request.setAttribute("forum", this.getRequestedForum(request));
 
-        request.setAttribute("loggedPersonCanWrite", forum.getWritersGroup().isMember(loggedPerson));
+        request.setAttribute("loggedPersonCanWrite", forum.getWritersGroup().isMember(Authenticate.getUser()));
         request.setAttribute("showReplyBox", this.getShowReplyBox(request));
 
         return mapping.findForward("viewThread");
@@ -126,7 +125,7 @@ public abstract class ForunsManagement extends FenixDispatchAction {
 
         request.setAttribute("quotationText", getQuotationText(request));
         return viewThreadOnPage(mapping, actionForm, request, response,
-                computeNumberOfPages(DEFAULT_PAGE_SIZE, getRequestedThread(request).getConversationMessagesCount()));
+                computeNumberOfPages(DEFAULT_PAGE_SIZE, getRequestedThread(request).getMessageSet().size()));
 
     }
 
@@ -148,7 +147,7 @@ public abstract class ForunsManagement extends FenixDispatchAction {
         }
 
         return viewThreadOnPage(mapping, actionForm, request, response,
-                computeNumberOfPages(DEFAULT_PAGE_SIZE, getRequestedThread(request).getConversationMessagesCount()));
+                computeNumberOfPages(DEFAULT_PAGE_SIZE, getRequestedThread(request).getMessageSet().size()));
     }
 
     public ActionForward emailSubscribe(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -192,15 +191,11 @@ public abstract class ForunsManagement extends FenixDispatchAction {
         return (Forum) FenixFramework.getDomainObject(request.getParameter("forumId"));
     }
 
-    private List<Content> getContentToDisplay(Collection<Node> nodes, Integer pageNumber, Integer pageSize) {
-        List<Node> nodeCopy = new ArrayList<Node>(nodes);
+    private <T extends Comparable<T>> List<T> getContentToDisplay(Collection<T> messages, Integer pageNumber, Integer pageSize) {
+        List<T> nodeCopy = new ArrayList<T>(messages);
         Collections.sort(nodeCopy);
-        List<Content> contents = new ArrayList<Content>();
         int start = (pageNumber - 1) * pageSize;
-        for (Node node : nodeCopy.subList(start, Math.min(nodeCopy.size(), start + pageSize))) {
-            contents.add(node.getChild());
-        }
-        return contents;
+        return nodeCopy.subList(start, Math.min(nodeCopy.size(), start + pageSize));
     }
 
     private int computeNumberOfPages(Integer pageSize, int listSize) {
@@ -234,13 +229,14 @@ public abstract class ForunsManagement extends FenixDispatchAction {
         Integer pageNumber = getPageNumber(request);
         request.setAttribute("pageNumber", pageNumber);
 
-        request.setAttribute("conversationThreads", getContentToDisplay(forum.getChildren(), pageNumber, DEFAULT_PAGE_SIZE));
+        request.setAttribute("conversationThreads",
+                getContentToDisplay(forum.getConversationThreadSet(), pageNumber, DEFAULT_PAGE_SIZE));
 
-        request.setAttribute("pageNumbers", computeNumberOfPages(DEFAULT_PAGE_SIZE, forum.getChildrenSet().size()));
+        request.setAttribute("pageNumbers", computeNumberOfPages(DEFAULT_PAGE_SIZE, forum.getConversationThreadSet().size()));
         Person loggedPerson = getLoggedPerson(request);
         request.setAttribute("receivingMessagesByEmail", forum.isPersonReceivingMessagesByEmail(loggedPerson));
 
-        request.setAttribute("loggedPersonCanWrite", forum.getWritersGroup().isMember(loggedPerson));
+        request.setAttribute("loggedPersonCanWrite", forum.getWritersGroup().isMember(Authenticate.getUser()));
     }
 
 }

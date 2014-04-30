@@ -11,8 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.UpdateProfessorshipWithPerson;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.TeacherSearchForExecutionCourseAssociation;
+import net.sourceforge.fenixedu.presentationTier.Action.teacher.professorship.exception.handler.MaxResponsibleForExceedHandler;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -33,20 +36,15 @@ import pt.ist.fenixframework.FenixFramework;
  * @author jpvl
  */
 @Mapping(module = "departmentAdmOffice", path = "/updateTeacherExecutionYearExecutionCourseResponsabilities",
-        input = "show-teacher-professorships-for-management", attribute = "teacherExecutionCourseResponsabilities",
-        formBean = "teacherExecutionCourseResponsabilities", scope = "request")
-@Forwards(value = { @Forward(name = "successfull-update", path = "/showTeacherProfessorshipsForManagement.do") })
-@Exceptions(
-        value = {
-                @ExceptionHandling(
-                        type = net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory.class,
-                        key = "message.professorship.invalidCategory", handler = org.apache.struts.action.ExceptionHandler.class,
-                        path = "/showTeacherProfessorshipsForManagement.do", scope = "request"),
-                @ExceptionHandling(
-                        type = net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed.class,
-                        key = "message.professorship.numberOfResponsibleForExceeded",
-                        handler = net.sourceforge.fenixedu.presentationTier.Action.teacher.professorship.exception.handler.MaxResponsibleForExceedHandler.class,
-                        path = "/showTeacherProfessorshipsForManagement.do", scope = "request") })
+        formBean = "teacherExecutionCourseResponsabilities", functionality = TeacherSearchForExecutionCourseAssociation.class)
+@Forwards({ @Forward(name = "successfull-update", path = "/departmentAdmOffice/showTeacherProfessorshipsForManagement.do") })
+@Exceptions(value = {
+        @ExceptionHandling(type = ResponsibleForValidator.InvalidCategory.class, key = "message.professorship.invalidCategory",
+                handler = org.apache.struts.action.ExceptionHandler.class, path = "/showTeacherProfessorshipsForManagement.do",
+                scope = "request"),
+        @ExceptionHandling(type = ResponsibleForValidator.MaxResponsibleForExceed.class,
+                key = "message.professorship.numberOfResponsibleForExceeded", handler = MaxResponsibleForExceedHandler.class,
+                path = "/showTeacherProfessorshipsForManagement.do", scope = "request") })
 public class UpdateTeacherExecutionCourseResponsabilitiesAction extends Action {
 
     @Override

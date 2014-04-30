@@ -33,6 +33,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
@@ -143,6 +144,7 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
         return mapping.findForward("searchResults");
     }
 
+    @EntryPoint
     public ActionForward viewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         RenderUtils.invalidateViewState();

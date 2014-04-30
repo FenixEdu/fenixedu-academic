@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@page import="net.sourceforge.fenixedu.domain.ExecutionSemester"%>
 <%@page contentType="text/html" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
@@ -7,7 +8,6 @@
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
 <html:xhtml/>
 
-<em><bean:message key="label.teacherService.credits"/></em>
 <jsp:include page="teacherCreditsStyles.jsp"/>
 
 <logic:present name="annualTeachingCreditsBean">

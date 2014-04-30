@@ -22,27 +22,29 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-@Mapping(module = "operator", path = "/submitPhoto", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "chooseFile", path = "/operator/photo/submitPhoto_bd.jsp", tileProperties = @Tile(
-        title = "private.operator.submitphotos")) })
+@StrutsFunctionality(app = OperatorApplication.class, path = "submit-photo", titleKey = "link.operator.submitPhoto")
+@Mapping(module = "operator", path = "/submitPhoto")
+@Forwards(value = { @Forward(name = "chooseFile", path = "/operator/photo/submitPhoto_bd.jsp") })
 public class SubmitPhotoAction extends FenixDispatchAction {
 
     private static final int MAX_RAW_SIZE = 1000000; // 2M
 
+    @EntryPoint
     public ActionForward preparePhotoUpload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", I18N.getLocale());
         request.setAttribute("photo", new PhotographUploadBean());
         request.setAttribute("phroperCaption", bundle.getString("phroper.caption"));
         request.setAttribute("phroperSubCaption", bundle.getString("phroper.subCaption"));

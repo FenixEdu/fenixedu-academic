@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -155,7 +156,7 @@
 			</academic:allowed>
 		</logic:notPresent>
 
-		<fr:property name="linkFormat(sentEmails)" value="/emails.do?method=viewSentEmails&senderId=${sender.externalId}" />
+		<fr:property name="linkFormat(sentEmails)" value="/viewSentEmails.do?method=viewSentEmails&senderId=${sender.externalId}" />
 		<fr:property name="order(sentEmails)" value="5" />
 		<fr:property name="key(sentEmails)" value="link.manager.email.sender" />
 		<fr:property name="bundle(sentEmails)" value="MANAGER_RESOURCES" />

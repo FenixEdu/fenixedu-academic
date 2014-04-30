@@ -1,24 +1,23 @@
 <%@ page language="java" %>
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%><html:xhtml/>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt"%>
+
+<jsp:include page="/coordinator/context.jsp" />
 
 <h2><bean:message key="title.teachersInformation"/> (<dt:format pattern="dd/MM/yyyy"><dt:currentTime/></dt:format>)</h2>
 
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
 
-<html:form action="/teachersInformation.do">	
+<html:form action="/teachersInformation.do?degreeCurricularPlanID=${degreeCurricularPlanID}">	
 	<p class="mtop2">
 		<bean:message key="link.masterDegree.administrativeOffice.gratuity.chosenYear"/>: 
 		<html:select bundle="HTMLALT_RESOURCES" altKey="select.yearString" property="yearString" size="1" onchange="this.form.submit();">
 			<html:options property="value" labelProperty="label" collection="executionYearList" />
 		</html:select>
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.degreeCurricularPlanID" property="degreeCurricularPlanID" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeId" property="executionDegreeId" />		
-		<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-			<bean:message key="button.submit"/>
-		</html:submit>
 	</p>
 </html:form>
 

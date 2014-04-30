@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -12,7 +13,6 @@
 <logic:present role="role(COORDINATOR)">
 
 <%-- ### Title #### --%>
-<em><bean:message  key="label.phd.coordinator.breadcrumb" bundle="PHD_RESOURCES"/></em>
 <h2><bean:message key="label.phd.manage.emails" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 

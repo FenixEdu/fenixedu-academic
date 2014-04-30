@@ -1,31 +1,23 @@
 package net.sourceforge.fenixedu.domain.messaging;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.contents.Container;
-import net.sourceforge.fenixedu.domain.contents.Content;
-import net.sourceforge.fenixedu.domain.contents.DateOrderedNode;
-import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
-import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.commons.StringNormalizer;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public abstract class Forum extends Forum_Base {
 
-    public Forum() {
-        super();
-        setRootDomainObject(Bennu.getInstance());
+    protected Forum() {
+
     }
 
     public Forum(MultiLanguageString name, MultiLanguageString description) {
-        this();
         init(name, description);
     }
 
@@ -35,11 +27,6 @@ public abstract class Forum extends Forum_Base {
         setDescription(description);
     }
 
-    @Override
-    public boolean isParentAccepted(Container parent) {
-        return parent instanceof Site;
-    }
-
     public boolean hasConversationThreadWithSubject(MultiLanguageString subject) {
         ConversationThread conversationThread = getConversationThreadBySubject(subject);
 
@@ -47,7 +34,7 @@ public abstract class Forum extends Forum_Base {
     }
 
     public ConversationThread getConversationThreadBySubject(MultiLanguageString subject) {
-        for (ConversationThread conversationThread : getConversationThreads()) {
+        for (ConversationThread conversationThread : getConversationThreadSet()) {
             final MultiLanguageString title = conversationThread.getTitle();
             if (title != null && title.equalInAnyLanguage(subject)) {
                 return conversationThread;
@@ -57,8 +44,18 @@ public abstract class Forum extends Forum_Base {
         return null;
     }
 
+    public int getConversationMessagesCount() {
+        int total = 0;
+
+        for (ConversationThread conversationThread : getConversationThreadSet()) {
+            total += conversationThread.getMessageSet().size();
+        }
+
+        return total;
+    }
+
     public void checkIfPersonCanWrite(Person person) {
-        if (!getWritersGroup().isMember(person)) {
+        if (!getWritersGroup().isMember(person.getUser())) {
             throw new DomainException("forum.person.cannot.write");
         }
     }
@@ -69,18 +66,8 @@ public abstract class Forum extends Forum_Base {
         }
     }
 
-    public int getConversationMessagesCount() {
-        int total = 0;
-
-        for (ConversationThread conversationThread : getConversationThreads()) {
-            total += conversationThread.getConversationMessagesCount();
-        }
-
-        return total;
-    }
-
     public void addEmailSubscriber(Person person) {
-        if (!getReadersGroup().isMember(person)) {
+        if (!getReadersGroup().isMember(person.getUser())) {
             throw new DomainException("forum.cannot.subscribe.person.because.does.not.belong.to.readers");
         }
 
@@ -108,7 +95,7 @@ public abstract class Forum extends Forum_Base {
     }
 
     public ForumSubscription getPersonSubscription(Person person) {
-        for (ForumSubscription subscription : getForumSubscriptions()) {
+        for (ForumSubscription subscription : getForumSubscriptionsSet()) {
             if (subscription.getPerson() == person) {
                 return subscription;
             }
@@ -130,53 +117,40 @@ public abstract class Forum extends Forum_Base {
         return new ConversationThread(this, creator, subject);
     }
 
-    public List<ConversationThread> getConversationThreads() {
-        List<ConversationThread> conversationThreads = new ArrayList<ConversationThread>();
-        for (Node node : getChildrenSet()) {
-            conversationThreads.add((ConversationThread) node.getChild());
-        }
-        return conversationThreads;
-    }
-
-    public void addConversationThreads(ConversationThread conversationThread) {
-        conversationThread.setForum(this);
-    }
-
-    public void removeConversationThreads(ConversationThread conversationThread) {
-        getConversationThreads().remove(conversationThread);
-    }
-
-    public int getConversationThreadsCount() {
-        return getChildrenSet().size();
-    }
-
-    @Override
-    protected Node createChildNode(Content childContent) {
-        return new DateOrderedNode(this, childContent, Boolean.FALSE);
-    }
-
     public abstract Group getReadersGroup();
 
     public abstract Group getWritersGroup();
 
     public abstract Group getAdminGroup();
 
-    @Override
-    protected void disconnect() {
+    public MultiLanguageString getNormalizedName() {
+        return normalize(getName());
+    }
+
+    public static MultiLanguageString normalize(final MultiLanguageString multiLanguageString) {
+        if (multiLanguageString == null) {
+            return null;
+        }
+        MultiLanguageString result = new MultiLanguageString();
+        for (final Locale language : multiLanguageString.getAllLocales()) {
+            result = result.with(language, normalize(multiLanguageString.getContent(language)));
+        }
+        return result;
+    }
+
+    public static String normalize(final String string) {
+        return string == null ? null : StringNormalizer.normalize(string).replace(' ', '-');
+    }
+
+    public void delete() {
         for (final ForumSubscription forumSubscription : getForumSubscriptionsSet()) {
             forumSubscription.delete();
         }
-        super.disconnect();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.messaging.ForumSubscription> getForumSubscriptions() {
-        return getForumSubscriptionsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyForumSubscriptions() {
-        return !getForumSubscriptionsSet().isEmpty();
+        for (final ConversationThread thread : getConversationThreadSet()) {
+            thread.delete();
+        }
+        setCreator(null);
+        deleteDomainObject();
     }
 
 }

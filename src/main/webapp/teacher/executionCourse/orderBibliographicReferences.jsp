@@ -5,6 +5,8 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <html:xhtml/>
 
+<jsp:include page="/commons/renderers/treeRendererHeader.jsp" />
+
 <bean:define id="executionCourseId" name="executionCourse" property="externalId"/>
 <bean:define id="optional" name="optional" type="java.lang.Boolean"/>
 
@@ -28,7 +30,7 @@
 </p>
 
 
-	<fr:form action="<%= "/manageExecutionCourse.do?method=sortBibliographyReferences&amp;executionCourseID=" + executionCourseId + (optional ? "&amp;optional=true" : "") %>">
+	<fr:form action="<%= "/manageBibliographicReference.do?method=sortBibliographyReferences&amp;executionCourseID=" + executionCourseId + (optional ? "&amp;optional=true" : "") %>">
 	    <input id="referencesOrder" type="hidden" name="referencesOrder" value=""/>
 	</fr:form>
 
@@ -44,7 +46,7 @@
 
 
 <p class="mtop15">
-    <fr:form action="<%="/manageExecutionCourse.do?method=bibliographicReference&amp;executionCourseID=" + executionCourseId %>">
+    <fr:form action="<%="/manageBibliographicReference.do?method=bibliographicReference&amp;executionCourseID=" + executionCourseId %>">
        <html:button bundle="HTMLALT_RESOURCES" altKey="button.saveButton" property="saveButton" onclick="<%= "treeRenderer_saveTree('referencesOrderTree');" %>">
            <bean:message key="button.items.order.save" bundle="SITE_RESOURCES"/>
        </html:button>

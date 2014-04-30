@@ -10,19 +10,25 @@ import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerStudentsApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/candidacySummary", module = "manager", scope = "request", parameter = "method")
+@StrutsFunctionality(app = ManagerStudentsApp.class, path = "first-time-candidacy",
+        titleKey = "title.first.time.candidacy.summary")
+@Mapping(path = "/candidacySummary", module = "manager")
 @Forwards({ @Forward(name = "prepare", path = "/manager/student/candidacies/manageFirstCandidacySummaryFile.jsp") })
 public class FirstTimeCandidacySummaryFileDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         request.setAttribute("studentNumberBean", new StudentNumberBean());
         return mapping.findForward("prepare");

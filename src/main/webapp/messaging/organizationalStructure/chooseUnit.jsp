@@ -1,10 +1,12 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
-<ft:tilesView definition="df.page.structure" attributeName="body-inline">
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.messaging.MessagingApplication$OrganizationalStructurePage" />
+
+<f:view>
 
 <f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 <f:loadBundle basename="resources/MessagingResources" var="messagingResources"/>
@@ -62,9 +64,6 @@
 		<h:outputText value="</tr>" escape="false"/>
 	<h:outputText value="</table>" escape="false"/>
 
-
-	<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>	
-
 	<h:outputText value="<p>" escape="false"/>
 		<h:outputLink value="#{displayEvaluationsToEnrol.contextPath}/messaging/organizationalStructure/structurePage.faces">
 			<h:outputText value="« #{messagingResources['messaging.back.label']}" escape="false"/>
@@ -81,4 +80,4 @@
 <h:outputText value="<div class='mvert025'><div style='width: 10px; height: 10px; background-color: #5a7086; margin-top: 4px; float: left;'></div> <div style='padding-left: 15px;'><em>" escape="false" /><h:outputText value="#{messagingResources['label.person.function']}" escape="false"/><h:outputText value="</em></div></div>" escape="false" />
 
 			
-</ft:tilesView> 
+</f:view> 

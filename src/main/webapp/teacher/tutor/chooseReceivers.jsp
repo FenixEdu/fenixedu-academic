@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
@@ -8,7 +9,6 @@
 
 <%@page import="net.sourceforge.fenixedu.util.BundleUtil"%>
 
-<em><bean:message key="label.teacher.tutor.operations" /></em>
 <h2><bean:message key="title.sendEmail" bundle="APPLICATION_RESOURCES"/></h2>
 
 <em>

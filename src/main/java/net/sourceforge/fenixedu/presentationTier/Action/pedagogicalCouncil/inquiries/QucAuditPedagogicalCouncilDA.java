@@ -14,27 +14,31 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.ExecutionCourseAudit;
+import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.PedagogicalCouncilApp.PedagogicalControlApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
+@StrutsFunctionality(app = PedagogicalControlApp.class, path = "quc-audit", titleKey = "link.inquiry.audit",
+        bundle = "InquiriesResources")
 @Mapping(path = "/qucAudit", module = "pedagogicalCouncil")
 @Forwards({
-        @Forward(name = "showExecutionCoursesForAudit", path = "/pedagogicalCouncil/inquiries/searchExecutionCourseToAudit.jsp",
-                tileProperties = @Tile(title = "private.pedagogiccouncil.control.qucaudit")),
+        @Forward(name = "showExecutionCoursesForAudit", path = "/pedagogicalCouncil/inquiries/searchExecutionCourseToAudit.jsp"),
         @Forward(name = "selectPersons", path = "/pedagogicalCouncil/inquiries/selectPersons.jsp"),
         @Forward(name = "viewProcessDetails", path = "/pedagogicalCouncil/inquiries/viewProcessDetails.jsp") })
 public class QucAuditPedagogicalCouncilDA extends ViewQucAuditProcessDA {
 
+    @EntryPoint
     public ActionForward searchExecutionCourse(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 

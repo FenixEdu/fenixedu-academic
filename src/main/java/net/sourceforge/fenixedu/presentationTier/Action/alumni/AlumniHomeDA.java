@@ -13,20 +13,23 @@ import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionUnit;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.StrutsApplication;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(module = "alumni", path = "/index", scope = "session")
+@StrutsApplication(bundle = "AlumniResources", path = "alumni-section", titleKey = "label.alumni.main.title", hint = "Alumni",
+        accessGroup = "role(ALUMNI)")
+@Mapping(module = "alumni", path = "/index")
 @Forwards(value = { @Forward(name = "Success", path = "/alumni/index.jsp") })
-public class AlumniHomeDA extends FenixDispatchAction {
+public class AlumniHomeDA extends FenixAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -34,7 +37,7 @@ public class AlumniHomeDA extends FenixDispatchAction {
 
         Person person = getLoggedPerson(request);
         double formationsPercentage = getFormationsPercentage(person.getFormations());
-        double jobsPercentage = getJobsPercentage(person.getJobs());
+        double jobsPercentage = getJobsPercentage(person.getJobsSet());
 
         if (!areContactsUpToDate(person)) {
             request.setAttribute("showContactsMessage", true);

@@ -1,8 +1,11 @@
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA.HideCancelledCandidaciesBean" %>
+
+<jsp:include page="/coordinator/context.jsp" />
 
 <html:xhtml/>
 
@@ -32,7 +35,6 @@
 
 <%-- candidacy process of current year --%>
 <logic:notEmpty name="process">
-	<em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
 	<h2><bean:write name="process" property="displayName" /> </h2>
 
 	<bean:define id="processId" name="process" property="externalId" />

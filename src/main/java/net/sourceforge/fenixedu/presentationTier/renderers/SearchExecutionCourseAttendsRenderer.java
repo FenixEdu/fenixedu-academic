@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.presentationTier.renderers;
 
 import java.util.ResourceBundle;
 
+import org.fenixedu.commons.i18n.I18N;
+
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean.StudentAttendsStateType;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -25,14 +27,14 @@ import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.ist.fenixWebFramework.renderers.model.MetaObject;
 import pt.ist.fenixWebFramework.renderers.model.MetaObjectFactory;
 import pt.ist.fenixWebFramework.renderers.schemas.Schema;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class SearchExecutionCourseAttendsRenderer extends InputRenderer {
 
     private final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources",
-            Language.getLocale());
+            I18N.getLocale());
     private final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources",
-            Language.getLocale());
+            I18N.getLocale());
 
     private String searchTableClasses;
 

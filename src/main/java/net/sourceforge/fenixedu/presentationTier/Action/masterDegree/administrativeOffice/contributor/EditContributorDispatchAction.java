@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
+import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -26,13 +27,13 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(path = "/editContributor", module = "academicAdministration", formBean = "createContributorForm")
+@Mapping(path = "/editContributor", module = "academicAdministration", formBean = "createContributorForm",
+        functionality = EditContributorsDispatchAction.class)
 @Forwards({ @Forward(name = "EditReady", path = "/academicAdminOffice/contributor/editContributor.jsp"),
         @Forward(name = "EditSuccess", path = "/academicAdminOffice/contributor/editContributorSuccess.jsp") })
-@Exceptions(value = { @ExceptionHandling(
-        type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException.class,
-        key = "resources.Action.exceptions.ExistingActionException",
-        handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
+@Exceptions(value = { @ExceptionHandling(type = ExistingActionException.class,
+        key = "resources.Action.exceptions.ExistingActionException", handler = FenixErrorExceptionHandler.class,
+        scope = "request") })
 public class EditContributorDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,

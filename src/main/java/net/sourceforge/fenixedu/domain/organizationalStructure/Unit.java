@@ -29,7 +29,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.UnitFile;
 import net.sourceforge.fenixedu.domain.UnitFileTag;
 import net.sourceforge.fenixedu.domain.UnitSite;
-import net.sourceforge.fenixedu.domain.accessControl.PersistentGroup;
+import net.sourceforge.fenixedu.domain.accessControl.MembersLinkGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroupMembers;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
@@ -57,17 +57,17 @@ import net.sourceforge.fenixedu.domain.util.email.UnitBasedSender;
 import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.commons.StringNormalizer;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class Unit extends Unit_Base {
@@ -126,8 +126,8 @@ public class Unit extends Unit_Base {
         MultiLanguageString partyName = getPartyName();
 
         partyName =
-                partyName == null ? new MultiLanguageString(Language.getDefaultLanguage(), name) : partyName.with(
-                        Language.getDefaultLanguage(), name);
+                partyName == null ? new MultiLanguageString(Locale.getDefault(), name) : partyName.with(
+                        Locale.getDefault(), name);
 
         super.setPartyName(partyName);
 
@@ -219,7 +219,7 @@ public class Unit extends Unit_Base {
                 && !hasAnyFunctions() && !hasAnyVigilantGroups() && !hasAnyAssociatedNonAffiliatedTeachers()
                 && !hasAnyPayedGuides() && !hasAnyPayedReceipts() && !hasAnyExternalCurricularCourses()
                 && !hasAnyResultUnitAssociations() && !hasUnitServiceAgreementTemplate() && !hasAnyResearchInterests()
-                && !hasAnyProjectParticipations() && !hasAnyParticipations() && !hasAnyBoards()
+                && !hasAnyProjectParticipations() && !hasAnyParticipations() && getBoardsSet().isEmpty()
                 && (!hasSite() || getSite().isDeletable()) && !hasAnyOwnedReceipts() && !hasAnyPrecedentDegreeInformations()
                 && !hasAnyCandidacyPrecedentDegreeInformations() && !hasAnyUnitSpaceOccupations() && !hasAnyExamCoordinators()
                 && !hasAnyExternalRegistrationDatas() && !hasAnyCooperation() && !hasAnyFiles() && !hasAnyPersistentGroups()
@@ -840,7 +840,7 @@ public class Unit extends Unit_Base {
     public static Unit createNewNoOfficialExternalInstitution(String unitName, Country country) {
         Unit externalInstitutionUnit = UnitUtils.readExternalInstitutionUnit();
         Unit noOfficialExternalInstitutionUnit = new Unit();
-        noOfficialExternalInstitutionUnit.init(new MultiLanguageString(Language.getDefaultLanguage(), unitName), null, null,
+        noOfficialExternalInstitutionUnit.init(new MultiLanguageString(Locale.getDefault(), unitName), null, null,
                 null, new YearMonthDay(), null, null, null, null, null, null);
         noOfficialExternalInstitutionUnit.addParentUnit(externalInstitutionUnit,
                 AccountabilityType.readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
@@ -1159,7 +1159,7 @@ public class Unit extends Unit_Base {
     }
 
     public void removeGroupFromUnitFiles(PersistentGroupMembers members) {
-        PersistentGroup group = new PersistentGroup(members);
+        MembersLinkGroup group = MembersLinkGroup.get(members);
         for (UnitFile file : getFiles()) {
             file.updatePermissions(group);
         }
@@ -1182,10 +1182,10 @@ public class Unit extends Unit_Base {
         return getPartyName();
     }
 
-    public List<IGroup> getUserDefinedGroups() {
-        final List<IGroup> groups = new ArrayList<IGroup>();
+    public List<Group> getUserDefinedGroups() {
+        final List<Group> groups = new ArrayList<Group>();
         for (final PersistentGroupMembers persistentMembers : this.getPersistentGroups()) {
-            groups.add(new PersistentGroup(persistentMembers));
+            groups.add(MembersLinkGroup.get(persistentMembers));
         }
         return groups;
     }
@@ -1204,15 +1204,15 @@ public class Unit extends Unit_Base {
      * 
      * @return Groups to used as recipients
      */
-    public List<IGroup> getGroups() {
-        List<IGroup> groups = new ArrayList<IGroup>();
+    public List<Group> getGroups() {
+        List<Group> groups = new ArrayList<Group>();
         groups.addAll(getDefaultGroups());
         groups.addAll(getUserDefinedGroups());
         return groups;
     }
 
-    protected List<IGroup> getDefaultGroups() {
-        return new ArrayList<IGroup>();
+    protected List<Group> getDefaultGroups() {
+        return new ArrayList<Group>();
     }
 
     public boolean isUserAbleToDefineGroups(Person person) {
@@ -1303,7 +1303,7 @@ public class Unit extends Unit_Base {
         }
         if (result.isEmpty()) {
             result =
-                    result.with(Language.getDefaultLanguage(),
+                    result.with(Locale.getDefault(),
                             BundleUtil.getStringFromResourceBundle("resources/GlobalResources", "institution.name"));
         }
 
@@ -1717,6 +1717,11 @@ public class Unit extends Unit_Base {
     }
 
     @Deprecated
+    public java.util.Set<net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard> getBoards() {
+        return getBoardsSet();
+    }
+
+    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.util.email.UnitBasedSender> getUnitBasedSender() {
         return getUnitBasedSenderSet();
     }
@@ -1977,16 +1982,6 @@ public class Unit extends Unit_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.events.InstitutionAffiliationEvent> getAffiliationEvent() {
-        return getAffiliationEventSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAffiliationEvent() {
-        return !getAffiliationEventSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExternalCourseLoadRequest> getExternalCourseLoadRequests() {
         return getExternalCourseLoadRequestsSet();
     }
@@ -1994,16 +1989,6 @@ public class Unit extends Unit_Base {
     @Deprecated
     public boolean hasAnyExternalCourseLoadRequests() {
         return !getExternalCourseLoadRequestsSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.events.MicroPaymentEvent> getMicroPaymentEvent() {
-        return getMicroPaymentEventSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyMicroPaymentEvent() {
-        return !getMicroPaymentEventSet().isEmpty();
     }
 
     @Deprecated
@@ -2044,16 +2029,6 @@ public class Unit extends Unit_Base {
     @Deprecated
     public boolean hasAnyFunctions() {
         return !getFunctionsSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.accounting.events.InstitutionAffiliationEvent> getOpenAffiliationEvent() {
-        return getOpenAffiliationEventSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyOpenAffiliationEvent() {
-        return !getOpenAffiliationEventSet().isEmpty();
     }
 
     @Deprecated

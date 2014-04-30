@@ -74,7 +74,7 @@
 		<property name="contextRelative" value="true"/>
 		<property name="moduleRelative" value="true"/>
 		<property name="blankTarget" value="true"/>
-		<property name="linkFormat" value="/viewCurriculum.do?method=prepare&amp;registrationOID=${externalId}"/>	
+		<property name="linkFormat" value="/viewStudentCurriculum.do?method=prepare&amp;registrationOID=${externalId}"/>	
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="registration.number"/>
 	</slot>
@@ -108,7 +108,7 @@
 		<property name="contextRelative" value="true"/>
 		<property name="moduleRelative" value="true"/>
 		<property name="blankTarget" value="true"/>
-		<property name="linkFormat" value="/viewCurriculum.do?method=prepare&amp;registrationOID=${externalId}"/>	
+		<property name="linkFormat" value="/viewStudentCurriculum.do?method=prepare&amp;registrationOID=${externalId}"/>	
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="registration.number"/>
 	</slot>

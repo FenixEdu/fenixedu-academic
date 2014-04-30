@@ -7,7 +7,6 @@
 <html:xhtml />
 
 <logic:present name="student">
-    <em><bean:message key="title.student.portalTitle" bundle="STUDENT_RESOURCES" /></em>
     <h2><bean:message key="title.student.dataShareAuthorizations" bundle="STUDENT_RESOURCES" /></h2>
 
     <html:link action="/studentDataShareAuthorization.do?method=viewAuthorizationHistory">

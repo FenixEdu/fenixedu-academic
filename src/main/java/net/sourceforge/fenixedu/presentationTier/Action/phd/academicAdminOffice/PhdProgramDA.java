@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramContextPeriod;
@@ -20,7 +20,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/phdProgram", module = "academicAdministration")
+@Mapping(path = "/phdProgram", module = "academicAdministration", functionality = PhdIndividualProgramProcessDA.class)
 @Forwards({
         @Forward(name = "listPhdProgramForPeriods",
                 path = "/phd/academicAdminOffice/periods/phdProgram/listPhdProgramForPeriods.jsp"),
@@ -32,8 +32,7 @@ public class PhdProgramDA extends PhdDA {
 
     public ActionForward listPhdProgramForPeriods(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
-        request.setAttribute("phdPrograms", AcademicAuthorizationGroup.getPhdProgramsForOperation(AccessControl.getPerson(),
-                AcademicOperationType.MANAGE_PHD_PROCESSES));
+        request.setAttribute("phdPrograms", AcademicAuthorizationGroup.getPhdProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_PHD_PROCESSES));
         return mapping.findForward("listPhdProgramForPeriods");
     }
 

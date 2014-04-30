@@ -1,10 +1,11 @@
 package net.sourceforge.fenixedu.domain.space;
 
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.resource.Resource;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 public abstract class SpaceOccupation extends SpaceOccupation_Base {
 
@@ -15,14 +16,13 @@ public abstract class SpaceOccupation extends SpaceOccupation_Base {
     public abstract Group getAccessGroup();
 
     public void checkPermissionsToManageSpaceOccupations() {
-
-        Person loggedPerson = AccessControl.getPerson();
-        if (getSpace().personHasPermissionsToManageSpace(loggedPerson)) {
+        User user = Authenticate.getUser();
+        if (getSpace().personHasPermissionsToManageSpace(user)) {
             return;
         }
 
         final Group group = getAccessGroup();
-        if (group != null && group.isMember(loggedPerson)) {
+        if (group != null && group.isMember(user)) {
             return;
         }
 
@@ -30,10 +30,9 @@ public abstract class SpaceOccupation extends SpaceOccupation_Base {
     }
 
     public void checkPermissionsToManageSpaceOccupationsWithoutCheckSpaceManager() {
-
-        Person loggedPerson = AccessControl.getPerson();
+        User user = Authenticate.getUser();
         final Group group = getAccessGroup();
-        if (group != null && group.isMember(loggedPerson)) {
+        if (group != null && group.isMember(user)) {
             return;
         }
 

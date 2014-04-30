@@ -1,12 +1,13 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
-<ft:tilesView definition="scientificCouncil.masterPage" attributeName="body-inline">
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.ScientificCouncilApplication$ScientificCurricularPlansManagement" />
+
+<f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 	
-	<h:outputText value="<i>#{scouncilBundle['scientificCouncil']}</i>" escape="false"/>
 	<h:outputFormat value="<h2>#{scouncilBundle['create.param']}</h2>" escape="false">
 		<f:param value="#{scouncilBundle['degree.officialPublication']}"/>
 	</h:outputFormat>
@@ -51,4 +52,4 @@
 			action="editDegree"/>
 		<h:outputText value="</p>" escape="false"/>
 	</h:form>
-</ft:tilesView>
+</f:view>

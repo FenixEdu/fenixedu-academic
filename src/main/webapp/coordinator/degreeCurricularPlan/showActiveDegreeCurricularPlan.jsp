@@ -1,8 +1,17 @@
 <%@ page language="java" %>
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %><html:xhtml/>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
+
+<jsp:include page="/coordinator/context.jsp" />
+
 <h2><bean:message key="label.coordinator.degreeCurricular.active"/></h2>
+
+<html:link page="/degreeCurricularPlanManagement.do?method=showCurricularCoursesHistory&degreeCurricularPlanID=${degreeCurricularPlanID}">
+    <bean:message key="link.coordinator.degreeCurricular.viewHistory" />
+</html:link>
+
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 <logic:present name="allActiveCurricularCourseScopes">
 			<logic:iterate id="curricularCourseScopeElem" name="allActiveCurricularCourseScopes" type="net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope" length="1">

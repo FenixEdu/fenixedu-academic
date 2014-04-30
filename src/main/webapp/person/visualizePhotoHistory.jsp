@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -10,7 +11,6 @@
 <logic:present role="role(PERSON)">
 <bean:define id="person" name="LOGGED_USER_ATTRIBUTE" property="person"/>
 
-<em><bean:message key="label.person.main.title" /></em>
 <h2><bean:message key="label.person.title.photoHistory"/></h2>
 
 <p>

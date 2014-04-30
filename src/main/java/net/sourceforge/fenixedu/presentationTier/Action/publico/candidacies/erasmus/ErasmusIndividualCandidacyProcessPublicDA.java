@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Instalation;
+import net.sourceforge.fenixedu.domain.Installation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
@@ -1217,7 +1217,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
         sb.append("\n");
 
         // Email construction and sending
-        String errorReportAddress = Instalation.getInstance().getInstituitionalEmailAddress("nmci");
+        String errorReportAddress = Installation.getInstance().getInstituitionalEmailAddress("nmci");
         String errorReportSubject =
                 BundleUtil.getStringFromResourceBundle("resources.CandidateResources", "error.mobility.report.mail.subject",
                         Unit.getInstitutionAcronym());

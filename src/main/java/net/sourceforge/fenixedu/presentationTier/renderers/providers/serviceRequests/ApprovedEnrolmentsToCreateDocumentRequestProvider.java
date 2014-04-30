@@ -9,7 +9,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -32,8 +32,7 @@ public class ApprovedEnrolmentsToCreateDocumentRequestProvider implements DataPr
         final DocumentRequestCreateBean documentRequestCreateBean = (DocumentRequestCreateBean) source;
 
         Set<Degree> degrees =
-                AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
-                        AcademicOperationType.SERVICE_REQUESTS);
+                AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(), AcademicOperationType.SERVICE_REQUESTS);
         SortedSet<Enrolment> aprovedEnrolments = new TreeSet<Enrolment>(Enrolment.COMPARATOR_BY_NAME_AND_ID);
         for (Degree degree : degrees) {
             for (final Registration registration : documentRequestCreateBean.getStudent().getRegistrationsFor(degree)) {

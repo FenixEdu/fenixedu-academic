@@ -3,14 +3,12 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ page import="org.apache.struts.action.ActionMessages" %>
-<%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app"%>
 
 <%@page import="net.sourceforge.fenixedu.domain.CompetenceCourse"%>
 <html:xhtml />
 
 <logic:present role="role(STUDENT)">
 
-	<em><bean:message  key="label.phd.student.breadcrumb" bundle="PHD_RESOURCES"/></em>
 	<h2><bean:message key="label.phd.student.enrolments" bundle="PHD_RESOURCES" /></h2>
 
 	<bean:define id="periodSemester" name="bolonhaStudentEnrollmentBean" property="executionPeriod.semester" />
@@ -30,19 +28,16 @@
 		<li>
 			<bean:define id="studentCurricularPlan" name="bolonhaStudentEnrollmentBean" property="studentCurricularPlan" />
 
-			<app:defineContentPath id="contextPathForUrl" name="studentCurricularPlan" property="degree.site" toScope="request"/>
-			<bean:define id="contextPathForUrl" name="contextPathForUrl" type="java.lang.String"/>
-
 			<bean:define id="degreeId" name="studentCurricularPlan" property="degree.externalId" />
 			<bean:define id="degreeCurricularPlanId" name="studentCurricularPlan" property="degreeCurricularPlan.externalId" />
 			<bean:define id="executionPeriodId" name="bolonhaStudentEnrollmentBean" property="executionPeriod.externalId" />
 			
-			<%= net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.HAS_CONTEXT_PREFIX %><html:link href="<%=request.getContextPath() + "/publico/degreeSite/showDegreeCurricularPlanBolonha.faces?organizeBy=groups&amp;showRules=false&amp;hideCourses=false&amp;degreeID=" + degreeId + "&amp;degreeCurricularPlanID=" + degreeCurricularPlanId + "&amp;executionPeriodOID=" + executionPeriodId + "&amp;" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=" + contextPathForUrl%>" styleClass="externallink" target="_blank">
+			<html:link href="<%=request.getContextPath() + "/publico/degreeSite/showDegreeCurricularPlanBolonha.faces?organizeBy=groups&amp;showRules=false&amp;hideCourses=false&amp;degreeID=" + degreeId + "&amp;degreeCurricularPlanID=" + degreeCurricularPlanId + "&amp;executionPeriodOID=" + executionPeriodId %>" styleClass="externallink" target="_blank">
 				<bean:message bundle="STUDENT_RESOURCES"  key="label.viewDegreeCurricularPlan"/>
 			</html:link>
 		</li>
 		<li>
-			<html:link action="/viewCurriculum.do?method=prepare" paramId="registrationOID" paramName="studentCurricularPlan" paramProperty="registration.externalId" styleClass="externallink" target="_blank"><bean:message bundle="STUDENT_RESOURCES"  key="label.viewStudentCurricularPlan"/></html:link>
+			<html:link action="/viewStudentCurriculum.do?method=prepare" paramId="registrationOID" paramName="studentCurricularPlan" paramProperty="registration.externalId" styleClass="externallink" target="_blank"><bean:message bundle="STUDENT_RESOURCES"  key="label.viewStudentCurricularPlan"/></html:link>
 		</li>
 		<li>
 			<html:link href="mailto:nucleo.graduacao@ist.utl.pt" styleClass="externallink">
@@ -136,7 +131,7 @@
 	</fr:form>
 
 	<p class="mtop15">
-	<em><bean:message bundle="STUDENT_RESOURCES"  key="message.enrollment.terminated"/> <html:link action="/viewCurriculum.do?method=prepare" paramId="registrationOID" paramName="studentCurricularPlan" paramProperty="registration.externalId"><bean:message bundle="STUDENT_RESOURCES"  key="message.student.curriculum"/></html:link>.</em> <br/>
+	<em><bean:message bundle="STUDENT_RESOURCES"  key="message.enrollment.terminated"/> <html:link action="/viewStudentCurriculum.do?method=prepare" paramId="registrationOID" paramName="studentCurricularPlan" paramProperty="registration.externalId"><bean:message bundle="STUDENT_RESOURCES"  key="message.student.curriculum"/></html:link>.</em> <br/>
 	<em><bean:message bundle="STUDENT_RESOURCES"  key="message.enrollment.terminated.shifts"/> <html:link page="/studentShiftEnrollmentManager.do?method=prepare" titleKey="link.title.shift.enrolment"><bean:message key="link.shift.enrolment"/></html:link>.</em>
 	</p>
 	

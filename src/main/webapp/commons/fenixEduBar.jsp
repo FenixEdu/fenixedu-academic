@@ -1,6 +1,6 @@
 <%@page import="org.fenixedu.bennu.core.util.CoreConfiguration"%>
 <%@page import="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"%>
-<%@page import="net.sourceforge.fenixedu.domain.Instalation"%>
+<%@page import="net.sourceforge.fenixedu.domain.Installation"%>
 <%@ page language="java"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -10,7 +10,7 @@
 <html:xhtml />
 
 <bean:define id="institutionUrl" type="java.lang.String">
-	<%=Instalation.getInstance().getInstituitionURL()%>
+	<%=Installation.getInstance().getInstituitionURL()%>
 </bean:define>
 <bean:define id="institutionName" type="java.lang.String">
 	<%=Unit.getInstitutionName()%>

@@ -842,25 +842,6 @@
 	</slot>
 </schema>
 
-<schema name="YearMonthDay" type="net.sourceforge.fenixedu.presentationTier.Action.manager.ErrorLogDispatchAction$RequestLogDayBean" bundle="MANAGER_RESOURCES">
-	<slot name="year" key="label.year" layout="menu-select-postback">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.manager.RequestLogYearProvider" />
-		<property name="format" value="${year}"/>
-		<property name="saveOptions" value="true" />
-		<property name="destination" value="postback" />
-	</slot>
-	<slot name="month" key="label.month" layout="menu-select-postback">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.manager.RequestLogMonthProvider" />
-		<property name="format" value="${monthOfYear}"/>
-		<property name="saveOptions" value="true" />
-	</slot>
-	<slot name="day" key="label.day" layout="menu-select-postback">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.manager.RequestLogDayProvider" />
-		<property name="format" value="${dayOfMonth}"/>
-		<property name="saveOptions" value="true" />
-	</slot>
-</schema>
-
 <schema name="extraCurricularActivityType.view"
 	type="net.sourceforge.fenixedu.domain.student.curriculum.ExtraCurricularActivityType">
 	<slot name="name" />

@@ -8,10 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.thesis.ThesisSearchBean;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
+import net.sourceforge.fenixedu.presentationTier.Action.library.LibraryApplication;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -20,9 +23,13 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 /**
  * @author Pedro Santos (pmrsa)
  */
-@Mapping(module = "library", path = "/theses/search", scope = "session", parameter = "method")
-@Forwards(value = { @Forward(name = "search", path = "/library/theses/search.jsp") })
+@StrutsFunctionality(app = LibraryApplication.class, path = "thesis-validation", titleKey = "thesis.validation.title.list",
+        accessGroup = "nobody")
+@Mapping(module = "library", path = "/theses/search")
+@Forwards(@Forward(name = "search", path = "/library/theses/search.jsp"))
 public class SearchThesesDA extends ThesisLibraryDA {
+
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         ThesisSearchBean search = new ThesisSearchBean();

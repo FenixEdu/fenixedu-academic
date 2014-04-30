@@ -1,16 +1,15 @@
 package net.sourceforge.fenixedu.presentationTier.Action.commons.curriculumHistoric.resourceAllocationManager;
 
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import net.sourceforge.fenixedu.presentationTier.Action.commons.curriculumHistoric.DegreeCurricularPlanExecutionYearDispacthAction;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.RAMApplication.RAMCurriculumHistoricApp;
+
+import org.fenixedu.bennu.portal.StrutsFunctionality;
+
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@StrutsFunctionality(app = RAMCurriculumHistoricApp.class, path = "view", titleKey = "link.visualize")
 @Mapping(module = "resourceAllocationManager", path = "/chooseExecutionYearAndDegreeCurricularPlan",
-        input = "/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare&page=0",
-        attribute = "executionYearDegreeCurricularPlanForm", formBean = "executionYearDegreeCurricularPlanForm",
-        scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "chooseExecutionYear", path = "view-degree-curricular-plan-execution-year"),
-        @Forward(name = "showActiveCurricularCourses", path = "show-active-curricular-scopes") })
-public class DegreeCurricularPlanExecutionYearDispacthActionForResourceAllocationManager
-        extends
-        net.sourceforge.fenixedu.presentationTier.Action.commons.curriculumHistoric.DegreeCurricularPlanExecutionYearDispacthAction {
+formBean = "executionYearDegreeCurricularPlanForm")
+public class DegreeCurricularPlanExecutionYearDispacthActionForResourceAllocationManager extends
+        DegreeCurricularPlanExecutionYearDispacthAction {
 }

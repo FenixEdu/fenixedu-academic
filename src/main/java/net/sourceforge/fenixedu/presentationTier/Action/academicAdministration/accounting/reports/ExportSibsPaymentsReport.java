@@ -11,12 +11,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.accounting.SibsPaymentFileProcessReport;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminPaymentsApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -26,8 +30,10 @@ import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
 import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
 import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
 import pt.utl.ist.fenix.tools.spreadsheet.converters.CellConverter;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
+@StrutsFunctionality(app = AcademicAdminPaymentsApp.class, path = "sibs-reports", titleKey = "label.payments.sibs.reports",
+        accessGroup = "academic(CREATE_SIBS_PAYMENTS_REPORT)")
 @Mapping(path = "/sibsReports", module = "academicAdministration")
 @Forwards({ @Forward(name = "report-by-year-month", path = "/academicAdminOffice/accounting/reports/paymentsByYearAndMonth.jsp") })
 public class ExportSibsPaymentsReport extends FenixDispatchAction {
@@ -64,6 +70,7 @@ public class ExportSibsPaymentsReport extends FenixDispatchAction {
 
     }
 
+    @EntryPoint
     public ActionForward prepareReportByYearAndMonth(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         request.setAttribute("reportBean", new SibsPaymentsReportBean());
@@ -99,7 +106,7 @@ public class ExportSibsPaymentsReport extends FenixDispatchAction {
                     @Override
                     protected void makeLine(SibsPaymentFileProcessReport line) {
                         final ResourceBundle bundle =
-                                ResourceBundle.getBundle("resources.ManagerResources", Language.getLocale());
+                                ResourceBundle.getBundle("resources.ManagerResources", I18N.getLocale());
                         addCell(bundle.getString("label.reports.date"), line.getWhenProcessedBySibs());
                         addCell(bundle.getString("label.reports.version"), line.getFileVersion());
                         addCell(bundle.getString("label.reports.gratuity.lic"), line.getDegreeGratuityTotalAmount());

@@ -12,9 +12,10 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_Base {
 
@@ -87,7 +88,7 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
     }
 
     public String getEnumerationResourcesString(String name) {
-        return ResourceBundle.getBundle("resources/EnumerationResources", Language.getLocale()).getString(name);
+        return ResourceBundle.getBundle("resources/EnumerationResources", I18N.getLocale()).getString(name);
     }
 
     public PostingRule findPostingRuleBy(EventType eventType, DateTime startDate, DateTime endDate) {

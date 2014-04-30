@@ -1,17 +1,22 @@
 package net.sourceforge.fenixedu.domain.phd.alert;
 
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import java.util.Set;
+
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCalendarUtil;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 
+import org.fenixedu.bennu.core.groups.Group;
 import org.joda.time.LocalDate;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+
+import com.google.common.collect.FluentIterable;
 
 public class PhdRegistrationFormalizationAlert extends PhdRegistrationFormalizationAlert_Base {
 
@@ -26,12 +31,12 @@ public class PhdRegistrationFormalizationAlert extends PhdRegistrationFormalizat
     }
 
     private MultiLanguageString buildSubject(final PhdIndividualProgramProcess process) {
-        return new MultiLanguageString(Language.getDefaultLanguage(), AlertService.getSubjectPrefixed(process,
+        return new MultiLanguageString(Locale.getDefault(), AlertService.getSubjectPrefixed(process,
                 "message.phd.alert.registration.formalization.subject"));
     }
 
     private MultiLanguageString buildBody(final PhdIndividualProgramProcess process) {
-        return new MultiLanguageString(Language.getDefaultLanguage(), AlertService.getBodyText(process,
+        return new MultiLanguageString(Locale.getDefault(), AlertService.getBodyText(process,
                 "message.phd.alert.registration.formalization.body"));
     }
 
@@ -61,12 +66,14 @@ public class PhdRegistrationFormalizationAlert extends PhdRegistrationFormalizat
 
     @Override
     protected void generateMessage() {
-        final Group academicOfficeGroup =
-                new AcademicAuthorizationGroup(AcademicOperationType.MANAGE_PHD_PROCESSES, this.getProcess().getPhdProgram());
+        final Group group =
+                AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_PHD_PROCESSES, this
+        .getProcess().getPhdProgram());
 
-        new PhdAlertMessage(getProcess(), academicOfficeGroup.getElements(), getFormattedSubject(), getFormattedBody());
+        Set<Person> members = FluentIterable.from(group.getMembers()).transform(Person.userToPerson).toSet();
+        new PhdAlertMessage(getProcess(), members, getFormattedSubject(), getFormattedBody());
 
-        new Message(getSender(), new Recipient(academicOfficeGroup.getElements()), buildMailSubject(), buildMailBody());
+        new Message(getSender(), new Recipient(group), buildMailSubject(), buildMailBody());
 
     }
 

@@ -7,7 +7,7 @@
 
 <div class="breadcumbs mvert0">
     <bean:define id="institutionUrl">
-        <%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>
+        <%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>
     </bean:define>
     <bean:define id="structureUrl">
         <bean:message key="link.institution.structure" bundle="GLOBAL_RESOURCES"/>
@@ -26,7 +26,7 @@
     </html:link>
     &nbsp;&gt;&nbsp;
     
-    <bean:define id="site" name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>" property="selectedContainer"/>
+    <bean:define id="site" name="actual$site"/>
 
 	<bean:define id="unitId" name="site" property="unit.externalId"/>
 	

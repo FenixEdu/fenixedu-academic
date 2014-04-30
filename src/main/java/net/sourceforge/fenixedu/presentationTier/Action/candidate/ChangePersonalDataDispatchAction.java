@@ -20,8 +20,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -32,7 +30,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-@Mapping(module = "candidate", path = "/changePersonalData", scope = "request", parameter = "method")
+@Mapping(module = "candidate", path = "/changePersonalData", functionality = ViewCandidaciesDispatchAction.class)
 @Forwards(value = { @Forward(name = "change", path = "/candidate/changePersonalData.jsp"),
         @Forward(name = "changeSuccess", path = "/candidate/changeSuccessPersonalData.jsp"),
         @Forward(name = "cannotChange", path = "/candidate/cannotChangePersonalData.jsp") })
@@ -56,8 +54,6 @@ public class ChangePersonalDataDispatchAction extends FenixDispatchAction {
 
     public ActionForward change(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixServiceException {
-
-        User userView = Authenticate.getUser();
 
         PrecedentDegreeInformationBean precedentDegreeInformation =
                 (PrecedentDegreeInformationBean) RenderUtils.getViewState("precedentDegreeInformation").getMetaObject()

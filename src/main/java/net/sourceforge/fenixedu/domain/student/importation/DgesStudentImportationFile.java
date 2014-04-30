@@ -15,7 +15,7 @@ public class DgesStudentImportationFile extends DgesStudentImportationFile_Base 
 
     protected DgesStudentImportationFile(byte[] contents, String filename) {
         this();
-        init(filename, filename, contents, new RoleGroup(RoleType.MANAGER));
+        init(filename, filename, contents, RoleGroup.get(RoleType.MANAGER));
     }
 
     @Atomic

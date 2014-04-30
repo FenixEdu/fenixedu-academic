@@ -5,14 +5,16 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <html:xhtml/>
 
-<ft:tilesView locale="<%=request.getAttribute(org.apache.struts.Globals.LOCALE_KEY).toString()%>" definition="definition.public.mainPageIST" attributeName="body-inline">
+<ft:tilesView definition="definition.public.mainPageIST" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 	<f:loadBundle basename="resources/GlobalResources" var="globalBundle"/>
 	<f:loadBundle basename="resources/PublicDegreeInformation" var="publicDegreeInfoBundle"/>
 
-	<h:outputLink value="#{CurricularCourseManagement.instalationUrl}" >
+	<h:outputText value="<span style='display:none'>#{CurricularCourseManagement.degreeAndSelectSite}</span>" escape="false" />
+
+	<h:outputLink value="#{CurricularCourseManagement.applicationUrl}" >
 		<h:outputText value="#{CurricularCourseManagement.institutionAcronym}"/>
 	</h:outputLink>
 	&nbsp;&gt;&nbsp;
@@ -28,9 +30,9 @@
 	
 	&nbsp;&gt;&nbsp;
 
-     <h:outputText rendered="#{!empty CurricularCourseManagement.organizeBy}" value="<a href='showDegreeCurricularPlanBolonha.faces?degreeID=#{CurricularCourseManagement.degreeCurricularPlan.degree.externalId}&amp;degreeCurricularPlanID=#{CurricularCourseManagement.degreeCurricularPlanID}&amp;executionPeriodID=#{CurricularCourseManagement.executionYearID}&amp;organizeBy=#{CurricularCourseManagement.organizeBy}&amp;showRules=#{CurricularCourseManagement.showRules}&amp;hideCourses=#{CurricularCourseManagement.hideCourses}'>#{publicDegreeInfoBundle['public.degree.information.label.curriculum']}</a>" escape="false"/>	
+     <h:outputText rendered="#{!empty CurricularCourseManagement.organizeBy}" value="<a href='#{facesContext.externalContext.requestContextPath}/publico/degreeSite/showDegreeCurricularPlanBolonha.faces?degreeID=#{CurricularCourseManagement.degreeCurricularPlan.degree.externalId}&amp;degreeCurricularPlanID=#{CurricularCourseManagement.degreeCurricularPlanID}&amp;executionPeriodID=#{CurricularCourseManagement.executionYearID}&amp;organizeBy=#{CurricularCourseManagement.organizeBy}&amp;showRules=#{CurricularCourseManagement.showRules}&amp;hideCourses=#{CurricularCourseManagement.hideCourses}'>#{publicDegreeInfoBundle['public.degree.information.label.curriculum']}</a>" escape="false"/>	
 
-     <h:outputText rendered="#{empty CurricularCourseManagement.organizeBy}" value="<a href='showDegreeCurricularPlanBolonha.faces?degreeID=#{CurricularCourseManagement.degreeCurricularPlan.degree.externalId}&amp;degreeCurricularPlanID=#{CurricularCourseManagement.degreeCurricularPlanID}&amp;executionPeriodID=#{CurricularCourseManagement.executionYearID}&amp;organizeBy=groups&amp;showRules=false&amp;hideCourses=false'>#{publicDegreeInfoBundle['public.degree.information.label.curriculum']}</a>" escape="false"/>	 	
+     <h:outputText rendered="#{empty CurricularCourseManagement.organizeBy}" value="<a href='#{facesContext.externalContext.requestContextPath}/publico/degreeSite/showDegreeCurricularPlanBolonha.faces?degreeID=#{CurricularCourseManagement.degreeCurricularPlan.degree.externalId}&amp;degreeCurricularPlanID=#{CurricularCourseManagement.degreeCurricularPlanID}&amp;executionPeriodID=#{CurricularCourseManagement.executionYearID}&amp;organizeBy=groups&amp;showRules=false&amp;hideCourses=false'>#{publicDegreeInfoBundle['public.degree.information.label.curriculum']}</a>" escape="false"/>	 	
 
 	&nbsp;&gt;&nbsp;
 	<h:outputText rendered="#{!CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.curricularCourseSemesterBean.curricularCourseName}"/>
@@ -65,8 +67,8 @@
 			<h:outputText value="<strong>#{bolonhaBundle['competenceCourse']}</strong></td></tr>" escape="false"/>
 			<h:outputText value="<tr><td class='box_cell'>" escape="false"/>
 				
-				<h:outputText rendered="#{!CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.hasContextCommentString}<a href='#{CurricularCourseManagement.contextPath}/publico/department/showCompetenceCourse.faces?competenceCourseID=#{CurricularCourseManagement.curricularCourse.competenceCourse.externalId}&amp;selectedDepartmentUnitID=#{CurricularCourseManagement.curricularCourseSemesterBean.departmentUnit.externalId}&amp;#{CurricularCourseManagement.contentContextPathAttributeName}=#{CurricularCourseManagement.departmentUnit.site.reversePath}'>#{CurricularCourseManagement.curricularCourseSemesterBean.curricularCourseName}</a>" escape="false"/> 
-				<h:outputText rendered="#{CurricularCourseManagement.renderInEnglish}" value="#{CurricularCourseManagement.hasContextCommentString}<a href='#{CurricularCourseManagement.contextPath}/publico/department/showCompetenceCourse.faces?competenceCourseID=#{CurricularCourseManagement.curricularCourse.competenceCourse.externalId}&amp;selectedDepartmentUnitID=#{CurricularCourseManagement.curricularCourseSemesterBean.departmentUnit.externalId}&amp;#{CurricularCourseManagement.contentContextPathAttributeName}=#{CurricularCourseManagement.departmentUnit.site.reversePath}'>#{CurricularCourseManagement.curricularCourseSemesterBean.curricularCourseNameEn}</a>" escape="false"/> 			
+				<h:outputText rendered="#{!CurricularCourseManagement.renderInEnglish}" value="<a href='#{CurricularCourseManagement.contextPath}/publico/department/showCompetenceCourse.faces?competenceCourseID=#{CurricularCourseManagement.curricularCourse.competenceCourse.externalId}&amp;selectedDepartmentUnitID=#{CurricularCourseManagement.curricularCourseSemesterBean.departmentUnit.externalId}'>#{CurricularCourseManagement.curricularCourseSemesterBean.curricularCourseName}</a>" escape="false"/> 
+				<h:outputText rendered="#{CurricularCourseManagement.renderInEnglish}" value="#{facesContext.externalContext.requestContextPath}/publico/degreeSite/<a href='#{CurricularCourseManagement.contextPath}/publico/department/showCompetenceCourse.faces?competenceCourseID=#{CurricularCourseManagement.curricularCourse.competenceCourse.externalId}&amp;selectedDepartmentUnitID=#{CurricularCourseManagement.curricularCourseSemesterBean.departmentUnit.externalId}'>#{CurricularCourseManagement.curricularCourseSemesterBean.curricularCourseNameEn}</a>" escape="false"/> 			
 											
 				<h:outputText value=" #{publicDegreeInfoBundle['public.degree.information.label.from.masculine']} "/>
 							

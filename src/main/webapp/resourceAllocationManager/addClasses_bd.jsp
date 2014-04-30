@@ -6,7 +6,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt" %>
 
-<em><bean:message key="title.resourceAllocationManager.management"/></em>
+<jsp:include page="/commons/contextShiftAndExecutionCourseAndExecutionDegreeAndCurricularYear.jsp" />
+
 <h2><bean:message key="link.manage.turmas"/></h2>
 
 <p class="mbottom05">O curso seleccionado &eacute;:</p>

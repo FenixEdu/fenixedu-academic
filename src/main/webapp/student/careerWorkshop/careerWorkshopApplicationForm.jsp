@@ -9,7 +9,6 @@
 <%@page import="net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopThemes"%>
 <html:xhtml />
 
-<em><bean:message key="title.student.portalTitle" /></em>
 <h2><bean:message key="label.careerWorkshopApplication.title" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" /></h2>
 
 <p><span class="error"><!-- Error messages go here --><html:errors /></span></p>

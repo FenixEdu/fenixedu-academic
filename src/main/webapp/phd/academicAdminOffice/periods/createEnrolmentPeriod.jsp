@@ -13,7 +13,7 @@
 <%-- ### End of Title ### --%>
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
-<html:link action="/phdIndividualProgramProcess.do?method=manageEnrolmentPeriods">
+<html:link action="/managePhdEnrolmentPeriods.do?method=manageEnrolmentPeriods">
 	<bean:message bundle="PHD_RESOURCES" key="label.back"/>
 </html:link>
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
@@ -24,7 +24,7 @@
 
 
 <fr:edit id="createBean" name="createBean" 
-		 action="/phdIndividualProgramProcess.do?method=createEnrolmentPeriod">
+		 action="/managePhdEnrolmentPeriods.do?method=createEnrolmentPeriod">
 
 	<fr:schema bundle="PHD_RESOURCES" type="<%= ManageEnrolmentsBean.class.getName() %>">
 
@@ -50,7 +50,7 @@
 		<fr:property name="requiredMarkShown" value="true" />
 	</fr:layout>
 	
-	<fr:destination name="invalid" path="/phdIndividualProgramProcess.do?method=createEnrolmentPeriodInvalid"/>
-	<fr:destination name="cancel" path="/phdIndividualProgramProcess.do?method=manageEnrolmentPeriods" />
+	<fr:destination name="invalid" path="/managePhdEnrolmentPeriods.do?method=createEnrolmentPeriodInvalid"/>
+	<fr:destination name="cancel" path="/managePhdEnrolmentPeriods.do?method=manageEnrolmentPeriods" />
 	
 </fr:edit>

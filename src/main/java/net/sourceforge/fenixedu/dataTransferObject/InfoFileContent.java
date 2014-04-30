@@ -32,8 +32,6 @@ public class InfoFileContent extends InfoObject {
 
     private Integer size;
 
-    private String externalStorageIdentification;
-
     public InfoFileContent() {
 
     }
@@ -47,8 +45,6 @@ public class InfoFileContent extends InfoObject {
             setChecksum(fileItem.getChecksum());
             setChecksumAlgorithm(fileItem.getChecksumAlgorithm());
             setSize(fileItem.getSize().intValue());
-            setExternalStorageIdentification(fileItem.getExternalStorageIdentification());
-
         }
     }
 
@@ -87,14 +83,6 @@ public class InfoFileContent extends InfoObject {
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
-    }
-
-    public String getExternalStorageIdentification() {
-        return externalStorageIdentification;
-    }
-
-    public void setExternalStorageIdentification(String externalStorageIdentification) {
-        this.externalStorageIdentification = externalStorageIdentification;
     }
 
     public String getFilename() {

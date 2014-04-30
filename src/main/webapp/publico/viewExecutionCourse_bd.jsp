@@ -6,7 +6,6 @@
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ page import="org.apache.struts.util.RequestUtils" %>
-<%@ page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
 <%@ page import="pt.ist.fenixframework.FenixFramework" %>
 <%@ page import="net.sourceforge.fenixedu.domain.Teacher" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
@@ -124,9 +123,7 @@
 						</logic:notPresent>
 						<logic:present name="person" property="homepage.activated">
 							<logic:equal name="person" property="homepage.activated" value="true">
-								<% final String appContext = FenixConfigurationManager.getConfiguration().appContext(); %>
-								<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
-								<bean:define id="homepageURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/homepage/<bean:write name="person" property="user.username"/></bean:define>
+								<bean:define id="homepageURL" type="java.lang.String" value="${person.homepage.fullPath}"></bean:define>
 								<html:link href="<%= homepageURL %>"><bean:write name="person" property="name"/></html:link>
 							</logic:equal>
 							<logic:equal name="person" property="homepage.activated" value="false">
@@ -158,9 +155,7 @@
 						</logic:notPresent>
 						<logic:present name="person" property="homepage.activated">
 							<logic:equal name="person" property="homepage.activated" value="true">
-								<% final String appContext = FenixConfigurationManager.getConfiguration().appContext(); %>
-								<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>
-								<bean:define id="homepageURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/homepage/<bean:write name="person" property="user.username"/></bean:define>
+								<bean:define id="homepageURL" type="java.lang.String" value="${person.homepage.fullPath}"></bean:define>
 								<html:link href="<%= homepageURL %>"><bean:write name="person" property="name"/></html:link>
 							</logic:equal>
 							<logic:equal name="person" property="homepage.activated" value="false">

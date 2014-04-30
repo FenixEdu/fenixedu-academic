@@ -15,27 +15,29 @@ import net.sourceforge.fenixedu.domain.TutorshipSummary;
 import net.sourceforge.fenixedu.domain.TutorshipSummaryRelation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.tutorship.ViewStudentsByTutorDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.PedagogicalCouncilApp.TutorshipApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
 import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
 import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
 import pt.utl.ist.fenix.tools.util.Pair;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
+@StrutsFunctionality(app = TutorshipApp.class, path = "tutorship-summary", titleKey = "link.teacher.tutorship.summary",
+        bundle = "ApplicationResources")
 @Mapping(path = "/tutorshipSummary", module = "pedagogicalCouncil")
-@Forwards({
-        @Forward(name = "searchTeacher", path = "/pedagogicalCouncil/tutorship/tutorTutorships.jsp", tileProperties = @Tile(
-                title = "private.pedagogiccouncil.tutoring.formtutor")),
+@Forwards({ @Forward(name = "searchTeacher", path = "/pedagogicalCouncil/tutorship/tutorTutorships.jsp"),
         @Forward(name = "createSummary", path = "/pedagogicalCouncil/tutorship/createSummary.jsp"),
         @Forward(name = "editSummary", path = "/pedagogicalCouncil/tutorship/editSummary.jsp"),
         @Forward(name = "processCreateSummary", path = "/pedagogicalCouncil/tutorship/processCreateSummary.jsp"),
@@ -43,6 +45,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
         @Forward(name = "viewSummary", path = "/pedagogicalCouncil/tutorship/viewSummary.jsp") })
 public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
 
+    @EntryPoint
     public ActionForward searchTeacher(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         TutorSummaryBean bean = (TutorSummaryBean) getRenderedObject("tutorateBean");
@@ -56,8 +59,8 @@ public class TutorshipSummaryDA extends ViewStudentsByTutorDispatchAction {
 
     public ActionForward exportSummaries(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale());
-        final ResourceBundle bundleEnum = ResourceBundle.getBundle("resources/EnumerationResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", I18N.getLocale());
+        final ResourceBundle bundleEnum = ResourceBundle.getBundle("resources/EnumerationResources", I18N.getLocale());
 
         TutorSummaryBean bean = (TutorSummaryBean) getRenderedObject("tutorateBean");
 

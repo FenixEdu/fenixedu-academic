@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.scholarship.report.UTLScholarshipReportBeanFromRegistration;
+import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.SearchForStudentsDA;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -16,7 +17,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 
-@Mapping(path = "/student/scholarship/report/utlScholarshipReport", module = "academicAdministration")
+@Mapping(path = "/student/scholarship/report/utlScholarshipReport", module = "academicAdministration",
+        functionality = SearchForStudentsDA.class)
 @Forwards({ @Forward(name = "viewUTLScholarshipFromRegistration",
         path = "/academicAdminOffice/student/scholarship/report/utl/viewUTLScholarshipFromRegistration.jsp") })
 public class UTLScholarshipReportDA extends FenixDispatchAction {

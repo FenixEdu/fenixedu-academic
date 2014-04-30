@@ -6,9 +6,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/caseHandlingDegreeChangeIndividualCandidacyProcess", module = "scientificCouncil",
-        formBeanClass = FenixActionForm.class)
+        formBeanClass = FenixActionForm.class, functionality = DegreeChangeCandidacyProcessDA.class)
 @Forwards({
-        @Forward(name = "intro", path = "/caseHandlingDegreeChangeCandidacyProcess.do?method=listProcessAllowedActivities"),
+        @Forward(name = "intro",
+                path = "/scientificCouncil/caseHandlingDegreeChangeCandidacyProcess.do?method=listProcessAllowedActivities"),
         @Forward(name = "list-allowed-activities",
                 path = "/scientificCouncil/candidacy/degreeChange/listIndividualCandidacyActivities.jsp") })
 public class DegreeChangeIndividualCandidacyProcessDA extends

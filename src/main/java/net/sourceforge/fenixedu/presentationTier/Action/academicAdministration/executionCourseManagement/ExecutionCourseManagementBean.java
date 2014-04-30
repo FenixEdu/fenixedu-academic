@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.interfaces.HasExecutionDegree;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ExecutionCourseManagementBean implements java.io.Serializable, HasExecutionDegree {
 
@@ -40,7 +40,7 @@ public class ExecutionCourseManagementBean implements java.io.Serializable, HasE
         setSemester(semester);
         setCurricularCourseList(new ArrayList<CurricularCourse>());
         getCurricularCourseList().add(curricularCourse);
-        setName(curricularCourse.getNameI18N().getContent(Language.pt));
+        setName(curricularCourse.getNameI18N().getContent(MultiLanguageString.pt));
     }
 
     public ExecutionCourseManagementBean(final ExecutionCourse executionCourse) {

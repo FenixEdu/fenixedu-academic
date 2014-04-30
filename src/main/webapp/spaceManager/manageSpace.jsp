@@ -112,7 +112,7 @@
 	</table>
 
 	<%
-		if(thisSpace.personHasPermissionsToManageSpace(person)) {
+		if(thisSpace.personHasPermissionsToManageSpace(person.getUser())) {
 	%>
 	<p class="mtop0 mbottom2">		
 		<bean:message bundle="SPACE_RESOURCES" key="label.version"/>: 
@@ -342,7 +342,7 @@
 						<td>
 							<bean:define id="subSpaceToCheck" name="subSpace" type="net.sourceforge.fenixedu.domain.space.Space"/>
 							<%
-								if(!subSpaceToCheck.personHasPermissionsToManageSpace(person)){
+								if(!subSpaceToCheck.personHasPermissionsToManageSpace(person.getUser())){
 							%>
 							<html:link page="<%= urlToManageSubspace %>">
 								<bean:message bundle="SPACE_RESOURCES" key="label.view"/>
@@ -363,7 +363,7 @@
 		</logic:greaterEqual>
 	</logic:present>
 	<%
-		if(thisSpace.personHasPermissionsToManageSpace(person)){
+		if(thisSpace.personHasPermissionsToManageSpace(person.getUser())){
 	%>	
 	<p class="mtop025">
 		<html:link page="/manageSpaces.do?method=showCreateSubSpaceForm" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="externalId">
@@ -383,7 +383,7 @@
    		</fr:layout>
 	</fr:view>
 	<%	
-//		if(thisSpace.personHasPermissionsToManageSpace(person)) {		 
+//		if(thisSpace.personHasPermissionsToManageSpace(person.getUser())) {		 
 	%>
 		<p>
 		<html:img border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES" />
@@ -408,7 +408,7 @@
 		<p class="mtop05 mbottom025"><em><bean:message key="label.empty.responsibility" bundle="SPACE_RESOURCES"/>.</em></p>		
 	</logic:empty>
 	<%
-		if(thisSpace.personHasPermissionsToManageSpace(person)){
+		if(thisSpace.personHasPermissionsToManageSpace(person.getUser())){
 	%>	
 	<p class="mtop025">
 		<html:link page="/manageSpaceResponsibility.do?method=showSpaceResponsibility" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="externalId">
@@ -432,7 +432,7 @@
 		<p class="mtop05 mbottom025"><em><bean:message key="label.empty.unitSpaceOccupations" bundle="SPACE_RESOURCES"/>.</em></p>		
 	</logic:empty>
 	<%
-		if(thisSpace.personHasPermissionsToManageSpace(person)){
+		if(thisSpace.personHasPermissionsToManageSpace(person.getUser())){
 	%>	
 	<p class="mtop025">
 		<html:link page="/manageUnitSpaceOccupations.do?method=prepareManageUnitSpaceOccupations" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="externalId">
@@ -456,7 +456,7 @@
 		<p class="mtop05 mbottom025"><em><bean:message key="label.empty.person.occupations" bundle="SPACE_RESOURCES"/>.</em></p>		
 	</logic:empty>
 	<%
-		if(thisSpace.personHasPermissionToManagePersonOccupations(person) || thisSpace.personHasPermissionsToManageSpace(person)){
+		if(thisSpace.personHasPermissionToManagePersonOccupations(person.getUser()) || thisSpace.personHasPermissionsToManageSpace(person.getUser())){
 	%>
 	<p class="mtop025"><html:link page="/managePersonSpaceOccupations.do?method=showSpaceOccupations" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="externalId">
 		<bean:message bundle="SPACE_RESOURCES" key="link.manage.person.occupations"/>
@@ -478,7 +478,7 @@
 		<p class="mtop05 mbottom025"><em><bean:message key="label.empty.material.occupations" bundle="SPACE_RESOURCES"/>.</em></p>		
 	</logic:empty>
 	<%
-		if(thisSpace.personHasPermissionToManageExtensionOccupations(person) || thisSpace.personHasPermissionsToManageSpace(person)){
+		if(thisSpace.personHasPermissionToManageExtensionOccupations(person.getUser()) || thisSpace.personHasPermissionsToManageSpace(person.getUser())){
 	%>
 	<p class="mtop025"><html:link page="/manageMaterialSpaceOccupations.do?method=showMaterialSpaceOccupations" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="externalId">
 		<bean:message bundle="SPACE_RESOURCES" key="link.manage.material.occupations"/>

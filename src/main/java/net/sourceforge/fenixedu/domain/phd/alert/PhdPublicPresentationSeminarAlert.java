@@ -2,11 +2,11 @@ package net.sourceforge.fenixedu.domain.phd.alert;
 
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -16,11 +16,15 @@ import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.ReplyTo;
 
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UserGroup;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+
+import com.google.common.collect.FluentIterable;
 
 public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSeminarAlert_Base {
 
@@ -40,13 +44,13 @@ public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSemi
     }
 
     private MultiLanguageString buildSubject(final PhdIndividualProgramProcess process) {
-        return new MultiLanguageString(Language.getDefaultLanguage(), AlertService.getSubjectPrefixed(process,
+        return new MultiLanguageString(Locale.getDefault(), AlertService.getSubjectPrefixed(process,
                 AlertMessage.create("message.phd.alert.public.presentation.seminar.subject")));
     }
 
     private MultiLanguageString buildBody(final PhdIndividualProgramProcess process) {
         int days = getDaysUntilNow(process.getWhenStartedStudies());
-        return new MultiLanguageString(Language.getDefaultLanguage(), AlertService.getBodyText(process, AlertMessage.create(
+        return new MultiLanguageString(Locale.getDefault(), AlertService.getBodyText(process, AlertMessage.create(
                 "message.phd.alert.public.presentation.seminar.body", process.getWhenStartedStudies().toString("dd/MM/yyyy"),
                 String.valueOf(days < 1 ? 1 : days), getGuidersNames(process))));
     }
@@ -130,24 +134,23 @@ public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSemi
     }
 
     private void generateMessageForCoodinator() {
-        generateMessage(new FixedSetGroup(getProcess().getPhdProgram().getCoordinatorsFor(
-                ExecutionYear.readCurrentExecutionYear())));
+        generateMessage(UserGroup.of(Person.convertToUsers(getProcess().getPhdProgram().getCoordinatorsFor(
+        ExecutionYear.readCurrentExecutionYear()))));
 
     }
 
     private void generateMessageForAcademicOffice() {
-        generateMessage(new AcademicAuthorizationGroup(AcademicOperationType.MANAGE_PHD_PROCESSES, this.getProcess()
-                .getPhdProgram()));
+        generateMessage(AcademicAuthorizationGroup.get(AcademicOperationType.MANAGE_PHD_PROCESSES, this.getProcess().getPhdProgram()));
     }
 
     private void generateMessageForStudent() {
-        generateMessage(new FixedSetGroup(getProcess().getPerson()));
+        generateMessage(UserGroup.of(getProcess().getPerson().getUser()));
     }
 
     private void generateMessageForGuiders() {
         for (final PhdParticipant guiding : getProcess().getGuidings()) {
             if (guiding.isInternal()) {
-                generateMessage(new FixedSetGroup(((InternalPhdParticipant) guiding).getPerson()));
+                generateMessage(UserGroup.of(((InternalPhdParticipant) guiding).getPerson().getUser()));
             } else {
                 new Message(getSender(), Collections.<ReplyTo> emptyList(), Collections.<Recipient> emptyList(),
                         buildMailSubject(), buildMailBody(), Collections.singleton(guiding.getEmail()));
@@ -156,7 +159,8 @@ public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSemi
     }
 
     private void generateMessage(Group group) {
-        new PhdAlertMessage(getProcess(), group.getElements(), getFormattedSubject(), getFormattedBody());
+        Set<Person> members = FluentIterable.from(group.getMembers()).transform(Person.userToPerson).toSet();
+        new PhdAlertMessage(getProcess(), members, getFormattedSubject(), getFormattedBody());
         new Message(getSender(), new Recipient("", group), buildMailSubject(), buildMailBody());
     }
 

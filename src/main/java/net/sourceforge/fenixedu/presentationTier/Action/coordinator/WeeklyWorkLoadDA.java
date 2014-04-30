@@ -20,27 +20,32 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.portal.EntryPoint;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.Period;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.DomainObject;
-import pt.ist.fenixframework.FenixFramework;
 
+@Mapping(module = "coordinator", path = "/weeklyWorkLoad", formBean = "weeklyWorkLoadForm",
+        functionality = DegreeCoordinatorIndex.class)
+@Forwards(@Forward(name = "showWeeklyWorkLoad", path = "/coordinator/weeklyWorkLoad.jsp"))
 public class WeeklyWorkLoadDA extends FenixDispatchAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        CoordinatedDegreeInfo.setCoordinatorContext(request);
+        DegreeCoordinatorIndex.setCoordinatorContext(request);
         return super.execute(mapping, actionForm, request, response);
     }
 
@@ -112,6 +117,7 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
         }
     }
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixServiceException {
         final Collection<ExecutionSemester> executionSemesters = rootDomainObject.getExecutionPeriodsSet();
@@ -141,18 +147,15 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
         request.setAttribute("executionCourses", executionCourses);
 
         final ExecutionCourse selectedExecutionCourse =
-                (ExecutionCourse) setDomainObjectInRequest(dynaActionForm, request, ExecutionCourse.class, "executionCourseID",
-                        "executionCourse");
+                setDomainObjectInRequest(dynaActionForm, request, "executionCourseID", "executionCourse");
         request.setAttribute("selectedExecutionCourse", selectedExecutionCourse);
 
         final String curricularYearID = getCurricularYearID(dynaActionForm);
         final CurricularYear selecctedCurricularYear =
-                (CurricularYear) setDomainObjectInRequest(dynaActionForm, request, CurricularYear.class, "curricularYearID",
-                        "selecctedCurricularYear");
+                setDomainObjectInRequest(dynaActionForm, request, "curricularYearID", "selecctedCurricularYear");
 
         final DegreeCurricularPlan degreeCurricularPlan =
-                (DegreeCurricularPlan) setDomainObjectInRequest(dynaActionForm, request, DegreeCurricularPlan.class,
-                        "degreeCurricularPlanID", "executionCourse");
+                setDomainObjectInRequest(dynaActionForm, request, "degreeCurricularPlanID", "executionCourse");
         if (degreeCurricularPlan != null) {
             request.setAttribute("degreeCurricularPlanID", degreeCurricularPlan.getExternalId());
             for (final CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
@@ -178,10 +181,9 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
         return mapping.findForward("showWeeklyWorkLoad");
     }
 
-    private DomainObject setDomainObjectInRequest(final DynaActionForm dynaActionForm, final HttpServletRequest request,
-            final Class clazz, final String formAttributeName, final String requestAttributeName) throws FenixServiceException {
-        final String domainObjectIDString = (String) dynaActionForm.get(formAttributeName);
-        final DomainObject domainObject = FenixFramework.getDomainObject(domainObjectIDString);
+    private <T extends DomainObject> T setDomainObjectInRequest(final DynaActionForm dynaActionForm,
+            final HttpServletRequest request, final String formAttributeName, final String requestAttributeName) {
+        final T domainObject = getDomainObject(dynaActionForm, formAttributeName);
         request.setAttribute(requestAttributeName, domainObject);
         return domainObject;
     }

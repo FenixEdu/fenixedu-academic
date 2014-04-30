@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYea
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadNotClosedExecutionYears;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.curriculumHistoric.ReadActiveDegreeCurricularPlansByExecutionYear;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.institution.InsertInstitution;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.institution.ReadAllInstitutions;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
@@ -25,7 +24,9 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.gep.GepApplication.GepInquiriesApp;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -34,45 +35,38 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-@Mapping(module = "gep", path = "/teachingStaff", input = "/teachingStaff.do?method=prepare", attribute = "teachingStaffForm",
-        formBean = "teachingStaffForm", scope = "request", parameter = "method")
+@StrutsFunctionality(app = GepInquiriesApp.class, path = "teaching-staff", titleKey = "link.inquiries.teachingStaff")
+@Mapping(module = "gep", path = "/teachingStaff", input = "/teachingStaff.do?method=prepare", formBean = "teachingStaffForm")
 @Forwards(value = {
-        @Forward(name = "chooseExecutionCourse", path = "/gep/teachingStaff/chooseExecutionCourse.jsp", tileProperties = @Tile(
-                title = "private.gep.gepportal.consultationguidelines")),
+        @Forward(name = "chooseExecutionCourse", path = "/gep/teachingStaff/chooseExecutionCourse.jsp"),
         @Forward(name = "chooseExecutionYearAndDegreeCurricularPlan",
-                path = "/gep/teachingStaff/chooseExecutionYearAndDegreeCurricularPlan.jsp", tileProperties = @Tile(
-                        title = "private.gep.surveys.faculty")),
-        @Forward(name = "viewTeachingStaff", path = "/gep/teachingStaff/viewTeachingStaff.jsp", tileProperties = @Tile(
-                title = "private.gep.gepportal.consultationguidelines")) })
+                path = "/gep/teachingStaff/chooseExecutionYearAndDegreeCurricularPlan.jsp"),
+        @Forward(name = "viewTeachingStaff", path = "/gep/teachingStaff/viewTeachingStaff.jsp") })
 public class TeachingStaffDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
-
-        User userView = Authenticate.getUser();
 
         request.setAttribute("executionYears", ReadNotClosedExecutionYears.run());
 
         return mapping.findForward("chooseExecutionYearAndDegreeCurricularPlan");
     }
 
+    @EntryPoint
     public ActionForward selectExecutionYear(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException {
-
-        User userView = Authenticate.getUser();
 
         final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
         String executionYearID = executionYear.getExternalId();
@@ -120,12 +114,12 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
 
         ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseID);
 
-        List institutions = (List) ReadAllInstitutions.run();
+        List<Unit> institutions = UnitUtils.readAllExternalInstitutionUnits();
         Collections.sort(institutions, new BeanComparator("name"));
 
-        request.setAttribute("professorships", executionCourse.getProfessorships());
+        request.setAttribute("professorships", executionCourse.getProfessorshipsSet());
         request.setAttribute("institutions", institutions);
-        request.setAttribute("nonAffiliatedTeachers", executionCourse.getNonAffiliatedTeachers());
+        request.setAttribute("nonAffiliatedTeachers", executionCourse.getNonAffiliatedTeachersSet());
 
         DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
         dynaActionForm.set("executionCourseID", executionCourseID);

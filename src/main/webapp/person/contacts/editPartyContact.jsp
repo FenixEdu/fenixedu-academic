@@ -14,7 +14,6 @@ request.setAttribute("isPhysicalAddress", partyContact instanceof PhysicalAddres
 %>
 
 
-<em><bean:message key="label.person.main.title" /></em>
 <h2><bean:message key="<%= "label.partyContacts.edit" +  partyContactClass %>" /></h2>
 
 <html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">

@@ -13,9 +13,10 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import net.sourceforge.fenixedu.util.Money;
 
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.YearMonthDay;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 @Deprecated
 public class InstallmentPaymentCode extends InstallmentPaymentCode_Base {
@@ -95,7 +96,7 @@ public class InstallmentPaymentCode extends InstallmentPaymentCode_Base {
     public String getDescription() {
         if (getInstallment().getPaymentPlan().hasSingleInstallment()) {
             final ResourceBundle enumerationResources =
-                    ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+                    ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
 
             return enumerationResources.getString(PaymentCodeType.TOTAL_GRATUITY.getQualifiedName());
 

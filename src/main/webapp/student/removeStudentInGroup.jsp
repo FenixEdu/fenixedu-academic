@@ -7,7 +7,6 @@
 <logic:present name="infoSiteStudentGroup">
 
 <logic:empty name="infoSiteStudentGroup" property="infoSiteStudentInformationList">
-	<em><bean:message key="title.student.portalTitle"/></em>
 	<h2><bean:message key="title.RemoveEnrolment"/></h2>
 	<p class="mtop15"><span class="warning0"><bean:message key="message.infoSiteStudentGroupList.not.available" /></span></p>
 </logic:empty> 
@@ -21,7 +20,6 @@
 
 	<html:form action="/removeGroupEnrolment"  style="margin: 0; padding: 0;">
 	
-	<em><bean:message key="title.student.portalTitle"/></em>
 	<h2><bean:message key="title.RemoveEnrolment"/></h2>
 
 	<div class="infoop2">

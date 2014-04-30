@@ -1,13 +1,12 @@
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
-import net.sourceforge.fenixedu.domain.accessControl.RoleTypeGroup;
+import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UserGroup;
 
 public class InstitutionSite extends InstitutionSite_Base {
 
@@ -22,8 +21,9 @@ public class InstitutionSite extends InstitutionSite_Base {
     }
 
     @Override
-    public IGroup getOwner() {
-        return new GroupUnion(new FixedSetGroup(getManagers()), new RoleTypeGroup(RoleType.MANAGER));
+    public Group getOwner() {
+        RoleType roleType = RoleType.MANAGER;
+        return UserGroup.of(Person.convertToUsers(getManagers())).or(RoleGroup.get(roleType));
     }
 
     /**

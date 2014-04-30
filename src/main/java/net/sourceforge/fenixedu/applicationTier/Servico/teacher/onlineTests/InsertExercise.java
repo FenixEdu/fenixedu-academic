@@ -36,7 +36,6 @@ import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.servlets.commons.UploadedFile;
 import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.FenixFramework;
 
 import com.sun.faces.el.impl.parser.ParseException;
 
@@ -49,12 +48,10 @@ public class InsertExercise {
 
     private static final double FILE_SIZE_LIMIT = Math.pow(2, 20);
 
-    public List<String> run(String executionCourseId, UploadedFile xmlZipFile, String path) throws FenixServiceException {
+    public List<String> run(ExecutionCourse executionCourse, UploadedFile xmlZipFile) throws FenixServiceException {
 
         List<String> badXmls = new ArrayList<String>();
-        String replacedPath = path.replace('\\', '/');
         boolean createAny = false;
-        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -71,7 +68,7 @@ public class InsertExercise {
                 String xmlFileName = labelValueBean.getLabel();
                 try {
                     ParseSubQuestion parseQuestion = new ParseSubQuestion();
-                    parseQuestion.parseSubQuestion(xmlFile, replacedPath);
+                    parseQuestion.parseSubQuestion(xmlFile);
                     Question question = new Question();
                     question.setXmlFile(xmlFile);
                     question.setXmlFileName(xmlFileName);
@@ -91,7 +88,7 @@ public class InsertExercise {
                     String xmlFileName = labelValueBean.getLabel();
                     ParseMetadata parse = new ParseMetadata();
                     try {
-                        Vector<Element> vector = parse.parseMetadata(xmlFile, path);
+                        Vector<Element> vector = parse.parseMetadata(xmlFile);
                         List<Question> listToThisMetadata = getListToThisMetadata(questionMap, parse.getMembers());
                         if (listToThisMetadata.size() != 0) {
                             metadata = new Metadata(executionCourse, xmlFile, vector);
@@ -246,10 +243,10 @@ public class InsertExercise {
     private static final InsertExercise serviceInstance = new InsertExercise();
 
     @Atomic
-    public static List<String> runInsertExercise(String executionCourseId, UploadedFile xmlZipFile, String path)
+    public static List<String> runInsertExercise(ExecutionCourse executionCourseId, UploadedFile xmlZipFile)
             throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
-        return serviceInstance.run(executionCourseId, xmlZipFile, path);
+        return serviceInstance.run(executionCourseId, xmlZipFile);
     }
 
 }

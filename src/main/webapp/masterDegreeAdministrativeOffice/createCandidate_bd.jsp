@@ -6,7 +6,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="e" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
-<em><bean:message key="title.masterDegree.administrativeOffice"/></em>
 <h2><bean:message key="title.masterDegree.administrativeOffice.createCandidate" /></h2>
 
 <p>

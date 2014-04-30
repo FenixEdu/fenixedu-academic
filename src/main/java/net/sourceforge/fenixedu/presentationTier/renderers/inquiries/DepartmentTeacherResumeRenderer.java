@@ -25,6 +25,7 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell.CellType;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableRow;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 
 public class DepartmentTeacherResumeRenderer extends InquiryBlocksResumeRenderer {
 
@@ -148,9 +149,7 @@ public class DepartmentTeacherResumeRenderer extends InquiryBlocksResumeRenderer
         }
         inlineContainer.addChild(new HtmlText(")</span> ", false));
 
-        HtmlLink ucPublicPageLink =
-                new HtmlLinkWithPreprendedComment(
-                        pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
+        HtmlLink ucPublicPageLink = new HtmlLinkWithPreprendedComment(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
         ucPublicPageLink.setUrl(executionCourse.getSite().getReversePath());
         ucPublicPageLink.setText("Site");
         ucPublicPageLink.setModule("");

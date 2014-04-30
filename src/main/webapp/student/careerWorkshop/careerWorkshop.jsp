@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ page language="java"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -7,7 +8,6 @@
 
 <html:xhtml />
 
-<em><bean:message key="title.student.portalTitle" /></em>
 <h2><bean:message key="label.careerWorkshopApplication.title" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" /></h2>
 
 <p><span class="error"><!-- Error messages go here --><html:errors /></span></p>

@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExamDateCertificateRequest;
 import net.sourceforge.fenixedu.domain.util.email.ConcreteReplyTo;
 import net.sourceforge.fenixedu.domain.util.email.Message;
@@ -23,6 +22,7 @@ import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.UserGroup;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -80,7 +80,7 @@ public class DeleteWrittenEvaluation {
             }
             Sender sender = Bennu.getInstance().getSystemSender();
             new Message(sender, new ConcreteReplyTo(group.getContactEmail()).asCollection(),
-                    new Recipient(new FixedSetGroup(tos)).asCollection(), subject, body, "");
+                    new Recipient(UserGroup.of(Person.convertToUsers(tos))).asCollection(), subject, body, "");
 
         }
     }

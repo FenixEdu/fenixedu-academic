@@ -7,12 +7,13 @@ import net.sourceforge.fenixedu.domain.ContentManagementLog;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseBoardPermittedGroupType;
+import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.contents.Attachment;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
+
+import org.fenixedu.bennu.core.groups.Group;
+
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncementBoard_Base {
@@ -94,9 +95,9 @@ public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncemen
     }
 
     @Override
-    protected void disconnect() {
+    public void delete() {
         setExecutionCourse(null);
-        super.disconnect();
+        super.delete();
     }
 
     @Override
@@ -132,10 +133,6 @@ public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncemen
         ExecutionCourse executionCourse = this.getExecutionCourse();
 
         actionPath.append("&executionCourseID=" + executionCourse.getExternalId());
-        actionPath.append("&");
-        actionPath.append(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
-        actionPath.append("=");
-        actionPath.append(executionCourse.getSite().getReversePath());
         return base + actionPath.toString();
     }
 
@@ -161,9 +158,9 @@ public class ExecutionCourseAnnouncementBoard extends ExecutionCourseAnnouncemen
     }
 
     @Override
-    public void logAddFile(Attachment attachment) {
+    public void logAddFile(FileContent attachment) {
         ContentManagementLog.createLog(getExecutionCourse(), "resources.MessagingResources",
-                "log.executionCourse.content.file.added", attachment.getName().getContent(), getExecutionCourse().getNome(),
+                "log.executionCourse.content.file.added", attachment.getDisplayName(), getExecutionCourse().getNome(),
                 getExecutionCourse().getDegreePresentationString());
     }
 

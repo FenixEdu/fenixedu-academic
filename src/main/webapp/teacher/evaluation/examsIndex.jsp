@@ -1,20 +1,21 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
-<ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
+<f:view>
+
+	<h:outputText value="#{evaluationManagementBackingBean.hackToStoreExecutionCourse}" />
+	<jsp:include page="/teacher/evaluation/evaluationMenu.jsp" />
 
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 	
 	<h:form>
 		<h:inputHidden binding="#{evaluationManagementBackingBean.executionCourseIdHidden}" />
-		
-		<h:outputText value="<em>#{bundle['message.evaluationElements']}</em>" escape="false" />
-		
+				
 		<h:outputText value="<h2>#{bundle['title.evaluation.Exam']}</h2>" escape="false" />
 
 		<h:outputText styleClass="error" rendered="#{!empty evaluationManagementBackingBean.errorMessage}"
@@ -135,4 +136,7 @@
 		</h:panelGrid>
 	</h:form>
 
-</ft:tilesView>
+</f:view>
+
+</div>
+</div>

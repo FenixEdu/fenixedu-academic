@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@page import="net.sourceforge.fenixedu.util.FenixConfigurationManager"%>
-<%@page import="net.sourceforge.fenixedu.domain.Instalation"%>
-<%@page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
+<%@page import="org.fenixedu.bennu.portal.domain.PortalConfiguration"%>
+<%@page import="org.fenixedu.commons.i18n.I18N"%>
 <%@page import="org.fenixedu.bennu.core.security.Authenticate"%>
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
@@ -43,10 +43,8 @@
 
 <body>
 <% if (FenixConfigurationManager.isBarraAsAuthenticationBroker()) { %>
-<script id="ist-bar" data-logout="https://fenix.tecnico.ulisboa.pt/logoff.do" data-login="https://fenix.tecnico.ulisboa.pt/loginPage.jsp" data-fluid="true" data-lang="<%= Language.getLocale().getLanguage() %>" <% if(Authenticate.getUser() == null) {%> data-use-offline="true" <%} %> data-next-param="service" src="https://barra.tecnico.ulisboa.pt/site_media/static/js/barra.js"></script>
+<script id="ist-bar" data-logout="https://fenix.tecnico.ulisboa.pt/logoff.do" data-login="https://fenix.tecnico.ulisboa.pt/loginPage.jsp" data-fluid="true" data-lang="<%= I18N.getLocale().getLanguage() %>" <% if(Authenticate.getUser() == null) {%> data-use-offline="true" <%} %> data-next-param="service" src="https://barra.tecnico.ulisboa.pt/site_media/static/js/barra.js"></script>
 <% } %>
-<jsp:include page="deployWarning.jsp" flush="true"/>
-
 
 <%-- Layout component parameters : title, header, navGeral, navLocal, body, footer --%>
 
@@ -61,10 +59,10 @@
 <div id="navtop">
 	<h1 class="applicationName">
 		<% if (FenixConfigurationManager.isBarraAsAuthenticationBroker()) { %>
-			<%=Instalation.getInstance().getInstalationName() %><span class="applicationName-subtle"><bean:message key="application.name.subtle" bundle="GLOBAL_RESOURCES" /></span>
+			<%=PortalConfiguration.getInstance().getApplicationTitle().getContent() %><span class="applicationName-subtle"><bean:message key="application.name.subtle" bundle="GLOBAL_RESOURCES" /></span>
 		<% } %>
 		<% if (!FenixConfigurationManager.isBarraAsAuthenticationBroker()) { %>
-			<img alt="<%=Instalation.getInstance().getInstalationName() %>" src="<bean:message key="fenix.logo.location" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>"/>
+			<img alt="<%=PortalConfiguration.getInstance().getApplicationTitle().getContent() %>" src="<bean:message key="fenix.logo.location" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>"/>
 		<% } %>
 	</h1>
 	<tiles:insert attribute="navGeral" />

@@ -5,7 +5,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<em><bean:message key="title.student.portalTitle"/></em>
 <h2><bean:message key="label.viewExecutionCourseForuns.title" /></h2>
 
 <p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
@@ -22,7 +21,7 @@
 	
 	<logic:notEmpty name="executionCourse" property="foruns">
 		<logic:iterate id="executionCourseForum" name="executionCourse" property="foruns">
-			<bean:size id="threadsCount" name="executionCourseForum" property="conversationThreads"/>
+			<bean:size id="threadsCount" name="executionCourseForum" property="conversationThreadSet"/>
 			<tr>
 				<td>
 					<html:link action="/viewExecutionCourseForuns.do?method=viewForum" paramId="forumId" paramName="executionCourseForum" paramProperty="externalId">

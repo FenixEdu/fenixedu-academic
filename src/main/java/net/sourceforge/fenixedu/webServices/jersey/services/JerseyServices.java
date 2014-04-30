@@ -56,7 +56,7 @@ import org.json.simple.JSONObject;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
@@ -363,9 +363,9 @@ public class JerseyServices {
                 JSONObject mscInfo = new JSONObject();
                 mscInfo.put("id", t.getExternalId());
                 mscInfo.put("author", t.getStudent().getPerson().getIstUsername());
-                String title = t.getFinalFullTitle().getContent(Language.en);
+                String title = t.getFinalFullTitle().getContent(MultiLanguageString.en);
                 if (title == null) {
-                    title = t.getFinalFullTitle().getContent(Language.pt);
+                    title = t.getFinalFullTitle().getContent(MultiLanguageString.pt);
                 }
                 mscInfo.put("title", title);
                 mscInfo.put("year", t.getDiscussed().year().getAsShortText());

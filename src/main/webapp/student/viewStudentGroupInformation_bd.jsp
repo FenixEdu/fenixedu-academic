@@ -14,7 +14,6 @@
 	<bean:define id="infoGrouping" name="infoStudentGroup" property="infoGrouping"/>
 	<bean:define id="groupPropertiesCode" name="infoGrouping" property="externalId"/>
 
-	<em><bean:message key="title.student.portalTitle"/></em>
 	<h2><bean:message key="title.StudentGroupInformation"/> <bean:write name="infoStudentGroup" property="groupNumber"/></h2>
 
 	<p><strong><bean:message key="label.projectTable.project"/>:</strong> <bean:write name="infoGrouping" property="name"/></p>

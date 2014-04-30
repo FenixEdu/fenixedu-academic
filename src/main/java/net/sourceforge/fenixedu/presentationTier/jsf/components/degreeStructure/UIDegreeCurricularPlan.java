@@ -11,6 +11,8 @@ import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.fenixedu.commons.i18n.I18N;
+
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -18,7 +20,7 @@ import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class UIDegreeCurricularPlan extends UIInput {
     public static final String COMPONENT_TYPE =
@@ -206,16 +208,18 @@ public class UIDegreeCurricularPlan extends UIInput {
         writer.writeAttribute("class", "aright", null);
         writer.writeAttribute("colspan", 3, null);
         if (!this.showRules && loggedPersonCanManageDegreeCurricularPlans(getDegreeCurricularPlanAttribute())) {
-            encodeLink("createCurricularCourse.faces", "&curricularYearID=" + curricularPeriod.getParent().getChildOrder()
-                    + "&curricularSemesterID=" + curricularPeriod.getChildOrder(), false, "create.curricular.course");
+            encodeLink(module + "/createCurricularCourse.faces", "&curricularYearID="
+                    + curricularPeriod.getParent().getChildOrder() + "&curricularSemesterID=" + curricularPeriod.getChildOrder(),
+                    false, "create.curricular.course");
             writer.append(" , ");
-            encodeLink("associateCurricularCourse.faces", "&curricularYearID=" + curricularPeriod.getParent().getChildOrder()
-                    + "&curricularSemesterID=" + curricularPeriod.getChildOrder(), false, "associate.curricular.course");
+            encodeLink(module + "/associateCurricularCourse.faces", "&curricularYearID="
+                    + curricularPeriod.getParent().getChildOrder() + "&curricularSemesterID=" + curricularPeriod.getChildOrder(),
+                    false, "associate.curricular.course");
         }
         writer.endElement("th");
     }
 
-    private Map<CurricularPeriod, List<Context>> toRepeat = new HashMap<CurricularPeriod, List<Context>>();
+    private final Map<CurricularPeriod, List<Context>> toRepeat = new HashMap<CurricularPeriod, List<Context>>();
 
     private boolean encodeCurricularCourses(CurricularPeriod curricularPeriod) throws IOException {
         boolean anyCurricularCourseEncoded = false;
@@ -262,39 +266,6 @@ public class UIDegreeCurricularPlan extends UIInput {
         }
     }
 
-    private void encodeSumsFooter(List<Double> sums) throws IOException {
-        writer.startElement("tr", this);
-
-        writer.startElement("td", this);
-        writer.writeAttribute("colspan", 3, null);
-        writer.endElement("td");
-
-        writer.startElement("td", this);
-        writer.writeAttribute("class", "highlight2 smalltxt", null);
-        writer.writeAttribute("align", "right", null);
-        // writer.writeAttribute("style", "width: 13em;", null);
-
-        encodeSumsLoadFooterElement(sums, "contactLessonHoursAcronym", 0);
-        encodeSumsLoadFooterElement(sums, "autonomousWorkAcronym", 1);
-        encodeSumsLoadFooterElement(sums, "totalLoadAcronym", 2);
-        writer.endElement("td");
-
-        writer.startElement("td", this);
-        writer.writeAttribute("class", "aright highlight2", null);
-        writer.writeAttribute("style", "width: 9em;", null);
-        writer.append(this.getBundleValue("BolonhaManagerResources", "credits")).append(" ");
-        writer.append(String.valueOf(sums.get(3)));
-        writer.endElement("td");
-
-        if (this.toEdit) {
-            writer.startElement("td", this);
-            writer.append("&nbsp;");
-            writer.endElement("td");
-        }
-
-        writer.endElement("tr");
-    }
-
     private void encodeSumsLoadFooterElement(List<Double> sums, String acronym, int order) throws IOException {
         writer.startElement("span", this);
         writer.writeAttribute("style", "color: #888", null);
@@ -320,7 +291,7 @@ public class UIDegreeCurricularPlan extends UIInput {
     }
 
     private String getBundleValue(String bundleName, String bundleKey) {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources/" + bundleName, Language.getLocale());
+        ResourceBundle bundle = ResourceBundle.getBundle("resources/" + bundleName, I18N.getLocale());
         return bundle.getString(bundleKey);
     }
 

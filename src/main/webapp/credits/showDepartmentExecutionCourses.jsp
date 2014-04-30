@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@page contentType="text/html" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
@@ -34,7 +35,7 @@
 			</fr:layout>
 			<fr:destination name="cancel" path="/exportCredits.do?method=exportDepartmentCourses" />
 		</fr:edit>
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible"><bean:message key="label.view" bundle="TEACHER_CREDITS_SHEET_RESOURCES" /></html:submit>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message key="label.view" bundle="TEACHER_CREDITS_SHEET_RESOURCES" /></html:submit>
 		<html:cancel><bean:message key="label.export" bundle="APPLICATION_RESOURCES" /></html:cancel>
 	</fr:form>
 	<logic:notEmpty name="departmentCreditsBean" property="departmentExecutionCourses">

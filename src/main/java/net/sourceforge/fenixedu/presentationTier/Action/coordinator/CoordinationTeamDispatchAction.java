@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -30,26 +29,34 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.security.Authenticate;
+
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 /**
- * 
+ *
  * @author João Mota
- * 
+ *
  */
+@Mapping(path = "/viewCoordinationTeam", module = "coordinator", formBean = "addCoordinator",
+        functionality = DegreeCoordinatorIndex.class)
+@Forwards({ @Forward(name = "chooseExecutionYear", path = "/coordinator/coordinationTeam/chooseExecutionYear.jsp"),
+        @Forward(name = "coordinationTeam", path = "/coordinator/coordinationTeam/viewCoordinationTeam.jsp"),
+        @Forward(name = "addCoordinator", path = "/coordinator/coordinationTeam/addCoordinator.jsp"),
+        @Forward(name = "sucess", path = "/coordinator/viewCoordinationTeam.do?method=viewTeam"),
+        @Forward(name = "noAuthorization", path = "/coordinator/student/notAuthorized_bd.jsp") })
 public class CoordinationTeamDispatchAction extends FenixDispatchAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        CoordinatedDegreeInfo.setCoordinatorContext(request);
+        DegreeCoordinatorIndex.setCoordinatorContext(request);
         return super.execute(mapping, actionForm, request, response);
     }
 
     public ActionForward chooseExecutionYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
-
-        User userView = Authenticate.getUser();
 
         String degreeCurricularPlanID = null;
         if (request.getParameter("degreeCurricularPlanID") != null) {
@@ -167,7 +174,6 @@ public class CoordinationTeamDispatchAction extends FenixDispatchAction {
 
     public ActionForward removeCoordinators(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixActionException, FenixServiceException {
-        User userView = getUserView(request);
         DynaActionForm removeCoordinatorsForm = (DynaActionForm) form;
         String[] coordinatorsIds = (String[]) removeCoordinatorsForm.get("coordinatorsIds");
         List<String> coordinators = Arrays.asList(coordinatorsIds);

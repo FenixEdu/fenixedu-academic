@@ -24,11 +24,18 @@ import org.apache.struts.action.DynaActionForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author tfc130
  */
+@Mapping(module = "publico", path = "/chooseRoomsFormNew", input = "/prepareConsultRoomsNew.do?method=prepare&page=0",
+        attribute = "roomForm", formBean = "roomForm", scope = "request")
+@Forwards(value = { @Forward(name = "one", path = "/siteViewerRoomNew.do?method=roomViewer"),
+        @Forward(name = "list", path = "chooseRoom") })
 public class SelectRoomsFormAction extends FenixContextAction {
 
     private static final Logger logger = LoggerFactory.getLogger(SelectRoomsFormAction.class);

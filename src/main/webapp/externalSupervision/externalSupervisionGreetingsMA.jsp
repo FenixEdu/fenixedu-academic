@@ -5,7 +5,6 @@
 
 <html:xhtml/>
 
-<em><bean:message bundle="EXTERNAL_SUPERVISION_RESOURCES" key="externalSupervision"/></em>
 <h2><bean:message bundle="EXTERNAL_SUPERVISION_RESOURCES" key="title.MA"/></h2>
 
 <table>

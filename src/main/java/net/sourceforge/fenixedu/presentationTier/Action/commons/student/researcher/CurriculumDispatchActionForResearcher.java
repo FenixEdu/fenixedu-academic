@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.commons.student.researcher;
 
+import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.CurriculumDispatchAction;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -10,6 +11,5 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "ShowStudentCurriculum", path = "/student/curriculum/displayStudentCurriculum_bd.jsp"),
         @Forward(name = "ShowStudentCurricularPlans", path = "/student/curriculum/viewCurricularPlans_bd.jsp"),
         @Forward(name = "NotAuthorized", path = "/student/notAuthorized_bd.jsp") })
-public class CurriculumDispatchActionForResearcher extends
-        net.sourceforge.fenixedu.presentationTier.Action.commons.student.CurriculumDispatchAction {
+public class CurriculumDispatchActionForResearcher extends CurriculumDispatchAction {
 }

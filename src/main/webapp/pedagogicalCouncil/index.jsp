@@ -5,8 +5,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 
 <h2>
-	<bean:message bundle="PEDAGOGICAL_COUNCIL" key="portal.pedagogical.council"/>
+	<bean:message bundle="PEDAGOGICAL_COUNCIL_RESOURCES" key="portal.pedagogical.council"/>
 </h2>
 <p>
-	<bean:message bundle="PEDAGOGICAL_COUNCIL" key="message.pedagogical.council.welcome"/>
+	<bean:message bundle="PEDAGOGICAL_COUNCIL_RESOURCES" key="message.pedagogical.council.welcome"/>
 </p>

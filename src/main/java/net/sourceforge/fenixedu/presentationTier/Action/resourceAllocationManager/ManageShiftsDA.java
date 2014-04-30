@@ -22,11 +22,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShiftEditor;
 import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.ContextSelectionBean;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.RequestUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.SessionUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
+import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
 
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
@@ -35,18 +36,36 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.commons.i18n.I18N;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import java.util.Locale;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- * 
+ *
  */
+@Mapping(path = "/manageShifts", module = "resourceAllocationManager", input = "/manageShifts.do?method=listShifts",
+        formBean = "createShiftForm", functionality = ExecutionPeriodDA.class)
+@Forwards({ @Forward(name = "ShowShiftList", path = "/resourceAllocationManager/manageShifts_bd.jsp"),
+        @Forward(name = "EditShift", path = "/resourceAllocationManager/manageShift.do?method=prepareEditShift") })
+@Exceptions(@ExceptionHandling(handler = FenixErrorExceptionHandler.class, type = ExistingActionException.class,
+        key = "resources.Action.exceptions.ExistingActionException", scope = "request"))
 public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContextDispatchAction {
 
     private static final Logger logger = LoggerFactory.getLogger(ManageShiftsDA.class);
+
+    @Mapping(path = "/deleteShifts", module = "resourceAllocationManager", input = "/manageShifts.do?method=listShifts&page=0",
+            formBean = "selectMultipleItemsForm", functionality = ExecutionPeriodDA.class)
+    @Forwards(@Forward(name = "ShowShiftList", path = "/resourceAllocationManager/manageShifts.do?method=listShifts"))
+    public static class DeleteShiftsDA extends ManageShiftsDA {
+    }
 
     public ActionForward listShifts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
@@ -65,7 +84,7 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
 
         if (infoExecutionCourse != null) {
             final List<LabelValueBean> tiposAula = new ArrayList<LabelValueBean>();
-            final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+            final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
 
             for (final ShiftType shiftType : infoExecutionCourse.getExecutionCourse().getShiftTypes()) {
                 tiposAula.add(new LabelValueBean(bundle.getString(shiftType.getName()), shiftType.name()));
@@ -191,6 +210,6 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
             request.setAttribute(PresentationConstants.SHIFTS, infoShifts);
         }
 
-        SessionUtils.getExecutionCourses(request);
+        ManageShiftDA.getExecutionCourses(request);
     }
 }

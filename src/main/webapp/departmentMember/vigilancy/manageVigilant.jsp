@@ -5,8 +5,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
 <html:xhtml />
-<em><bean:message bundle="VIGILANCY_RESOURCES"
-	key="label.vigilancy.department" /></em>
 <h2><bean:message bundle="VIGILANCY_RESOURCES"
 	key="label.navheader.person.vigilant" /></h2>
 

@@ -19,19 +19,19 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.DomainObject;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-@Mapping(path = "/editCandidacyInformation", module = "academicAdministration")
+@Mapping(path = "/editCandidacyInformation", module = "academicAdministration", functionality = SearchForStudentsDA.class)
 @Forwards({
         @Forward(name = "editCandidacyInformation",
                 path = "/academicAdminOffice/student/registration/editCandidacyInformation.jsp"),
-        @Forward(name = "visualizeStudent", path = "/student.do?method=visualizeStudent") })
+        @Forward(name = "visualizeStudent", path = "/academicAdministration/student.do?method=visualizeStudent") })
 public class EditCandidacyInformationDA extends FenixDispatchAction {
 
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -147,11 +147,10 @@ public class EditCandidacyInformationDA extends FenixDispatchAction {
             if (isRegistration()) {
                 return getRegistration().getDegreeCurricularPlanName();
             } else {
-                Locale locale = Language.getLocale();
+                Locale locale = I18N.getLocale();
                 ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", locale);
                 StringBuilder stringBuilder = new StringBuilder(bundle.getString("label.phd")).append(" ");
-                stringBuilder.append(getPhdIndividualProgramProcess().getPhdProgram().getName()
-                        .getContent(Language.valueOf(locale.getLanguage())));
+                stringBuilder.append(getPhdIndividualProgramProcess().getPhdProgram().getName().getContent(locale));
                 return stringBuilder.toString();
             }
         }

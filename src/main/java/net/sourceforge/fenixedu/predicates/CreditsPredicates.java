@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.predicates;
 
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Credits;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
@@ -15,8 +15,7 @@ public class CreditsPredicates {
         public boolean evaluate(final Credits credits) {
 
             boolean authorizedIfConcluded =
-                    AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-                            AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION).contains(
+                    AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION).contains(
                             credits.getStudentCurricularPlan().getDegree());
 
             for (final Dismissal dismissal : credits.getDismissalsSet()) {

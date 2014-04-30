@@ -10,7 +10,7 @@ import java.io.Serializable;
  * 
  * @author jmota
  */
-
+@Deprecated
 public abstract class DataTranferObject implements Serializable {
 
     /**

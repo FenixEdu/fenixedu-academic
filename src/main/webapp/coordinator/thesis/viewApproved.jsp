@@ -13,6 +13,8 @@
 
 <html:xhtml/>
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <h2><bean:message key="title.coordinator.thesis.confirm"/></h2>
 
 <ul>

@@ -11,12 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerMessagesAndNoticesApp;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.AnnouncementManagement;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -26,9 +28,11 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author Luis Cruz
  * @author Gonçalo Luiz
  */
+
+@StrutsFunctionality(app = ManagerMessagesAndNoticesApp.class, path = "manage-notices", titleKey = "title.notices")
 @Mapping(module = "manager", path = "/manageAdvisories", input = "/manageAdvisories.do?method=prepare&page=0",
-        attribute = "advisoryForm", formBean = "advisoryForm", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "uploadFile", path = "/messaging/announcements/uploadFileToBoard.jsp"),
+        formBean = "advisoryForm")
+@Forwards({ @Forward(name = "uploadFile", path = "/messaging/announcements/uploadFileToBoard.jsp"),
         @Forward(name = "edit", path = "/messaging/announcements/editAnnouncement.jsp"),
         @Forward(name = "listAnnouncements", path = "/messaging/announcements/listBoardAnnouncements.jsp"),
         @Forward(name = "add", path = "/messaging/announcements/addAnnouncement.jsp"),
@@ -50,7 +54,7 @@ public class ManageAdvisoriesDA extends AnnouncementManagement {
         final User userView = getUserView(request);
         final Collection<AnnouncementBoard> boardsToShow = new ArrayList<AnnouncementBoard>();
         for (AnnouncementBoard board : rootDomainObject.getInstitutionUnit().getBoards()) {
-            if (board.getWriters() == null || board.getWriters().allows(userView)) {
+            if (board.getWriters() == null || board.getWriters().isMember(userView)) {
                 boardsToShow.add(board);
             }
         }

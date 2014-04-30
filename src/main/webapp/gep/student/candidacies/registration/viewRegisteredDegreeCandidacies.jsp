@@ -7,7 +7,6 @@
 
 <logic:present role="role(GEP)">
 
-<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="label.registeredDegreeCandidacies.first.time.list" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
 <jsp:include page="/academicAdminOffice/student/candidacies/registration/viewRegisteredDegreeCandidacies_bd.jsp" />

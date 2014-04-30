@@ -10,23 +10,22 @@ import net.sourceforge.fenixedu.domain.credits.util.TeacherCreditsBean;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ViewTeacherCreditsDA;
+import net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.ScientificCouncilApplication.ScientificCreditsApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "scientificCouncil", path = "/credits", scope = "request", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "selectTeacher", path = "/credits/selectTeacher.jsp", tileProperties = @Tile(
-                title = "private.scientificcouncil.credits.summary")),
-        @Forward(name = "showTeacherCredits", path = "/credits/showTeacherCredits.jsp", tileProperties = @Tile(
-                title = "private.scientificcouncil.credits.summary")),
+@StrutsFunctionality(app = ScientificCreditsApp.class, path = "teacher-sheet", titleKey = "link.teacher.sheet")
+@Mapping(module = "scientificCouncil", path = "/credits")
+@Forwards({ @Forward(name = "selectTeacher", path = "/credits/selectTeacher.jsp"),
+        @Forward(name = "showTeacherCredits", path = "/credits/showTeacherCredits.jsp"),
         @Forward(name = "showPastTeacherCredits", path = "/credits/showPastTeacherCredits.jsp"),
         @Forward(name = "showAnnualTeacherCredits", path = "/credits/showAnnualTeacherCredits.jsp") })
 public class ScientificCouncilViewTeacherCreditsDA extends ViewTeacherCreditsDA {

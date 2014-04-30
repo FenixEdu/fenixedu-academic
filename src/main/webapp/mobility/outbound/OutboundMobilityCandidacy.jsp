@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@page import="net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyPeriodConfirmationOption"%>
 <%@ page language="java"%>
 <%@page import="net.sourceforge.fenixedu.domain.Person"%>
@@ -80,7 +81,7 @@
 		<html:hidden property="method" value="prepare"/>
 				<fr:edit id="outboundMobilityContextBeanExecutionIntervalSelection" name="outboundMobilityContextBean">
 					<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound.OutboundMobilityContextBean" bundle="MANAGER_RESOURCES">
-						<fr:slot name="executionYear" bundle="CARD_GENERATION_RESOURCES" key="label.execution.year"
+						<fr:slot name="executionYear" bundle="MANAGER_RESOURCES" key="label.executionYear"
 								layout="menu-select-postback">
 							<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
 							<fr:property name="format" value="${year}" />

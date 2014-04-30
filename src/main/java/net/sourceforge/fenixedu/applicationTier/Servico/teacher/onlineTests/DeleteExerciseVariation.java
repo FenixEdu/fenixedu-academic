@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
@@ -28,7 +29,8 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class DeleteExerciseVariation {
 
-    public List<LabelValueBean> run(String executionCourseId, String questionCode) throws InvalidArgumentsServiceException {
+    public List<LabelValueBean> run(ExecutionCourse executionCourseId, String questionCode)
+            throws InvalidArgumentsServiceException {
         List<LabelValueBean> result = new ArrayList<LabelValueBean>();
 
         Question question = FenixFramework.getDomainObject(questionCode);
@@ -107,7 +109,7 @@ public class DeleteExerciseVariation {
     private static final DeleteExerciseVariation serviceInstance = new DeleteExerciseVariation();
 
     @Atomic
-    public static List<LabelValueBean> runDeleteExerciseVariation(String executionCourseId, String questionCode)
+    public static List<LabelValueBean> runDeleteExerciseVariation(ExecutionCourse executionCourseId, String questionCode)
             throws InvalidArgumentsServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
         return serviceInstance.run(executionCourseId, questionCode);

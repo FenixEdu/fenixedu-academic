@@ -3,12 +3,12 @@ package net.sourceforge.fenixedu.presentationTier.renderers.validators;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 
 import pt.ist.fenixWebFramework.rendererExtensions.MultiLanguageStringInputRenderer.LanguageBean;
 import pt.ist.fenixWebFramework.renderers.components.HtmlSimpleValueComponent;
 import pt.ist.fenixWebFramework.renderers.validators.HtmlChainValidator;
 import pt.ist.fenixWebFramework.renderers.validators.HtmlValidator;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class MultiLanguageStringValidator extends HtmlValidator {
 
@@ -29,7 +29,7 @@ public class MultiLanguageStringValidator extends HtmlValidator {
         boolean hasRepeatedLanguage = false;
         boolean hasNullLanguage = false;
 
-        List<Language> languages = new ArrayList<Language>();
+        List<Locale> languages = new ArrayList<Locale>();
 
         for (LanguageBean bean : beans) {
             // only consider fields not empty

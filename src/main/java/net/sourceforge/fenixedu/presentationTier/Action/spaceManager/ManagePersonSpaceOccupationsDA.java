@@ -5,11 +5,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.space.DeletePersonSpaceOccupation;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.SpaceInformation;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -17,6 +15,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -37,9 +37,9 @@ public class ManagePersonSpaceOccupationsDA extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         final SpaceInformation spaceInformation = getSpaceInformationFromParameter(request);
-        Person loggedPerson = AccessControl.getPerson();
-        if (spaceInformation.getSpace().personHasPermissionsToManageSpace(loggedPerson)
-                || spaceInformation.getSpace().personHasPermissionToManagePersonOccupations(loggedPerson)) {
+        User user = Authenticate.getUser();
+        if (spaceInformation.getSpace().personHasPermissionsToManageSpace(user)
+                || spaceInformation.getSpace().personHasPermissionToManagePersonOccupations(user)) {
             return super.execute(mapping, actionForm, request, response);
         } else {
             final ActionMessages actionMessages = new ActionMessages();

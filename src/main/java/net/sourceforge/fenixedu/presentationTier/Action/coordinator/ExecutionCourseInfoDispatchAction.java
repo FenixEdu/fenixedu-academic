@@ -23,10 +23,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftGroupStatistics;
 import net.sourceforge.fenixedu.domain.CurricularYear;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
 
@@ -41,18 +41,28 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.bennu.core.domain.User;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
- * 
+ *
  */
+@Mapping(path = "/executionCoursesInformation", module = "coordinator", input = "/courses/searchCurricularCourses.jsp",
+        formBean = "searchExecutionCourses", functionality = DegreeCoordinatorIndex.class)
+@Forwards({ @Forward(name = "ReadyToSearch", path = "/coordinator/courses/searchCurricularCourses_bd.jsp"),
+        @Forward(name = "ShowCurricularCourseList", path = "/coordinator/courses/showCurricularCourses_bd.jsp"),
+        @Forward(name = "showOccupancy", path = "/coordinator/courses/showOccupancyLevels_bd.jsp"),
+        @Forward(name = "showLoads", path = "/coordinator/courses/showLoads_bd.jsp"),
+        @Forward(name = "notAuthorized", path = "/coordinator/notAuthorizedSimple.jsp") })
 public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        CoordinatedDegreeInfo.setCoordinatorContext(request);
+        DegreeCoordinatorIndex.setCoordinatorContext(request);
         return super.execute(mapping, actionForm, request, response);
     }
 
@@ -126,7 +136,7 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
     public ActionForward getExecutionCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request.getAttribute(PresentationConstants.MASTER_DEGREE);
+        ExecutionDegree infoExecutionDegree = (ExecutionDegree) request.getAttribute(PresentationConstants.MASTER_DEGREE);
 
         DynaActionForm searchExecutionCourse = (DynaActionForm) form;
 
@@ -176,8 +186,8 @@ public class ExecutionCourseInfoDispatchAction extends FenixDispatchAction {
         List infoExecutionCourses = null;
         try {
             infoExecutionCourses =
-                    SearchExecutionCourses.runSearchExecutionCourses(infoExecutionPeriod, infoExecutionDegree,
-                            infoCurricularYear, executionCourseName);
+                    SearchExecutionCourses.runSearchExecutionCourses(infoExecutionPeriod,
+                            InfoExecutionDegree.newInfoFromDomain(infoExecutionDegree), infoCurricularYear, executionCourseName);
         } catch (NotAuthorizedException e) {
             return mapping.findForward("notAuthorized");
         }

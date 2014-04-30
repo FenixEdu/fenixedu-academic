@@ -18,37 +18,43 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.UnitFunctionalities;
+import net.sourceforge.fenixedu.presentationTier.Action.messaging.MessagingApplication.MessagingFilesApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
-@Mapping(module = "messaging", path = "/viewFiles", scope = "request", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "uploadFile", path = "/commons/unitFiles/uploadFile.jsp", tileProperties = @Tile(
-                head = "/messaging/files/context.jsp")),
-        @Forward(name = "manageFiles", path = "/commons/unitFiles/manageFiles.jsp", tileProperties = @Tile(
-                head = "/messaging/files/context.jsp")),
-        @Forward(name = "showSources", path = "/messaging/files/showSources.jsp", tileProperties = @Tile(
-                head = "/commons/renderers/treeRendererHeader.jsp", title = "private.messaging.files")),
-        @Forward(name = "editFile", path = "/commons/unitFiles/editFile.jsp", tileProperties = @Tile(
-                head = "/messaging/files/context.jsp")) })
+@StrutsFunctionality(app = MessagingFilesApp.class, path = "view", titleKey = "label.files.view")
+@Mapping(module = "messaging", path = "/viewFiles")
+@Forwards(value = { @Forward(name = "uploadFile", path = "/commons/unitFiles/uploadFile.jsp"),
+        @Forward(name = "manageFiles", path = "/commons/unitFiles/manageFiles.jsp"),
+        @Forward(name = "showSources", path = "/messaging/files/showSources.jsp"),
+        @Forward(name = "editFile", path = "/commons/unitFiles/editFile.jsp") })
 public class ViewFilesDA extends UnitFunctionalities {
 
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        request.setAttribute("functionalityAction", "viewFiles");
+        request.setAttribute("module", "messaging");
+        return super.execute(mapping, form, request, response);
+    }
+
+    @EntryPoint
     public ActionForward showSources(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         List<PersonFileSource> result = new ArrayList<PersonFileSource>();
 
         MultiLanguageString departmentsName =
-                new MultiLanguageString().with(Language.pt, "Departamentos").with(Language.en, "Departments");
+                new MultiLanguageString().with(MultiLanguageString.pt, "Departamentos").with(MultiLanguageString.en, "Departments");
         PersonFileSourceGroupBean departmentsGroup = new PersonFileSourceGroupBean(departmentsName);
 
         SortedSet<Department> departments = new TreeSet<Department>(Department.COMPARATOR_BY_NAME);
@@ -58,7 +64,7 @@ public class ViewFilesDA extends UnitFunctionalities {
         }
 
         MultiLanguageString researchUnitsName =
-                new MultiLanguageString().with(Language.pt, "Unidades de Investigação").with(Language.en, "Research Units");
+                new MultiLanguageString().with(MultiLanguageString.pt, "Unidades de Investigação").with(MultiLanguageString.en, "Research Units");
         PersonFileSourceGroupBean researchUnitsGroup = new PersonFileSourceGroupBean(researchUnitsName);
 
         SortedSet<Unit> researchUnits = new TreeSet<Unit>(Unit.COMPARATOR_BY_NAME_AND_ID);
@@ -68,7 +74,7 @@ public class ViewFilesDA extends UnitFunctionalities {
         }
 
         MultiLanguageString scientificAreaName =
-                new MultiLanguageString().with(Language.pt, "Áreas Ciêntificas").with(Language.en, "Scientific Areas");
+                new MultiLanguageString().with(MultiLanguageString.pt, "Áreas Ciêntificas").with(MultiLanguageString.en, "Scientific Areas");
         PersonFileSourceGroupBean scientificAreaUnits = new PersonFileSourceGroupBean(scientificAreaName);
 
         SortedSet<Unit> scientificAreas = new TreeSet<Unit>(Unit.COMPARATOR_BY_NAME_AND_ID);

@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.accounting.PaymentCodeState;
 import net.sourceforge.fenixedu.domain.accounting.SibsPaymentFileProcessReport;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerPaymentsApp;
 import net.sourceforge.fenixedu.util.sibs.incomming.SibsIncommingPaymentFile;
 import net.sourceforge.fenixedu.util.sibs.incomming.SibsIncommingPaymentFileDetailLine;
 
@@ -30,6 +31,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.fenixedu.commons.StringNormalizer;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -40,6 +43,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import com.google.common.io.ByteStreams;
 import com.google.common.io.Files;
 
+@StrutsFunctionality(app = ManagerPaymentsApp.class, path = "sibs-payments", titleKey = "label.payments.uploadPaymentsFile")
 @Mapping(path = "/SIBSPayments", module = "manager")
 @Forwards({ @Forward(name = "prepareUploadSIBSPaymentFiles", path = "/manager/payments/prepareUploadSIBSPaymentFiles.jsp") })
 public class SIBSPaymentsDA extends FenixDispatchAction {
@@ -98,6 +102,7 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
         }
     }
 
+    @EntryPoint
     public ActionForward prepareUploadSIBSPaymentFiles(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 

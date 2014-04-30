@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.SeminaryCoordinatorOrStudentFilter;
+import net.sourceforge.fenixedu.applicationTier.Filtro.StudentAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -48,7 +48,7 @@ public class ReadDegreeCurricularPlans {
 
     @Atomic
     public static List runReadDegreeCurricularPlans() throws NotAuthorizedException {
-        SeminaryCoordinatorOrStudentFilter.instance.execute();
+        StudentAuthorizationFilter.instance.execute();
         return serviceInstance.run();
     }
 

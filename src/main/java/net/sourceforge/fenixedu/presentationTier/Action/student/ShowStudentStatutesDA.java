@@ -9,23 +9,29 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.StudentStatute;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentViewApp;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@StrutsFunctionality(app = StudentViewApp.class, descriptionKey = "label.student.statutes", path = "statutes",
+        titleKey = "link.title.statutes")
 @Mapping(path = "/ShowStudentStatutes", module = "student")
 @Forwards({ @Forward(name = "studentStatutes", path = "/student/showStudentStatutes.jsp", tileProperties = @Tile(
         title = "private.student.view.statutes")) })
 public class ShowStudentStatutesDA extends FenixDispatchAction {
 
+    @EntryPoint
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         User userView = getUserView(request);

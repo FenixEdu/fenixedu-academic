@@ -56,7 +56,6 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class OrganizationalStructureBackingBean extends FenixBackingBean {
@@ -593,7 +592,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         CreateNewUnitParameters parameters = new CreateNewUnitParameters(this, 1);
 
         MultiLanguageString unitName =
-                new MultiLanguageString(Language.pt, this.getUnitName()).with(Language.en, this.getUnitNameEn());
+                new MultiLanguageString(MultiLanguageString.pt, this.getUnitName()).with(MultiLanguageString.en, this.getUnitNameEn());
 
         try {
             CreateUnit.run(null, unitName, this.getUnitNameCard(), this.getUnitCostCenter(), this.getUnitAcronym(),
@@ -627,8 +626,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         CreateNewUnitParameters parameters = new CreateNewUnitParameters(this, 1);
 
         MultiLanguageString unitName = new MultiLanguageString();
-        unitName = unitName.with(Language.pt, this.getUnitName());
-        unitName = unitName.with(Language.en, this.getUnitNameEn());
+        unitName = unitName.with(MultiLanguageString.pt, this.getUnitName());
+        unitName = unitName.with(MultiLanguageString.en, this.getUnitNameEn());
 
         try {
             CreateUnit.run(this.getUnit(), unitName, this.getUnitNameCard(), this.getUnitCostCenter(), this.getUnitAcronym(),
@@ -653,8 +652,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         CreateNewUnitParameters parameters = new CreateNewUnitParameters(this, 1);
 
         MultiLanguageString unitName = new MultiLanguageString();
-        unitName = unitName.with(Language.pt, this.getUnitName());
-        unitName = unitName.with(Language.en, this.getUnitNameEn());
+        unitName = unitName.with(MultiLanguageString.pt, this.getUnitName());
+        unitName = unitName.with(MultiLanguageString.en, this.getUnitNameEn());
 
         try {
             EditUnit.run(this.getChooseUnit().getExternalId(), unitName, this.getUnitNameCard(), this.getUnitCostCenter(),
@@ -734,8 +733,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         FunctionType type = getFunctionType();
 
         MultiLanguageString functionName = new MultiLanguageString();
-        functionName = functionName.with(Language.pt, this.getFunctionName());
-        functionName = functionName.with(Language.en, this.getFunctionNameEn());
+        functionName = functionName.with(MultiLanguageString.pt, this.getFunctionName());
+        functionName = functionName.with(MultiLanguageString.en, this.getFunctionNameEn());
 
         try {
             CreateFunction.run(functionName, datesResult.getBeginDate(), datesResult.getEndDate(), type, this.getUnit()
@@ -759,8 +758,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         FunctionType type = getFunctionType();
 
         MultiLanguageString functionName = new MultiLanguageString();
-        functionName = functionName.with(Language.pt, this.getFunctionName());
-        functionName = functionName.with(Language.en, this.getFunctionNameEn());
+        functionName = functionName.with(MultiLanguageString.pt, this.getFunctionName());
+        functionName = functionName.with(MultiLanguageString.en, this.getFunctionNameEn());
 
         try {
             EditFunction.run(this.getFunction().getExternalId(), functionName, datesResult.getBeginDate(),
@@ -1100,7 +1099,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public String getFunctionName() throws FenixServiceException {
         if (this.functionName == null && this.getFunction() != null) {
-            this.functionName = this.getFunction().getTypeName().getContent(Language.pt);
+            this.functionName = this.getFunction().getTypeName().getContent(MultiLanguageString.pt);
         }
         return functionName;
     }
@@ -1464,7 +1463,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public String getFunctionNameEn() throws FenixServiceException {
         if (this.functionNameEn == null && this.getFunction() != null) {
-            this.functionNameEn = this.getFunction().getTypeName().getContent(Language.en);
+            this.functionNameEn = this.getFunction().getTypeName().getContent(MultiLanguageString.en);
         }
         return functionNameEn;
     }
@@ -1475,7 +1474,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public String getUnitNameEn() throws FenixServiceException {
         if (this.unitNameEn == null && this.getChooseUnit() != null) {
-            this.unitNameEn = this.getChooseUnit().getPartyName().getContent(Language.en);
+            this.unitNameEn = this.getChooseUnit().getPartyName().getContent(MultiLanguageString.en);
         }
         return unitNameEn;
     }

@@ -3,7 +3,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<em><bean:message key="title.teaching" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></em>
 <h2><bean:message key="label.version.information" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h2>
 
 <bean:define id="competenceCourseID" name="changeRequest" property="competenceCourse.externalId"/>

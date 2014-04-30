@@ -15,6 +15,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.degree.execution.ReadExe
 import net.sourceforge.fenixedu.applicationTier.Servico.degree.execution.ReadExecutionDegreesByExecutionYearAndDegreeType;
 import net.sourceforge.fenixedu.applicationTier.Servico.department.professorship.ReadExecutionCoursesByTeacherResponsibility;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
@@ -24,6 +26,8 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.TeacherSearchForExecutionCourseAssociation;
+import net.sourceforge.fenixedu.presentationTier.Action.teacher.professorship.exception.handler.MaxResponsibleForExceedHandler;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -35,12 +39,32 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.apache.struts.action.ExceptionHandler;
 import org.apache.struts.util.MessageResources;
 import org.apache.struts.validator.DynaValidatorForm;
+
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 /**
  * @author jpvl
  */
+@Mapping(path = "/createProfessorship", module = "departmentAdmOffice", formBean = "teacherExecutionCourseForm",
+        functionality = TeacherSearchForExecutionCourseAssociation.class,
+        input = "/createProfessorship.do?method=showExecutionYearExecutionPeriods")
+@Forwards({ @Forward(name = "second-step", path = "/departmentAdmOffice/teacher/professorship/createProfessorship.jsp"),
+        @Forward(name = "third-step", path = "/departmentAdmOffice/teacher/professorship/createProfessorship.jsp"),
+        @Forward(name = "final-step", path = "/departmentAdmOffice/teacherSearchForExecutionCourseAssociation.do") })
+@Exceptions({
+        @ExceptionHandling(handler = ExceptionHandler.class, type = InvalidCategory.class,
+                key = "message.professorship.invalidCategory", scope = "request",
+                path = "/createProfessorship.do?method=showExecutionDegreeExecutionCourses"),
+        @ExceptionHandling(handler = MaxResponsibleForExceedHandler.class, type = MaxResponsibleForExceed.class,
+                key = "message.professorship.numberOfResponsibleForExceeded", scope = "request",
+                path = "/createProfessorship.do?method=showExecutionDegreeExecutionCourses") })
 public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
 
     public ActionForward createProfessorship(ActionMapping mapping, ActionForm form, HttpServletRequest request,

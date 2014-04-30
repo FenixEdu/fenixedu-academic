@@ -3,14 +3,14 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.FileContent;
-import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
+
+import org.fenixedu.bennu.core.groups.Group;
 
 public class FileItemPermissionBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private FileContent fileItem;
+    private final FileContent fileItem;
     private Group permittedGroup;
 
     public FileItemPermissionBean(FileContent fileItem) {
@@ -23,11 +23,7 @@ public class FileItemPermissionBean implements Serializable {
     }
 
     public Group getPermittedGroup() {
-        if (this.permittedGroup != null) {
-            return this.permittedGroup;
-        } else {
-            return new EveryoneGroup();
-        }
+        return permittedGroup;
     }
 
     public void setPermittedGroup(Group permittedGroup) {
@@ -37,4 +33,5 @@ public class FileItemPermissionBean implements Serializable {
     public void logItemFilePermittedGroup() {
         fileItem.logItemFilePermittedGroup();
     }
+
 }

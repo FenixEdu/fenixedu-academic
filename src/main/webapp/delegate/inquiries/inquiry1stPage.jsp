@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
@@ -12,7 +13,7 @@
 		<td><bean:message key="label.curricularCourse.name" bundle="INQUIRIES_RESOURCES"/>:</td>
 		<td>
 			<bean:define id="executionCourseLink"><c:out value="${pageContext.request.contextPath}" /><c:out value="${inquiryDTO.executionCourse.site.reversePath}" /></bean:define>	
-			<!-- NO_CHECKSUM --><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><a href="<%= executionCourseLink %>" target="_blank" title="Ir para p&aacute;gina da UC"><bean:write name="inquiryDTO" property="executionCourse.nome" /></a>	
+			<!-- NO_CHECKSUM --><a href="<%= executionCourseLink %>" target="_blank" title="Ir para p&aacute;gina da UC"><bean:write name="inquiryDTO" property="executionCourse.nome" /></a>	
 		</td>
 	</tr>
 	<tr>

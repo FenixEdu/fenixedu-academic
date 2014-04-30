@@ -12,26 +12,27 @@ import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopConfirmation
 import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopConfirmationSpreadsheet;
 import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopSpreadsheet;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.DirectiveCouncilApplication.DirectiveCouncilCareerWorkshops;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
+@StrutsFunctionality(app = DirectiveCouncilCareerWorkshops.class, path = "manage", titleKey = "label.title.careerWorkshop.simple")
 @Mapping(path = "/careerWorkshopApplication", module = "directiveCouncil")
-@Forwards({
-        @Forward(name = "manageCareerWorkshops", path = "/directiveCouncil/careerWorkshop/manageCareerWorkshops.jsp",
-                tileProperties = @Tile(title = "private.steeringcouncil.istcareerWorkshops.managingistcareerworkshops")),
-        @Forward(name = "setConfirmationPeriod", path = "/directiveCouncil/careerWorkshop/setConfirmationPeriod.jsp",
-                tileProperties = @Tile(title = "private.steeringcouncil.istcareerWorkshops.managingistcareerworkshops")) })
+@Forwards({ @Forward(name = "manageCareerWorkshops", path = "/directiveCouncil/careerWorkshop/manageCareerWorkshops.jsp"),
+        @Forward(name = "setConfirmationPeriod", path = "/directiveCouncil/careerWorkshop/setConfirmationPeriod.jsp") })
 public class ManageCareerWorkshopApplicationsDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
@@ -79,7 +80,7 @@ public class ManageCareerWorkshopApplicationsDA extends FenixDispatchAction {
                 response.setContentLength(spreadsheet.getSize().intValue());
                 response.setContentType("application/csv");
                 response.addHeader("Content-Disposition", "attachment; filename=" + spreadsheet.getFilename());
-                writer.write(spreadsheet.getContents());
+                writer.write(spreadsheet.getContent());
                 writer.flush();
             } finally {
                 writer.close();
@@ -124,7 +125,7 @@ public class ManageCareerWorkshopApplicationsDA extends FenixDispatchAction {
                 response.setContentLength(spreadsheet.getSize().intValue());
                 response.setContentType("application/csv");
                 response.addHeader("Content-Disposition", "attachment; filename=" + spreadsheet.getFilename());
-                writer.write(spreadsheet.getContents());
+                writer.write(spreadsheet.getContent());
                 writer.flush();
             } finally {
                 writer.close();
@@ -139,7 +140,7 @@ public class ManageCareerWorkshopApplicationsDA extends FenixDispatchAction {
         CareerWorkshopApplicationEvent application = FenixFramework.getDomainObject(eventExternalId);
         List<CareerWorkshopConfirmation> confirmations =
                 new ArrayList<CareerWorkshopConfirmation>(application.getCareerWorkshopConfirmationEvent()
-                        .getCareerWorkshopConfirmations());
+                        .getCareerWorkshopConfirmationsSet());
         for (CareerWorkshopConfirmation confToDelete : confirmations) {
             confToDelete.delete();
         }

@@ -10,15 +10,19 @@ import net.sourceforge.fenixedu.dataTransferObject.commons.student.StudentNumber
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.transition.AbstractBolonhaTransitionManagementDA;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerBolonhaTransitionApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@StrutsFunctionality(app = ManagerBolonhaTransitionApp.class, path = "student-curriculum", titleKey = "title.student.curriculum")
 @Mapping(module = "manager", path = "/bolonhaTransitionManagement", attribute = "bolonhaTransitionManagementForm",
         formBean = "bolonhaTransitionManagementForm", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "chooseStudent", path = "/manager/transition/bolonha/chooseStudent.jsp"),
@@ -26,6 +30,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "chooseRegistration", path = "/manager/transition/bolonha/chooseRegistration.jsp") })
 public class BolonhaTransitionManagementDA extends AbstractBolonhaTransitionManagementDA {
 
+    @EntryPoint
     public ActionForward prepareChooseStudent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 

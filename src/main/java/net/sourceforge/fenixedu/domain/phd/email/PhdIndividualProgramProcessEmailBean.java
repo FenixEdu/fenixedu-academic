@@ -21,7 +21,7 @@ import org.apache.commons.lang.StringUtils;
 
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdIndividualProgramProcessEmailBean extends PhdEmailBean implements Serializable {
 
@@ -216,8 +216,8 @@ public class PhdIndividualProgramProcessEmailBean extends PhdEmailBean implement
     }
 
     public PhdIndividualProgramProcessEmailBean(PhdIndividualProgramProcessEmail email) {
-        this.subject = email.getFormattedSubject().getContent(Language.pt);
-        this.message = email.getFormattedBody().getContent(Language.pt);
+        this.subject = email.getFormattedSubject().getContent(MultiLanguageString.pt);
+        this.message = email.getFormattedBody().getContent(MultiLanguageString.pt);
         this.bccs = email.getBccs();
         this.creationDate = email.getWhenCreated();
         this.creator = email.getPerson();

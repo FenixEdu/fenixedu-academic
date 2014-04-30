@@ -12,7 +12,7 @@
 
 <br/>
 
-<html:form action="/defineResponsePeriods?method=define">
+<fr:form action="/defineResponsePeriods.do?method=define">
 	<fr:edit id="inquiryResponsePeriod" name="definitionPeriodBean" schema="net.sourceforge.fenixedu.domain.inquiry.SelectInquiryResponsePeriod.edit">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thmiddle thlight mtop05 mbottom1"/>
@@ -40,7 +40,6 @@
 				<fr:destination name="cancel" path="/defineResponsePeriods.do?method=prepare"/>
 		   	</fr:layout>	    	
 		</fr:edit>
-		<html:submit><bean:message key="button.submit"/></html:submit>
-		<html:cancel><bean:message key="button.cancel"/></html:cancel>
-	</logic:notPresent>	
-</html:form>
+	</logic:notPresent>
+	<html:submit />
+</fr:form>

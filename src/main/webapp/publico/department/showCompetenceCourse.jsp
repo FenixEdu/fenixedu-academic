@@ -3,8 +3,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
-<ft:tilesView locale="<%=request.getAttribute(org.apache.struts.Globals.LOCALE_KEY).toString()%>" definition="definition.public.department" attributeName="body-inline">
+<ft:tilesView definition="definition.public.department" attributeName="body-inline">
 	
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
@@ -14,8 +13,10 @@
 	<f:loadBundle basename="resources/PublicDepartmentResources" var="publicDepartmentBundle"/>
 	<f:loadBundle basename="resources/GlobalResources" var="globalBundle"/>
 
+	<h:outputText value="<span style='display:none'>#{CurricularCourseManagement.departmentAndSelectSite}</span>" escape="false" />
+
     <h:outputText value="<div class='breadcumbs mvert0'>" escape="false"/>
-	<h:outputLink value="#{CurricularCourseManagement.instalationUrl}" >
+	<h:outputLink value="#{CurricularCourseManagement.applicationUrl}" >
 		<h:outputText value="#{CurricularCourseManagement.institutionAcronym}"/>
 	</h:outputLink>
 	
@@ -25,7 +26,7 @@
 	</h:outputLink>
 	
 	&nbsp;&gt;&nbsp;
-	<h:outputLink value="showDepartments.faces">
+	<h:outputLink value="#{facesContext.externalContext.requestContextPath}/publico/department/showDepartments.faces">
 		<h:outputText value="#{publicDepartmentBundle['academic.units']}"/>
 	</h:outputLink>
 	
@@ -75,15 +76,12 @@
 			
 			<h:outputText value=" > "/>
 								
-			<h:outputText value="<!-- BLOCK_HAS_CONTEXT -->" escape="false"/>
 			<h:outputLink value="#{CompetenceCourseManagement.contextPath}/publico/degreeSite/viewCurricularCourse.faces">
 				<h:outputText value="#{curricularCourse.oneFullName}" escape="false"/>
 				<f:param name="degreeID" value="#{curricularCourse.parentDegreeCurricularPlan.degree.externalId}"/>
 				<f:param name="degreeCurricularPlanID" value="#{curricularCourse.parentDegreeCurricularPlan.externalId}"/>
 				<f:param name="curricularCourseID" value="#{curricularCourse.externalId}"/>
-				<f:param name="#{CompetenceCourseManagement.contentContextPathAttributeName}" value="#{curricularCourse.parentDegreeCurricularPlan.degree.site.reversePath}"/>
 			</h:outputLink>
-			<h:outputText value="<!-- END_BLOCK_HAS_CONTEXT -->" escape="false"/>			
 			
 			<h:outputText value="</i></p>" escape="false"/>
 		</fc:dataRepeater>
@@ -172,7 +170,7 @@
 			<h:outputText value="<div class='lfloat mbottom2'>" escape="false"/>
 			<h:outputText value="<p class='mvert0'>" escape="false"/>
 			<h:outputText value="<label>#{bolonhaBundle['title']}:</label>" escape="false"/>
-			<h:outputText value="#{CompetenceCourseManagement.hasContextAndChecksumString}" escape="false"/><h:outputText rendered="#{bibliographicReference.url != 'http://'}" value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a>" escape="false"/>
+			<h:outputText value="#{CompetenceCourseManagement.hasChecksumString}" escape="false"/><h:outputText rendered="#{bibliographicReference.url != 'http://'}" value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a>" escape="false"/>
 			<h:outputText rendered="#{bibliographicReference.url == 'http://'}" value="#{bibliographicReference.title}" escape="false"/>
 			<h:outputText value="</p>" escape="false"/>
 			
@@ -203,7 +201,7 @@
 			<h:outputText value="<div class='lfloat mbottom2'>" escape="false"/>
 			<h:outputText value="<p class='mvert0'>" escape="false"/>
 			<h:outputText value="<label>#{bolonhaBundle['title']}:</label>" escape="false"/>
-			<h:outputText value="#{CompetenceCourseManagement.hasContextAndChecksumString}" escape="false"/><h:outputText rendered="#{bibliographicReference.url != 'http://'}" value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a>" escape="false"/>
+			<h:outputText value="#{CompetenceCourseManagement.hasChecksumString}" escape="false"/><h:outputText rendered="#{bibliographicReference.url != 'http://'}" value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a>" escape="false"/>
 			<h:outputText rendered="#{bibliographicReference.url == 'http://'}" value="#{bibliographicReference.title}" escape="false"/>
 			<h:outputText value="</p>" escape="false"/>
 			

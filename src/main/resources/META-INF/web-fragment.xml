@@ -34,18 +34,6 @@
 	    <filter-class>pt.ist.fenixWebFramework.servlets.filters.RequestIgnorerFilter</filter-class>
 	</filter>
 	<filter>
-	    <filter-name>MultipartFilter</filter-name>
-	    <filter-class>org.apache.myfaces.component.html.util.MultipartFilter</filter-class>
-		<init-param>
-			<param-name>uploadMaxFileSize</param-name>
-			<param-value>10m</param-value>
-		</init-param>
-		<init-param>
-			<param-name>uploadThresholdSize</param-name>
-			<param-value>1m</param-value>
-		</init-param>
-	</filter>
-	<filter>
 	    <filter-name>RequestWrapperFilter</filter-name>
 	    <filter-class>pt.ist.fenixWebFramework.servlets.filters.RequestWrapperFilter</filter-class>
 	</filter>
@@ -57,67 +45,10 @@
 	    <filter-name>LoginPageFilter</filter-name>
 	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.LoginPageFilter</filter-class>
 	</filter>
-    <filter>
-        <filter-name>GeneralForwardFilter</filter-name>
-        <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.GeneralForwardFilter</filter-class>
-        <init-param>
-            <param-name>notFoundURI</param-name>
-            <param-value>/publico/notFound.do</param-value>
-        </init-param>
-        <init-param>
-            <param-name>siteListURI</param-name>
-            <param-value>/publico/showExecutionCourseSites.do?method=listSites&amp;degreeID=%s</param-value>
-        </init-param>
-        <init-param>
-            <param-name>executionCourseSiteURI</param-name>
-            <param-value>/publico/executionCourse.do?method=%s&amp;executionCourseID=%s</param-value>
-        </init-param>
-        <init-param>            
-            <param-name>scheduleListURI</param-name>
-            <param-value>/publico/showClasses.do?method=listClasses&amp;degreeID=%s</param-value>
-        </init-param>
-        <init-param>            
-            <param-name>classScheduleURI</param-name>
-            <param-value>/publico/viewClassTimeTableNew.do?classId=%s&amp;className=%s&amp;degreeCurricularPlanID=%s&amp;nameDegreeCurricularPlan=%s&amp;degreeID=%s&amp;degreeInitials=%s</param-value>
-        </init-param>
-        <init-param>      
-            <param-name>examListURI</param-name>
-            <param-value>/publico/chooseExamsMapContextDANew.do?method=choose&amp;degreeID=%s</param-value>
-        </init-param>
-        <init-param>
-            <param-name>degreeURI</param-name>
-            <param-value>/publico/showDegreeSite.do?method=showDescription&amp;executionPeriodOID=%s&amp;degreeID=%s</param-value>
-        </init-param>
-		<init-param>
-            <param-name>degreeSiteURI</param-name>
-            <param-value>/publico/showDegreeSiteContent.do?method=%s&amp;degreeID=%s</param-value>
-        </init-param>
-    </filter>
 	<filter>
 		<filter-name>CASFilter</filter-name>
 		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.CASFilter</filter-class>
     </filter>
-	<filter>
-		<filter-name>BlankResponseFilter</filter-name>
-		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.BlankResponseFilter</filter-class>
-    </filter>
-    <filter>
-        <description>
-            This filter is used to check a requested path against the model of functionalities. 
-            The request proceeds normally if the path is not mapped in the model or if the targeted 
-            functionality does not have an availability policy defined.
-        </description>
-        <filter-name>FunctionalityAccessFilter</filter-name>
-        <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.CheckAvailabilityFilter</filter-class>
-    </filter>
-   	<filter>
-	    <filter-name>ContextFilter</filter-name>
-	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.ContextFilter</filter-class>
-	</filter>
-   	<filter>
-	    <filter-name>ContentFilter</filter-name>
-	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentFilter</filter-class>
-	</filter>
 	<filter>
 	    <filter-name>MissingCandidacyInformationFilter</filter-name>
 	    <filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.MissingCandidacyInformationFilter</filter-class>
@@ -129,19 +60,6 @@
 	<filter>
 		<filter-name>AnnualTeachingCreditsDocumentFilter</filter-name>
 		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.AnnualTeachingCreditsDocumentFilter</filter-class>
-	</filter>
-	<filter>
-		<filter-name>StaticCacheFilter</filter-name>
-		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.StaticCacheFilter</filter-class>
-	</filter>	
-	<filter>
-		<filter-name>XSSProtectionFilter</filter-name>
-		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.XSSProtectionFilter</filter-class>
-		<description>
-				 This is used to prevent browsers to interpret a post request with iframes as a XSS attack.
- 				 The problem occurs when someone inserts html content with source code in a form.
- 				 Since this is wanted behaviour, the header X-XSS-Protection must be set to 0.
- 		</description>
 	</filter>
 	<filter>
 		<filter-name>FenixAPILanguageFilter</filter-name>
@@ -157,24 +75,12 @@
  		 <url-pattern>/login</url-pattern>
 	</filter-mapping>
     <filter-mapping>
-    	<filter-name>StaticCacheFilter</filter-name>
-    	<url-pattern>/*</url-pattern>
-    </filter-mapping>
-	<filter-mapping>
-		<filter-name>MultipartFilter</filter-name>
-		<url-pattern>*.faces</url-pattern>
-	</filter-mapping>
-    <filter-mapping>
         <filter-name>ExceptionHandlerFilter</filter-name>
         <url-pattern>*.faces</url-pattern>
     </filter-mapping>
 	<filter-mapping>
 		<filter-name>ManagerFilter</filter-name>
 		<url-pattern>/manager/*</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>ManagerFilter</filter-name>
-		<url-pattern>/domainbrowser/*</url-pattern>
 	</filter-mapping>
    	<filter-mapping>
 	    <filter-name>CASFilter</filter-name>
@@ -188,28 +94,6 @@
 	    <filter-name>CASFilter</filter-name>
 	    <url-pattern>/login.do</url-pattern>
     </filter-mapping>
-   	<filter-mapping>
-	    <filter-name>BlankResponseFilter</filter-name>
-	    <url-pattern>/blank</url-pattern>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>ContextFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>GeneralForwardFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>FunctionalityAccessFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-        <dispatcher>REQUEST</dispatcher>
-        <dispatcher>FORWARD</dispatcher>
-    </filter-mapping>
-	<filter-mapping>
-		<filter-name>ContentFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
 	<filter-mapping>
 		<filter-name>ProcessCandidacyPrintAllDocumentsFilter</filter-name>
 		<url-pattern>/candidate/*</url-pattern>
@@ -226,17 +110,9 @@
 		<filter-name>AnnualTeachingCreditsDocumentFilter</filter-name>
 		<url-pattern>/departmentAdmOffice/annualTeachingCreditsDocument.do</url-pattern>
 	</filter-mapping>
-	<filter-mapping>
-		<filter-name>XSSProtectionFilter</filter-name>
-		<url-pattern>*.do</url-pattern>
-	</filter-mapping>
     <filter-mapping>
         <filter-name>RequestChecksumFilter</filter-name>
         <url-pattern>*.faces</url-pattern>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>RequestChecksumFilter</filter-name>
-        <url-pattern>*.jsp</url-pattern>
     </filter-mapping>
     <filter-mapping>
     	<filter-name>FenixAPILanguageFilter</filter-name>
@@ -253,27 +129,6 @@
 			<param-value>true</param-value>
 		</init-param>
 	</servlet>
-    <servlet>
-        <servlet-name>MathMlServlet</servlet-name>
-        <servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.MathMlServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <display-name>XFire Servlet</display-name>
-        <servlet-name>XFireServlet</servlet-name>
-        <servlet-class>org.codehaus.xfire.transport.http.XFireConfigurableServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>XFireServlet</servlet-name>
-        <url-pattern>/servlet/XFireServlet/*</url-pattern>
-    </servlet-mapping>    
-    <servlet-mapping>
-        <servlet-name>XFireServlet</servlet-name>
-        <url-pattern>/services/*</url-pattern>
-    </servlet-mapping>
-   	<servlet-mapping>
-		<servlet-name>MathMlServlet</servlet-name>
-		<url-pattern>/mathml/MathMlServlet</url-pattern>
-	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>dwr-invoker</servlet-name>
 		<url-pattern>/dwr/*</url-pattern>
@@ -282,5 +137,10 @@
 	<session-config>
 			<session-timeout>120</session-timeout>
 	</session-config>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/notFound.jsp</location>
+    </error-page>
 
 </web-fragment>

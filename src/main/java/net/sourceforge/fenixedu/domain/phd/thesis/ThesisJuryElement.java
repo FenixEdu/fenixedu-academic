@@ -11,10 +11,11 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.PhdThesisReportFeedbackDocument;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class ThesisJuryElement extends ThesisJuryElement_Base {
 
@@ -130,7 +131,7 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
 
     public String getNameWithTitleAndRoleOnProcess() {
         StringBuilder stringBuilder = new StringBuilder(getNameWithTitle());
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.PhdResources", I18N.getLocale());
         if (getProcess().getIndividualProgramProcess().isGuider(getParticipant())) {
             stringBuilder.append(" (").append(resourceBundle.getString("label.phd.guiding")).append(")");
         }

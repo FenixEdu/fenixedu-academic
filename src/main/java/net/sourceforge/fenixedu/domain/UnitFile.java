@@ -1,17 +1,14 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
-import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
-import net.sourceforge.fenixedu.domain.accessControl.PersistentGroup;
+import net.sourceforge.fenixedu.domain.accessControl.MembersLinkGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
+
+import org.fenixedu.bennu.core.groups.Group;
+
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class UnitFile extends UnitFile_Base {
@@ -73,33 +70,8 @@ public class UnitFile extends UnitFile_Base {
         return isEditableByUser(AccessControl.getPerson());
     }
 
-    public void updatePermissions(PersistentGroup group) {
-        Group currentGroup = getPermittedGroup();
-        if (currentGroup instanceof GroupUnion) {
-            setPermittedGroup(updateGroupUnion((GroupUnion) currentGroup, group));
-        } else {
-            if (currentGroup.equals(group)) {
-                setPermittedGroup(new EveryoneGroup());
-            }
-        }
-    }
-
-    private Group updateGroupUnion(GroupUnion group, PersistentGroup groupToRemove) {
-        return new GroupUnion(processGroup(group, groupToRemove));
-    }
-
-    private List<IGroup> processGroup(GroupUnion groupUnion, PersistentGroup groupToRemove) {
-        List<IGroup> groups = new ArrayList<IGroup>();
-        for (IGroup group : groupUnion.getChildren()) {
-            if (group instanceof GroupUnion) {
-                groups.addAll(processGroup((GroupUnion) group, groupToRemove));
-            } else {
-                if (!group.equals(groupToRemove)) {
-                    groups.add(group);
-                }
-            }
-        }
-        return groups;
+    public void updatePermissions(MembersLinkGroup group) {
+        setPermittedGroup(getPermittedGroup().minus(group));
     }
 
     public boolean hasUnitFileTags(Collection<UnitFileTag> tags) {

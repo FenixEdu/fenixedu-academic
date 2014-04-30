@@ -8,7 +8,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/collection-pager" prefix="cp" %>
 <html:xhtml/>
 
-
 <logic:present name="searchBean">
 	<h2> <bean:message key="message.attendingStudentsOf"/> 
 	<bean:write name="searchBean" property="executionCourse.nome" /></h2>
@@ -18,7 +17,7 @@
 		<bean:message key="message.students.explanation"/>
 	</div>
 	
-	<fr:form action="<%="/searchECAttends.do?method=search&amp;objectCode=" + request.getParameter("objectCode") %>">
+	<fr:form action="/searchECAttends.do?method=search&amp;executionCourseID=${executionCourseID}">
 		<%  if (request.getAttribute("degreeCurricularPlanID") != null) { %>
 			    <html:hidden property="degreeCurricularPlanID" value="<%= request.getAttribute("degreeCurricularPlanID").toString() %>"/>
 		<%  } %>
@@ -33,9 +32,9 @@
 		<h3> <bean:write name="size"/>
 			<bean:message key="message.attendingStudents"/> </h3>
 	
-		<fr:form id="sendMailForm" action="<%="/searchECAttends.do?method=sendEmail&" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/messaging")%>">
+		<fr:form id="sendMailForm" action="/searchECAttends.do?method=sendEmail">
 			<fr:edit name="searchBean" id="mailViewState" visible="false"/>
-			<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><a href="javascript:document.getElementById('sendMailForm').submit()"><bean:message key="link.sendEmailToAllStudents"/></a>
+			<a href="javascript:document.getElementById('sendMailForm').submit()"><bean:message key="link.sendEmailToAllStudents"/></a>
 		</fr:form>
 		
 		<fr:form id="downloadStudentListForm" action="/getTabSeparatedStudentList.do">
@@ -52,7 +51,7 @@
 
 		<bean:define id="bean" name="searchBean" property="searchElementsAsParameters"/>
 		<cp:collectionPages
-			url="<%="/teacher/searchECAttends.do?method=prepare&amp;objectCode=" + request.getParameter("objectCode") + bean %>" 
+			url="/teacher/searchECAttends.do?method=prepare&executionCourseID=${executionCourseID}" 
 			pageNumberAttributeName="pageNumber"
 			numberOfPagesAttributeName="numberOfPages"/>
 		<fr:view name="attendsPagesBean">
@@ -62,7 +61,7 @@
 			</fr:layout>
 		</fr:view>
 		<cp:collectionPages
-			url="<%="/teacher/searchECAttends.do?method=prepare&amp;objectCode=" + request.getParameter("objectCode") + bean %>" 
+			url="/teacher/searchECAttends.do?method=prepare&executionCourseID=${executionCourseID}"
 			pageNumberAttributeName="pageNumber"
 			numberOfPagesAttributeName="numberOfPages"/>
 		<br/>

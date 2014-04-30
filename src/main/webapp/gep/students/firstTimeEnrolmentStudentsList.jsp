@@ -1,10 +1,10 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
-<ft:tilesView definition="definition.gep.two-column" attributeName="body-inline">
+<f:view>
 
 	<f:loadBundle basename="resources/EnumerationResources" var="bundleEnumeration"/>
 	<f:loadBundle basename="resources/GEPResources" var="bundleGEP"/>
@@ -60,4 +60,4 @@
 
 
 
-</ft:tilesView>
+</f:view>

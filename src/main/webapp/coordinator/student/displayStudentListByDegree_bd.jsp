@@ -6,13 +6,15 @@
 <%@ page import="java.util.List" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <p>
 	<span class="error"><!-- Error messages go here --><html:errors /></span>
 </p>
 
   <bean:define id="studentList" name="<%= PresentationConstants.STUDENT_LIST %>" scope="request" />
   <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" scope="request" />
-  <bean:define id="link">/studentCurriculum.do?method=getCurriculumForCoordinator<%= "&" %>page=0<%= "&" %>studentCPID=</bean:define>
+  <bean:define id="link">/viewStudentCurriculum.do?method=getCurriculumForCoordinator<%= "&" %>page=0<%= "&" %>studentCPID=</bean:define>
 	<p>
 		<span class="emphasis"><%= ((List) studentList).size()%></span> <bean:message key="label.masterDegree.administrativeOffice.studentsFound"/>       
 		<% if (((List) studentList).size() != 0) { %>

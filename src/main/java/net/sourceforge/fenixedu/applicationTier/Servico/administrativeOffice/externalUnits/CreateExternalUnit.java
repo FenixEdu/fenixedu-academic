@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateExternalUnit {
@@ -22,7 +22,7 @@ public class CreateExternalUnit {
             return DepartmentUnit.createNewOfficialExternalDepartmentUnit(externalUnitBean.getUnitName(),
                     externalUnitBean.getUnitCode(), externalUnitBean.getParentUnit());
         } else {
-            return new CreateUnit().run(externalUnitBean.getParentUnit(), new MultiLanguageString(Language.getDefaultLanguage(),
+            return new CreateUnit().run(externalUnitBean.getParentUnit(), new MultiLanguageString(Locale.getDefault(),
                     externalUnitBean.getUnitName()), null, null, externalUnitBean.getUnitCode(), new YearMonthDay(), null,
                     externalUnitBean.getUnitType(), null, null, null, null, null, null, null, null);
         }

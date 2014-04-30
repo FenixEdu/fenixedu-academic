@@ -8,9 +8,10 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.serviceRequests.Under23TransportsDeclarationRequest;
 
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.LocalDate;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class Under23TransportsDeclarationDocument extends AdministrativeOfficeDocument {
 
@@ -45,7 +46,7 @@ public class Under23TransportsDeclarationDocument extends AdministrativeOfficeDo
         addAddressInformation("institution", adminOfficeUnit);
         addParameter("institutionPhone", adminOfficeUnit.getDefaultPhone().getNumber());
 
-        addParameter("reportDate", new LocalDate().toString("dd 'de' MMMM 'de' yyyy", Language.getLocale()));
+        addParameter("reportDate", new LocalDate().toString("dd 'de' MMMM 'de' yyyy", I18N.getLocale()));
     }
 
     private void addAddressInformation(final String prefix, final Party party) {

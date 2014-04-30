@@ -1,14 +1,18 @@
 package net.sourceforge.fenixedu.presentationTier.Action.coordinator.pedagogicalCouncil;
 
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.WeeklyWorkLoadDA;
+import net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.PedagogicalCouncilApp.PedagogicalControlApp;
+
+import org.fenixedu.bennu.portal.StrutsFunctionality;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@StrutsFunctionality(app = PedagogicalControlApp.class, path = "weekly-work-load", titleKey = "link.weekly.work.load",
+        bundle = "ApplicationResources")
 @Mapping(module = "pedagogicalCouncil", path = "/weeklyWorkLoad", input = "/weeklyWorkLoad.do?method=prepare",
-        attribute = "weeklyWorkLoadForm", formBean = "weeklyWorkLoadForm", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "showWeeklyWorkLoad", path = "/pedagogicalCouncil/weeklyWorkLoad.jsp",
-        tileProperties = @Tile(title = "private.pedagogiccouncil.weeklyeffort")) })
-public class WeeklyWorkLoadDAForPedagogicalCouncil extends
-        net.sourceforge.fenixedu.presentationTier.Action.coordinator.WeeklyWorkLoadDA {
+        formBean = "weeklyWorkLoadForm")
+@Forwards(value = { @Forward(name = "showWeeklyWorkLoad", path = "/pedagogicalCouncil/weeklyWorkLoad.jsp") })
+public class WeeklyWorkLoadDAForPedagogicalCouncil extends WeeklyWorkLoadDA {
 }

@@ -14,7 +14,7 @@
 <link rel="stylesheet" type="text/css" media="print" href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" />
 
 <bean:define id="institutionUrl" type="java.lang.String">
-	<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>
+	<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>
 </bean:define>
 
 <div class="breadcumbs mvert0">

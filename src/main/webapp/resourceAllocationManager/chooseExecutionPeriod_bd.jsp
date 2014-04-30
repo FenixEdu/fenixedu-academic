@@ -11,7 +11,6 @@
 
 <html:xhtml />
 
-<em><bean:message key="title.resourceAllocationManager.management" /></em>
 <h2><bean:message key="title.manage.schedule" /></h2>
 
 <p>
@@ -27,17 +26,18 @@
 <fr:form id="executionSemesterSelectionForm" action="/chooseExecutionPeriod.do?method=choose">
 	<fr:edit id="executionSemesterSelectionFormEdit" schema="academicIntervalSelectionBean.choosePostBack"
 		name="<%=PresentationConstants.CONTEXT_SELECTION_BEAN%>">
-		<fr:layout name="tabular">
+		<fr:layout name="flow">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />
 		</fr:layout>
 	</fr:edit>
 
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-		<bean:message key="label.choose" />
-	</html:submit>
+	<html:link styleClass="btn btn-primary" page="/chooseContext.do?method=prepare&academicInterval=${academicInterval}">
+		<bean:message key="link.schedules.chooseContext"></bean:message>
+	</html:link>
 </fr:form>
 
+<br/>
 <br/>
 
 <logic:present name="executionYear">

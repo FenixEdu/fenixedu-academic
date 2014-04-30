@@ -21,6 +21,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -28,7 +29,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 /**
  * Action to upload personal photographs.
@@ -36,7 +37,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
  * @author Pedro Santos (pmrsa)
  */
 @Mapping(module = "person", path = "/uploadPhoto", attribute = "voidForm", formBean = "voidForm", scope = "request",
-        parameter = "method")
+        parameter = "method", functionality = VisualizePersonalInfo.class)
 @Forwards(value = {
         @Forward(name = "visualizePersonalInformation", path = "/person/visualizePersonalInfo.jsp", tileProperties = @Tile(
                 title = "private.personal.dspace.information")),
@@ -49,7 +50,7 @@ public class UploadPhotoDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", I18N.getLocale());
         request.setAttribute("photo", new PhotographUploadBean());
         request.setAttribute("phroperCaption", bundle.getString("phroper.caption"));
         request.setAttribute("phroperSubCaption", bundle.getString("phroper.subCaption"));

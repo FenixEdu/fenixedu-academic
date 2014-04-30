@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.phd.email.PhdProgramEmailBean;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AcceptEnrolments;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.RejectEnrolments;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.CoordinatorApplication.CoordinatorPhdApp;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.CommonPhdIndividualProgramProcessDA;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdCandidacyPredicateContainer;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdInactivePredicateContainer;
@@ -41,83 +42,41 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
+@StrutsFunctionality(app = CoordinatorPhdApp.class, path = "phd-processes", titleKey = "label.coordinator.phdProcesses",
+        bundle = "ApplicationResources")
 @Mapping(path = "/phdIndividualProgramProcess", module = "coordinator",
         formBeanClass = PhdIndividualProgramProcessDA.PhdEmailProgramForm.class)
-@Forwards(tileProperties = @Tile(navLocal = "/coordinator/localNavigationBar.jsp"), value = {
-
-        @Forward(name = "manageProcesses", path = "/phd/coordinator/manageProcesses.jsp", tileProperties = @Tile(
-                title = "private.coordinator.phdprocess")),
-
-        @Forward(name = "viewProcess", path = "/phd/coordinator/viewProcess.jsp", tileProperties = @Tile(
-                title = "private.coordinator.phdprocess")),
-
-        @Forward(name = "viewInactiveProcesses", path = "/phd/coordinator/viewInactiveProcesses.jsp", tileProperties = @Tile(
-                title = "private.coordinator.phdprocess")),
-
-        @Forward(name = "searchResults", path = "/phd/coordinator/searchResults.jsp", tileProperties = @Tile(
-                title = "private.coordinator.phdprocess")),
-
-        @Forward(name = "viewAlertMessages", path = "/phd/coordinator/viewAlertMessages.jsp", tileProperties = @Tile(
-                title = "private.coordinator.phdprocess")),
-
-        @Forward(name = "viewAlertMessageArchive", path = "/phd/coordinator/viewAlertMessageArchive.jsp", tileProperties = @Tile(
-                title = "private.coordinator.phdprocess")),
-
-        @Forward(name = "viewAlertMessage", path = "/phd/coordinator/viewAlertMessage.jsp", tileProperties = @Tile(
-                title = "private.coordinator.phdprocess")),
-
-        @Forward(name = "viewProcessAlertMessages", path = "/phd/coordinator/viewProcessAlertMessages.jsp",
-                tileProperties = @Tile(title = "private.coordinator.phdprocess")),
-
-        @Forward(name = "viewProcessAlertMessageArchive", path = "/phd/coordinator/viewProcessAlertMessageArchive.jsp",
-                tileProperties = @Tile(title = "private.coordinator.phdprocess")),
-
-        @Forward(name = "viewCurriculum", path = "/phd/coordinator/viewCurriculum.jsp", tileProperties = @Tile(
-                title = "private.coordinator.phdprocess")),
-
-        @Forward(name = "manageEnrolments", path = "/phd/coordinator/enrolments/manageEnrolments.jsp", tileProperties = @Tile(
-                title = "private.coordinator.phdprocess")),
-
-        @Forward(name = "validateEnrolments", path = "/phd/coordinator/enrolments/validateEnrolments.jsp",
-                tileProperties = @Tile(title = "private.coordinator.phdprocess")),
-
-        @Forward(name = "manageGuidanceDocuments", path = "/phd/coordinator/manageGuidanceDocuments.jsp", tileProperties = @Tile(
-                title = "private.coordinator.phdprocess")),
-
-        @Forward(name = "uploadGuidanceDocument", path = "/phd/coordinator/uploadGuidanceDocument.jsp", tileProperties = @Tile(
-                title = "private.coordinator.phdprocess")),
-
-        @Forward(name = "managePhdEmails", path = "/phd/coordinator/email/managePhdEmails.jsp", tileProperties = @Tile(
-                title = "private.coordinator.phdprocess")),
-
-        @Forward(name = "choosePhdEmailRecipients", path = "/phd/coordinator/email/choosePhdEmailRecipients.jsp",
-                tileProperties = @Tile(title = "private.coordinator.phdprocess")),
-
-        @Forward(name = "prepareSendPhdEmail", path = "/phd/coordinator/email/prepareSendPhdEmail.jsp", tileProperties = @Tile(
-                title = "private.coordinator.phdprocess")),
-
-        @Forward(name = "confirmSendPhdEmail", path = "/phd/coordinator/email/confirmSendPhdEmail.jsp", tileProperties = @Tile(
-                title = "private.coordinator.phdprocess")),
-
-        @Forward(name = "viewPhdEmail", path = "/phd/coordinator/email/viewPhdEmail.jsp", tileProperties = @Tile(
-                title = "private.coordinator.phdprocess")),
-
-        @Forward(name = "viewRefereeLetters", path = "/phd/coordinator/referee/viewRefereeLetters.jsp", tileProperties = @Tile(
-                title = "private.coordinator.phdprocess")),
-
-        @Forward(name = "viewLetter", path = "/phd/coordinator/referee/viewLetter.jsp", tileProperties = @Tile(
-                title = "private.coordinator.phdprocess"))
-
-})
+@Forwards({ @Forward(name = "manageProcesses", path = "/phd/coordinator/manageProcesses.jsp"),
+        @Forward(name = "viewProcess", path = "/phd/coordinator/viewProcess.jsp"),
+        @Forward(name = "viewInactiveProcesses", path = "/phd/coordinator/viewInactiveProcesses.jsp"),
+        @Forward(name = "searchResults", path = "/phd/coordinator/searchResults.jsp"),
+        @Forward(name = "viewAlertMessages", path = "/phd/coordinator/viewAlertMessages.jsp"),
+        @Forward(name = "viewAlertMessageArchive", path = "/phd/coordinator/viewAlertMessageArchive.jsp"),
+        @Forward(name = "viewAlertMessage", path = "/phd/coordinator/viewAlertMessage.jsp"),
+        @Forward(name = "viewProcessAlertMessages", path = "/phd/coordinator/viewProcessAlertMessages.jsp"),
+        @Forward(name = "viewProcessAlertMessageArchive", path = "/phd/coordinator/viewProcessAlertMessageArchive.jsp"),
+        @Forward(name = "viewCurriculum", path = "/phd/coordinator/viewCurriculum.jsp"),
+        @Forward(name = "manageEnrolments", path = "/phd/coordinator/enrolments/manageEnrolments.jsp"),
+        @Forward(name = "validateEnrolments", path = "/phd/coordinator/enrolments/validateEnrolments.jsp"),
+        @Forward(name = "manageGuidanceDocuments", path = "/phd/coordinator/manageGuidanceDocuments.jsp"),
+        @Forward(name = "uploadGuidanceDocument", path = "/phd/coordinator/uploadGuidanceDocument.jsp"),
+        @Forward(name = "managePhdEmails", path = "/phd/coordinator/email/managePhdEmails.jsp"),
+        @Forward(name = "choosePhdEmailRecipients", path = "/phd/coordinator/email/choosePhdEmailRecipients.jsp"),
+        @Forward(name = "prepareSendPhdEmail", path = "/phd/coordinator/email/prepareSendPhdEmail.jsp"),
+        @Forward(name = "confirmSendPhdEmail", path = "/phd/coordinator/email/confirmSendPhdEmail.jsp"),
+        @Forward(name = "viewPhdEmail", path = "/phd/coordinator/email/viewPhdEmail.jsp"),
+        @Forward(name = "viewRefereeLetters", path = "/phd/coordinator/referee/viewRefereeLetters.jsp"),
+        @Forward(name = "viewLetter", path = "/phd/coordinator/referee/viewLetter.jsp") })
 public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {
 
     private static final PredicateContainer<?>[] CANDIDACY_CATEGORY = { PhdCandidacyPredicateContainer.DELIVERED,
@@ -140,6 +99,13 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
         public void setSelectedProcesses(String[] selectedProcesses) {
             this.selectedProcesses = selectedProcesses;
         }
+    }
+
+    @Override
+    @EntryPoint
+    public ActionForward manageProcesses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        return super.manageProcesses(mapping, form, request, response);
     }
 
     @Override

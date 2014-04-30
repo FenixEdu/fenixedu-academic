@@ -12,15 +12,15 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ScientificAreaSite;
 import net.sourceforge.fenixedu.domain.UnitSite;
-import net.sourceforge.fenixedu.domain.accessControl.ScientificAreaMemberGroup;
+import net.sourceforge.fenixedu.domain.accessControl.UnitGroup;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.groups.Group;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -160,9 +160,9 @@ public class ScientificAreaUnit extends ScientificAreaUnit_Base {
     }
 
     @Override
-    protected List<IGroup> getDefaultGroups() {
-        List<IGroup> groups = super.getDefaultGroups();
-        groups.add(new ScientificAreaMemberGroup(this));
+    protected List<Group> getDefaultGroups() {
+        List<Group> groups = super.getDefaultGroups();
+        groups.add(UnitGroup.workers(this));
         return groups;
     }
 }

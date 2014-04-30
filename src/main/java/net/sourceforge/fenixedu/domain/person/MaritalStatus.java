@@ -5,9 +5,11 @@ package net.sourceforge.fenixedu.domain.person;
 
 import java.util.ResourceBundle;
 
+import org.fenixedu.commons.i18n.I18N;
+
 import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public enum MaritalStatus implements IPresentableEnum {
 
@@ -33,7 +35,7 @@ public enum MaritalStatus implements IPresentableEnum {
 
     @Override
     public String getLocalizedName() {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
         return bundle.getString(this.getClass().getName() + "." + name());
     }
 }

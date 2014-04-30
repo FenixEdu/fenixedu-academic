@@ -41,7 +41,7 @@ public class PublishMarks {
             announcement.setSubject(new MultiLanguageString(announcementTitle));
             announcement.setBody(new MultiLanguageString(publishmentMessage));
             announcement.setVisible(true);
-            site.getExecutionCourse().getBoard().addAnnouncements(announcement);
+            site.getExecutionCourse().getBoard().addAnnouncement(announcement);
         }
 
         for (Mark mark : evaluation.getMarks()) {

@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.accounting.report.events;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdEvent;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdEventWrapper implements Wrapper {
     PhdEvent event;
@@ -57,7 +57,7 @@ public class PhdEventWrapper implements Wrapper {
 
     @Override
     public String getPhdProgramName() {
-        return event.getPhdIndividualProgramProcess().getPhdProgram().getName().getContent(Language.pt);
+        return event.getPhdIndividualProgramProcess().getPhdProgram().getName().getContent(MultiLanguageString.pt);
     }
 
     @Override

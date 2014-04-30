@@ -17,7 +17,7 @@ public class UnitSiteInitialSectionProvider implements DataProvider {
     public Object provide(Object source, Object currentValue) {
         UnitSite unitSite = (UnitSite) source;
 
-        return unitSite.getSideSection().getChildrenAsContent();
+        return unitSite.getSideSection().getChildrenSections();
 
     }
 

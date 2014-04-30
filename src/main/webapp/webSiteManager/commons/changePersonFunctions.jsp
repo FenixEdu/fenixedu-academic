@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
@@ -13,6 +14,8 @@
 <bean:define id="contextParam" name="siteContextParam"/>
 <bean:define id="contextParamValue" name="siteContextParamValue"/>
 <bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
+
+<jsp:include page="/commons/renderers/treeRendererHeader.jsp" />
 
 <h2>
     <bean:message key="title.site.manage.functions" bundle="SITE_RESOURCES"/>

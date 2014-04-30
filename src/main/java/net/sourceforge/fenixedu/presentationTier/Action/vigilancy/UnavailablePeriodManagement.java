@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -129,6 +130,7 @@ public class UnavailablePeriodManagement extends FenixDispatchAction {
         return mapping.findForward("manageUnavailablePeriodsOfVigilants");
     }
 
+    @EntryPoint
     public ActionForward prepareManageUnavailablePeriodsOfVigilants(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 

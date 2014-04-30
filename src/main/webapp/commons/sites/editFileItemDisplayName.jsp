@@ -59,7 +59,7 @@
 			<tr>
 			<tr>
 				<th><bean:message key="label.fileVisible.question" bundle="SITE_RESOURCES"/></th>
-				<td><fr:edit name="node" slot="visible"/></td>	
+				<td><fr:edit name="fileItem" slot="visible"/></td>	
 			</tr>
 		</table>
 		

@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.student.AffinityCyclesManagement;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.student.enrollment.bolonha.AbstractBolonhaStudentEnrollmentDA;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerStudentsApp;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
@@ -28,6 +29,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -37,6 +40,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
+@StrutsFunctionality(app = ManagerStudentsApp.class, path = "manage", titleKey = "label.manage")
 @Mapping(path = "/bolonhaStudentEnrolment", module = "manager", formBean = "bolonhaStudentEnrolmentForm")
 @Forwards({
         @Forward(name = "viewStudentCurriculum", path = "/manager/bolonha/enrolments/displayStudentCurriculum.jsp"),
@@ -47,11 +51,10 @@ import pt.utl.ist.fenix.tools.util.DateFormatUtil;
                 path = "/manager/bolonha/enrolments/chooseOptionalCurricularCourseToEnrol.jsp"),
         @Forward(name = "chooseCycleCourseGroupToEnrol", path = "/manager/bolonha/enrolments/chooseCycleCourseGroupToEnrol.jsp"),
         @Forward(name = "transitToBolonha", path = "/manager/bolonha/enrolments/transitToBolonha.jsp"),
-        @Forward(name = "showRegistrationStatesLog", path = "/manager/bolonha/enrolments/showRegistrationStatesLog.jsp")
-
-})
+        @Forward(name = "showRegistrationStatesLog", path = "/manager/bolonha/enrolments/showRegistrationStatesLog.jsp") })
 public class BolonhaEnrolmentsManagementDA extends AbstractBolonhaStudentEnrollmentDA {
 
+    @EntryPoint
     public ActionForward prepareSearchStudent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 

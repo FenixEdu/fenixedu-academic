@@ -52,15 +52,15 @@
 				<tr><td><hr/></td></tr>
 		<%}%>		
 		<tr><td><div class="gen-button">
-			<html:link page="<%= "/testsManagement.do?method=prepareChangeStudentTestQuestion&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;questionCode=" + pageContext.findAttribute("questionCode") +"&amp;distributedTestCode=" + pageContext.findAttribute("testCode") +"&amp;studentCode=" + pageContext.findAttribute("studentId")%>">
+			<html:link page="<%= "/testsManagement.do?method=prepareChangeStudentTestQuestion&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID") + "&amp;questionCode=" + pageContext.findAttribute("questionCode") +"&amp;distributedTestCode=" + pageContext.findAttribute("testCode") +"&amp;studentCode=" + pageContext.findAttribute("studentId")%>">
 				<bean:message key="label.changeQuestion" />
 			</html:link>
 		</div><div class="gen-button">
-			<html:link page="<%= "/testsManagement.do?method=prepareChangeStudentTestQuestionValue&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;questionCode=" + pageContext.findAttribute("questionCode") +"&amp;distributedTestCode=" + pageContext.findAttribute("testCode") +"&amp;studentCode=" + pageContext.findAttribute("studentId")+"&amp;questionValue="+testQuestionValue%>">
+			<html:link page="<%= "/testsManagement.do?method=prepareChangeStudentTestQuestionValue&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID") + "&amp;questionCode=" + pageContext.findAttribute("questionCode") +"&amp;distributedTestCode=" + pageContext.findAttribute("testCode") +"&amp;studentCode=" + pageContext.findAttribute("studentId")+"&amp;questionValue="+testQuestionValue%>">
 				<bean:message key="label.changeQuestionValue" />
 			</html:link>
 		</div><div class="gen-button">
-			<html:link page="<%= "/testsManagement.do?method=prepareChangeStudentTestQuestionMark&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;questionCode=" + pageContext.findAttribute("questionCode") +"&amp;distributedTestCode=" + pageContext.findAttribute("testCode") +"&amp;studentCode=" + pageContext.findAttribute("studentId")+"&amp;questionValue="+mark%>">
+			<html:link page="<%= "/testsManagement.do?method=prepareChangeStudentTestQuestionMark&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID") + "&amp;questionCode=" + pageContext.findAttribute("questionCode") +"&amp;distributedTestCode=" + pageContext.findAttribute("testCode") +"&amp;studentCode=" + pageContext.findAttribute("studentId")+"&amp;questionValue="+mark%>">
 				<bean:message key="label.changeQuestionMark" />
 			</html:link>
 		</div></td></tr>

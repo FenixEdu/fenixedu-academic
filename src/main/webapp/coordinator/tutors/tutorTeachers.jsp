@@ -3,16 +3,13 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree"%>
+
+<jsp:include page="/coordinator/context.jsp" />
 
 <html:xhtml />
 
-<bean:define id="infoExecutionDegree" name="<%=PresentationConstants.MASTER_DEGREE%>" type="InfoExecutionDegree" />
-<bean:define id="infoDegreeCurricularPlan" name="infoExecutionDegree" property="infoDegreeCurricularPlan" />
-<bean:define id="degreeCurricularPlanID" name="infoDegreeCurricularPlan" property="externalId" type="java.lang.String" />
-<bean:define id="degreeCurricularPlanOID" name="infoDegreeCurricularPlan" property="externalId" />
-<bean:define id="executionDegreeID" name="infoExecutionDegree" property="externalId" />
+<bean:define id="degreeCurricularPlanID" name="master_degree" property="degreeCurricularPlan.externalId" type="java.lang.String" />
+<bean:define id="executionDegreeID" name="master_degree" property="externalId" />
 
 <h2><bean:message key="link.coordinator.tutorTeachers" bundle="COORDINATOR_RESOURCES"/></h2>
 
@@ -23,7 +20,7 @@
             <fr:slot name="executionYear" layout="menu-select-postback">
                 <fr:property name="providerClass"
                     value="net.sourceforge.fenixedu.presentationTier.renderers.providers.FutureAndCurrentAcademicIntervalYears" />
-                <fr:property name="format" value="${pathName}" />
+                <fr:property name="format" value="\${pathName}" />
                 <fr:property name="nullOptionHidden" value="true" />
                 <fr:property name="destination" value="selectYear" />
                 <fr:property name="sortBy" value="pathName=desc" />

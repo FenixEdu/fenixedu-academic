@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.predicates;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.MarkSheet;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
@@ -45,19 +45,16 @@ public class MarkSheetPredicates {
 
         @Override
         public boolean evaluate(final MarkSheet markSheet) {
-            return AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
-                    AcademicOperationType.REMOVE_GRADES).contains(markSheet.getCurricularCourse().getDegree());
+            return AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(), AcademicOperationType.REMOVE_GRADES).contains(markSheet.getCurricularCourse().getDegree());
         }
     };
 
     static public boolean checkRectification(Degree degree) {
-        return AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
-                AcademicOperationType.RECTIFICATION_MARKSHEETS).contains(degree);
+        return AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(), AcademicOperationType.RECTIFICATION_MARKSHEETS).contains(degree);
     }
 
     static public boolean checkDissertation(Degree degree) {
-        return AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
-                AcademicOperationType.DISSERTATION_MARKSHEETS).contains(degree);
+        return AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(), AcademicOperationType.DISSERTATION_MARKSHEETS).contains(degree);
     }
 
     private static boolean hasScientificCouncilRole() {

@@ -37,6 +37,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
@@ -60,6 +61,7 @@ public abstract class DelegatesManagementDispatchAction extends FenixDispatchAct
     /*
      * Degree Delegates Group Management
      */
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();

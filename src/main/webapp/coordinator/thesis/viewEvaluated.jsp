@@ -10,6 +10,8 @@
 
 <html:xhtml/>
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <h2><bean:message key="title.coordinator.thesis.evaluated.view"/></h2>
 
 <ul>

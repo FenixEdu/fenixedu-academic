@@ -5,8 +5,10 @@ import java.text.Collator;
 import java.util.Comparator;
 import java.util.ResourceBundle;
 
+import org.fenixedu.commons.i18n.I18N;
+
 import net.sourceforge.fenixedu.domain.curriculum.IGrade;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public abstract class CourseStatisticsDTO implements Serializable, Comparable<CourseStatisticsDTO> {
 
@@ -41,13 +43,13 @@ public abstract class CourseStatisticsDTO implements Serializable, Comparable<Co
 
                 @Override
                 public int compare(CourseStatisticsDTO o1, CourseStatisticsDTO o2) {
-                    return Collator.getInstance(Language.getLocale()).compare(o1.getName(), o2.getName());
+                    return Collator.getInstance(I18N.getLocale()).compare(o1.getName(), o2.getName());
                 }
 
             };
 
     public CourseStatisticsDTO() {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources/DepartmentMemberResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources/DepartmentMemberResources", I18N.getLocale());
         NOT_AVAILABLE = bundle.getString("label.common.notAvailable");
     }
 
@@ -184,6 +186,6 @@ public abstract class CourseStatisticsDTO implements Serializable, Comparable<Co
 
     @Override
     public int compareTo(CourseStatisticsDTO o) {
-        return Collator.getInstance(Language.getLocale()).compare(this.getName(), o.getName());
+        return Collator.getInstance(I18N.getLocale()).compare(this.getName(), o.getName());
     }
 }

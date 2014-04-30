@@ -6,8 +6,9 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.commons.i18n.I18N;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 /**
  * @author dcs-rjao
@@ -61,7 +62,7 @@ public enum EnrolmentEvaluationType {
     }
 
     public String getDescription() {
-        return ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale()).getString(getQualifiedName());
+        return ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale()).getString(getQualifiedName());
     }
 
 }

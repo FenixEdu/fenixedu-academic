@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <html:xhtml/>
@@ -5,7 +6,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<em class="invisible"><bean:message key="title.student.portalTitle"/></em>
 <h2><bean:message key="link.tests"/></h2>
 
 
@@ -19,11 +19,6 @@
 					<fr:property name="destination" value="postBack"/>
 				</fr:layout>
 			</fr:edit>
-			<p>
-				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton">
-					<bean:message key="button.submit" />
-				</html:submit>
-			</p>
 		</fr:form>
 	</div>
 </logic:present>

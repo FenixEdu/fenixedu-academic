@@ -8,6 +8,8 @@
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
 <%@page import="net.sourceforge.fenixedu.domain.ScientificCommission"%><html:xhtml/>
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <bean:define id="degreeCurricularPlan" name="degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"/>
 <bean:define id="executionYear" name="executionYear" type="net.sourceforge.fenixedu.domain.ExecutionYear"/>
 <bean:define id="dcpId" name="degreeCurricularPlan" property="externalId"/>

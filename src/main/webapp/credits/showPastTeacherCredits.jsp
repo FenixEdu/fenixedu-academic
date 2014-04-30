@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@page contentType="text/html" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
@@ -6,7 +7,6 @@
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
 <html:xhtml/>
 
-<em><bean:message key="label.teacherService.credits"/></em>
 <h2><bean:message key="label.teacherService.credits.resume"/></h2>
 
 <logic:present name="teacherBean">

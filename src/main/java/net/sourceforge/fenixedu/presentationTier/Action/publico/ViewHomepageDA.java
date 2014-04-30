@@ -20,12 +20,12 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.Site.SiteMapper;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
-import net.sourceforge.fenixedu.domain.contents.Container;
-import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -440,16 +440,18 @@ public class ViewHomepageDA extends SiteVisualizationDA {
     }
 
     protected Homepage getHomepage(HttpServletRequest request) {
-        FunctionalityContext context = AbstractFunctionalityContext.getCurrentContext(request);
-        Container container = null;
-        if (context != null) {
-            container = (Container) context.getLastContentInPath(Homepage.class);
-        }
-        if (container instanceof Homepage) {
-            return (Homepage) container;
+        Site site = SiteMapper.getSite(request);
+        if (site instanceof Homepage) {
+            return (Homepage) site;
         } else {
             String homepageID = request.getParameter("homepageID");
-            return (Homepage) FenixFramework.getDomainObject(homepageID);
+            if (homepageID != null) {
+                site = FenixFramework.getDomainObject(homepageID);
+            } else {
+                site = getDomainObject(request, "siteID");
+            }
+            OldCmsSemanticURLHandler.selectSite(request, site);
+            return (Homepage) site;
         }
 
     }

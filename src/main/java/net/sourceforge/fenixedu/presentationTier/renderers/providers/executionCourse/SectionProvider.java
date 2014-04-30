@@ -19,7 +19,7 @@ public abstract class SectionProvider implements DataProvider {
             self = (Section) source;
 
             superiorSection = self.getSuperiorSection();
-            site = self.getSite();
+            site = self.getOwnerSite();
         } else if (source instanceof SectionCreator) {
             SectionCreator creator = (SectionCreator) source;
 

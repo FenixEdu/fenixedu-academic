@@ -34,7 +34,6 @@ import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 import pt.utl.ist.sotis.bibtex.Fieldtype;
 import pt.utl.ist.sotis.bibtex.Item;
@@ -294,8 +293,8 @@ public class ExportPublications {
                         }
                         for (ResearchResultDocumentFile documentFile : publication.getAllResultDocumentFiles()) {
                             if (!documentFile.getFilename().equals("default.txt")) {
-                                marshaller.insertText(marshaller.insertField(item, Fieldtype.FILE),
-                                        documentFile.getExternalStorageIdentification(), null, null);
+                                marshaller.insertText(marshaller.insertField(item, Fieldtype.FILE), documentFile.getExternalId(),
+                                        null, null);
                             }
                         }
                     } catch (ConversionException e) {
@@ -442,17 +441,17 @@ public class ExportPublications {
         language = language.trim().toLowerCase();
         String lang = null;
         if (language.matches("ingl.s") || language.equals("english") || language.equals("en")) {
-            lang = Language.en.name();
+            lang = MultiLanguageString.en.getLanguage();
         } else if (language.matches("portug(.*)s") || language.equalsIgnoreCase("portuguese") || language.equalsIgnoreCase("pt")) {
-            lang = Language.pt.name();
+            lang = MultiLanguageString.pt.getLanguage();
         } else if (language.matches("franc.s") || language.equalsIgnoreCase("french")) {
-            lang = Language.fr.name();
+            lang = MultiLanguageString.fr.getLanguage();
         } else if (language.equalsIgnoreCase("italian") || language.equalsIgnoreCase("italiano")) {
-            lang = Language.it.name();
+            lang = MultiLanguageString.it.getLanguage();
         } else if (language.matches("alem.o") || language.equalsIgnoreCase("german") || language.equalsIgnoreCase("de")) {
-            lang = Language.de.name();
+            lang = MultiLanguageString.de.getLanguage();
         } else if (language.equalsIgnoreCase("espanhol") || language.endsWith("spanish")) {
-            lang = Language.es.name();
+            lang = MultiLanguageString.es.getLanguage();
         }
         if (lang != null) {
             marshaller.insertLanguage(marshaller.insertField(item, Fieldtype.LANGUAGE), lang, null);
@@ -474,11 +473,11 @@ public class ExportPublications {
     }
 
     private String extractBestMLS(MultiLanguageString mls) {
-        if (mls.hasLanguage(Language.en)) {
-            return mls.getContent(Language.en);
+        if (mls.hasLocale(MultiLanguageString.en)) {
+            return mls.getContent(MultiLanguageString.en);
         }
-        if (mls.hasLanguage(Language.pt)) {
-            return mls.getContent(Language.pt);
+        if (mls.hasLocale(MultiLanguageString.pt)) {
+            return mls.getContent(MultiLanguageString.pt);
         }
         return mls.getContent();
     }

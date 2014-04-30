@@ -9,7 +9,8 @@
 <bean:define id="parentProcessId" name="parentProcess" property="externalId" />
 <bean:define id="individualCandidacyProcess" name="process"/>
 
-<em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
+<jsp:include page="/coordinator/context.jsp" />
+
 <logic:notEmpty name="process">
 	<h2><bean:write name="process" property="displayName" /> </h2>
 </logic:notEmpty>

@@ -64,6 +64,7 @@
 	   	<html:link page="<%= "/qualification.do?method=showQualifications&personID="+ personID%>" >
 	   		<bean:message key="link.title.qualification" bundle="MANAGER_RESOURCES"/>
 	   	</html:link>
+		   	&nbsp;|&nbsp;
 	   	<html:link page="<%= "/qualification.do?method=viewStudentLog&personID="+ personID%>" >
 	   		<bean:message key="link.executionCourse.log" bundle="APPLICATION_RESOURCES"/>
 	   	</html:link>

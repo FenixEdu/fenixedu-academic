@@ -8,11 +8,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerStudentsApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -20,6 +23,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
+@StrutsFunctionality(app = ManagerStudentsApp.class, path = "scholarship-provider", titleKey = "label.scolarships.fct")
 @Mapping(path = "/externalScholarshipProvider", module = "manager")
 @Forwards({ @Forward(name = "list", path = "/manager/listExternalScholarshipProvideres.jsp"),
         @Forward(name = "add", path = "/manager/addExternalScholarshipProvideres.jsp") })
@@ -37,6 +41,7 @@ public class ExternalScholarshipProviderDA extends FenixDispatchAction {
         }
     }
 
+    @EntryPoint
     public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         Collection<Party> externalScholarshipProvider = Bennu.getInstance().getExternalScholarshipProviderSet();
         request.setAttribute("externalScholarshipProviders", externalScholarshipProvider);

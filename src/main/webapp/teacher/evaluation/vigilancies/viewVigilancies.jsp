@@ -9,7 +9,6 @@
 <bean:define id="executionCourseId" name="executionCourseID"/>
 <bean:define id="evaluationId" name="evaluation" property="externalId"/>
 
-<em><bean:message key="message.evaluationElements" bundle="APPLICATION_RESOURCES"/></em>
 <h2><bean:message key="label.viewVigilancies" bundle="VIGILANCY_RESOURCES"/></h2>
 
 <ul>

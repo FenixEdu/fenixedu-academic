@@ -9,17 +9,18 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.Instalation;
+import net.sourceforge.fenixedu.domain.Installation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.UIViewState;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
+import org.fenixedu.commons.i18n.I18N;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 
 public class FenixBackingBean {
 
@@ -33,7 +34,7 @@ public class FenixBackingBean {
 
     public FenixBackingBean() {
         final FacesContext facesContext = FacesContext.getCurrentInstance();
-        final Locale locale = Language.getLocale();
+        final Locale locale = I18N.getLocale();
         facesContext.getViewRoot().setLocale(locale);
     }
 
@@ -225,27 +226,19 @@ public class FenixBackingBean {
         return FacesContext.getCurrentInstance().getMessages().hasNext();
     }
 
-    public String getHasContextCommentString() {
-        return pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX;
-    }
-
-    public String getContentContextPathAttributeName() {
-        return ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME;
-    }
-
-    public String getHasContextAndChecksumString() {
-        return pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX;
-    }
-
-    public String getInstalationUrl() {
-        return Instalation.getInstance() == null ? "" : Instalation.getInstance().getInstalationDomain();
+    public String getHasChecksumString() {
+        return GenericChecksumRewriter.NO_CHECKSUM_PREFIX;
     }
 
     public String getInstitutionUrl() {
-        return Instalation.getInstance() == null ? "" : Instalation.getInstance().getInstituitionURL();
+        return Installation.getInstance() == null ? "" : Installation.getInstance().getInstituitionURL();
     }
 
     public String getInstitutionAcronym() {
         return Unit.getInstitutionAcronym();
+    }
+
+    public String getApplicationUrl() {
+        return CoreConfiguration.getConfiguration().applicationUrl();
     }
 }

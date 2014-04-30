@@ -9,7 +9,6 @@
 	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
 <%@ page import="java.util.List"%>
 
-<em><bean:message key="label.manager.executionCourses"/></em>
 <h2><bean:message key="label.manager.executionCourses"/></h2>
 
 <p><span class="error"><!-- Error messages go here --><html:errors /></span></p>

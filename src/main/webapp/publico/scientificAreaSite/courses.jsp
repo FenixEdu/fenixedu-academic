@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
@@ -5,7 +6,7 @@
 
 <html:xhtml/>
 
-<h1 class="mbottom03 cnone"><fr:view name="site" property="unitNameWithAcronym"/></h1>
+<h1 class="mbottom03 cnone"><fr:view name="actual$site" property="unitNameWithAcronym"/></h1>
 <h2 class="mtop15"><bean:message key="property.courses"/></h2>
 
 

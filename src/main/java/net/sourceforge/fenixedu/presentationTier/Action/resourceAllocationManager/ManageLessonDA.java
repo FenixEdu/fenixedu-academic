@@ -29,9 +29,13 @@ import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixLessonAndShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InterceptingActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidTimeIntervalActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.base.FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
+import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
@@ -46,13 +50,43 @@ import org.apache.struts.util.LabelValueBean;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- * 
+ *
  */
-public class ManageLessonDA extends FenixLessonAndShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
+
+@Mapping(path = "/manageLesson", module = "resourceAllocationManager", input = "/manageLesson.do?method=findInput&page=0",
+        formBean = "manageLessonForm", functionality = ExecutionPeriodDA.class)
+@Forwards({ @Forward(name = "ShowLessonForm", path = "/resourceAllocationManager/manageLesson_bd.jsp"),
+        @Forward(name = "ShowChooseRoomForm", path = "/resourceAllocationManager/chooseRoomForLesson_bd.jsp"),
+        @Forward(name = "EditShift", path = "/resourceAllocationManager/manageShift.do?method=prepareEditShift&page=0"),
+        @Forward(name = "LessonDeleted", path = "/resourceAllocationManager/manageShift.do?method=prepareEditShift&page=0"),
+        @Forward(name = "ViewAllLessonDates", path = "/resourceAllocationManager/showAllLessonDates.jsp"),
+        @Forward(name = "ChangeRoom", path = "/resourceAllocationManager/changeRoom_bd.jsp") })
+@Exceptions({
+        @ExceptionHandling(key = "resources.Action.exceptions.ExistingActionException",
+                handler = FenixErrorExceptionHandler.class, type = ExistingActionException.class),
+        @ExceptionHandling(key = "resources.Action.exceptions.InterceptingActionException",
+                handler = FenixErrorExceptionHandler.class, type = InterceptingActionException.class),
+        @ExceptionHandling(key = "resources.Action.exceptions.InvalidTimeIntervalActionException",
+                handler = FenixErrorExceptionHandler.class, type = InvalidTimeIntervalActionException.class) })
+public class ManageLessonDA extends FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
+
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+
+        ContextUtils.setLessonContext(request);
+        ActionForward actionForward = super.execute(mapping, actionForm, request, response);
+        return actionForward;
+    }
 
     public static String INVALID_TIME_INTERVAL = "errors.lesson.invalid.time.interval";
 

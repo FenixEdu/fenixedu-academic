@@ -15,22 +15,6 @@ public final class DefaultForwards {
     public static class ShowErrorPageRegistered extends ForwardAction {
     }
 
-    @Mapping(path = "/naoAutorizado", parameter = "/error.jsp")
-    public static class NaoAutorizado extends ForwardAction {
-    }
-
-    @Mapping(path = "/naoExecutado", parameter = "/error.jsp")
-    public static class NaoExecutado extends ForwardAction {
-    }
-
-    @Mapping(path = "/notAuthorized", parameter = "/fenixLayout_error.jsp")
-    public static class NotAuthorized extends ForwardAction {
-    }
-
-    @Mapping(path = "/naoExistente", parameter = "/error.jsp")
-    public static class NaoExistente extends ForwardAction {
-    }
-
     @Mapping(path = "/nonExistingObject", parameter = "/nonExistingError.jsp")
     public static class NonExistingObject extends ForwardAction {
     }
@@ -39,12 +23,12 @@ public final class DefaultForwards {
     public static class PublicNotAuthorized extends ForwardAction {
     }
 
-    @Mapping(path = "/userDoesNotExistOrIsInactive", parameter = "/userDoesNotExistOrIsInactive.jsp")
-    public static class UserDoesNotExistOrIsInactive extends ForwardAction {
-    }
-
     @Mapping(path = "/alumniReminder", parameter = "/showAlumniDataReminder.jsp")
     public static class AlumniReminder extends ForwardAction {
+    }
+
+    @Mapping(path = "/notFound", module = "publico", parameter = "/notFound.jsp")
+    public static class NotFoundAction extends ForwardAction {
     }
 
 }

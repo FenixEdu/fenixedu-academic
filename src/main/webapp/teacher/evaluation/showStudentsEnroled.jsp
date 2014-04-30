@@ -1,9 +1,13 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
-<ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
+<f:view>
+
+	<h:outputText value="#{evaluationManagementBackingBean.hackToStoreExecutionCourse}" />
+	<jsp:include page="/teacher/evaluation/evaluationMenu.jsp" />
+
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 
@@ -12,7 +16,6 @@
 		<h:inputHidden binding="#{evaluationManagementBackingBean.executionCourseIdHidden}" />
 		<h:inputHidden binding="#{evaluationManagementBackingBean.evaluationIdHidden}" />
 		
-		<h:outputText value="<em>#{bundle['message.evaluationElements']}</em>" escape="false" />
 		<h:outputText value="<h2>#{bundle['label.students.enrolled']}</h2>" escape="false" />
 
 		<h:outputText value="<table class='tstyle2 thlight thright'>" escape="false" />
@@ -109,4 +112,7 @@
 			<h:commandButton alt="#{htmlAltBundle['commandButton.goBack']}" action="#{evaluationManagementBackingBean.evaluation.class.getSimpleName}" value="#{bundle['link.goBack']}" styleClass="inputButton"  />
 		<h:outputText value="</p>" escape="false" />
 	</h:form>
-</ft:tilesView>
+</f:view>
+
+</div>
+</div>

@@ -3,7 +3,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 
-<em><bean:message key="title.student.portalTitle"/></em>
 <h2><bean:message key="title.enrolmentGroup.insertNewGroup"/></h2>
 
 	<div class="infoop2">

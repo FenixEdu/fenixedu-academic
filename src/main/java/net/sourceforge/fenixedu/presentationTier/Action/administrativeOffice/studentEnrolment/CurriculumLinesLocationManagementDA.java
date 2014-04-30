@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.st
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.SearchForStudentsDA;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.student.AbstractCurriculumLinesLocationManagementDA;
 
 import org.apache.struts.action.ActionForm;
@@ -13,12 +14,13 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/curriculumLinesLocationManagement", module = "academicAdministration")
+@Mapping(path = "/curriculumLinesLocationManagement", module = "academicAdministration",
+        functionality = SearchForStudentsDA.class)
 @Forwards({
         @Forward(name = "showCurriculum", path = "/academicAdminOffice/curriculum/curriculumLines/location/showCurriculum.jsp"),
         @Forward(name = "chooseNewLocation",
                 path = "/academicAdminOffice/curriculum/curriculumLines/location/chooseNewLocation.jsp"),
-        @Forward(name = "backToStudentEnrolments", path = "/studentEnrolments.do?method=prepare") })
+        @Forward(name = "backToStudentEnrolments", path = "/academicAdministration/studentEnrolments.do?method=prepare") })
 public class CurriculumLinesLocationManagementDA extends AbstractCurriculumLinesLocationManagementDA {
 
     public ActionForward backToStudentEnrolments(ActionMapping mapping, ActionForm form, HttpServletRequest request,

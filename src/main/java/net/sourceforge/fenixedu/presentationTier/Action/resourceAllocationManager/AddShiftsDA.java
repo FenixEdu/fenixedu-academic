@@ -22,8 +22,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "resourceAllocationManager", path = "/addShifts", input = "/manageClass.do?method=prepare&page=0",
-        attribute = "selectMultipleItemsForm", formBean = "selectMultipleItemsForm", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "EditClass", path = "/manageClass.do?method=prepare&page=0") })
+        formBean = "selectMultipleItemsForm", functionality = ExecutionPeriodDA.class)
+@Forwards(@Forward(name = "EditClass", path = "/resourceAllocationManager/manageClass.do?method=prepare&page=0"))
 public class AddShiftsDA extends FenixClassAndExecutionDegreeAndCurricularYearContextDispatchAction {
 
     public ActionForward add(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

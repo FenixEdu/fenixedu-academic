@@ -23,8 +23,9 @@ import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.domain.DegreeSite;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Site.SiteMapper;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
+import net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -34,7 +35,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.utils.ContextUtils;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -400,8 +400,7 @@ public class ShowDegreeSiteAction extends FenixDispatchAction {
     }
 
     public static Degree getDegree(HttpServletRequest request) {
-        FilterFunctionalityContext context = (FilterFunctionalityContext) AbstractFunctionalityContext.getCurrentContext(request);
-        final DegreeSite site = (DegreeSite) context.getSelectedContainer();
+        final DegreeSite site = SiteMapper.getSite(request);
         Degree degree = null;
         if (site != null) {
             degree = site.getDegree();
@@ -412,6 +411,7 @@ public class ShowDegreeSiteAction extends FenixDispatchAction {
         if (degree != null) {
             request.setAttribute("degreeID", degree.getExternalId());
             request.setAttribute("degree", degree);
+            OldCmsSemanticURLHandler.selectSite(request, degree.getSite());
         }
         return degree;
     }

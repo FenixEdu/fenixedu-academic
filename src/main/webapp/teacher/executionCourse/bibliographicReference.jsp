@@ -25,13 +25,13 @@
 	<p>
 		<div class="gen-button">
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-			<html:link page="/createBibliographicReference.do?method=prepareCreateBibliographicReference" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
+			<html:link page="/manageBibliographicReference.do?method=prepareCreateBibliographicReference" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
 				<bean:message key="label.insertBibliographicReference"/>                   		     
 			</html:link>
 		</div>
 		<div class="gen-button">
 			<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" /> 
-			<html:link page="/manageExecutionCourse.do?method=prepareImportBibliographicReferences&amp;page=0" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
+			<html:link page="/manageBibliographicReference.do?method=prepareImportBibliographicReferences&amp;page=0" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
 				<bean:message key="link.import.bibliographicReferences"/>
 			</html:link>
 		</div>
@@ -87,10 +87,10 @@
 	        				<bean:write name="bibliographicReference" property="reference"  filter="false"/><br/>
 	        				<bean:write name="bibliographicReference" property="year" filter="false" /><br/>
 	        				<bean:define id="url" type="java.lang.String">bibliographicReferenceID=<bean:write name="bibliographicReference" property="externalId"/></bean:define>
-	        				<html:link page="<%= "/editBibliographicReference.do?method=prepareEditBibliographicReference&amp;" + url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
+	        				<html:link page="<%= "/manageBibliographicReference.do?method=prepareEditBibliographicReference&amp;" + url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
 	        					<bean:message key="button.edit"/>
 	        				</html:link>, 
-	        				<html:link page="<%= "/manageExecutionCourse.do?method=deleteBibliographicReference&amp;" + url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
+	        				<html:link page="<%= "/manageBibliographicReference.do?method=deleteBibliographicReference&amp;" + url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
 	        					<bean:message key="button.delete"/>
 	        				</html:link>
         				</li>
@@ -102,7 +102,7 @@
             <logic:greaterThan name="referencesSize" value="1">
                 <p>
                     <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-                    <html:link page="/manageExecutionCourse.do?method=prepareSortBibliography" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
+                    <html:link page="/manageBibliographicReference .do?method=prepareSortBibliography" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
                         <bean:message key="message.sortRecommendedBibliography"/>
                     </html:link>
                 </p>
@@ -160,10 +160,10 @@
 		        				<bean:write name="bibliographicReference" property="reference"  filter="false" /><br/>
 		        				<bean:write name="bibliographicReference" property="year" filter="false" /><br/>
 		        				<bean:define id="url" type="java.lang.String">bibliographicReferenceID=<bean:write name="bibliographicReference" property="externalId"/></bean:define>
-		        				<html:link page="<%= "/editBibliographicReference.do?method=prepareEditBibliographicReference&amp;" + url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
+		        				<html:link page="<%= "/manageBibliographicReference.do?method=prepareEditBibliographicReference&amp;" + url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
 		        					<bean:message key="button.edit"/>
 		        				</html:link>, 
-		        				<html:link page="<%= "/manageExecutionCourse.do?method=deleteBibliographicReference&amp;" + url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
+		        				<html:link page="<%= "/manageBibliographicReference.do?method=deleteBibliographicReference&amp;" + url %>" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
 		        					<bean:message key="button.delete"/>
 		        				</html:link>
 		       				</li>
@@ -175,7 +175,7 @@
             <logic:greaterThan name="referencesSize" value="1">
                 <p>
                     <img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-                    <html:link page="/manageExecutionCourse.do?method=prepareSortBibliography&amp;optional=true" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
+                    <html:link page="/manageBibliographicReference.do?method=prepareSortBibliography&amp;optional=true" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
                         <bean:message key="message.sortOptionalBibliography"/>
                     </html:link>
                 </p>

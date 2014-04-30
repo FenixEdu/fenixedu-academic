@@ -2,9 +2,12 @@ package net.sourceforge.fenixedu.dataTransferObject.alumni;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.accessControl.NotUpdatedAlumniInfoForSpecificTimeGroup;
+import net.sourceforge.fenixedu.domain.accessControl.NotUpdatedAlumniInfoForSpecificDaysGroup;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
+
+import org.fenixedu.bennu.core.groups.Group;
+
 import pt.ist.fenixframework.Atomic;
 
 public class AlumniInfoNotUpdatedBean implements Serializable {
@@ -57,8 +60,8 @@ public class AlumniInfoNotUpdatedBean implements Serializable {
 
     @Atomic
     public void createRecipientGroup(Sender sender) {
-        NotUpdatedAlumniInfoForSpecificTimeGroup recipientsGroup =
-                new NotUpdatedAlumniInfoForSpecificTimeGroup(getDaysNotUpdated(), getProfessionalInfo(), getFormationInfo(),
+        Group recipientsGroup =
+                NotUpdatedAlumniInfoForSpecificDaysGroup.get(getDaysNotUpdated(), getProfessionalInfo(), getFormationInfo(),
                         getPersonalDataInfo());
         Recipient recipients = Recipient.newInstance(recipientsGroup);
         sender.addRecipients(recipients);

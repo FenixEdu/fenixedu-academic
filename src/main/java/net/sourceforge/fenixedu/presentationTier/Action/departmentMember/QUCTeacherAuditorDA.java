@@ -6,10 +6,16 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.inquiries.ExecutionCourseAudit;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.presentationTier.Action.departmentMember.DepartmentMemberApp.DepartmentMemberTeacherApp;
+
+import org.fenixedu.bennu.portal.StrutsFunctionality;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@StrutsFunctionality(app = DepartmentMemberTeacherApp.class, path = "quc-audit", titleKey = "title.inquiry.quc.auditProcesses",
+        bundle = "InquiriesResources")
 @Mapping(path = "/qucAudit", module = "departmentMember")
 @Forwards({ @Forward(name = "viewAuditProcesses", path = "/departmentMember/quc/viewAuditProcesses.jsp"),
         @Forward(name = "viewProcessDetails", path = "/departmentMember/quc/viewProcessDetails.jsp"),

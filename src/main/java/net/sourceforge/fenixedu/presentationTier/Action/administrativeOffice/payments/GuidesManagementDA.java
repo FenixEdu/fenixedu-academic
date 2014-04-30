@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.PaymentsManagementDTO;
+import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.SearchForStudentsDA;
 import net.sourceforge.fenixedu.presentationTier.docs.accounting.GuideDocument;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
@@ -20,9 +21,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/guides", module = "academicAdministration", formBeanClass = FenixActionForm.class)
+@Mapping(path = "/guides", module = "academicAdministration", formBeanClass = FenixActionForm.class,
+        functionality = SearchForStudentsDA.class)
 @Forwards({ @Forward(name = "showGuide", path = "/academicAdminOffice/payments/guides/showGuide.jsp"),
-        @Forward(name = "showEvents", path = "/payments.do?method=showEvents") })
+        @Forward(name = "showEvents", path = "/academicAdministration/payments.do?method=showEvents") })
 public class GuidesManagementDA extends PaymentsManagementDispatchAction {
 
     @Override

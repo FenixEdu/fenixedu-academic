@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
@@ -5,7 +6,7 @@
 <html:xhtml/>
 
 <p class="mvert15">
-	<fr:form>
+	<fr:form action="/qucAudit.do?method=showAuditProcesses">
 		<fr:edit id="executionSemesterBean" name="executionSemesterBean">
 			<fr:schema bundle="INQUIRIES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.VariantBean">
 				<fr:slot name="domainObject" key="label.inquiries.semester" layout="menu-select-postback">
@@ -34,7 +35,7 @@
 			<tr>
 				<td>
 					<bean:define id="ecSite" name="executionCourseAudit" property="executionCourse.site.reversePath" type="java.lang.String"/>
-					<!-- NO_CHECKSUM --><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><html:link page="<%= ecSite %>" target="_blank" module="">
+					<!-- NO_CHECKSUM --><html:link page="<%= ecSite %>" target="_blank" module="">
 						<bean:write name="executionCourseAudit" property="executionCourse.name"/>
 					</html:link>
 				</td>				

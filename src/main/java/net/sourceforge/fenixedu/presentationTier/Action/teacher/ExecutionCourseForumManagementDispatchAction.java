@@ -21,17 +21,25 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author naat
  * @author pcma
  */
-@Mapping(module = "teacher", path = "/executionCourseForumManagement", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "viewForum", path = "view-forum"), @Forward(name = "viewThread", path = "view-thread"),
-        @Forward(name = "createThreadAndMessage", path = "create-thread-and-message"),
-        @Forward(name = "viewForuns", path = "view-foruns") })
+@Mapping(module = "teacher", path = "/executionCourseForumManagement", functionality = ManageExecutionCourseDA.class)
+@Forwards({ @Forward(name = "viewForum", path = "/commons/forums/viewForum.jsp"),
+        @Forward(name = "viewThread", path = "/commons/forums/viewThread.jsp"),
+        @Forward(name = "createThreadAndMessage", path = "/commons/forums/createThreadAndMessage.jsp"),
+        @Forward(name = "viewForuns", path = "/teacher/forums/viewExecutionCourseForuns.jsp") })
 public class ExecutionCourseForumManagementDispatchAction extends ForunsManagement {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         ManageExecutionCourseDA.propageContextIds(request);
-        return super.execute(mapping, actionForm, request, response);
+
+        String executionCourseId = (String) request.getAttribute("executionCourseID");
+        request.setAttribute("module", "/teacher");
+        request.setAttribute("contextPrefix", "/executionCourseForumManagement.do?executionCourseID=" + executionCourseId);
+        request.setAttribute("executionCourseId", executionCourseId);
+
+        ActionForward forward = super.execute(mapping, actionForm, request, response);
+        return ManageExecutionCourseDA.forward(request, forward.getPath());
     }
 
     public ActionForward viewForuns(ActionMapping mapping, ActionForm form, HttpServletRequest request,

@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
@@ -36,6 +35,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.Season;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.UserGroup;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
@@ -205,7 +205,7 @@ public class EditWrittenEvaluation {
             }
             Sender sender = Bennu.getInstance().getSystemSender();
             new Message(sender, new ConcreteReplyTo(group.getContactEmail()).asCollection(),
-                    new Recipient(new FixedSetGroup(tos)).asCollection(), subject, body, "");
+                    new Recipient(UserGroup.of(Person.convertToUsers(tos))).asCollection(), subject, body, "");
         }
     }
 

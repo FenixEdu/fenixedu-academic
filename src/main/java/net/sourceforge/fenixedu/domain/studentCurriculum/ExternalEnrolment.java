@@ -124,9 +124,7 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 
     @Override
     public MultiLanguageString getName() {
-        MultiLanguageString multiLanguageString = new MultiLanguageString();
-        multiLanguageString.setContent(getExternalCurricularCourse().getName());
-        return multiLanguageString;
+        return new MultiLanguageString(getExternalCurricularCourse().getName());
     }
 
     @Override

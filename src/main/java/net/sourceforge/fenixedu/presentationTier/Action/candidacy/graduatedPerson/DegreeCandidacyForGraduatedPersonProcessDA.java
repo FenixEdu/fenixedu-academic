@@ -21,11 +21,14 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCa
 import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonProcess;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.DegreeCandidacyForGraduatedPersonCandidacyPeriod;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminCandidaciesApp;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -33,11 +36,15 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.excel.SpreadsheetXLSExporter;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 
+@StrutsFunctionality(app = AcademicAdminCandidaciesApp.class, path = "degree-candidacy-for-graduated-person",
+        titleKey = "label.candidacy.graduatedPerson",
+        accessGroup = "(academic(MANAGE_CANDIDACY_PROCESSES) | academic(MANAGE_INDIVIDUAL_CANDIDACIES))",
+        bundle = "ApplicationResources")
 @Mapping(path = "/caseHandlingDegreeCandidacyForGraduatedPersonProcess", module = "academicAdministration",
         formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
 @Forwards({ @Forward(name = "intro", path = "/candidacy/mainCandidacyProcess.jsp"),
@@ -48,9 +55,7 @@ import com.google.common.base.Predicates;
         @Forward(name = "view-candidacy-results", path = "/candidacy/graduatedPerson/viewCandidacyResults.jsp"),
         @Forward(name = "introduce-candidacy-results", path = "/candidacy/graduatedPerson/introduceCandidacyResults.jsp"),
         @Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp"),
-        @Forward(name = "prepare-select-available-degrees", path = "/candidacy/selectAvailableDegrees.jsp")
-
-})
+        @Forward(name = "prepare-select-available-degrees", path = "/candidacy/selectAvailableDegrees.jsp") })
 public class DegreeCandidacyForGraduatedPersonProcessDA extends CandidacyProcessDA {
 
     @Override
@@ -201,7 +206,7 @@ public class DegreeCandidacyForGraduatedPersonProcessDA extends CandidacyProcess
             row.setCell(process.getPrecedentDegreeInformation().getConclusionGrade());
             row.setCell(process.getCandidacyGrade());
             if (process.isCandidacyAccepted() || process.isCandidacyRejected()) {
-                row.setCell(ResourceBundle.getBundle("resources/EnumerationResources", Language.getLocale()).getString(
+                row.setCell(ResourceBundle.getBundle("resources/EnumerationResources", I18N.getLocale()).getString(
                         process.getCandidacyState().getQualifiedName()));
             } else {
                 row.setCell("");
@@ -212,7 +217,7 @@ public class DegreeCandidacyForGraduatedPersonProcessDA extends CandidacyProcess
     }
 
     private List<Object> getHeader() {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", I18N.getLocale());
         final List<Object> result = new ArrayList<Object>();
         result.add(bundle.getString("label.name"));
         result.add(bundle.getString("label.candidacy.degree.and.school"));
@@ -250,8 +255,8 @@ public class DegreeCandidacyForGraduatedPersonProcessDA extends CandidacyProcess
             final IndividualCandidacyProcess individualCandidacyProcess) {
         DegreeCandidacyForGraduatedPersonIndividualProcess degreeCandidacyForGraduatedPersonProcess =
                 (DegreeCandidacyForGraduatedPersonIndividualProcess) individualCandidacyProcess;
-        ResourceBundle enumerationBundle = ResourceBundle.getBundle("resources/EnumerationResources", Language.getLocale());
-        ResourceBundle candidateBundle = ResourceBundle.getBundle("resources/CandidateResources", Language.getLocale());
+        ResourceBundle enumerationBundle = ResourceBundle.getBundle("resources/EnumerationResources", I18N.getLocale());
+        ResourceBundle candidateBundle = ResourceBundle.getBundle("resources/CandidateResources", I18N.getLocale());
 
         final Row row = spreadsheet.addRow();
         row.setCell(degreeCandidacyForGraduatedPersonProcess.getProcessCode());

@@ -1,20 +1,12 @@
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %><%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.TimeTableType" %>
-<html:xhtml/>
 
-<span class="error"><!-- Error messages go here --><html:errors /></span>
-<logic:messagesPresent message="true">
-	<ul>
-		<html:messages id="messages" message="true">
-			<li><span class="error0"><bean:write name="messages" /></span></li>
-		</html:messages>
-	</ul>
-	<br />
-</logic:messagesPresent>
+<link href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" rel="stylesheet" type="text/css" />
 
 <bean:define id="hoursPattern">HH : mm</bean:define>
 <bean:define id="infoLessons" name="infoLessons"/>
@@ -23,6 +15,8 @@
 <bean:define id="infoClasslessonsEndTime" name="infoClasslessonsEndTime"/>
 <bean:define id="infoLessonsEndTime" name="infoLessonsEndTime"/>
 <bean:define id="infoClasslessons" name="infoClasslessons"/>	
+
+<div class="col-md-10">
 
 <h2><bean:message bundle="STUDENT_RESOURCES" key="message.showShiftsToEnroll.title" /></h2>
 
@@ -35,10 +29,18 @@
 
 <logic:present name="executionCourse">
 	<p class="mbottom05"><bean:message bundle="STUDENT_RESOURCES"  key="message.showShiftsToEnroll.visibleCourse"/>: <strong><bean:write name="executionCourse" property="nome"/></strong></p>
-	<bean:define id="link"><bean:message bundle="STUDENT_RESOURCES"  key="link.shift.enrolement.edit"/></bean:define>
-	<p class="mtop05"><bean:message bundle="STUDENT_RESOURCES"  key="message.showShiftsToEnroll.showAllCourses"/>: <html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" + registrationOID.toString() %>"><bean:message bundle="STUDENT_RESOURCES" key="link.student.seeAllClasses"/></html:link></p>
+	<bean:define id="link">proceedToShiftEnrolment</bean:define>
+	<p class="mtop05"><bean:message bundle="STUDENT_RESOURCES"  key="message.showShiftsToEnroll.showAllCourses"/>: <html:link page="<%="/studentShiftEnrollmentManagerLookup.do?method=" + link + "&amp;registrationOID=" + registrationOID.toString() %>"><bean:message bundle="STUDENT_RESOURCES" key="link.student.seeAllClasses"/></html:link></p>
 </logic:present>
 
+<span class="error"><!-- Error messages go here --><html:errors /></span>
+<logic:messagesPresent message="true">
+	<ul>
+		<html:messages id="messages" message="true">
+			<li><span class="error0"><bean:write name="messages" /></span></li>
+		</html:messages>
+	</ul>
+</logic:messagesPresent>
 
 <h3 class="mtop15"><bean:message bundle="STUDENT_RESOURCES"  key="label.class" /> <bean:write name="selectedSchoolClass" property="nome"/></h3>
 
@@ -146,8 +148,14 @@
 	</logic:notPresent>
 </logic:notPresent>
 
-
-
 <ul>
 	<li><html:link page="<%="/studentShiftEnrollmentManager.do?method=start&registrationOID=" + registrationOID%>"><strong><bean:message bundle="STUDENT_RESOURCES"  key="button.finish" /></strong></html:link></li>
 </ul>
+
+</div>
+
+<div class="col-md-2">
+	<div class="jumbotron" style="padding-left: 20px; padding-right: 20px">
+		<%@include file="listClasses.jsp" %>
+	</div>
+</div>

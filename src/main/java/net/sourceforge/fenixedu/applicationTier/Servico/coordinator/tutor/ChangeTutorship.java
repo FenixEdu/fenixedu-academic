@@ -3,8 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator.tutor;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Filtro.BolonhaOrLEECCoordinatorAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.TutorshipAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -64,14 +62,8 @@ public class ChangeTutorship extends TutorshipManagement {
     @Atomic
     public static List<TutorshipErrorBean> runChangeTutorship(String executionDegreeID, List<ChangeTutorshipBean> beans)
             throws FenixServiceException, NotAuthorizedException {
-        try {
-            TutorshipAuthorizationFilter.instance.execute();
-            return serviceInstance.run(executionDegreeID, beans);
-        } catch (NotAuthorizedException ex1) {
-            CoordinatorAuthorizationFilter.instance.execute();
-            BolonhaOrLEECCoordinatorAuthorizationFilter.instance.execute(executionDegreeID);
-            return serviceInstance.run(executionDegreeID, beans);
-        }
+        TutorshipAuthorizationFilter.instance.execute();
+        return serviceInstance.run(executionDegreeID, beans);
     }
 
 }

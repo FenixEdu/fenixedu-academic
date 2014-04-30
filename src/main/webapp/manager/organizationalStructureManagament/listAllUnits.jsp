@@ -1,10 +1,12 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 
-<ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications$OrganizationalStructurePage" />
+
+<f:view>
 
 	<script language="JavaScript">
 	function check(e,v)
@@ -32,11 +34,10 @@
 		<h:outputText styleClass="error" rendered="#{!empty organizationalStructureBackingBean.errorMessage}"
 				value="#{bundle[organizationalStructureBackingBean.errorMessage]}<br/>" escape="false"/>
 				
-		<h:outputText value="<div class=\"infoselected\">" escape="false"/>
+		<h:outputText value="<div class=\"alert alert-info\">" escape="false"/>
 		<h:outputText value="#{bundle['title.organizationalStructureManagement.information']}" escape="false"/>
 		<h:outputText value="</div>" escape="false"/>
 
-		<h:outputText value="<br/><br/>" escape="false"/>									
 		<h:commandLink value="#{bundle['link.new.unit']}" action="prepareCreateNewUnit" />														
 			
 		<h:outputText value="<br/><br/><h3>#{bundle['title.all.units']}</h3><br/>" escape="false"/>
@@ -46,7 +47,6 @@
 			onchange="this.form.submit();">
 			<f:selectItems value="#{organizationalStructureBackingBean.listingTypeToUnits}"/>				
 		</fc:selectOneMenu>		
-		<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 		
 		<h:outputText value="<br/><br/>" escape="false"/>									
 		<h:outputText value="<b>#{bundle['message.viewExternalUnits']}</b>" escape="false"/>	
@@ -59,4 +59,4 @@
 		<h:outputText value="<br/><br/>#{organizationalStructureBackingBean.units}" escape="false"/>
 				
 	</h:form>
-</ft:tilesView>
+</f:view>

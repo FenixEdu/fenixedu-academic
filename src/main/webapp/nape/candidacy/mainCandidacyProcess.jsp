@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -31,7 +32,6 @@
 
 <%-- candidacy process of current year --%>
 <logic:notEmpty name="process">
-	<em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
 	<h2><bean:write name="process" property="displayName" /> </h2>
 
 	<bean:define id="processId" name="process" property="externalId" />

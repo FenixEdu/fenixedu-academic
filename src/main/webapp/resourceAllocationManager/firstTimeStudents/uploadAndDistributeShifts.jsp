@@ -5,7 +5,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<em><bean:message key="title.resourceManager.management" bundle="SOP_RESOURCES" /></em>
 <h2><bean:message key="title.firstTimeStudents.shiftDistribution" bundle="SOP_RESOURCES" /></h2>
 
 <logic:present name="success">

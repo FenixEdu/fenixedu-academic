@@ -6,7 +6,6 @@
 <%@ taglib uri="http://jakarta.apache.org/taglibs/string-1.0.1" prefix="string" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 <html:xhtml/>
 
 <logic:present name="homepage">
@@ -75,20 +74,20 @@
 									<logic:match name="homepage" property="researchUnitHomepage" value="http://">
 										<bean:define id="url" type="java.lang.String" name="homepage" property="researchUnitHomepage"/>
 										<td>
-											<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><html:link href="<%= url %>"><bean:write name="homepage" property="researchUnit.content"/></html:link>
+											<html:link href="<%= url %>"><bean:write name="homepage" property="researchUnit.content"/></html:link>
 										</td>
 									</logic:match>
 									<logic:notMatch name="homepage" property="researchUnitHomepage" value="http://">
 										<logic:match name="homepage" property="researchUnitHomepage" value="https://">
 											<bean:define id="url" type="java.lang.String" name="homepage" property="researchUnitHomepage"/>
 											<td>
-												<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><html:link href="<%= url %>"><bean:write name="homepage" property="researchUnit.content"/></html:link>
+												<html:link href="<%= url %>"><bean:write name="homepage" property="researchUnit.content"/></html:link>
 											</td>
 										</logic:match>
 										<logic:notMatch name="homepage" property="researchUnitHomepage" value="https://">
 											<td>
 												<bean:define id="url" type="java.lang.String">http://<bean:write name="homepage" property="researchUnitHomepage"/></bean:define>
-												<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><html:link href="<%= url %>"><bean:write name="homepage" property="researchUnit.content"/></html:link>
+												<html:link href="<%= url %>"><bean:write name="homepage" property="researchUnit.content"/></html:link>
 											</td>
 										</logic:notMatch>
 									</logic:notMatch>

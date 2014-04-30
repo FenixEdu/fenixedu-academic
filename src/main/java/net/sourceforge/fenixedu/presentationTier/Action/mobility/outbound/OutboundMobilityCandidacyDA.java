@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.mobility.outbound;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -13,8 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacy;
 import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandidacyContest;
@@ -26,13 +24,18 @@ import net.sourceforge.fenixedu.domain.util.email.EmailBean;
 import net.sourceforge.fenixedu.domain.util.email.PersonSender;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminCandidaciesApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UnionGroup;
+import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
@@ -41,14 +44,17 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 
+@StrutsFunctionality(app = AcademicAdminCandidaciesApp.class, path = "outbound-mobility", titleKey = "label.mobility.outbound",
+        accessGroup = "academic(MANAGE_MOBILITY_OUTBOUND)")
 @Mapping(path = "/outboundMobilityCandidacy", module = "academicAdministration")
 @Forwards({ @Forward(name = "prepare", path = "/mobility/outbound/OutboundMobilityCandidacy.jsp"),
         @Forward(name = "viewContest", path = "/mobility/outbound/viewContest.jsp"),
         @Forward(name = "manageCandidacies", path = "/mobility/outbound/manageCandidacies.jsp"),
         @Forward(name = "viewCandidate", path = "/mobility/outbound/viewCandidate.jsp"),
-        @Forward(name = "sendEmail", path = "/messaging/emails.do?method=newEmail", contextRelative = true) })
+        @Forward(name = "sendEmail", path = "/messaging/emails.do?method=newEmail") })
 public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepare(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
             final HttpServletResponse response) {
         OutboundMobilityContextBean outboundMobilityContextBean = getRenderedObject();
@@ -179,12 +185,8 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
     }
 
     private String constructRedirectPath(final ActionMapping mapping, final HttpServletRequest request, final StringBuilder path) {
-        path.append('&');
-        path.append(net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
-        path.append('=');
-        path.append(getFromRequest(request,
-                net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME));
-        final String result = GenericChecksumRewriter.injectChecksumInUrl(request.getContextPath(), path.toString());
+        final String result =
+                GenericChecksumRewriter.injectChecksumInUrl(request.getContextPath(), path.toString(), request.getSession());
         return result.substring(mapping.getModuleConfig().getPrefix().length());
     }
 
@@ -433,7 +435,7 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
                 BundleUtil.getStringFromResourceBundle("resources.AcademicAdminOffice",
                         "label.send.email.to.candidates.group.to.name", mobilityGroup.getDescription(), period
                                 .getExecutionInterval().getName());
-        final GroupUnion group = new GroupUnion(getCandidateGroups(mobilityGroup, period));
+        final Group group = UnionGroup.of(getCandidateGroups(mobilityGroup, period));
 
         final Recipient recipient = Recipient.newInstance(toGroupName, group);
         final EmailBean bean = new EmailBean();
@@ -452,12 +454,12 @@ public class OutboundMobilityCandidacyDA extends FenixDispatchAction {
         return mapping.findForward("sendEmail");
     }
 
-    private Collection<IGroup> getCandidateGroups(final OutboundMobilityCandidacyContestGroup mobilityGroup,
+    private Set<Group> getCandidateGroups(final OutboundMobilityCandidacyContestGroup mobilityGroup,
             final OutboundMobilityCandidacyPeriod period) {
-        final Collection<IGroup> groups = new HashSet<IGroup>();
+        final Set<Group> groups = new HashSet<Group>();
         for (final OutboundMobilityCandidacySubmission submission : period.getOutboundMobilityCandidacySubmissionSet()) {
             if (submission.hasContestInGroup(mobilityGroup)) {
-                groups.add(new PersonGroup(submission.getRegistration().getPerson()));
+                groups.add(UserGroup.of(submission.getRegistration().getPerson().getUser()));
             }
         }
         return groups;

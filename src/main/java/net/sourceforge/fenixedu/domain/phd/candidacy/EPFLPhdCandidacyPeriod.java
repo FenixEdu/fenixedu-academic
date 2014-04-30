@@ -11,10 +11,10 @@ import net.sourceforge.fenixedu.util.phd.EPFLPhdCandidacyProcessProperties;
 import net.sourceforge.fenixedu.util.phd.PhdProperties;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class EPFLPhdCandidacyPeriod extends EPFLPhdCandidacyPeriod_Base {
@@ -110,7 +110,7 @@ public class EPFLPhdCandidacyPeriod extends EPFLPhdCandidacyPeriod_Base {
 
     @Override
     public String getEmailMessageBodyForRefereeForm(final PhdCandidacyReferee referee) {
-        Locale locale = Language.getLocale();
+        Locale locale = I18N.getLocale();
         final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", locale);
 
         return String.format(bundle.getString("message.phd.epfl.email.body.referee"), referee.getPhdProgramCandidacyProcess()
@@ -122,7 +122,7 @@ public class EPFLPhdCandidacyPeriod extends EPFLPhdCandidacyPeriod_Base {
     @Override
     public MultiLanguageString getEmailMessageSubjectForMissingCandidacyValidation(PhdIndividualProgramProcess process) {
         final ResourceBundle bundle = getResourceBundle(Locale.ENGLISH);
-        return new MultiLanguageString().with(Language.en,
+        return new MultiLanguageString().with(MultiLanguageString.en,
                 bundle.getString("message.phd.epfl.email.subject.missing.candidacy.validation"));
     }
 
@@ -133,7 +133,7 @@ public class EPFLPhdCandidacyPeriod extends EPFLPhdCandidacyPeriod_Base {
                 String.format(bundle.getString("message.phd.epfl.email.body.missing.candidacy.validation"),
                         PhdProperties.getPublicCandidacyAccessLink(), process.getCandidacyProcess().getCandidacyHashCode()
                                 .getValue());
-        return new MultiLanguageString().with(Language.en, body);
+        return new MultiLanguageString().with(MultiLanguageString.en, body);
     }
 
     final protected ResourceBundle getResourceBundle(final Locale locale) {

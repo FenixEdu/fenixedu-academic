@@ -19,6 +19,17 @@
 		</p>
 	</logic:messagesPresent>
 
+
+   <logic:notEmpty name="createdPerson">
+           <b><bean:message key="label.invitedPerson.created.with.success" bundle="MANAGER_RESOURCES"/>:</b>
+           <fr:view name="createdPerson" schema="ShowExistentPersonsDetailsBeforeCreateInvitedPersons">
+                   <fr:layout name="tabular">
+                           <fr:property name="classes" value="tstyle4"/>
+                           <fr:property name="rowClasses" value="listClasses"/>                                    
+                   </fr:layout>
+           </fr:view>      
+   </logic:notEmpty>
+
 	<fr:form action="/invitationsManagement.do?method=searchPersonForManageInvitations">		
 		<fr:edit name="personBean" id="personBeanID" schema="SearchPersonAttributes">
 			<fr:layout name="tabular" >
@@ -44,6 +55,13 @@
 				</fr:layout>			
 			</fr:view>				
 		</logic:notEmpty>			
+		<logic:present name="resultPersons">
+			<logic:empty name="resultPersons">
+				<html:link action="/invitationsManagement.do?method=prepareCreateInvitedPerson">
+					<bean:message key="link.create.invited.person.because.does.not.exist" bundle="MANAGER_RESOURCES"/>
+				</html:link>
+			</logic:empty>
+		</logic:present>
 	</p>
 
 </logic:present>

@@ -14,20 +14,26 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentParticipateApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@StrutsFunctionality(app = StudentParticipateApp.class, path = "first-time-inquiries",
+        titleKey = "link.inquiries.firstTimeCycle", bundle = "InquiriesResources")
 @Mapping(path = "/studentCycleInquiry", module = "student")
 @Forwards({ @Forward(name = "firstTimeCyleInquiry", path = "/student/inquiries/fillFirstTimeCycleInquiry.jsp") })
 public class FirstTimeCycleInquiryDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 

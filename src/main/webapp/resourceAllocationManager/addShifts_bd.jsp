@@ -7,15 +7,13 @@
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt" %>
 <%@ page import="java.util.List"%>
 
-<em><bean:message key="title.resourceAllocationManager.management"/></em>
+<jsp:include page="/commons/contextExecutionDegreeAndCurricularYear.jsp"/>
+
 <h2><bean:message key="link.manage.turnos"/></h2>
 
-
-<p class="mbottom05">O curso seleccionado &eacute;:</p>
-<strong><jsp:include page="context.jsp"/></strong>
-
-
 <h3>Adicionar Turnos</h3>
+
+<bean:define id="schoolClass" name="context.classView" />
 
 <logic:present name="<%= PresentationConstants.SHIFTS %>" scope="request">
 	<html:form action="/addShifts" focus="selectedItems">
@@ -29,7 +27,7 @@
 		<html:hidden alt="<%= PresentationConstants.CURRICULAR_YEAR_OID %>" property="<%= PresentationConstants.CURRICULAR_YEAR_OID %>"
 					 value="<%= pageContext.findAttribute("curricularYearOID").toString() %>"/>
 		<html:hidden alt="<%= PresentationConstants.CLASS_VIEW_OID %>" property="<%= PresentationConstants.CLASS_VIEW_OID %>"
-					 value="<%= pageContext.findAttribute("classOID").toString() %>"/>
+					 value="${schoolClass.externalId}"/>
 
 	<table class="tstyle4 thlight tdcenter mtop05">
 		<tr>

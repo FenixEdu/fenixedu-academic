@@ -4,18 +4,24 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.AnnouncementManagement;
 
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@StrutsFunctionality(app = PublicRelationsApplication.class, path = "announcements", titleKey = "label.announcements")
 @Mapping(path = "/announcementsManagement", module = "publicRelations")
 @Forwards({ @Forward(name = "add", path = "/publicRelations/announcements/addAnnouncement.jsp"),
         @Forward(name = "edit", path = "/publicRelations/announcements/editAnnouncement.jsp"),
@@ -31,9 +37,9 @@ public class PublicRelationAnnouncementManagement extends AnnouncementManagement
     protected Collection<AnnouncementBoard> boardsToView(HttpServletRequest request) throws Exception {
         final Collection<AnnouncementBoard> boards = new ArrayList<AnnouncementBoard>();
         final Person person = this.getLoggedPerson(request);
-        for (final AnnouncementBoard currentBoard : rootDomainObject.getInstitutionUnit().getBoards()) {
+        for (final AnnouncementBoard currentBoard : rootDomainObject.getInstitutionUnit().getBoardsSet()) {
             final UnitAnnouncementBoard board = (UnitAnnouncementBoard) currentBoard;
-            if (board.getWriters().isMember(person)) {
+            if (board.getWriters().isMember(person.getUser())) {
                 boards.add(board);
             }
         }
@@ -48,6 +54,13 @@ public class PublicRelationAnnouncementManagement extends AnnouncementManagement
     @Override
     protected String getExtraRequestParameters(HttpServletRequest request) {
         return "tabularVersion=true";
+    }
+
+    @Override
+    @EntryPoint
+    public ActionForward viewAllBoards(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        return super.viewAllBoards(mapping, form, request, response);
     }
 
 }

@@ -22,21 +22,19 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Project;
+import net.sourceforge.fenixedu.domain.Site.SiteMapper;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
+import net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.util.MessageResources;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PublicEvaluationsBackingBean extends FenixBackingBean {
 
@@ -57,9 +55,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
     private Degree degree;
 
     public String getDegreeID() {
-        FilterFunctionalityContext context =
-                (FilterFunctionalityContext) AbstractFunctionalityContext.getCurrentContext(getRequest());
-        final DegreeSite site = (DegreeSite) context.getSelectedContainer();
+        final DegreeSite site = SiteMapper.getSite(getRequest());
         if (site != null) {
             final Degree degree = site.getDegree();
             setRequestAttribute("degreeID", degree.getExternalId());
@@ -103,6 +99,9 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
     public Degree getDegree() {
         if (degree == null) {
             degree = FenixFramework.getDomainObject(getDegreeID());
+        }
+        if (degree != null) {
+            OldCmsSemanticURLHandler.selectSite(getRequest(), degree.getSite());
         }
         return degree;
     }
@@ -251,7 +250,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
                                 if (!(evaluation instanceof Exam) || ((Exam) evaluation).isExamsMapPublished()) {
                                     final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
                                     CalendarLink calendarLink =
-                                            new CalendarLink(executionCourse, writtenEvaluation, Language.getLocale());
+                                            new CalendarLink(executionCourse, writtenEvaluation, I18N.getLocale());
                                     calendarLinks.add(calendarLink);
                                     calendarLink.setLinkParameters(constructLinkParameters(executionCourse));
                                 }
@@ -286,7 +285,6 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
         final Map<String, String> linkParameters = new HashMap<String, String>();
         linkParameters.put("method", "evaluations");
         linkParameters.put("executionCourseID", executionCourse.getExternalId().toString());
-        linkParameters.put(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME, executionCourse.getSite().getReversePath());
         return linkParameters;
     }
 
@@ -318,8 +316,7 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
     }
 
     public String getApplicationContext() {
-        final String appContext = FenixConfigurationManager.getConfiguration().appContext();
-        return (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
+        return getRequest().getContextPath();
     }
 
     public void setCurricularYearID(String curricularYearID) {

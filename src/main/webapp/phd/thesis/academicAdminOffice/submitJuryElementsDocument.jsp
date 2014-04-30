@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.PhdJuryElementsRatificationEntity"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 

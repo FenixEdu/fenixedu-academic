@@ -16,9 +16,10 @@ import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public enum MobilityEmailTemplateType {
 
@@ -29,13 +30,13 @@ public enum MobilityEmailTemplateType {
 
         @Override
         public void sendEmailFor(MobilityEmailTemplate mobilityEmailTemplate, DegreeOfficePublicCandidacyHashCode hashCode) {
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", I18N.getLocale());
 
             String subject = mobilityEmailTemplate.getSubject();
             String body = mobilityEmailTemplate.getBody();
             String link = bundle.getString(APPLICATION_SUBMISSION_LINK);
 
-            link = String.format(link, hashCode.getValue(), Language.getLocale());
+            link = String.format(link, hashCode.getValue(), I18N.getLocale());
 
             if (body.contains("[submission_link]")) {
                 body = body.replace("[submission_link]", link);
@@ -59,14 +60,14 @@ public enum MobilityEmailTemplateType {
 
         @Override
         public void sendEmailFor(MobilityEmailTemplate mobilityEmailTemplate, DegreeOfficePublicCandidacyHashCode hashCode) {
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", I18N.getLocale());
 
             IndividualCandidacyProcess individualCandidacyProcess = hashCode.getIndividualCandidacyProcess();
 
             String subject = mobilityEmailTemplate.getSubject();
             String body = mobilityEmailTemplate.getBody();
             String link =
-                    String.format(bundle.getString(APPLICATION_ACCESS_LINK), hashCode.getValue(), Language.getLocale()
+                    String.format(bundle.getString(APPLICATION_ACCESS_LINK), hashCode.getValue(), I18N.getLocale()
                             .getLanguage());
 
             String processCode = individualCandidacyProcess.getProcessCode();
@@ -112,12 +113,12 @@ public enum MobilityEmailTemplateType {
 
             String subject =
                     StringUtils.isEmpty(mobilityEmailTemplate.getSubject()) ? MessageFormat.format(
-                            ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale()).getString(
+                            ResourceBundle.getBundle("resources.CandidateResources", I18N.getLocale()).getString(
                                     "message.erasmus.missing.required.documents.email.subject"), Unit.getInstitutionAcronym()) : mobilityEmailTemplate
                             .getSubject();
             String body =
                     StringUtils.isEmpty(mobilityEmailTemplate.getBody()) ? ResourceBundle.getBundle(
-                            "resources.CandidateResources", Language.getLocale()).getString(
+                            "resources.CandidateResources", I18N.getLocale()).getString(
                             "message.erasmus.missing.required.documents.email.body") : mobilityEmailTemplate.getBody();
 
             if (body.contains("[missing_documents]")) {
@@ -149,13 +150,13 @@ public enum MobilityEmailTemplateType {
 
         @Override
         public void sendEmailFor(MobilityEmailTemplate mobilityEmailTemplate, DegreeOfficePublicCandidacyHashCode hashCode) {
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", I18N.getLocale());
 
             String subject = mobilityEmailTemplate.getSubject();
             String body = mobilityEmailTemplate.getBody();
             String link = bundle.getString(APPLICATION_ACCESS_LINK);
 
-            link = String.format(link, hashCode.getValue(), Language.getLocale());
+            link = String.format(link, hashCode.getValue(), I18N.getLocale());
 
             if (body.contains("[access_link]")) {
                 body = body.replace("[access_link]", link);
@@ -181,7 +182,7 @@ public enum MobilityEmailTemplateType {
             String subject = mobilityEmailTemplate.getSubject();
             String body = mobilityEmailTemplate.getBody();
 
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", I18N.getLocale());
             String link = MessageFormat.format(bundle.getString(REGISTRATION_ACCESS_LINK), hashCode.getValue());
 
             if (body.contains("[registration_link]")) {
@@ -206,7 +207,7 @@ public enum MobilityEmailTemplateType {
     }
 
     public String getLocalizedName() {
-        return getLocalizedName(Language.getLocale());
+        return getLocalizedName(I18N.getLocale());
     }
 
     public String getLocalizedName(final Locale locale) {

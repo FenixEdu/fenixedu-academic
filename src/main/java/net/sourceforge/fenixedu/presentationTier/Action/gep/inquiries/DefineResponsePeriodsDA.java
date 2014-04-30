@@ -8,23 +8,26 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryTemplate;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.gep.GepApplication.GepInquiriesApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(module = "gep", path = "/defineResponsePeriods", input = "/defineResponsePeriods.do?method=prepare&page=0",
-        attribute = "defineResponsePeriodsForm", formBean = "defineResponsePeriodsForm", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "showForm", path = "/gep/inquiries/defineResponsePeriods.jsp", tileProperties = @Tile(
-        title = "private.gep.surveys.setperiodsofresponse")) })
+@StrutsFunctionality(app = GepInquiriesApp.class, path = "define-response-period",
+        titleKey = "link.inquiries.define.response.period")
+@Mapping(module = "gep", path = "/defineResponsePeriods", input = "/defineResponsePeriods.do?method=prepare&page=0")
+@Forwards(@Forward(name = "showForm", path = "/gep/inquiries/defineResponsePeriods.jsp"))
 public class DefineResponsePeriodsDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 

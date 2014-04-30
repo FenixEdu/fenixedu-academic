@@ -5,21 +5,28 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.curriculum.ExtraCurricularActivityType;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminExtraCurricularApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@StrutsFunctionality(app = AcademicAdminExtraCurricularApp.class, path = "manage",
+        titleKey = "label.manage.extraCurricularActivityTypes", accessGroup = "academic(MANAGE_EXTRA_CURRICULAR_ACTIVITIES)")
 @Mapping(path = "/manageExtraCurricularActivities", module = "academicAdministration")
 @Forwards({ @Forward(name = "list", path = "/academicAdminOffice/extraCurricularActivities/listActivities.jsp"),
         @Forward(name = "create", path = "/academicAdminOffice/extraCurricularActivities/createActivity.jsp"),
         @Forward(name = "edit", path = "/academicAdminOffice/extraCurricularActivities/editActivity.jsp") })
 public class ManageExtraCurricularActivities extends FenixDispatchAction {
+
+    @EntryPoint
     public ActionForward list(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         request.setAttribute("activityTypes", rootDomainObject.getExtraCurricularActivityTypeSet());

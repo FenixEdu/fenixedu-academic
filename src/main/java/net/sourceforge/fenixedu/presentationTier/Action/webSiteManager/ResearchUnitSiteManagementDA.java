@@ -25,48 +25,22 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "webSiteManager", path = "/manageResearchUnitSite", scope = "session", parameter = "method")
-@Forwards(value = { @Forward(name = "confirmDeleteFunction", path = "researchSite-confirmDeleteFunction"),
-        @Forward(name = "editContract", path = "researchSite-edit-contract"),
-        @Forward(name = "changePersonFunctions", path = "researchSite-changePersonFunctions"),
-        @Forward(name = "createPersonFunction", path = "researchSite-createPersonFunction"),
-        @Forward(name = "editSideBanner", path = "researchSite-edit-side-banner"),
-        @Forward(name = "externalPersonExtraInfo", path = "researchSite-external-person-extra-info"),
-        @Forward(name = "confirmSectionDelete", path = "manage-researchSite-confirmSectionDelete"),
-        @Forward(name = "editSection", path = "manage-researchSite-editSection"),
-        @Forward(name = "editFooterNavigation", path = "researchSite-edit-footer-navigation"),
-        @Forward(name = "chooseManagers", path = "researchSite-chooseManagers"),
-        @Forward(name = "uploadFile", path = "manage-researchSite-uploadFile"),
-        @Forward(name = "editConfiguration", path = "researchSite-edit-configuration"),
-        @Forward(name = "managePeople", path = "researchSite-manage-people"),
-        @Forward(name = "organizeTopLinks", path = "researchSite-edit-organizeTopLinks"),
-        @Forward(name = "organizeFooterLinks", path = "researchSite-edit-organizeFooterLinks"),
-        @Forward(name = "editFile", path = "manage-researchSite-editFile"),
-        @Forward(name = "editItem", path = "manage-researchSite-editItem"),
-        @Forward(name = "addInstitutionSection", path = "researchSite-addInstitutionSection"),
-        @Forward(name = "organizeFunctions", path = "researchSite-organizeFunctions"),
-        @Forward(name = "organizeItems", path = "manage-researchSite-organizeItems"),
-        @Forward(name = "editResearchSite", path = "edit-research-site"),
-        @Forward(name = "editBanners", path = "researchSite-edit-banners"),
-        @Forward(name = "manageExistingFunctions", path = "researchSite-manageExistingFunctions"),
-        @Forward(name = "organizeFiles", path = "manage-researchSite-organizeFiles"),
-        @Forward(name = "edit-fileItem-name", path = "manage-researchSite-editFileItemName"),
-        @Forward(name = "addFunction", path = "researchSite-addFunction"),
-        @Forward(name = "editSectionPermissions", path = "manage-researchSite-editSectionPermissions"),
-        @Forward(name = "analytics", path = "researchSite-analytics"),
-        @Forward(name = "editFunction", path = "researchSite-editFunction"),
-        @Forward(name = "chooseIntroductionSections", path = "researchSite-chooseIntroductionSections"),
-        @Forward(name = "section", path = "manage-researchSite-section"),
-        @Forward(name = "createSection", path = "manage-researchSite-createSection"),
-        @Forward(name = "editItemPermissions", path = "manage-researchSite-editItemPermissions"),
-        @Forward(name = "editIntroduction", path = "researchSite-edit-introduction"),
-        @Forward(name = "editLogo", path = "researchSite-edit-logo"),
-        @Forward(name = "editTopNavigation", path = "researchSite-edit-top-navigation"),
-        @Forward(name = "createItem", path = "manage-researchSite-createItem"),
-        @Forward(name = "sectionsManagement", path = "manage-researchSite-sectionsManagement"),
-        @Forward(name = "manageFunctions", path = "researchSite-manageFunctions"),
-        @Forward(name = "editPersonFunction", path = "researchSite-editPersonFunction") })
+@Mapping(module = "webSiteManager", path = "/manageResearchUnitSite", functionality = ListSitesAction.class)
+@Forwards({ @Forward(name = "editContract", path = "/webSiteManager/researchUnitSite/editContract.jsp"),
+        @Forward(name = "externalPersonExtraInfo", path = "/webSiteManager/researchUnitSite/addInfoForNewExternalPerson.jsp"),
+        @Forward(name = "managePeople", path = "/webSiteManager/researchUnitSite/managePeople.jsp"),
+        @Forward(name = "editResearchSite", path = "/webSiteManager/commons/start.jsp") })
 public class ResearchUnitSiteManagementDA extends CustomUnitSiteManagementDA {
+
+    @Override
+    protected void setContext(HttpServletRequest request) {
+        request.setAttribute("siteActionName", "/manageResearchUnitSite.do");
+        request.setAttribute("siteContextParam", "oid");
+        request.setAttribute("siteContextParamValue", getSite(request).getExternalId());
+        request.setAttribute("siteId", getSite(request).getExternalId());
+        request.setAttribute("announcementsActionName", "/manageResearchUnitAnnouncements.do");
+        request.setAttribute("researchUnit", true);
+    }
 
     @Override
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

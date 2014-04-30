@@ -30,7 +30,7 @@ import pt.ist.fenixframework.FenixFramework;
 @Mapping(module = "publico", path = "/viewClassTimeTableWithClassNameAndDegreeInitialsAction",
         attribute = "classTimeTableWithClassNameAndDegreeInitialsForm",
         formBean = "classTimeTableWithClassNameAndDegreeInitialsForm", scope = "request", validate = false)
-@Forwards(value = { @Forward(name = "Sucess", path = "/viewClassTimeTable.do") })
+@Forwards(value = { @Forward(name = "Sucess", path = "/publico/viewClassTimeTable.do") })
 public class ViewClassTimeTableWithClassNameAndDegreeInitialsAction extends FenixContextAction {
 
     @Override

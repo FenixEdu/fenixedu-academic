@@ -22,7 +22,6 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
@@ -182,23 +181,25 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
         announcement.setReferedSubjectBegin(thesis.getProposedDiscussed());
 
         MultiLanguageString subject =
-                new MultiLanguageString().with(Language.pt,
-                        getAnnouncementSubject(thesis, "thesis.announcement.subject", Language.pt)).with(Language.en,
-                        getAnnouncementSubject(thesis, "thesis.announcement.subject", Language.en));
+                new MultiLanguageString().with(MultiLanguageString.pt,
+                        getAnnouncementSubject(thesis, "thesis.announcement.subject", MultiLanguageString.pt)).with(
+                        MultiLanguageString.en,
+                        getAnnouncementSubject(thesis, "thesis.announcement.subject", MultiLanguageString.en));
 
         MultiLanguageString body =
-                new MultiLanguageString().with(Language.pt, getAnnouncementBody(thesis, "thesis.announcement.body", Language.pt))
-                        .with(Language.en, getAnnouncementBody(thesis, "thesis.announcement.body", Language.en));
+                new MultiLanguageString().with(MultiLanguageString.pt,
+                        getAnnouncementBody(thesis, "thesis.announcement.body", MultiLanguageString.pt)).with(
+                        MultiLanguageString.en, getAnnouncementBody(thesis, "thesis.announcement.body", MultiLanguageString.en));
 
         announcement.setSubject(subject);
         announcement.setBody(body);
     }
 
-    private String getAnnouncementSubject(Thesis thesis, String key, Language language) {
+    private String getAnnouncementSubject(Thesis thesis, String key, Locale language) {
         return getMessage(key, new Locale(language.toString()), thesis.getStudent().getPerson().getName());
     }
 
-    private String getAnnouncementBody(Thesis thesis, String key, Language language) {
+    private String getAnnouncementBody(Thesis thesis, String key, Locale language) {
         return getMessage(key, new Locale(language.toString()), thesis.getStudent().getPerson().getName(),
                 getDate(thesis.getProposedDiscussed()), hasPlace(thesis), thesis.getProposedPlace(),
                 hasTime(thesis.getProposedDiscussed()), getTime(thesis.getProposedDiscussed()),
@@ -226,7 +227,7 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
         return String.format(new Locale("pt"), "%1$td de %1$tB de %1$tY", dateTime.toDate());
     }
 
-    private String getString(MultiLanguageString mls, Language language) {
+    private String getString(MultiLanguageString mls, Locale language) {
         String value = mls.getContent(language);
 
         if (value == null) {

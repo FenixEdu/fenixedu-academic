@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -28,19 +27,16 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "coordinator", path = "/scientificCommissionTeamDA", scope = "session", parameter = "method")
-@Forwards(value = { @Forward(name = "viewScientificCommission",
-        path = "/coordinator/scientificCommission/manageScientificCommission.jsp", tileProperties = @Tile(
-                title = "private.coordinator.management.courses.management.scientificcommittee")) })
+@Mapping(module = "coordinator", path = "/scientificCommissionTeamDA", functionality = DegreeCoordinatorIndex.class)
+@Forwards(@Forward(name = "viewScientificCommission", path = "/coordinator/scientificCommission/manageScientificCommission.jsp"))
 public class ScientificCommissionTeamDA extends FenixDispatchAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        CoordinatedDegreeInfo.setCoordinatorContext(request);
+        DegreeCoordinatorIndex.setCoordinatorContext(request);
 
         request.setAttribute("degreeCurricularPlan", getDegreeCurricularPlan(request));
 

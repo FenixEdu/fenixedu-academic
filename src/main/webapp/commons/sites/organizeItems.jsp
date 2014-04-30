@@ -6,6 +6,8 @@
 
 <html:xhtml/>
 
+<jsp:include page="/commons/renderers/treeRendererHeader.jsp"/>
+
 <bean:define id="site" name="site" type="net.sourceforge.fenixedu.domain.Site"/>
 <bean:define id="actionName" name="siteActionName"/>
 <bean:define id="contextParam" name="siteContextParam"/>

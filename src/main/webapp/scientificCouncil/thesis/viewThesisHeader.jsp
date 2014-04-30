@@ -2,7 +2,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant"%>
 <%@page import="net.sourceforge.fenixedu.domain.thesis.ThesisFile"%>
 <%@page import="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString"%>
-<%@page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
+<%@page import="org.fenixedu.commons.i18n.I18N"%>
 <%@page import="java.util.List"%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState"%>
 <%@page import="net.sourceforge.fenixedu.domain.Degree"%>
@@ -18,8 +18,6 @@
 <html:xhtml/>
 
 <jsp:include page="styles.jsp"/>
-
-<em><bean:message key="scientificCouncil"/></em>
 
 <bean:define id="thesis" name="thesis" type="net.sourceforge.fenixedu.domain.thesis.Thesis"/>
 <%
@@ -44,7 +42,7 @@
 	<tr>
 		<td>
 			<div style="border: 1px solid #ddd; padding: 8px; margin: 0 20px 20px 0;">
-				<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;<%=net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME%>=/homepage&amp;uuid=<bean:write name="thesis" property="student.person.username"/></bean:define>
+				<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;uuid=<bean:write name="thesis" property="student.person.username"/></bean:define>
 				<img src="<%= request.getContextPath() + url %>"/>
 			</div> 
 		</td>

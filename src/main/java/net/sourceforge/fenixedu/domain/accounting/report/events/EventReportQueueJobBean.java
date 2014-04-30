@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -117,8 +117,7 @@ public class EventReportQueueJobBean implements Serializable {
     }
 
     public Set<AdministrativeOffice> getAvailableOffices() {
-        return AcademicAuthorizationGroup.getOfficesForOperation(AccessControl.getPerson(),
-                AcademicOperationType.MANAGE_EVENT_REPORTS);
+        return AcademicAuthorizationGroup.getOfficesForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_EVENT_REPORTS);
     }
 
     public Set<AdministrativeOffice> getAvailableOfficesForManager() {

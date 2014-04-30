@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
@@ -26,7 +27,7 @@
                 - <c:out value="${executionCourse.executionPeriod.qualifiedName}" />
                 <br/>
                 <bean:define id="executionCourseLink"><c:out value="${pageContext.request.contextPath}" /><c:out value="${executionCourse.site.reversePath}" />/pagina-inicial</bean:define>
-                <!-- NO_CHECKSUM --><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><html:link href="<%= executionCourseLink %>" target="_blank">
+                <!-- NO_CHECKSUM --><html:link href="<%= executionCourseLink %>" target="_blank">
                     <em><bean:message key="link.curricularUnit.website" bundle="INQUIRIES_RESOURCES"/></em>
                 </html:link>
             

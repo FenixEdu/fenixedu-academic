@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <html:xhtml />
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -6,6 +7,9 @@
 
 
 <logic:present role="role(COORDINATOR)">
+
+	<jsp:include page="/coordinator/context.jsp" />
+
 	<h2><bean:message key="label.transition.bolonha.registrationsInTransition"
 		bundle="STUDENT_RESOURCES" /></h2>
 

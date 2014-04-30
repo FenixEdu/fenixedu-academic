@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -15,7 +16,7 @@
 	<body>
 		<div id="container">
 			<div id="dotist_id">
-				<img alt="<%=net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstalationName() %>"
+				<img alt="<%=org.fenixedu.bennu.portal.domain.PortalConfiguration.getInstance().getApplicationTitle().getContent() %>"
 						src="<bean:message key="dot.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>" />
 			</div>
 			<div id="txt">
@@ -33,7 +34,7 @@
                             <bean:write name="executionPeriod" property="semester" />
                             <bean:message bundle="PUBLIC_DEGREE_INFORMATION" locale="pt_PT" key="public.degree.information.label.ordinal.semester.abbr" />
                             <bean:write name="executionPeriod" property="executionYear.year" />             
-                            <html:link page="<%="/coordinator/viewInquiriesResults.do?method=prepare&" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/coordinator")%>" paramId="degreeCurricularPlanID" paramName="executionDegree" paramProperty="degreeCurricularPlan.externalId">
+                            <html:link page="/coordinator/viewInquiriesResults.do?method=prepare" paramId="degreeCurricularPlanID" paramName="executionDegree" paramProperty="degreeCurricularPlan.externalId">
                                 <strong>
                                     <bean:write name="executionDegree" property="degree.sigla" /> - <bean:write name="executionDegree" property="degree.name" />
                                     »
@@ -46,7 +47,6 @@
 				
 				<form method="post" action="<%= request.getContextPath() %>/respondToTeachingInquiriesQuestion.do">
 					<html:hidden property="method" value="respondLater"/>
-					<html:hidden property="<%=net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME%>" value="/comunicacao/comunicacao"/>
 					<p style="margin-top: 2.5em; text-align: center;">
 						<html:submit bundle="HTMLALT_RESOURCES" altKey="inquiries.respond.later" property="ok">
 							<bean:message key="button.inquiries.respond.later" />

@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -16,7 +17,7 @@
 	<body>
 		<div id="container">
 			<div id="dotist_id">
-				<img alt="<%=net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstalationName() %>"
+				<img alt="<%=org.fenixedu.bennu.portal.domain.PortalConfiguration.getInstance().getApplicationTitle().getContent() %>"
 						src="<bean:message key="dot.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>" />
 			</div>
 			<div id="txt">
@@ -36,7 +37,6 @@
 			<div class="dinline forminline" align="center">
 				<fr:form action="/respondToAlumniInquiriesQuestion.do">
 					<html:hidden property="method" value="registerAlumniResponseNow"/>
-					<html:hidden property="<%=net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME%>" value="/comunicacao/comunicacao"/>
 					<fr:edit id="cerimonyInquiryPerson" name="cerimonyInquiryPerson">
 						<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson">
 							<fr:slot name="cerimonyInquiryAnswer" key="label.response" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
@@ -64,7 +64,6 @@
 
 				<form method="post" action="<%= request.getContextPath() %>/respondToAlumniInquiriesQuestion.do">
 					<html:hidden property="method" value="registerAlumniResponseRespondLater"/>
-					<html:hidden property="<%=net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME%>" value="/comunicacao/comunicacao"/>
 					<html:submit bundle="HTMLALT_RESOURCES" altKey="inquiries.respond.later" property="ok">
 						<bean:message key="button.inquiries.respond.later" />
 					</html:submit>

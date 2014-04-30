@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -9,7 +10,6 @@
 
 <bean:define id="bean" name="bean" type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean"/>
 
-<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2>
 	<bean:define id="academicSituationType" name="bean" property="academicServiceRequestSituationType" type="net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType"/>
 	<logic:equal name="academicSituationType" value="NEW">

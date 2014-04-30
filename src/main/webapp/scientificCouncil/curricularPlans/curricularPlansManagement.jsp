@@ -1,14 +1,15 @@
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
-<ft:tilesView definition="scientificCouncil.masterPage" attributeName="body-inline">
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.ScientificCouncilApplication$ScientificCurricularPlansManagement" />
+
+<f:view>
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 	
-	<h:outputText value="<em>#{scouncilBundle['scientificCouncil']}</em>" escape="false"/>
 	<h:outputText value="<h2>#{scouncilBundle['curricularPlansManagement']}</h2>" escape="false"/>
 
 	<h:outputText value="<ul>" escape="false" />
@@ -28,7 +29,7 @@
 		<h:outputText value="<tr class='bgcolor1'><th style='width: 80px'><strong>#{scouncilBundle['degree']}:</strong></th>" escape="false"/>
 
 		<h:outputText value="<td><em>#{degree.presentationName} (#{degree.sigla})</em></td>" escape="false"/>
-		<h:outputText value="<td style='width: 180px'>" escape="false"/>
+		<h:outputText value="<td style='width: 230px'>" escape="false"/>
 		<h:outputLink value="#{DegreeManagement.request.contextPath}/scientificCouncil/curricularPlans/editDegree.faces">
 			<h:outputFormat value="#{scouncilBundle['edit']}"/>
 			<f:param name="degreeId" value="#{degree.externalId}"/>
@@ -91,4 +92,4 @@
 		<h:outputText value="</table>" escape="false"/>
 	</fc:dataRepeater>
 
-</ft:tilesView>
+</f:view>

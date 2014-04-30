@@ -5,7 +5,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <html:xhtml />
 
-<em><bean:message key="title.studentPortal" bundle="INQUIRIES_RESOURCES"/></em>
 <h2><bean:message key="title.inquiries" bundle="INQUIRIES_RESOURCES"/></h2>
 
 <bean:message key="message.inquiries.notOpen" bundle="INQUIRIES_RESOURCES"/>

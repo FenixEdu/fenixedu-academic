@@ -5,16 +5,16 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.InternalPersonGroup;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.FileContentCreationBean;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.FileItemPermissionBean;
+
+import org.fenixedu.bennu.core.groups.AnyoneGroup;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.LoggedGroup;
+
 import pt.ist.fenixWebFramework.renderers.DataProvider;
-import pt.ist.fenixWebFramework.renderers.components.converters.BiDirectionalConverter;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class FileItemGroupProvider implements DataProvider {
@@ -28,16 +28,7 @@ public class FileItemGroupProvider implements DataProvider {
             site = fileContent.getSite();
 
             if (site == null) {
-                UnitAnnouncementBoard board = fileContent.getAttachment().getUniqueParentContainer(UnitAnnouncementBoard.class);
-                if (board != null) {
-                    site = board.getUnit().getSite();
-                } else {
-                    ExecutionCourseAnnouncementBoard executionBoard =
-                            fileContent.getAttachment().getUniqueParentContainer(ExecutionCourseAnnouncementBoard.class);
-                    if (executionBoard != null) {
-                        site = executionBoard.getExecutionCourse().getSite();
-                    }
-                }
+                site = fileContent.getAnnouncementBoard().getSite();
             }
         } else if (source instanceof FileContentCreationBean) {
             FileContentCreationBean bean = (FileContentCreationBean) source;
@@ -60,26 +51,16 @@ public class FileItemGroupProvider implements DataProvider {
         return site != null ? site.getContextualPermissionGroups() : getDefaultPermissions();
     }
 
-    private List<IGroup> getDefaultPermissions() {
-        List<IGroup> groups = new ArrayList<IGroup>();
-        groups.add(new EveryoneGroup());
-        groups.add(new InternalPersonGroup());
+    private List<Group> getDefaultPermissions() {
+        List<Group> groups = new ArrayList<Group>();
+        groups.add(AnyoneGroup.get());
+        groups.add(LoggedGroup.get());
         return groups;
     }
 
     @Override
     public Converter getConverter() {
-        return new BiDirectionalConverter() {
-            @Override
-            public Object convert(Class type, Object value) {
-                return value == null ? null : Group.fromString((String) value);
-            }
-
-            @Override
-            public String deserialize(Object object) {
-                return object == null ? null : ((Group) object).getExpression();
-            }
-        };
+        return null;
     }
 
 }

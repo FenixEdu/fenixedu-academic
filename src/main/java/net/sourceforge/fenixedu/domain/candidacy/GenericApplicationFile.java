@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.candidacy;
 
-import net.sourceforge.fenixedu.domain.accessControl.NoOneGroup;
+import org.fenixedu.bennu.core.groups.NobodyGroup;
+
 import pt.ist.fenixframework.Atomic;
 
 public class GenericApplicationFile extends GenericApplicationFile_Base {
@@ -8,7 +9,7 @@ public class GenericApplicationFile extends GenericApplicationFile_Base {
     public GenericApplicationFile(final GenericApplication application, final String displayName, final String fileName,
             final byte[] content) {
         super();
-        init(fileName, displayName, content, new NoOneGroup());
+        init(fileName, displayName, content, NobodyGroup.get());
         setGenericApplication(application);
     }
 

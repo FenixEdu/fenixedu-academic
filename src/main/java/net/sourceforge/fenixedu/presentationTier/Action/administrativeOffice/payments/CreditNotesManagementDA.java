@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.documents.CreditNoteGeneratedDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
+import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.SearchForStudentsDA;
 import net.sourceforge.fenixedu.presentationTier.docs.accounting.CreditNoteDocument;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
@@ -29,11 +30,11 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/creditNotes", module = "academicAdministration",
-        formBeanClass = CreditNotesManagementDA.CreditNotesActionForm.class)
+        formBeanClass = CreditNotesManagementDA.CreditNotesActionForm.class, functionality = SearchForStudentsDA.class)
 @Forwards({ @Forward(name = "list", path = "/academicAdminOffice/payments/creditNotes/listCreditNotes.jsp"),
         @Forward(name = "create", path = "/academicAdminOffice/payments/creditNotes/createCreditNote.jsp"),
         @Forward(name = "show", path = "/academicAdminOffice/payments/creditNotes/showCreditNote.jsp"),
-        @Forward(name = "prepareShowReceipt", path = "/receipts.do?method=prepareShowReceipt") })
+        @Forward(name = "prepareShowReceipt", path = "/academicAdministration/receipts.do?method=prepareShowReceipt") })
 public class CreditNotesManagementDA extends PaymentsManagementDispatchAction {
 
     public static class CreditNotesActionForm extends FenixActionForm {

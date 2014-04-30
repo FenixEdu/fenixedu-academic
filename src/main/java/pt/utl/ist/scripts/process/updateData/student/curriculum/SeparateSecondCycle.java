@@ -15,17 +15,18 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 
 import org.fenixedu.bennu.scheduler.CronTask;
 import org.fenixedu.bennu.scheduler.annotation.Task;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 @Task(englishTitle = "SeparateSecondCycle", readOnly = true)
 public class SeparateSecondCycle extends CronTask {
 
     @Override
     public void runTask() {
-        Language.setLocale(new Locale("pt", "PT"));
+        I18N.setLocale(new Locale("pt", "PT"));
         for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlans()) {
             getLogger().info("Processing DCP: " + degreeCurricularPlan.getName());
 

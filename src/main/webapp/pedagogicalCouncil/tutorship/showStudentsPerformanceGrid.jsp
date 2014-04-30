@@ -7,7 +7,6 @@
 
 <!-- showTutorPerformanceGrid.jsp -->
 
-<em><bean:message key="pedagogical.council" bundle="PEDAGOGICAL_COUNCIL" /></em>
 <h2><bean:message key="title.tutorship.tutor.performanceGrids" bundle="PEDAGOGICAL_COUNCIL" /></h2>
 
 <fr:form action="/tutorStudentsPerformanceGrid.do?method=viewStudentsPerformanceGrid">

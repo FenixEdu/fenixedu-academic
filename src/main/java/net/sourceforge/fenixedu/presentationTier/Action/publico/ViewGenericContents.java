@@ -10,12 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.contents.Content;
-import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
-import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
+import net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -32,7 +28,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author pcma
  * 
  */
-@Mapping(module = "publico", path = "/viewGenericContent", scope = "session", parameter = "method")
+@Mapping(module = "publico", path = "/viewGenericContent")
 @Forwards(value = { @Forward(name = "viewItem-TutorSite", path = "basicUnit-item"),
         @Forward(name = "viewItem-AssemblySite", path = "basicUnit-item"),
         @Forward(name = "site-section-adviseLogin-DegreeSite", path = "degree-section-adviseLogin"),
@@ -95,13 +91,11 @@ public class ViewGenericContents extends FenixDispatchAction {
             HttpServletResponse response) {
         Section section = getSection(request);
         request.setAttribute("section", section);
-        String type = getType(request);
-        String forwardSufix = type.substring(type.lastIndexOf(".") + 1, type.length());
-        FilterFunctionalityContext context = getContext(request);
+        String forwardSufix = getSite(request).getClass().getSimpleName();
         User userView = Authenticate.getUser();
 
-        if (section.isAvailable(context)) {
-            prepareProtectedItems(request, userView, section.getOrderedItems(), context);
+        if (section.isAvailable()) {
+            prepareProtectedItems(request, userView, section.getOrderedChildItems());
             return mapping.findForward("viewSection-" + forwardSufix);
         } else {
             if (isAuthenticated(userView)) {
@@ -116,58 +110,34 @@ public class ViewGenericContents extends FenixDispatchAction {
     public ActionForward viewItem(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
 
-        Section section = (Section) getLastContentInPathWithClass(request, Section.class);
-        request.setAttribute("section", section);
-
         Item item = getItem(request);
         request.setAttribute("item", item);
 
-        FilterFunctionalityContext context = getContext(request);
+        Section section = item.getSection();
+        request.setAttribute("section", section);
 
-        request.setAttribute("itemAvailable", item.isAvailable(context));
+        request.setAttribute("itemAvailable", item.isAvailable());
 
-        String type = getType(request);
+        String type = getSite(request).getClass().getSimpleName();
 
-        return mapping.findForward("viewItem-" + type.substring(type.lastIndexOf(".") + 1, type.length()));
+        return mapping.findForward("viewItem-" + type);
 
     }
 
-    private String getType(HttpServletRequest request) {
-        return getPortal(request).getType();
-    }
-
-    private FilterFunctionalityContext getContext(HttpServletRequest request) {
-        return (FilterFunctionalityContext) AbstractFunctionalityContext.getCurrentContext(request);
-    }
-
-    private Content getLastContentInPathWithClass(HttpServletRequest request, Class clazz) {
-        FilterFunctionalityContext context = getContext(request);
-        return context.getLastContentInPath(clazz);
-    }
-
-    private Content getLastContentInPath(HttpServletRequest request) {
-        FilterFunctionalityContext context = getContext(request);
-        List<Content> contents = context.getSelectedContents();
-        return context.getSelectedContents().get(contents.size() - 1);
+    private Site getSite(HttpServletRequest request) {
+        return OldCmsSemanticURLHandler.getSite(request);
     }
 
     private Section getSection(HttpServletRequest request) {
-        return (Section) getLastContentInPath(request);
+        return (Section) OldCmsSemanticURLHandler.getContent(request);
     }
 
     private Item getItem(HttpServletRequest request) {
-        return (Item) getLastContentInPath(request);
+        return (Item) OldCmsSemanticURLHandler.getContent(request);
     }
 
-    private MetaDomainObjectPortal getPortal(HttpServletRequest request) {
-        FilterFunctionalityContext context = (FilterFunctionalityContext) AbstractFunctionalityContext.getCurrentContext(request);
-        return MetaDomainObjectPortal.getPortal(context.getLastContentInPath(Site.class).getClass());
-    }
-
-    private void prepareProtectedItems(HttpServletRequest request, User userView, Collection<Item> items,
-            FunctionalityContext context) {
-        List<ProtectedItem> protectedItems = setupItems(request, context, items);
-
+    private void prepareProtectedItems(HttpServletRequest request, User userView, Collection<Item> items) {
+        List<ProtectedItem> protectedItems = setupItems(request, items);
         if (!isAuthenticated(userView) && hasRestrictedItems(protectedItems)) {
             request.setAttribute("hasRestrictedItems", true);
         }
@@ -179,23 +149,28 @@ public class ViewGenericContents extends FenixDispatchAction {
                 return true;
             }
         }
-
         return false;
     }
 
-    private List<ProtectedItem> setupItems(HttpServletRequest request, FunctionalityContext context, Collection<Item> items) {
+    private List<ProtectedItem> setupItems(HttpServletRequest request, Collection<Item> items) {
         List<ProtectedItem> protectedItems = new ArrayList<ProtectedItem>();
         for (Item item : items) {
             if (item.getVisible()) {
-                protectedItems.add(new ProtectedItem(context, item));
+                protectedItems.add(new ProtectedItem(item));
             }
         }
-
         request.setAttribute("protectedItems", protectedItems);
         return protectedItems;
     }
 
     private boolean isAuthenticated(User userView) {
         return userView != null;
+    }
+
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        request.setAttribute("site", OldCmsSemanticURLHandler.getSite(request));
+        return super.execute(mapping, actionForm, request, response);
     }
 }

@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ page language="java" %>
 <%@page import="net.sourceforge.fenixedu.domain.util.email.Sender"%>
 <%@page import="net.sourceforge.fenixedu.domain.person.RoleType"%>
@@ -18,7 +19,7 @@
 </logic:present>
 
 <% if (Sender.hasAvailableSender()) { %>
-<form action="<%= request.getContextPath() + "/messaging/emails.do" %>" method="post">
+<fr:form action="/emails.do">
 	<html:hidden property="method" value="sendEmail"/>
 
 	<fr:edit id="emailBean" name="emailBean">
@@ -71,9 +72,9 @@
 		</fr:layout>
 
 		<fr:destination name="selectSender" path="/emails.do?method=newEmail"/>
-		<fr:destination name="cancel" path="/index.do"/>
 	</fr:edit>
-</form>
+	<html:submit><bean:message key="label.send" /></html:submit>
+</fr:form>
 <% } else { %>
 	<bean:message bundle="MANAGER_RESOURCES" key="message.not.authorized.to.send.emails"/>
 <% } %>

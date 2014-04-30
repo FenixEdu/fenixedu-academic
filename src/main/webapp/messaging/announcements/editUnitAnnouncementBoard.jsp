@@ -6,7 +6,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="e"%>
 
 <html:xhtml/>
-<em><bean:message key="label.communicationPortal.header" bundle="MESSAGING_RESOURCES"/></em>
 <h2><bean:message key="label.manageChannel" bundle="MESSAGING_RESOURCES"/></h2>
 
 

@@ -38,14 +38,14 @@ public class ParseMetadata extends DefaultHandler {
 
     private Element current = null;
 
-    private List<String> members = new ArrayList<String>();
+    private final List<String> members = new ArrayList<String>();
 
     public Metadata parseMetadata(Vector<Element> vector, Metadata metadata) {
         this.vector = vector;
         return vector2Metadata(vector, metadata);
     }
 
-    public Vector<Element> parseMetadata(String metadataFile, String path) throws ParseException {
+    public Vector<Element> parseMetadata(String metadataFile) throws ParseException {
         SAXParserFactory spf = SAXParserFactory.newInstance();
         spf.setValidating(true);
         try {
@@ -55,7 +55,7 @@ public class ParseMetadata extends DefaultHandler {
             reader.setErrorHandler(this);
             StringReader sr = new StringReader(metadataFile);
             InputSource input = new InputSource(sr);
-            MetadataResolver resolver = new MetadataResolver(path);
+            MetadataResolver resolver = new MetadataResolver();
             reader.setEntityResolver(resolver);
             reader.parse(input);
         } catch (Exception e) {

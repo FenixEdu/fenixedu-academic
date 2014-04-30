@@ -3,6 +3,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <html:xhtml/>
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" />
 
 <h2><bean:message key="title.coordinationTeam"/></h2>

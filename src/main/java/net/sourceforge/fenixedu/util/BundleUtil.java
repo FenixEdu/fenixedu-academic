@@ -5,8 +5,9 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.commons.i18n.I18N;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class BundleUtil {
 
@@ -80,6 +81,6 @@ public class BundleUtil {
     }
 
     private static ResourceBundle getResourceBundleByName(final String bundleName) {
-        return ResourceBundle.getBundle(bundleName, Language.getLocale());
+        return ResourceBundle.getBundle(bundleName, I18N.getLocale());
     }
 }

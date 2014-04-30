@@ -4,20 +4,20 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.TeacherPersonalExpectationsEvaluationPeriod;
+import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.DepartmentAdmOfficeApp.DefineExpectationPeriods;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(module = "departmentAdmOffice", path = "/teacherPersonalExpectationsEvaluationPeriod", scope = "request",
-        parameter = "method")
-@Forwards(
-        value = {
-                @Forward(
-                        name = "showDefinitionPeriod",
-                        path = "/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/showTeacherPersonalExpectationsEvaluationPeriod.jsp"),
-                @Forward(
-                        name = "editDefinitionPeriod",
-                        path = "/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/editTeacherPersonalExpectationsEvaluationPeriod.jsp") })
+@Mapping(module = "departmentAdmOffice", path = "/teacherPersonalExpectationsEvaluationPeriod",
+        functionality = DefineExpectationPeriods.class)
+@Forwards({
+        @Forward(
+                name = "showDefinitionPeriod",
+                path = "/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/showTeacherPersonalExpectationsEvaluationPeriod.jsp"),
+        @Forward(
+                name = "editDefinitionPeriod",
+                path = "/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/editTeacherPersonalExpectationsEvaluationPeriod.jsp") })
 public class TeacherPersonalExpectationsEvaluationPeriodDA extends TeacherPersonalExpectationsDefinitionPeriodDA {
 
     @Override

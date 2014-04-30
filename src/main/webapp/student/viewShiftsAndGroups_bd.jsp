@@ -18,7 +18,6 @@
 
 
 	<logic:empty name="infoSiteShiftsAndGroups" property="infoSiteGroupsByShiftList">
-		<em><bean:message key="title.student.portalTitle"/></em>
 		<h2><bean:message key="title.ShiftsAndGroups"/></h2>
 		
 		<p class="mtop15"><em><bean:message key="message.shifts.not.available" /></em></p>
@@ -35,7 +34,6 @@
 	
 	
 	<logic:notEmpty name="infoSiteShiftsAndGroups" property="infoSiteGroupsByShiftList">
-	<em><bean:message key="title.student.portalTitle"/></em>
 	<h2><bean:message key="title.ShiftsAndGroups"/>: <span class="infoop4"><bean:write name="infoSiteShiftsAndGroups" property="infoGrouping.name"/></span></h2>
 	
 	<ul class="mvert15">

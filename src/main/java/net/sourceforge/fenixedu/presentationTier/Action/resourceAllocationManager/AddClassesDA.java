@@ -20,10 +20,18 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * @author Luis Cruz & Sara Ribeiro
- * 
+ *
  */
+@Mapping(module = "resourceAllocationManager", path = "/addClasses", input = "/manageShift.do?method=prepareEditShift",
+        formBean = "selectMultipleItemsForm", functionality = ExecutionPeriodDA.class)
+@Forwards({ @Forward(name = "ListClasses", path = "/resourceAllocationManager/addClasses_bd.jsp"),
+        @Forward(name = "BackToEditShift", path = "/resourceAllocationManager/manageShift.do?method=prepareEditShift") })
 public class AddClassesDA extends FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
 
     public ActionForward listClasses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -64,7 +72,7 @@ public class AddClassesDA extends FenixShiftAndExecutionCourseAndExecutionDegree
 
         request.setAttribute("selectMultipleItemsForm", null);
 
-        return mapping.findForward("EditShift");
+        return mapping.findForward("BackToEditShift");
     }
 
 }

@@ -23,7 +23,7 @@
 	<bean:define id="studentIndex" value="0"/>
 	<bean:define id="finalMark" value="0"/>
 	<bean:define id="questionNumber" name="distributedTest" property="numberOfQuestions"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%= (pageContext.findAttribute("objectCode")).toString() %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID" property="executionCourseID" value="<%= (pageContext.findAttribute("executionCourseID")).toString() %>"/>
 
 		<bean:size id="numberOfStudentTestQuestion" name="infoStudentTestQuestionList"/>
 		<bean:define id="numberOfStudents" value="<%=numberOfStudentTestQuestion.toString()%>"/>
@@ -46,7 +46,7 @@
 				<br/>
 				<br/>
 				<bean:define id="distributedTestCode" name="distributedTest" property="externalId"/>
-				<html:link page="<%= "/testsManagement.do?method=downloadTestMarks&amp;distributedTestCode=" +pageContext.findAttribute("distributedTestCode")+ "&amp;objectCode=" +pageContext.findAttribute("objectCode")%>"><bean:message key="link.exportToExcel"/></html:link>
+				<html:link page="<%= "/testsManagement.do?method=downloadTestMarks&amp;distributedTestCode=" +pageContext.findAttribute("distributedTestCode")+ "&amp;executionCourseID=" +pageContext.findAttribute("executionCourseID")%>"><bean:message key="link.exportToExcel"/></html:link>
 				<br/>
 				<br/>
 				<table>
@@ -97,9 +97,9 @@
 					</logic:greaterThan>
 				</logic:greaterThan>
 				
-				<td><html:link page="<%= "/studentTestManagement.do?method=showStudentTest&amp;studentCode=" +studentCode+ "&amp;distributedTestCode=" +pageContext.findAttribute("distributedTestCode")+ "&amp;objectCode=" +pageContext.findAttribute("objectCode")%>"><bean:message key="link.showStudentTest"/></html:link></td>
-				<td><html:link page="<%= "/testsManagement.do?method=showStudentTestLog&amp;studentCode=" +studentCode+ "&amp;distributedTestCode=" +pageContext.findAttribute("distributedTestCode")+ "&amp;objectCode=" +pageContext.findAttribute("objectCode")%>"><bean:message key="link.showLog"/></html:link></td>
-				<td><html:link page="<%= "/testChecksumValidation.do?method=prepareValidateTestChecksum&amp;studentCode=" +studentCode+ "&amp;distributedTestCode=" +pageContext.findAttribute("distributedTestCode")+ "&amp;objectCode=" +pageContext.findAttribute("objectCode")%>"><bean:message key="link.validateTestChecksum"/></html:link></td>
+				<td><html:link styleClass="gen-button" page="<%= "/studentTestManagement.do?method=showStudentTest&amp;studentCode=" +studentCode+ "&amp;distributedTestCode=" +pageContext.findAttribute("distributedTestCode")+ "&amp;executionCourseID=" +pageContext.findAttribute("executionCourseID")%>"><bean:message key="link.showStudentTest"/></html:link></td>
+				<td><html:link styleClass="gen-button" page="<%= "/testsManagement.do?method=showStudentTestLog&amp;studentCode=" +studentCode+ "&amp;distributedTestCode=" +pageContext.findAttribute("distributedTestCode")+ "&amp;executionCourseID=" +pageContext.findAttribute("executionCourseID")%>"><bean:message key="link.showLog"/></html:link></td>
+				<td><html:link styleClass="gen-button" page="<%= "/testChecksumValidation.do?method=prepareValidateTestChecksum&amp;studentCode=" +studentCode+ "&amp;distributedTestCode=" +pageContext.findAttribute("distributedTestCode")+ "&amp;executionCourseID=" +pageContext.findAttribute("executionCourseID")%>"><bean:message key="link.validateTestChecksum"/></html:link></td>
 				</tr>
 		</logic:iterate>
 		</table>

@@ -9,28 +9,29 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.CreateUnitSite;
 import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.contents.Portal;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerOrganizationalStructureApp;
 import net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.CustomUnitSiteManagementDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
-@Mapping(module = "manager", path = "/unitSiteManagement", scope = "request", parameter = "method")
-@Forwards(value = {
+@StrutsFunctionality(app = ManagerOrganizationalStructureApp.class, path = "unit-site", titleKey = "title.unitSite.manage.sites")
+@Mapping(module = "manager", path = "/unitSiteManagement")
+@Forwards({
         @Forward(name = "chooseManagers", path = "/manager/organizationalStructureManagament/unitSites/editSiteManagers.jsp"),
         @Forward(name = "createEntryPoint", path = "/manager/organizationalStructureManagament/unitSites/createEntryPoint.jsp"),
-        @Forward(name = "showUnits", path = "/manager/organizationalStructureManagament/unitSites/showUnits.jsp",
-                tileProperties = @Tile(head = "/commons/renderers/treeRendererHeader.jsp")) })
+        @Forward(name = "showUnits", path = "/manager/organizationalStructureManagament/unitSites/showUnits.jsp") })
 public class UnitSiteManagementDA extends CustomUnitSiteManagementDA {
 
     @Override
@@ -45,6 +46,11 @@ public class UnitSiteManagementDA extends CustomUnitSiteManagementDA {
     }
 
     @Override
+    protected void setContext(HttpServletRequest request) {
+    }
+
+    @Override
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         request.setAttribute("units", Collections.singleton(Bennu.getInstance().getInstitutionUnit()));
@@ -80,7 +86,7 @@ public class UnitSiteManagementDA extends CustomUnitSiteManagementDA {
             HttpServletResponse response) throws Exception {
         VariantBean multilanguagebean = getMultiLanguageString();
         Site site = getSite(request);
-        Portal.getRootPortal().addContentJump(site, multilanguagebean.getMLString());
+//        Portal.getRootPortal().addContentJump(site, multilanguagebean.getMLString());
         return prepare(mapping, actionForm, request, response);
     }
 

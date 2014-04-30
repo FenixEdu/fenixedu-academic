@@ -11,9 +11,9 @@ import net.sourceforge.fenixedu.util.tests.QuestionDifficultyType;
 /**
  * @author Susana Fernandes
  */
-public class MetadataComparator implements Comparator {
+public class MetadataComparator implements Comparator<Metadata> {
 
-    private String column;
+    private final String column;
 
     private Integer ascendent = 1;
 
@@ -25,9 +25,7 @@ public class MetadataComparator implements Comparator {
     }
 
     @Override
-    public int compare(Object arg1, Object arg2) {
-        Metadata metadata1 = (Metadata) arg1;
-        Metadata metadata2 = (Metadata) arg2;
+    public int compare(Metadata metadata1, Metadata metadata2) {
 
         if (column.equals("description")) {
             if (metadata1.getDescription() == null && metadata2.getDescription() != null) {

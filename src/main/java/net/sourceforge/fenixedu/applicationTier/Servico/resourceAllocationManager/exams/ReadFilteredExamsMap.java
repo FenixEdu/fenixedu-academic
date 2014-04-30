@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
+import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixframework.Atomic;
@@ -53,7 +54,8 @@ public class ReadFilteredExamsMap {
                 obtainInfoExecutionCourses(curricularYears, infoExecutionPeriod, executionDegree);
         result.setExecutionCourses(infoExecutionCourses);
 
-        if (!Authenticate.getUser().getPerson().hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
+        User user = Authenticate.getUser();
+        if (user == null || !user.getPerson().hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
             PublishedExamsMapAuthorizationFilter.execute(result);
         }
 

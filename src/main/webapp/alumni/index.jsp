@@ -45,7 +45,7 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 		<ul class="mbottom05">
 			<logic:present name="showContactsMessage">
 				<li>
-					<bean:define id="url"><%= request.getContextPath() %>/person/visualizePersonalInfo.do?<%=net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/person")%></bean:define>
+					<bean:define id="url"><%= request.getContextPath() %>/person/visualizePersonalInfo.do</bean:define>
 					<b><bean:message key="label.alumni.contacts" bundle="ALUMNI_RESOURCES"/>:</b> 
 					<bean:message key="message.alumni.contacts" bundle="ALUMNI_RESOURCES"/>
 					<html:link href="<%= url %>">
@@ -168,7 +168,7 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 	
 <h3> <bean:message key="label.alumni.opportunities" bundle="ALUMNI_RESOURCES"/></h3>
 <ul>
-	<li><a target="_blank" href="<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>html/ensino/">Ensino, Pós-graduações e Formação</a></li>
+	<li><a target="_blank" href="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>html/ensino/">Ensino, Pós-graduações e Formação</a></li>
 	<li><a target="_blank" href="http://galtec.ist.utl.pt/">Licenciamento de Tecnologia</a></li>
 	<li><a target="_blank" href="http://www.istpress.ist.utl.pt/">Oportunidades de publicação de livros</a></li>
 	<li><a href="mailto:empreendedorismo@ist.utl.pt">Empreendedorismo</a></li>

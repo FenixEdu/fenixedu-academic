@@ -4,17 +4,17 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.credits.ReadAllTeacherCredits;
 import net.sourceforge.fenixedu.dataTransferObject.credits.CreditLineDTO;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
-import net.sourceforge.fenixedu.domain.accessControl.groups.DepartmentPresidentGroup;
+import net.sourceforge.fenixedu.domain.accessControl.UnitGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -36,8 +35,10 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
-
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UnionGroup;
+import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.commons.i18n.I18N;
 
 public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
 
@@ -50,19 +51,19 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
             throw new DomainException("");
         }
         String filename = getFilename(teacher, executionSemester);
-        final Collection<IGroup> groups = new ArrayList<>();
+        final Set<Group> groups = new HashSet<>();
         final Person person = teacher.getPerson();
         if (person != null) {
-            groups.add(new PersonGroup(person));
+            groups.add(UserGroup.of(person.getUser()));
         }
         final Department department =
                 teacher.getLastWorkingDepartment(executionSemester.getBeginDateYearMonthDay(),
                         executionSemester.getEndDateYearMonthDay());
         if (department != null && department.getDepartmentUnit() != null) {
-            groups.add(new DepartmentPresidentGroup(department.getDepartmentUnit()));
+            groups.add(UnitGroup.get(department.getDepartmentUnit(), FunctionType.PRESIDENT, false));
         }
-        groups.add(new RoleGroup(RoleType.SCIENTIFIC_COUNCIL));
-        init(filename, filename, content, new GroupUnion(groups));
+        groups.add(RoleGroup.get(RoleType.SCIENTIFIC_COUNCIL));
+        init(filename, filename, content, UnionGroup.of(groups));
     }
 
     private String getFilename(Teacher teacher, ExecutionSemester executionSemester) {
@@ -72,7 +73,7 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
 
     private String getTeacherCreditsFile(Teacher teacher, ExecutionSemester executionSemester, TeacherService teacherService)
             throws ParseException {
-        ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+        ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
         CreditLineDTO creditLineDTO = ReadAllTeacherCredits.readCreditLineDTO(executionSemester, teacher);
         Unit lastWorkingUnit =
                 teacher.getLastWorkingUnit(executionSemester.getBeginDateYearMonthDay(),

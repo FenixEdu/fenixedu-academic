@@ -6,7 +6,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt" %>
 
-<em><bean:message key="title.student.portalTitle"/></em>
 <h2><bean:message key="title.finalDegreeWork.candidacy"/></h2>
 
 <div class="inobullet mvert15">
@@ -30,9 +29,6 @@
 						  labelProperty="nextYearsYearString"
 					  	collection="executionYears" />
 		</html:select>
-		<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-			<bean:message key="button.submit"/>
-		</html:submit>
 		<br />
 		<br />
 
@@ -113,8 +109,8 @@
 					<% } %>
 				</li>
 			</ul>
-			<!-- HAS_CONTEXT --><html:link href="<%= request.getContextPath()
-					+ "/publico/finalDegreeWorks.do?method=search&" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/student")
+			<html:link href="<%= request.getContextPath()
+					+ "/publico/finalDegreeWorks.do?method=search"
 					+ "&amp;executionYearOID=" + executionDegree.getExecutionYear().getExternalId()
 					+ "&amp;executionDegreeOID=" + executionDegree.getExternalId() %>"
 					target="blank">

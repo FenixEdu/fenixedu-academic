@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.util.EvaluationType;
  * 
  *         25/6/2003
  */
-public class InfoEvaluation extends InfoShowOccupation implements ISiteComponent {
+public class InfoEvaluation extends InfoShowOccupation {
 
     public static final Comparator<InfoEvaluation> COMPARATOR_BY_START = new Comparator<InfoEvaluation>() {
 

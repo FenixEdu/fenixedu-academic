@@ -7,7 +7,6 @@
 
 <logic:present name="infoGroupPropertiesList">
 
-<em><bean:message key="title.student.portalTitle"/></em>
 <h2><bean:message key="title.ExecutionCourseProjects.short"/></h2>
 
 	<span class="error"><!-- Error messages go here --><html:errors /></span> 	

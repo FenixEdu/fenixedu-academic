@@ -12,6 +12,8 @@ import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import org.fenixedu.commons.i18n.I18N;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -20,6 +22,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
 import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
@@ -35,11 +38,11 @@ import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
 import net.sourceforge.fenixedu.util.tests.TestType;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class ChangeStudentTestQuestion {
 
-    protected Boolean run(String executionCourseId, String distributedTestId, String oldQuestionId, String newMetadataId,
+    protected Boolean run(ExecutionCourse executionCourse, String distributedTestId, String oldQuestionId, String newMetadataId,
             String studentId, TestQuestionChangesType changesType, Boolean delete, TestQuestionStudentsChangesType studentsType,
             String path) throws FenixServiceException {
 
@@ -140,7 +143,7 @@ public class ChangeStudentTestQuestion {
                                     studentTestQuestion.getStudent(), oldMark));
                         }
                     }
-                    ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
+                    ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
                     String event =
                             MessageFormat.format(bundle.getString("message.changeStudentQuestionLogMessage"),
                                     new Object[] { studentTestQuestion.getTestQuestionOrder() });
@@ -253,11 +256,11 @@ public class ChangeStudentTestQuestion {
     private static final ChangeStudentTestQuestion serviceInstance = new ChangeStudentTestQuestion();
 
     @Atomic
-    public static Boolean runChangeStudentTestQuestion(String executionCourseId, String distributedTestId, String oldQuestionId,
-            String newMetadataId, String studentId, TestQuestionChangesType changesType, Boolean delete,
+    public static Boolean runChangeStudentTestQuestion(ExecutionCourse executionCourse, String distributedTestId,
+            String oldQuestionId, String newMetadataId, String studentId, TestQuestionChangesType changesType, Boolean delete,
             TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException, NotAuthorizedException {
-        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
-        return serviceInstance.run(executionCourseId, distributedTestId, oldQuestionId, newMetadataId, studentId, changesType,
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourse);
+        return serviceInstance.run(executionCourse, distributedTestId, oldQuestionId, newMetadataId, studentId, changesType,
                 delete, studentsType, path);
     }
 

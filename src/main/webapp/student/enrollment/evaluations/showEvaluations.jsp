@@ -1,12 +1,13 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
-<ft:tilesView definition="definition.student.masterPage" attributeName="body-inline">
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication$ShowStudentEvaluations" />
+
+<f:view>
 	<f:loadBundle basename="resources/StudentResources" var="bundle"/>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
-	<h:outputText value="<em>#{bundle['title.student.portalTitle']}</em>" escape="false" />
 	<h:outputText value="<h2>#{bundle['label.evaluations.enrolment']}</h2>" escape="false" />
 	<h:outputText value="<p><em>#{bundle['label.do.enrolment']}:</em> " escape="false" />
 	<h:outputLink value="#{displayEvaluationsToEnrol.contextPath}/student/enrollment/evaluations/showWrittenEvaluations.faces?evaluationType=1">
@@ -26,7 +27,6 @@
 				   valueChangeListener="#{displayEvaluationsToEnrol.changeExecutionPeriod}">
 					<f:selectItems value="#{displayEvaluationsToEnrol.executionPeriodsLabels}" />
 				</fc:selectOneMenu>
-				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 			</h:panelGroup>
 			<h:outputText value="#{bundle['link.evaluations.enrolment']}: " styleClass="" />
 			<h:panelGroup>
@@ -34,7 +34,6 @@
 				   valueChangeListener="#{displayEvaluationsToEnrol.changeEvaluationType}">
 					<f:selectItems value="#{displayEvaluationsToEnrol.evaluationTypes}" />
 				</fc:selectOneMenu>
-				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 			</h:panelGroup>
 		</h:panelGrid>
 		<h:outputText value="</div>" escape="false" />
@@ -205,4 +204,4 @@
 		</h:outputLink>
 		<h:outputText value="</p>" escape="false"/>
 	</h:form>
-</ft:tilesView>
+</f:view>

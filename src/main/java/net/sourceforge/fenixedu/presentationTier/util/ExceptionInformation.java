@@ -19,7 +19,6 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.dataTransferObject.support.SupportRequestBean;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
@@ -28,6 +27,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.domain.MenuFunctionality;
+import org.fenixedu.bennu.portal.servlet.BennuPortalDispatcher;
 
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
@@ -370,9 +371,9 @@ public class ExceptionInformation {
             user = userView.getUsername();
             exceptionInfo.append(userView.getUsername()).append("\n");
             requestBean = SupportRequestBean.generateExceptionBean(userView.getPerson());
-            if (AbstractFunctionalityContext.getCurrentContext(request) != null) {
-                requestBean.setRequestContext(AbstractFunctionalityContext.getCurrentContext(request)
-                        .getSelectedTopLevelContainer());
+            MenuFunctionality selectedFunctionality = BennuPortalDispatcher.getSelectedFunctionality(request);
+            if (selectedFunctionality != null) {
+                requestBean.setSelectedFunctionality(selectedFunctionality);
             }
             setUserName(user);
             Set<RoleType> roles = new HashSet<RoleType>();

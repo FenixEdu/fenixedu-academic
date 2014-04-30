@@ -33,6 +33,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminServicesApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -42,6 +43,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -51,6 +54,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.Atomic;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
+@StrutsFunctionality(app = AcademicAdminServicesApp.class, path = "service-requests",
+        titleKey = "label.academic.service.requests", accessGroup = "academic(SERVICE_REQUESTS)")
 @Mapping(path = "/academicServiceRequestsManagement", module = "academicAdministration",
         formBeanClass = AcademicServiceRequestsManagementDispatchAction.AcademicServiceRequestsManagementForm.class)
 @Forwards({
@@ -70,12 +75,13 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
         @Forward(name = "prepareCancelAcademicServiceRequest",
                 path = "/academicAdminOffice/serviceRequests/prepareCancelAcademicServiceRequest.jsp"),
         @Forward(name = "prepareConcludeDocumentRequest",
-                path = "/documentRequestsManagement.do?method=prepareConcludeDocumentRequest"),
+                path = "/academicAdministration/documentRequestsManagement.do?method=prepareConcludeDocumentRequest"),
         @Forward(name = "prepareConcludeServiceRequest", path = "/academicAdminOffice/serviceRequests/concludeServiceRequest.jsp"),
         @Forward(name = "prepareCreateServiceRequest",
                 path = "/academicAdminOffice/serviceRequests/prepareCreateServiceRequest.jsp"),
         @Forward(name = "searchResults", path = "/academicAdminOffice/serviceRequests/searchResults.jsp"),
-        @Forward(name = "showCurrentBag", path = "/academicAdminOffice/serviceRequests/showCurrentBag.jsp") })
+        @Forward(name = "showCurrentBag", path = "/academicAdminOffice/serviceRequests/showCurrentBag.jsp"),
+        @Forward(name = "entryPoint", path = "/academicAdminOffice/serviceRequests/entryPoint.jsp") })
 public class AcademicServiceRequestsManagementDispatchAction extends FenixDispatchAction {
 
     private static final int REQUESTS_PER_PAGE = 50;
@@ -133,6 +139,12 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
             this.deferRequest = deferRequest;
         }
 
+    }
+
+    @EntryPoint
+    public ActionForward entryPoint(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+        return mapping.findForward("entryPoint");
     }
 
     private RegistrationAcademicServiceRequest getAndSetAcademicServiceRequest(final HttpServletRequest request) {

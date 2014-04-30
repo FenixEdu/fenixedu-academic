@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.documents.GeneratedDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -34,11 +34,9 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.serviceRequests.AcademicServiceRequestsManagementDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -47,7 +45,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/documentRequestsManagement", module = "academicAdministration",
-        formBeanClass = AcademicServiceRequestsManagementDispatchAction.AcademicServiceRequestsManagementForm.class)
+        formBeanClass = AcademicServiceRequestsManagementDispatchAction.AcademicServiceRequestsManagementForm.class,
+        functionality = AcademicServiceRequestsManagementDispatchAction.class)
 @Forwards({
         @Forward(name = "printDocument", path = "/academicAdminOffice/serviceRequests/documentRequests/printDocument.jsp"),
         @Forward(name = "createDocumentRequests",
@@ -58,9 +57,7 @@ import pt.ist.fenixframework.FenixFramework;
                 path = "/academicAdminOffice/serviceRequests/documentRequests/chooseExamsToCreateExamDateCertificateRequest.jsp"),
         @Forward(name = "viewRegistrationDetails", path = "/academicAdminOffice/student/registration/viewRegistrationDetails.jsp"),
         @Forward(name = "processNewAcademicServiceRequest",
-                path = "/academicServiceRequestsManagement.do?method=processNewAcademicServiceRequest")
-
-})
+                path = "/academicAdministration/academicServiceRequestsManagement.do?method=processNewAcademicServiceRequest") })
 public class DocumentRequestsManagementDispatchAction extends FenixDispatchAction {
 
     protected IDocumentRequest getDocumentRequest(HttpServletRequest request) {
@@ -83,7 +80,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
                 response.setContentLength(doc.getSize().intValue());
                 response.setContentType("application/pdf");
                 response.addHeader("Content-Disposition", "attachment; filename=" + doc.getFilename());
-                writer.write(doc.getContents());
+                writer.write(doc.getContent());
                 writer.flush();
             } finally {
                 writer.close();
@@ -121,34 +118,6 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
             request.setAttribute("academicServiceRequest", getAndSetAcademicServiceRequest(request));
         }
         return mapping.findForward("printDocument");
-    }
-
-    private StringBuilder buildUrl(ActionForm actionForm, HttpServletRequest request) {
-        final DynaActionForm form = (DynaActionForm) actionForm;
-
-        final StringBuilder result = new StringBuilder();
-
-        if (!StringUtils.isEmpty(request.getParameter("back"))) {
-            result.append("method=").append(request.getParameter("back"));
-        }
-
-        if (!StringUtils.isEmpty(form.getString("documentRequestType"))) {
-            result.append("&documentRequestType=").append(form.get("documentRequestType"));
-        }
-
-        if (!StringUtils.isEmpty(form.getString("requestSituationType"))) {
-            result.append("&requestSituationType=").append(form.get("requestSituationType"));
-        }
-
-        if (!StringUtils.isEmpty(form.getString("isUrgent"))) {
-            result.append("&isUrgent=").append(form.get("isUrgent"));
-        }
-
-        if (!StringUtils.isEmpty(form.getString("studentNumber"))) {
-            result.append("&studentNumber=").append(form.get("studentNumber"));
-        }
-
-        return result;
     }
 
     private Registration getRegistration(final HttpServletRequest request) {
@@ -363,8 +332,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
         final DocumentRequestCreateBean documentRequestCreateBean = getRenderedObject();
         if (documentRequestCreateBean.isToUseAll()) {
             Set<Degree> degrees =
-                    AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
-                            AcademicOperationType.SERVICE_REQUESTS);
+                    AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(), AcademicOperationType.SERVICE_REQUESTS);
             Set<Enrolment> aprovedEnrolments = new HashSet<Enrolment>();
             for (Degree degree : degrees) {
                 for (final Registration registration : documentRequestCreateBean.getStudent().getRegistrationsFor(degree)) {

@@ -10,6 +10,7 @@
 <bean:define id="contextParamValue" name="siteContextParamValue"/>
 <bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
 
+<jsp:include page="/webSiteManager/commons/colorPickerHeader.jsp" />
 
 <h2><bean:message key="title.site.banners" bundle="WEBSITEMANAGER_RESOURCES"/></h2>
 
@@ -159,7 +160,7 @@
                                     	<fr:property name="size" value="50"/>
                                     </fr:layout>
                                 </fr:edit>
-                                <p class="mvert05 smalltxt color888">O URL deve ser inserido com o protocolo, exemplo: "<%= net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstituitionURL() %>" e não "www.ist.utl.pt"</p>
+                                <p class="mvert05 smalltxt color888">O URL deve ser inserido com o protocolo, exemplo: "<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>" e não "www.ist.utl.pt"</p>
                             </td>
                             <td class="tdclear tderror1">
                             </td>

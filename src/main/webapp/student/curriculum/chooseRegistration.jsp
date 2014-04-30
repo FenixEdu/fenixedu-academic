@@ -1,10 +1,10 @@
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <html:xhtml />
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<em><bean:message key="title.student.portalTitle" bundle="STUDENT_RESOURCES"/></em>
 <h2><bean:message key="message.student.curriculum" bundle="STUDENT_RESOURCES" /></h2>
 
 <h3 class="mtop15 mbottom025"><bean:message key="label.studentRegistrations" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
@@ -15,7 +15,7 @@
 		<fr:property name="sortBy" value="startDate=desc"/>	
 		<fr:property name="classes" value="tstyle1 thlight mtop025"/>
 		<fr:property name="columnClasses" value="acenter,acenter,,,acenter,"/>
-		<fr:property name="linkFormat(view)" value="/viewCurriculum.do?method=prepare&amp;registrationOID=${externalId}" />
+		<fr:property name="linkFormat(view)" value="/viewStudentCurriculum.do?method=prepare&amp;registrationOID=${externalId}" />
 		<fr:property name="key(view)" value="view.curricular.plans"/>
 		<fr:property name="bundle(view)" value="STUDENT_RESOURCES"/>
 		<fr:property name="contextRelative(view)" value="true"/>
@@ -29,7 +29,7 @@
 		<fr:property name="sortBy" value="startDate=desc"/>	
 		<fr:property name="classes" value="tstyle1 thlight mtop025"/>
 		<fr:property name="columnClasses" value="acenter,acenter,,,acenter,"/>
-		<fr:property name="linkFormat(view)" value="/viewCurriculum.do?method=prepare&amp;registrationOID=${externalId}" />
+		<fr:property name="linkFormat(view)" value="/viewStudentCurriculum.do?method=prepare&amp;registrationOID=${externalId}" />
 		<fr:property name="key(view)" value="view.curricular.plans"/>
 		<fr:property name="bundle(view)" value="STUDENT_RESOURCES"/>
 		<fr:property name="contextRelative(view)" value="true"/>

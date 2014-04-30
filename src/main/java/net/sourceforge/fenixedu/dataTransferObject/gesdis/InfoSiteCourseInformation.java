@@ -44,7 +44,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.DateTime;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
  * @author Leonor Almeida
@@ -155,8 +155,8 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
         }
         if (getExecutionCourse().getEvaluationMethod() != null
                 && getExecutionCourse().getEvaluationMethod().getEvaluationElements() != null
-                && getExecutionCourse().getEvaluationMethod().getEvaluationElements().getContent(Language.pt) != null
-                && getExecutionCourse().getEvaluationMethod().getEvaluationElements().getContent(Language.pt).length() > MIN_LENGTH) {
+                && getExecutionCourse().getEvaluationMethod().getEvaluationElements().getContent(MultiLanguageString.pt) != null
+                && getExecutionCourse().getEvaluationMethod().getEvaluationElements().getContent(MultiLanguageString.pt).length() > MIN_LENGTH) {
             result++;
         }
 
@@ -198,8 +198,8 @@ public class InfoSiteCourseInformation extends DataTranferObject implements ISit
         }
         if (getExecutionCourse().getEvaluationMethod() != null
                 && getExecutionCourse().getEvaluationMethod().getEvaluationElements() != null
-                && getExecutionCourse().getEvaluationMethod().getEvaluationElements().getContent(Language.en) != null
-                && getExecutionCourse().getEvaluationMethod().getEvaluationElements().getContent(Language.en).length() > MIN_LENGTH) {
+                && getExecutionCourse().getEvaluationMethod().getEvaluationElements().getContent(MultiLanguageString.en) != null
+                && getExecutionCourse().getEvaluationMethod().getEvaluationElements().getContent(MultiLanguageString.en).length() > MIN_LENGTH) {
             numberOfFieldsFilled++;
         }
 

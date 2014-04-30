@@ -11,34 +11,27 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.CommonPhdIndividualProgramProcessDA;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdInactivePredicateContainer;
+import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentViewApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
+@StrutsFunctionality(app = StudentViewApp.class, path = "phds", titleKey = "label.phds", bundle = "PhdResources")
 @Mapping(path = "/phdIndividualProgramProcess", module = "student")
-@Forwards({
-
-@Forward(name = "viewProcess", path = "/phd/student/viewProcess.jsp"),
-
-@Forward(name = "viewAlertMessages", path = "/phd/student/viewAlertMessages.jsp"),
-
-@Forward(name = "viewAlertMessageArchive", path = "/phd/student/viewAlertMessageArchive.jsp"),
-
-@Forward(name = "viewAlertMessage", path = "/phd/student/viewAlertMessage.jsp"),
-
-@Forward(name = "viewProcessAlertMessages", path = "/phd/student/viewProcessAlertMessages.jsp"),
-
-@Forward(name = "viewProcessAlertMessageArchive", path = "/phd/student/viewProcessAlertMessageArchive.jsp"),
-
-@Forward(name = "choosePhdProcess", path = "/phd/student/choosePhdProcess.jsp")
-
-})
+@Forwards({ @Forward(name = "viewProcess", path = "/phd/student/viewProcess.jsp"),
+        @Forward(name = "viewAlertMessages", path = "/phd/student/viewAlertMessages.jsp"),
+        @Forward(name = "viewAlertMessageArchive", path = "/phd/student/viewAlertMessageArchive.jsp"),
+        @Forward(name = "viewAlertMessage", path = "/phd/student/viewAlertMessage.jsp"),
+        @Forward(name = "viewProcessAlertMessages", path = "/phd/student/viewProcessAlertMessages.jsp"),
+        @Forward(name = "viewProcessAlertMessageArchive", path = "/phd/student/viewProcessAlertMessageArchive.jsp"),
+        @Forward(name = "choosePhdProcess", path = "/phd/student/choosePhdProcess.jsp") })
 public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {
 
     @Override
@@ -59,7 +52,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
         final Person person = getLoggedPerson(request);
         PhdIndividualProgramProcess process = super.getProcess(request);
         if ((process == null) && (person.getPhdIndividualProgramProcessesSet().size() == 1)) {
-            process = person.getPhdIndividualProgramProcesses().iterator().next();
+            process = person.getPhdIndividualProgramProcessesSet().iterator().next();
         }
         return process;
     }
@@ -76,7 +69,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
             return mapping.findForward("viewProcess");
         }
 
-        request.setAttribute("processes", person.getPhdIndividualProgramProcesses());
+        request.setAttribute("processes", person.getPhdIndividualProgramProcessesSet());
         return mapping.findForward("choosePhdProcess");
     }
 

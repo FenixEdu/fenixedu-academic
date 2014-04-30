@@ -10,15 +10,14 @@ import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class GenericApplicationPeriodBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private MultiLanguageString title = new MultiLanguageString(Language.en, "");
-    private MultiLanguageString description = new MultiLanguageString(Language.en, "");
+    private MultiLanguageString title = new MultiLanguageString(MultiLanguageString.en, "");
+    private MultiLanguageString description = new MultiLanguageString(MultiLanguageString.en, "");
     private DateTime start;
     private DateTime end;
 

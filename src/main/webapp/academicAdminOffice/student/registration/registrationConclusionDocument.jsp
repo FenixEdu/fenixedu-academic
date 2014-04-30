@@ -7,7 +7,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.Person"%>
 <%@page import="net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice" %>
 <%@page import="net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.DegreeFinalizationCertificate"%>
-<%@page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
+<%@page import="org.fenixedu.commons.i18n.I18N"%>
 <%@page import="org.joda.time.LocalDate"%>
 
 <html:xhtml />
@@ -140,7 +140,7 @@
 </logic:equal>	
 
 <%
-	request.setAttribute("degreeFinalizationDate", registrationConclusionBean.getConclusionDate().toString("dd 'de' MMMM 'de' yyyy", Language.getLocale()));
+	request.setAttribute("degreeFinalizationDate", registrationConclusionBean.getConclusionDate().toString("dd 'de' MMMM 'de' yyyy", I18N.getLocale()));
 	final Integer finalAverage = registrationConclusionBean.getFinalAverage();	
 	request.setAttribute("finalAverage", finalAverage);
 	request.setAttribute("degreeFinalizationGrade", DegreeFinalizationCertificate.getDegreeFinalizationGrade(finalAverage));
@@ -152,7 +152,7 @@
 	request.setAttribute("administrativeOfficeCoordinator", administrativeOfficeCoordinator);
 	request.setAttribute("administrativeOfficeCoordinatorGender", administrativeOfficeCoordinator.isMale() ? "" : "a");
 	request.setAttribute("administrativeOfficeName", office.getUnit().getName());
-	request.setAttribute("day", new LocalDate().toString("dd 'de' MMMM 'de' yyyy", Language.getLocale()));
+	request.setAttribute("day", new LocalDate().toString("dd 'de' MMMM 'de' yyyy", I18N.getLocale()));
 %>
 
 <table class="apura-final mtop2" width="90%" cellspacing="0" border="0">

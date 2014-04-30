@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
-import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.StringNormalizer;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
@@ -55,16 +55,20 @@ public class UnitAcronym extends UnitAcronym_Base {
         if (acronym == null) {
             return null;
         }
-        final String acronymLowerCase = shouldNormalize ? Content.normalize(acronym.toLowerCase()) : acronym.toLowerCase();
+        final String acronymLowerCase = shouldNormalize ? normalize(acronym.toLowerCase()) : acronym.toLowerCase();
 
         for (UnitAcronym unitAcronym : Bennu.getInstance().getUnitAcronymsSet()) {
 
-            if ((shouldNormalize && Content.normalize(unitAcronym.getAcronym()).equals(acronymLowerCase))
+            if ((shouldNormalize && normalize(unitAcronym.getAcronym()).equals(acronymLowerCase))
                     || unitAcronym.getAcronym().equals(acronymLowerCase)) {
                 return unitAcronym;
             }
         }
         return null;
+    }
+
+    public static String normalize(final String string) {
+        return string == null ? null : StringNormalizer.normalize(string).replace(' ', '-');
     }
 
     @Deprecated

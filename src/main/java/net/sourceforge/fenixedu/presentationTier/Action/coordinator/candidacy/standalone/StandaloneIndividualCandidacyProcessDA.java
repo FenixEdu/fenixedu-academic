@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -13,27 +13,24 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(
         path = "/caseHandlingStandaloneIndividualCandidacyProcess",
         module = "coordinator",
-        formBeanClass = net.sourceforge.fenixedu.presentationTier.Action.candidacy.standalone.StandaloneIndividualCandidacyProcessDA.StandaloneIndividualCandidacyForm.class)
+        formBeanClass = net.sourceforge.fenixedu.presentationTier.Action.candidacy.standalone.StandaloneIndividualCandidacyProcessDA.StandaloneIndividualCandidacyForm.class,
+        functionality = DegreeCoordinatorIndex.class)
 @Forwards({
-        @Forward(name = "intro", path = "/caseHandlingStandaloneCandidacyProcess.do?method=listProcessAllowedActivities",
-                tileProperties = @Tile(title = "private.coordinator.management.courses.applicationprocesses.isolatedcurriculum")),
+        @Forward(name = "intro",
+                path = "/coordinator/caseHandlingStandaloneCandidacyProcess.do?method=listProcessAllowedActivities"),
         @Forward(name = "list-allowed-activities",
-                path = "/coordinator/candidacy/standalone/listIndividualCandidacyActivities.jsp", tileProperties = @Tile(
-                        title = "private.coordinator.management.courses.applicationprocesses.isolatedcurriculum"))
-
-})
+                path = "/coordinator/candidacy/standalone/listIndividualCandidacyActivities.jsp") })
 public class StandaloneIndividualCandidacyProcessDA extends
         net.sourceforge.fenixedu.presentationTier.Action.candidacy.standalone.StandaloneIndividualCandidacyProcessDA {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        CoordinatedDegreeInfo.setCoordinatorContext(request);
+        DegreeCoordinatorIndex.setCoordinatorContext(request);
         return super.execute(mapping, actionForm, request, response);
     }
 

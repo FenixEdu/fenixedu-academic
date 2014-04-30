@@ -3,8 +3,23 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
+<style>
+.text-right { text-align: right; }
+.table { 
+border-collapse: collapse;
+border-spacing: 0;
+max-width: 100%;
+background-color: transparent;
+width: 100%;
+margin-bottom: 20px;
+border: 1px solid #ddd;
+}
+.table-bordered>thead>tr>th, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>td {
+border: 1px solid #ddd;
+}
+</style>
 
-<ft:tilesView locale="<%=request.getAttribute(org.apache.struts.Globals.LOCALE_KEY).toString()%>" definition="definition.public.mainPageIST" attributeName="body-inline">
+<ft:tilesView definition="definition.public.mainPageIST" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/PublicDegreeInformation" var="bundle"/>
 	<f:loadBundle basename="resources/ApplicationResources" var="bundleApplication"/>
@@ -12,6 +27,7 @@
 
 	<h:form id="publicEvaluationForm">
 		<h:outputText escape="false" value="<input alt='input.degreeID' id='degreeID' name='degreeID' type='hidden' value='#{publicEvaluations.degreeID}'/>"/>
+		<h:outputText escape="false" value="<input alt='input.degreeID' id='degreeID' name='publicEvaluationForm:degreeID' type='hidden' value='#{publicEvaluations.degreeID}'/>"/>
 
 		<h:outputText value="<div class='breadcumbs mvert0'>" escape="false"/>
 			<fc:breadCrumbs degree="#{publicEvaluations.degree}" trailingCrumb="#{bundle['public.degree.information.label.evaluations']}"/>

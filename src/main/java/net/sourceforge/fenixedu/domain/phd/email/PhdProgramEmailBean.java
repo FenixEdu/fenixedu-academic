@@ -14,7 +14,7 @@ import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.predicates.AndPredicate;
 import pt.utl.ist.fenix.tools.predicates.InlinePredicate;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdProgramEmailBean extends PhdEmailBean {
 
@@ -33,8 +33,8 @@ public class PhdProgramEmailBean extends PhdEmailBean {
     }
 
     public PhdProgramEmailBean(PhdProgramEmail email) {
-        this.subject = email.getFormattedSubject().getContent(Language.pt);
-        this.message = email.getFormattedBody().getContent(Language.pt);
+        this.subject = email.getFormattedSubject().getContent(MultiLanguageString.pt);
+        this.message = email.getFormattedBody().getContent(MultiLanguageString.pt);
         this.bccs = email.getBccs();
         this.creationDate = email.getWhenCreated();
         this.creator = email.getPerson();

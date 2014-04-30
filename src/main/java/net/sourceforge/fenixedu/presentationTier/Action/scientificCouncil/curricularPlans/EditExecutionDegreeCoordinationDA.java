@@ -16,25 +16,26 @@ import net.sourceforge.fenixedu.domain.OperationType;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.ScientificCouncilApplication.ScientificBolonhaProcessApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
+@StrutsFunctionality(app = ScientificBolonhaProcessApp.class, path = "edit-degree-coordination",
+        titleKey = "navigation.manageCoordinationTeams")
 @Mapping(path = "/curricularPlans/editExecutionDegreeCoordination", module = "scientificCouncil")
-@Forwards({
-        @Forward(name = "presentCoordination", path = "/scientificCouncil/curricularPlans/presentCoordination.jsp"),
-        @Forward(name = "editCoordination", path = "/scientificCouncil/curricularPlans/editCoordination.jsp",
-                tileProperties = @Tile(title = "private.scientificcouncil.bolognaprocess.managecoordinationteams")),
-        @Forward(name = "selectYearAndDegree", path = "/scientificCouncil/curricularPlans/selectYearAndDegree.jsp",
-                tileProperties = @Tile(title = "private.scientificcouncil.bolognaprocess.managecoordinationteams")) })
+@Forwards({ @Forward(name = "presentCoordination", path = "/scientificCouncil/curricularPlans/presentCoordination.jsp"),
+        @Forward(name = "editCoordination", path = "/scientificCouncil/curricularPlans/editCoordination.jsp"),
+        @Forward(name = "selectYearAndDegree", path = "/scientificCouncil/curricularPlans/selectYearAndDegree.jsp") })
 public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
 
     public ActionForward prepareEditCoordination(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -166,6 +167,7 @@ public class EditExecutionDegreeCoordinationDA extends FenixDispatchAction {
         return mapping.findForward("editCoordination");
     }
 
+    @EntryPoint
     public ActionForward editByYears(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 

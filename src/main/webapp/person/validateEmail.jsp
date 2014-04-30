@@ -8,7 +8,6 @@
 
 <logic:present role="role(PERSON)">
 
-	<em><bean:message key="label.person.main.title" /></em>
 	<h2><bean:message key="label.validate.email"/></h2>
 
 

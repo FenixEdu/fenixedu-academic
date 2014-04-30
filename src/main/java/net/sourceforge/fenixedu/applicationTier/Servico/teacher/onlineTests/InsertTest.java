@@ -1,21 +1,15 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
 import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.FenixFramework;
 
 public class InsertTest {
 
-    protected String run(String executionCourseId, String title, String information) throws InvalidArgumentsServiceException {
-        ExecutionCourse executionCourse = FenixFramework.getDomainObject(executionCourseId);
-        if (executionCourse == null) {
-            throw new InvalidArgumentsServiceException();
-        }
+    protected String run(ExecutionCourse executionCourse, String title, String information) {
         TestScope testScope = executionCourse.getTestScope();
         if (testScope == null) {
             testScope = new TestScope(executionCourse);
@@ -29,10 +23,10 @@ public class InsertTest {
     private static final InsertTest serviceInstance = new InsertTest();
 
     @Atomic
-    public static String runInsertTest(String executionCourseId, String title, String information)
-            throws InvalidArgumentsServiceException, NotAuthorizedException {
-        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
-        return serviceInstance.run(executionCourseId, title, information);
+    public static String runInsertTest(ExecutionCourse executionCourse, String title, String information)
+            throws NotAuthorizedException {
+        ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourse);
+        return serviceInstance.run(executionCourse, title, information);
     }
 
 }

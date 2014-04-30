@@ -12,10 +12,6 @@
 
 <%@ page import="java.util.Calendar" %>
 
-<logic:present name="siteView" property="component">
-	<bean:define id="component" name="siteView" property="component" />
-
-	
 	
 	<h2><bean:message key="title.StudentGroupInformation"/></h2>
 	
@@ -149,7 +145,7 @@
 
 <ul>
 	<li>		
-		<html:link page="<%="/viewShiftsAndGroups.do?method=viewShiftsAndGroups&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()%>">
+		<html:link page="<%="/studentGroupManagement.do?method=viewShiftsAndGroups&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()%>">
 			<bean:message key="link.backToShiftsAndGroups"/>
 		</html:link>
 	</li>
@@ -171,13 +167,13 @@
 		<logic:lessEqual name="ShiftType" value="2">
 		<bean:define id="infoShift" name="infoStudentGroup" property="infoShift"/>	
 		<bean:define id="shiftCode" name="infoShift" property="externalId"/>
-		<html:link page="<%="/editStudentGroupMembers.do?method=prepareEditStudentGroupMembers&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString() + "&amp;shiftCode=" + shiftCode.toString()%>">
+		<html:link page="<%="/studentGroupManagement.do?method=prepareEditStudentGroupMembers&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString() + "&amp;shiftCode=" + shiftCode.toString()%>">
 	    	<bean:message key="link.editGroupMembers"/>
 	    </html:link>
 	 	</logic:lessEqual>
 	 	
 		<logic:greaterEqual name="ShiftType" value="3">
-		<html:link page="<%="/editStudentGroupMembers.do?method=prepareEditStudentGroupMembers&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
+		<html:link page="<%="/studentGroupManagement.do?method=prepareEditStudentGroupMembers&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
 	    	<bean:message key="link.editGroupMembers"/>
 	    </html:link> | 
 	 	</logic:greaterEqual> 
@@ -187,29 +183,29 @@
 	    <bean:define id="infoShift" name="infoStudentGroup" property="infoShift"/>	
 		<bean:define id="shiftCode" name="infoShift" property="externalId"/>
 	    
-	    <html:link page="<%="/editStudentGroupShift.do?method=prepareEditStudentGroupShift&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;shiftCode=" + shiftCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
+	    <html:link page="<%="/studentGroupManagement.do?method=prepareEditStudentGroupShift&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;shiftCode=" + shiftCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
 	    	<bean:message key="link.editGroupShift"/></html:link> | 
 		</logic:equal>
 		
 		<logic:equal name="ShiftType" value="3">
-	    <html:link page="<%="/enrollStudentGroupShift.do?method=prepareEnrollStudentGroupShift&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
+	    <html:link page="<%="/studentGroupManagement.do?method=prepareEnrollStudentGroupShift&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
 	    	<bean:message key="link.enrollStudentGroupInShift"/></html:link> | 
 		</logic:equal>
 		
 		<logic:equal name="ShiftType" value="2">
-	    <html:link page="<%="/unEnrollStudentGroupShift.do?method=unEnrollStudentGroupShift&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
+	    <html:link page="<%="/studentGroupManagement.do?method=unEnrollStudentGroupShift&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
 	    	<bean:message key="link.unEnrollStudentGroupShift"/></html:link> | 
 		</logic:equal>
 		
 		<logic:lessEqual name="ShiftType" value="2">
 		<bean:define id="infoShift" name="infoStudentGroup" property="infoShift"/>	
 		<bean:define id="shiftCode" name="infoShift" property="externalId"/>
-		<html:link page="<%= "/deleteStudentGroup.do?method=deleteStudentGroup&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;shiftCode=" + shiftCode.toString() +"&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
+		<html:link page="<%= "/studentGroupManagement.do?method=deleteStudentGroup&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID") + "&amp;shiftCode=" + shiftCode.toString() +"&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
 	    	<bean:message key="link.deleteGroup"/></html:link>
 		</logic:lessEqual>
 		
 		<logic:greaterEqual name="ShiftType" value="3">
-		<html:link page="<%= "/deleteStudentGroup.do?method=deleteStudentGroup&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
+		<html:link page="<%= "/studentGroupManagement.do?method=deleteStudentGroup&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")  + "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
 	    	<bean:message key="link.deleteGroup"/></html:link>
 		</logic:greaterEqual> 
 	</p>
@@ -221,7 +217,7 @@
 	
 	<ul class="mbottom05">
 		<li>
-			<html:link page="<%="/viewShiftsAndGroups.do?method=viewShiftsAndGroups&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()%>">
+			<html:link page="<%="/studentGroupManagement.do?method=viewShiftsAndGroups&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()%>">
 		    	<bean:message key="link.backToShiftsAndGroups"/>
 			</html:link>
 		</li>
@@ -229,7 +225,7 @@
 		
 	<bean:define id="nrOfElements" name="component" property="nrOfElements"/>
 				 			 		
-	<bean:define id="sendMailLink" type="java.lang.String">/sendMailToWorkGroupStudents.do?method=sendEmail&amp;objectCode=<%= pageContext.findAttribute("objectCode").toString() %>&amp;groupPropertiesCode=<%= groupPropertiesCode.toString() %>&amp;studentGroupCode=<%= studentGroupCode.toString() %></bean:define>
+	<bean:define id="sendMailLink" type="java.lang.String">/sendMailToWorkGroupStudents.do?method=sendEmail&amp;executionCourseID=<%= pageContext.findAttribute("executionCourseID").toString() %>&amp;groupPropertiesCode=<%= groupPropertiesCode.toString() %>&amp;studentGroupCode=<%= studentGroupCode.toString() %></bean:define>
 	<ul class="mtop05">
 		<li>
 		   <html:link page="<%= sendMailLink %>">
@@ -248,24 +244,24 @@
 		<bean:define id="shiftCode" name="infoShift" property="externalId"/>
 	
 		<logic:present name="showPhotos">
-			<html:link page="<%="/viewStudentGroupInformation.do?method=viewStudentGroupInformation&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;shiftCode=" + shiftCode.toString()+ "&amp;showPhotos=true&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
+			<html:link page="<%="/studentGroupManagement.do?method=viewStudentGroupInformation&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;shiftCode=" + shiftCode.toString()+ "&amp;showPhotos=true&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
 		    		<bean:message key="label.viewPhoto"/>
 			</html:link>
 		</logic:present>
 		<logic:notPresent name="showPhotos">
-			<html:link page="<%="/viewStudentGroupInformation.do?method=viewStudentGroupInformation&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;shiftCode=" + shiftCode.toString()+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
+			<html:link page="<%="/studentGroupManagement.do?method=viewStudentGroupInformation&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;shiftCode=" + shiftCode.toString()+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
 		    		<bean:message key="label.notViewPhoto"/>
 			</html:link>
 		</logic:notPresent>
 	</logic:present>
 	<logic:notPresent name="infoStudentGroup" property="infoShift">
 		<logic:present name="showPhotos">
-			<html:link page="<%="/viewStudentGroupInformation.do?method=viewStudentGroupInformation&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;showPhotos=true&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
+			<html:link page="<%="/studentGroupManagement.do?method=viewStudentGroupInformation&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;showPhotos=true&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
 		    		<bean:message key="label.viewPhoto"/>
 			</html:link>
 		</logic:present>
 		<logic:notPresent name="showPhotos">
-			<html:link page="<%="/viewStudentGroupInformation.do?method=viewStudentGroupInformation&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
+			<html:link page="<%="/studentGroupManagement.do?method=viewStudentGroupInformation&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
 		    		<bean:message key="label.notViewPhoto"/>
 			</html:link>
 		</logic:notPresent>
@@ -327,13 +323,13 @@
 		<logic:lessEqual name="ShiftType" value="2">
 		<bean:define id="infoShift" name="infoStudentGroup" property="infoShift"/>	
 		<bean:define id="shiftCode" name="infoShift" property="externalId"/>
-		<html:link page="<%="/editStudentGroupMembers.do?method=prepareEditStudentGroupMembers&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString() + "&amp;shiftCode=" + shiftCode.toString()%>">
+		<html:link page="<%="/studentGroupManagement.do?method=prepareEditStudentGroupMembers&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString() + "&amp;shiftCode=" + shiftCode.toString()%>">
 	    	<bean:message key="link.editGroupMembers"/>
 	    </html:link> | 
 	 	</logic:lessEqual>
 	 	
 	 	<logic:greaterEqual name="ShiftType" value="3">
-		<html:link page="<%="/editStudentGroupMembers.do?method=prepareEditStudentGroupMembers&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
+		<html:link page="<%="/studentGroupManagement.do?method=prepareEditStudentGroupMembers&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
 	    	<bean:message key="link.editGroupMembers"/>
 	    </html:link> | 
 	 	</logic:greaterEqual> 
@@ -341,19 +337,19 @@
 	    <logic:equal name="ShiftType" value="1">
 	     <bean:define id="infoShift" name="infoStudentGroup" property="infoShift"/>	
 		 <bean:define id="shiftCode" name="infoShift" property="externalId"/>
-	    <html:link page="<%="/editStudentGroupShift.do?method=prepareEditStudentGroupShift&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;shiftCode=" + shiftCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
+	    <html:link page="<%="/studentGroupManagement.do?method=prepareEditStudentGroupShift&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;shiftCode=" + shiftCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
 	    	<bean:message key="link.editGroupShift"/>
 	    </html:link> | 
     	</logic:equal>
 	    	
 	    <logic:equal name="ShiftType" value="3">
-	    <html:link page="<%="/enrollStudentGroupShift.do?method=prepareEnrollStudentGroupShift&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
+	    <html:link page="<%="/studentGroupManagement.do?method=prepareEnrollStudentGroupShift&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
 	    	<bean:message key="link.enrollStudentGroupInShift"/>
 	    </html:link> | 
 		</logic:equal>
 		
 		<logic:equal name="ShiftType" value="2">
-	    <html:link page="<%="/unEnrollStudentGroupShift.do?method=unEnrollStudentGroupShift&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
+	    <html:link page="<%="/studentGroupManagement.do?method=unEnrollStudentGroupShift&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
 	    	<bean:message key="link.unEnrollStudentGroupShift"/>
 	    </html:link> | 
 		</logic:equal>
@@ -361,13 +357,13 @@
 		<logic:lessEqual name="ShiftType" value="2">
 		<bean:define id="infoShift" name="infoStudentGroup" property="infoShift"/>	
 		<bean:define id="shiftCode" name="infoShift" property="externalId"/>
-		<html:link page="<%= "/deleteStudentGroup.do?method=deleteStudentGroup&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;shiftCode=" + shiftCode.toString() +"&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
+		<html:link page="<%= "/studentGroupManagement.do?method=deleteStudentGroup&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID") + "&amp;shiftCode=" + shiftCode.toString() +"&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
 	    	<bean:message key="link.deleteGroup"/>
 	    </html:link>
 		</logic:lessEqual>
 		
 		<logic:greaterEqual name="ShiftType" value="3">
-		<html:link page="<%= "/deleteStudentGroup.do?method=deleteStudentGroup&amp;objectCode=" + pageContext.findAttribute("objectCode")  + "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
+		<html:link page="<%= "/studentGroupManagement.do?method=deleteStudentGroup&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")  + "&amp;groupPropertiesCode=" + groupPropertiesCode.toString()+ "&amp;studentGroupCode=" + studentGroupCode.toString()%>">
 	    	<bean:message key="link.deleteGroup"/>
 	    </html:link>
 		</logic:greaterEqual> 
@@ -376,10 +372,3 @@
  	
 </logic:notEmpty>
 	 
-</logic:present>
-
-<logic:notPresent name="siteView" property="component">
-<p>
-	<span class="warning0"><bean:message key="message.infoSiteStudentGroupList.not.available" /></span>
-</p>
-</logic:notPresent>

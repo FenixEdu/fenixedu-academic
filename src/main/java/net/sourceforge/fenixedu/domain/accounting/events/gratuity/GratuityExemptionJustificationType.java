@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import org.fenixedu.commons.i18n.I18N;
+
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public enum GratuityExemptionJustificationType {
 
@@ -74,7 +76,7 @@ public enum GratuityExemptionJustificationType {
     }
 
     public String getLocalizedName() {
-        return localizedName(Language.getLocale());
+        return localizedName(I18N.getLocale());
     }
 
 }

@@ -5,7 +5,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 <html:xhtml/>
 
 <bean:define id="site" name="site" type="net.sourceforge.fenixedu.domain.Site"/>
@@ -15,16 +14,13 @@
 <bean:define id="context" value="<%= contextParam + "=" + contextParamValue %>"/>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
 
-
 <logic:present name="section">
     <bean:define id="section" name="section" type="net.sourceforge.fenixedu.domain.Section"/>
 
 
     <h2>
         <fr:view name="section" property="name" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString"/>
-		<app:defineContentPath id="sectionURL" name="section" toScope="request"/>
-		<bean:define id="url" name="sectionURL" type="java.lang.String"/>
-  		<span class="permalink1">(<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath()  + url %>"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
+  		<span class="permalink1">(<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="${section.fullPath}"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
     </h2>
 
     <logic:present name="hasRestrictedItems">
@@ -36,7 +32,7 @@
 							    final String server = request.getServerName();
 							    final int port = request.getServerPort();
 		%>
-				<a href="<%= "https://barra.tecnico.ulisboa.pt/login?next=https://id.ist.utl.pt/cas/login?service=" + schema + "://" + server + (port == 80 || port == 443 ? "" : ":" + port) + request.getContextPath() + section.getReversePath() %>">
+				<a href="<%= "https://barra.tecnico.ulisboa.pt/login?next=https://id.ist.utl.pt/cas/login?service=" + schema + "://" + server + (port == 80 || port == 443 ? "" : ":" + port) + section.getFullPath() %>">
             		<bean:message key="link.section.view.login" bundle="SITE_RESOURCES"/>
        			</a>.
 		<%
@@ -64,12 +60,10 @@
 				<tr>
 					<td class="box_cell">
 						<ul>
-								<logic:iterate id="file" name="section" property="visibleFiles" type="net.sourceforge.fenixedu.domain.contents.Attachment">		
+								<logic:iterate id="file" name="section" property="visibleFiles">		
 									<li>
-									<app:contentLink name="file">
-									<fr:view name="file" property="name"/> 
-									</app:contentLink>
-									 <span class="color888">(<fr:view name="file" property="file.filename"/>, <fr:view name="file" property="file.size" layout="fileSize"/>)</span></li>
+										<a href="${file.downloadUrl}">${file.displayName}</a>
+									 <span class="color888">(${file.filename}, <fr:view name="file" property="size" layout="fileSize"/>)</span></li>
 								</logic:iterate>
 						</ul>
 					</td>						
@@ -81,9 +75,7 @@
 				<ul>
 					<logic:iterate id="section" name="section" property="orderedVisibleSubSections" type="net.sourceforge.fenixedu.domain.Section">		
 							<li>
-							<app:contentLink name="section">
-							<fr:view name="section" property="name"/>
-							</app:contentLink>
+								<a href="${section.fullPath}">${section.name}</a>
 							</li>
 						</logic:iterate>
 				</ul>
@@ -102,9 +94,7 @@
 	                <fr:view name="item" property="name"/>
 
 		            <logic:equal name="item" property="publicAvailable" value="true">
-	 				    <app:defineContentPath id="itemURL" name="item" toScope="request"/>
-						<bean:define id="url" name="itemURL" type="java.lang.String"/>
-		                  <span class="permalink1">(<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + url %>"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
+		                  <span class="permalink1">(<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="${item.fullPath}"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
 	    			</logic:equal>
 	            </h3>
             </logic:equal>
@@ -119,8 +109,8 @@
             			</fr:view>
             		</logic:notEmpty>
                     
-            		<logic:notEmpty name="item" property="sortedVisibleFileItems">
-                    <fr:view name="item" property="sortedVisibleFileItems">
+            		<logic:notEmpty name="item" property="visibleFiles">
+                    <fr:view name="item" property="visibleFiles">
                         <fr:layout name="list">
                             <fr:property name="eachSchema" value="site.item.file.basic"/>
                             <fr:property name="eachLayout" value="values"/>

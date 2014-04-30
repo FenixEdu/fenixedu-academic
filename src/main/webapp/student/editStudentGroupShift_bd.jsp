@@ -5,7 +5,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 
 
-<em><bean:message key="title.student.portalTitle"/></em>
 <h2><bean:message key="title.editStudentGroupShift"/></h2>
 
 <logic:present name="shiftsList">

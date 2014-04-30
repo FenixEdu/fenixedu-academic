@@ -13,70 +13,62 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.util.LabelValueBeanUtils;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
+import net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherApplication.TeacherTeachingApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.DynaActionForm;
-import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "teacher", path = "/showProfessorships", input = "/showProfessorships.do?method=list",
-        attribute = "showProfessorshipsForm", formBean = "showProfessorshipsForm", scope = "request", validate = false,
-        parameter = "method")
-@Forwards(value = { @Forward(name = "list", path = "list-professorships") })
-public class ShowProfessorshipsDA extends FenixDispatchAction {
+@StrutsFunctionality(app = TeacherTeachingApp.class, path = "manage-execution-course", titleKey = "link.manage.executionCourse")
+@Mapping(module = "teacher", path = "/showProfessorships")
+@Forwards(@Forward(name = "list", path = "/teacher/listProfessorships.jsp"))
+public class ShowProfessorshipsDA extends FenixAction {
 
-    public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        final User userView = getUserView(request);
-        final DynaActionForm dynaActionForm = (DynaActionForm) form;
         final String executionPeriodIDString = request.getParameter("executionPeriodID");
-
-        final SortedSet<ExecutionSemester> executionSemesters = new TreeSet<ExecutionSemester>();
 
         final ExecutionSemester selectedExecutionPeriod;
         if (executionPeriodIDString == null) {
             selectedExecutionPeriod = ExecutionSemester.readActualExecutionSemester();
-            dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getExternalId().toString());
-            dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getExternalId().toString());
-        } else if (executionPeriodIDString.length() > 0) {
-            selectedExecutionPeriod = FenixFramework.getDomainObject(executionPeriodIDString);
-            dynaActionForm.set("executionPeriodID", selectedExecutionPeriod.getExternalId().toString());
-        } else {
+        } else if (executionPeriodIDString.isEmpty()) {
             selectedExecutionPeriod = null;
-            dynaActionForm.set("executionPeriodID", "");
+        } else {
+            selectedExecutionPeriod = FenixFramework.getDomainObject(executionPeriodIDString);
         }
+        request.setAttribute("executionPeriod", selectedExecutionPeriod);
 
         final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
         request.setAttribute("executionCourses", executionCourses);
 
-        if (userView != null) {
-            final Person person = userView.getPerson();
-            if (person != null) {
-                for (final Professorship professorship : person.getProfessorshipsSet()) {
-                    final ExecutionCourse executionCourse = professorship.getExecutionCourse();
-                    final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
+        final Person person = AccessControl.getPerson();
+        final SortedSet<ExecutionSemester> executionSemesters = new TreeSet<ExecutionSemester>();
+        if (person != null) {
+            for (final Professorship professorship : person.getProfessorshipsSet()) {
+                final ExecutionCourse executionCourse = professorship.getExecutionCourse();
+                final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
 
-                    executionSemesters.add(executionSemester);
-                    if (selectedExecutionPeriod == null || selectedExecutionPeriod == executionSemester) {
-                        executionCourses.add(executionCourse);
-                    }
+                executionSemesters.add(executionSemester);
+                if (selectedExecutionPeriod == null || selectedExecutionPeriod == executionSemester) {
+                    executionCourses.add(executionCourse);
                 }
             }
         }
         executionSemesters.add(ExecutionSemester.readActualExecutionSemester());
         Collections.sort(executionCourses, ExecutionCourse.EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
+        Collections.reverse(executionCourses);
 
-        request.setAttribute("executionPeriodLabelValueBeans",
-                LabelValueBeanUtils.executionPeriodLabelValueBeans(executionSemesters, true));
+        request.setAttribute("semesters", executionSemesters);
 
         return mapping.findForward("list");
     }

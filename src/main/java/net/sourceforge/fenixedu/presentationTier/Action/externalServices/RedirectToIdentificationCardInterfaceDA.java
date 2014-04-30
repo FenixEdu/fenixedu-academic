@@ -12,6 +12,7 @@ import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/loginForIdentificationCard", module = "external")
@@ -29,12 +30,10 @@ public class RedirectToIdentificationCardInterfaceDA extends FenixDispatchAction
             actionForward.setRedirect(true);
             actionForward.setModule("");
 
-            final String path = "/person/identificationCard.do?method=prepare&contentContextPath_PATH=/pessoal/pessoal";
+            final String path = "/person/identificationCard.do?method=prepare";
 
-            actionForward.setPath(path + "&"
-                    + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.CHECKSUM_ATTRIBUTE_NAME
-                    + "="
-                    + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.calculateChecksum(path));
+            actionForward.setPath(path + "&" + GenericChecksumRewriter.CHECKSUM_ATTRIBUTE_NAME + "="
+                    + GenericChecksumRewriter.calculateChecksum(path, request.getSession()));
             return actionForward;
         } else {
             return null;

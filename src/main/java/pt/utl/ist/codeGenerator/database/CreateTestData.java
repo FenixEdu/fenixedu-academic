@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.SupportLessonDTO;
@@ -16,6 +17,7 @@ import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CompetenceCourseType;
 import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
@@ -58,8 +60,6 @@ import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
@@ -131,7 +131,11 @@ import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.Season;
 
+import org.fenixedu.bennu.core.bootstrap.AdminUserBootstrapper.AdminUserSection;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.portal.domain.PortalBootstrapper.PortalSection;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.YearMonthDay;
@@ -140,8 +144,7 @@ import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
-import pt.utl.ist.codeGenerator.database.Installer.InstallationProcess;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.codeGenerator.database.FenixBootstrapper.SchoolSetupSection;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateTestData {
@@ -178,7 +181,7 @@ public class CreateTestData {
     public static class CreateExecutionYears extends AtomicAction {
         @Override
         public void doIt() {
-            Language.setLocale(Language.getDefaultLocale());
+            I18N.setLocale(Locale.getDefault());
 
             final int numYearsToCreate = 5;
             final YearMonthDay today = new YearMonthDay();
@@ -319,11 +322,13 @@ public class CreateTestData {
     static AdministrativeOffice administrativeOffice;
 
     public static class CreateOrganizationalStructure {
-        public void doIt(InstallationProcess process) {
-            final CountryUnit countryUnit = getCountryUnit(process.country.getName());
+        public void doIt(PortalSection portalSection, SchoolSetupSection schoolSetupSection) {
+            final CountryUnit countryUnit = getCountryUnit(Country.readDefault().getName());
             final UniversityUnit universityUnit =
-                    createUniversityUnit(countryUnit, process.universityName, process.universityAcronym);
-            final SchoolUnit institutionUnit = createSchoolUnit(universityUnit, process.schoolName, process.schoolAcronym);
+                    createUniversityUnit(countryUnit, schoolSetupSection.getUniversityName(),
+                            schoolSetupSection.getUniversityAcronym());
+            final SchoolUnit institutionUnit =
+                    createSchoolUnit(universityUnit, portalSection.getOrganizationName(), schoolSetupSection.getSchoolAcronym());
             getRootDomainObject().setInstitutionUnit(institutionUnit);
             final AggregateUnit serviceUnits = createAggregateUnit(institutionUnit, "Services");
             //createServiceUnits(serviceUnits);
@@ -347,29 +352,28 @@ public class CreateTestData {
 
         private UniversityUnit createUniversityUnit(final CountryUnit countryUnit, final String universityName,
                 final String universityAcronym) {
-            return UniversityUnit.createNewUniversityUnit(new MultiLanguageString(Language.getDefaultLanguage(), universityName),
-                    null, null, universityAcronym, new YearMonthDay(), null, countryUnit, null, null, false, null);
+            return UniversityUnit.createNewUniversityUnit(new MultiLanguageString(Locale.getDefault(), universityName), null,
+                    null, universityAcronym, new YearMonthDay(), null, countryUnit, null, null, false, null);
         }
 
         private AggregateUnit createAggregateUnit(final Unit parentUnit, final String unitName) {
-            return AggregateUnit.createNewAggregateUnit(new MultiLanguageString(Language.getDefaultLanguage(), unitName), null,
-                    null, null, new YearMonthDay(), null, parentUnit,
+            return AggregateUnit.createNewAggregateUnit(new MultiLanguageString(Locale.getDefault(), unitName), null, null, null,
+                    new YearMonthDay(), null, parentUnit,
                     AccountabilityType.readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE), null, null, Boolean.FALSE,
                     null);
         }
 
         private SchoolUnit createSchoolUnit(final UniversityUnit universityUnit, final String universityName,
                 final String universityAcronym) {
-            return SchoolUnit.createNewSchoolUnit(new MultiLanguageString(Language.getDefaultLanguage(), universityName), null,
-                    null, universityAcronym, new YearMonthDay(), null, universityUnit, null, null, Boolean.FALSE, null);
+            return SchoolUnit.createNewSchoolUnit(new MultiLanguageString(Locale.getDefault(), universityName), null, null,
+                    universityAcronym, new YearMonthDay(), null, universityUnit, null, null, Boolean.FALSE, null);
         }
 
         private void createServiceUnits(final AggregateUnit serviceUnits) {
             administrativeOffice = new AdministrativeOffice();
-            Unit.createNewUnit(new MultiLanguageString(Language.getDefaultLanguage(), "Office"), null, null, null,
-                    new YearMonthDay(), null, serviceUnits,
-                    AccountabilityType.readByType(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE), null, null,
-                    administrativeOffice, Boolean.FALSE, null);
+            Unit.createNewUnit(new MultiLanguageString(Locale.getDefault(), "Office"), null, null, null, new YearMonthDay(),
+                    null, serviceUnits, AccountabilityType.readByType(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE), null,
+                    null, administrativeOffice, Boolean.FALSE, null);
             new AdministrativeOfficeServiceAgreementTemplate(administrativeOffice);
         }
 
@@ -399,29 +403,27 @@ public class CreateTestData {
 
         private void createCompetenceCourseGroupUnit(final DepartmentUnit departmentUnit) {
             final ScientificAreaUnit scientificAreaUnit =
-                    ScientificAreaUnit.createNewInternalScientificArea(new MultiLanguageString(Language.getDefaultLanguage(),
+                    ScientificAreaUnit.createNewInternalScientificArea(new MultiLanguageString(Locale.getDefault(),
                             "Scientific Area"), null, null, "Code" + areaCounter++, new YearMonthDay(), null, departmentUnit,
                             AccountabilityType.readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE), null, null, Boolean.FALSE,
                             null);
 
-            CompetenceCourseGroupUnit.createNewInternalCompetenceCourseGroupUnit(
-                    new MultiLanguageString(Language.getDefaultLanguage(), "Competence Courses"), null, null, null,
-                    new YearMonthDay(), null, scientificAreaUnit,
-                    AccountabilityType.readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE), null, null, Boolean.FALSE, null);
+            CompetenceCourseGroupUnit.createNewInternalCompetenceCourseGroupUnit(new MultiLanguageString(Locale.getDefault(),
+                    "Competence Courses"), null, null, null, new YearMonthDay(), null, scientificAreaUnit, AccountabilityType
+                    .readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE), null, null, Boolean.FALSE, null);
         }
 
         private DepartmentUnit createDepartmentUnut(final AggregateUnit departmentUnits, final int someNumber,
                 final Department department) {
-            return DepartmentUnit.createNewInternalDepartmentUnit(new MultiLanguageString(Language.getDefaultLanguage(),
-                    "Department Name " + someNumber), null, Integer.valueOf(2100 + someNumber), "DU" + someNumber,
-                    new YearMonthDay().minusMonths(1), null, departmentUnits, AccountabilityType
-                            .readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE), null, department, null, Boolean.FALSE, null);
+            return DepartmentUnit.createNewInternalDepartmentUnit(new MultiLanguageString(Locale.getDefault(), "Department Name "
+                    + someNumber), null, Integer.valueOf(2100 + someNumber), "DU" + someNumber,
+                    new YearMonthDay().minusMonths(1), null, departmentUnits,
+                    AccountabilityType.readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE), null, department, null,
+                    Boolean.FALSE, null);
         }
 
-        private Group getCompetenceCourseMembersGroup() {
-            final Group teachersGroup = getRoleGroup(RoleType.TEACHER);
-            final Group managersGroup = getRoleGroup(RoleType.MANAGER);
-            return new GroupUnion(teachersGroup, managersGroup);
+        private org.fenixedu.bennu.core.groups.Group getCompetenceCourseMembersGroup() {
+            return RoleGroup.get(RoleType.TEACHER).or(RoleGroup.get(RoleType.MANAGER));
         }
 
         private String getDepartmentName(final int i) {
@@ -440,12 +442,12 @@ public class CreateTestData {
     }
 
     private static Group getRoleGroup(final RoleType roleType) {
-        return new RoleGroup(Role.getRoleByRoleType(roleType));
+        return RoleGroup.get(roleType);
     }
 
     public static class CreateDegrees {
-        public void doIt(InstallationProcess process) {
-            Language.setLocale(Language.getDefaultLocale());
+        public void doIt(AdminUserSection adminSection) {
+            I18N.setLocale(Locale.getDefault());
 
             final Unit unit = findUnitByName("Degrees");
             for (final DegreeType degreeType : DegreeType.NOT_EMPTY_VALUES) {
@@ -455,15 +457,14 @@ public class CreateTestData {
                         createDegreeInfo(degree);
                         associateToDepartment(degree);
 
-                        final DegreeCurricularPlan degreeCurricularPlan = createDegreeCurricularPlan(degree, process);
+                        final DegreeCurricularPlan degreeCurricularPlan = createDegreeCurricularPlan(degree, adminSection);
 
                         createExecutionDegrees(degreeCurricularPlan, getCampus());
                         degree.setAdministrativeOffice(administrativeOffice);
                         final DegreeSite degreeSite = degree.getSite();
 
-                        DegreeUnit.createNewInternalDegreeUnit(
-                                new MultiLanguageString(Language.getDefaultLanguage(), degree.getName()), null, null,
-                                degree.getSigla(), new YearMonthDay(), null, unit,
+                        DegreeUnit.createNewInternalDegreeUnit(new MultiLanguageString(Locale.getDefault(), degree.getName()),
+                                null, null, degree.getSigla(), new YearMonthDay(), null, unit,
                                 AccountabilityType.readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE), null, degree, null,
                                 Boolean.FALSE, null);
                     }
@@ -485,10 +486,11 @@ public class CreateTestData {
                     degreeType.getGradeScale());
         }
 
-        private DegreeCurricularPlan createDegreeCurricularPlan(final Degree degree, InstallationProcess process) {
+        private DegreeCurricularPlan createDegreeCurricularPlan(final Degree degree, AdminUserSection adminSection) {
 
+            Person person = Person.findByUsername(adminSection.getAdminUsername());
             final DegreeCurricularPlan degreeCurricularPlan =
-                    degree.createBolonhaDegreeCurricularPlan(degree.getSigla(), GradeScale.TYPE20, process.person);
+                    degree.createBolonhaDegreeCurricularPlan(degree.getSigla(), GradeScale.TYPE20, person);
 
             degreeCurricularPlan.setCurricularStage(CurricularStage.APPROVED);
             degreeCurricularPlan.setDescription("Bla bla bla. Desc. do plano curricular do curso. Bla bla bla");
@@ -594,43 +596,51 @@ public class CreateTestData {
             for (final ExecutionYear executionYear : Bennu.getInstance().getExecutionYearsSet()) {
                 final DegreeInfo degreeInfo = degree.createCurrentDegreeInfo();
                 degreeInfo.setExecutionYear(executionYear);
-                degreeInfo.setDescription(new MultiLanguageString(Language.pt, "Desc. do curso. Bla bla bla bla bla.").with(
-                        Language.en, "Description of the degree. Blur blur blur and more blur."));
-                degreeInfo.setHistory(new MultiLanguageString(Language.pt, "Historial do curso. Bla bla bla bla bla.").with(
-                        Language.en, "History of the degree. Blur blur blur and more blur."));
-                degreeInfo.setObjectives(new MultiLanguageString(Language.pt, "Objectivos do curso. Bla bla bla bla bla.").with(
-                        Language.en, "Objectives of the degree. Blur blur blur and more blur."));
-                degreeInfo.setDesignedFor(new MultiLanguageString(Language.pt, "Prop. do curso. Bla bla bla bla bla.").with(
-                        Language.en, "Purpose of the degree. Blur blur blur and more blur."));
-                degreeInfo
-                        .setProfessionalExits(new MultiLanguageString(Language.pt, "Saidas profissionais. Bla bla bla bla bla.")
-                                .with(Language.en, "Professional exists of the degree. Blur blur blur and more blur."));
-                degreeInfo.setOperationalRegime(new MultiLanguageString(Language.pt, "Regime operacional. Bla bla bla bla bla.")
-                        .with(Language.en, "Operational regime of the degree. Blur blur blur and more blur."));
-                degreeInfo.setGratuity(new MultiLanguageString(Language.pt, "Propinas. Bla bla bla bla bla.").with(Language.en,
-                        "Gratuity of the degree. Blur blur blur and more blur."));
-                degreeInfo.setSchoolCalendar(new MultiLanguageString(Language.pt, "Calendario escolar. Bla bla bla bla bla.")
-                        .with(Language.en, "School calendar of the degree. Blur blur blur and more blur."));
-                degreeInfo.setCandidacyPeriod(new MultiLanguageString(Language.pt,
-                        "Periodo de candidaturas. Bla bla bla bla bla.").with(Language.en,
+                degreeInfo.setDescription(new MultiLanguageString(MultiLanguageString.pt, "Desc. do curso. Bla bla bla bla bla.")
+                        .with(MultiLanguageString.en, "Description of the degree. Blur blur blur and more blur."));
+                degreeInfo.setHistory(new MultiLanguageString(MultiLanguageString.pt, "Historial do curso. Bla bla bla bla bla.")
+                        .with(MultiLanguageString.en, "History of the degree. Blur blur blur and more blur."));
+                degreeInfo.setObjectives(new MultiLanguageString(MultiLanguageString.pt,
+                        "Objectivos do curso. Bla bla bla bla bla.").with(MultiLanguageString.en,
+                        "Objectives of the degree. Blur blur blur and more blur."));
+                degreeInfo.setDesignedFor(new MultiLanguageString(MultiLanguageString.pt, "Prop. do curso. Bla bla bla bla bla.")
+                        .with(MultiLanguageString.en, "Purpose of the degree. Blur blur blur and more blur."));
+                degreeInfo.setProfessionalExits(new MultiLanguageString(MultiLanguageString.pt,
+                        "Saidas profissionais. Bla bla bla bla bla.").with(MultiLanguageString.en,
+                        "Professional exists of the degree. Blur blur blur and more blur."));
+                degreeInfo.setOperationalRegime(new MultiLanguageString(MultiLanguageString.pt,
+                        "Regime operacional. Bla bla bla bla bla.").with(MultiLanguageString.en,
+                        "Operational regime of the degree. Blur blur blur and more blur."));
+                degreeInfo.setGratuity(new MultiLanguageString(MultiLanguageString.pt, "Propinas. Bla bla bla bla bla.").with(
+                        MultiLanguageString.en, "Gratuity of the degree. Blur blur blur and more blur."));
+                degreeInfo.setSchoolCalendar(new MultiLanguageString(MultiLanguageString.pt,
+                        "Calendario escolar. Bla bla bla bla bla.").with(MultiLanguageString.en,
+                        "School calendar of the degree. Blur blur blur and more blur."));
+                degreeInfo.setCandidacyPeriod(new MultiLanguageString(MultiLanguageString.pt,
+                        "Periodo de candidaturas. Bla bla bla bla bla.").with(MultiLanguageString.en,
                         "Candidacy period of the degree. Blur blur blur and more blur."));
-                degreeInfo.setSelectionResultDeadline(new MultiLanguageString(Language.pt,
-                        "Prazo de publicacao de resultados de candidaturas. Bla bla bla bla bla.").with(Language.en,
+                degreeInfo.setSelectionResultDeadline(new MultiLanguageString(MultiLanguageString.pt,
+                        "Prazo de publicacao de resultados de candidaturas. Bla bla bla bla bla.").with(MultiLanguageString.en,
                         "Seletion result deadline of the degree. Blur blur blur and more blur."));
-                degreeInfo.setEnrolmentPeriod(new MultiLanguageString(Language.pt, "Periodo de inscricoes. Bla bla bla bla bla.")
-                        .with(Language.en, "Enrolment period of the degree. Blur blur blur and more blur."));
-                degreeInfo.setAdditionalInfo(new MultiLanguageString(Language.pt, "Informacao adicional. Bla bla bla bla bla.")
-                        .with(Language.en, "Additional information of the degree. Blur blur blur and more blur."));
-                degreeInfo.setLinks(new MultiLanguageString(Language.pt, "Links. Bla bla bla bla bla.").with(Language.en,
-                        "Links of the degree. Blur blur blur and more blur."));
-                degreeInfo.setTestIngression(new MultiLanguageString(Language.pt, "Testes de ingressao. Bla bla bla bla bla.")
-                        .with(Language.en, "Ingression tests of the degree. Blur blur blur and more blur."));
-                degreeInfo.setClassifications(new MultiLanguageString(Language.pt, "Classificacoes. Bla bla bla bla bla.").with(
-                        Language.en, "Classifications of the degree. Blur blur blur and more blur."));
-                degreeInfo.setAccessRequisites(new MultiLanguageString(Language.pt, "Requisitos de acesso. Bla bla bla bla bla.")
-                        .with(Language.en, "Access requisites of the degree. Blur blur blur and more blur."));
-                degreeInfo.setCandidacyDocuments(new MultiLanguageString(Language.pt,
-                        "Documentos de candidatura. Bla bla bla bla bla.").with(Language.en,
+                degreeInfo.setEnrolmentPeriod(new MultiLanguageString(MultiLanguageString.pt,
+                        "Periodo de inscricoes. Bla bla bla bla bla.").with(MultiLanguageString.en,
+                        "Enrolment period of the degree. Blur blur blur and more blur."));
+                degreeInfo.setAdditionalInfo(new MultiLanguageString(MultiLanguageString.pt,
+                        "Informacao adicional. Bla bla bla bla bla.").with(MultiLanguageString.en,
+                        "Additional information of the degree. Blur blur blur and more blur."));
+                degreeInfo.setLinks(new MultiLanguageString(MultiLanguageString.pt, "Links. Bla bla bla bla bla.").with(
+                        MultiLanguageString.en, "Links of the degree. Blur blur blur and more blur."));
+                degreeInfo.setTestIngression(new MultiLanguageString(MultiLanguageString.pt,
+                        "Testes de ingressao. Bla bla bla bla bla.").with(MultiLanguageString.en,
+                        "Ingression tests of the degree. Blur blur blur and more blur."));
+                degreeInfo.setClassifications(new MultiLanguageString(MultiLanguageString.pt,
+                        "Classificacoes. Bla bla bla bla bla.").with(MultiLanguageString.en,
+                        "Classifications of the degree. Blur blur blur and more blur."));
+                degreeInfo.setAccessRequisites(new MultiLanguageString(MultiLanguageString.pt,
+                        "Requisitos de acesso. Bla bla bla bla bla.").with(MultiLanguageString.en,
+                        "Access requisites of the degree. Blur blur blur and more blur."));
+                degreeInfo.setCandidacyDocuments(new MultiLanguageString(MultiLanguageString.pt,
+                        "Documentos de candidatura. Bla bla bla bla bla.").with(MultiLanguageString.en,
                         "Candidacy documents of the degree. Blur blur blur and more blur."));
                 degreeInfo.setDriftsInitial(Integer.valueOf(1));
                 degreeInfo.setDriftsFirst(Integer.valueOf(1));
@@ -638,11 +648,12 @@ public class CreateTestData {
                 degreeInfo.setMarkMin(Double.valueOf(12));
                 degreeInfo.setMarkMax(Double.valueOf(20));
                 degreeInfo.setMarkAverage(Double.valueOf(15));
-                degreeInfo.setQualificationLevel(new MultiLanguageString(Language.pt,
-                        "Nivel de qualificacao. Bla bla bla bla bla.").with(Language.en,
+                degreeInfo.setQualificationLevel(new MultiLanguageString(MultiLanguageString.pt,
+                        "Nivel de qualificacao. Bla bla bla bla bla.").with(MultiLanguageString.en,
                         "Qualification level of the degree. Blur blur blur and more blur."));
-                degreeInfo.setRecognitions(new MultiLanguageString(Language.pt, "Reconhecimentos. Bla bla bla bla bla.").with(
-                        Language.en, "Recognitions of the degree. Blur blur blur and more blur."));
+                degreeInfo.setRecognitions(new MultiLanguageString(MultiLanguageString.pt,
+                        "Reconhecimentos. Bla bla bla bla bla.").with(MultiLanguageString.en,
+                        "Recognitions of the degree. Blur blur blur and more blur."));
             }
         }
     }
@@ -831,7 +842,7 @@ public class CreateTestData {
     public static class CreateExecutionCourses extends AtomicAction {
         @Override
         public void doIt() {
-            Language.setLocale(Language.getDefaultLocale());
+            I18N.setLocale(Locale.getDefault());
 
             for (final DegreeModule degreeModule : Bennu.getInstance().getDegreeModulesSet()) {
                 if (degreeModule.isCurricularCourse()) {
@@ -878,28 +889,31 @@ public class CreateTestData {
 
         private static void createPlanning(ExecutionCourse executionCourse, ShiftType shiftType) {
             final LessonPlanning lessonPlanning =
-                    new LessonPlanning(new MultiLanguageString(Language.pt, "Titulo do Planeamento").with(Language.en,
-                            "Title of the planning."), new MultiLanguageString(Language.pt, "Corpo do Planeamento").with(
-                            Language.en, "Planning contents."), shiftType, executionCourse);
+                    new LessonPlanning(new MultiLanguageString(MultiLanguageString.pt, "Titulo do Planeamento").with(
+                            MultiLanguageString.en, "Title of the planning."), new MultiLanguageString(MultiLanguageString.pt,
+                            "Corpo do Planeamento").with(MultiLanguageString.en, "Planning contents."), shiftType,
+                            executionCourse);
         }
 
         private static void createAnnouncements(final AnnouncementBoard announcementBoard, final YearMonthDay day) {
             final Announcement announcement = new Announcement();
             announcement.setAuthor("Autor do anuncio");
             announcement.setAuthorEmail("http://www.google.com/");
-            announcement.setBody(new MultiLanguageString(Language.pt, "Corpo do anuncio. Bla bla bla bla.").with(Language.en,
-                    "Content of the announcement. Blur blur blur blur."));
+            announcement.setBody(new MultiLanguageString(MultiLanguageString.pt, "Corpo do anuncio. Bla bla bla bla.").with(
+                    MultiLanguageString.en, "Content of the announcement. Blur blur blur blur."));
             announcement.setCreationDate(day.toDateTimeAtMidnight());
             announcement.setCreator(null);
-            announcement.setExcerpt(new MultiLanguageString(Language.pt, "Bla ...").with(Language.en, "Blur ..."));
-            announcement.setKeywords(new MultiLanguageString(Language.pt, "Bla").with(Language.en, "Blur"));
+            announcement.setExcerpt(new MultiLanguageString(MultiLanguageString.pt, "Bla ...").with(MultiLanguageString.en,
+                    "Blur ..."));
+            announcement.setKeywords(new MultiLanguageString(MultiLanguageString.pt, "Bla").with(MultiLanguageString.en, "Blur"));
             announcement.setLastModification(day.toDateTimeAtCurrentTime());
             announcement.setPlace("Here.");
             // announcement.setPublicationBegin();
             // announcement.setPublicationEnd();
             // announcement.setReferedSubjectBegin();
             // announcement.setReferedSubjectEnd();
-            announcement.setSubject(new MultiLanguageString(Language.pt, "Assunto Bla.").with(Language.en, "Subject blur."));
+            announcement.setSubject(new MultiLanguageString(MultiLanguageString.pt, "Assunto Bla.").with(MultiLanguageString.en,
+                    "Subject blur."));
             announcement.setVisible(Boolean.TRUE);
             announcement.setAnnouncementBoard(announcementBoard);
         }
@@ -907,8 +921,9 @@ public class CreateTestData {
         private static void createEvaluationMethod(final ExecutionCourse executionCourse) {
             final EvaluationMethod evaluationMethod = new EvaluationMethod();
             evaluationMethod.setExecutionCourse(executionCourse);
-            evaluationMethod.setEvaluationElements(new MultiLanguageString(Language.pt,
-                    "Metodo de avaliacao. Bla bla bla bla bla.").with(Language.en, "Evaluation method. Blur blur ble blur bla."));
+            evaluationMethod.setEvaluationElements(new MultiLanguageString(MultiLanguageString.pt,
+                    "Metodo de avaliacao. Bla bla bla bla bla.").with(MultiLanguageString.en,
+                    "Evaluation method. Blur blur ble blur bla."));
         }
 
         private static void createBibliographicReferences(final ExecutionCourse executionCourse) {
@@ -1146,8 +1161,8 @@ public class CreateTestData {
         return null;
     }
 
-    private static void createDegrees(InstallationProcess process) {
-        final Person person = process.person;
+    private static void createDegrees(AdminUserSection adminSection) {
+        final Person person = Person.findByUsername(adminSection.getAdminUsername());
 
         final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
         final Campus campus = Space.getAllCampus().iterator().next();
@@ -1178,7 +1193,7 @@ public class CreateTestData {
 
             final Department department = new Department();
             department.setCode(degree.getSigla());
-            department.setCompetenceCourseMembersGroup(new RoleGroup(Role.getRoleByRoleType(RoleType.TEACHER)));
+            department.setCompetenceCourseMembersGroup(RoleGroup.get(RoleType.TEACHER));
 
             department.setName("Department " + degree.getName());
             department.setRealName("Department " + degree.getName());

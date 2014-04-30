@@ -7,16 +7,15 @@
 <html:xhtml/>
 
 
-<logic:present name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>">
-	<fr:view name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>" property="selectedContainer" 
-		layout="unit-side-menu">
-            <fr:layout>
-                <fr:property name="sectionUrl" value="/researchSite/viewResearchUnitSite.do?method=section"/>
-                <fr:property name="contextParam" value="siteID"/>
-            </fr:layout>
-        </fr:view>
-    </logic:present>
+<logic:present name="actual$site">
+   <fr:view name="actual$site" layout="unit-side-menu">
+        <fr:layout>
+            <fr:property name="sectionUrl" value="/units/viewSite.do?method=section"/>
+            <fr:property name="contextParam" value="unitID"/>
+        </fr:layout>
+    </fr:view>
+</logic:present>
     
 <div class="usitebannerlat">
-	<fr:view name="site" property="sideBanner" layout="html" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString"/>
+	${site.sideBanner}
 </div>

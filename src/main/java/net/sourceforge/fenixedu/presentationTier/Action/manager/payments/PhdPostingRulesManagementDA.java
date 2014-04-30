@@ -30,7 +30,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.Atomic;
 
-@Mapping(path = "/phdPostingRules", module = "manager", formBeanClass = PostingRulesManagementDA.PostingRulesManagementForm.class)
+@Mapping(path = "/phdPostingRules", module = "manager",
+        formBeanClass = PostingRulesManagementDA.PostingRulesManagementForm.class, functionality = PostingRulesManagementDA.class)
 @Forwards({
         @Forward(name = "showPhdProgramPostingRules",
                 path = "/manager/payments/postingRules/management/phd/showPhdProgramPostingRules.jsp"),

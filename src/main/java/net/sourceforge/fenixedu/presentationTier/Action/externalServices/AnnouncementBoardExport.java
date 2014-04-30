@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +26,7 @@ import org.joda.time.DateTime;
 import org.joda.time.IllegalFieldValueException;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -87,9 +88,10 @@ public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
         return request.getParameter("language");
     }
 
-    protected Language getRequestedLanguage(HttpServletRequest request) {
+    protected Locale getRequestedLanguage(HttpServletRequest request) {
         final String language = getRequestedLanguageString(request);
-        return (language == null) ? Language.pt : Language.valueOf(getRequestedLanguageString(request));
+        return (language == null) ? MultiLanguageString.pt : new Locale.Builder()
+                .setLanguage(getRequestedLanguageString(request)).build();
     }
 
     private Integer getSelectedMonth(HttpServletRequest request) {
@@ -149,7 +151,7 @@ public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
 
         Collections.sort(announcements, EXTERNAL_ANNOUNCEMENTS_COMPARATOR_BY_PRIORITY_AND_NEWEST_FIRST);
 
-        final Language language = getRequestedLanguage(request);
+        final Locale language = getRequestedLanguage(request);
         final Integer selectedYear = getSelectedYear(request);
         final Integer selectedMonth = getSelectedMonth(request);
 
@@ -178,7 +180,7 @@ public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
     private Collection<AnnouncementDTO> buildStickyDTOCollection(final List<Announcement> announcements,
             final HttpServletRequest request) {
 
-        final Language language = getRequestedLanguage(request);
+        final Locale language = getRequestedLanguage(request);
         // filter sticky announcements
         final Collection<Announcement> stickyAnnouncements = new ArrayList<Announcement>();
         for (Announcement announcement : announcements) {
@@ -198,17 +200,17 @@ public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
         return new XStream().toXML(announcements);
     }
 
-    private boolean testContentAvailabilityForLanguage(Announcement announcement, Language language) {
-        if (announcement.getSubject() != null && !announcement.getSubject().hasLanguage(language)) {
+    private boolean testContentAvailabilityForLanguage(Announcement announcement, Locale language) {
+        if (announcement.getSubject() != null && !announcement.getSubject().hasLocale(language)) {
             return false;
         }
-        if (announcement.getBody() != null && !announcement.getBody().hasLanguage(language)) {
+        if (announcement.getBody() != null && !announcement.getBody().hasLocale(language)) {
             return false;
         }
-        if (announcement.getExcerpt() != null && !announcement.getExcerpt().hasLanguage(language)) {
+        if (announcement.getExcerpt() != null && !announcement.getExcerpt().hasLocale(language)) {
             return false;
         }
-        if (announcement.getKeywords() != null && !announcement.getKeywords().hasLanguage(language)) {
+        if (announcement.getKeywords() != null && !announcement.getKeywords().hasLocale(language)) {
             return false;
         }
         return true;

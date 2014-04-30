@@ -18,11 +18,14 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.RAMApplication.RAMFirstYearShiftsApp;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -30,10 +33,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
-@Mapping(module = "resourceAllocationManager", path = "/exportFirstYearShifts", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "chooseExport", path = "/exportFirstYearShifts.jsp", useTile = false, redirect = false) })
+@StrutsFunctionality(app = RAMFirstYearShiftsApp.class, path = "export-shifts", titleKey = "link.firstYearShifts.export")
+@Mapping(module = "resourceAllocationManager", path = "/exportFirstYearShifts")
+@Forwards(@Forward(name = "chooseExport", path = "/resourceAllocationManager/exportFirstYearShifts_bd.jsp"))
 public class ExportFirstYearShiftsDA extends FenixContextDispatchAction {
 
+    @EntryPoint
     public ActionForward chooseExport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         FirstYearShiftsBean bean = (FirstYearShiftsBean) getRenderedObject();

@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
@@ -18,21 +18,18 @@ import org.apache.struts.action.DynaActionForm;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "coordinator", path = "/viewStudentCurriculumSearch", attribute = "viewStudentCurriculumForm",
-        formBean = "viewStudentCurriculumForm", scope = "request", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "chooseStudent", path = "/coordinator/student/curriculum/chooseStudent.jsp", tileProperties = @Tile(
-                title = "private.coordinator.management.courses.students.curriculum")),
+@Mapping(module = "coordinator", path = "/viewStudentCurriculumSearch", formBean = "viewStudentCurriculumForm",
+        functionality = DegreeCoordinatorIndex.class)
+@Forwards({ @Forward(name = "chooseStudent", path = "/coordinator/student/curriculum/chooseStudent.jsp"),
         @Forward(name = "chooseCurriculumType", path = "/coordinator/student/curriculum/chooseCurriculumType.jsp") })
 public class ViewStudentCurriculumDA extends FenixDispatchAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        CoordinatedDegreeInfo.setCoordinatorContext(request);
+        DegreeCoordinatorIndex.setCoordinatorContext(request);
         return super.execute(mapping, actionForm, request, response);
     }
 
@@ -68,22 +65,12 @@ public class ViewStudentCurriculumDA extends FenixDispatchAction {
 
     }
 
-    private ActionForward getBolonhaTransitionRedirect(final ActionForm actionForm, final Student student) {
-        final ActionForward actionForward = new ActionForward();
-        actionForward.setPath("/bolonhaTransitionManagement.do?method=prepare&studentId=" + student.getExternalId());
-
-        return actionForward;
-
-    }
-
     private ActionForward getOldCurriculumRedirect(final ActionForm actionForm, final Student student) {
         final ActionForward actionForward = new ActionForward();
-        actionForward.setPath("/viewCurriculum.do?method=prepareReadByStudentNumber&studentNumber=" + student.getNumber()
+        actionForward.setPath("/viewStudentCurriculum.do?method=prepareReadByStudentNumber&studentNumber=" + student.getNumber()
                 + "&executionDegreeId=" + getExecutionDegreeId(actionForm) + "&degreeCurricularPlanID="
                 + getDegreeCurricularPlanId(actionForm));
-
         return actionForward;
-
     }
 
     private String getExecutionDegreeId(final HttpServletRequest request) {

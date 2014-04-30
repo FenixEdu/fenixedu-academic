@@ -5,7 +5,6 @@
 
 <html:xhtml />
 
-<em><bean:message bundle="STUDENT_RESOURCES"  key="title.student.portalTitle" /></em>
 <h2><bean:message bundle="STUDENT_RESOURCES"  key="label.enrollment.specialSeason" /></h2>
 
 <logic:notPresent role="role(STUDENT)">

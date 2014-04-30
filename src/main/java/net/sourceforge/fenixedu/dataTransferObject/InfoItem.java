@@ -9,7 +9,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.Item;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
  * @author Ivo Brandão
@@ -150,13 +150,13 @@ public class InfoItem extends InfoObject implements Comparable {
     public void copyFromDomain(Item item) {
         super.copyFromDomain(item);
         if (item != null) {
-            setInformation(item.getBody().getContent(Language.pt));
-            setItemOrder(item.getItemOrder());
-            setName(item.getName().getContent(Language.pt));
+            setInformation(item.getBody().getContent(MultiLanguageString.pt));
+            setItemOrder(item.getOrder());
+            setName(item.getName().getContent(MultiLanguageString.pt));
 
             List<InfoFileContent> infoFileItems = new ArrayList<InfoFileContent>();
 
-            for (FileContent fileItem : item.getFileItems()) {
+            for (FileContent fileItem : item.getFileContentSet()) {
                 infoFileItems.add(InfoFileContent.newInfoFromDomain(fileItem));
             }
 

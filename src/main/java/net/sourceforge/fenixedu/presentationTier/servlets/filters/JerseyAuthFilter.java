@@ -12,8 +12,6 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,8 +23,6 @@ public class JerseyAuthFilter implements Filter {
 
     private static final Logger logger = LoggerFactory.getLogger(JerseyAuthFilter.class);
 
-    final static String systemUsername = FenixConfigurationManager.getConfiguration().getJerseyUsername();
-    final static String systemPassword = FenixConfigurationManager.getConfiguration().getJerseyPassword();
     final static String USERNAME_KEY = "__username__";
     final static String PASSWORD_KEY = "__password__";
 

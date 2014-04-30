@@ -9,13 +9,15 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ProjectSubmission;
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.util.email.ExecutionCourseSender;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import net.sourceforge.fenixedu.util.BundleUtil;
+
+import org.fenixedu.bennu.core.groups.UserGroup;
+
 import pt.ist.fenixframework.Atomic;
 
 public class NotifyStudentGroup {
@@ -34,7 +36,7 @@ public class NotifyStudentGroup {
                 BundleUtil.getStringFromResourceBundle("resources.GlobalResources", "label.group", new String[] { submission
                         .getStudentGroup().getGroupNumber().toString() });
         Sender sender = ExecutionCourseSender.newInstance(course);
-        Recipient recipient = new Recipient(groupName, new FixedSetGroup(recievers));
+        Recipient recipient = new Recipient(groupName, UserGroup.of(Person.convertToUsers(recievers)));
         new Message(sender, sender.getConcreteReplyTos(), recipient.asCollection(), submission.getProject().getName(),
                 submission.getTeacherObservation(), "");
     }

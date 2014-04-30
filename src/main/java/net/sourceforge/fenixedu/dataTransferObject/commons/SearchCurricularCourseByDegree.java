@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -102,8 +102,7 @@ public class SearchCurricularCourseByDegree implements Serializable {
         public Object provide(Object source, Object currentValue) {
 
             Set<AcademicProgram> programs =
-                    AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
-                            AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
+                    AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
 
             final SearchCurricularCourseByDegree bean = (SearchCurricularCourseByDegree) source;
             final List<DegreeByExecutionYearBean> result = new ArrayList<DegreeByExecutionYearBean>();

@@ -12,7 +12,8 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <html:xhtml/>
 
-<em><bean:message key="title.resourceAllocationManager.management"/></em>
+<jsp:include page="/commons/contextLessonAndShiftAndExecutionCourseAndExecutionDegreeAndCurricularYear.jsp" />
+
 <h2><bean:message key="link.manage.turnos"/></h2>
 
 <jsp:include page="context.jsp"/>

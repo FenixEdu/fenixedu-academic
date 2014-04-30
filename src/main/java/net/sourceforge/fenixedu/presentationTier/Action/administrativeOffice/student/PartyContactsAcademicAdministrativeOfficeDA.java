@@ -27,7 +27,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(path = "/partyContacts", module = "academicAdministration", formBeanClass = FenixActionForm.class)
+@Mapping(path = "/partyContacts", module = "academicAdministration", formBeanClass = FenixActionForm.class,
+        functionality = SearchForStudentsDA.class)
 @Forwards({ @Forward(name = "createPartyContact", path = "/academicAdminOffice/createPartyContact.jsp"),
         @Forward(name = "editPartyContact", path = "/academicAdminOffice/editPartyContact.jsp"),
         @Forward(name = "inputValidationCode", path = "/academicAdminOffice/inputValidationCode.jsp"),

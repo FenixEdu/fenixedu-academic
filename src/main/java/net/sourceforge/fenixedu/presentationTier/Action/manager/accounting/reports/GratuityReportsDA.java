@@ -10,21 +10,26 @@ import net.sourceforge.fenixedu.domain.accounting.report.GratuityReportQueueJob;
 import net.sourceforge.fenixedu.domain.accounting.report.GratuityReportQueueJobLaunchService;
 import net.sourceforge.fenixedu.domain.accounting.report.events.EventReportQueueJob;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerPaymentsApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@StrutsFunctionality(app = ManagerPaymentsApp.class, path = "gratuity-reports", titleKey = "title.gratuity.reports")
 @Mapping(path = "/gratuityReports", module = "manager")
 @Forwards({ @Forward(name = "prepare-generate-report", path = "/manager/accounting/reports/gratuity/prepareGenerateReport.jsp"),
         @Forward(name = "list-reports", path = "/manager/accounting/reports/gratuity/listReports.jsp") })
 public class GratuityReportsDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward listReports(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 

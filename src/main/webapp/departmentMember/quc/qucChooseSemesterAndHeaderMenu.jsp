@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
@@ -9,14 +10,12 @@
 <bean:define id="departmentParam" value="&departmentUnitOID="/>
 
 <logic:present name="fromPedagogicalCouncil">
-	<em><bean:message key="pedagogical.council" bundle="PEDAGOGICAL_COUNCIL" /></em>
 	<h2><bean:message key="title.inquiries.resultsWithDescription" bundle="INQUIRIES_RESOURCES"/></h2>
 
 	<bean:define id="departmentParam" value="<%= "&departmentUnitOID=" + executionSemesterBean.getDepartmentUnitOID() %>"/>	
 </logic:present>
 
 <logic:notPresent name="fromPedagogicalCouncil">
-	<em><bean:message key="label.departmentMember"/></em>
 	<h2><bean:message key="title.inquiry.quc.department" bundle="INQUIRIES_RESOURCES"/></h2>
 </logic:notPresent>
 

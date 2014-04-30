@@ -5,7 +5,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <html:xhtml/>
 
-<em><bean:message key="label.teacherPortal" bundle="APPLICATION_RESOURCES"/></em>
 <h2><bean:message key="see.specified.rooms.reserve.title" bundle="APPLICATION_RESOURCES"/></h2>
 <bean:define id="isTeacher" value="<%= new Boolean(net.sourceforge.fenixedu.injectionCode.AccessControl.getPerson().hasAnyProfessorships()).toString() %>" />
 
@@ -170,9 +169,9 @@
 				</p>
 			</fr:form>
 			
-			<logic:notEmpty name="punctualRequest" property="genericEvents">
+<%--			<logic:notEmpty name="punctualRequest" property="genericEvents">
 				<jsp:include page="../../resourceAllocationManager/roomsPunctualScheduling/legend.jsp" />
-			</logic:notEmpty>
+			</logic:notEmpty> --%>
 					
 		</logic:notEqual>
 		

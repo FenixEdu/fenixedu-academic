@@ -15,7 +15,7 @@
 	<body>
 		<div id="container">
 			<div id="dotist_id">
-				<img alt="<%=net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstalationName() %>"
+				<img alt="<%=org.fenixedu.bennu.portal.domain.PortalConfiguration.getInstance().getApplicationTitle().getContent() %>"
 						src="<bean:message key="dot.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>" />
 			</div>
 			<div id="txt">
@@ -33,7 +33,7 @@
 							<bean:write name="executionCourse" property="executionPeriod.semester" />
 							<bean:message bundle="PUBLIC_DEGREE_INFORMATION" locale="pt_PT" key="public.degree.information.label.ordinal.semester.abbr" />
 							<bean:write name="executionCourse" property="executionPeriod.executionYear.year" />				
-							<html:link page="<%="/teacher/regentInquiry.do?method=showInquiriesPrePage&" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/teacher")%>" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
+							<html:link page="/teacher/regentInquiry.do?method=showInquiriesPrePage" paramId="executionCourseID" paramName="executionCourse" paramProperty="externalId">
 								<strong>
 									<bean:write name="executionCourse" property="nome"/>
 									(<logic:iterate id="executionDegree" name="executionCourse" property="executionDegrees" indexId="iter">
@@ -52,7 +52,6 @@
 				
 				<form method="post" action="<%= request.getContextPath() %>/respondToRegentInquiriesQuestion.do">
 					<html:hidden property="method" value="respondLater"/>
-					<html:hidden property="<%=net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME%>" value="/comunicacao/comunicacao"/>
 					<p style="margin-top: 2.5em; text-align: center;">
 						<html:submit bundle="HTMLALT_RESOURCES" altKey="inquiries.respond.later" property="ok">
 							<bean:message key="button.inquiries.respond.later" />

@@ -1,10 +1,12 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 
-<ft:tilesView definition="df.page.functionsManagement" attributeName="body-inline">
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications$ManagementFunctionsPage" />
+
+<f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 
 	<f:loadBundle basename="resources/DepartmentAdmOfficeResources" var="bundle"/>
@@ -57,7 +59,6 @@
 						<fc:selectOneMenu disabled="#{managerFunctionsManagementBackingBean.disabledVar == 1}" onchange="this.form.submit();" value="#{managerFunctionsManagementBackingBean.executionPeriod}">
 							<f:selectItems value="#{managerFunctionsManagementBackingBean.executionPeriods}"/>
 						</fc:selectOneMenu>
-						<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 					<h:outputText value="</td>" escape="false"/>
 				<h:outputText value="</tr>" escape="false"/>
 	
@@ -68,7 +69,6 @@
 										  value="#{managerFunctionsManagementBackingBean.duration}">
 							<f:selectItems value="#{managerFunctionsManagementBackingBean.durationList}" />
 						</h:selectOneRadio>
-						<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 					<h:outputText value="</td>" escape="false"/>
 				<h:outputText value="</tr>" escape="false"/>
 
@@ -137,4 +137,4 @@
 		</h:panelGrid>
 	</h:form>
 
-</ft:tilesView>
+</f:view>

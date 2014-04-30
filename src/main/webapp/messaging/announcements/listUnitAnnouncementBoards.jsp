@@ -6,7 +6,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="e" %>
 
-<em><bean:message key="label.communicationPortal.header" bundle="MESSAGING_RESOURCES"/></em>
 <h2><bean:message key="label.manageBoards" bundle="MESSAGING_RESOURCES"/></h2>
 
 <jsp:include flush="true" page="/messaging/context.jsp"/>

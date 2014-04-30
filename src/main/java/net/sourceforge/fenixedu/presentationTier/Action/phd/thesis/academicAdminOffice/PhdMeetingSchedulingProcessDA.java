@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.ScheduleFir
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.ScheduleThesisMeeting;
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.ScheduleThesisMeetingRequest;
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.SubmitThesisMeetingMinutes;
+import net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice.PhdIndividualProgramProcessDA;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.thesis.CommonPhdThesisProcessDA;
 
 import org.apache.struts.action.ActionForm;
@@ -30,22 +31,16 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/phdMeetingSchedulingProcess", module = "academicAdministration")
+@Mapping(path = "/phdMeetingSchedulingProcess", module = "academicAdministration",
+        functionality = PhdIndividualProgramProcessDA.class)
 @Forwards({
-
         @Forward(name = "requestScheduleFirstThesisMeeting",
                 path = "/phd/thesis/academicAdminOffice/requestScheduleFirstThesisMeeting.jsp"),
-
         @Forward(name = "scheduleFirstThesisMeeting", path = "/phd/thesis/academicAdminOffice/scheduleFirstThesisMeeting.jsp"),
-
         @Forward(name = "requestScheduleThesisMeeting", path = "/phd/thesis/academicAdminOffice/requestScheduleThesisMeeting.jsp"),
-
         @Forward(name = "scheduleThesisMeeting", path = "/phd/thesis/academicAdminOffice/scheduleThesisMeeting.jsp"),
-
         @Forward(name = "submitThesisMeetingMinutes", path = "/phd/thesis/academicAdminOffice/submitThesisMeetingMinutes.jsp"),
-
         @Forward(name = "viewMeetingSchedulingProcess", path = "/phd/thesis/academicAdminOffice/viewMeetingSchedulingProcess.jsp"),
-
         @Forward(name = "editMeetingAttributes", path = "/phd/thesis/academicAdminOffice/editMeetingAttributes.jsp") })
 public class PhdMeetingSchedulingProcessDA extends CommonPhdThesisProcessDA {
 

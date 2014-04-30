@@ -6,7 +6,6 @@
 
 <logic:present role="role(STUDENT)">
 
-	<em><bean:message key="administrative.office.services" bundle="STUDENT_RESOURCES"/></em>
 	<h2><bean:message key="label.prices" /></h2>
 
 	<logic:messagesPresent message="true">
@@ -30,7 +29,7 @@
 			<bean:define id="adminOfficeType" name="entry" property="key" />
 			<bean:define id="postingRules" name="entry" property="value" />
 			
-			<div style="background: #f5f5f5; width: 300px; margin: 1em 1em 0 0; float: left; border: 1px solid #ddd; padding: 0 1em 1em 1em;">
+			<div style="background: #f5f5f5; width: 400px; margin: 1em 1em 0 0; float: left; border: 1px solid #ddd; padding: 0 1em 1em 1em;">
 			<h3 style="color: #369;"><bean:message name="adminOfficeType" property="qualifiedName" bundle="ENUMERATION_RESOURCES" /></h3>
 				<logic:iterate id="postingRule" name="postingRules">
 					<p class="mtop2 mbottom025"><strong><bean:message name="postingRule" property="eventType.qualifiedName" bundle="ENUMERATION_RESOURCES" /></strong></p>

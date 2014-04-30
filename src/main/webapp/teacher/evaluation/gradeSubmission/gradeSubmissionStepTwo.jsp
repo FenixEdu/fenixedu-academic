@@ -19,10 +19,9 @@
 	//-->
 	</script>
 
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" name="markSheetManagementForm" property="method" value="gradeSubmissionStepTwo" />
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID" name="markSheetManagementForm" property="executionCourseID" />
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="gradeSubmissionStepTwo" />
+	<input type="hidden" name="executionCourseID" value="${executionCourseID}" />	
 	
-	<em><bean:message key="message.evaluationElements" bundle="APPLICATION_RESOURCES"/></em>
 	<h2><bean:message key="label.submit.listMarks"/></h2>
 
 	<div class="infoop2">

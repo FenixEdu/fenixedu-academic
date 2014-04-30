@@ -8,14 +8,12 @@
 
 <html:xhtml/>
 
-<em><bean:message key="link.writtenEvaluationManagement"/></em>
 <h2><bean:message key="link.written.evaluations.search.by.date"/></h2>
 
 <html:form action="/searchWrittenEvaluationsByDate" focus="day">
 
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="search"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.academicInterval" property="academicInterval" value="<%= request.getAttribute(PresentationConstants.ACADEMIC_INTERVAL).toString() %>"/>
 
 	<p>
 		<span class="error"><!-- Error messages go here --><html:errors /></span>
@@ -178,7 +176,6 @@ return (aVal - bVal);
 					<logic:iterate id="executionCourse" name="writtenEvaluation" property="associatedExecutionCourses">
 						<bean:write name="executionCourse" property="nome"/><br />
 						<bean:define id="executionCourseID" name="executionCourse" property="externalId"/>
-						<bean:define id="academicInterval" name="academicInterval"/>
 						<bean:define id="executionYearID" name="executionCourse" property="executionPeriod.executionYear.externalId" type="java.lang.String"/>
 					</logic:iterate>
 				</td>
@@ -215,10 +212,6 @@ return (aVal - bVal);
 										+ "evaluationTypeClassname"
 										+ "="
 										+ pageContext.findAttribute("evaluationTypeClassname") 
-										+ "&amp;"
-										+ "academicInterval"
-										+ "="
-										+ pageContext.findAttribute("academicInterval")
 										+ "&amp;"
 										+ "executionCourseID"
 										+ "="

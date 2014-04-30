@@ -24,9 +24,9 @@ public class EditUnitAnnouncementBoard extends CreateUnitAnnouncementBoard {
         board.setUnitPermittedManagementGroupType(parameters.managementGroupType);
         board.setName(new MultiLanguageString(parameters.name));
         board.setMandatory(parameters.mandatory);
-        board.setReaders(this.buildGroup(parameters.readersGroupType, board.getParty()));
-        board.setWriters(this.buildGroup(parameters.writersGroupType, board.getParty()));
-        board.setManagers(this.buildGroup(parameters.managementGroupType, board.getParty()));
+        board.setReaders(this.buildGroup(parameters.readersGroupType, board.getUnit()));
+        board.setWriters(this.buildGroup(parameters.writersGroupType, board.getUnit()));
+        board.setManagers(this.buildGroup(parameters.managementGroupType, board.getUnit()));
     }
 
     // Service Invokers migrated from Berserk

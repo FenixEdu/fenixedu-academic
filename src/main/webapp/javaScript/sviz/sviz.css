@@ -80,11 +80,11 @@ x:-o-prefocus,.qtip .qtip-tip{visibility:hidden}
 .donut-center-text{color:#000;font-weight:bold}
 .donut-not-evaluated-grades{fill:#000}
 .donut-negative-grades{fill:#f13939}
-.donut-positive-grades{fill:#96c472}
-.donut-not-evaluated{fill:#000}
+.donut-positive-grades{fill:#66cc33}
+.donut-not-evaluated{fill:#444}
 .donut-flunked{fill:#f13939}
-.donut-approved{fill:#96c472}
-.donut-attending{fill:#1888b8}
+.donut-approved{fill:#66cc33}
+.donut-attending{fill:#4a87ee}
 .you{fill:#800080 !important}
 .bar{fill:#4682b4}
 .bar:hover{fill:#a52a2a !important}
@@ -125,12 +125,13 @@ svg foreignobject body{background-color:#fff}
 .donut{padding-right:10px;padding-left:10px;cursor:pointer}
 .donut-cat1{fill:#000}
 .donut-cat2{fill:#f13939}
-.donut-cat3{fill:#96c472}
+.donut-cat3{fill:#66cc33}
 .stack{padding-right:10px;padding-left:10px;cursor:pointer}
 .stack-cat1{fill:#000}
 .stack-cat2{fill:#f13939}
-.stack-cat3{fill:#96c472}
-.stack-not-evaluated{fill:#000}
+.stack-cat3{fill:#66cc33}
+.stack-not-evaluated{fill:#444}
+.stack-notEvaluated{fill:#444}
 .stack-flunked{fill:#f13939}
-.stack-approved{fill:#96c472}
-.stack-attending{fill:#1888b8}
+.stack-approved{fill:#66cc33}
+.stack-attending{fill:#4a87ee}

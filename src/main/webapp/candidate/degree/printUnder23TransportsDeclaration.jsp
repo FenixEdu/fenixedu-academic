@@ -4,7 +4,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 
-<%@page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
+<%@page import="org.fenixedu.commons.i18n.I18N"%>
 <%@page import="org.joda.time.LocalDate"%><html xmlns="http://www.w3.org/1999/xhtml" lang="pt-PT" xml:lang="pt-PT">
 
 <html:xhtml/>
@@ -123,7 +123,7 @@ width: 1%;
 <br/>
 <table>
 	<tr>
-		<td class="col1"><%= new LocalDate().toString("dd 'de' MMMM 'de' yyyy", Language.getLocale()) %></td>
+		<td class="col1"><%= new LocalDate().toString("dd 'de' MMMM 'de' yyyy", I18N.getLocale()) %></td>
 		<td class="col2">
 			.........................................................................<br/>
 			(assinatura e selo branco ou carimbo)

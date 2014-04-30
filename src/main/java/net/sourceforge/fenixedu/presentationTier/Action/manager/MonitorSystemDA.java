@@ -42,23 +42,34 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.RootCurriculumGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerSystemManagementApp;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.fenixedu.bennu.portal.servlet.PortalLayoutInjector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.core.SharedIdentityMap;
 
 /**
  * @author Luis Cruz
  */
+@StrutsFunctionality(app = ManagerSystemManagementApp.class, path = "system-info", titleKey = "title.system.information")
+@Mapping(module = "manager", path = "/monitorSystem")
+@Forwards(@Forward(name = "Show", path = "/manager/monitorSystem_bd.jsp"))
 public class MonitorSystemDA extends FenixDispatchAction {
 
     private static final Logger logger = LoggerFactory.getLogger(MonitorSystemDA.class);
 
+    @EntryPoint
     public ActionForward monitor(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
@@ -95,6 +106,7 @@ public class MonitorSystemDA extends FenixDispatchAction {
         }
 
         try (PrintWriter writer = response.getWriter()) {
+            PortalLayoutInjector.skipLayoutOn(request);
             response.setContentType("text/plain");
             response.setStatus(HttpServletResponse.SC_OK);
             writer.write(builder.toString());

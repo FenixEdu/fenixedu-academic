@@ -18,10 +18,13 @@ import net.sourceforge.fenixedu.domain.ExpectationEvaluationGroup;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.DepartmentAdmOfficeApp.DepartmentAdmOfficeExpectationsApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -30,17 +33,17 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "departmentAdmOffice", path = "/defineExpectationEvaluationGroups", scope = "request", parameter = "method")
-@Forwards(
-        value = {
-                @Forward(
-                        name = "manageGroups",
-                        path = "/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/manageExpectationEvaluationGroups.jsp"),
-                @Forward(
-                        name = "listGroups",
-                        path = "/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/seeExpectationEvaluationGroups.jsp") })
+@StrutsFunctionality(app = DepartmentAdmOfficeExpectationsApp.class, path = "evaluation-groups",
+        titleKey = "link.define.expectations.evaluation.groups")
+@Mapping(module = "departmentAdmOffice", path = "/defineExpectationEvaluationGroups")
+@Forwards({
+        @Forward(name = "manageGroups",
+                path = "/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/manageExpectationEvaluationGroups.jsp"),
+        @Forward(name = "listGroups",
+                path = "/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/seeExpectationEvaluationGroups.jsp") })
 public class ExpectationsEvaluationGroupsDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward listGroups(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 

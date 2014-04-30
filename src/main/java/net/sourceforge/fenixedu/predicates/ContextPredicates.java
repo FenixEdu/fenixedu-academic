@@ -38,7 +38,7 @@ public class ContextPredicates {
                         return true;
                     }
 
-                    return parentDegreeCurricularPlan.getCurricularPlanMembersGroup().isMember(person);
+                    return parentDegreeCurricularPlan.getCurricularPlanMembersGroup().isMember(person.getUser());
                 }
 
             };

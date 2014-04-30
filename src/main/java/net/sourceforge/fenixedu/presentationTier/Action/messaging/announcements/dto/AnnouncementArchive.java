@@ -20,9 +20,9 @@ import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
  */
 public class AnnouncementArchive {
 
-    private AnnouncementBoard board;
+    private final AnnouncementBoard board;
 
-    private AnnouncementArchiveAnnouncementsVisibility visibility;
+    private final AnnouncementArchiveAnnouncementsVisibility visibility;
 
     private Map<Integer, YearAnnouncementArchiveEntry> entries = null;
 
@@ -46,7 +46,7 @@ public class AnnouncementArchive {
             announcements.addAll(this.board.getActiveAnnouncements());
             break;
         case ALL:
-            announcements.addAll(this.board.getAnnouncements());
+            announcements.addAll(this.board.getAnnouncementSet());
             break;
         case VISIBLE:
             announcements.addAll(this.board.getVisibleAnnouncements());

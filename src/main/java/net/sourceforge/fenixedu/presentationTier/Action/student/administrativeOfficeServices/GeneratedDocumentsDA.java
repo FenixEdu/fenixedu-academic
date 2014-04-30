@@ -5,27 +5,27 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 
+import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/generatedDocuments", module = "student", formBeanClass = FenixActionForm.class)
-@Forwards({
+@StrutsFunctionality(app = StudentAcademicOfficeServices.class, path = "annual-irs-documents",
+        titleKey = "label.documents.anualIRS")
+@Mapping(path = "/generatedDocuments", module = "student")
+@Forwards(@Forward(name = "showAnnualIRSDocuments",
+        path = "/student/administrativeOfficeServices/generatedDocuments/showAnnualIRSDocuments.jsp"))
+public class GeneratedDocumentsDA extends Action {
 
-@Forward(name = "showAnnualIRSDocuments", path = "df.page.documents.showAnnualIrsDocuments")
-
-})
-public class GeneratedDocumentsDA extends FenixDispatchAction {
-
-    public ActionForward showAnnualIRSDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixServiceException {
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+            throws FenixServiceException {
 
         request.setAttribute("person", AccessControl.getPerson());
 

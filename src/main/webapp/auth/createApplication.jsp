@@ -5,13 +5,10 @@
 
 <%@ page
 	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
-<%@page
-	import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 <%@page import="net.sourceforge.fenixedu.domain.person.RoleType"%>
 <html:xhtml />
 
 <logic:present role="role(DEVELOPER)">
-<em><bean:message key="label.person.main.title" /></em>
 <h2>
 	<bean:message key="oauthapps.label.create.application" bundle="APPLICATION_RESOURCES" />
 </h2>

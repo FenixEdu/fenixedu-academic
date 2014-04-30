@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.util.EnrolmentAction;
 
 import org.fenixedu.bennu.core.security.Authenticate;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class OptionalEnrolment extends OptionalEnrolment_Base {
@@ -90,8 +89,8 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
     @Override
     public MultiLanguageString getName() {
         final ExecutionSemester executionSemester = getExecutionPeriod();
-        return new MultiLanguageString().with(Language.pt, this.getOptionalCurricularCourse().getName(executionSemester)).with(
-                Language.en, this.getOptionalCurricularCourse().getNameEn(executionSemester));
+        return new MultiLanguageString().with(MultiLanguageString.pt, this.getOptionalCurricularCourse().getName(executionSemester)).with(
+                MultiLanguageString.en, this.getOptionalCurricularCourse().getNameEn(executionSemester));
     }
 
     @Override
@@ -105,7 +104,7 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
                 String.format("%s (%s)", getOptionalCurricularCourse().getNameEn(getExecutionPeriod()), getCurricularCourse()
                         .getNameEn(getExecutionPeriod()));
 
-        return new MultiLanguageString().with(Language.pt, namePt).with(Language.en, nameEn);
+        return new MultiLanguageString().with(MultiLanguageString.pt, namePt).with(MultiLanguageString.en, nameEn);
     }
 
     @Override

@@ -4,7 +4,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ExternalContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.Gender;
@@ -13,7 +12,6 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.FenixFramework;
 
 public class InsertExternalPerson {
 
@@ -34,24 +32,6 @@ public class InsertExternalPerson {
             return unit;
         }
 
-    }
-
-    @Atomic
-    public static ExternalContract run(String name, String sex, String address, String institutionID, String phone,
-            String mobile, String homepage, String email) throws FenixServiceException {
-
-        final ExternalContract storedExternalContract =
-                ExternalContract.readByPersonNameAddressAndInstitutionID(name, address, institutionID);
-        if (storedExternalContract != null) {
-            throw new ExistingServiceException("error.exception.commons.ExternalContract.existingExternalContract");
-        }
-
-        final Unit institutionLocation = (Unit) FenixFramework.getDomainObject(institutionID);
-        Person externalPerson =
-                Person.createExternalPerson(name, Gender.valueOf(sex), new PhysicalAddressData().setAddress(address), phone,
-                        mobile, homepage, email, String.valueOf(System.currentTimeMillis()), IDDocumentType.EXTERNAL);
-
-        return new ExternalContract(externalPerson, institutionLocation, new YearMonthDay(), null);
     }
 
     @Atomic

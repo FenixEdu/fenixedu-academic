@@ -15,7 +15,7 @@ public class SectionOrderProvider extends SectionProvider {
         if (superiorSection != null) {
             siblings = superiorSection.getOrderedSubSections();
         } else {
-            siblings = site.getOrderedTopLevelSections();
+            siblings = site.getOrderedAssociatedSections();
         }
 
         siblings = new ArrayList<Section>(siblings);

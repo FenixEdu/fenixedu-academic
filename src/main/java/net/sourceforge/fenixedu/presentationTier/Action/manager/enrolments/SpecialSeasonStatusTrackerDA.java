@@ -14,11 +14,15 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerStudentsApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -26,13 +30,16 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
+@StrutsFunctionality(app = ManagerStudentsApp.class, path = "special-season-enrolments",
+        titleKey = "label.course.specialSeasonEnrolments")
 @Mapping(path = "/specialSeason/specialSeasonStatusTracker", module = "manager")
 @Forwards({ @Forward(name = "selectCourse", path = "/manager/specialSeason/selectCourse.jsp"),
         @Forward(name = "listStudents", path = "/manager/specialSeason/listStudents.jsp") })
 public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward selectCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         SpecialSeasonStatusTrackerBean bean = getRenderedObject();
@@ -106,7 +113,7 @@ public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
 
     private String getFilename(SpecialSeasonStatusTrackerBean bean) {
         StringBuilder strBuilder = new StringBuilder();
-        strBuilder.append(ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale()).getString(
+        strBuilder.append(ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale()).getString(
                 "special.season.filename"));
         if (bean.getCompetenceCourse() != null) {
             strBuilder.append("_");
@@ -118,7 +125,7 @@ public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
         strBuilder.append("_");
         strBuilder.append(bean.getExecutionSemester().getSemester());
         strBuilder.append("_");
-        strBuilder.append(ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale()).getString(
+        strBuilder.append(ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale()).getString(
                 "special.season.semester"));
         strBuilder.append("_");
         strBuilder.append(bean.getExecutionSemester().getExecutionYear().getName());
@@ -144,7 +151,7 @@ public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
     }
 
     private Spreadsheet createSpreadSheet() {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
         final Spreadsheet spreadsheet = new Spreadsheet(bundle.getString("list.students"));
 
         spreadsheet.setHeaders(new String[] {

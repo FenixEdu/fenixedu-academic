@@ -5,6 +5,8 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <h2><bean:message key="link.coordinator.approveCandidates" /></h2>
 
 <p>

@@ -25,7 +25,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(path = "/student", module = "academicAdministration", formBeanClass = FenixActionForm.class)
+@Mapping(path = "/student", module = "academicAdministration", formBeanClass = FenixActionForm.class,
+        functionality = SearchForStudentsDA.class)
 @Forwards({ @Forward(name = "viewStudentDetails", path = "/academicAdminOffice/student/viewStudentDetails.jsp"),
         @Forward(name = "editPersonalData", path = "/academicAdminOffice/editPersonalData.jsp"),
         @Forward(name = "viewPersonalData", path = "/academicAdminOffice/viewPersonalData.jsp"),

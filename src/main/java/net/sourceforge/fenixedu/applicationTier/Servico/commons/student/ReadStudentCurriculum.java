@@ -5,7 +5,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.CoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.MasterDegreeAdministrativeOfficeAuthorizationFilter;
-import net.sourceforge.fenixedu.applicationTier.Filtro.SeminariesCoordinatorFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.StudentCurriculumViewAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -40,23 +39,18 @@ public class ReadStudentCurriculum {
     public static List runReadStudentCurriculum(String executionDegreeCode, String studentCurricularPlanID)
             throws FenixServiceException, NotAuthorizedException {
         try {
-            SeminariesCoordinatorFilter.instance.execute(executionDegreeCode, studentCurricularPlanID);
+            StudentCurriculumViewAuthorizationFilter.instance.execute();
             return serviceInstance.run(executionDegreeCode, studentCurricularPlanID);
-        } catch (NotAuthorizedException ex1) {
+        } catch (NotAuthorizedException ex2) {
             try {
-                StudentCurriculumViewAuthorizationFilter.instance.execute();
+                CoordinatorAuthorizationFilter.instance.execute();
                 return serviceInstance.run(executionDegreeCode, studentCurricularPlanID);
-            } catch (NotAuthorizedException ex2) {
+            } catch (NotAuthorizedException ex3) {
                 try {
-                    CoordinatorAuthorizationFilter.instance.execute();
+                    MasterDegreeAdministrativeOfficeAuthorizationFilter.instance.execute();
                     return serviceInstance.run(executionDegreeCode, studentCurricularPlanID);
-                } catch (NotAuthorizedException ex3) {
-                    try {
-                        MasterDegreeAdministrativeOfficeAuthorizationFilter.instance.execute();
-                        return serviceInstance.run(executionDegreeCode, studentCurricularPlanID);
-                    } catch (NotAuthorizedException ex4) {
-                        throw ex4;
-                    }
+                } catch (NotAuthorizedException ex4) {
+                    throw ex4;
                 }
             }
         }

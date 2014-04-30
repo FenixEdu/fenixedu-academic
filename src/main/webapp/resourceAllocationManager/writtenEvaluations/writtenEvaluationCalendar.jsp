@@ -1,17 +1,19 @@
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt"%>
 
-<ft:tilesView definition="definition.sop.examsPage" attributeName="body-inline">
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.exams.MainExamsDA" />
+
+<f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 
 	<f:loadBundle basename="resources/ResourceAllocationManagerResources" var="bundleSOP"/>
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 
-	<h:outputFormat value="<em>#{bundleSOP['title.resourceAllocationManager.management']}</em>" escape="false"/>
 	<h:outputFormat value="<h2>#{bundleSOP['link.writtenEvaluation.map']}</h2>" escape="false"/>
 
 	<h:outputText styleClass="error" rendered="#{!empty SOPEvaluationManagementBackingBean.errorMessage}"
@@ -41,7 +43,6 @@
 	 						onchange="this.form.submit();" valueChangeListener="#{SOPEvaluationManagementBackingBean.enableDropDowns}">
 				<f:selectItems value="#{SOPEvaluationManagementBackingBean.academicIntervals}" />
 			</h:selectOneMenu>
-			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 		<h:outputText value="</td>" escape="false"/>
 		<h:outputText value="</tr>" escape="false"/>
 
@@ -55,7 +56,6 @@
 							onchange="this.form.submit();" valueChangeListener="#{SOPEvaluationManagementBackingBean.setNewValueExecutionDegreeID}">
 				<f:selectItems value="#{SOPEvaluationManagementBackingBean.executionDegrees}"/>
 			</h:selectOneMenu>
-		<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 		<h:outputText value="</td>" escape="false"/>
 		<h:outputText value="</tr>" escape="false"/>
 		<h:outputText value="<tr>" escape="false"/>
@@ -68,7 +68,6 @@
 							onchange="this.form.submit();" valueChangeListener="#{SOPEvaluationManagementBackingBean.setNewValueCalendarPeriod}">
 				<f:selectItems value="#{SOPEvaluationManagementBackingBean.calendarPeriodItems}"/>
 			</h:selectOneMenu>
-			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID3' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 		<h:outputText value="</td>" escape="false"/>
 		<h:outputText value="</tr>" escape="false"/>
 		
@@ -82,7 +81,6 @@
 					onchange="this.form.submit();" valueChangeListener="#{SOPEvaluationManagementBackingBean.setNewValueCurricularYearIDs}">
 				<f:selectItems value="#{SOPEvaluationManagementBackingBean.curricularYearItems}"/>
 			</h:selectManyCheckbox>
-			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID4' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 		<h:outputText value="</td>" escape="false"/>
 		<h:outputText value="</tr>" escape="false"/>
 		<h:outputText value="</table>" escape="false"/>
@@ -93,8 +91,8 @@
 		 	<fc:fenixCalendar 
 		 		begin="#{SOPEvaluationManagementBackingBean.writtenEvaluationsCalendarBegin}" 
 		 		end="#{SOPEvaluationManagementBackingBean.writtenEvaluationsCalendarEnd}"
-		 		createLink="showExecutionCourses.faces?academicInterval=#{SOPEvaluationManagementBackingBean.academicIntervalEscapeFriendly}&executionDegreeID=#{SOPEvaluationManagementBackingBean.executionDegreeID}&curricularYearIDsParameterString=#{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}&contentContextPath_PATH=/gestao-de-recursos/gestao-de-recursos"
-		 		editLinkPage="editWrittenTest.faces?contentContextPath_PATH=/gestao-de-recursos/gestao-de-recursos"
+		 		createLink="#{facesContext.externalContext.requestContextPath}/resourceAllocationManager/writtenEvaluations/showExecutionCourses.faces?academicInterval=#{SOPEvaluationManagementBackingBean.academicIntervalEscapeFriendly}&executionDegreeID=#{SOPEvaluationManagementBackingBean.executionDegreeID}&curricularYearIDsParameterString=#{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}"
+		 		editLinkPage="#{facesContext.externalContext.requestContextPath}/resourceAllocationManager/writtenEvaluations/editWrittenTest.faces"
 		 		editLinkParameters="#{SOPEvaluationManagementBackingBean.writtenTestsCalendarLink}"
 		 	/>
 
@@ -122,7 +120,7 @@
 							<c:out value=": ${executionCourseWrittenEvaluationAgregationBean.curricularYear} ${bundleSOP['label.year.simple']}"/>
 						</td>
 						<td colspan="2" class="header" style="font-weight: bold">
-							<c:url var="creationURL" value="showExecutionCourses.faces">
+							<c:url var="creationURL" value="${facesContext.externalContext.requestContextPath}/resourceAllocationManager/writtenEvaluations/showExecutionCourses.faces">
 								<c:param name="academicInterval" value="${SOPEvaluationManagementBackingBean.academicIntervalEscapeFriendly}"/>
 								<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
 								<c:param name="executionCourseID" value="${executionCourseWrittenEvaluationAgregationBean.executionCourse.externalId}"/>
@@ -133,7 +131,7 @@
 							</a>
 						</td>
 						<td colspan="3" class="header">
-							<c:url var="commentURL" value="commentExecutionCourse.faces">
+							<c:url var="commentURL" value="${facesContext.externalContext.requestContextPath}/resourceAllocationManager/writtenEvaluations/commentExecutionCourse.faces">
 								<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
 								<c:param name="academicInterval" value="${SOPEvaluationManagementBackingBean.academicIntervalEscapeFriendly}"/>
 								<c:param name="executionCourseID" value="${executionCourseWrittenEvaluationAgregationBean.executionCourse.externalId}"/>
@@ -199,7 +197,7 @@
 								</c:if>
 							</td>
 							<td> <!-- links -->
-								<c:url var="editEvaluationURL" value="editWrittenTest.faces">
+								<c:url var="editEvaluationURL" value="${facesContext.externalContext.requestContextPath}/resourceAllocationManager/writtenEvaluations/editWrittenTest.faces">
 									<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
 									<c:param name="evaluationID" value="${evaluation.externalId}"/>
 									<c:param name="evaluationTypeClassname" value="${evaluation.class.name}"/>
@@ -211,7 +209,7 @@
 									<c:out value="${bundle['label.edit']}"/>
 								</a>
 								<c:out value=" | "/>
-								<c:url var="deleteEvaluationURL" value="deleteWrittenEvaluation.faces">
+								<c:url var="deleteEvaluationURL" value="${facesContext.externalContext.requestContextPath}/resourceAllocationManager/writtenEvaluations/deleteWrittenEvaluation.faces">
 									<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
 									<c:param name="evaluationID" value="${evaluation.externalId}"/>
 									<c:param name="evaluationTypeClassname" value="${evaluation.class.name}"/>
@@ -243,7 +241,7 @@
 									<c:out value="${executionCourse.sigla} - ${executionCourse.nome}"/>
 								</td>
 								<td>
-									<c:url var="creationURL" value="showExecutionCourses.faces">
+									<c:url var="creationURL" value="${facesContext.externalContext.requestContextPath}/resourceAllocationManager/writtenEvaluations/showExecutionCourses.faces">
 										<c:param name="academicInterval" value="${SOPEvaluationManagementBackingBean.academicIntervalEscapeFriendly}"/>
 										<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
 										<c:param name="executionCourseID" value="${executionCourse.externalId}"/>										
@@ -254,7 +252,7 @@
 									</a>
 								</td>
 								<td>
-									<c:url var="commentURL" value="commentExecutionCourse.faces">
+									<c:url var="commentURL" value="${facesContext.externalContext.requestContextPath}/resourceAllocationManager/writtenEvaluations/commentExecutionCourse.faces">
 										<c:param name="executionDegreeID" value="${SOPEvaluationManagementBackingBean.executionDegreeID}"/>
 										<c:param name="academicInterval" value="${SOPEvaluationManagementBackingBean.academicIntervalEscapeFriendly}"/>
 										<c:param name="executionCourseID" value="${executionCourse.externalId}"/>							
@@ -279,4 +277,4 @@
 
 	
 
-</ft:tilesView>
+</f:view>

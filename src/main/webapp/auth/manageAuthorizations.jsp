@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app"%>
 <%@ taglib uri="http://jakarta.apache.org/struts/tags-bean" prefix="bean"%>
@@ -7,7 +8,6 @@
 <html:xhtml />
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
 
-<em><bean:message key="label.person.main.title" /></em>
 <h2>
 	<bean:message key="oauthapps.label.manage.authorizations" bundle="APPLICATION_RESOURCES" />
 </h2>

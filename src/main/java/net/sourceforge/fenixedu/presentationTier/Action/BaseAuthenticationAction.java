@@ -1,13 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,12 +7,8 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.PendingRequest;
-import net.sourceforge.fenixedu.domain.PendingRequestParameter;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson;
-import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.inquiries.RegentInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.TeacherInquiryTemplate;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -28,23 +16,17 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.teacher.ReductionService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
-import net.sourceforge.fenixedu.presentationTier.Action.commons.LoginRedirectAction;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
-import net.sourceforge.fenixedu.util.HostAccessControl;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
-import org.apache.struts.action.DynaActionForm;
-import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.exceptions.AuthorizationException;
 
 import pt.ist.fenixWebFramework.renderers.components.HtmlLink;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
-import pt.ist.fenixframework.FenixFramework;
 
 public abstract class BaseAuthenticationAction extends FenixAction {
 
@@ -61,12 +43,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 
             final HttpSession httpSession = request.getSession(false);
 
-            String pendingRequest = request.getParameter("pendingRequest");
-            if (pendingRequest != null && pendingRequest.length() > 0 && !pendingRequest.equals("null")
-                    && FenixFramework.getDomainObject(pendingRequest) != null
-                    && isValidChecksumForUser((PendingRequest) FenixFramework.getDomainObject(pendingRequest))) {
-                return handleSessionRestoreAndGetForward(request, form, userView, httpSession);
-            } else if (hasMissingTeacherService(userView)) {
+            if (hasMissingTeacherService(userView)) {
                 return handleSessionCreationAndForwardToTeachingService(request, userView, httpSession);
             } else if (hasPendingTeachingReductionService(userView)) {
                 return handleSessionCreationAndForwardToPendingTeachingReductionService(request, userView, httpSession);
@@ -269,92 +246,45 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 
     private ActionForward handleSessionCreationAndForwardToTeachingService(HttpServletRequest request, User userView,
             HttpSession session) {
-        final List<Content> contents = new ArrayList<Content>();
-        Bennu.getInstance().getRootPortal().addPathContentsForTrailingPath(contents, "departamento/departamento");
-        final FilterFunctionalityContext context = new FilterFunctionalityContext(request, contents);
-        request.setAttribute(FilterFunctionalityContext.CONTEXT_KEY, context);
-
         String teacherOid = userView.getPerson().getTeacher().getExternalId();
         String executionYearOid = ExecutionYear.readCurrentExecutionYear().getExternalId();
 
         HtmlLink link = new HtmlLink();
         link.setModule("/departmentMember");
         link.setUrl("/credits.do?method=viewAnnualTeachingCredits&teacherOid=" + teacherOid + "&executionYearOid="
-                + executionYearOid + "&"
-                + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
-                + "=/departamento/departamento");
+                + executionYearOid);
         link.setEscapeAmpersand(false);
         String calculatedUrl = link.calculateUrl();
-        return new ActionForward(
-                "/departmentMember/credits.do?method=viewAnnualTeachingCredits&teacherOid="
-                        + teacherOid
-                        + "&executionYearOid="
-                        + executionYearOid
-                        + "&"
-                        + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
-                        + "=/departamento/departamento&_request_checksum_="
-                        + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
-                                .calculateChecksum(calculatedUrl),
-                true);
+        return new ActionForward("/departmentMember/credits.do?method=viewAnnualTeachingCredits&teacherOid=" + teacherOid
+                + "&executionYearOid=" + executionYearOid + "&_request_checksum_="
+                + GenericChecksumRewriter.calculateChecksum(calculatedUrl, session), true);
     }
 
     private ActionForward handleSessionCreationAndForwardToPendingTeachingReductionService(HttpServletRequest request,
             User userView, HttpSession session) {
-        final List<Content> contents = new ArrayList<Content>();
-        Bennu.getInstance().getRootPortal().addPathContentsForTrailingPath(contents, "departamento/departamento");
-        final FilterFunctionalityContext context = new FilterFunctionalityContext(request, contents);
-        request.setAttribute(FilterFunctionalityContext.CONTEXT_KEY, context);
-
-        String teacherOid = userView.getPerson().getTeacher().getExternalId();
-        String executionYearOid = ExecutionYear.readCurrentExecutionYear().getExternalId();
-
         HtmlLink link = new HtmlLink();
         link.setModule("/departmentMember");
-        link.setUrl("/creditsReductions.do?method=showReductionServices&"
-                + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
-                + "=/departamento/departamento");
+        link.setUrl("/creditsReductions.do?method=showReductionServices");
         link.setEscapeAmpersand(false);
         String calculatedUrl = link.calculateUrl();
-        return new ActionForward(
-                "/departmentMember/creditsReductions.do?method=showReductionServices&"
-                        + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
-                        + "=/departamento/departamento&_request_checksum_="
-                        + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
-                                .calculateChecksum(calculatedUrl),
-                true);
+        return new ActionForward("/departmentMember/creditsReductions.do?method=showReductionServices&_request_checksum_="
+                + GenericChecksumRewriter.calculateChecksum(calculatedUrl, session), true);
     }
 
     private ActionForward handleSessionCreationAndForwardToRAIDESInquiriesResponseQuestion(HttpServletRequest request,
             User userView, HttpSession session) {
-        final List<Content> contents = new ArrayList<Content>();
-        Bennu.getInstance().getRootPortal().addPathContentsForTrailingPath(contents, "estudante/estudante");
-        final FilterFunctionalityContext context = new FilterFunctionalityContext(request, contents);
-        request.setAttribute(FilterFunctionalityContext.CONTEXT_KEY, context);
-
         HtmlLink link = new HtmlLink();
         link.setModule("/student");
-        link.setUrl("/editMissingCandidacyInformation.do?method=prepareEdit&"
-                + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
-                + "=/estudante/estudante");
+        link.setUrl("/editMissingCandidacyInformation.do?method=prepareEdit");
         link.setEscapeAmpersand(false);
         String calculatedUrl = link.calculateUrl();
-        return new ActionForward(
-                "/student/editMissingCandidacyInformation.do?method=prepareEdit&"
-                        + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
-                        + "=/estudante/estudante&_request_checksum_="
-                        + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
-                                .calculateChecksum(calculatedUrl),
-                true);
+        return new ActionForward("/student/editMissingCandidacyInformation.do?method=prepareEdit&_request_checksum_="
+                + GenericChecksumRewriter.calculateChecksum(calculatedUrl, session), true);
     }
 
     private ActionForward handleSessionCreationAndForwardToAlumniInquiriesResponseQuestion(HttpServletRequest request,
             User userView, HttpSession session) {
         return new ActionForward("/respondToAlumniInquiriesQuestion.do?method=showQuestion");
-    }
-
-    private ActionForward handleSessionCreationAndForwardToTeacherInquiriesResponseQuestion(HttpServletRequest request,
-            User userView, HttpSession session) {
-        return new ActionForward("/respondToInquiriesQuestion.do?method=showTeacherQuestion");
     }
 
     private ActionForward handleSessionCreationAndForwardToQucInquiriesResponseQuestion(HttpServletRequest request,
@@ -382,84 +312,4 @@ public abstract class BaseAuthenticationAction extends FenixAction {
         return new ActionForward("/respondToCoordinationExecutionDegreeReportsQuestion.do?method=showQuestion");
     }
 
-    private boolean isValidChecksumForUser(final PendingRequest pendingRequest) {
-        try {
-            String url = pendingRequest.getUrl();
-
-            for (PendingRequestParameter pendingRequestParameter : pendingRequest.getPendingRequestParameter()) {
-                if (!pendingRequestParameter.getAttribute()) {
-                    url =
-                            LoginRedirectAction.addToUrl(url, pendingRequestParameter.getParameterKey(),
-                                    pendingRequestParameter.getParameterValue());
-                }
-            }
-
-            final String requestChecksumParameter = pendingRequest.getRequestChecksumParameter();
-
-            if (url.contains("/external/") && requestChecksumParameter == null) { //TODO: check if it is necessary
-                return true;
-            }
-            return GenericChecksumRewriter.calculateChecksum(url).equals(requestChecksumParameter);
-        } catch (Exception ex) {
-            return false;
-        }
-    }
-
-    private ActionForward handleSessionRestoreAndGetForward(HttpServletRequest request, ActionForm form, User userView,
-            final HttpSession session) {
-        final ActionForward actionForward = new ActionForward();
-        actionForward.setContextRelative(false);
-        actionForward.setRedirect(true);
-        // Set request attributes
-
-        String pendingRequest = request.getParameter("pendingRequest");
-        if (pendingRequest == null) {
-            pendingRequest = (String) request.getAttribute("pendingRequest");
-            if (pendingRequest == null) {
-                final DynaActionForm authenticationForm = (DynaActionForm) form;
-                pendingRequest = (String) authenticationForm.get("pendingRequest");
-            }
-        }
-        actionForward.setPath("/redirect.do?pendingRequest=" + pendingRequest);
-        return actionForward;
-    }
-
-    /**
-     * @param userRoles
-     * @return
-     */
-    private int getNumberOfSubApplications(final Collection<RoleType> roleTypes) {
-        final Set<String> subApplications = new HashSet<String>();
-        for (final RoleType roleType : roleTypes) {
-            final Role role = Role.getRoleByRoleType(roleType);
-            final String subApplication = role.getPortalSubApplication();
-            if (!subApplications.contains(subApplication) && !subApplication.equals("/teacher")) {
-                subApplications.add(subApplication);
-            }
-        }
-        return subApplications.size();
-    }
-
-    /**
-     * @param infoRole
-     * @return
-     */
-    private ActionForward buildRoleForward(Role infoRole) {
-        ActionForward actionForward = new ActionForward();
-        actionForward.setContextRelative(false);
-        actionForward.setRedirect(false);
-        actionForward.setPath("/dotIstPortal.do?prefix=" + infoRole.getPortalSubApplication() + "&page=" + infoRole.getPage());
-        return actionForward;
-    }
-
-    public static String getRemoteHostName(HttpServletRequest request) {
-        String remoteHostName;
-        final String remoteAddress = HostAccessControl.getRemoteAddress(request);
-        try {
-            remoteHostName = InetAddress.getByName(remoteAddress).getHostName();
-        } catch (UnknownHostException e) {
-            remoteHostName = remoteAddress;
-        }
-        return remoteHostName;
-    }
 }

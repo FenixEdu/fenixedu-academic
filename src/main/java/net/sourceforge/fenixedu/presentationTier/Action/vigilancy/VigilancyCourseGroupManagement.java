@@ -27,8 +27,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "examCoordination", path = "/vigilancy/vigilancyCourseGroupManagement", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "editCourseGroup", path = "edit-course-group") })
+@Mapping(module = "examCoordination", path = "/vigilancy/vigilancyCourseGroupManagement",
+        functionality = VigilantGroupManagement.class)
+@Forwards(value = { @Forward(name = "editCourseGroup", path = "/examCoordinator/vigilancy/editVigilancyCourseGroup.jsp") })
 public class VigilancyCourseGroupManagement extends FenixDispatchAction {
 
     public ActionForward prepareEdition(ActionMapping mapping, ActionForm form, HttpServletRequest request,

@@ -13,8 +13,9 @@ import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.commons.i18n.I18N;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
  * @author tfc130
@@ -83,7 +84,7 @@ public class InfoCurricularCourseScope extends InfoObject {
 
     private final CurricularCourseScope curricularCourseScope;
 
-    private final boolean showEnVersion = (Language.getUserLanguage() == Language.en);
+    private final boolean showEnVersion = I18N.getLocale().equals(MultiLanguageString.en);
 
     public InfoCurricularCourseScope(final CurricularCourseScope curricularCourseScope) {
         this.curricularCourseScope = curricularCourseScope;

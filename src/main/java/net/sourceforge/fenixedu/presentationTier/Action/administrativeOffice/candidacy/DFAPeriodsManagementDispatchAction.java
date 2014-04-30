@@ -10,26 +10,35 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.MasterDegreeOfficeApplication.MasterDegreeDfaApp;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "masterDegreeAdministrativeOffice", path = "/dfaPeriodsManagement", attribute = "chooseExecutionYearForm",
-        formBean = "chooseExecutionYearForm", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "chooseExecutionYear", path = "dfa.periodsManagement.chooseExecutionYear"),
-        @Forward(name = "editCandidacyPeriod", path = "dfa.periodsManagement.editCandidacyPeriod"),
-        @Forward(name = "showExecutionDegrees", path = "dfa.periodsManagement.showExecutionDegrees"),
-        @Forward(name = "editRegistrationPeriod", path = "dfa.periodsManagement.editRegistrationPeriod") })
+@StrutsFunctionality(app = MasterDegreeDfaApp.class, path = "manage-periods", titleKey = "link.candidacy.dfa.periodsManagement")
+@Mapping(module = "masterDegreeAdministrativeOffice", path = "/dfaPeriodsManagement", formBean = "chooseExecutionYearForm")
+@Forwards({
+        @Forward(name = "chooseExecutionYear",
+                path = "/masterDegreeAdministrativeOffice/candidacy/dfa/periodsManagement/chooseExecutionYear.jsp"),
+        @Forward(name = "editCandidacyPeriod",
+                path = "/masterDegreeAdministrativeOffice/candidacy/dfa/periodsManagement/editCandidacyPeriod.jsp"),
+        @Forward(name = "showExecutionDegrees",
+                path = "/masterDegreeAdministrativeOffice/candidacy/dfa/periodsManagement/showExecutionDegrees.jsp"),
+        @Forward(name = "editRegistrationPeriod",
+                path = "/masterDegreeAdministrativeOffice/candidacy/dfa/periodsManagement/editRegistrationPeriod.jsp") })
 public class DFAPeriodsManagementDispatchAction extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         ((DynaActionForm) form).set("executionYear", ExecutionYear.readCurrentExecutionYear().getExternalId().toString());
         request.setAttribute("executionYears", ExecutionYear.readNotClosedExecutionYears());

@@ -7,7 +7,7 @@
 		<property name="classes" value="bold"/>
 	</slot>
 	<slot name="description" key="label.net.sourceforge.fenixedu.domain.messaging.Forum.description"/>
-	<slot name="conversationThreadsCount" key="label.forum.totalConversationThreads"/>
+	<slot name="conversationThreadCount" key="label.forum.totalConversationThreads"/>
 	<slot name="conversationMessagesCount" key="label.forum.totalConversationMessages"/>
 	<slot name="creationDate" key="label.net.sourceforge.fenixedu.domain.messaging.Forum.creationDate"/>
 	
@@ -28,7 +28,7 @@
 		<property name="address" value="email"/>
 	</slot>
    	<slot name="creationDate" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationThread.creationDate"/>
-   	<slot name="conversationMessagesCount" key="label.forum.ConversationMessages"/>
+   	<slot name="messageCount" key="label.forum.ConversationMessages"/>
 </schema>
 
 <schema bundle="MESSAGING_RESOURCES" name="conversationThreadAndMessage.create" type="net.sourceforge.fenixedu.dataTransferObject.messaging.CreateConversationThreadAndMessageBean">
@@ -65,7 +65,7 @@
 		<property name="classes" value="bold" />	
 	</slot>
 	<slot name="creationDate" key="label.net.sourceforge.fenixedu.domain.messaging.ConversationThread.creationDate"/>
-	<slot name="conversationMessagesCount" key="label.forum.totalConversationMessages"/>	
+	<slot name="messageCount" key="label.forum.totalConversationMessages"/>	
 </schema>
 
 <schema bundle="MESSAGING_RESOURCES" name="conversationMessage.view-with-author-creationDate-and-body" type="net.sourceforge.fenixedu.domain.messaging.ConversationMessage">
@@ -133,8 +133,8 @@
     </slot>
 </schema>
 
-<schema name="researchUnitGroupDescription" type="net.sourceforge.fenixedu.injectionCode.IGroup" bundle="MESSAGING_RESOURCES">
-	<slot name="name"/>
+<schema name="researchUnitGroupDescription" type="org.fenixedu.bennu.core.groups.Group" bundle="MESSAGING_RESOURCES">
+	<slot name="presentationName"/>
 </schema>
 
 <schema name="messaging.file.sourceGroup" type="net.sourceforge.fenixedu.presentationTier.Action.person.PersonFileSourceGroupBean">
@@ -154,8 +154,8 @@
 	</slot>
 </schema>
 
-<schema name="delegatesGroupDescription" type="net.sourceforge.fenixedu.injectionCode.IGroup" bundle="MESSAGING_RESOURCES">
-	<slot name="name"/>
+<schema name="delegatesGroupDescription" type="org.fenixedu.bennu.core.groups.Group" bundle="MESSAGING_RESOURCES">
+	<slot name="presentationName"/>
 </schema>
 
 
@@ -337,6 +337,3 @@
 	<slot name="failedMailsCount" key="net.sourceforge.fenixedu.domain.util.email.Message.failedMailsCount"/>
 </schema>
 
-<schema bundle="MESSAGING_RESOURCES" name="find.person" type="net.sourceforge.fenixedu.presentationTier.Action.person.FindPersonBean">
-	
-</schema>

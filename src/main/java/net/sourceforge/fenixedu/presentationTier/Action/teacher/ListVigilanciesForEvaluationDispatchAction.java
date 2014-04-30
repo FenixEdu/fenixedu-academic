@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.vigilancy.AttendingStatus;
 import net.sourceforge.fenixedu.domain.vigilancy.OwnCourseVigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.teacher.executionCourse.ExecutionCourseBaseAction;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -26,15 +26,16 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "teacher", path = "/evaluation/vigilancy/vigilantsForEvaluation", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "listVigilantsForEvaluation", path = "list-vigilants-for-evaluation"),
-        @Forward(name = "editReportForEvaluation", path = "edit-report-for-evaluation") })
-public class ListVigilanciesForEvaluationDispatchAction extends FenixDispatchAction {
+@Mapping(module = "teacher", path = "/evaluation/vigilancy/vigilantsForEvaluation", functionality = ManageExecutionCourseDA.class)
+public class ListVigilanciesForEvaluationDispatchAction extends ExecutionCourseBaseAction {
+
+    private ActionForward doForward(HttpServletRequest request, String path) {
+        request.setAttribute("teacher$actual$page", path);
+        return new ActionForward("/evaluation/evaluationFrame.jsp");
+    }
 
     private void setState(HttpServletRequest request) {
         String executionCourseID = request.getParameter("executionCourseID");
@@ -60,14 +61,13 @@ public class ListVigilanciesForEvaluationDispatchAction extends FenixDispatchAct
             HttpServletResponse response) {
         setState(request);
         request.setAttribute("unconvokeRequest", new VariantBean());
-        return mapping.findForward("listVigilantsForEvaluation");
-
+        return doForward(request, "/teacher/evaluation/vigilancies/viewVigilancies.jsp");
     }
 
     public ActionForward editReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         setState(request);
-        return mapping.findForward("editReportForEvaluation");
+        return doForward(request, "/teacher/evaluation/vigilancies/editVigilanciesReport.jsp");
     }
 
     public ActionForward changeConvokeStatus(ActionMapping mapping, ActionForm form, HttpServletRequest request,

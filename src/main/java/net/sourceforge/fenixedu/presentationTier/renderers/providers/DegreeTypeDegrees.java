@@ -6,7 +6,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementBaseBean;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
@@ -21,8 +21,7 @@ public class DegreeTypeDegrees implements DataProvider {
         if (markSheetManagementBean.getExecutionPeriod() != null) {
             final Set<Degree> result = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
             Set<Degree> degreesForMarksheets =
-                    AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
-                            AcademicOperationType.MANAGE_MARKSHEETS);
+                    AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_MARKSHEETS);
             result.addAll(degreesForMarksheets);
             return result;
         }

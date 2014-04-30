@@ -13,16 +13,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/curriculumLinesLocationManagement", module = "manager")
+@Mapping(path = "/curriculumLinesLocationManagement", module = "manager", functionality = BolonhaEnrolmentsManagementDA.class)
 @Forwards({
-
-@Forward(name = "showCurriculum", path = "/manager/curriculum/curriculumLines/location/showCurriculum.jsp"),
-
-@Forward(name = "chooseNewLocation", path = "/manager/curriculum/curriculumLines/location/chooseNewLocation.jsp"),
-
-@Forward(name = "backToChooseStudentCurricularPlan", path = "/bolonhaStudentEnrolment.do?method=showAllStudentCurricularPlans")
-
-})
+        @Forward(name = "showCurriculum", path = "/manager/curriculum/curriculumLines/location/showCurriculum.jsp"),
+        @Forward(name = "chooseNewLocation", path = "/manager/curriculum/curriculumLines/location/chooseNewLocation.jsp"),
+        @Forward(name = "backToChooseStudentCurricularPlan",
+                path = "/manager/bolonhaStudentEnrolment.do?method=showAllStudentCurricularPlans") })
 public class CurriculumLinesLocationManagementDA extends AbstractCurriculumLinesLocationManagementDA {
 
     @Override

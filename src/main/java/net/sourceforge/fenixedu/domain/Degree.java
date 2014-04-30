@@ -43,16 +43,16 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.predicates.AcademicPredicates;
 import net.sourceforge.fenixedu.util.MarkType;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.google.common.base.Predicate;
@@ -69,12 +69,12 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         public int compare(final Degree o1, final Degree o2) {
             String name1;
             String name2;
-            if (Language.getLocale().toString().equalsIgnoreCase("pt")) {
-                name1 = o1.getNameFor((AcademicInterval) null).getContent(Language.pt);
-                name2 = o2.getNameFor((AcademicInterval) null).getContent(Language.pt);
+            if (I18N.getLocale().toString().equalsIgnoreCase("pt")) {
+                name1 = o1.getNameFor((AcademicInterval) null).getContent(MultiLanguageString.pt);
+                name2 = o2.getNameFor((AcademicInterval) null).getContent(MultiLanguageString.pt);
             } else {
-                name1 = o1.getNameFor((AcademicInterval) null).getContent(Language.en);
-                name2 = o2.getNameFor((AcademicInterval) null).getContent(Language.en);
+                name1 = o1.getNameFor((AcademicInterval) null).getContent(MultiLanguageString.en);
+                name2 = o2.getNameFor((AcademicInterval) null).getContent(MultiLanguageString.en);
             }
 
             return collator.compare(name1, name2);
@@ -164,7 +164,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         if (degreeInfo == null) {
             degreeInfo = tryCreateUsingMostRecentInfo(executionYear);
         }
-        degreeInfo.setName(new MultiLanguageString().with(Language.pt, name.trim()).with(Language.en, nameEn.trim()));
+        degreeInfo.setName(new MultiLanguageString().with(MultiLanguageString.pt, name.trim()).with(MultiLanguageString.en,
+                nameEn.trim()));
 
         this.setNome(name);
         this.setNameEn(nameEn);
@@ -643,8 +644,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     @Deprecated
     public MultiLanguageString getNameFor(final ExecutionYear executionYear) {
         DegreeInfo degreeInfo = executionYear == null ? getMostRecentDegreeInfo() : getMostRecentDegreeInfo(executionYear);
-        return degreeInfo == null ? new MultiLanguageString().with(Language.pt, super.getNome()).with(Language.en,
-                super.getNameEn()) : degreeInfo.getName();
+        return degreeInfo == null ? new MultiLanguageString().with(MultiLanguageString.pt, super.getNome()).with(
+                MultiLanguageString.en, super.getNameEn()) : degreeInfo.getName();
     }
 
     @Deprecated
@@ -654,8 +655,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     public MultiLanguageString getNameFor(final AcademicInterval academicInterval) {
         DegreeInfo degreeInfo = academicInterval == null ? getMostRecentDegreeInfo() : getMostRecentDegreeInfo(academicInterval);
-        return degreeInfo == null ? new MultiLanguageString().with(Language.pt, super.getNome()).with(Language.en,
-                super.getNameEn()) : degreeInfo.getName();
+        return degreeInfo == null ? new MultiLanguageString().with(MultiLanguageString.pt, super.getNome()).with(
+                MultiLanguageString.en, super.getNameEn()) : degreeInfo.getName();
     }
 
     @Override
@@ -670,7 +671,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     @Deprecated
     public String getName() {
         DegreeInfo degreeInfo = getMostRecentDegreeInfo();
-        return degreeInfo == null ? StringUtils.EMPTY : degreeInfo.getName().getContent(Language.pt);
+        return degreeInfo == null ? StringUtils.EMPTY : degreeInfo.getName().getContent(MultiLanguageString.pt);
     }
 
     /**
@@ -680,7 +681,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     @Deprecated
     public String getNameEn() {
         DegreeInfo degreeInfo = getMostRecentDegreeInfo();
-        return degreeInfo == null ? StringUtils.EMPTY : degreeInfo.getName().getContent(Language.en);
+        return degreeInfo == null ? StringUtils.EMPTY : degreeInfo.getName().getContent(MultiLanguageString.en);
     }
 
     final public MultiLanguageString getNameI18N() {
@@ -692,11 +693,11 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     final public String getPresentationName() {
-        return getPresentationName(ExecutionYear.readCurrentExecutionYear(), Language.getLocale());
+        return getPresentationName(ExecutionYear.readCurrentExecutionYear(), I18N.getLocale());
     }
 
     public String getPresentationName(final ExecutionYear executionYear) {
-        return getPresentationName(executionYear, Language.getLocale());
+        return getPresentationName(executionYear, I18N.getLocale());
     }
 
     protected String getPresentationName(final ExecutionYear executionYear, final Locale locale) {
@@ -710,22 +711,22 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         }
 
         final MultiLanguageString mls = getNameFor(executionYear);
-        final Language language = Language.valueOf(locale.getLanguage());
+        final Locale language = locale;
         res.append(mls.hasContent(language) ? mls.getContent(language) : mls.getPreferedContent());
 
         return res.toString();
     }
 
     final public String getFilteredName() {
-        return getFilteredName(ExecutionYear.readCurrentExecutionYear(), Language.getLocale());
+        return getFilteredName(ExecutionYear.readCurrentExecutionYear(), I18N.getLocale());
     }
 
     final public String getFilteredName(final ExecutionYear executionYear) {
-        return getFilteredName(executionYear, Language.getLocale());
+        return getFilteredName(executionYear, I18N.getLocale());
     }
 
     public String getFilteredName(final ExecutionYear executionYear, final Locale locale) {
-        final StringBuilder res = new StringBuilder(getNameFor(executionYear).getContent(Language.valueOf(locale.getLanguage())));
+        final StringBuilder res = new StringBuilder(getNameFor(executionYear).getContent(locale));
 
         for (final net.sourceforge.fenixedu.domain.space.Campus campus : Space.getAllCampus()) {
             final String toRemove = " - " + campus.getName();
@@ -1087,7 +1088,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     }
 
     public boolean isMemberOfAnyScientificCommission(Person person) {
-        return getMostRecentScientificCommission(person) != null;
+        return person != null && getMostRecentScientificCommission(person) != null;
     }
 
     public boolean isMemberOfCurrentScientificCommission(Person person) {
@@ -1165,9 +1166,11 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
      *         execution degree
      */
     final public boolean isCoordinatorInSomeExecutionYear(final Person person) {
-        for (Coordinator coordinator : person.getCoordinators()) {
-            if (coordinator.getExecutionDegree().getDegree() == this) {
-                return true;
+        if (person != null) {
+            for (Coordinator coordinator : person.getCoordinators()) {
+                if (coordinator.getExecutionDegree().getDegree() == this) {
+                    return true;
+                }
             }
         }
 
@@ -1601,12 +1604,12 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         return result;
     }
 
-    public static List<IGroup> getDegreesDelegatesGroupByDegreeType(DegreeType degreeType) {
-        List<IGroup> result = new ArrayList<IGroup>();
+    public static List<Group> getDegreesDelegatesGroupByDegreeType(DegreeType degreeType) {
+        List<Group> result = new ArrayList<Group>();
 
         List<Degree> degrees = Degree.readAllByDegreeType(degreeType);
         for (Degree degree : degrees) {
-            result.add(new DelegatesGroup(degree));
+            result.add(DelegatesGroup.get(degree));
         }
 
         return result;

@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.util.Money;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
 
@@ -55,7 +55,7 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
 
         StringBuilder builder1 = new StringBuilder();
 
-        if (getLanguage().equals(Language.pt)) {
+        if (getLanguage().equals(MultiLanguageString.pt)) {
             builder1.append(getResourceBundle().getString("label.with")).append(SINGLE_SPACE);
         }
 
@@ -83,7 +83,7 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
     @Override
     protected void setNationality(final Person person) {
         StringBuilder builder = new StringBuilder();
-        if (getLanguage().equals(Language.pt)) {
+        if (getLanguage().equals(MultiLanguageString.pt)) {
             builder.append(getResourceBundle().getString("label.and")).append(SINGLE_SPACE);
         }
 
@@ -185,7 +185,7 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
     }
 
     private String getThesisTitle(final PhdIndividualProgramProcess phdIndividualProgramProcess) {
-        if (getLanguage().equals(Language.en) && !StringUtils.isEmpty(phdIndividualProgramProcess.getThesisTitleEn())) {
+        if (getLanguage().equals(MultiLanguageString.en) && !StringUtils.isEmpty(phdIndividualProgramProcess.getThesisTitleEn())) {
             return phdIndividualProgramProcess.getThesisTitleEn();
         }
 

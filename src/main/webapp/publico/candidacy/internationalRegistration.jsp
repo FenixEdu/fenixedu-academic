@@ -1,4 +1,4 @@
-<%@page import="net.sourceforge.fenixedu.domain.Instalation"%>
+<%@page import="org.fenixedu.bennu.portal.domain.PortalConfiguration"%>
 <%@page import="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -15,7 +15,7 @@
 <logic:present name="person">
 	
 	<div class="infoop2">
-		<p><bean:message key="message.register.user" arg0="<%=Instalation.getInstance().getInstalationName()%>" bundle="APPLICATION_RESOURCES"/></p>
+		<p><bean:message key="message.register.user" arg0="<%=PortalConfiguration.getInstance().getApplicationTitle().getContent()%>" bundle="APPLICATION_RESOURCES"/></p>
 		<strong><bean:message key="message.requirements"/>:</strong>
 		<ul>
 			<li><bean:message key="message.pass.size"/></li>

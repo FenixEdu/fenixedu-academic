@@ -24,23 +24,23 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.delegate.DelegateApplication.DelegateConsultApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "delegate", path = "/viewStudents", scope = "request", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "selectCurricularCourses", path = "selectCurricularCourses"),
-        @Forward(name = "showStudents", path = "/delegate/showStudents.jsp", tileProperties = @Tile(
-                title = "private.delegate.view.students")) })
+@StrutsFunctionality(app = DelegateConsultApp.class, path = "students", titleKey = "link.students")
+@Mapping(module = "delegate", path = "/viewStudents")
+@Forwards(@Forward(name = "showStudents", path = "/delegate/showStudents.jsp"))
 public class ViewStudentsDispatchAction extends FenixDispatchAction {
 
     @Override
@@ -96,6 +96,7 @@ public class ViewStudentsDispatchAction extends FenixDispatchAction {
         return mapping.findForward("showStudents");
     }
 
+    @EntryPoint
     public ActionForward prepareShowStudentsByCurricularCourse(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         String year = request.getParameter("year");

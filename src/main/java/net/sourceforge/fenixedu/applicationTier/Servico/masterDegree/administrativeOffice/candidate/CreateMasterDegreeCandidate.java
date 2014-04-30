@@ -53,7 +53,6 @@ public class CreateMasterDegreeCandidate {
             }
         }
 
-        person.addPersonRoleByRoleType(RoleType.MASTER_DEGREE_CANDIDATE);
         person.addPersonRoleByRoleType(RoleType.PERSON);
 
         // Create the Candidate

@@ -6,13 +6,11 @@
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
 <html:xhtml/>
 
-<em><bean:message key="title.resourceAllocationManager.management"/></em>
-<h2><bean:message key="link.manage.turnos"/></h2>
+<jsp:include page="/commons/contextShiftAndExecutionCourseAndExecutionDegreeAndCurricularYear.jsp" />
 
-<p class="mbottom05">O curso seleccionado &eacute;:</p>
-<jsp:include page="context.jsp"/>
+<h2><bean:message key="link.manage.turnos"/> <span class="small">${executionDegree.executionDegree.degreeCurricularPlan.name}</span></h2>
 
-<h3><bean:message key="title.editTurno"/></h3>
+<h3><bean:message key="title.editTurno"/> <span class="small">${shift.nome}</span></h3>
 
 <p>
 	<span class="error"><!-- Error messages go here -->

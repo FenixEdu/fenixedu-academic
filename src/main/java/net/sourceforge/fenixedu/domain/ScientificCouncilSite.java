@@ -1,11 +1,12 @@
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
-import net.sourceforge.fenixedu.domain.accessControl.RoleTypeGroup;
+import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificCouncilUnit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
+
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UserGroup;
+
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ScientificCouncilSite extends ScientificCouncilSite_Base {
@@ -17,8 +18,8 @@ public class ScientificCouncilSite extends ScientificCouncilSite_Base {
     }
 
     @Override
-    public IGroup getOwner() {
-        return new GroupUnion(new RoleTypeGroup(RoleType.SCIENTIFIC_COUNCIL), new FixedSetGroup(getManagers()));
+    public Group getOwner() {
+        return RoleGroup.get(RoleType.SCIENTIFIC_COUNCIL).or(UserGroup.of(Person.convertToUsers(getManagers())));
     }
 
     /**
@@ -29,10 +30,6 @@ public class ScientificCouncilSite extends ScientificCouncilSite_Base {
     public static ScientificCouncilSite getSite() {
         final ScientificCouncilUnit scientificCouncilUnit = ScientificCouncilUnit.getScientificCouncilUnit();
         return scientificCouncilUnit == null ? null : (ScientificCouncilSite) scientificCouncilUnit.getSite();
-    }
-
-    @Override
-    public void appendReversePathPart(final StringBuilder stringBuilder) {
     }
 
     @Override

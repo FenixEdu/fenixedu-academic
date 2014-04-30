@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.TeacherAuthorizationFilte
 import net.sourceforge.fenixedu.applicationTier.Filtro.gep.GEPAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.teacher.ReadTeacherInformationCoordinatorAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.constants.publication.PublicationConstants;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
@@ -134,8 +133,8 @@ public class ReadTeacherInformation {
                 PublicationType.COMUNICATION));
         infoSiteTeacherInformation.setInfoOldCientificPublications(getInfoOldPublications(teacher, OldPublicationType.CIENTIFIC));
         infoSiteTeacherInformation.setInfoOldDidacticPublications(getInfoOldPublications(teacher, OldPublicationType.DIDACTIC));
-        infoSiteTeacherInformation.setInfoDidaticPublications(getInfoPublications(teacher, PublicationConstants.DIDATIC));
-        infoSiteTeacherInformation.setInfoCientificPublications(getInfoPublications(teacher, PublicationConstants.CIENTIFIC));
+        infoSiteTeacherInformation.setInfoDidaticPublications(getInfoPublications(teacher, Integer.valueOf(1)));
+        infoSiteTeacherInformation.setInfoCientificPublications(getInfoPublications(teacher, Integer.valueOf(0)));
 
         // FIXME possible cause of error: this execution period is used for
         // what?

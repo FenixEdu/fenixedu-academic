@@ -6,8 +6,9 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.dataTransferObject.SearchDSpaceCoursesBean;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseSite;
-import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
+import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.Site.SiteMapper;
+import net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -30,9 +31,9 @@ public class SearchFileContentAction extends FenixDispatchAction {
 
         ExecutionCourse course = null;
 
-        FunctionalityContext context = AbstractFunctionalityContext.getCurrentContext(request);
-        if (context != null && context.getSelectedContainer() instanceof ExecutionCourseSite) {
-            course = ((ExecutionCourseSite) context.getSelectedContainer()).getSiteExecutionCourse();
+        Site site = SiteMapper.getSite(request);
+        if (site != null && site instanceof ExecutionCourseSite) {
+            course = ((ExecutionCourseSite) site).getSiteExecutionCourse();
         }
 
         String executionCourseId = request.getParameter("executionCourseID");
@@ -92,6 +93,15 @@ public class SearchFileContentAction extends FenixDispatchAction {
         request.setAttribute("numberOfPages", bean.getNumberOfPages());
         request.setAttribute("pageNumber", bean.getPage());
         return mapping.findForward("search");
+    }
+
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        ActionForward forward = super.execute(mapping, actionForm, request, response);
+        ExecutionCourse course = (ExecutionCourse) request.getAttribute("executionCourse");
+        OldCmsSemanticURLHandler.selectSite(request, course.getSite());
+        return forward;
     }
 
 }

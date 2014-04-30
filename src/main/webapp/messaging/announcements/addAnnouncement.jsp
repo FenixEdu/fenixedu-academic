@@ -5,12 +5,9 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
-
 <html:xhtml/>
 
 
-<em><bean:message key="label.manageChannels" bundle="MESSAGING_RESOURCES"/></em>
 <h2><bean:message bundle="MESSAGING_RESOURCES" key="messaging.annoucenment.add.label"/></h2>
 
 <jsp:include flush="true" page="/messaging/context.jsp"/>
@@ -21,8 +18,7 @@
 <bean:define id="announcementBoardId" name="announcementBoard" property="externalId"/>
 <bean:define id="announcementBoard" name="announcementBoard"/>
 
-<bean:define id="method" name="returnMethod" />
-<bean:define id="action"><%= "method=" + method + "&amp;announcementBoardId=" + announcementBoardId + "&amp;" + extraParameters %></bean:define>
+<bean:define id="action">method=${returnMethod ? returnMethod : 'viewAnnouncements'}&announcementBoardId=${announcementBoardId}&${extraParameters}</bean:define>
            
 <fr:form action="<%=  contextPrefix + action %>">
 
@@ -83,7 +79,7 @@
 			</fr:create>
 		</td>
 	</tr>
-	<logic:notEmpty name="announcementBoard" property="files">
+	<logic:notEmpty name="announcementBoard" property="fileContentSet">
 		<tr>
 		<th>
 			<bean:message key="label.insertFiles" bundle="MESSAGING_RESOURCES"/>:
@@ -95,18 +91,18 @@
 				
 				<p><fr:view name="file" property="displayName"/>
 				   <span class="color888">(<fr:view name="file" property="filename"/>)
-				   <fr:view name="file" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
+				   <fr:view name="file" property="permittedGroup" layout="null-as-label" type="org.fenixedu.bennu.core.groups.Group">
 	                                        <fr:layout>
-	                                            <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
+	                                            <fr:property name="label" value="label.public"/>
 	                                            <fr:property name="key" value="true"/>
 	                                            <fr:property name="bundle" value="SITE_RESOURCES"/>
 	                                            <fr:property name="subLayout" value="values"/>
-	                                            <fr:property name="subSchema" value="permittedGroup.class.text"/>
+	                                            <fr:property name="subSchema" value="permittedGroup.name"/>
 	                                        </fr:layout>
 	                                    </fr:view>
 	                </span> - <bean:define id="downloadUrl" name="file" property="downloadUrl"/>
 					<bean:define id="displayName" name="file" property="displayName"/>
-                    <%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#" onclick="<%= "insertLink('" + downloadUrl + "', '"+ displayName + "');"%>"><bean:message key="link.insert.file.in.editor" bundle="SITE_RESOURCES"/></a>
+                    <%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="#" onclick="<%= "insertLink('" + downloadUrl + "', '"+ displayName + "');"%>"><bean:message key="link.insert.file.in.editor" bundle="SITE_RESOURCES"/></a>
                     </p>
 			</logic:iterate>
 			</div>
@@ -313,7 +309,7 @@
 		</td>	
 	</tr>
 	
-	<logic:notEmpty name="announcementBoard" property="files">
+	<logic:notEmpty name="announcementBoard" property="fileContentSet">
 		<tr>
 		<th>
 			<bean:message key="label.define.image" bundle="MESSAGING_RESOURCES"/>:
@@ -334,7 +330,7 @@
 						<table>
 							<tr>
 							<td>
-							<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><img src="<%= downloadUrl %>" style="width:40px; height:30px"/>
+							<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><img src="<%= downloadUrl %>" style="width:40px; height:30px"/>
 							</td>
 							</tr>
 						</table>

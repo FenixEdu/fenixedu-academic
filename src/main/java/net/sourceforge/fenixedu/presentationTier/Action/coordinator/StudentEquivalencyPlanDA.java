@@ -18,16 +18,20 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.equivalencyPlan.Stu
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.util.search.StudentSearchBean;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerBolonhaTransitionApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
+@StrutsFunctionality(app = ManagerBolonhaTransitionApp.class, path = "local-equivalence", titleKey = "title.local.equivalence")
 @Mapping(path = "/degreeCurricularPlan/studentEquivalencyPlan", module = "manager")
 @Forwards({ @Forward(name = "showPlan", path = "/academicAdminOffice/degreeCurricularPlan/showStudentEquivalencyPlan.jsp"),
         @Forward(name = "addEquivalency", path = "/academicAdminOffice/degreeCurricularPlan/addStudentEquivalency.jsp") })
@@ -55,6 +59,7 @@ public class StudentEquivalencyPlanDA extends FenixDispatchAction {
         return super.execute(mapping, actionForm, request, response);
     }
 
+    @EntryPoint
     public ActionForward showPlan(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final Student student = getStudent(request);

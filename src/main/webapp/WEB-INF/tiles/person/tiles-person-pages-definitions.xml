@@ -10,16 +10,6 @@
 		<put name="body" value="/person/showChangePassLink.jsp"/>
 	</definition>
 
-	<definition name="visualize.personal.information" extends="definition.person.masterPage">
-		<put name="bundle" value="TITLES_RESOURCES"/>
-	    <put name="title" value="private.personal.dspace.information"/>
-		<put name="body" value="/person/visualizePersonalInfo.jsp"/>
-	</definition>
-	
-    <definition name="person.upload.photo" extends="definition.person.masterPage">
-         <put name="body" value="/person/uploadPhoto.jsp"/>
-    </definition>
-	
 	<definition name="partyContacts.createPartyContact" extends="definition.person.masterPage">
 		 <put name="body" value="/person/contacts/createPartyContact.jsp"/>
 	</definition>
@@ -135,14 +125,6 @@
 	<definition name="view-thread" extends="definition.person.masterPage">
 		 <put name="body" value="/messaging/viewThread.jsp"/>
 	</definition>	
-		
-	<!--  ============== Parking ===================== -->
-	<definition name="prepare-parking" extends="definition.person.masterPage">
-	     <put name="body" value="/person/parking/parkingRequest.jsp"/>
-	</definition>
-	<definition name="edit-parking-request" extends="definition.person.masterPage">
-	     <put name="body" value="/person/parking/editParkingRequest.jsp"/>
-	</definition>
 	
 	
 	<!--  @@@@@@@@@@@@@@@@@ Auth @@@@@@@@@@@@@@@@@  -->

@@ -20,7 +20,6 @@ ul, ol { line-height: 1.63em; }
 ul { list-style-type: square; }
 li { padding: 0.3em 0 0.3em 0; }
 ul li ul { font-size: 1em} 
-.browser_upgrade { display: none;}
 
 /***********************************************************
 	structural classes: layout and position ids

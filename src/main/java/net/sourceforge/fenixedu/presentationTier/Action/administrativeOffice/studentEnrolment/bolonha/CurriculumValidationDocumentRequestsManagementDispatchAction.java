@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.serviceRequests.documentRequests.DocumentRequestsManagementDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.SearchForStudentsDA;
 import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.AdministrativeOfficeDocument;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
@@ -29,7 +30,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/curriculumValidationDocumentRequestsManagement", module = "academicAdministration")
+@Mapping(path = "/curriculumValidationDocumentRequestsManagement", module = "academicAdministration",
+        functionality = SearchForStudentsDA.class)
 @Forwards({
         @Forward(name = "printDocument",
                 path = "/academicAdminOffice/student/curriculumValidation/documentRequests/printDocument.jsp"),

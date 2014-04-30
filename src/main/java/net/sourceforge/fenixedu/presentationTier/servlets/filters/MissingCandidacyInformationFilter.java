@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.servlets.filters;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -12,18 +10,12 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
-
-import org.fenixedu.bennu.core.domain.Bennu;
 
 public class MissingCandidacyInformationFilter implements Filter {
 
     private static final String EDIT_CANDIDACY_INFORMATION_PATH =
-            "/student/editMissingCandidacyInformation.do?method=prepareEdit&"
-                    + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
-                    + "=/estudante/estudante";
+            "/student/editMissingCandidacyInformation.do?method=prepareEdit";
 
     private static final String CANDIDACY_INFORMATION_VALID_KEY = "CANDIDACY_INFORMATION_VALID";
 
@@ -64,11 +56,6 @@ public class MissingCandidacyInformationFilter implements Filter {
                 }
             }
 
-            final List<Content> contents = new ArrayList<Content>();
-            Bennu.getInstance().getRootPortal().addPathContentsForTrailingPath(contents, "estudante/estudante");
-            final FilterFunctionalityContext context =
-                    new FilterFunctionalityContext((HttpServletRequest) servletRequest, contents);
-            servletRequest.setAttribute(FilterFunctionalityContext.CONTEXT_KEY, context);
             servletRequest.getRequestDispatcher(EDIT_CANDIDACY_INFORMATION_PATH).forward(servletRequest, servletResponse);
 
         } else {

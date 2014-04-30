@@ -20,8 +20,9 @@ import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
+import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.RAMApplication.RAMEvaluationsApp;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -30,26 +31,36 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.util.MessageResources;
+import org.fenixedu.bennu.core.util.VariantBean;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.fenixedu.bennu.portal.servlet.PortalLayoutInjector;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@StrutsFunctionality(app = RAMEvaluationsApp.class, path = "search-by-degree-and-year",
+        titleKey = "link.exams.searchWrittenEvaluationsByDegreeAndYear")
 @Mapping(module = "resourceAllocationManager", path = "/searchWrittenEvaluationsByDegreeAndYear",
-        input = "/searchWrittenEvaluationsByDegreeAndYear.do?method=prepare&page=0",
-        attribute = "searchWrittenEvaluationsByDegreeAndYearForm", formBean = "searchWrittenEvaluationsByDegreeAndYearForm",
-        scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "showForm", path = "df.page.selectDegreeAndYearForWrittenEvaluationsSearch"),
-        @Forward(name = "showMap", path = "df.page.degreeYearWrittenEvaluationsMap") })
+        formBean = "searchWrittenEvaluationsByDegreeAndYearForm")
+@Forwards({ @Forward(name = "showForm", path = "/resourceAllocationManager/writtenEvaluations/selectDegreeAndYear.jsp"),
+        @Forward(name = "showMap", path = "/resourceAllocationManager/writtenEvaluations/degreeYearWrittenEvaluationsMap.jsp") })
 public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatchAction {
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        final AcademicInterval academicInterval =
-                AcademicInterval.getAcademicIntervalFromResumedString((String) request
-                        .getAttribute(PresentationConstants.ACADEMIC_INTERVAL));
-        request.setAttribute(PresentationConstants.ACADEMIC_INTERVAL, academicInterval.getResumedRepresentationInStringFormat());
+        VariantBean bean = getRenderedObject();
+        if (bean == null) {
+            bean = new VariantBean();
+            bean.setObject(AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.SEMESTER));
+        }
+        RenderUtils.invalidateViewState();
+        AcademicInterval academicInterval = (AcademicInterval) bean.getObject();
+        request.setAttribute("bean", bean);
 
         final MessageResources enumMessages = MessageResources.getMessageResources("resources/EnumerationResources");
         final MessageResources messages = MessageResources.getMessageResources("resources/PublicDegreeInformation");
@@ -86,7 +97,7 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
 
     public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-
+        PortalLayoutInjector.skipLayoutOn(request);
         prepareInformationToList(form, request);
         return mapping.findForward("showMap");
     }
@@ -95,10 +106,9 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
 
         DynaActionForm dynaActionForm = (DynaActionForm) form;
 
-        final AcademicInterval academicInterval =
-                AcademicInterval.getAcademicIntervalFromResumedString(dynaActionForm
-                        .getString(PresentationConstants.ACADEMIC_INTERVAL));
-        request.setAttribute(PresentationConstants.ACADEMIC_INTERVAL, academicInterval);
+        VariantBean bean = getRenderedObject();
+        final AcademicInterval academicInterval = (AcademicInterval) bean.getObject();
+        request.setAttribute("academicInterval", academicInterval);
 
         final Boolean selectAllCurricularYears = (Boolean) dynaActionForm.get("selectAllCurricularYears");
         final String[] selectedCurricularYears = (String[]) dynaActionForm.get("selectedCurricularYears");

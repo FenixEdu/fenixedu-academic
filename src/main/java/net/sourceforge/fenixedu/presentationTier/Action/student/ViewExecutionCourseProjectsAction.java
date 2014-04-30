@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadExecutionCou
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteProjects;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
 import org.apache.struts.action.ActionError;
@@ -29,20 +29,16 @@ import org.fenixedu.bennu.core.domain.User;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author asnr & scpo
  * 
  */
-@Mapping(module = "student", path = "/viewExecutionCourseProjects", attribute = "enroledExecutionCoursesForm",
-        formBean = "enroledExecutionCoursesForm", scope = "request")
-@Forwards(value = {
-        @Forward(name = "sucess", path = "/student/viewExecutionCourseProjects_bd.jsp", tileProperties = @Tile(
-                title = "private.student.subscribe.groups")),
-        @Forward(name = "insucess", path = "/viewEnroledExecutionCourses.do?method=prepare"),
-        @Forward(name = "noprojects", path = "/viewEnroledExecutionCourses.do?method=prepare") })
-public class ViewExecutionCourseProjectsAction extends FenixContextAction {
+@Mapping(module = "student", path = "/viewExecutionCourseProjects", functionality = ViewEnroledExecutionCoursesAction.class)
+@Forwards(value = { @Forward(name = "sucess", path = "/student/viewExecutionCourseProjects_bd.jsp"),
+        @Forward(name = "insucess", path = "/student/viewEnroledExecutionCourses.do?method=prepare"),
+        @Forward(name = "noprojects", path = "/student/viewEnroledExecutionCourses.do?method=prepare") })
+public class ViewExecutionCourseProjectsAction extends FenixAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

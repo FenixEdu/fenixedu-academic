@@ -12,7 +12,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateStudentCurricularPlan;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteEnrollment;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteStudentCurricularPlan;
@@ -20,8 +22,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadDegreeCurric
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadStudentCurricularInformation;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.TransferEnrollments;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerPeopleApp;
+import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -31,14 +36,36 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
+
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 /**
  * @author Luis Cruz
  */
+@StrutsFunctionality(app = ManagerPeopleApp.class, path = "manage-students", titleKey = "link.manager.studentsManagement")
+@Mapping(module = "manager", path = "/studentsManagement", input = "/studentsManagement.do?method=show&page=0",
+        formBean = "studentCurricularPlanForm")
+@Forwards({ @Forward(name = "createStudentCurricularPlan", path = "/manager/createStudentCurricularPlan.jsp"),
+        @Forward(name = "transferEnrollments", path = "/manager/transferEnrollments.jsp"),
+        @Forward(name = "show", path = "/manager/studentCurricularPlan.jsp") })
+@Exceptions(value = {
+        @ExceptionHandling(type = NonExistingServiceException.class, key = "exception.student.does.not.exist",
+                handler = FenixErrorExceptionHandler.class, scope = "request"),
+        @ExceptionHandling(type = ExistingServiceException.class, key = "student.curricular.plan.already.exists",
+                handler = FenixErrorExceptionHandler.class, scope = "request"),
+        @ExceptionHandling(type = DomainException.class, key = "error.enrolmentEvaluation.cannot.be.deleted",
+                handler = FenixErrorExceptionHandler.class, scope = "request") })
 public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
 
     private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
+    @EntryPoint
     public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
@@ -90,8 +117,6 @@ public class ManageStudentCurricularPlanDA extends FenixDispatchAction {
             // putStudentCurricularPlanStateLabelListInRequest(request);
 
             final DegreeType degreeType = DegreeType.valueOf(degreeTypeString);
-
-            final User userView = Authenticate.getUser();
 
             final List infoDegreeCurricularPlans = ReadDegreeCurricularPlansByDegreeType.run(degreeType);
 

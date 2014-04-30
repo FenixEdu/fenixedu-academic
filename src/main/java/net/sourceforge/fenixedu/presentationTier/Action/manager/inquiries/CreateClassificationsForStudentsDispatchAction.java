@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.CreateClassificationsForStudents;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManageStudentCurricularPlanDA;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -27,19 +28,23 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.security.Authenticate;
+
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
+@Mapping(module = "manager", path = "/createClassificationsForStudents", formBean = "createClassificationsForm",
+        functionality = ManageStudentCurricularPlanDA.class)
+@Forwards(value = { @Forward(name = "chooseDegreeCurricularPlan",
+        path = "/manager/student/classifications/chooseDegreeCurricularPlan.jsp") })
 public class CreateClassificationsForStudentsDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixServiceException {
-
-        User userView = Authenticate.getUser();
 
         InfoExecutionYear executionYear = ReadCurrentExecutionYear.run();
 
@@ -65,8 +70,6 @@ public class CreateClassificationsForStudentsDispatchAction extends FenixDispatc
 
     public ActionForward createClassifications(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws FenixServiceException, IOException {
-
-        User userView = Authenticate.getUser();
 
         DynaActionForm dynaActionForm = (DynaActionForm) form;
         String degreeCurricularPlanID = (String) dynaActionForm.get("degreeCurricularPlanID");

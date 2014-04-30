@@ -53,8 +53,6 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.EvaluationManagementBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.Season;
@@ -64,12 +62,14 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.util.MessageResources;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class SOPEvaluationManagementBackingBean extends EvaluationManagementBackingBean {
 
@@ -89,7 +89,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     protected Integer calendarPeriod;
     protected HtmlInputHidden calendarPeriodHidden;
     private Integer[] curricularYearIDs;
-    private final String chooseMessage = messages.getMessage(Language.getLocale(), "label.choose.message");
+    private final String chooseMessage = messages.getMessage(I18N.getLocale(), "label.choose.message");
     private HtmlInputHidden dayHidden;
     private HtmlInputHidden monthHidden;
     private HtmlInputHidden yearHidden;
@@ -98,7 +98,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     private HtmlInputHidden endHourHidden;
     private HtmlInputHidden endMinuteHidden;
     private Integer orderCriteria;
-    private final String labelVacancies = messages.getMessage(Language.getLocale(), "label.vacancies");
+    private final String labelVacancies = messages.getMessage(I18N.getLocale(), "label.vacancies");
     private List<String> associatedExecutionCourses;
 
     private Map<String, String> associatedExecutionCoursesNames = new HashMap<String, String>();
@@ -243,7 +243,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         ExecutionDegree executionDegreeSelected = getExecutionDegree();
 
         StringBuilder stringBuffer = new StringBuilder();
-        stringBuffer.append(enumerations.getMessage(Language.getLocale(), executionDegreeSelected.getDegreeCurricularPlan()
+        stringBuffer.append(enumerations.getMessage(I18N.getLocale(), executionDegreeSelected.getDegreeCurricularPlan()
                 .getDegree().getDegreeType().toString()));
         stringBuffer.append(" em ");
         stringBuffer.append(executionDegreeSelected.getDegreeCurricularPlan().getDegree()
@@ -496,7 +496,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         result.add(new SelectItem(0, this.chooseMessage));
         for (InfoExecutionDegree infoExecutionDegree : infoExecutionDegrees) {
             StringBuilder label = new StringBuilder();
-            label.append(enumerations.getMessage(Language.getLocale(), infoExecutionDegree.getInfoDegreeCurricularPlan()
+            label.append(enumerations.getMessage(I18N.getLocale(), infoExecutionDegree.getInfoDegreeCurricularPlan()
                     .getInfoDegree().getDegreeType().toString()));
             label.append(" em ");
             label.append(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome());
@@ -535,11 +535,11 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         }
 
         List<SelectItem> curricularYearItems = new ArrayList<SelectItem>(6);
-        curricularYearItems.add(new SelectItem(1, messages.getMessage(Language.getLocale(), "label.year.first")));
-        curricularYearItems.add(new SelectItem(2, messages.getMessage(Language.getLocale(), "label.year.second")));
-        curricularYearItems.add(new SelectItem(3, messages.getMessage(Language.getLocale(), "label.year.third")));
-        curricularYearItems.add(new SelectItem(4, messages.getMessage(Language.getLocale(), "label.year.fourth")));
-        curricularYearItems.add(new SelectItem(5, messages.getMessage(Language.getLocale(), "label.year.fifth")));
+        curricularYearItems.add(new SelectItem(1, messages.getMessage(I18N.getLocale(), "label.year.first")));
+        curricularYearItems.add(new SelectItem(2, messages.getMessage(I18N.getLocale(), "label.year.second")));
+        curricularYearItems.add(new SelectItem(3, messages.getMessage(I18N.getLocale(), "label.year.third")));
+        curricularYearItems.add(new SelectItem(4, messages.getMessage(I18N.getLocale(), "label.year.fourth")));
+        curricularYearItems.add(new SelectItem(5, messages.getMessage(I18N.getLocale(), "label.year.fifth")));
 
         return curricularYearItems;
     }
@@ -551,10 +551,10 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
         List<SelectItem> calendarPeriodItems = new ArrayList<SelectItem>(7);
 
-        calendarPeriodItems.add(new SelectItem(0, messages.getMessage(Language.getLocale(), "label.calendarPeriodItem.all")));
-        calendarPeriodItems.add(new SelectItem(1, messages.getMessage(Language.getLocale(),
+        calendarPeriodItems.add(new SelectItem(0, messages.getMessage(I18N.getLocale(), "label.calendarPeriodItem.all")));
+        calendarPeriodItems.add(new SelectItem(1, messages.getMessage(I18N.getLocale(),
                 "label.calendarPeriodItem.lesson.period")));
-        calendarPeriodItems.add(new SelectItem(2, messages.getMessage(Language.getLocale(),
+        calendarPeriodItems.add(new SelectItem(2, messages.getMessage(I18N.getLocale(),
                 "label.calendarPeriodItem.exam.period")));
 
         return calendarPeriodItems;
@@ -726,7 +726,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                         final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
                         if (writtenEvaluation.hasScopeOrContextFor(curricularYears, degreeCurricularPlan)) {
                             final CalendarLink calendarLink =
-                                    new CalendarLink(executionCourse, writtenEvaluation, Language.getLocale());
+                                    new CalendarLink(executionCourse, writtenEvaluation, I18N.getLocale());
                             calendarLink.setLinkParameters(constructLinkParameters(executionCourse, writtenEvaluation));
                             result.add(calendarLink);
                         }
@@ -754,9 +754,9 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
             final ExecutionCourse executionCourse) {
         final StringBuilder stringBuilder = new StringBuilder();
         if (writtenEvaluation instanceof WrittenTest) {
-            stringBuilder.append(messages.getMessage(Language.getLocale(), "label.evaluation.shortname.test"));
+            stringBuilder.append(messages.getMessage(I18N.getLocale(), "label.evaluation.shortname.test"));
         } else if (writtenEvaluation instanceof Exam) {
-            stringBuilder.append(messages.getMessage(Language.getLocale(), "label.evaluation.shortname.exam"));
+            stringBuilder.append(messages.getMessage(I18N.getLocale(), "label.evaluation.shortname.exam"));
         }
         stringBuilder.append(" ");
         stringBuilder.append(executionCourse.getSigla());
@@ -948,17 +948,17 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     public List<SelectItem> getEvaluationTypeClassnameLabels() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         result.add(new SelectItem("noSelection", this.chooseMessage));
-        result.add(new SelectItem(WrittenTest.class.getName(), messages.getMessage(Language.getLocale(), "label.test")));
-        result.add(new SelectItem(Exam.class.getName(), messages.getMessage(Language.getLocale(), "label.exam")));
+        result.add(new SelectItem(WrittenTest.class.getName(), messages.getMessage(I18N.getLocale(), "label.test")));
+        result.add(new SelectItem(Exam.class.getName(), messages.getMessage(I18N.getLocale(), "label.exam")));
         return result;
     }
 
     public List<SelectItem> getSeasonLabels() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         result.add(new SelectItem("noSelection", this.chooseMessage));
-        result.add(new SelectItem(Season.SEASON1_STRING, messages.getMessage(Language.getLocale(), "property.exam.1stExam")));
-        result.add(new SelectItem(Season.SEASON2_STRING, messages.getMessage(Language.getLocale(), "property.exam.2stExam")));
-        result.add(new SelectItem(Season.SPECIAL_SEASON_STRING, messages.getMessage(Language.getLocale(),
+        result.add(new SelectItem(Season.SEASON1_STRING, messages.getMessage(I18N.getLocale(), "property.exam.1stExam")));
+        result.add(new SelectItem(Season.SEASON2_STRING, messages.getMessage(I18N.getLocale(), "property.exam.2stExam")));
+        result.add(new SelectItem(Season.SPECIAL_SEASON_STRING, messages.getMessage(I18N.getLocale(),
                 "property.exam.specialSeasonExam")));
         return result;
     }
@@ -1115,7 +1115,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
             return result.toString();
         } else {
-            return messages.getMessage(Language.getLocale(), "label.no.associated.rooms");
+            return messages.getMessage(I18N.getLocale(), "label.no.associated.rooms");
         }
     }
 
@@ -1238,17 +1238,11 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                 stringBuilder.append(DateFormatUtil.format("HH:mm", this.getEnd().getTime()));
             }
             stringBuilder.append("&academicInterval=").append(academicInterval);
-            stringBuilder.append("&");
-            stringBuilder.append(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
-            stringBuilder.append("=");
-            stringBuilder.append(FilterFunctionalityContext.getCurrentContext(getRequest()).getCurrentContextPath());
             String url = stringBuilder.toString();
 
-            String checksum =
-                    pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.calculateChecksum(url);
+            String checksum = GenericChecksumRewriter.calculateChecksum(url, getRequest().getSession());
             stringBuilder.append("&");
-            stringBuilder
-                    .append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.CHECKSUM_ATTRIBUTE_NAME);
+            stringBuilder.append(GenericChecksumRewriter.CHECKSUM_ATTRIBUTE_NAME);
             stringBuilder.append("=");
             stringBuilder.append(checksum);
 

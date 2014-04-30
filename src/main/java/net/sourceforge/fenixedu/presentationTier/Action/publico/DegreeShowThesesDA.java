@@ -5,9 +5,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeSite;
-import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
+import net.sourceforge.fenixedu.domain.Site.SiteMapper;
+import net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -16,6 +16,7 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "publico", path = "/showDegreeTheses", scope = "session", parameter = "method")
 @Forwards(value = { @Forward(name = "showThesisDetails", path = "degree-showDegreeThesisDetails"),
@@ -29,20 +30,20 @@ public class DegreeShowThesesDA extends PublicShowThesesDA {
         return super.execute(mapping, form, request, response);
     }
 
-    public Degree getDegree(HttpServletRequest request) throws FenixActionException {
-
-        FilterFunctionalityContext currentContext =
-                (FilterFunctionalityContext) AbstractFunctionalityContext.getCurrentContext(request);
-        DegreeSite selectedContainer = (DegreeSite) currentContext.getSelectedContainer();
-        Degree degree = selectedContainer.getDegree();
-
-        if (degree == null) {
-            throw new FenixActionException();
+    private Degree getDegree(HttpServletRequest request) {
+        final DegreeSite site = SiteMapper.getSite(request);
+        Degree degree = null;
+        if (site != null) {
+            degree = site.getDegree();
+        } else {
+            String degreeId = FenixContextDispatchAction.getFromRequest("degreeID", request);
+            degree = FenixFramework.getDomainObject(degreeId);
         }
-
-        request.setAttribute("degreeID", degree.getExternalId());
-        request.setAttribute("degree", degree);
-
+        if (degree != null) {
+            request.setAttribute("degreeID", degree.getExternalId());
+            request.setAttribute("degree", degree);
+            OldCmsSemanticURLHandler.selectSite(request, degree.getSite());
+        }
         return degree;
     }
 

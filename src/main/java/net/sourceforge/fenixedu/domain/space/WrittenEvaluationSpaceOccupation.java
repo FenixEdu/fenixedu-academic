@@ -9,7 +9,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
 import net.sourceforge.fenixedu.predicates.SpacePredicates;
@@ -17,6 +16,7 @@ import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.groups.Group;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
@@ -171,6 +171,7 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
         return !getWrittenEvaluationsSet().isEmpty();
     }
 
+    @Override
     protected boolean overlaps(final Interval interval) {
         for (final WrittenEvaluation writtenEvaluation : getWrittenEvaluationsSet()) {
             final Interval evaluationInterval = writtenEvaluation.getInterval();

@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerOrganizationalStructureApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -16,6 +17,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -24,14 +27,15 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "manager", path = "/unitsMerge", attribute = "unitsMergeForm", formBean = "unitsMergeForm", scope = "request",
-        parameter = "method")
+@StrutsFunctionality(app = ManagerOrganizationalStructureApp.class, path = "units-merge", titleKey = "title.units.merge")
+@Mapping(module = "manager", path = "/unitsMerge", formBean = "unitsMergeForm")
 @Forwards(value = {
         @Forward(name = "chooseUnit", path = "/manager/organizationalStructureManagament/mergeUnits/chooseUnitToStart.jsp"),
         @Forward(name = "seeChoosedUnit", path = "/manager/organizationalStructureManagament/mergeUnits/choosedUnit.jsp"),
         @Forward(name = "goToConfirmation", path = "/manager/organizationalStructureManagament/mergeUnits/confirmation.jsp") })
 public class ExternalUnitsMergeDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward chooseUnitToStart(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 

@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -16,20 +17,19 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.UnitSite;
-import net.sourceforge.fenixedu.domain.accessControl.DegreeStudentsGroup;
-import net.sourceforge.fenixedu.domain.accessControl.DepartmentEmployeesByExecutionYearGroup;
-import net.sourceforge.fenixedu.domain.accessControl.DepartmentTeachersByExecutionYearGroup;
+import net.sourceforge.fenixedu.domain.accessControl.StudentGroup;
+import net.sourceforge.fenixedu.domain.accessControl.TeacherGroup;
+import net.sourceforge.fenixedu.domain.accessControl.UnitGroup;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.util.email.UnitBasedSender;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.groups.Group;
 import org.joda.time.YearMonthDay;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class DepartmentUnit extends DepartmentUnit_Base {
@@ -59,8 +59,8 @@ public class DepartmentUnit extends DepartmentUnit_Base {
             final String departmentAcronym, final Unit parentUnit) {
 
         final DepartmentUnit departmentUnit = new DepartmentUnit();
-        departmentUnit.init(new MultiLanguageString(Language.getDefaultLanguage(), departmentName), null, null,
-                departmentAcronym, new YearMonthDay(), null, null, null, null, null, null);
+        departmentUnit.init(new MultiLanguageString(Locale.getDefault(), departmentName), null, null, departmentAcronym,
+                new YearMonthDay(), null, null, null, null, null, null);
         if (parentUnit.isCountryUnit()) {
             departmentUnit.addParentUnit(parentUnit, AccountabilityType.readByType(AccountabilityTypeEnum.GEOGRAPHIC));
         } else {
@@ -209,24 +209,21 @@ public class DepartmentUnit extends DepartmentUnit_Base {
     }
 
     @Override
-    public List<IGroup> getDefaultGroups() {
-        List<IGroup> groups = super.getDefaultGroups();
+    public List<Group> getDefaultGroups() {
+        List<Group> groups = super.getDefaultGroups();
 
         ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
         Department department = this.getDepartment();
         if (department != null) {
 
-            groups.add(new DepartmentTeachersByExecutionYearGroup(currentYear, department));
-            // groups.add(new
-            // DepartmentStudentsByExecutionYearGroup(currentYear,
-            // department));
-            groups.add(new DepartmentEmployeesByExecutionYearGroup(currentYear, department));
+            groups.add(TeacherGroup.get(department, currentYear));
+            groups.add(UnitGroup.workers(department.getDepartmentUnit()));
 
             SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
             degrees.addAll(department.getDegrees());
 
             for (Degree degree : degrees) {
-                groups.add(new DegreeStudentsGroup(degree));
+                groups.add(StudentGroup.get(degree, null));
             }
         }
 

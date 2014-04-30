@@ -8,7 +8,6 @@
 
 <logic:present role="role(MANAGER)">
 
-<em>Entidades Externas para Bolsas</em>
 <h2>Listar Entidades</h2>
 <logic:notEmpty name="externalScholarshipProviders">
 <table class="tstyle1">

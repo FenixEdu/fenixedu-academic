@@ -4,7 +4,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <html:xhtml />
 
-<em><bean:message key="label.rectorate" bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
 <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="title.rectorateIncoming" /></h2>
 
 <logic:notEmpty name="batches">

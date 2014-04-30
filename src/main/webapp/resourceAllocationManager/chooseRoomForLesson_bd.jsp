@@ -5,9 +5,10 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="e" %>
 
+<jsp:include page="/commons/contextLessonAndShiftAndExecutionCourseAndExecutionDegreeAndCurricularYear.jsp" />
+
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
-<em><bean:message key="title.resourceAllocationManager.management"/></em>
 <h2><bean:message key="title.manage.aulas"/></h2>
 
 <p class="mbottom05">O curso seleccionado &eacute;:</p>

@@ -5,8 +5,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="e"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<logic:present name="siteView">
-
 	<h2>
 		<bean:message key="title.insertGroupProperties" />
 	</h2>
@@ -24,27 +22,27 @@
 	</p>
 
 	<div class="dinline forminline">
-		<html:form action="/createGroupProperties" styleClass="dinline">
+		<html:form action="/studentGroupManagement" styleClass="dinline">
 			<fr:context>
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page"
 					property="page" value="1" />
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method"
 					property="method" value="createGroupProperties" />
-				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"
-					property="objectCode"
-					value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID"
+					property="executionCourseID"
+					value="<%= pageContext.findAttribute("executionCourseID").toString() %>" />
 
 				<bean:define id="isAutomaticEnrolment" value="false" />
 
 
-				<logic:equal name="groupPropertiesForm"
+				<logic:equal name="studentGroupsForm"
 					property="automaticEnrolment" value="true">
 					<bean:define id="isAutomaticEnrolment" value="true" />
 				</logic:equal>
 
 				<bean:define id="isDifferentiatedCapacity" value="false" />
 
-				<logic:equal name="groupPropertiesForm"
+				<logic:equal name="studentGroupsForm"
 					property="differentiatedCapacity" value="true">
 					<bean:define id="isDifferentiatedCapacity" value="true" />
 				</logic:equal>
@@ -230,22 +228,11 @@
 			</html:cancel>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method"
 				property="method" value="prepareViewExecutionCourseProjects" />
-			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"
-				property="objectCode"
-				value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID"
+				property="executionCourseID"
+				value="<%= pageContext.findAttribute("executionCourseID").toString() %>" />
 		</html:form>
 	</div>
-
-
-</logic:present>
-
-<logic:notPresent name="siteView">
-	<p class="mvert15">
-		<em><bean:message
-				key="message.insert.infoGroupProperties.not.available" />
-		</em>
-	</p>
-</logic:notPresent>
 
 <script language="javascript">
 	function setAutomaticValues(form) {

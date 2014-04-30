@@ -11,20 +11,23 @@ import net.sourceforge.fenixedu.domain.student.PersonalIngressionData;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.gep.GepApplication.GepRAIDESApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@StrutsFunctionality(app = GepRAIDESApp.class, path = "personal-ingression-data",
+        titleKey = "link.personal.ingression.data.viewer")
 @Mapping(path = "/personalIngressionDataViewer", module = "gep")
 @Forwards({
-        @Forward(name = "chooseStudent", path = "/gep/student/candidacy/personal/ingression/data/chooseStudent.jsp",
-                tileProperties = @Tile(title = "private.gep.raidesdata.raidesdatabystudent")),
+        @Forward(name = "chooseStudent", path = "/gep/student/candidacy/personal/ingression/data/chooseStudent.jsp"),
         @Forward(name = "viewStudent", path = "/gep/student/candidacy/personal/ingression/data/viewStudent.jsp"),
         @Forward(name = "viewStudentCandidacy", path = "/gep/student/candidacy/personal/ingression/data/viewStudentCandidacy.jsp"),
         @Forward(name = "viewPersonalIngressionData",
@@ -34,6 +37,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
         @Forward(name = "viewRegistration", path = "/gep/student/candidacy/personal/ingression/data/viewRegistration.jsp") })
 public class PersonalIngressionDataViewer extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward chooseStudent(final ActionMapping mapping, final ActionForm actionForm,
             final HttpServletRequest request, final HttpServletResponse response) {
         request.setAttribute("chooseStudentBean", new ChooseStudentBean());

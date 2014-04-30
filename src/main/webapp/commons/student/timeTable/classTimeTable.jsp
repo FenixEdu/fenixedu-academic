@@ -16,16 +16,15 @@
 	<body>
 		<logic:present name="LOGGED_USER_ATTRIBUTE">
 			<div class="mbottom2" style="font-size: 0.85em; margin-left: 3em;">
-				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.name" bundle="APPLICATION_RESOURCES"/></strong>: <bean:write name="person" property="name"/> </p>
-				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.studentNumber" bundle="APPLICATION_RESOURCES"/> </strong>: <bean:write name="person" property="student.number"/> </p>
-				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.istUsername"  bundle="APPLICATION_RESOURCES"/> </strong>: <bean:write name="person" property="istUsername"/> </p>
-			</div>	
+				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.name" bundle="APPLICATION_RESOURCES"/></strong>: ${LOGGED_USER_ATTRIBUTE.person.name}</p>
+				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.studentNumber" bundle="APPLICATION_RESOURCES"/> </strong>: ${LOGGED_USER_ATTRIBUTE.person.student.number} </p>
+				<p class="mvert05"><strong style="font-weight: bold;"><bean:message  key="label.istUsername"  bundle="APPLICATION_RESOURCES"/> </strong>: ${LOGGED_USER_ATTRIBUTE.username} </p>
+			</div>
 
 		</logic:present>
 		
-		<bean:define id="infoLessons" name="infoLessons"/>
 		<div align="center">
-			<app:gerarHorario name="infoLessons" type="<%= TimeTableType.CLASS_TIMETABLE %>" application="<%= request.getContextPath() %>"/>
+			<app:gerarHorario name="infoLessons" type="<%= TimeTableType.CLASS_TIMETABLE %>" application="${pageContext.request.contextPath}"/>
 		</div> 
 		<logic:present name="tutor">
 			<div style="text-align: left">

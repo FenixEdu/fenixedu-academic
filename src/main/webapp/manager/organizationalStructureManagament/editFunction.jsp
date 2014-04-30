@@ -1,15 +1,16 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 
-<ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications$OrganizationalStructurePage" />
+
+<f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	
 	<f:loadBundle basename="resources/ManagerResources" var="bundle"/>
 		
-	<h:form>	
 		<h:inputHidden binding="#{organizationalStructureBackingBean.unitIDHidden}"/>
 		<h:inputHidden binding="#{organizationalStructureBackingBean.functionIDHidden}"/>
 
@@ -25,52 +26,69 @@
 		<h:outputText styleClass="error" rendered="#{!empty organizationalStructureBackingBean.errorMessage}"
 				value="#{bundle[organizationalStructureBackingBean.errorMessage]}<br/>" escape="false"/>
 
-		<h:panelGrid columns="2" styleClass="infoop">		
-		
-			<h:outputText value="<b>#{bundle['title.FunctionName']}:</b>" escape="false"/>
-			<h:panelGroup>
-				<h:inputText alt="#{htmlAltBundle['inputText.functionName']}" id="name" required="true" size="30" value="#{organizationalStructureBackingBean.functionName}"/>
+	<h:form styleClass="form-horizontal well">	
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label">${bundle['title.FunctionName']}</label>
+			<h:panelGroup styleClass="col-sm-6">
+				<h:inputText alt="#{htmlAltBundle['inputText.functionName']}" id="name" required="true" size="30" value="#{organizationalStructureBackingBean.functionName}" styleClass="form-control"/>
+			</h:panelGroup>
+			<span class="col-sm-3">
 				<h:message for="name" styleClass="error"/>
+			</span>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label">${bundle['title.FunctionName.en']}</label>
+			<h:panelGroup styleClass="col-sm-6">
+				<h:inputText alt="#{htmlAltBundle['inputText.functionName']}" id="nameEn" required="true" size="30" value="#{organizationalStructureBackingBean.functionName}" styleClass="form-control"/>
 			</h:panelGroup>
-			
-			<h:outputText value="<b>#{bundle['title.FunctionName.en']}:</b>" escape="false"/>
-			<h:panelGroup>
-				<h:inputText alt="#{htmlAltBundle['inputText.functionName']}" id="nameEn" required="false" size="30" value="#{organizationalStructureBackingBean.functionNameEn}"/>
+			<span class="col-sm-3">
 				<h:message for="nameEn" styleClass="error"/>
-			</h:panelGroup>
-			
-			<h:outputText value="<b>#{bundle['message.initialDate']}:</b>" escape="false"/>
-			<h:panelGroup>
-				<h:inputText alt="#{htmlAltBundle['inputText.functionBeginDate']}" maxlength="10" id="beginDate" required="true" size="10" value="#{organizationalStructureBackingBean.functionBeginDate}">
-					<fc:dateValidator format="dd/MM/yyyy" strict="false"/>
+			</span>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label">${bundle['message.initialDate']}</label>
+			<h:panelGroup styleClass="col-sm-2">
+				<h:inputText alt="#{htmlAltBundle['inputText.functionBeginDate']}" maxlength="10" id="beginDate" required="true" size="10" value="#{organizationalStructureBackingBean.functionBeginDate}" styleClass="form-control">
+					<fc:dateValidator format="dd/MM/yyyy" strict="true"/>
 				</h:inputText>
-				<h:outputText value="#{bundle['date.format']}"/>
+			</h:panelGroup>
+			<span class="col-lg-3">
+				<h:outputText value="#{bundle['date.format']}"/>&nbsp;
 				<h:message for="beginDate" styleClass="error"/>
-			</h:panelGroup>
-			
-			<h:outputText value="<b>#{bundle['message.endDate']}:</b>" escape="false"/>
-			<h:panelGroup>
-				<h:inputText alt="#{htmlAltBundle['inputText.functionEndDate']}" maxlength="10" id="endDate" size="10" value="#{organizationalStructureBackingBean.functionEndDate}">
-					<fc:dateValidator format="dd/MM/yyyy" strict="false"/>
+			</span>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label">${bundle['message.endDate']}</label>
+			<h:panelGroup styleClass="col-sm-2">
+				<h:inputText alt="#{htmlAltBundle['inputText.functionEndDate']}" maxlength="10" id="endDate" size="10" value="#{organizationalStructureBackingBean.functionEndDate}" styleClass="form-control">
+					<fc:dateValidator format="dd/MM/yyyy" strict="true"/>
 				</h:inputText>
-				<h:outputText value="#{bundle['date.format']}"/>
-				<h:message for="endDate" styleClass="error"/>				
 			</h:panelGroup>
-		
-			
-			<h:outputText value="<b>#{bundle['message.functionType']}</b>" escape="false"/>
-			<fc:selectOneMenu value="#{organizationalStructureBackingBean.functionTypeName}">
-				<f:selectItems value="#{organizationalStructureBackingBean.validFunctionType}"/>				
-			</fc:selectOneMenu>
-			
-		</h:panelGrid>
+			<span class="col-lg-3">
+				<h:outputText value="#{bundle['date.format']}"/>&nbsp;
+				<h:message for="endDate" styleClass="error"/>
+			</span>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label">${bundle['message.functionType']}</label>
+			<h:panelGroup styleClass="col-sm-6">
+				<fc:selectOneMenu value="#{organizationalStructureBackingBean.functionTypeName}" styleClass="form-control">
+					<f:selectItems value="#{organizationalStructureBackingBean.validFunctionType}"/>				
+				</fc:selectOneMenu>
+			</h:panelGroup>
+		</div>
 		
 		<h:outputText value="<br/>" escape="false" />	
 		<h:panelGrid columns="2">
-			<h:commandButton alt="#{htmlAltBundle['commandButton.submit']}" action="#{organizationalStructureBackingBean.editFunction}" value="#{bundle['button.submit']}" styleClass="inputbutton"/>				
-			<h:commandButton alt="#{htmlAltBundle['commandButton.return']}" action="backToUnitDetails" immediate="true" value="#{bundle['label.return']}" styleClass="inputbutton"/>								
+			<h:commandButton alt="#{htmlAltBundle['commandButton.submit']}" action="#{organizationalStructureBackingBean.editFunction}" value="#{bundle['button.submit']}" styleClass="btn btn-info"/>				
+			<h:commandButton alt="#{htmlAltBundle['commandButton.return']}" action="backToUnitDetails" immediate="true" value="#{bundle['label.return']}" styleClass="btn btn-default"/>								
 		</h:panelGrid>		
 				
 	</h:form>
 	
-</ft:tilesView>
+</f:view>

@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -29,10 +28,10 @@ import net.sourceforge.fenixedu.util.Month;
 
 import org.apache.commons.io.IOUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.Group;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
@@ -103,17 +102,14 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
             titleForFile = title.getContent();
         }
         net.sourceforge.fenixedu.domain.research.result.publication.Thesis publication =
-                new net.sourceforge.fenixedu.domain.research.result.publication.Thesis(author,
-                        ThesisType.Graduation_Thesis,
-                        titleForFile,
-                        thesis.getKeywords(),
-                        Bennu.getInstance().getInstitutionUnit().getName(),
-                        thesis.getDiscussed().getYear(), // publication year
+                new net.sourceforge.fenixedu.domain.research.result.publication.Thesis(author, ThesisType.Graduation_Thesis,
+                        titleForFile, thesis.getKeywords(), Bennu.getInstance().getInstitutionUnit().getName(), thesis
+                                .getDiscussed().getYear(), // publication year
                         getAddress(Bennu.getInstance().getInstitutionUnit()), // address
-                        thesis.getThesisAbstract(),
-                        null, // number of pages
+                        thesis.getThesisAbstract(), null, // number of pages
                         BundleUtil.getStringFromResourceBundle("resources.EnumerationResources",
-                                thesis.getLanguage() == null ? Language.getDefaultLanguage().name() : thesis.getLanguage().name()), // language
+                                thesis.getLanguage() == null ? Locale.getDefault().getLanguage() : thesis.getLanguage()
+                                        .getLanguage()), // language
                         getMonth(thesis), // publication month
                         null, // year begin
                         null, // month begin

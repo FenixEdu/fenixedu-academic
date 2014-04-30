@@ -32,6 +32,7 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.RootCurriculumGroup;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
+import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.SearchForStudentsDA;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 
@@ -47,7 +48,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/curriculumValidation", module = "academicAdministration", formBeanClass = FenixActionForm.class)
+@Mapping(path = "/curriculumValidation", module = "academicAdministration", formBeanClass = FenixActionForm.class,
+        functionality = SearchForStudentsDA.class)
 @Forwards({
         @Forward(name = "show-curriculum-validation-options",
                 path = "/academicAdminOffice/student/curriculumValidation/curriculumValidationOperations.jsp"),
@@ -60,9 +62,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "show-set-end-stage-date-form",
                 path = "/academicAdminOffice/student/curriculumValidation/setStageDate.jsp"),
         @Forward(name = "registrationConclusion",
-                path = "/academicAdminOffice/student/curriculumValidation/registrationConclusion.jsp")
-
-})
+                path = "/academicAdminOffice/student/curriculumValidation/registrationConclusion.jsp") })
 public class AcademicAdminOfficeCurriculumValidationDA extends FenixDispatchAction {
 
     private static final Logger logger = LoggerFactory.getLogger(AcademicAdminOfficeCurriculumValidationDA.class);

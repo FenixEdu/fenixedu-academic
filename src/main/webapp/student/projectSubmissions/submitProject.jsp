@@ -5,7 +5,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<em><bean:message key="title.student.portalTitle" /></em>
 <h2><bean:message key="label.projectSubmissions.submitProject.title" /></h2>
 	
 <logic:messagesPresent message="true">

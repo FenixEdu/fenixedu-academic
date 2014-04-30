@@ -1445,16 +1445,6 @@ public class Teacher extends Teacher_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewTestGroup> getTestGroups() {
-        return getTestGroupsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTestGroups() {
-        return !getTestGroupsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime> getInstitutionWorkTimePeriods() {
         return getInstitutionWorkTimePeriodsSet();
     }
@@ -1625,16 +1615,6 @@ public class Teacher extends Teacher_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewTestModel> getTestModels() {
-        return getTestModelsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTestModels() {
-        return !getTestModelsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.teacher.OldPublication> getAssociatedOldPublications() {
         return getAssociatedOldPublicationsSet();
     }
@@ -1652,16 +1632,6 @@ public class Teacher extends Teacher_Base {
     @Deprecated
     public boolean hasAnyAppraiserExpectationEvaluationGroups() {
         return !getAppraiserExpectationEvaluationGroupsSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDRealTeacher> getTSDRealTeachers() {
-        return getTSDRealTeachersSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTSDRealTeachers() {
-        return !getTSDRealTeachersSet().isEmpty();
     }
 
     @Deprecated

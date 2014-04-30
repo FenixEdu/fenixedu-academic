@@ -21,7 +21,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(path = "/viewTimetable", module = "externalSupervision", formBean = "studentTimeTableForm")
+@Mapping(path = "/viewTimetable", module = "externalSupervision", formBean = "studentTimeTableForm",
+        functionality = ExternalSupervisorViewStudentDA.class)
 @Forwards({ @Forward(name = "chooseRegistration", path = "/student/timeTable/chooseRegistration.jsp"),
         @Forward(name = "showTimeTable", path = "/externalSupervision/consult/showTimetable.jsp") })
 public class ShowStudentTimeTable extends ViewStudentTimeTable {
@@ -44,6 +45,11 @@ public class ShowStudentTimeTable extends ViewStudentTimeTable {
             request.setAttribute("registrations", registrations);
             return mapping.findForward("chooseRegistration");
         }
+    }
+
+    @Override
+    protected void skipLayoutInjection(HttpServletRequest request) {
+        // Don't skip layout injection
     }
 
 }

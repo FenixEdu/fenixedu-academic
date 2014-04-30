@@ -1,8 +1,10 @@
 package net.sourceforge.fenixedu.domain.space;
 
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.ByteArray;
+
+import org.fenixedu.bennu.core.groups.Group;
+
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
 public class BlueprintFile extends BlueprintFile_Base {

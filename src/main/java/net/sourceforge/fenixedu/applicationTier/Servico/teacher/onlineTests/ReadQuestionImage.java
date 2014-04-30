@@ -28,14 +28,14 @@ import pt.ist.fenixframework.FenixFramework;
 public class ReadQuestionImage {
 
     @Atomic
-    public static String run(String exerciseId, Integer imageId, Integer feedbackId, Integer itemIndex, String path)
+    public static String run(String exerciseId, Integer imageId, Integer feedbackId, Integer itemIndex)
             throws FenixServiceException {
         Question question = FenixFramework.getDomainObject(exerciseId);
         if (question != null) {
             if (question.getSubQuestions() == null || question.getSubQuestions().size() == 0) {
                 ParseSubQuestion parse = new ParseSubQuestion();
                 try {
-                    question = parse.parseSubQuestion(question, path);
+                    question = parse.parseSubQuestion(question);
                 } catch (ParseQuestionException e) {
                     throw new FenixServiceException();
                 }
@@ -50,7 +50,7 @@ public class ReadQuestionImage {
 
     @Atomic
     public static String run(String distributedTestId, String questionId, String optionShuffle, Integer imageId,
-            Integer feedbackId, String path) throws FenixServiceException {
+            Integer feedbackId) throws FenixServiceException {
 
         Question question = null;
         Test test = FenixFramework.getDomainObject(distributedTestId);

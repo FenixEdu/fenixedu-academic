@@ -5,8 +5,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
-<%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app" %>
-
 
 <bean:define id="site" name="site" type="net.sourceforge.fenixedu.domain.Site"/>
 <bean:define id="actionName" name="siteActionName"/>
@@ -20,9 +18,7 @@
 
 <div class="infoop2">
     <p class="mvert0">
-  		<app:defineContentPath id="siteURL" name="site" toScope="request"/>
-		<bean:define id="url" name="siteURL" type="java.lang.String"/>
-    	<bean:message key="message.site.analytics" bundle="SITE_RESOURCES" arg0="<%= RequestUtils.absoluteURL(request, url).toString() %>"/>
+    	<bean:message key="message.site.analytics" bundle="SITE_RESOURCES" arg0="${site.fullPath}"/>
    	</p>
 </div>
 

@@ -2,12 +2,14 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Calendar;
 
+import org.fenixedu.commons.i18n.I18N;
+
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.DiaSemana;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class InfoLessonInstance extends InfoShowOccupation {
 
@@ -39,12 +41,12 @@ public class InfoLessonInstance extends InfoShowOccupation {
 
     @Override
     public Calendar getInicio() {
-        return getLessonInstance().getBeginDateTime().toCalendar(Language.getLocale());
+        return getLessonInstance().getBeginDateTime().toCalendar(I18N.getLocale());
     }
 
     @Override
     public Calendar getFim() {
-        return getLessonInstance().getEndDateTime().toCalendar(Language.getLocale());
+        return getLessonInstance().getEndDateTime().toCalendar(I18N.getLocale());
     }
 
     @Override

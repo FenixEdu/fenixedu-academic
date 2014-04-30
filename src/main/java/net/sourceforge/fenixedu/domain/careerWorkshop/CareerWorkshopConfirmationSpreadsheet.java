@@ -1,14 +1,12 @@
 package net.sourceforge.fenixedu.domain.careerWorkshop;
 
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 public class CareerWorkshopConfirmationSpreadsheet extends CareerWorkshopConfirmationSpreadsheet_Base {
     public CareerWorkshopConfirmationSpreadsheet(String filename, byte[] content) {
         super();
-        RoleGroup cg = new RoleGroup(Role.getRoleByRoleType(RoleType.DIRECTIVE_COUNCIL));
-        init(filename, filename, content, cg);
+        init(filename, filename, content, RoleGroup.get(RoleType.DIRECTIVE_COUNCIL));
     }
 
     @Override

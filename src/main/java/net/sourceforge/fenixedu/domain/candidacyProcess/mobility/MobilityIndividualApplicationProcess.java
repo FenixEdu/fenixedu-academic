@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
@@ -45,6 +45,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.restlet.Client;
@@ -59,7 +60,7 @@ import org.restlet.data.Status;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class MobilityIndividualApplicationProcess extends MobilityIndividualApplicationProcess_Base {
@@ -189,8 +190,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
     static private boolean isAllowedToManageProcess(MobilityIndividualApplicationProcess process, User userView) {
         Set<AcademicProgram> programs =
-                AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
-                        AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
+                AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(), AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
 
         if (process == null || process.getCandidacy() == null) {
             return false;
@@ -304,7 +304,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
     @Override
     public String getDisplayName() {
-        return ResourceBundle.getBundle("resources/CaseHandlingResources", Language.getLocale()).getString(
+        return ResourceBundle.getBundle("resources/CaseHandlingResources", I18N.getLocale()).getString(
                 getClass().getSimpleName());
     }
 
@@ -389,7 +389,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     }
 
     public String getErasmusCandidacyStateDescription() {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", I18N.getLocale());
 
         String registeredMessage =
                 getCandidacy().hasRegistration() ? "/" + bundle.getString("label.erasmus.candidacy.state.registered") : "";

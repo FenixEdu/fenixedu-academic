@@ -7,7 +7,6 @@
 
 <html:xhtml />
 
-<em><bean:message key="label.residenceManagement" bundle="RESIDENCE_MANAGEMENT_RESOURCES" /></em>
 <h2><bean:message key="label.import.debt" bundle="RESIDENCE_MANAGEMENT_RESOURCES" /></h2>
 
 <bean:define id="monthOID" name="importFileBean" property="residenceMonth.OID"/>
@@ -95,7 +94,7 @@
 				<p>
 					<span class="error" style="padding: 3px 6px;">
 						<bean:message key="label.errors.in.import" arg0="<%= numberOfErrors.toString() %>" bundle="RESIDENCE_MANAGEMENT_RESOURCES" />. 
-						<%=pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX%><a href="#statusNotOk"> 
+						<%=pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX%><a href="#statusNotOk"> 
 							<bean:message key="label.details" bundle="RESIDENCE_MANAGEMENT_RESOURCES" />
 						</a>
 					</span>

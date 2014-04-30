@@ -5,7 +5,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ page import="org.fenixedu.bennu.core.security.Authenticate" %>
 
-<em class="invisible"><bean:message key="title.student.portalTitle"/></em>
 <h2 class="mbottom15"><bean:message key="link.tests"/></h2>
 <logic:present name="tests">
 	<logic:notEmpty name="tests">

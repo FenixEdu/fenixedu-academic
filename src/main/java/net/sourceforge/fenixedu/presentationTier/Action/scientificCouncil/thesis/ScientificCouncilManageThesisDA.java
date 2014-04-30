@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -55,39 +54,27 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.FileUtils;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
+import com.google.common.io.ByteStreams;
+
+// @StrutsFunctionality(app = ScientificDisserationsApp.class, path = "list-old", titleKey = "navigation.list.jury.proposals")
 @Mapping(path = "/scientificCouncilManageThesis", module = "scientificCouncil")
-@Forwards({
-        @Forward(name = "list-thesis", path = "/scientificCouncil/thesis/listThesis.jsp", tileProperties = @Tile(
-                title = "private.scientificcouncil.dissertations")),
-        @Forward(name = "review-proposal", path = "/scientificCouncil/thesis/reviewProposal.jsp", tileProperties = @Tile(
-                title = "private.scientificcouncil.dissertations")),
-        @Forward(name = "review-thesis", path = "/scientificCouncil/thesis/reviewThesis.jsp", tileProperties = @Tile(
-                title = "private.scientificcouncil.dissertations")),
-        @Forward(name = "view-thesis", path = "/scientificCouncil/thesis/viewThesis.jsp", tileProperties = @Tile(
-                title = "private.scientificcouncil.dissertations")),
-        @Forward(name = "list-scientific-comission", path = "/scientificCouncil/thesis/listScientificComission.jsp",
-                tileProperties = @Tile(title = "private.scientificcouncil.dissertations")),
-        @Forward(name = "list-thesis-creation-periods", path = "/scientificCouncil/thesis/listThesisCreationPeriods.jsp",
-                tileProperties = @Tile(title = "private.scientificcouncil.dissertations")),
-        @Forward(name = "viewOperationsThesis", path = "/student/thesis/viewOperationsThesis.jsp", tileProperties = @Tile(
-                title = "private.scientificcouncil.dissertations")),
-        @Forward(name = "showDissertationsInfo", path = "/scientificCouncil/thesis/showDissertationsInfo.jsp",
-                tileProperties = @Tile(title = "private.scientificcouncil.dissertations")),
-        @Forward(name = "editParticipant", path = "/scientificCouncil/thesis/editParticipant.jsp", tileProperties = @Tile(
-                title = "private.scientificcouncil.dissertations")),
-        @Forward(name = "select-person", path = "/scientificCouncil/thesis/selectPerson.jsp", tileProperties = @Tile(
-                title = "private.scientificcouncil.dissertations")),
-        @Forward(name = "change-information-with-docs", path = "/scientificCouncil/thesis/changeInformationWithDocs.jsp",
-                tileProperties = @Tile(title = "private.scientificcouncil.dissertations")),
-        @Forward(name = "search-student", path = "/scientificCouncil/thesis/searchStudent.jsp", tileProperties = @Tile(
-                title = "private.scientificcouncil.dissertations")) })
+@Forwards({ @Forward(name = "list-thesis", path = "/scientificCouncil/thesis/listThesis.jsp"),
+        @Forward(name = "review-proposal", path = "/scientificCouncil/thesis/reviewProposal.jsp"),
+        @Forward(name = "review-thesis", path = "/scientificCouncil/thesis/reviewThesis.jsp"),
+        @Forward(name = "view-thesis", path = "/scientificCouncil/thesis/viewThesis.jsp"),
+        @Forward(name = "list-scientific-comission", path = "/scientificCouncil/thesis/listScientificComission.jsp"),
+        @Forward(name = "list-thesis-creation-periods", path = "/scientificCouncil/thesis/listThesisCreationPeriods.jsp"),
+        @Forward(name = "viewOperationsThesis", path = "/student/thesis/viewOperationsThesis.jsp"),
+        @Forward(name = "showDissertationsInfo", path = "/scientificCouncil/thesis/showDissertationsInfo.jsp"),
+        @Forward(name = "editParticipant", path = "/scientificCouncil/thesis/editParticipant.jsp"),
+        @Forward(name = "select-person", path = "/scientificCouncil/thesis/selectPerson.jsp"),
+        @Forward(name = "change-information-with-docs", path = "/scientificCouncil/thesis/changeInformationWithDocs.jsp"),
+        @Forward(name = "search-student", path = "/scientificCouncil/thesis/searchStudent.jsp") })
 public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 
     @Override
@@ -439,17 +426,9 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
         RenderUtils.invalidateViewState();
 
         if (bean != null && bean.getFile() != null) {
-            File temporaryFile = null;
-
-            try {
-                temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
-                CreateThesisDissertationFile.runCreateThesisDissertationFile(getThesis(request), temporaryFile,
-                        bean.getSimpleFileName(), bean.getTitle(), bean.getSubTitle(), bean.getLanguage());
-            } finally {
-                if (temporaryFile != null) {
-                    temporaryFile.delete();
-                }
-            }
+            byte[] bytes = ByteStreams.toByteArray(bean.getFile());
+            CreateThesisDissertationFile.runCreateThesisDissertationFile(getThesis(request), bytes, bean.getSimpleFileName(),
+                    bean.getTitle(), bean.getSubTitle(), bean.getLanguage());
         }
 
         return viewThesis(mapping, actionForm, request, response);
@@ -461,17 +440,9 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
         RenderUtils.invalidateViewState();
 
         if (bean != null && bean.getFile() != null) {
-            File temporaryFile = null;
-
-            try {
-                temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
-                CreateThesisAbstractFile.runCreateThesisAbstractFile(getThesis(request), temporaryFile, bean.getSimpleFileName(),
-                        bean.getTitle(), bean.getSubTitle(), bean.getLanguage());
-            } finally {
-                if (temporaryFile != null) {
-                    temporaryFile.delete();
-                }
-            }
+            byte[] bytes = ByteStreams.toByteArray(bean.getFile());
+            CreateThesisAbstractFile.runCreateThesisAbstractFile(getThesis(request), bytes, bean.getSimpleFileName(),
+                    bean.getTitle(), bean.getSubTitle(), bean.getLanguage());
         }
 
         return viewThesis(mapping, actionForm, request, response);

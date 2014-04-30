@@ -4,7 +4,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 
-<%@page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
+<%@page import="org.fenixedu.commons.i18n.I18N"%>
 <%@page import="org.joda.time.LocalDate"%>
 <%@page import="net.sourceforge.fenixedu.domain.candidacy.MeasurementTestRoom"%>
 <%@page import="java.util.Locale"%>
@@ -53,11 +53,11 @@ margin-left: 0px;
 		<p>
 		
 		
-		A prova realizar-se-á no dia <%= ((Registration)request.getAttribute("registration")).getMeasurementTestRoom().getShift().getDate().toString("dd 'de' MMMM", Language.getLocale())  %> e terá uma duração aproximada de 3 horas, pelo que, neste dia, serão suspensas as aulas do 1º ano. 
+		A prova realizar-se-á no dia <%= ((Registration)request.getAttribute("registration")).getMeasurementTestRoom().getShift().getDate().toString("dd 'de' MMMM", I18N.getLocale())  %> e terá uma duração aproximada de 3 horas, pelo que, neste dia, serão suspensas as aulas do 1º ano. 
 		</p>
 		
 		<p>
-		A realização da sua prova de aferição terá lugar na sala <bean:write name="registration" property="measurementTestRoom.name"/>,  onde deverá comparecer  às <%= ((Registration)request.getAttribute("registration")).getMeasurementTestRoom().getShift().getDate().toString("HH:mm", Language.getLocale())  %> horas munido de BI ou cartão de cidadão, lápis e borracha.
+		A realização da sua prova de aferição terá lugar na sala <bean:write name="registration" property="measurementTestRoom.name"/>,  onde deverá comparecer  às <%= ((Registration)request.getAttribute("registration")).getMeasurementTestRoom().getShift().getDate().toString("HH:mm", I18N.getLocale())  %> horas munido de BI ou cartão de cidadão, lápis e borracha.
 		</p>
 		
 		<br/>

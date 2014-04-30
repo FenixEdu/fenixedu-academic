@@ -29,7 +29,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/phdAccountingEventsManagement", module = "academicAdministration")
+@Mapping(path = "/phdAccountingEventsManagement", module = "academicAdministration",
+        functionality = PhdIndividualProgramProcessDA.class)
 @Forwards({ @Forward(name = "chooseEventType", path = "/phd/academicAdminOffice/payments/chooseEventType.jsp"),
         @Forward(name = "chooseYear", path = "/phd/academicAdminOffice/payments/chooseYear.jsp"),
         @Forward(name = "chooseYear2", path = "/phd/academicAdminOffice/payments/chooseYear2.jsp"),

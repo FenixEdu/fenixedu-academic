@@ -33,8 +33,7 @@ import pt.ist.fenixframework.FenixFramework;
  */
 public class ReadDistributedTestMarks {
 
-    protected InfoSiteStudentsTestMarks run(String executionCourseId, String distributedTestId, String path)
-            throws FenixServiceException {
+    protected InfoSiteStudentsTestMarks run(String executionCourseId, String distributedTestId) throws FenixServiceException {
 
         InfoSiteStudentsTestMarks infoSiteStudentsTestMarks = new InfoSiteStudentsTestMarks();
 
@@ -55,7 +54,7 @@ public class ReadDistributedTestMarks {
                 ParseSubQuestion parse = new ParseSubQuestion();
                 Question question = studentTestQuestion.getQuestion();
                 try {
-                    question = parse.parseSubQuestion(studentTestQuestion.getQuestion(), path.replace('\\', '/'));
+                    question = parse.parseSubQuestion(studentTestQuestion.getQuestion());
                 } catch (Exception e) {
                     throw new FenixServiceException(e);
                 }
@@ -90,10 +89,10 @@ public class ReadDistributedTestMarks {
     private static final ReadDistributedTestMarks serviceInstance = new ReadDistributedTestMarks();
 
     @Atomic
-    public static InfoSiteStudentsTestMarks runReadDistributedTestMarks(String executionCourseId, String distributedTestId,
-            String path) throws FenixServiceException, NotAuthorizedException {
+    public static InfoSiteStudentsTestMarks runReadDistributedTestMarks(String executionCourseId, String distributedTestId)
+            throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
-        return serviceInstance.run(executionCourseId, distributedTestId, path);
+        return serviceInstance.run(executionCourseId, distributedTestId);
     }
 
 }

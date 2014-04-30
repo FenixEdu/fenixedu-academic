@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <html:xhtml/>
@@ -5,7 +6,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<em><bean:message key="messaging.announcements.title.label" bundle="MESSAGING_RESOURCES"/></em>
 <h2><bean:message key="label.manageAnnouncements" bundle="MESSAGING_RESOURCES"/></h2>
 
 <logic:present name="announcementBoards">	

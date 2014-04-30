@@ -13,6 +13,10 @@
 		width: 500px;
 		margin-left: 10px;
 	}
+	#upload-button {
+		left: 155px !important;
+		top: 300px !important;
+	}
 </style>
 
 <script src="<%= request.getContextPath() + "/javaScript/phroper/fabric-1.2.0.all.min.js" %>" type="text/javascript" ></script>
@@ -57,7 +61,6 @@
 	});
 </script>
 
-<em><bean:message key="operator.module.title" bundle="MANAGER_RESOURCES"/></em>
 <h2><bean:message key="link.operator.submitPhoto"/></h2>
 
 <html:messages id="message" message="true" bundle="MANAGER_RESOURCES" property="error">
@@ -91,31 +94,3 @@
 	  <bean:message key="button.submit" />
    </html:submit>
 </fr:form>
-
-<%--
-<html:form styleId="photoForm" action="/submitPhoto.do?method=photoUpload" enctype="multipart/form-data">
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
-	
-	<input type="hidden" id="phroperCaption" value="<%= request.getAttribute("phroperCaption") != null ? request.getAttribute("phroperCaption") : "" %>" />
-	<input type="hidden" id="phroperSubCaption" value="<%= request.getAttribute("phroperSubCaption") != null ? request.getAttribute("phroperSubCaption") : "" %>" />
-	<input type="hidden" id="phroperButtonCaption" value="<%= request.getAttribute("phroperButtonCaption") != null ? request.getAttribute("phroperButtonCaption") : "" %>" />
-	<input type="hidden" id="phroperLoadingCaption" value="<%= request.getAttribute("phroperLoadingCaption") != null ? request.getAttribute("phroperLoadingCaption") : "" %>" />
-
-	<table class="tstyle5 thlight thright thmiddle mtop05">
-		<tr>
-			<th><bean:message key="property.login.username" /></th>
-			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.username" property="username" size="55"/></td>
-		</tr>
-		<tr>
-			<th><bean:message key="title.loadMarks" /></th>
-			<td><html:file bundle="HTMLALT_RESOURCES" altKey="file.theFile" property="theFile" size="50"/></td>
-		</tr>
-	</table>
-
-	<p>
-		<html:submit styleId="submitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-			<bean:message key="button.save"/>
-		</html:submit>
-	</p>
-</html:form> 
---%>

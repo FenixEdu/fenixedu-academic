@@ -5,7 +5,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt" %>
 
-<em><bean:message key="title.student.portalTitle"/></em>
 <h2><bean:message key="title.finalDegreeWork.attribution"/></h2>
 
 <p>

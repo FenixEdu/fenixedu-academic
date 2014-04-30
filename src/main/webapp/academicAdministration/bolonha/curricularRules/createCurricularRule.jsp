@@ -1,10 +1,10 @@
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
-<ft:tilesView definition="df.layout.two-column.contents" attributeName="body-inline">
+<f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
@@ -213,7 +213,7 @@
 		<h:panelGroup rendered="#{empty CurricularRulesManagement.type}">
 			<h:outputText value="<br/>" escape="false"/>
 			<h:outputText value="<p>" escape="false"/>
-			<h:outputLink value="createCurricularRule.faces">
+			<h:outputLink value="#{facesContext.externalContext.requestContextPath}/academicAdministration/bolonha/curricularRules/createCurricularRule.faces">
 				<h:outputText value="#{bolonhaBundle['new.rule']}" />
 				<f:param name="type" value="rule" />
 				<f:param name="degreeCurricularPlanID" value="#{CurricularRulesManagement.degreeCurricularPlanID}" />
@@ -227,7 +227,7 @@
 			<h:outputText value="</p>" escape="false"/>
 
 			<h:outputText value="<p>" escape="false"/>
-			<h:outputLink value="createCurricularRule.faces">
+			<h:outputLink value="#{facesContext.externalContext.requestContextPath}/academicAdministration/bolonha/curricularRules/createCurricularRule.faces">
 				<h:outputText value="#{bolonhaBundle['createCompositeRule']}" />
 				<f:param name="type" value="compositeRule" />
 				<f:param name="degreeCurricularPlanID" value="#{CurricularRulesManagement.degreeCurricularPlanID}" />
@@ -259,4 +259,4 @@
 		
 		<h:outputText value="</p>" escape="false"/>
 	</h:form>
-</ft:tilesView>
+</f:view>

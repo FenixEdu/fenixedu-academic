@@ -3,17 +3,23 @@ package net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminExecutionsApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@StrutsFunctionality(app = AcademicAdminExecutionsApp.class, path = "edit-execution-course",
+        titleKey = "label.manager.executionCourseManagement.edit.executionCourse",
+        accessGroup = "academic(MANAGE_EXECUTION_COURSES)")
 @Mapping(path = "/editExecutionCourseChooseExPeriod", module = "academicAdministration")
 @Forwards({
         @Forward(name = "editChooseExecutionPeriod",
@@ -24,6 +30,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
                 path = "/academicAdministration/executionCourseManagement/listExecutionCourseActions.jsp") })
 public class EditExecutionCourseDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepareEditExecutionCourse(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 

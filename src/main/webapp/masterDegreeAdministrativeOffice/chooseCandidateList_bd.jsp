@@ -21,7 +21,6 @@
         <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
         <input alt="input.method" type="hidden" value="getCandidates" name="method"/>
 
-<em><bean:message key="title.masterDegree.administrativeOffice"/></em>
 <h2><bean:message name="title"/></h2>
 
 <table class="tstyle5">    

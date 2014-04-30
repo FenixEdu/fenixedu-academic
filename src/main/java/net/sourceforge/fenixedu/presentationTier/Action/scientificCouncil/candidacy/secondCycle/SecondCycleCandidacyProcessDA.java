@@ -22,26 +22,29 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleC
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.period.SecondCycleCandidacyPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex;
+import net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.ScientificCouncilApplication.ScientificApplicationsApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.excel.SpreadsheetXLSExporter;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
+@StrutsFunctionality(app = ScientificApplicationsApp.class, path = "second-cycle",
+        titleKey = "title.application.name.secondCycle")
 @Mapping(path = "/caseHandlingSecondCycleCandidacyProcess", module = "scientificCouncil",
         formBeanClass = SecondCycleCandidacyProcessDA.SecondCycleCandidacyProcessForm.class)
-@Forwards({ @Forward(name = "intro", path = "/scientificCouncil/candidacy/secondCycle/mainCandidacyProcess.jsp",
-        tileProperties = @Tile(title = "private.scientificcouncil.applications")) })
+@Forwards(@Forward(name = "intro", path = "/scientificCouncil/candidacy/secondCycle/mainCandidacyProcess.jsp"))
 public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 
     static public class SecondCycleCandidacyProcessForm extends CandidacyProcessForm {
@@ -225,7 +228,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
             row.setCell(process.getCandidacyInterviewGrade() != null ? process.getCandidacyInterviewGrade() : " ");
             row.setCell(process.getCandidacySeriesGrade());
             if (process.isCandidacyAccepted() || process.isCandidacyRejected()) {
-                row.setCell(ResourceBundle.getBundle("resources/EnumerationResources", Language.getLocale()).getString(
+                row.setCell(ResourceBundle.getBundle("resources/EnumerationResources", I18N.getLocale()).getString(
                         process.getCandidacyState().getQualifiedName()));
             } else {
                 row.setCell(" ");
@@ -236,7 +239,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
     }
 
     private List<Object> getHeader() {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources/ApplicationResources", I18N.getLocale());
         final List<Object> result = new ArrayList<Object>();
         result.add(bundle.getString("label.name"));
         result.add(bundle.getString("label.candidacy.mfc"));
@@ -300,7 +303,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
     }
 
     public DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
-        final String degreeCurricularPlanOID = CoordinatedDegreeInfo.findDegreeCurricularPlanID(request);
+        final String degreeCurricularPlanOID = DegreeCoordinatorIndex.findDegreeCurricularPlanID(request);
         request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanOID);
 
         if (degreeCurricularPlanOID != null) {

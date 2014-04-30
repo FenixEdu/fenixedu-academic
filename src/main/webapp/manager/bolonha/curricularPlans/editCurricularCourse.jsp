@@ -1,9 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
-<ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
+<f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/ManagerResources" var="managerBundle"/>
@@ -188,7 +188,7 @@
 		<h:outputText value="<h4 class='first'>#{bolonhaBundle['contexts']}:</h4>" escape="false"/>		
 		
 		<p>
-		<h:outputLink value="editCurricularCourse.faces">
+		<h:outputLink value="#{facesContext.externalContext.requestContextPath}/manager/bolonha/curricularPlans/editCurricularCourse.faces">
 			<h:outputText value="#{bolonhaBundle['newContext']}" />
 			<f:param name="degreeCurricularPlanID" value="#{ManagerCurricularCourseManagement.degreeCurricularPlanID}" />
 			<f:param name="curricularCourseID" value="#{ManagerCurricularCourseManagement.curricularCourseID}" />
@@ -262,7 +262,7 @@
 					<h:outputText value="#{bolonhaBundle['opened']}</p>" escape="false" rendered="#{empty context.endExecutionPeriod}"/>
 					
 					<h:outputText value="<p class='mtop05'><label class='lempty'>.</label>" escape="false"/>
-					<h:outputLink value="editCurricularCourse.faces">
+					<h:outputLink value="#{facesContext.externalContext.requestContextPath}/manager/bolonha/curricularPlans/editCurricularCourse.faces">
 						<h:outputText value="#{bolonhaBundle['edit']}" />
 						<f:param name="degreeCurricularPlanID" value="#{ManagerCurricularCourseManagement.degreeCurricularPlanID}" />
 						<f:param name="courseGroupID" value="#{context.parentCourseGroup.externalId}" />
@@ -331,4 +331,4 @@
 		<fc:commandButton alt="#{htmlAltBundle['commandButton.back']}" immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['back']}"
 			action="buildCurricularPlan"/>
 	</h:form>
-</ft:tilesView>
+</f:view>

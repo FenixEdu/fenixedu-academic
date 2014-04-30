@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.OptionalEnrolment;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
@@ -31,10 +31,10 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -47,14 +47,13 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlForm;
 import pt.ist.fenixWebFramework.renderers.components.HtmlImage;
 import pt.ist.fenixWebFramework.renderers.components.HtmlInlineContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlLink;
-import pt.ist.fenixWebFramework.renderers.components.HtmlLinkWithPreprendedComment;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTable;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableRow;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.contexts.InputContext;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class StudentCurricularPlanRenderer extends InputRenderer {
 
@@ -124,13 +123,13 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
     }
 
-    private final ResourceBundle studentResources = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
+    private final ResourceBundle studentResources = ResourceBundle.getBundle("resources.StudentResources", I18N.getLocale());
 
     private final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources",
-            Language.getLocale());
+            I18N.getLocale());
 
     private final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources",
-            Language.getLocale());
+            I18N.getLocale());
 
     private OrganizationType organizedBy = OrganizationType.GROUPS;
 
@@ -1109,15 +1108,11 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
                 return new HtmlText(degreeCurricularPlan.getName());
             }
 
-            final HtmlLink result =
-                    new HtmlLinkWithPreprendedComment(
-                            pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
+            final HtmlLink result = new HtmlLink();
 
             result.setText(degreeCurricularPlan.getName());
             result.setModuleRelative(false);
             result.setTarget("_blank");
-            result.setParameter(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME, degreeCurricularPlan.getDegree().getSite()
-                    .getReversePath());
 
             if (degreeCurricularPlan.isBoxStructure()) {
                 result.setUrl("/publico/degreeSite/showDegreeCurricularPlanBolonha.faces");
@@ -1177,9 +1172,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
         private HtmlLink createCurricularCourseLink(final String text, final CurricularCourse curricularCourse) {
 
-            final HtmlLink result =
-                    new HtmlLinkWithPreprendedComment(
-                            pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
+            final HtmlLink result = new HtmlLink();
             result.setBody(new HtmlText(text));
             result.setModuleRelative(false);
             result.setTarget(HtmlLink.Target.BLANK);
@@ -1187,8 +1180,6 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
             result.setParameter("degreeID", curricularCourse.getDegreeCurricularPlan().getDegree().getExternalId());
             result.setParameter("curricularCourseID", curricularCourse.getExternalId());
             result.setParameter("degreeCurricularPlanID", curricularCourse.getDegreeCurricularPlan().getExternalId());
-            result.setParameter(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME, "cursos/"
-                    + curricularCourse.getDegree().getSigla() + "/plano-curricular");
 
             if (curricularCourse.isBolonhaDegree()) {
                 result.setParameter("organizeBy", "groups");

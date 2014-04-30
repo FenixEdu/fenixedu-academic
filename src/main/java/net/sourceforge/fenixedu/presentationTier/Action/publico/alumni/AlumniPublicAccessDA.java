@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.dataTransferObject.alumni.publicAccess.AlumniPas
 import net.sourceforge.fenixedu.dataTransferObject.alumni.publicAccess.AlumniPublicAccessBean;
 import net.sourceforge.fenixedu.domain.Alumni;
 import net.sourceforge.fenixedu.domain.AlumniRequestType;
-import net.sourceforge.fenixedu.domain.Instalation;
+import net.sourceforge.fenixedu.domain.Installation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -25,6 +25,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.commons.i18n.I18N;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +34,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.EMail;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 import com.octo.captcha.module.struts.CaptchaServicePlugin;
 
@@ -54,7 +55,7 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
 
     private static final Logger logger = LoggerFactory.getLogger(AlumniPublicAccessDA.class);
 
-    final ResourceBundle RESOURCES = ResourceBundle.getBundle("resources.AlumniResources", Language.getLocale());
+    final ResourceBundle RESOURCES = ResourceBundle.getBundle("resources.AlumniResources", I18N.getLocale());
 
     public ActionForward initFenixPublicAccess(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
@@ -158,7 +159,7 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
         } catch (DomainException e) {
             if ("error.no.registrations".equals(e.getKey())) {
                 request.setAttribute("showReportError", "true");
-                String alumniEmail = Instalation.getInstance().getInstituitionalEmailAddress("alumni");
+                String alumniEmail = Installation.getInstance().getInstituitionalEmailAddress("alumni");
                 request.setAttribute("errorMessage", getResources(request).getMessage(e.getKey(), e.getArgs(), alumniEmail));
             } else if ("error.no.concluded.registrations".equals(e.getKey()) || "error.person.no.student".equals(e.getKey())) {
                 request.setAttribute("showReportError", "true");
@@ -186,7 +187,7 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
 
     public ActionForward sendEmailReportingError(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.AlumniResources", Language.getLocale());
+        final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.AlumniResources", I18N.getLocale());
 
         final AlumniErrorSendingMailBean alumniBean = getRenderedObject();
         StringBuilder mailBody = new StringBuilder();
@@ -211,7 +212,7 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
         try {
             if (!request.getServerName().equals("localhost")) {
                 email = new EMail("mail.adm", "erro@dot.ist.utl.pt");
-                String aluminiEmailAddress = Instalation.getInstance().getInstituitionalEmailAddress("alumni");
+                String aluminiEmailAddress = Installation.getInstance().getInstituitionalEmailAddress("alumni");
                 email.send(aluminiEmailAddress, "Erro Registo Alumni", mailBody.toString());
             }
         } catch (Throwable t) {

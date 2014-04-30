@@ -10,11 +10,12 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdCandidacyRefereeAlert extends PhdCandidacyRefereeAlert_Base {
@@ -36,7 +37,7 @@ public class PhdCandidacyRefereeAlert extends PhdCandidacyRefereeAlert_Base {
     }
 
     private MultiLanguageString generateSubject(final PhdCandidacyReferee referee) {
-        final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", I18N.getLocale());
         return new MultiLanguageString(String.format(bundle.getString("message.phd.email.subject.referee"), referee
                 .getCandidatePerson().getName(), referee.getCandidatePerson().getName()));
     }
@@ -48,7 +49,7 @@ public class PhdCandidacyRefereeAlert extends PhdCandidacyRefereeAlert_Base {
 
     @Override
     public String getDescription() {
-        final ResourceBundle bundle = getResourceBundle(Language.getLocale());
+        final ResourceBundle bundle = getResourceBundle(I18N.getLocale());
         return bundle.getString(String.format("message.phd.referee.alert", INTERVAL));
     }
 

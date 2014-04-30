@@ -3,8 +3,9 @@ package net.sourceforge.fenixedu.domain.documents;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+
+import org.fenixedu.bennu.core.groups.Group;
 
 /**
  * {@link GeneratedDocument}s are output files resulting of some process of the

@@ -8,19 +8,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import org.fenixedu.commons.i18n.I18N;
+
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
 import net.sourceforge.fenixedu.util.WorkingStudentSelectionType;
+
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UserGroup;
+
 import pt.utl.ist.fenix.tools.predicates.AndPredicate;
 import pt.utl.ist.fenix.tools.predicates.InlinePredicate;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class SearchExecutionCourseAttendsBean implements Serializable {
 
@@ -34,11 +38,11 @@ public class SearchExecutionCourseAttendsBean implements Serializable {
     private transient Map<Integer, Integer> enrolmentsNumberMap;
 
     public String getEnumerationResourcesString(String name) {
-        return ResourceBundle.getBundle("resources/EnumerationResources", Language.getLocale()).getString(name);
+        return ResourceBundle.getBundle("resources/EnumerationResources", I18N.getLocale()).getString(name);
     }
 
     public String getApplicationResourcesString(String name) {
-        return ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale()).getString(name);
+        return ResourceBundle.getBundle("resources/ApplicationResources", I18N.getLocale()).getString(name);
     }
 
     public SearchExecutionCourseAttendsBean(ExecutionCourse executionCourse) {
@@ -215,7 +219,7 @@ public class SearchExecutionCourseAttendsBean implements Serializable {
         for (Attends attends : getAttendsResult()) {
             persons.add(attends.getRegistration().getStudent().getPerson());
         }
-        return new FixedSetGroup(persons);
+        return UserGroup.of(Person.convertToUsers(persons));
     }
 
     public String getLabel() {

@@ -16,13 +16,25 @@ import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.AbstractManageThesisDA;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState;
+import net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherApplication.TeacherFinalWorkApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
+@StrutsFunctionality(app = TeacherFinalWorkApp.class, path = "document-confirmation",
+        titleKey = "link.manage.thesis.document.confirmation")
+@Mapping(module = "teacher", path = "/thesisDocumentConfirmation")
+@Forwards({ @Forward(name = "viewThesis", path = "/teacher/viewThesis.jsp"),
+        @Forward(name = "viewOperationsThesis", path = "/student/thesis/viewOperationsThesis.jsp"),
+        @Forward(name = "showThesisList", path = "/teacher/showThesisList.jsp") })
 public class ThesisDocumentConfirmationDA extends AbstractManageThesisDA {
 
     public static class ThesisPresentationWrapper {
@@ -110,6 +122,7 @@ public class ThesisDocumentConfirmationDA extends AbstractManageThesisDA {
         }
     }
 
+    @EntryPoint
     public ActionForward showThesisList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
 

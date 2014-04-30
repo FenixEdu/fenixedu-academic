@@ -5,11 +5,11 @@
 <html:xhtml/>
 
 
-<h1 class="mbottom03 cnone"><fr:view name="site" property="unitNameWithAcronym"/></h1>
+<h1 class="mbottom03 cnone"><fr:view name="actual$site" property="unitNameWithAcronym"/></h1>
 <h2><bean:message key="label.organization" bundle="SITE_RESOURCES"/> </h2>
 
 <div>
-	<fr:view name="site" property="unit" layout="organigram-with-card">
+	<fr:view name="actual$site" property="unit" layout="organigram-with-card">
 		<fr:layout>
 			<fr:property name="classes" value="ostructure1"/>
 			<fr:property name="rootUnitClasses" value="osrootunit"/>

@@ -15,11 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.File;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.streams.FetcherRequestWrapper;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.siteArchive.streams.FetcherServletResponseWrapper;
 import net.sourceforge.fenixedu.presentationTier.servlets.FileDownloadServlet;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 
 import com.google.common.io.ByteStreams;
 
@@ -46,7 +44,6 @@ public class Fetcher {
     private Archive archive;
     private HttpServletRequest request;
     private HttpServletResponse response;
-    private FilterFunctionalityContext requestContext;
 
     public Fetcher() {
         super();
@@ -95,15 +92,6 @@ public class Fetcher {
      */
     public Resource next() {
         return this.queue.remove();
-    }
-
-    /**
-     * Processes the current queue retrieving all resources and saving them in
-     * the archive.
-     */
-    public void process(FilterFunctionalityContext context) throws ServletException, IOException {
-        this.requestContext = context;
-        process();
     }
 
     /**
@@ -159,9 +147,8 @@ public class Fetcher {
             writeFileToStream(url, stream);
         } else {
             RequestDispatcher dispatcher = this.request.getRequestDispatcher(url);
-            ServletRequest request = this.requestContext == null ? createForwardRequest() : createForwardRequest(requestContext);
+            ServletRequest request = createForwardRequest();
             FetcherServletResponseWrapper response = createForwardResponse(resource, stream);
-
             dispatcher.forward(request, response);
         }
     }
@@ -190,13 +177,6 @@ public class Fetcher {
         url = url.replaceAll("&amp;", "&");
 
         return url;
-    }
-
-    private ServletRequest createForwardRequest(FilterFunctionalityContext context) {
-        ServletRequest wrapper = createForwardRequest();
-        wrapper.removeAttribute(FunctionalityContext.CONTEXT_KEY);
-        wrapper.setAttribute(FunctionalityContext.CONTEXT_KEY, context);
-        return wrapper;
     }
 
     private ServletRequest createForwardRequest() {

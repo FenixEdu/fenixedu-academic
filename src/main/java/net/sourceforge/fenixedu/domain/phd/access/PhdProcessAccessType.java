@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import org.fenixedu.commons.i18n.I18N;
+
 import net.sourceforge.fenixedu.domain.phd.PhdProcessStateType;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public enum PhdProcessAccessType {
 
@@ -73,7 +75,7 @@ public enum PhdProcessAccessType {
     }
 
     public String getLocalizedName() {
-        return getLocalizedName(Language.getLocale());
+        return getLocalizedName(I18N.getLocale());
     }
 
     public String getLocalizedName(final Locale locale) {

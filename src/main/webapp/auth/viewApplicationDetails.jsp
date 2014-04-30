@@ -9,7 +9,6 @@
 <%@ page
 	import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
 
-<em><bean:message key="label.person.main.title" /></em>
 <h2>
 	<bean:message key="oauthapps.label.manage.applications" bundle="APPLICATION_RESOURCES" />
 </h2>

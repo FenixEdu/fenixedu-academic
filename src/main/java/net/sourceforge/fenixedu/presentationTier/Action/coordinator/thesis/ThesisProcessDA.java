@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -16,7 +17,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/thesisProcess", module = "coordinator")
+@Mapping(path = "/thesisProcess", module = "coordinator", functionality = DegreeCoordinatorIndex.class)
 @Forwards({ @Forward(name = "showInformation", path = "/coordinator/thesis/showInformation.jsp") })
 public class ThesisProcessDA extends FenixDispatchAction {
 

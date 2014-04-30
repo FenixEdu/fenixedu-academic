@@ -1,25 +1,17 @@
 package net.sourceforge.fenixedu.domain.messaging;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.contents.DateOrderedNode;
-import net.sourceforge.fenixedu.domain.contents.IDateContent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
-import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
-public class ConversationMessage extends ConversationMessage_Base implements IDateContent {
-
-    public ConversationMessage() {
-        super();
-        setRootDomainObject(Bennu.getInstance());
-        setCreationDate(new DateTime());
-    }
+public class ConversationMessage extends ConversationMessage_Base implements Comparable<ConversationMessage> {
 
     public ConversationMessage(ConversationThread conversationThread, Person creator, MultiLanguageString body) {
-        this();
+        super();
+        setCreationDate(new DateTime());
         init(conversationThread, creator, body);
     }
 
@@ -27,10 +19,6 @@ public class ConversationMessage extends ConversationMessage_Base implements IDa
         setConversationThread(conversationThread);
         setBody(body);
         setCreator(creator);
-    }
-
-    public void removeCreator() {
-        super.setCreator(null);
     }
 
     @Override
@@ -51,25 +39,23 @@ public class ConversationMessage extends ConversationMessage_Base implements IDa
         super.setBody(body);
     }
 
+    @Override
     public void setConversationThread(ConversationThread conversationThread) {
         if (conversationThread == null) {
             throw new DomainException("conversationMessage.conversationThread.cannot.be.null");
         }
-
-        if (!hasAnyParents()) {
-            new DateOrderedNode(conversationThread, this, Boolean.TRUE);
-        } else {
-            getUniqueParentNode().setParent(conversationThread);
-        }
+        super.setConversationThread(conversationThread);
     }
 
-    public ConversationThread getConversationThread() {
-        return (ConversationThread) getUniqueParentContainer();
+    public void delete() {
+        setCreator(null);
+        setConversationThread(null);
+        deleteDomainObject();
     }
 
     @Override
-    public DateTime getContentDate() {
-        return getCreationDate();
+    public int compareTo(ConversationMessage o) {
+        return this.getCreationDate().compareTo(o.getCreationDate());
     }
 
 }

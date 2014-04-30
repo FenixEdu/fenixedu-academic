@@ -19,7 +19,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * 
  */
 
-@Mapping(path = "/manageRegistrationStartDates", module = "academicAdministration")
+@Mapping(path = "/manageRegistrationStartDates", module = "academicAdministration", functionality = SearchForStudentsDA.class)
 @Forwards({ @Forward(name = "showEditStartDates",
         path = "/academicAdminOffice/student/registration/manageRegistrationStartDates.jsp") })
 public class ManageRegistrationStartDatesDA extends FenixDispatchAction {

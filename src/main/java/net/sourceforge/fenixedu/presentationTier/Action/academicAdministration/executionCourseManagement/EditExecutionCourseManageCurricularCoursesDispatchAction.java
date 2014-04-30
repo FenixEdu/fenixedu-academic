@@ -52,15 +52,16 @@ import pt.ist.fenixframework.FenixFramework;
  *  
  */
 @Mapping(module = "academicAdministration", path = "/editExecutionCourseManageCurricularCourses",
-        input = "/editExecutionCourse.do?method=prepareEditExecutionCourse&page=0", attribute = "executionCourseForm",
-        formBean = "executionCourseForm", scope = "request", parameter = "method")
+        input = "/editExecutionCourse.do?method=prepareEditExecutionCourse&page=0", formBean = "executionCourseForm",
+        functionality = EditExecutionCourseDA.class)
 @Forwards(
         value = {
-                @Forward(name = "editExecutionCourse", path = "/editExecutionCourse.do?method=editExecutionCourse&page=0"),
+                @Forward(name = "editExecutionCourse",
+                        path = "/academicAdministration/editExecutionCourse.do?method=editExecutionCourse&page=0"),
                 @Forward(name = "listExecutionCourseActions",
                         path = "/academicAdministration/executionCourseManagement/listExecutionCourseActions.jsp"),
                 @Forward(name = "manageCurricularSeparation",
-                        path = "/seperateExecutionCourse.do?method=manageCurricularSeparation"),
+                        path = "/academicAdministration/seperateExecutionCourse.do?method=manageCurricularSeparation"),
                 @Forward(name = "associateCurricularCourse",
                         path = "/academicAdministration/executionCourseManagement/associateCurricularCourse.jsp"),
                 @Forward(

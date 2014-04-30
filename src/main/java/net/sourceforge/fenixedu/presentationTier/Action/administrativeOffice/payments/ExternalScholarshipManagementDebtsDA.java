@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityEvent;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityExternalScholarshipExemption;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice.PhdIndividualProgramProcessDA;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.struts.action.ActionForm;
@@ -32,7 +33,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(path = "/fctDebts", module = "academicAdministration")
+@Mapping(path = "/fctDebts", module = "academicAdministration", functionality = PhdIndividualProgramProcessDA.class)
 @Forwards({ @Forward(name = "selectPhdStudent", path = "/academicAdminOffice/payments/selectPhdStudent.jsp"),
         @Forward(name = "showScolarship", path = "/academicAdminOffice/payments/showScolarship.jsp") })
 public class ExternalScholarshipManagementDebtsDA extends FenixDispatchAction {

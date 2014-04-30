@@ -38,6 +38,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.EntryPoint;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -52,6 +54,7 @@ import pt.utl.ist.fenix.tools.util.FileUtils;
  */
 public abstract class AnnouncementManagement extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward start(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         request.setAttribute("announcementBoard", this.getRequestedAnnouncementBoard(request));
@@ -133,7 +136,7 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
             HttpServletResponse response) throws Exception {
 
         AnnouncementBoard board = this.getRequestedAnnouncementBoard(request);
-        if (board.getWriters() != null && !board.getWriters().isMember(getLoggedPerson(request))) {
+        if (board.getWriters() != null && !board.getWriters().isMember(Authenticate.getUser())) {
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.not.allowed.to.write.board"));
             saveErrors(request, actionMessages);
@@ -188,7 +191,7 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
     protected Collection<Announcement> getThisMonthAnnouncements(AnnouncementBoard board, HttpServletRequest request) {
 
         final List<Announcement> announcements =
-                board.hasWriter(getLoggedPerson(request)) ? new ArrayList<Announcement>(board.getAnnouncements()) : board
+                board.hasWriter(getLoggedPerson(request)) ? new ArrayList<Announcement>(board.getAnnouncementSet()) : board
                         .getApprovedAnnouncements();
 
         List<Announcement> thisMonthAnnouncements = getThisMonthAnnouncements(announcements);
@@ -217,7 +220,7 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
     protected List<Announcement> getStickyAnnouncements(AnnouncementBoard board, HttpServletRequest request) {
 
         final List<Announcement> announcements =
-                board.hasWriter(getLoggedPerson(request)) ? new ArrayList<Announcement>(board.getAnnouncements()) : board
+                board.hasWriter(getLoggedPerson(request)) ? new ArrayList<Announcement>(board.getAnnouncementSet()) : board
                         .getApprovedAnnouncements();
 
         List<Announcement> stickies = filterStickies(announcements);
@@ -242,7 +245,7 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
 
         Announcement announcement = this.getRequestedAnnouncement(request);
         if (announcement.getAnnouncementBoard().getWriters() != null
-                && !announcement.getAnnouncementBoard().getWriters().isMember(getLoggedPerson(request))) {
+                && !announcement.getAnnouncementBoard().getWriters().isMember(Authenticate.getUser())) {
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.not.allowed.to.write.board"));
             saveErrors(request, actionMessages);
@@ -363,8 +366,8 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
             formFileInputStream = bean.getFile();
             file = FileUtils.copyToTemporaryFile(formFileInputStream);
 
-            CreateFileContentForBoard.runCreateFileContentForBoard((AnnouncementBoard) bean.getFileHolder(), file,
-                    bean.getFileName(), bean.getDisplayName(), bean.getPermittedGroup(), getLoggedPerson(request));
+            CreateFileContentForBoard.runCreateFileContentForBoard(bean.getFileHolder(), file, bean.getFileName(),
+                    bean.getDisplayName(), bean.getPermittedGroup(), getLoggedPerson(request));
         } catch (DomainException e) {
             addErrorMessage(request, "board", e.getKey(), (Object[]) e.getArgs());
         } finally {

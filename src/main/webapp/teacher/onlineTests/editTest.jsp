@@ -16,7 +16,7 @@
 <html:form action="/testEdition">
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editTest"/>
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode" property="objectCode" value="<%=(pageContext.findAttribute("objectCode")).toString()%>"/>
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID" property="executionCourseID" value="<%=(pageContext.findAttribute("executionCourseID")).toString()%>"/>
 <table>
 	<tr>
 		<td><b><bean:message key="label.title"/></b></td>
@@ -32,15 +32,15 @@
 <table>
 	<tr>
 		<td><div class="gen-button">
-		<html:link page="<%= "/testEdition.do?method=prepareEditTestHeader&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")%>">
+		<html:link page="<%= "/testEdition.do?method=prepareEditTestHeader&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;testCode=" + pageContext.findAttribute("testCode")%>">
 		<bean:message key="link.editTestHeader" />
 		</html:link>&nbsp;&nbsp;&nbsp;</div></td>
 		<td><div class="gen-button">
-		<html:link page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")%>">
+		<html:link page="<%= "/questionsManagement.do?method=showAvailableQuestions&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;testCode=" + pageContext.findAttribute("testCode")%>">
 		<bean:message key="label.test.insertQuestion"/>
 		</html:link>&nbsp;&nbsp;&nbsp;</div></td>
 		<td><div class="gen-button">
-		<html:link page="<%= "/testsManagement.do?method=showTests&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")%>">
+		<html:link page="<%= "/testsManagement.do?method=showTests&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;testCode=" + pageContext.findAttribute("testCode")%>">
 		<bean:message key="label.finish"/>
 		</html:link></div></td>
 	</tr>
@@ -58,11 +58,11 @@
 		<bean:define id="questionCode" name="thisQuestion" property="externalId"/>
 		<tr><td><table><tr><td>
 			<div class="gen-button">
-			<html:link page="<%= "/testQuestionEdition.do?method=prepareEditTestQuestion&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode") +"&amp;questionCode=" +questionCode%>">
+			<html:link page="<%= "/testQuestionEdition.do?method=prepareEditTestQuestion&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;testCode=" + pageContext.findAttribute("testCode") +"&amp;questionCode=" +questionCode%>">
 			<bean:message key="title.editTestQuestion" />
 			</html:link>&nbsp;&nbsp;&nbsp;</div></td>
 			<td><div class="gen-button">
-			<html:link page="<%= "/testEdition.do?method=deleteTestQuestion&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode") +"&amp;questionCode=" +questionCode%>">
+			<html:link page="<%= "/testEdition.do?method=deleteTestQuestion&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;testCode=" + pageContext.findAttribute("testCode") +"&amp;questionCode=" +questionCode%>">
 			<bean:message key="link.removeTestQuestion" />
 			</html:link></div></td>
 		</tr></table><tr><td>
@@ -82,11 +82,11 @@
 	<table>
 		<tr><td>
 			<div class="gen-button">
-			<html:link page="<%= "/testsManagement.do?method=showAvailableQuestions&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")%>">
+			<html:link page="<%= "/testsManagement.do?method=showAvailableQuestions&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;testCode=" + pageContext.findAttribute("testCode")%>">
 			<bean:message key="label.test.insertQuestion" />
 			</html:link>&nbsp;&nbsp;&nbsp;</div></td>
 			<td><div class="gen-button">
-			<html:link page="<%= "/testsManagement.do?method=showTests&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;testCode=" + pageContext.findAttribute("testCode")%>">
+			<html:link page="<%= "/testsManagement.do?method=showTests&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;testCode=" + pageContext.findAttribute("testCode")%>">
 			<bean:message key="label.finish" />
 			</html:link></div></td>
 		</tr>

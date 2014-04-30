@@ -1,16 +1,18 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo"%>
 
-<ft:tilesView definition="definition.coordinator.two-column" attributeName="body-inline">
+<f:view>
 
 <f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 <f:loadBundle basename="resources/EnumerationResources" var="bundleEnumeration"/>
 
 <%
-	CoordinatedDegreeInfo.setCoordinatorContext(request);
+	net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex.setCoordinatorContext(request);
 %>
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex" />
+<jsp:include page="/coordinator/context.jsp" />
+
 
 	<h:dataTable value="#{listStudentThesis.masterDegreeThesisDataVersions}" var="masterDegreeThesisDataVersion" cellpadding="0">
 		<h:column>
@@ -56,4 +58,4 @@
 		</h:column>
 	</h:dataTable>
 
-</ft:tilesView>
+</f:view>

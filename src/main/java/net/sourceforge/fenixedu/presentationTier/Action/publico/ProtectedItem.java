@@ -1,18 +1,17 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico;
 
 import net.sourceforge.fenixedu.domain.Item;
-import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 
 public class ProtectedItem {
 
-    private Item item;
-    private boolean available;
+    private final Item item;
+    private final boolean available;
 
-    public ProtectedItem(FunctionalityContext context, Item item) {
+    public ProtectedItem(Item item) {
         super();
 
         this.item = item;
-        this.available = item.isAvailable(context);
+        this.available = item.isAvailable();
     }
 
     public Item getItem() {

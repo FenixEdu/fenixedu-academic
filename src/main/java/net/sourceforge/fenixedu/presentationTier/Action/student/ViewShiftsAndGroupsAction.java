@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadExportGroupi
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadShiftsAndGroups;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExportGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShiftsAndGroups;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
 import org.apache.struts.action.ActionError;
@@ -29,20 +29,16 @@ import org.fenixedu.bennu.core.domain.User;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author asnr and scpo
  * 
  */
-@Mapping(module = "student", path = "/viewShiftsAndGroups", attribute = "enroledExecutionCoursesForm",
-        formBean = "enroledExecutionCoursesForm", scope = "request")
-@Forwards(value = {
-        @Forward(name = "sucess", path = "/student/viewShiftsAndGroups_bd.jsp", tileProperties = @Tile(
-                title = "private.student.subscribe.groups")),
-        @Forward(name = "insucess", path = "/viewEnroledExecutionCourses.do?method=prepare", tileProperties = @Tile(
-                title = "private.student.subscribe.groups")) })
-public class ViewShiftsAndGroupsAction extends FenixContextAction {
+@Mapping(module = "student", path = "/viewShiftsAndGroups", formBean = "enroledExecutionCoursesForm",
+        functionality = ViewEnroledExecutionCoursesAction.class)
+@Forwards(value = { @Forward(name = "sucess", path = "/student/viewShiftsAndGroups_bd.jsp"),
+        @Forward(name = "insucess", path = "/student/viewEnroledExecutionCourses.do?method=prepare") })
+public class ViewShiftsAndGroupsAction extends FenixAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

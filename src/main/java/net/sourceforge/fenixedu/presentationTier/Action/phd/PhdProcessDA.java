@@ -28,9 +28,10 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 abstract public class PhdProcessDA extends PhdDA {
 
@@ -124,7 +125,7 @@ abstract public class PhdProcessDA extends PhdDA {
     }
 
     protected String getMessageFromResource(final String key, Object... args) {
-        return MessageFormat.format(ResourceBundle.getBundle(PHD_RESOURCES, Language.getLocale()).getString(key), args);
+        return MessageFormat.format(ResourceBundle.getBundle(PHD_RESOURCES, I18N.getLocale()).getString(key), args);
     }
 
     protected String getZipDocumentsFilename(PhdIndividualProgramProcess process) {

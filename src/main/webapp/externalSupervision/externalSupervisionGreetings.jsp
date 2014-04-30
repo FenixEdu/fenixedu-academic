@@ -5,7 +5,6 @@
 
 <html:xhtml/>
 
-<em><bean:message bundle="EXTERNAL_SUPERVISION_RESOURCES" key="externalSupervision"/></em>
 <h2><bean:message bundle="EXTERNAL_SUPERVISION_RESOURCES" key="title.default"/></h2>
 
 <p class="width400px mtop2"><bean:message bundle="EXTERNAL_SUPERVISION_RESOURCES" key="greetings.default"/></p>

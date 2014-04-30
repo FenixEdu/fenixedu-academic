@@ -5,6 +5,8 @@
 
 <html:xhtml/>
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath()%>/CSS/gwt/xviews/executionYear.css">
 
@@ -21,47 +23,47 @@
 	<p class="CAT-TutorialTitle"><bean:message key="label.coordinator.analyticTools.tutorialTitle" bundle="COORDINATOR_RESOURCES"/></p>
 	
 	<div class="CAT-TutorialRow">
-		<img src="../images/cat/final-1.0.png" class="CAT-TutorialImgs" />
+		<img src="${pageContext.request.contextPath}/images/cat/final-1.0.png" class="CAT-TutorialImgs" />
 		<div class="CAT-TutorialText"><bean:message key="label.coordinator.analyticTools.tutorialText1" bundle="COORDINATOR_RESOURCES"/></div>
 	</div>
 	
 	<div>
 		<div class="CAT-TutorialText"><bean:message key="label.coordinator.analyticTools.tutorialText2" bundle="COORDINATOR_RESOURCES"/></div>
-		<img src="../images/cat/final-1.1.png" class="CAT-TutorialImgs" />
+		<img src="${pageContext.request.contextPath}/images/cat/final-1.1.png" class="CAT-TutorialImgs" />
 	</div>
 	
 	<div class="CAT-TutorialRow">
-		<img src="../images/cat/final-1.2.png" class="CAT-TutorialImgs" />
+		<img src="${pageContext.request.contextPath}/images/cat/final-1.2.png" class="CAT-TutorialImgs" />
 		<div class="CAT-TutorialText"><bean:message key="label.coordinator.analyticTools.tutorialText3" bundle="COORDINATOR_RESOURCES"/></div>
 	</div>
 	
 	<div>
 		<div class="CAT-TutorialText"><bean:message key="label.coordinator.analyticTools.tutorialText4" bundle="COORDINATOR_RESOURCES"/></div>
-		<img src="../images/cat/final-1.3.png" class="CAT-TutorialImgs" />
+		<img src="${pageContext.request.contextPath}/images/cat/final-1.3.png" class="CAT-TutorialImgs" />
 	</div>
 	
 	<div class="CAT-TutorialRow">
-		<img src="../images/cat/final-2.0.png" class="CAT-TutorialImgs" />
+		<img src="${pageContext.request.contextPath}/images/cat/final-2.0.png" class="CAT-TutorialImgs" />
 		<div class="CAT-TutorialText"><bean:message key="label.coordinator.analyticTools.tutorialText5" bundle="COORDINATOR_RESOURCES"/></div>
 	</div>
 	
 	<div>
 		<div class="CAT-TutorialText"><bean:message key="label.coordinator.analyticTools.tutorialText6" bundle="COORDINATOR_RESOURCES"/></div>
-		<img src="../images/cat/final-2.1.png" class="CAT-TutorialImgs" />
+		<img src="${pageContext.request.contextPath}/images/cat/final-2.1.png" class="CAT-TutorialImgs" />
 	</div>
 	
 	<div class="CAT-TutorialRow">
-		<img src="../images/cat/final-3.0.png" class="CAT-TutorialImgs" />
+		<img src="${pageContext.request.contextPath}/images/cat/final-3.0.png" class="CAT-TutorialImgs" />
 		<div class="CAT-TutorialText"><bean:message key="label.coordinator.analyticTools.tutorialText7" bundle="COORDINATOR_RESOURCES"/></div>
 	</div>
 	
 	<div>
 		<div class="CAT-TutorialText"><bean:message key="label.coordinator.analyticTools.tutorialText8" bundle="COORDINATOR_RESOURCES"/></div>
-		<img src="../images/cat/final-4.0.png" class="CAT-TutorialImgs" />
+		<img src="${pageContext.request.contextPath}/images/cat/final-4.0.png" class="CAT-TutorialImgs" />
 	</div>
 	
 	<div class="CAT-TutorialRow">
-		<img src="../images/cat/final-5.0.png" class="CAT-TutorialImgs" />
+		<img src="${pageContext.request.contextPath}/images/cat/final-5.0.png" class="CAT-TutorialImgs" />
 		<div class="CAT-TutorialText"><bean:message key="label.coordinator.analyticTools.tutorialText9" bundle="COORDINATOR_RESOURCES"/></div>
 	</div>
 </div>

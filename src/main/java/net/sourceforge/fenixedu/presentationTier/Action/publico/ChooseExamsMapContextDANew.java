@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -48,7 +49,11 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
 
         String degreeId = getFromRequest("degreeID", request);
         request.setAttribute("degreeID", degreeId);
-        request.setAttribute("degree", FenixFramework.getDomainObject(degreeId));
+        Degree degree = FenixFramework.getDomainObject(degreeId);
+        if (degree != null) {
+            OldCmsSemanticURLHandler.selectSite(request, degree.getSite());
+        }
+        request.setAttribute("degree", degree);
 
         String executionDegreeId = getFromRequest("executionDegreeID", request);
         request.setAttribute("executionDegreeID", executionDegreeId);
@@ -93,6 +98,9 @@ public class ChooseExamsMapContextDANew extends FenixContextDispatchAction {
         String degreeId = (String) chooseExamContextoForm.get("degreeID");
         request.setAttribute("degreeID", degreeId);
         final Degree degree = FenixFramework.getDomainObject(degreeId);
+        if (degree != null) {
+            OldCmsSemanticURLHandler.selectSite(request, degree.getSite());
+        }
         request.setAttribute("degree", degree);
 
         // curricularYearList

@@ -29,14 +29,14 @@
 	</logic:empty>
 	
 	<cp:collectionPages
-	url="<%="/messaging/emails.do?method=viewSentEmails" + "&amp;senderId=" + request.getAttribute("senderId")%>" 
+	url="<%="/messaging/viewSentEmails.do?method=viewSentEmails" + "&amp;senderId=" + request.getAttribute("senderId")%>" 
 	pageNumberAttributeName="pageNumber" numberOfPagesAttributeName="numberOfPages" />
 	
 	<fr:view name="messages" schema="net.sourceforge.fenixedu.domain.util.email.Message.list">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight"/>
 			<fr:property name="columnClasses" value=",,aleft,"/>
-			<fr:property name="link(view)" value="/emails.do?method=viewEmail"/>
+			<fr:property name="link(view)" value="/viewSentEmails.do?method=viewEmail"/>
 			<fr:property name="bundle(view)" value="APPLICATION_RESOURCES"/>
 			<fr:property name="key(view)" value="link.view"/>
 			<fr:property name="param(view)" value="externalId/messagesId"/>
@@ -52,7 +52,7 @@
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop05"/>
 			<fr:property name="columnClasses" value=",,aleft,"/>
-			<fr:property name="link(view)" value="/emails.do?method=viewSentEmails"/>
+			<fr:property name="link(view)" value="/viewSentEmails.do?method=viewSentEmails"/>
 			<fr:property name="bundle(view)" value="APPLICATION_RESOURCES"/>
 			<fr:property name="key(view)" value="link.view"/>
 			<fr:property name="param(view)" value="externalId/senderId"/>
@@ -67,7 +67,7 @@
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop05"/>
 			<fr:property name="columnClasses" value=",,aleft,"/>
-			<fr:property name="link(view)" value="/emails.do?method=viewSentEmails"/>
+			<fr:property name="link(view)" value="/viewSentEmails.do?method=viewSentEmails"/>
 			<fr:property name="bundle(view)" value="APPLICATION_RESOURCES"/>
 			<fr:property name="key(view)" value="link.view"/>
 			<fr:property name="param(view)" value="externalId/senderId"/>
@@ -77,7 +77,7 @@
 </logic:present>
 
 <logic:present name="searchSendersBean">
-	<form action="<%= request.getContextPath() + "/messaging/emails.do" %>" method="post">
+	<form action="<%= request.getContextPath() + "/messaging/viewSentEmails.do" %>" method="post">
 		<html:hidden property="method" value="viewSentEmails"/>
 
 		<fr:edit id="searchSendersBean" name="searchSendersBean" type="net.sourceforge.fenixedu.presentationTier.Action.messaging.SearchSendersBean">
@@ -89,7 +89,7 @@
 				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 			</fr:layout>
 
-			<fr:destination name="selectSender" path="/emails.do?method=newEmail"/>
+			<fr:destination name="selectSender" path="/viewSentEmails.do?method=newEmail"/>
 			<fr:destination name="cancel" path="/index.do"/>
 		</fr:edit>
 	</form>
@@ -100,7 +100,7 @@
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle2 thlight mtop05"/>
 				<fr:property name="columnClasses" value=",,aleft,"/>
-				<fr:property name="link(view)" value="/emails.do?method=viewSentEmails"/>
+				<fr:property name="link(view)" value="/viewSentEmails.do?method=viewSentEmails"/>
 				<fr:property name="bundle(view)" value="APPLICATION_RESOURCES"/>
 				<fr:property name="key(view)" value="link.view"/>
 				<fr:property name="param(view)" value="externalId/senderId"/>

@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -10,8 +11,6 @@
 <html:xhtml/>
 
 <bean:define id="processName" name="processName" />
-
-<em><bean:message key="label.mobility.applications" bundle="APPLICATION_RESOURCES"/></em>
 
 <h2><bean:message key="title.application.name.mobility" bundle="CANDIDATE_RESOURCES" /></h2>
 

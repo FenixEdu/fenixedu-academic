@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -7,7 +8,6 @@
 <bean:define id="rpId" name="sessionBean" property="registrationProtocol.externalId"/>
 <bean:define id="agreement" name="sessionBean" property="registrationAgreement.name"/>
 
-<em><bean:message bundle="DIRECTIVE_COUNCIL_RESOURCES" key="directiveCouncil"/></em>
 <h2><bean:message bundle="DIRECTIVE_COUNCIL_RESOURCES" key="title.externalSupervisorsManagement"/></h2>
 
 <p><html:link action="/manageExternalSupervision.do?method=prepareSelectAgreement">

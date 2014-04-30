@@ -9,16 +9,21 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.EPFLPhdCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.candidacy.InstitutionPhdCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriodBean;
+import net.sourceforge.fenixedu.presentationTier.Action.academicAdministration.AcademicAdministrationApplication.AcademicAdminPhdApp;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@StrutsFunctionality(app = AcademicAdminPhdApp.class, path = "candidacy-period-management",
+        titleKey = "label.phd.candidacy.periods.management", accessGroup = "academic(MANAGE_PHD_PROCESSES)")
 @Mapping(path = "/phdCandidacyPeriodManagement", module = "academicAdministration")
 @Forwards({
         @Forward(name = "list", path = "/phd/candidacy/academicAdminOffice/periods/list.jsp"),
@@ -28,6 +33,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "view", path = "/phd/candidacy/academicAdminOffice/periods/view.jsp") })
 public class PhdCandidacyPeriodManagementDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         request.setAttribute("phdCandidacyPeriods", PhdCandidacyPeriod.readPhdCandidacyPeriods());
 

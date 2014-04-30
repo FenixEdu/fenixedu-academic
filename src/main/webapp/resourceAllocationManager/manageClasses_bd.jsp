@@ -5,13 +5,9 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 
-<em><bean:message key="title.resourceAllocationManager.management"/></em>
-<h2>Manipular Turmas</h2>
+<jsp:include page="/commons/contextExecutionDegreeAndCurricularYear.jsp"/>
 
-<p class="mbottom05">O curso seleccionado &eacute;:</p>
-
-<jsp:include page="context.jsp"/>
-
+<h2>Manipular Turmas <span class="small">${executionDegree.executionDegree.degreeCurricularPlan.name}</span></h2>
 
 <html:form action="/manageClasses" focus="className">
 
@@ -35,7 +31,7 @@
    	<%= degree.constructSchoolClassPrefix(curricularYear) %>
 
 	   	<html:text bundle="HTMLALT_RESOURCES" altKey="text.className" property="className"/>
-	   	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbuttonSmall">
+	   	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="btn btn-primary btn-xs">
 	   		<bean:message key="label.create"/>
 	   	</html:submit>
 
@@ -44,7 +40,7 @@
 
 
 <logic:present name="<%= PresentationConstants.CLASSES %>" scope="request">
-  <html:form action="/deleteClasses">
+  <html:form action="/manageClasses">
 
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="deleteClasses"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
@@ -130,7 +126,7 @@
 	</logic:iterate>
 </table>
 
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="btn btn-danger btn-sm" onclick='<%= pageContext.findAttribute("deleteConfirm").toString() %>'>
 		<bean:message key="link.delete"/>
 	</html:submit>
   </html:form>

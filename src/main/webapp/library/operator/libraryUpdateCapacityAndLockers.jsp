@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -8,7 +9,7 @@
 
 <h2><bean:message key="portal.library.update.capacity.and.lockers" bundle="PORTAL_RESOURCES" /></h2>
 
-<fr:form action="/libraryOperator.do?method=selectLibrary">
+<fr:form action="/manageCapacityAndLockers.do?method=selectLibraryToUpdate">
 	<fr:edit id="libraryInformation" name="libraryInformation">
 		<fr:schema bundle="LIBRARY_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryInformation">
 			<fr:slot name="library" key="label.library" layout="menu-select-postback" required="true">
@@ -21,13 +22,13 @@
 			<fr:property name="classes" value="tstyle2 thlight thleft mbottom0" />
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />
 		</fr:layout>
-		<fr:destination name="postback" path="/libraryOperator.do?method=selectLibraryToUpdate" />
+		<fr:destination name="postback" path="/manageCapacityAndLockers.do?method=selectLibraryToUpdate" />
 	</fr:edit>
 </fr:form>
 
 
 <logic:present name="libraryInformation" property="library">
-	<fr:form action="/libraryOperator.do?method=updateCapacityAndLockers">
+	<fr:form action="/manageCapacityAndLockers.do?method=updateCapacityAndLockers">
 		<fr:edit id="libraryUpdate" name="libraryInformation">
 			<fr:schema bundle="LIBRARY_RESOURCES"
 				type="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryInformation">
@@ -45,8 +46,8 @@
 				<fr:property name="columnClasses" value=",,tdclear tderror1" />
 			</fr:layout>
 			
-			<fr:destination name="postback" path="/libraryOperator.do?method=updateCapacityAndLockers" />
-			<fr:destination name="invalid" path="/libraryOperator.do?method=handleInvalidCapacityOrLockers"/>
+			<fr:destination name="postback" path="/manageCapacityAndLockers.do?method=updateCapacityAndLockers" />
+			<fr:destination name="invalid" path="/manageCapacityAndLockers.do?method=handleInvalidCapacityOrLockers"/>
 		</fr:edit>
 		
 		<html:submit>

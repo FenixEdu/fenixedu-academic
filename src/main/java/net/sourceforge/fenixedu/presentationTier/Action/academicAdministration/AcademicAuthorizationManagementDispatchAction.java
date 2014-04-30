@@ -16,17 +16,22 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.Atomic;
 
+@StrutsFunctionality(app = AcademicAdministrationApplication.class, path = "authorizations", titleKey = "label.authorizations",
+        accessGroup = "academic(MANAGE_AUTHORIZATIONS)")
 @Mapping(path = "/authorizations", module = "academicAdministration")
 @Forwards({ @Forward(name = "listAuthorizations", path = "/academicAdministration/authorizations/authorizations.jsp"),
         @Forward(name = "managePartyAuthorization", path = "/academicAdministration/authorizations/authorizationsPerPerson.jsp") })
 public class AcademicAuthorizationManagementDispatchAction extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward authorizations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         SortedMap<Party, TreeSet<PersistentAcademicAuthorizationGroup>> groups =

@@ -1,16 +1,16 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
-<ft:tilesView locale="<%=request.getAttribute(org.apache.struts.Globals.LOCALE_KEY).toString()%>" definition="definition.public.departments" attributeName="body-inline">
+<f:view>" definition="definition.public.departments" attributeName="body-inline">
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 	<f:loadBundle basename="resources/PublicDepartmentResources" var="publicDepartmentBundle"/>
 	<f:loadBundle basename="resources/GlobalResources" var="globalBundle"/>
 	
 	<h:outputText value="<div class='breadcumbs mvert0'>" escape="false"/>
-		<h:outputLink value="#{DepartmentManagement.instalationUrl}" >
+		<h:outputLink value="#{DepartmentManagement.applicationUrl}" >
 			<h:outputText value="#{DepartmentManagement.institutionAcronym}"/>
 		</h:outputLink>
 		&nbsp;&gt;&nbsp;
@@ -33,4 +33,4 @@
 		</h:column>
 	</h:dataTable>
 	
-</ft:tilesView>
+</f:view>

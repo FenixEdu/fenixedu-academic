@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
@@ -143,16 +143,14 @@ abstract public class StudentCurricularPlanEnrolment {
 
     protected void checkEnrolmentWithoutRules() {
         if (isEnrolmentWithoutRules()
-                && !AcademicAuthorizationGroup.getProgramsForOperation(getResponsiblePerson(),
-                        AcademicOperationType.ENROLMENT_WITHOUT_RULES).contains(getStudentCurricularPlan().getDegree())
+                && !AcademicAuthorizationGroup.getProgramsForOperation(getResponsiblePerson(), AcademicOperationType.ENROLMENT_WITHOUT_RULES).contains(getStudentCurricularPlan().getDegree())
                 && !isResponsibleInternationalRelationOffice()) {
             throw new DomainException("error.permissions.cannot.enrol.without.rules");
         }
     }
 
     protected void checkUpdateRegistrationAfterConclusion() {
-        if (!AcademicAuthorizationGroup.getProgramsForOperation(getResponsiblePerson(),
-                AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION).contains(getStudentCurricularPlan().getDegree())) {
+        if (!AcademicAuthorizationGroup.getProgramsForOperation(getResponsiblePerson(), AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION).contains(getStudentCurricularPlan().getDegree())) {
             throw new DomainException("error.permissions.cannot.update.registration.after.conclusion.process");
         }
     }
@@ -316,8 +314,7 @@ abstract public class StudentCurricularPlanEnrolment {
 
     // Old AcademicAdminOffice role check
     protected boolean isResponsiblePersonAllowedToEnrolStudents() {
-        return AcademicAuthorizationGroup.getProgramsForOperation(getResponsiblePerson(),
-                AcademicOperationType.STUDENT_ENROLMENTS).contains(getStudentCurricularPlan().getDegree());
+        return AcademicAuthorizationGroup.getProgramsForOperation(getResponsiblePerson(), AcademicOperationType.STUDENT_ENROLMENTS).contains(getStudentCurricularPlan().getDegree());
     }
 
     protected boolean isResponsibleInternationalRelationOffice() {

@@ -14,9 +14,9 @@ import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CycleCourseGroup extends CycleCourseGroup_Base {
@@ -47,14 +47,13 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
     }
 
     final public String getGraduateTitle() {
-        return getGraduateTitle(ExecutionYear.readCurrentExecutionYear(), Language.getLocale());
+        return getGraduateTitle(ExecutionYear.readCurrentExecutionYear(), I18N.getLocale());
     }
 
     final public String getGraduateTitle(final ExecutionYear executionYear, final Locale locale) {
 
         if (getMostRecentCycleCourseGroupInformation(executionYear) != null) {
-            return getMostRecentCycleCourseGroupInformation(executionYear).getGraduatedTitle().getContent(
-                    Language.valueOf(locale.getLanguage()));
+            return getMostRecentCycleCourseGroupInformation(executionYear).getGraduatedTitle().getContent(locale);
         } else {
             final StringBuilder result = new StringBuilder();
 
@@ -64,7 +63,7 @@ public class CycleCourseGroup extends CycleCourseGroup_Base {
             result.append(" ").append(ResourceBundle.getBundle("resources/ApplicationResources", locale).getString("label.in"));
 
             final MultiLanguageString mls = getGraduateTitleSuffix();
-            final String suffix = mls == null ? null : mls.getContent(Language.valueOf(locale.getLanguage()));
+            final String suffix = mls == null ? null : mls.getContent(locale);
             if (!StringUtils.isEmpty(suffix) && !degreeFilteredName.contains(suffix.trim())) {
                 result.append(" ").append(suffix);
                 result.append(" ").append("-");

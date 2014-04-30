@@ -3,8 +3,10 @@ package net.sourceforge.fenixedu.presentationTier.Action.library;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.Group;
 
 public class LibraryHigherCleranceGroupManagementBean implements Serializable {
 
@@ -12,12 +14,12 @@ public class LibraryHigherCleranceGroupManagementBean implements Serializable {
     private Group higherClearenceGroup;
     private String searchUserId;
 
-    public void setOperator(Person operator) {
-        this.operator = operator;
+    public void setOperator(User operator) {
+        this.operator = operator.getPerson();
     }
 
     public boolean getBelongsToGroup() {
-        return higherClearenceGroup.getElements().contains(operator);
+        return higherClearenceGroup.isMember(operator.getUser());
     }
 
     public Person getOperator() {
@@ -41,9 +43,9 @@ public class LibraryHigherCleranceGroupManagementBean implements Serializable {
     }
 
     public void search() {
-        Person res = Person.readPersonByUsername(getSearchUserId());
+        User res = User.findByUsername(getSearchUserId());
 
-        if (res != null && res.hasRole(RoleType.LIBRARY)) {
+        if (res != null && res.getPerson().hasRole(RoleType.LIBRARY)) {
             setOperator(res);
         } else {
             setOperator(null);

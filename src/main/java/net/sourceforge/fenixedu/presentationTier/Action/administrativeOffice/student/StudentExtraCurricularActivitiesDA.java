@@ -20,7 +20,7 @@ import pt.ist.fenixframework.FenixFramework;
 /**
  * @author Pedro Santos (pedro.miguel.santos@ist.utl.pt)
  */
-@Mapping(path = "/studentExtraCurricularActivities", module = "academicAdministration")
+@Mapping(path = "/studentExtraCurricularActivities", module = "academicAdministration", functionality = SearchForStudentsDA.class)
 @Forwards({ @Forward(name = "manageActivities",
         path = "/academicAdminOffice/student/extraCurricularActivities/manageActivities.jsp") })
 public class StudentExtraCurricularActivitiesDA extends FenixDispatchAction {

@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
@@ -5,7 +6,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 <%@page import="net.sourceforge.fenixedu.domain.ExecutionYear"%>
 
-<em><bean:message key="label.departmentAdmOffice"/></em>
 <h2><bean:message key="link.listCourseResponsibles" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
 <fr:form action="/listCourseResponsibles.do?method=chooseExecutionYearPostBack">

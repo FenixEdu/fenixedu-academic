@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -5,7 +6,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <html:xhtml/>
 
-<em><bean:message key="label.departmentAdmOffice"/></em>
 <h2><bean:message key="label.visualize.teachers.expectations"/></h2>
 
 <logic:present role="role(DEPARTMENT_ADMINISTRATIVE_OFFICE)">

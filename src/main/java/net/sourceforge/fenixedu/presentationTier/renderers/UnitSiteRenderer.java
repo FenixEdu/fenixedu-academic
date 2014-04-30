@@ -17,6 +17,7 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.ist.fenixWebFramework.renderers.schemas.Schema;
 import pt.ist.fenixWebFramework.renderers.utils.RenderKit;
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 
 /**
  * 
@@ -119,8 +120,7 @@ public class UnitSiteRenderer extends OutputRenderer {
         public HtmlComponent createComponent(Object object, Class type) {
             Unit unit = (Unit) object;
             HtmlBlockContainer unitPresentation = new HtmlBlockContainer();
-            final boolean isPublic = unit.hasSite() ? unit.getSite().isPublic() : false;
-            unitPresentation.addChild(getUnitComponent(unit, isPublic));
+            unitPresentation.addChild(getUnitComponent(unit));
             if (isParenteShown()) {
 
                 Collection<Unit> parentUnits = CollectionUtils.select(unit.getParentUnits(), new Predicate() {
@@ -136,7 +136,7 @@ public class UnitSiteRenderer extends OutputRenderer {
                     int i = 0;
                     int size = parentUnits.size();
                     for (Unit parentUnit : parentUnits) {
-                        unitPresentation.addChild(getUnitComponent(parentUnit, isPublic));
+                        unitPresentation.addChild(getUnitComponent(parentUnit));
                         if (i < size - 1) {
                             unitPresentation.addChild(new HtmlText(","));
                         }
@@ -147,12 +147,10 @@ public class UnitSiteRenderer extends OutputRenderer {
             return unitPresentation;
         }
 
-        private HtmlComponent getUnitComponent(Unit unit, final boolean isPublic) {
+        private HtmlComponent getUnitComponent(Unit unit) {
             HtmlComponent component;
             if (unitHasSite(unit)) {
-                final String preapendedComment =
-                        isPublic ? pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX : pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX;
-                HtmlLink link = new HtmlLinkWithPreprendedComment(preapendedComment);
+                HtmlLink link = new HtmlLinkWithPreprendedComment(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
 
                 link.setUrl(resolveUnitURL(unit));
                 link.setBody(renderValue(unit, findSchema(), getUnitLayout()));

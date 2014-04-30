@@ -5,7 +5,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <html:xhtml/>
 
-<em><bean:message key="link.curriculumHistoric" bundle="CURRICULUM_HISTORIC_RESOURCES"/></em>
 <h2><bean:message key="label.marksSheet" bundle="CURRICULUM_HISTORIC_RESOURCES"/></h2>
 
 <p>

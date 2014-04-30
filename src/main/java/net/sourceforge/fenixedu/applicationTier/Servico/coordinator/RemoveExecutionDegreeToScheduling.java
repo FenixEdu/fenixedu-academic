@@ -10,7 +10,7 @@ import pt.ist.fenixframework.Atomic;
 
 public class RemoveExecutionDegreeToScheduling {
 
-    private class SchedulingContainsProposalsException extends FenixServiceException {
+    public class SchedulingContainsProposalsException extends FenixServiceException {
     }
 
     protected void run(final Scheduleing scheduleing, final ExecutionDegree executionDegree) throws FenixServiceException {

@@ -3,7 +3,8 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
-<ft:tilesView locale="<%=request.getAttribute(org.apache.struts.Globals.LOCALE_KEY).toString()%>" definition="definition.public.department" attributeName="body-inline">
+<ft:tilesView definition="definition.public.mainPageIST" attributeName="body-inline">
+
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 	<f:loadBundle basename="resources/PublicDepartmentResources" var="publicDepartmentBundle"/>
@@ -11,8 +12,7 @@
 
 	<h:outputText value="<div class='breadcumbs mvert0'>" escape="false"/>
 		
-		
-		<h:outputLink value="#{CompetenceCourseManagement.instalationUrl}" >
+		<h:outputLink value="#{CompetenceCourseManagement.applicationUrl}" >
 			<h:outputText value="#{CompetenceCourseManagement.institutionAcronym}"/>
 		</h:outputLink>
 		&nbsp;&gt;&nbsp;

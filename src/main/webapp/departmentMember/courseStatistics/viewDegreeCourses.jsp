@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ page language="java"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <html:xhtml />
@@ -8,7 +9,6 @@
 <bean:define id="executionSemesterId" name="courseStatisticsBean" property="executionSemester.externalId" />
 <bean:define id="competenceCourseId" name="courseStatisticsBean" property="competenceCourse.externalId" />
 
-<em><bean:message key="label.departmentMember"/></em>
 <h2><bean:message key="label.courseStatistics.degreeStatistics"/></h2>
 <h3><bean:write name="courseStatisticsBean" property="competenceCourseName" /></h3>
 

@@ -53,7 +53,6 @@ import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CurricularCourse extends CurricularCourse_Base {
@@ -1468,7 +1467,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public String getObjectives(ExecutionSemester period) {
-        return getObjectivesI18N(period).getContent(Language.pt);
+        return getObjectivesI18N(period).getContent(MultiLanguageString.pt);
         /* if (isBolonhaDegree()) {
              return getCompetenceCourse().getObjectives(period);
          }
@@ -1483,7 +1482,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     public String getObjectivesEn(ExecutionSemester period) {
-        return getObjectivesI18N(period).getContent(Language.en);
+        return getObjectivesI18N(period).getContent(MultiLanguageString.en);
         /*if (isBolonhaDegree()) {
             return getCompetenceCourse().getObjectivesEn(period);
         }
@@ -1499,10 +1498,10 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public MultiLanguageString getObjectivesI18N(ExecutionSemester period) {
         if (isBolonhaDegree()) {
-            return new MultiLanguageString(Language.pt, getCompetenceCourse().getObjectives(period)).with(Language.en,
+            return new MultiLanguageString(MultiLanguageString.pt, getCompetenceCourse().getObjectives(period)).with(MultiLanguageString.en,
                     getCompetenceCourse().getObjectivesEn(period));
         }
-        return new MultiLanguageString(Language.pt, getCurriculumFactoryEditCurriculum(period).getObjectives()).with(Language.en,
+        return new MultiLanguageString(MultiLanguageString.pt, getCurriculumFactoryEditCurriculum(period).getObjectives()).with(MultiLanguageString.en,
                 getCurriculumFactoryEditCurriculum(period).getObjectivesEn());
     }
 
@@ -1536,15 +1535,15 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public MultiLanguageString getProgramI18N(ExecutionSemester period) {
         if (isBolonhaDegree()) {
-            return new MultiLanguageString(Language.pt, getCompetenceCourse().getProgram(period)).with(Language.en,
+            return new MultiLanguageString(MultiLanguageString.pt, getCompetenceCourse().getProgram(period)).with(MultiLanguageString.en,
                     getCompetenceCourse().getProgramEn(period));
         }
-        return new MultiLanguageString(Language.pt, getCurriculumFactoryEditCurriculum(period).getProgram()).with(Language.en,
+        return new MultiLanguageString(MultiLanguageString.pt, getCurriculumFactoryEditCurriculum(period).getProgram()).with(MultiLanguageString.en,
                 getCurriculumFactoryEditCurriculum(period).getProgramEn());
     }
 
     public MultiLanguageString getPrerequisitesI18N() {
-        return new MultiLanguageString(Language.pt, getPrerequisites()).with(Language.en, getPrerequisitesEn());
+        return new MultiLanguageString(MultiLanguageString.pt, getPrerequisites()).with(MultiLanguageString.en, getPrerequisitesEn());
     }
 
     public String getEvaluationMethod(ExecutionSemester period) {
@@ -1585,11 +1584,11 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public MultiLanguageString getEvaluationMethodI18N(ExecutionSemester period) {
         if (isBolonhaDegree()) {
-            return new MultiLanguageString(Language.pt, getCompetenceCourse().getEvaluationMethod(period)).with(Language.en,
+            return new MultiLanguageString(MultiLanguageString.pt, getCompetenceCourse().getEvaluationMethod(period)).with(MultiLanguageString.en,
                     getCompetenceCourse().getEvaluationMethodEn(period));
         }
-        return new MultiLanguageString(Language.pt, getExecutionCoursesByExecutionPeriod(period).iterator().next()
-                .getEvaluationMethodText()).with(Language.en, getExecutionCoursesByExecutionPeriod(period).iterator().next()
+        return new MultiLanguageString(MultiLanguageString.pt, getExecutionCoursesByExecutionPeriod(period).iterator().next()
+                .getEvaluationMethodText()).with(MultiLanguageString.en, getExecutionCoursesByExecutionPeriod(period).iterator().next()
                 .getEvaluationMethodTextEn());
     }
 
@@ -2359,16 +2358,6 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency> getCourseEquivalencies() {
-        return getCourseEquivalenciesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCourseEquivalencies() {
-        return !getCourseEquivalenciesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.CandidateEnrolment> getCandidateEnrolments() {
         return getCandidateEnrolmentsSet();
     }
@@ -2386,16 +2375,6 @@ public class CurricularCourse extends CurricularCourse_Base {
     @Deprecated
     public boolean hasAnyStudentsInquiryRegistries() {
         return !getStudentsInquiryRegistriesSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.Seminaries.SeminaryCandidacy> getAssociatedCandidancies() {
-        return getAssociatedCandidanciesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyAssociatedCandidancies() {
-        return !getAssociatedCandidanciesSet().isEmpty();
     }
 
     @Deprecated
@@ -2446,16 +2425,6 @@ public class CurricularCourse extends CurricularCourse_Base {
     @Deprecated
     public boolean hasAnyRestrictionsByCurricularCourse() {
         return !getRestrictionsByCurricularCourseSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularCourse> getTSDCurricularCourses() {
-        return getTSDCurricularCoursesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTSDCurricularCourses() {
-        return !getTSDCurricularCoursesSet().isEmpty();
     }
 
     @Deprecated

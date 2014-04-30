@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -12,8 +13,6 @@
 <html:xhtml/>
 
 <logic:present role="role(MANAGER)">
-
-<em><bean:message key="title.personal.ingression.data.viewer.unit.name" bundle="GEP_RESOURCES" /></em>
 
 <h2><bean:message key="title.personal.ingression.data.viewer.student.raides.data.view" bundle="GEP_RESOURCES" /></h2>
 

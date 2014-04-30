@@ -10,6 +10,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/respondToInquiriesQuestion")
@@ -47,14 +48,9 @@ public class RespondToInquiriesQuestion extends FenixDispatchAction {
 
     public final ActionForward respondNow(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        final String path =
-                "/student/studentInquiry.do?method=showCoursesToAnswer&page=0&"
-                        + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME
-                        + "=/estudante/estudante";
-        return forward(path
-                + "&_request_checksum_="
-                + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.calculateChecksum(request
-                        .getContextPath() + path));
+        final String path = "/student/studentInquiry.do?method=showCoursesToAnswer&page=0";
+        return forward(path + "&_request_checksum_="
+                + GenericChecksumRewriter.calculateChecksum(request.getContextPath() + path, request.getSession(false)));
     }
 
 }

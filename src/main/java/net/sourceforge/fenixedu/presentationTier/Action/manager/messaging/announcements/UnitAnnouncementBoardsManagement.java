@@ -34,6 +34,9 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -42,6 +45,19 @@ import pt.ist.fenixframework.FenixFramework;
  *         Created on Jun 26, 2006,3:07:21 PM
  * 
  */
+@Mapping(path = "/announcements/manageUnitAnnouncementBoard", module = "manager",
+        formBeanClass = UnitAnnouncementBoardsManagementForm.class, functionality = AnnouncementBoardsManagement.class)
+@Forwards({
+        @Forward(name = "chooseUnit", path = "/manager/announcements/chooseUnit.jsp"),
+        @Forward(name = "createBoard", path = "/messaging/announcements/createUnitAnnouncementBoard.jsp"),
+        @Forward(name = "add", path = "/messaging/announcements/addAnnouncement.jsp"),
+        @Forward(name = "listAnnouncementBoards", path = "/messaging/announcements/listAnnouncementBoards.jsp"),
+        @Forward(name = "listAnnouncements", path = "/messaging/announcements/listBoardAnnouncements.jsp"),
+        @Forward(name = "editAnnouncementBoard", path = "/messaging/announcements/editUnitAnnouncementBoard.jsp"),
+        @Forward(name = "editAnnouncementBoardApprovers",
+                path = "/messaging/announcements/editUnitAnnouncementBoardApprovers.jsp"),
+        @Forward(name = "edit", path = "/messaging/announcements/editAnnouncement.jsp"),
+        @Forward(name = "viewAnnouncement", path = "/messaging/announcements/viewAnnouncement.jsp") })
 public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
 
     public ActionForward showTree(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -142,7 +158,7 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
 
         UnitAnnouncementBoard board = (UnitAnnouncementBoard) this.getRequestedAnnouncementBoard(request);
 
-        if (board.getManagers() != null && !board.getManagers().allows(getUserView(request))) {
+        if (board.getManagers() != null && !board.getManagers().isMember(getUserView(request))) {
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.not.allowed.to.edit.board"));
             saveErrors(request, actionMessages);
@@ -154,7 +170,7 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
         form.setReturnMethod(request.getParameter("returnMethod"));
         form.setName(board.getName().getContent());
         form.setMandatory(board.getMandatory());
-        form.setKeyUnit(board.getParty().getExternalId());
+        form.setKeyUnit(board.getUnit().getExternalId());
         form.setUnitBoardManagementPermittedGroupType(board.getUnitPermittedManagementGroupType() == null ? null : board
                 .getUnitPermittedManagementGroupType().name());
         form.setUnitBoardWritePermittedGroupType(board.getUnitPermittedWriteGroupType() == null ? null : board
@@ -168,9 +184,9 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
             request.setAttribute("sortBy", request.getParameter("sortBy"));
         }
 
-        request.setAttribute("unit", board.getParty());
+        request.setAttribute("unit", board.getUnit());
         request.setAttribute("announcementBoard", board);
-        request.setAttribute("announcements", board.getAnnouncements());
+        request.setAttribute("announcements", board.getAnnouncementSet());
         return mapping.findForward("editAnnouncementBoard");
     }
 
@@ -179,7 +195,7 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
 
         UnitAnnouncementBoard board = (UnitAnnouncementBoard) this.getRequestedAnnouncementBoard(request);
 
-        if (board.getWriters() != null && !board.getWriters().allows(getUserView(request))) {
+        if (board.getWriters() != null && !board.getWriters().isMember(getUserView(request))) {
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.not.allowed.to.edit.board."));
             saveErrors(request, actionMessages);
@@ -190,16 +206,16 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
         form.setReturnAction(request.getParameter("returnAction"));
         form.setReturnMethod(request.getParameter("returnMethod"));
         form.setName(board.getName().getContent());
-        form.setKeyUnit(board.getParty().getExternalId());
+        form.setKeyUnit(board.getUnit().getExternalId());
 
         Collection<AnnouncementBoardApproversBean> approvers = new ArrayList<AnnouncementBoardApproversBean>();
         for (Person person : board.getUnit().getSite().getManagers()) {
             approvers.add(new AnnouncementBoardApproversBean(person, board.getApprovers() != null ? board.getApprovers()
-                    .isMember(person) : false));
+                    .isMember(person.getUser()) : false));
         }
 
         request.setAttribute("approvers", approvers);
-        request.setAttribute("unit", board.getParty());
+        request.setAttribute("unit", board.getUnit());
         request.setAttribute("announcementBoard", board);
 
         return mapping.findForward("editAnnouncementBoardApprovers");
@@ -210,7 +226,7 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
 
         AnnouncementBoard board = this.getRequestedAnnouncementBoard(request);
 
-        if (board.getWriters() != null && !board.getWriters().allows(getUserView(request))) {
+        if (board.getWriters() != null && !board.getWriters().isMember(getUserView(request))) {
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.not.allowed.to.edit.board"));
             saveErrors(request, actionMessages);
@@ -243,7 +259,7 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
         UnitAnnouncementBoardParameters params = new UnitAnnouncementBoardParameters();
         AnnouncementBoard board = this.getRequestedAnnouncementBoard(request);
 
-        if (board.getManagers() != null && !board.getManagers().allows(getUserView(request))) {
+        if (board.getManagers() != null && !board.getManagers().isMember(getUserView(request))) {
             ActionMessages actionMessages = new ActionMessages();
             actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.not.allowed.to.edit.board"));
             saveErrors(request, actionMessages);
@@ -333,8 +349,8 @@ public class UnitAnnouncementBoardsManagement extends AnnouncementManagement {
         if (unit != null) {
             for (AnnouncementBoard board : unit.getBoards()) {
                 if (board.getWriters() == null || board.getReaders() == null || board.getManagers() == null
-                        || board.getWriters().allows(getUserView(request)) || board.getReaders().allows(getUserView(request))
-                        || board.getManagers().allows(getUserView(request))) {
+                        || board.getWriters().isMember(getUserView(request)) || board.getReaders().isMember(getUserView(request))
+                        || board.getManagers().isMember(getUserView(request))) {
                     boards.add(board);
                 }
             }

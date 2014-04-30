@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -150,10 +151,10 @@
 					<bean:write name="hash" property="email"/>
 				</td>
 				<td>
-					<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://fenix.ist.utl.pt/candidaturas/lic/vinte_tres_anos/submissao?hash=<%= code %>">Candidaturas Maiores de 23 anos</a>
+					<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="http://fenix.ist.utl.pt/candidaturas/lic/vinte_tres_anos/submissao?hash=<%= code %>">Candidaturas Maiores de 23 anos</a>
 				</td>
 				<td>
-					<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://fenix.ist.utl.pt/candidaturas/segundo_ciclo/submissao?hash=<%= code %>">Candidatura Segundo Ciclo</a>
+					<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="http://fenix.ist.utl.pt/candidaturas/segundo_ciclo/submissao?hash=<%= code %>">Candidatura Segundo Ciclo</a>
 				</td>
 			</tr>
 			

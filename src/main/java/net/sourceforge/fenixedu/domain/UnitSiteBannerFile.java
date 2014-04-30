@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.domain.accessControl.Group;
+import org.fenixedu.bennu.core.groups.Group;
 
 public class UnitSiteBannerFile extends UnitSiteBannerFile_Base {
 

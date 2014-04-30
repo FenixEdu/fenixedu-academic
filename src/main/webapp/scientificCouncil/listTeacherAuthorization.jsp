@@ -6,7 +6,6 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <html:xhtml />
 
-<em><bean:message key="scientificCouncil" /></em>
 <h2><bean:message key="label.authorize.teacher" /></h2>
 
 <p>

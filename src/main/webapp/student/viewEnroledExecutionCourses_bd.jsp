@@ -3,14 +3,14 @@
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>	
+<%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
 
 <logic:present name="executionCourses"> 
-<html:form action="/viewExecutionCourseProjects">
+<fr:form action="/viewExecutionCourseProjects.do">
 
 
 	<logic:empty name="executionCourses">
-		<em><bean:message key="title.student.portalTitle"/></em>
 		<h2><bean:message key="label.student.groupEnrollment.title"/></h2>
 		<p class="mtop15"><em><bean:message key="message.executionCourses.not.available"/></em></p>
 		<p>
@@ -20,7 +20,6 @@
 
 
 	<logic:notEmpty name="executionCourses">
-		<em><bean:message key="title.student.portalTitle"/></em>
 		<h2><bean:message key="label.student.groupEnrollment.title"/></h2>
 	
 		<div class="infoop2"><bean:message key="label.student.viewEnroledExecutionCourses.description" />.</div>
@@ -42,7 +41,7 @@
 		<logic:iterate id="executionCourse" name="executionCourses">
 			<tr>
 				<td><bean:define id="executionCourseID" name="executionCourse" property="externalId" type="java.lang.String"/>
-					<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.executionCourseCode" property="executionCourseCode" value="<%= executionCourseID.toString() %>"/>
+					<input type="radio" name="executionCourseCode" value="${executionCourseID}"/>
 			 	</td>
 			 	<td><bean:write name="executionCourse" property="nome"/></td>
 			 	<td style="line-height: 200%;">
@@ -66,7 +65,7 @@
 </p>
 
 </logic:notEmpty>
-</html:form>	
+</fr:form>	
 </logic:present>
 
 <logic:notPresent name="executionCourses">

@@ -19,6 +19,16 @@ header, nav, section, article, aside, footer {
 	display:block;
 }
 
+#cursos_acc.affix {
+	top: 20px;
+}
+
+#cursos_acc {
+	max-height: 90%;
+	min-height: 400px;
+	overflow-y: auto;
+}
+
 #container {
 	font: 13px/1.6 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	color: #333;
@@ -38,17 +48,12 @@ h2 span {
 }
 
 /* General */
-a {
-	color: #105c93;
-}
-
 ul {
 	list-style: none;
 }
 
 /* Structure */
 #main {
-	width: 65%;
 	position: relative;
 }
 
@@ -56,18 +61,6 @@ ul {
 	position: relative;
 	height: 100%;
 	min-height: 600px;
-}
-
-#sidebar {
-	width: 32%;
-	margin-left: 2%;
-	position:absolute;
-	top:0;
-	right:0;
-	max-height: 100%;
-	min-height: 400px;
-	overflow-y: auto;
-	overflow-x: hidden;
 }
 
 /* Period */
@@ -176,7 +169,7 @@ ul.courses-list {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d7e38c', endColorstr='#cad77f',GradientType=0 );
 }
 
-.peopleInUnit header {
+.unit header {
 	background:#f1d67e;
 	background-image: linear-gradient(bottom, rgb(254,225,139) 100%, rgb(241,214,126) 0%);
 	background-image: -o-linear-gradient(bottom, rgb(254,225,139) 100%, rgb(241,214,126) 0%);
@@ -425,9 +418,7 @@ a,input,.symbol {
 
 </style>
 
-<script src="../javaScript/jquery/jquery-1.8.0.min.js"></script>
-
-<script src="../javaScript/jquery/jquery-ui-1.8.23.min.js"></script>
+<script src="${pageContext.request.contextPath}/javaScript/jquery/jquery-ui.js"></script>
 
 <script type="text/javascript">
 
@@ -623,11 +614,6 @@ a,input,.symbol {
 					    }
 					}
 				%>
-
-				$("#cursos_acc").accordion({
-					icons : false,
-					autoHeight : false
-				});
 
 				$(".courses-list li img").click(removeFunction);
 				$(".offices-list li img").click(removeFunction);

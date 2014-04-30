@@ -21,7 +21,6 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base implements GanttDiagramEvent {
@@ -424,7 +423,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
         MultiLanguageString type = new MultiLanguageString();
         String key = "label." + getClass().getSimpleName() + ".type";
         type =
-                type.with(Language.pt,
+                type.with(MultiLanguageString.pt,
                         ResourceBundle.getBundle("resources/ManagerResources", new Locale("pt", "PT")).getString(key));
         return type;
     }

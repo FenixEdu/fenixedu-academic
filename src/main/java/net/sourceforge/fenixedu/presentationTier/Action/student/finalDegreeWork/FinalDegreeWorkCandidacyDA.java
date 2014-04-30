@@ -43,6 +43,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentSeniorsApp;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -54,28 +55,25 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Cruz
  */
-@Mapping(module = "student", path = "/finalDegreeWorkCandidacy", input = "df.page.finalDegreeWork.candidacy",
-        attribute = "finalDegreeWorkCandidacyForm", formBean = "finalDegreeWorkCandidacyForm", scope = "request",
-        parameter = "method")
-@Forwards(value = {
-        @Forward(name = "showDissertationsInfo", path = "/student/finalDegreeWork/dissertations.jsp", tileProperties = @Tile(
-                title = "private.student.finalists.dissertations")),
-        @Forward(name = "showSelectProposalsForm", path = "/student/finalDegreeWork/selectProposals.jsp", tileProperties = @Tile(
-                title = "private.student.finalists.application")),
-        @Forward(name = "showCandidacyForm", path = "/student/finalDegreeWork/candidacy.jsp", tileProperties = @Tile(
-                title = "private.student.finalists.application")) })
+@StrutsFunctionality(app = StudentSeniorsApp.class, path = "disseration-candidacy", titleKey = "link.finalDegreeWork.candidacy")
+@Mapping(module = "student", path = "/finalDegreeWorkCandidacy", input = "/finalDegreeWork/candidacy.jsp",
+        formBean = "finalDegreeWorkCandidacyForm")
+@Forwards({ @Forward(name = "showDissertationsInfo", path = "/student/finalDegreeWork/dissertations.jsp"),
+        @Forward(name = "showSelectProposalsForm", path = "/student/finalDegreeWork/selectProposals.jsp"),
+        @Forward(name = "showCandidacyForm", path = "/student/finalDegreeWork/candidacy.jsp") })
 @Exceptions(
         value = {
                 @ExceptionHandling(
@@ -240,6 +238,17 @@ import pt.ist.fenixframework.FenixFramework;
                         scope = "request") })
 public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
 
+    @StrutsFunctionality(app = StudentSeniorsApp.class, path = "dissertations", titleKey = "link.student.finalWorkTitle")
+    @Mapping(path = "/finalDegreeWorkDisserations", module = "student")
+    public static class FinalDegreeWorkDisserations extends FinalDegreeWorkCandidacyDA {
+        @Override
+        @EntryPoint
+        public ActionForward dissertations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+                HttpServletResponse response) throws Exception {
+            return super.dissertations(mapping, form, request, response);
+        }
+    }
+
     public class NoDegreeStudentCurricularPlanFoundException extends Exception {
     }
 
@@ -290,6 +299,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
         return dissertations(mapping, form, request, response);
     }
 
+    @EntryPoint
     public ActionForward prepareCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 

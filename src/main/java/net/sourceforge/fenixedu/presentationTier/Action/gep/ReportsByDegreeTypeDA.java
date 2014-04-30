@@ -40,26 +40,26 @@ import net.sourceforge.fenixedu.domain.reports.TutorshipProgramReportFile;
 import net.sourceforge.fenixedu.domain.reports.WrittenEvaluationReportFile;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.gep.GepApplication.GepPortalApp;
 
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "gep", path = "/reportsByDegreeType", scope = "session", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "selectDegreeType", path = "/gep/reportsByDegreeType.jsp", tileProperties = @Tile(
-                title = "private.gep.gepportal.reportsbydegreetype")),
-        @Forward(name = "viewReports", path = "/gep/viewReports.jsp", tileProperties = @Tile(
-                title = "private.gep.gepportal.reportsbydegreetype")) })
+@StrutsFunctionality(app = GepPortalApp.class, path = "reports", titleKey = "link.reports")
+@Mapping(module = "gep", path = "/reportsByDegreeType")
+@Forwards({ @Forward(name = "selectDegreeType", path = "/gep/reportsByDegreeType.jsp"),
+        @Forward(name = "viewReports", path = "/gep/viewReports.jsp") })
 public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 
     private static final int MAX_AUTHORIZED_REPORT_FILES = 20;
@@ -112,7 +112,7 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
         return QueueJob.getLastJobsForClassOrSubClass(GepReportFile.class, 5);
     }
 
-    @SuppressWarnings("unused")
+    @EntryPoint
     public ActionForward selectDegreeType(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         ReportBean reportBean = getRenderedObject();

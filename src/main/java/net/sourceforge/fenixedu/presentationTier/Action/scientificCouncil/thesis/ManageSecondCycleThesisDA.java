@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesis;
 
-import java.io.File;
 import java.io.Serializable;
 import java.util.SortedSet;
 
@@ -24,6 +23,7 @@ import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
 import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.ScientificCouncilApplication.ScientificDisserationsApp;
 import net.sourceforge.fenixedu.presentationTier.Action.student.thesis.ThesisFileBean;
 import net.sourceforge.fenixedu.presentationTier.docs.thesis.StudentThesisIdentificationDocument;
 import net.sourceforge.fenixedu.presentationTier.docs.thesis.ThesisJuryReportDocument;
@@ -32,13 +32,17 @@ import net.sourceforge.fenixedu.util.report.ReportsUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.utl.ist.fenix.tools.util.FileUtils;
 
+import com.google.common.io.ByteStreams;
+
+@StrutsFunctionality(app = ScientificDisserationsApp.class, path = "list", titleKey = "navigation.list.jury.proposals")
 @Mapping(path = "/manageSecondCycleThesis", module = "scientificCouncil")
 @Forwards({
         @Forward(name = "firstPage", path = "/scientificCouncil/thesis/firstPage.jsp"),
@@ -117,6 +121,7 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
         }
     }
 
+    @EntryPoint
     public ActionForward firstPage(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
             final HttpServletResponse response) throws Exception {
         return firstPage(new ManageSecondCycleThesisSearchBean(), mapping, request, response);
@@ -286,21 +291,13 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
         RenderUtils.invalidateViewState();
 
         if (bean != null && bean.getFile() != null) {
-            File temporaryFile = null;
-
-            try {
-                temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
-                if (dissertationFile) {
-                    CreateThesisDissertationFile.runCreateThesisDissertationFile(thesis, temporaryFile, bean.getSimpleFileName(),
-                            bean.getTitle(), bean.getSubTitle(), bean.getLanguage());
-                } else {
-                    CreateThesisAbstractFile.runCreateThesisAbstractFile(thesis, temporaryFile, bean.getSimpleFileName(),
-                            bean.getTitle(), bean.getSubTitle(), bean.getLanguage());
-                }
-            } finally {
-                if (temporaryFile != null) {
-                    temporaryFile.delete();
-                }
+            byte[] bytes = ByteStreams.toByteArray(bean.getFile());
+            if (dissertationFile) {
+                CreateThesisDissertationFile.runCreateThesisDissertationFile(thesis, bytes, bean.getSimpleFileName(),
+                        bean.getTitle(), bean.getSubTitle(), bean.getLanguage());
+            } else {
+                CreateThesisAbstractFile.runCreateThesisAbstractFile(thesis, bytes, bean.getSimpleFileName(), bean.getTitle(),
+                        bean.getSubTitle(), bean.getLanguage());
             }
         }
 

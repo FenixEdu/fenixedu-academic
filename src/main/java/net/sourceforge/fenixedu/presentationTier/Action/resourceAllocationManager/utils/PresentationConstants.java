@@ -129,8 +129,6 @@ public abstract class PresentationConstants {
     // -----
     public static final String INDEX = "index";
 
-    public static final String INFO_SITE = "info_site";
-
     public static final String EXECUTION_COURSE_CURRICULUM = "execution_course_curriculum";
 
     public static final String INFO_SITE_ANNOUNCEMENT = "info_site_announcement";
@@ -239,8 +237,6 @@ public abstract class PresentationConstants {
     public static final String MASTER_DEGREE_LIST = "master_degree_list";
 
     public static final String MASTER_DEGREE_CANDIDATES_AMMOUNT = "master_degree_candidates_ammount";
-
-    public static final String MASTER_DEGREE_CANDIDATE_AMMOUNT = "master_degree_candidate_ammount";
 
     public static final String DECLARATION_LIST = "declaration_list";
 
@@ -558,8 +554,6 @@ public abstract class PresentationConstants {
     public static final String ORIGINAL_MAPPING_KEY = "original_mapping_key";
 
     public static final String EXCEPTION_STACK_TRACE = "exception_stack_trace";
-
-    public static final String REQUEST_CONTEXT = "request_context";
 
     public static final String ACADEMIC_INTERVAL = "academicInterval";
 

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -11,7 +12,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ResearchInterest extends ResearchInterest_Base {
     public static class ResearchInterestComparator implements Comparator<ResearchInterest> {
@@ -40,11 +40,11 @@ public class ResearchInterest extends ResearchInterest_Base {
         setInterest(getInterest().with(translation.getLanguage(), translation.getInterest()));
     }
 
-    public void removeTranslation(Language language) {
-        if (!this.getInterest().hasLanguage(language)) {
+    public void removeTranslation(Locale language) {
+        if (!this.getInterest().hasLocale(language)) {
             throw new DomainException("errors.researchInterest.inexistantTranslation");
         }
-        if (this.getInterest().getAllLanguages().size() == 1) {
+        if (this.getInterest().getAllLocales().size() == 1) {
             throw new DomainException("errors.researchInterest.lastTranslation");
         }
         this.setInterest(getInterest().without(language));
@@ -52,7 +52,7 @@ public class ResearchInterest extends ResearchInterest_Base {
 
     public List<ResearchInterestTranslation> getAllTranslations() {
         List<ResearchInterestTranslation> result = new ArrayList<ResearchInterestTranslation>();
-        for (Language language : this.getInterest().getAllLanguages()) {
+        for (Locale language : this.getInterest().getAllLocales()) {
             result.add(this.getTranslation(language));
         }
         return result;
@@ -67,10 +67,10 @@ public class ResearchInterest extends ResearchInterest_Base {
      *            the language we want the translation
      * @return the researchInteresttranslation in the given language
      */
-    public ResearchInterestTranslation getTranslation(Language language) {
+    public ResearchInterestTranslation getTranslation(Locale language) {
 
         ResearchInterestTranslation translation = new ResearchInterestTranslation(language);
-        if (this.getInterest().hasLanguage(language)) {
+        if (this.getInterest().hasLocale(language)) {
             translation.setInterest(this.getInterest().getContent(language));
         } else {
             throw new DomainException("errors.researchInterest.inexistantTranslation");
@@ -79,15 +79,15 @@ public class ResearchInterest extends ResearchInterest_Base {
     }
 
     public static class ResearchInterestTranslation implements Serializable {
-        private Language language;
+        private Locale language;
 
         private String interest;
 
-        public Language getLanguage() {
+        public Locale getLanguage() {
             return language;
         }
 
-        public void setLanguage(Language language) {
+        public void setLanguage(Locale language) {
             this.language = language;
         }
 
@@ -103,7 +103,7 @@ public class ResearchInterest extends ResearchInterest_Base {
             interest = new String();
         }
 
-        public ResearchInterestTranslation(Language language) {
+        public ResearchInterestTranslation(Locale language) {
             this.language = language;
             interest = new String();
         }

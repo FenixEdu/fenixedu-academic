@@ -1,17 +1,8 @@
 <%@ page language="java" %>
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%><html:xhtml/>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
+<html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
-
-
-
-
-<logic:present name="siteView" property="component"> 
-
-<h2><bean:message key="title.importGroupProperties"/></h2>
-
-<bean:define id="infoSiteGroupProperties" name="siteView" property="component"/>
-<bean:define id="infoGrouping" name="infoSiteGroupProperties" property="infoGrouping"/>
 
 <br/>
 <table width="98%" cellpadding="0" cellspacing="0">
@@ -203,44 +194,34 @@
 <table>
 <tr>
 
-	<html:form action="/acceptNewProjectProposal" >
+	<html:form action="/studentGroupManagement" >
 	<td>
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.accept"/>                    		         	
 		</html:submit>
 	</td>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="acceptNewProjectProposal"/>
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID"  property="executionCourseID" value="<%= pageContext.findAttribute("executionCourseID").toString() %>" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.groupPropertiesCode"  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
 	</html:form>
 
-	<html:form action="/rejectNewProjectProposal" >
+	<html:form action="/studentGroupManagement" >
 	<td>
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message key="button.reject"/>                    		         	
 		</html:submit>
 	</td>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="rejectNewProjectProposal"/>
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID"  property="executionCourseID" value="<%= pageContext.findAttribute("executionCourseID").toString() %>" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.groupPropertiesCode"  property="groupPropertiesCode" value="<%= request.getParameter("groupPropertiesCode") %>" />
 	</html:form>
 
-	<html:form action="/viewNewProjectProposals" >
+	<html:form action="/studentGroupManagement" >
 	<td>
 		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton"><bean:message key="button.cancel"/>                    		         	
 		</html:cancel>
 	</td>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="viewNewProjectProposals"/>
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseID"  property="executionCourseID" value="<%= pageContext.findAttribute("executionCourseID").toString() %>" />
 	</html:form>
 
 </tr>
 </table>
-
-</logic:present>
-
-
-
-<logic:notPresent name="siteView" property="component"> 
-<h2>
-<bean:message key="message.infoGroupProperties.not.available" />
-</h2>
-</logic:notPresent>

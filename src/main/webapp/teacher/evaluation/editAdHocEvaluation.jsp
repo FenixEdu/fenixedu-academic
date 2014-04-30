@@ -1,8 +1,12 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
-<ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
+<f:view>
+
+	<h:outputText value="#{adHocEvaluationManagementBackingBean.hackToStoreExecutionCourse}" />
+	<jsp:include page="/teacher/evaluation/evaluationMenu.jsp" />
+
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
@@ -10,7 +14,6 @@
 		<h:form>
 			<h:inputHidden binding="#{adHocEvaluationManagementBackingBean.executionCourseIdHidden}" />
 
-			<h:outputText value="<em>#{bundle['message.evaluationElements']}</em>" escape="false" />
 			<h:outputFormat value="<h2>#{bundle['link.edit.adHocEvaluation']}</h2/>" escape="false"/>
 			<%-- ERROR MESSAGE --%>
 			<h:outputText styleClass="error" rendered="#{!empty adHocEvaluationManagementBackingBean.errorMessage}"
@@ -46,4 +49,6 @@
 			<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" immediate="true" action="adHocEvaluationsIndex"
 				styleClass="inputbutton" value="#{bundle['button.cancel']}"/>
 		</h:form>
-</ft:tilesView>
+</f:view>
+</div>
+</div>

@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.util.EnrolmentAction;
 
 import org.joda.time.DateTime;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreditsDismissal extends CreditsDismissal_Base {
@@ -91,7 +90,7 @@ public class CreditsDismissal extends CreditsDismissal_Base {
 
     @Override
     public MultiLanguageString getName() {
-        return new MultiLanguageString(Language.pt, ResourceBundle.getBundle("resources/AcademicAdminOffice",
+        return new MultiLanguageString(MultiLanguageString.pt, ResourceBundle.getBundle("resources/AcademicAdminOffice",
                 new Locale("pt", "PT")).getString("label.group.credits"));
     }
 

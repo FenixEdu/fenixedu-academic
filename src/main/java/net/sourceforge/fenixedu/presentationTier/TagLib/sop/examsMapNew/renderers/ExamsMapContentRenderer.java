@@ -22,6 +22,8 @@ import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.struts.Globals;
 import org.apache.struts.util.RequestUtils;
 
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
+
 /**
  * @author Ana e Ricardo
  */
@@ -116,13 +118,7 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
                 } else if (typeUser.equals("public")) {
 
                     final Site site = infoExecutionCourse.getExecutionCourse().getSite();
-                    if (site.isPublic()) {
-                        strBuffer
-                                .append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
-                    } else {
-                        strBuffer
-                                .append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
-                    }
+                    strBuffer.append(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
                     strBuffer.append("<a href=\"").append(((HttpServletRequest) pageContext.getRequest()).getContextPath());
                     strBuffer.append(site.getReversePath());
                     strBuffer.append("\">");

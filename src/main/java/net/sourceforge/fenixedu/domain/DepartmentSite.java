@@ -2,15 +2,15 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.accessControl.DepartmentEmployeesGroup;
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
-import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
+import net.sourceforge.fenixedu.domain.accessControl.UnitGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UserGroup;
+
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class DepartmentSite extends DepartmentSite_Base {
@@ -34,16 +34,15 @@ public class DepartmentSite extends DepartmentSite_Base {
     }
 
     @Override
-    public IGroup getOwner() {
-        return new GroupUnion(new RoleGroup(Role.getRoleByRoleType(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)),
-                new FixedSetGroup(getManagers()));
+    public Group getOwner() {
+        return RoleGroup.get(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE).or(UserGroup.of(Person.convertToUsers(getManagers())));
     }
 
     @Override
-    public List<IGroup> getContextualPermissionGroups() {
-        List<IGroup> groups = super.getContextualPermissionGroups();
+    public List<Group> getContextualPermissionGroups() {
+        List<Group> groups = super.getContextualPermissionGroups();
 
-        groups.add(new DepartmentEmployeesGroup(getDepartment()));
+        groups.add(UnitGroup.recursiveWorkers(getDepartment().getDepartmentUnit()));
 
         return groups;
     }
@@ -60,13 +59,12 @@ public class DepartmentSite extends DepartmentSite_Base {
 
     @Override
     public MultiLanguageString getName() {
-        return new MultiLanguageString().with(Language.pt, getUnit().getAcronym());
+        return new MultiLanguageString().with(MultiLanguageString.pt, getUnit().getAcronym());
     }
 
     @Override
-    public void setNormalizedName(final MultiLanguageString normalizedName) {
-        // unable to optimize because we cannot track changes to name correctly.
-        // don't call super.setNormalizedName() !
+    public String getReversePath() {
+        return super.getReversePath() + "/" + getUnit().getAcronym().toLowerCase();
     }
 
 }

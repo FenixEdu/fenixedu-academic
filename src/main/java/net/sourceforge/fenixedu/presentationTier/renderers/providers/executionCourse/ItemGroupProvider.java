@@ -11,7 +11,7 @@ public class ItemGroupProvider extends ItemProvider {
 
     @Override
     public Object provideForContext(Section section, Item self) {
-        return UnmodifiableList.decorate(section.getSite().getContextualPermissionGroups());
+        return UnmodifiableList.decorate(section.getOwnerSite().getContextualPermissionGroups());
     }
 
     @Override

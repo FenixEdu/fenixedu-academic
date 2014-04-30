@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -37,14 +38,14 @@ import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class UTLScholarshipReportBeanFromRegistration implements Serializable, IUTLScholarshipReportResult {
 
     public Registration registration;
 
     private final ResourceBundle ACADEMIC_OFFICE_RESOURCE_BUNDLE = ResourceBundle.getBundle("resources.AcademicAdminOffice",
-            Language.getDefaultLocale());
+            Locale.getDefault());
 
     public UTLScholarshipReportBeanFromRegistration(final Registration registration) {
         this.registration = registration;

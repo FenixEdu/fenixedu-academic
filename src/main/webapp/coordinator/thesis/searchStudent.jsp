@@ -9,6 +9,8 @@
 <%@page import="net.sourceforge.fenixedu.domain.Enrolment"%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState"%><html:xhtml/>
 
+<jsp:include page="/coordinator/context.jsp" />
+
 <bean:define id="dcpId" name="degreeCurricularPlan" property="externalId"/>
 <bean:define id="executionYearId" name="executionYearId"/>
 

@@ -32,16 +32,17 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(path = "/oldCreateMarkSheet", module = "academicAdministration", formBean = "markSheetManagementForm",
-        input = "/academicAdminOffice/gradeSubmission/oldMarkSheets/createMarkSheetStep1.jsp")
+        input = "/gradeSubmission/oldMarkSheets/createMarkSheetStep1.jsp", functionality = OldMarkSheetSearchDispatchAction.class)
 @Forwards({
         @Forward(name = "createMarkSheetStep1",
-                path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/createMarkSheetStep1.jsp"),
+                path = "/academicAdministration/gradeSubmission/oldMarkSheets/createMarkSheetStep1.jsp"),
         @Forward(name = "createMarkSheetStep2",
-                path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/createMarkSheetStep2.jsp"),
-        @Forward(name = "searchMarkSheetFilled", path = "/oldMarkSheetManagement.do?method=prepareSearchMarkSheetFilled"),
-        @Forward(name = "rectifyMarkSheetStep1", path = "/academicAdminOffice/gradeSubmission/rectifyMarkSheetStep1.jsp"),
-        @Forward(name = "rectifyMarkSheetStep2", path = "/academicAdminOffice/gradeSubmission/rectifyMarkSheetStep2.jsp"),
-        @Forward(name = "viewMarkSheet", path = "/academicAdminOffice/gradeSubmission/oldMarkSheets/viewMarkSheet.jsp") })
+                path = "/academicAdministration/gradeSubmission/oldMarkSheets/createMarkSheetStep2.jsp"),
+        @Forward(name = "searchMarkSheetFilled",
+                path = "/academicAdministration/oldMarkSheetManagement.do?method=prepareSearchMarkSheetFilled"),
+        @Forward(name = "rectifyMarkSheetStep1", path = "/academicAdministration/gradeSubmission/rectifyMarkSheetStep1.jsp"),
+        @Forward(name = "rectifyMarkSheetStep2", path = "/academicAdministration/gradeSubmission/rectifyMarkSheetStep2.jsp"),
+        @Forward(name = "viewMarkSheet", path = "/academicAdministration/gradeSubmission/oldMarkSheets/viewMarkSheet.jsp") })
 public class OldMarkSheetCreateDispatchAction extends MarkSheetCreateDispatchAction {
 
     @Override

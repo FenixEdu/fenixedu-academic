@@ -74,7 +74,7 @@
 					<td>
 						<bean:define id="thisSpace" name="space" type="net.sourceforge.fenixedu.domain.space.Space"/>					
 						<%
-							if(!thisSpace.personHasPermissionsToManageSpace(person)){
+							if(!thisSpace.personHasPermissionsToManageSpace(person.getUser())){
 						%>
 						<html:link page="<%= urlToManage %>">
 							<logic:equal name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Campus">

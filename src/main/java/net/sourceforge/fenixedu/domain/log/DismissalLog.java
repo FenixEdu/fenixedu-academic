@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.log;
 
 import java.math.BigDecimal;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -10,7 +11,7 @@ import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Credits;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class DismissalLog extends DismissalLog_Base {
 
@@ -65,7 +66,7 @@ public class DismissalLog extends DismissalLog_Base {
     }
 
     protected String getLabel() {
-        return ResourceBundle.getBundle("resources.ApplicationResources", Language.getDefaultLocale()).getString(
+        return ResourceBundle.getBundle("resources.ApplicationResources", Locale.getDefault()).getString(
                 "label.dismissal");
     }
 

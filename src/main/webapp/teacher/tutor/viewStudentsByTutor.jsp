@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <html:xhtml/>
@@ -7,7 +8,6 @@
 
 <%@page import="net.sourceforge.fenixedu.util.BundleUtil"%>
 
-<em><bean:message key="label.teacher.tutor.operations" /></em>
 <h2><bean:message key="label.teacher.tutor.viewStudentsByTutor"/></h2>
 
 
@@ -28,7 +28,7 @@
 	   </fr:layout>
 	</fr:view>
 
-	<fr:form>
+	<fr:form action="/viewStudentsByTutor.do?method=viewStudentsByTutor">
 		<fr:edit id="performanceBean" name="performanceBean">
 			<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsPerformanceInfoBean$StudentsPerformanceInfoNullEntryYearBean">
 				<fr:slot name="studentsEntryYear" key="label.studentsEntryYear" layout="menu-select-postback">

@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@page contentType="text/html" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
@@ -7,7 +8,6 @@
 <html:xhtml/>
 
 <style media="all">
-<jsp:include page="../CSS/transitional.css"/>
 
 body {
 font-family: Verdana, Arial, Helvetica, sans-serif;

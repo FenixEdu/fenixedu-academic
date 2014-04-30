@@ -18,21 +18,21 @@ import pt.ist.fenixframework.FenixFramework;
 public class ReadStudentTestQuestionImage {
     @Atomic
     public static String run(String registrationId, String distributedTestId, String questionId, Integer imageId,
-            Integer feedbackId, Integer itemIndex, String path) throws FenixServiceException {
+            Integer feedbackId, Integer itemIndex) throws FenixServiceException {
         final DistributedTest distributedTest = FenixFramework.getDomainObject(distributedTestId);
         final Registration registration = FenixFramework.getDomainObject(registrationId);
-        return run(registration, distributedTest, questionId, imageId, feedbackId, itemIndex, path);
+        return run(registration, distributedTest, questionId, imageId, feedbackId, itemIndex);
     }
 
     @Atomic
     public static String run(Registration registration, DistributedTest distributedTest, String questionId, Integer imageId,
-            Integer feedbackId, Integer itemIndex, String path) throws FenixServiceException {
+            Integer feedbackId, Integer itemIndex) throws FenixServiceException {
         final Question question = FenixFramework.getDomainObject(questionId);
         for (StudentTestQuestion studentTestQuestion : registration.getStudentTestsQuestions()) {
             if (studentTestQuestion.getDistributedTest() == distributedTest && studentTestQuestion.getQuestion() == question) {
                 ParseSubQuestion parse = new ParseSubQuestion();
                 try {
-                    parse.parseStudentTestQuestion(studentTestQuestion, path.replace('\\', '/'));
+                    parse.parseStudentTestQuestion(studentTestQuestion);
                 } catch (Exception e) {
                     throw new FenixServiceException(e);
                 }

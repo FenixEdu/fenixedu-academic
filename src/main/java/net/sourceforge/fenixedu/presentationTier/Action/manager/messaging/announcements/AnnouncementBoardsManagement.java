@@ -7,21 +7,24 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager.messaging.annou
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
+import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerMessagesAndNoticesApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
@@ -29,16 +32,13 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
  *         Created on Jun 20, 2006,5:02:14 PM
  * 
  */
-@Mapping(module = "manager", path = "/announcements/announcementBoardsManagement", scope = "request", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "chooseBoardType", path = "/manager/announcements/chooseBoardType.jsp", tileProperties = @Tile(
-                navLocal = "/manager/announcements/menu.jsp")),
-        @Forward(name = "createUnitAnnouncementBoard", path = "/messaging/announcements/createUnitAnnouncementBoard.jsp",
-                tileProperties = @Tile(navLocal = "/manager/announcements/menu.jsp")),
-        @Forward(name = "firstPage", path = "/manager/announcements/firstPage.jsp", tileProperties = @Tile(
-                navLocal = "/manager/announcements/menu.jsp")),
-        @Forward(name = "statistics", path = "/manager/announcements/statistics.jsp", tileProperties = @Tile(
-                navLocal = "/manager/announcements/menu.jsp")) })
+@StrutsFunctionality(app = ManagerMessagesAndNoticesApp.class, path = "boards-management",
+        titleKey = "title.announcement.boards.management")
+@Mapping(module = "manager", path = "/announcements/announcementBoardsManagement")
+@Forwards({ @Forward(name = "chooseBoardType", path = "/manager/announcements/chooseBoardType.jsp"),
+        @Forward(name = "createUnitAnnouncementBoard", path = "/messaging/announcements/createUnitAnnouncementBoard.jsp"),
+        @Forward(name = "firstPage", path = "/manager/announcements/firstPage.jsp"),
+        @Forward(name = "statistics", path = "/manager/announcements/statistics.jsp") })
 public class AnnouncementBoardsManagement extends FenixDispatchAction {
 
     public ActionForward stats(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -59,13 +59,10 @@ public class AnnouncementBoardsManagement extends FenixDispatchAction {
         int invisibleNotExpiredAnnouncementsCount = 0;
         int invisibleExpiredAnnouncementsCount = 0;
 
-        for (final Content content : rootDomainObject.getContentsSet()) {
-            if (content.isAnAnnouncementBoard()) {
-                boardsCount++;
-            }
+        for (final AnnouncementBoard board : Bennu.getInstance().getAnnouncementBoardSet()) {
+            boardsCount++;
 
-            if (content.isAnAnnouncement()) {
-                final Announcement announcement = (Announcement) content;
+            for (Announcement announcement : board.getAnnouncementSet()) {
                 announcementsCount++;
 
                 if (!announcement.getVisible()) {
@@ -98,15 +95,10 @@ public class AnnouncementBoardsManagement extends FenixDispatchAction {
         return mapping.findForward("statistics");
     }
 
+    @EntryPoint
     public ActionForward start(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-
         return mapping.findForward("firstPage");
-    }
-
-    public ActionForward chooseBoardType(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        return mapping.findForward("chooseBoardType");
     }
 
     public ActionForward createExecutionCourseAnnouncementBoard(ActionMapping mapping, ActionForm actionForm,

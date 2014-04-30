@@ -8,6 +8,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -16,7 +17,6 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.photograph.AspectRatio;
@@ -31,13 +31,14 @@ import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.commons.i18n.I18N;
 import org.imgscalr.Scalr;
 import org.imgscalr.Scalr.Method;
 import org.imgscalr.Scalr.Mode;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import com.google.common.io.ByteStreams;
 
@@ -129,13 +130,13 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
                 }
                 final EmailAddress institutionalOrDefaultEmailAddress = getPerson().getInstitutionalOrDefaultEmailAddress();
                 if (institutionalOrDefaultEmailAddress != null) {
-                    ResourceBundle bundle = ResourceBundle.getBundle(RESOURCE_BUNDLE_NAME, Language.getDefaultLocale());
+                    ResourceBundle bundle = ResourceBundle.getBundle(RESOURCE_BUNDLE_NAME, Locale.getDefault());
                     Set<String> sendTo = Collections.singleton(institutionalOrDefaultEmailAddress.getValue());
 
                     SystemSender systemSender = getRootDomainObject().getSystemSender();
-                    new Message(systemSender, systemSender.getConcreteReplyTos(),
-                            new Recipient(new PersonGroup(getPerson())).asCollection(),
-                            bundle.getString(REJECTION_MAIL_SUBJECT_KEY), bundle.getString(REJECTION_MAIL_BODY_KEY), "");
+                    new Message(systemSender, systemSender.getConcreteReplyTos(), new Recipient(UserGroup.of(getPerson()
+                            .getUser())).asCollection(), bundle.getString(REJECTION_MAIL_SUBJECT_KEY),
+                            bundle.getString(REJECTION_MAIL_BODY_KEY), "");
                 }
 
             }
@@ -376,7 +377,7 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
         try {
             image =
                     Picture.readImage(ByteStreams.toByteArray(Photograph.class.getClassLoader().getResourceAsStream(
-                            "images/photo_placer01_" + Language.getDefaultLanguage().name() + ".gif")));
+                            "images/photo_placer01_" + I18N.getLocale().getLanguage() + ".gif")));
             return processImage(image, xRatio, yRatio, width, height, pictureMode);
         } catch (IOException e) {
             return null;

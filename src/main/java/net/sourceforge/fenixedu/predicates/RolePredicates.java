@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.dataTransferObject.contacts.PartyContactBean;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
@@ -32,8 +32,7 @@ public class RolePredicates {
 
             if (contactPerson.hasStudent() && !contactPerson.hasRole(RoleType.GRANT_OWNER)
                     && !contactPerson.hasRole(RoleType.EMPLOYEE)) {
-                return new AcademicAuthorizationGroup(AcademicOperationType.EDIT_STUDENT_PERSONAL_DATA).isMember(AccessControl
-                        .getPerson());
+                return AcademicAuthorizationGroup.get(AcademicOperationType.EDIT_STUDENT_PERSONAL_DATA).isMember(Authenticate.getUser());
             }
 
             return false;
@@ -200,24 +199,10 @@ public class RolePredicates {
                 };
             };
 
-    public static final AccessControlPredicate<Object> MASTER_DEGREE_CANDIDATE_PREDICATE = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(Object domainObject) {
-            return hasRole(RoleType.MASTER_DEGREE_CANDIDATE);
-        };
-    };
-
     public static final AccessControlPredicate<Object> OPERATOR_PREDICATE = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(Object domainObject) {
             return hasRole(RoleType.OPERATOR);
-        };
-    };
-
-    public static final AccessControlPredicate<Object> PARKING_MANAGER_PREDICATE = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(Object domainObject) {
-            return hasRole(RoleType.PARKING_MANAGER);
         };
     };
 
@@ -264,13 +249,6 @@ public class RolePredicates {
         };
     };
 
-    public static final AccessControlPredicate<Object> SEMINARIES_COORDINATOR_PREDICATE = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(Object domainObject) {
-            return hasRole(RoleType.SEMINARIES_COORDINATOR);
-        };
-    };
-
     public static final AccessControlPredicate<Object> SPACE_MANAGER_PREDICATE = new AccessControlPredicate<Object>() {
         @Override
         public boolean evaluate(Object domainObject) {
@@ -296,13 +274,6 @@ public class RolePredicates {
         @Override
         public boolean evaluate(Object domainObject) {
             return isTeacher() || hasRole(RoleType.STUDENT);
-        };
-    };
-
-    public static final AccessControlPredicate<Object> TREASURY_PREDICATE = new AccessControlPredicate<Object>() {
-        @Override
-        public boolean evaluate(Object domainObject) {
-            return hasRole(RoleType.TREASURY);
         };
     };
 

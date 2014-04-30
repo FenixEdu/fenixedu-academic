@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentViewApp;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.struts.action.ActionForm;
@@ -20,6 +21,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -28,6 +31,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
+@StrutsFunctionality(app = StudentViewApp.class, descriptionKey = "label.title.sync", path = "sync",
+        bundle = "MessagingResources", titleKey = "label.title.sync")
 @Mapping(path = "/ICalTimeTable", module = "student")
 @Forwards({
         @Forward(name = "viewOptions", path = "/student/iCalendar/viewCalendarInformation.jsp", tileProperties = @Tile(
@@ -53,6 +58,7 @@ public class ICalStudentTimeTable extends FenixDispatchAction {
 
     }
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         List<Registration> registrations = getUserView(request).getPerson().getStudent().getActiveRegistrations();

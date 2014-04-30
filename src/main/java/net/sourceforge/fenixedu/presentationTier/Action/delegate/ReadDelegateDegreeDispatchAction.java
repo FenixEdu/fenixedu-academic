@@ -15,12 +15,15 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.StrutsApplication;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(module = "delegate", path = "/index", scope = "session")
+@StrutsApplication(bundle = "DelegateResources", path = "delegate", titleKey = "label.delegatesPortal",
+        accessGroup = "role(DELEGATE)", hint = "Delegate")
+@Mapping(module = "delegate", path = "/index")
 @Forwards(value = { @Forward(name = "success", path = "/delegate/index.jsp") })
 public class ReadDelegateDegreeDispatchAction extends FenixAction {
 
@@ -28,7 +31,7 @@ public class ReadDelegateDegreeDispatchAction extends FenixAction {
     public ActionForward execute(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
             final HttpServletResponse response) throws FenixActionException {
         final Person person = getLoggedPerson(request);
-        if (person.hasStudent()) {
+        if (person.getStudent() != null) {
             final Registration lastActiveRegistration = person.getStudent().getLastActiveRegistration();
             if (lastActiveRegistration != null) {
                 final Degree degree = lastActiveRegistration.getDegree();

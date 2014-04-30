@@ -5,17 +5,21 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.Group;
 import org.joda.time.LocalDate;
 
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.ImmutableSet;
 
 public class PhdCustomAlert extends PhdCustomAlert_Base {
 
@@ -30,8 +34,8 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
     }
 
     public PhdCustomAlert(PhdCustomAlertBean bean) {
-        this(bean.getProcess(), bean.calculateTargetGroup(), new MultiLanguageString(Language.getDefaultLanguage(),
-                bean.getSubject()), new MultiLanguageString(Language.getDefaultLanguage(), bean.getBody()), bean.isToSendEmail(),
+        this(bean.getProcess(), bean.calculateTargetGroup(), new MultiLanguageString(Locale.getDefault(),
+                bean.getSubject()), new MultiLanguageString(Locale.getDefault(), bean.getBody()), bean.isToSendEmail(),
                 bean.getFireDate(), bean.getUserDefined(), bean.getShared());
     }
 
@@ -66,9 +70,17 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
 
         super.setWhenToFire(whenToFire);
         super.setSendEmail(sendEmail);
-        super.setTargetGroup(targetGroup);
+        super.setTargetGroup(targetGroup.toPersistentGroup());
         super.setUserDefined(userDefined);
         super.setShared(shared);
+    }
+
+    protected Group getTargetAccessGroup() {
+        return getTargetGroup().toGroup();
+    }
+
+    protected ImmutableSet<Person> getTargetPeople() {
+        return FluentIterable.from(getTargetAccessGroup().getMembers()).transform(Person.userToPerson).toSet();
     }
 
     @Override
@@ -89,23 +101,24 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
     @Override
     public String getDescription() {
         final ResourceBundle bundle = getResourceBundle();
-        return MessageFormat.format(bundle.getString("message.phd.alert.custom.description"), getTargetGroup().getName(),
-                getWhenToFire().toString(DateFormatUtil.DEFAULT_DATE_FORMAT), getFormattedSubject(), getFormattedBody());
+        return MessageFormat.format(bundle.getString("message.phd.alert.custom.description"), getTargetAccessGroup()
+                .getPresentationName(), getWhenToFire().toString(DateFormatUtil.DEFAULT_DATE_FORMAT), getFormattedSubject(),
+                getFormattedBody());
     }
 
     @Override
     protected void generateMessage() {
 
         if (getShared().booleanValue()) {
-            new PhdAlertMessage(getProcess(), getTargetGroup().getElements(), getFormattedSubject(), getFormattedBody());
+            new PhdAlertMessage(getProcess(), getTargetPeople(), getFormattedSubject(), getFormattedBody());
         } else {
-            for (final Person person : getTargetGroup().getElements()) {
+            for (final Person person : getTargetPeople()) {
                 new PhdAlertMessage(getProcess(), person, getFormattedSubject(), getFormattedBody());
             }
         }
 
         if (isToSendMail()) {
-            final Recipient recipient = new Recipient(getTargetGroup().getElements());
+            final Recipient recipient = new Recipient(getTargetAccessGroup());
             new Message(getSender(), recipient, buildMailSubject(), buildMailBody());
 
         }
@@ -113,32 +126,18 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
     }
 
     public String getTargetGroupInText() {
-        Group targetGroup = getTargetGroup();
+        Group targetGroup = getTargetAccessGroup();
 
-        Set<Person> elements = targetGroup.getElements();
+        Set<User> elements = targetGroup.getMembers();
 
         StringBuilder builder = new StringBuilder();
 
-        for (Person person : elements) {
-            builder.append(person.getName()).append(" (").append(person.getEmailForSendingEmails()).append(")\n");
+        for (User user : elements) {
+            builder.append(user.getPerson().getName()).append(" (").append(user.getPerson().getEmailForSendingEmails())
+                    .append(")\n");
         }
 
         return builder.toString();
-    }
-
-    @Override
-    public void setTargetGroup(Group targetGroup) {
-        throw new DomainException("error.phd.alert.PhdAlert.cannot.modify.targetGroup");
-    }
-
-    /**
-     * Remove once groups are converted
-     * 
-     * @param targetGroup
-     */
-    @Deprecated
-    public void setTargetGroupWithoutCheckingPermissions(Group targetGroup) {
-        super.setTargetGroup(targetGroup);
     }
 
     @Override
@@ -179,11 +178,6 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
     @Deprecated
     public boolean hasUserDefined() {
         return getUserDefined() != null;
-    }
-
-    @Deprecated
-    public boolean hasTargetGroup() {
-        return getTargetGroup() != null;
     }
 
     @Deprecated

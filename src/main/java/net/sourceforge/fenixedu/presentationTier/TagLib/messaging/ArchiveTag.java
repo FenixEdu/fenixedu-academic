@@ -16,9 +16,10 @@ import net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.dto.YearAnnouncementArchiveEntry;
 
 import org.apache.struts.taglib.TagUtils;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.LocalDate;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
@@ -138,7 +139,7 @@ public class ArchiveTag extends TagSupport {
                 buffer.append("\">");
             }
             if (month != null) {
-                Locale locale = Language.getLocale();
+                Locale locale = I18N.getLocale();
                 LocalDate localDate = new LocalDate();
                 localDate = localDate.withMonthOfYear(month.getMonth());
 

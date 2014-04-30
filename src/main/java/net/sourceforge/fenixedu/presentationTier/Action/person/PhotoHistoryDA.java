@@ -24,7 +24,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * 
  */
 
-@Mapping(path = "/photoHistory", module = "person")
+@Mapping(path = "/photoHistory", module = "person", functionality = VisualizePersonalInfo.class)
 @Forwards({ @Forward(name = "userHistory", path = "/person/visualizePhotoHistory.jsp"),
         @Forward(name = "visualizePersonalInformation", path = "/person/visualizePersonalInfo.jsp") })
 public class PhotoHistoryDA extends FenixDispatchAction {

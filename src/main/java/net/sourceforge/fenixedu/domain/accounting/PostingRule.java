@@ -20,10 +20,11 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public abstract class PostingRule extends PostingRule_Base {
 
@@ -334,7 +335,7 @@ public abstract class PostingRule extends PostingRule_Base {
     }
 
     public String getFormulaDescription() {
-        return ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale()).getString(
+        return ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale()).getString(
                 this.getClass().getSimpleName() + ".formulaDescription");
     }
 

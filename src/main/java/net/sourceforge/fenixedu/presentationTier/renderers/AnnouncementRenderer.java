@@ -171,25 +171,9 @@ public class AnnouncementRenderer extends OutputRenderer {
         private HtmlComponent getContent() {
             HtmlBlockContainer container = new HtmlBlockContainer();
             if (announcement.isExcerptEmpty()) {
-                container
-                        .addChild(new HtmlText(
-                                new String(
-                                        pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.BLOCK_HAS_CONTEXT_PREFIX),
-                                false));
                 container.addChild(new HtmlText(announcement.getBody().getContent(), false));
-                container.addChild(new HtmlText(new String(
-                        pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.END_BLOCK_HAS_CONTEXT_PREFIX),
-                        false));
             } else {
-                container
-                        .addChild(new HtmlText(
-                                new String(
-                                        pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.BLOCK_HAS_CONTEXT_PREFIX),
-                                false));
                 container.addChild(new HtmlText(announcement.getExcerpt().getContent(), false));
-                container.addChild(new HtmlText(new String(
-                        pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.END_BLOCK_HAS_CONTEXT_PREFIX),
-                        false));
                 HtmlLink link = new HtmlLink();
                 link.setUrl(RenderUtils.getFormattedProperties(getViewMoreUrl(), announcement));
                 link.setText(RenderUtils.getFormatedResourceString(getBundle(), getViewMoreLabel()));

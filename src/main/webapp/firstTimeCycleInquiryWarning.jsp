@@ -21,7 +21,7 @@
 				LocalDate limitDate = new LocalDate(2013, 12, 1);
 			%>
 			<div id="dotist_id">
-				<img alt="<%=net.sourceforge.fenixedu.domain.Instalation.getInstance().getInstalationName() %>"
+				<img alt="<%=org.fenixedu.bennu.portal.domain.PortalConfiguration.getInstance().getApplicationTitle().getContent() %>"
 						src="<bean:message key="dot.logo" bundle="GLOBAL_RESOURCES" arg0="<%= request.getContextPath() %>"/>" />
 			</div>
 			<div id="txt">
@@ -37,7 +37,6 @@
 						<td>
 							<form method="post" action="<%= request.getContextPath() %>/respondToFirstTimeCycleInquiry.do">
 								<html:hidden property="method" value="respondNow"/>
-								<html:hidden property="<%=net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME%>" value="/estudante/estudante"/>
 								<html:submit bundle="HTMLALT_RESOURCES" altKey="inquiries.respond.now" property="ok">
 									<bean:message key="button.inquiries.respond.now" />
 								</html:submit>
@@ -49,7 +48,6 @@
 								<td>
 									<form method="post" action="<%= request.getContextPath() %>/respondToFirstTimeCycleInquiry.do">
 										<html:hidden property="method" value="registerStudentResponseRespondLater"/>
-										<html:hidden property="<%=net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME%>" value="/comunicacao/comunicacao"/>
 										<html:submit bundle="HTMLALT_RESOURCES" altKey="inquiries.respond.later" property="ok">
 											<bean:message key="button.inquiries.respond.later" />
 										</html:submit>

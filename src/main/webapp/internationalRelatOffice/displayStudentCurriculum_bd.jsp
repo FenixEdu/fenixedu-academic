@@ -7,7 +7,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/enum" prefix="e" %>
 <%@page import="net.sourceforge.fenixedu.domain.degree.DegreeType"%>
 <%@page import="org.apache.struts.util.LabelValueBean"%>
-<%@ page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
+<%@ page import="org.fenixedu.commons.i18n.I18N"%>
 
 <html:xhtml/>
 
@@ -98,9 +98,6 @@
 				<html:select bundle="HTMLALT_RESOURCES" property="studentCPID" onchange='this.form.submit();'> 
 					<html:options collection="scpsLabelValueBeanList" property="value" labelProperty="label" />
 				</html:select>
-				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-					<bean:message key="button.submit"/>
-				</html:submit>
 			</td>
 		</tr>
 		<tr>
@@ -119,9 +116,6 @@
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.enrolmentStateType" property="select" onchange='this.form.submit();' >
 					<html:options collection="enrolmentStateTypes" property="value" labelProperty="label"/>
 				</html:select>
-				<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-					<bean:message key="button.submit"/>
-				</html:submit>
 			</td>
 		</tr>
 		<tr>
@@ -211,7 +205,7 @@
 
 <div class="print_fsize08">
 	<p class="mtop2 mbottom0"><strong><bean:message key="label.legend" bundle="STUDENT_RESOURCES"/></strong></p>
-	<div style="width: 250px; float: left;">
+	<div style="float: left;">
 		<p class="mvert05"><em><bean:message  key="label.curriculum.credits.legend.minCredits" bundle="APPLICATION_RESOURCES"/></em></p>
 		<p class="mvert05"><em><bean:message  key="label.curriculum.credits.legend.creditsConcluded" bundle="APPLICATION_RESOURCES"/></em></p>
 		<p class="mvert05"><em><bean:message  key="label.curriculum.credits.legend.approvedCredits" bundle="APPLICATION_RESOURCES"/></em></p>
@@ -228,8 +222,6 @@
 
 <link href="../javaScript/sviz/sviz.css" rel="stylesheet" type="text/css" />
 
-<script type="text/javascript">	$.noConflict(); </script>
-<script type="text/javascript" src="../javaScript/jquery/jquery-1.8.0.min.js"></script>
 <script type="text/javascript" src="../javaScript/sviz/d3.min.js"></script>
 <script type="text/javascript" src="../javaScript/sviz/qtip.min.js"></script>
 <script type="text/javascript" src="../javaScript/sviz/i18next.min.js"></script>
@@ -239,7 +231,7 @@
 
 <script type="text/javascript">
 	var data = <bean:write name="registrationApprovalRateJSON" filter="false" />;
-	SViz.init({ lang: "<%= Language.getLanguage() %>", localesBasePath: "../javaScript/sviz" });
+	SViz.init({ lang: "<%= I18N.getLocale().getLanguage() %>", localesBasePath: "../javaScript/sviz" });
 	var chart = SViz.loadViz("showApprovalRate", data, "#graph", {classic:true, width:650, blockWidth:50, blockPadding:7, barWidth:0.85, margin:{left:0}, titleclass:'h1'});
 </script>
 </logic:notEmpty>

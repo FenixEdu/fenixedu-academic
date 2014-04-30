@@ -1,8 +1,11 @@
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <html:xhtml/>
+
+<jsp:include page="/commons/renderers/treeRendererHeader.jsp" />
 
 <h2><bean:message key="title.unitSite.manage.sites" bundle="MANAGER_RESOURCES"/></h2>
 
@@ -16,8 +19,6 @@
 
 <fr:view name="units" layout="unit-sites-tree">
 	<fr:layout>
-        <fr:property name="treeId" value="managerUnitsSites"/>
-
         <fr:property name="eachLayout" value="values"/>
         <fr:property name="eachSchema" value="unitSite.tree.unit.name"/>
 

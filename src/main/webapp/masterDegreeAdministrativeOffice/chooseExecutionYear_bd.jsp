@@ -6,8 +6,6 @@
 <%@ page import="org.apache.struts.Globals" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
-<em><bean:message key="title.masterDegree.administrativeOffice"/></em>
-
 <logic:present name="jspTitle">
 	<h2><bean:write name="jspTitle" /></h2>
 

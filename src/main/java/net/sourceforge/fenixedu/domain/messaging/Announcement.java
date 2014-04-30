@@ -9,11 +9,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ContentManagementLog;
 import net.sourceforge.fenixedu.domain.File;
-import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.predicates.AnnouncementPredicates;
 
-import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -72,7 +70,6 @@ public class Announcement extends Announcement_Base {
 
     public Announcement() {
         super();
-        setRootDomainObject(Bennu.getInstance());
         super.setCreationDate(new DateTime());
         super.setLastModification(new DateTime());
         super.setApproved(false);
@@ -253,40 +250,18 @@ public class Announcement extends Announcement_Base {
     }
 
     @Override
-    public boolean isAnAnnouncement() {
-        return true;
-    }
-
-    public AnnouncementNode getAnnouncementNode() {
-        return (AnnouncementNode) getUniqueParentNode();
-    }
-
-    public AnnouncementBoard getAnnouncementBoard() {
-        final AnnouncementNode announcementNode = getAnnouncementNode();
-        return announcementNode == null ? null : (AnnouncementBoard) announcementNode.getParent();
-    }
-
     public void setAnnouncementBoard(final AnnouncementBoard announcementBoard) {
-        if (announcementBoard == null) {
-            for (final Node node : getParentsSet()) {
-                node.delete();
-            }
-        } else {
-            final AnnouncementNode announcementNode = getAnnouncementNode();
-            if (announcementNode == null) {
-                new AnnouncementNode(announcementBoard, this);
-                announcementBoard.logCreate(this);
-            } else {
-                if (announcementNode.getParent() != announcementBoard) {
-                    announcementNode.setParent(announcementBoard);
-                }
+        if (announcementBoard != null) {
+            if (getAnnouncementBoard() != null) {
                 announcementBoard.logEdit(this);
+            } else {
+                announcementBoard.logCreate(this);
             }
             super.setApproved(announcementBoard.getInitialAnnouncementsApprovedState());
         }
+        super.setAnnouncementBoard(announcementBoard);
     }
 
-    @Override
     public MultiLanguageString getName() {
         return getSubject();
     }
@@ -321,10 +296,8 @@ public class Announcement extends Announcement_Base {
         announcement.setBody(body);
         announcement.setCampus(campus);
         announcement.setCategories(categories);
-        announcement.setContentId(null);
         announcement.setCreationDate(new DateTime());
         announcement.setCreator(null);
-        announcement.setDescription(null);
         announcement.setExcerpt(excerpt);
         announcement.setPhotoUrl(null);
         announcement.setPlace(place);
@@ -333,7 +306,6 @@ public class Announcement extends Announcement_Base {
         announcement.setReferedSubjectBegin(referedSubjectBeginDate);
         announcement.setReferedSubjectEnd(referedSubjectEndDate);
         announcement.setSubject(subject);
-        announcement.setTitle(null);
         announcement.setVisible(isVisible);
         announcement.setEditorNotes(editorNotes);
 
@@ -346,9 +318,7 @@ public class Announcement extends Announcement_Base {
 
     }
 
-    @Override
-    protected void disconnectContent() {
-
+    public void delete() {
         AnnouncementBoard ab = getAnnouncementBoard();
         if (ab instanceof ExecutionCourseAnnouncementBoard) {
             ExecutionCourseAnnouncementBoard ecab = (ExecutionCourseAnnouncementBoard) ab;
@@ -361,7 +331,9 @@ public class Announcement extends Announcement_Base {
             removeCategories(category);
         }
         setCampus(null);
-        super.disconnectContent();
+        setCreator(null);
+        setAnnouncementBoard(null);
+        deleteDomainObject();
     }
 
     public boolean isInPublicationPeriod() {
@@ -375,7 +347,7 @@ public class Announcement extends Announcement_Base {
     @Atomic
     public void swap(AnnouncementBoard source, AnnouncementBoard destination) {
         source.removeAnnouncement(this);
-        destination.addAnnouncements(this);
+        setAnnouncementBoard(destination);
     }
 
     @Atomic
@@ -390,7 +362,7 @@ public class Announcement extends Announcement_Base {
 
     private Integer getMaxPriority() {
         Integer maxPriority = 0;
-        for (Announcement announcement : this.getAnnouncementBoard().getAnnouncements()) {
+        for (Announcement announcement : this.getAnnouncementBoard().getAnnouncementSet()) {
             if (announcement.getSticky()) {
                 if (!announcement.equals(this) && announcement.superGetPriority() > maxPriority) {
                     maxPriority = announcement.getPriority();
@@ -410,7 +382,7 @@ public class Announcement extends Announcement_Base {
         if (board != null) {
             List<Announcement> stickyAnnouncements = new ArrayList<Announcement>();
 
-            for (Announcement announcement : board.getAnnouncements()) {
+            for (Announcement announcement : board.getAnnouncementSet()) {
                 if (announcement.getSticky() != null && announcement.getSticky()) {
                     stickyAnnouncements.add(announcement);
                 }
@@ -465,7 +437,7 @@ public class Announcement extends Announcement_Base {
     }
 
     private void updateOtherAnnouncementPriorities(int priority, Announcement targetAnnouncement) {
-        for (Announcement announcement : this.getAnnouncementBoard().getAnnouncements()) {
+        for (Announcement announcement : this.getAnnouncementBoard().getAnnouncementSet()) {
             if (!announcement.equals(targetAnnouncement) && announcement.getSticky() && announcement.getPriority() > priority) {
                 announcement.setPriority(announcement.getPriority() - 1);
             }

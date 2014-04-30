@@ -1,15 +1,16 @@
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
-<ft:tilesView definition="pedagogicalCouncil.masterPage" attributeName="body-inline">
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.PedagogicalCouncilApp$PedagogicalCurricularPlansManagement" />
+
+<f:view>
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="resources/PedagogicalCouncilResources" var="pcouncilBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 	
-	<h:outputText value="<i>#{pcouncilBundle['pedagogical.council']}</i>" escape="false"/>
 	<h:outputText value="<h2>#{bolonhaBundle['curricularPlans']}</h2>" escape="false"/>
 
 	<h:outputText value="<i>#{pcouncilBundle['no.degree.access']}</i>" escape="false" rendered="#{empty DegreeManagement.bolonhaDegrees}"/>
@@ -19,7 +20,7 @@
 		<h:messages errorClass="error0" infoClass="success0"/>
 	
 		<fc:dataRepeater value="#{DegreeManagement.bolonhaDegrees}" var="degree" rendered="#{!empty DegreeManagement.bolonhaDegrees}">
-			<h:outputText value="<table style='width: 720px' class='showinfo1 bgcolor1'>" escape="false"/>
+			<h:outputText value="<table style='width: 100%' class='showinfo1 bgcolor1'>" escape="false"/>
 			<h:outputText value="<tr><th width='80px'><strong>#{bolonhaBundle['degree']}:</strong></th>" escape="false"/>
 	
 			<h:outputText value="<td> #{degree.presentationName} (#{degree.sigla})</td>" escape="false"/>
@@ -62,4 +63,4 @@
 
 	</h:panelGroup>
 
-</ft:tilesView>
+</f:view>

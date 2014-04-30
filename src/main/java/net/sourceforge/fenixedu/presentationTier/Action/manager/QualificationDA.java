@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonInformationLog;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.FindPersonAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -20,7 +21,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(path = "/qualification", module = "manager")
+@Mapping(path = "/qualification", module = "manager", functionality = FindPersonAction.class)
 @Forwards({ @Forward(name = "showQualifications", path = "/manager/qualifications/showQualifications.jsp"),
         @Forward(name = "qualification", path = "/manager/qualifications/qualification.jsp"),
         @Forward(name = "viewPerson", path = "/manager/personManagement/viewPerson.jsp"),

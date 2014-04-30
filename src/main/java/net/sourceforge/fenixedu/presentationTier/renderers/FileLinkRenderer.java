@@ -9,9 +9,9 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlLink;
 import pt.ist.fenixWebFramework.renderers.components.HtmlLinkWithPreprendedComment;
-import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 
 /**
  * This render is used to create a link to a File object. The form of the link
@@ -36,16 +36,8 @@ public class FileLinkRenderer extends OutputRenderer {
                 if (object != null && object instanceof File) {
                     File file = (File) object;
                     HtmlBlockContainer container = new HtmlBlockContainer();
-                    container.addChild(new HtmlText(new String(
-                            pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.BLOCK_HAS_CONTEXT_PREFIX),
-                            false));
                     HtmlLink link = getLink(file);
                     container.addChild(link);
-                    container
-                            .addChild(new HtmlText(
-                                    new String(
-                                            pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.END_BLOCK_HAS_CONTEXT_PREFIX),
-                                    false));
                     link.setIndented(false);
                     link.setText(getLinkText(file));
                     return container;
@@ -54,9 +46,7 @@ public class FileLinkRenderer extends OutputRenderer {
             }
 
             private HtmlLink getLink(File file) {
-                HtmlLink link =
-                        new HtmlLinkWithPreprendedComment(
-                                pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
+                HtmlLink link = new HtmlLinkWithPreprendedComment(GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
 //		if (file.hasLocalContent()) {
 //		    link.setContextRelative(true);
 //		} else {

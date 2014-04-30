@@ -31,8 +31,8 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.contents.Container;
+import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.Site.SiteMapper;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel;
@@ -40,7 +40,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
@@ -56,6 +55,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.Group;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -117,10 +117,10 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         DepartmentUnit selectedDepartmentUnit = getSelectedDepartmentUnit();
         if (selectedDepartmentUnit == null) {
             return (this.getPersonDepartment() != null && this.getPersonDepartment().getCompetenceCourseMembersGroup() != null) ? this
-                    .getPersonDepartment().getCompetenceCourseMembersGroup().isMember(this.getUserView().getPerson()) : false;
+                    .getPersonDepartment().getCompetenceCourseMembersGroup().isMember(this.getUserView()) : false;
         } else {
             return selectedDepartmentUnit.getDepartment().getCompetenceCourseMembersGroup() != null ? selectedDepartmentUnit
-                    .getDepartment().getCompetenceCourseMembersGroup().isMember(getUserView().getPerson()) : false;
+                    .getDepartment().getCompetenceCourseMembersGroup().isMember(getUserView()) : false;
         }
     }
 
@@ -193,8 +193,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         if (competenceCoursesManagementGroup != null) {
             result = new ArrayList<String>();
 
-            for (Person person : competenceCoursesManagementGroup.getElements()) {
-                result.add(person.getName() + " (" + person.getUsername() + ")");
+            for (User user : competenceCoursesManagementGroup.getMembers()) {
+                result.add(user.getPerson().getName() + " (" + user.getUsername() + ")");
             }
         }
 
@@ -418,7 +418,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     public String getSelectedDepartmentUnitID() {
         if (selectedDepartmentUnitID == null) {
-            Container site = AbstractFunctionalityContext.getCurrentContext(getRequest()).getSelectedContainer();
+            Site site = SiteMapper.getSite(getRequest());
             if (site != null && site instanceof DepartmentSite) {
                 selectedDepartmentUnitID = ((DepartmentSite) site).getDepartment().getDepartmentUnit().getExternalId();
             } else if (getAndHoldStringParameter("selectedDepartmentUnitID") != null) {

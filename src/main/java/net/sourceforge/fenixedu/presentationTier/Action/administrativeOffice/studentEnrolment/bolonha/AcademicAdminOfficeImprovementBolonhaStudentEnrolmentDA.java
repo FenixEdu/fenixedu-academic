@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.Im
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
+import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.SearchForStudentsDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -17,7 +18,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/improvementBolonhaStudentEnrollment", module = "academicAdministration",
-        formBean = "bolonhaStudentEnrollmentForm")
+        formBean = "bolonhaStudentEnrollmentForm", functionality = SearchForStudentsDA.class)
 @Forwards({ @Forward(name = "showDegreeModulesToEnrol",
         path = "/academicAdminOffice/student/enrollment/bolonha/showDegreeModulesToEnrol.jsp") })
 public class AcademicAdminOfficeImprovementBolonhaStudentEnrolmentDA extends AcademicAdminOfficeBolonhaStudentEnrollmentDA {

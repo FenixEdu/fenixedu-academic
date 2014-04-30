@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC
+      "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+      "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
 <struts-config>
       <!-- ========== Data Source Configuration =============================== -->
       <!-- ========== Form Bean Definitions ================================== -->
@@ -13,21 +16,7 @@
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="teachingReportForm">
                   <form-property type="java.lang.String" name="executionCourseId"></form-property>
             </form-bean>
-            <!-- ==================== View Curricular Course Historic ================== -->
-            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="executionYearDegreeCurricularPlanForm">
-                  <form-property type="java.lang.String" name="executionYearID"></form-property>
-                  <form-property type="java.lang.String" name="degreeCurricularPlanID"></form-property>
-                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
-            </form-bean>
             <!-- =================== Inquiries ============== -->
-            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="sendEmailReminderForm">
-                  <form-property name="method" type="java.lang.String"></form-property>
-                  <form-property name="page" type="java.lang.Integer"></form-property>
-                  <form-property name="degreeCurricularPlanIds" type="java.lang.String[]"></form-property>
-                  <form-property name="bodyTextSubject" type="java.lang.String"></form-property>
-                  <form-property name="bodyTextIntro" type="java.lang.String"></form-property>
-                  <form-property name="bodyTextEnd" type="java.lang.String"></form-property>
-            </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="teachingStaffForm">
                   <form-property type="java.lang.String" name="executionYearID"></form-property>
                   <form-property type="java.lang.String" name="degreeCurricularPlanID"></form-property>
@@ -38,14 +27,6 @@
                   <form-property type="java.lang.String" name="nonAffiliatedTeacherInstitutionName"></form-property>
                   <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
                   <form-property type="java.lang.String" name="method"></form-property>
-            </form-bean>
-            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="defineResponsePeriodsForm">
-                  <form-property type="java.lang.Integer" name="page"></form-property>
-                  <form-property type="java.lang.String" name="method"></form-property>
-                  <form-property type="java.lang.String" name="periodType"></form-property>
-                  <form-property type="java.lang.String" name="executionPeriodID"></form-property>
-                  <form-property type="java.lang.String" name="inquiryResponseBegin"></form-property>
-                  <form-property type="java.lang.String" name="inquiryResponseEnd"></form-property>
             </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="createClassificationsForm">
                   <form-property type="java.lang.Integer[]" name="entryGradeLimits"></form-property>
@@ -63,40 +44,17 @@
                   <form-property type="java.lang.String" name="method"></form-property>
                   <form-property type="java.lang.Integer" name="registrationID"></form-property>
             </form-bean>
-            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="studentCurricularPlanAndEnrollmentsSelectionForm">
-                  <form-property type="java.lang.String" name="studentCPID"></form-property>
-                  <form-property type="java.lang.String" name="select"></form-property>
-                  <form-property type="java.lang.String" name="studentNumber"></form-property>
-                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
-                  <form-property type="java.lang.String" name="degreeCurricularPlanID"></form-property>
-                  <form-property type="java.lang.String" name="organizedBy"></form-property>
-                  <form-property initial="false" type="java.lang.Boolean" name="detailed"></form-property>
-                  <form-property type="java.lang.String" name="viewType"></form-property>
-            </form-bean>
       </form-beans>
       <!-- ========== Global Exception Definitions ============================== -->
       <global-exceptions>
-            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.Exception" type="java.lang.Exception"></exception>
-            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"></exception>
-            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException"></exception>
       </global-exceptions>
       <!-- ========== Global Forward Definitions =============================== -->
       <global-forwards type="org.apache.struts.action.ActionForward"></global-forwards>
       <!-- ========== Action Mapping Definitions =============================== -->
       <action-mappings type="org.apache.struts.action.ActionMapping">
-            <action forward="index" path="/index"></action>
-            <!-- Teaching Report -->
-            <!-- ==================== View Curricular Course Historic ================== -->
-            <!-- ==================== Inquiries ================== -->
-            <action scope="request" type="net.sourceforge.fenixedu.presentationTier.Action.manager.inquiries.CreateClassificationsForStudentsDispatchAction" name="createClassificationsForm" parameter="method" path="/createClassificationsForStudents">
-                  <forward path="chooseDegreeCurricularPlan" name="chooseDegreeCurricularPlan"></forward>
-            </action>
-            <action scope="request" type="net.sourceforge.fenixedu.presentationTier.Action.manager.inquiries.CreateClassificationsForStudentsDispatchAction" name="createClassificationsForm" parameter="method" path="/createClassificationsForStudents">
-                  <forward path="chooseDegreeCurricularPlan" name="chooseDegreeCurricularPlan"></forward>
-            </action>
       </action-mappings>
       <!-- ========== Controller Configuration ================================ -->
-      <controller processorClass="pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessor"></controller>
+      <controller processorClass="pt.ist.fenixWebFramework.renderers.plugin.SimpleRenderersRequestProcessor"></controller>
       <!-- ========== Message Resources Definitions ============================ -->
       <message-resources null="false" key="ENUMERATION_RESOURCES" parameter="resources.EnumerationResources"></message-resources>
       <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
@@ -129,13 +87,6 @@
       <!-- ========== Plug Ins Configuration ================================= -->
       <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
             <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-gep.xml" property="pathnames"></set-property>
-      </plug-in>
-      <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin">
-            <set-property value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/gep/tiles-gep-definitions.xml,/WEB-INF/tiles/gep/tiles-gep-pages-definitions.xml" property="definitions-config"></set-property>
-            <set-property value="true" property="moduleAware"></set-property>
-            <set-property value="true" property="definitions-parser-validate"></set-property>
-            <set-property value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" property="factoryClassname"></set-property>
-            <set-property value="definition.gep.two-column" property="defaultTileDefinition"></set-property>
       </plug-in>
       <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
 </struts-config>

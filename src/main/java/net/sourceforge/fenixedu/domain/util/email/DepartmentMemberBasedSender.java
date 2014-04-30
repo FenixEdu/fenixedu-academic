@@ -1,8 +1,10 @@
 package net.sourceforge.fenixedu.domain.util.email;
 
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.UnitMembersGroup;
+import net.sourceforge.fenixedu.domain.accessControl.UnitGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+
+import org.fenixedu.bennu.core.groups.Group;
+
 import pt.ist.fenixframework.Atomic;
 
 public class DepartmentMemberBasedSender extends DepartmentMemberBasedSender_Base {
@@ -18,7 +20,7 @@ public class DepartmentMemberBasedSender extends DepartmentMemberBasedSender_Bas
 
     @Atomic
     public static DepartmentMemberBasedSender newInstance(final Unit unit) {
-        return new DepartmentMemberBasedSender(unit, Sender.getNoreplyMail(), new UnitMembersGroup(unit));
+        return new DepartmentMemberBasedSender(unit, Sender.getNoreplyMail(), UnitGroup.recursiveWorkers(unit));
     }
 
 }

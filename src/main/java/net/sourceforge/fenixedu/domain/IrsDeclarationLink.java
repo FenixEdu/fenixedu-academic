@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class IrsDeclarationLink extends IrsDeclarationLink_Base {
@@ -17,7 +16,7 @@ public class IrsDeclarationLink extends IrsDeclarationLink_Base {
             throw new Error("there.can.only.be.one!");
         }
         setAvailable(Boolean.FALSE);
-        setTitle(new MultiLanguageString(Language.pt, "IRS"));
+        setTitle(new MultiLanguageString(MultiLanguageString.pt, "IRS"));
         setIrsLink("");
     }
 

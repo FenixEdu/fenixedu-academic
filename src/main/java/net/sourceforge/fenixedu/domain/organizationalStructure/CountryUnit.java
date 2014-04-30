@@ -15,12 +15,13 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.YearMonthDay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CountryUnit extends CountryUnit_Base {
@@ -126,7 +127,7 @@ public class CountryUnit extends CountryUnit_Base {
         }
         defaultCountry =
                 (CountryUnit) Unit.readUnitByAcronymAndType(
-                        ResourceBundle.getBundle("resources.GlobalResources", Language.getLocale()).getString(
+                        ResourceBundle.getBundle("resources.GlobalResources", I18N.getLocale()).getString(
                                 "default.country.code"), PartyTypeEnum.COUNTRY);
         return defaultCountry;
     }

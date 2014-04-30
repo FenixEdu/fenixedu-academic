@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@page import="java.util.Map.Entry"%>
 <%@page import="java.util.Map"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
@@ -8,6 +9,8 @@
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt"%>
 <html:xhtml/>
 <!-- aqui comeca o viewLogSearch -->
+
+<jsp:include page="/coordinator/context.jsp" />
 
 <h2> 
 	<bean:message key= "log.coordinator.title"/>
@@ -48,7 +51,7 @@
 		</h3>
 		<bean:define id="bean" name="searchBean" property="searchElementsAsParameters"/>
 			<cp:collectionPages
-				url="<%="/searchDLog.do?method=prepare&amp;degreeCurricularPlanID=" + request.getParameter("degreeCurricularPlanID") + bean %>" 
+				url="<%="/coordinator/searchDLog.do?method=prepare&amp;degreeCurricularPlanID=" + request.getParameter("degreeCurricularPlanID") + bean %>" 
 				pageNumberAttributeName="pageNumber"
 				numberOfPagesAttributeName="numberOfPages"/>
 

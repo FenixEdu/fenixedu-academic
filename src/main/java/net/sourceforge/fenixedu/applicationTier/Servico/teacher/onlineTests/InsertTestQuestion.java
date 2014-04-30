@@ -25,11 +25,8 @@ import pt.ist.fenixframework.FenixFramework;
 
 public class InsertTestQuestion {
 
-    private String path = new String();
-
     protected void run(String executionCourseId, String testId, String[] metadataId, Integer questionOrder, Double questionValue,
-            CorrectionFormula formula, String path) throws FenixServiceException {
-        this.path = path.replace('\\', '/');
+            CorrectionFormula formula) throws FenixServiceException {
 
         for (String element : metadataId) {
             Metadata metadata = FenixFramework.getDomainObject(element);
@@ -72,7 +69,7 @@ public class InsertTestQuestion {
                 }
                 try {
                     InfoQuestion infoQuestion = InfoQuestion.newInfoFromDomain(question);
-                    question = parseQuestion.parseSubQuestion(question, this.path);
+                    question = parseQuestion.parseSubQuestion(question);
                     if (infoQuestion.getQuestionValue() != null) {
                         thisQuestionValue = infoQuestion.getQuestionValue();
                     } else {
@@ -105,9 +102,9 @@ public class InsertTestQuestion {
 
     @Atomic
     public static void runInsertTestQuestion(String executionCourseId, String testId, String[] metadataId, Integer questionOrder,
-            Double questionValue, CorrectionFormula formula, String path) throws FenixServiceException, NotAuthorizedException {
+            Double questionValue, CorrectionFormula formula) throws FenixServiceException, NotAuthorizedException {
         ExecutionCourseLecturingTeacherAuthorizationFilter.instance.execute(executionCourseId);
-        serviceInstance.run(executionCourseId, testId, metadataId, questionOrder, questionValue, formula, path);
+        serviceInstance.run(executionCourseId, testId, metadataId, questionOrder, questionValue, formula);
     }
 
 }

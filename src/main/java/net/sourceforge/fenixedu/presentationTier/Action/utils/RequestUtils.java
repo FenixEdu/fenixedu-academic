@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.domain.PendingRequest;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
@@ -28,8 +27,6 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.struts.util.LabelValueBean;
-
-import pt.ist.fenixframework.Atomic;
 
 /**
  * 
@@ -39,8 +36,6 @@ import pt.ist.fenixframework.Atomic;
  * 
  */
 public class RequestUtils {
-
-    private static final boolean STORE_PENDING_REQUEST = FenixConfigurationManager.getConfiguration().getStorePendingRequest();
 
     public static String getAndSetStringToRequest(HttpServletRequest request, String name) {
         String parameter = request.getParameter(name);
@@ -117,51 +112,9 @@ public class RequestUtils {
         return curricularYears;
     }
 
-    /**
-     * Redirects the user to the login page saving the request state. This can
-     * be used to force the user to login before a certain request is fulfilled.
-     * 
-     * @param request
-     *            the current request
-     * @param response
-     *            the reponse were the redirect will be sent
-     * 
-     * @throws IOException
-     *             when it's not possible to send the redirect to the client
-     */
     public static void sendLoginRedirect(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
         request.getSession(true);
-
-        final PendingRequest pendingRequest = STORE_PENDING_REQUEST ? storeRequest(request) : null;
-        response.sendRedirect(generateRedirectLink(FenixConfigurationManager.getConfiguration().getLoginPage(), pendingRequest));
-    }
-
-    public static String generateRedirectLink(String url, PendingRequest pendingRequest) {
-        return generateRedirectLink(url, pendingRequest == null ? null : pendingRequest.getExternalId());
-    }
-
-    public static String generateRedirectLink(String url, String externalId) {
-        if (externalId == null || externalId.length() == 0 || externalId.equals("null")) {
-            return url;
-        }
-        String param = "pendingRequest=" + externalId;
-        if (url.contains("?")) {
-            if (url.contains("&")) {
-                return url + "&" + param;
-            } else if (url.charAt(url.length() - 1) != '?') {
-                return url + "&" + param;
-            } else {
-                return url + param;
-            }
-        } else {
-            return url + "?" + param;
-        }
-    }
-
-    @Atomic
-    public static PendingRequest storeRequest(HttpServletRequest request) {
-        return new PendingRequest(request);
+        response.sendRedirect(FenixConfigurationManager.getConfiguration().getLoginPage());
     }
 
 }

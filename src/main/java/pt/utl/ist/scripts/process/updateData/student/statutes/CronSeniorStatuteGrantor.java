@@ -18,9 +18,10 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.scheduler.CronTask;
 import org.fenixedu.bennu.scheduler.annotation.Task;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.LocalDate;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 @Task(englishTitle = "CronSeniorStatuteGrantor", readOnly = true)
 public class CronSeniorStatuteGrantor extends CronTask {
@@ -34,7 +35,7 @@ public class CronSeniorStatuteGrantor extends CronTask {
 
     @Override
     public void runTask() {
-        Language.setLocale(new Locale("pt", "PT"));
+        I18N.setLocale(new Locale("pt", "PT"));
         getLogger().info(".: Checking if a special season enrolment period is coming soon... :.");
         ExecutionYear subjectYear = specialSeasonEnrolmentPeriodOpeningSoonForThisYear(HOW_MANY_WEEKS_SOONER);
 

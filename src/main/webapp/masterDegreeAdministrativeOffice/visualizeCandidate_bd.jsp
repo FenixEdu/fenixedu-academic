@@ -18,8 +18,6 @@
 <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Globals.MAPPING_KEY %>" />
 <bean:define id="link">/editCandidate.do?method=prepareEdit&candidateID=</bean:define>
 
-
-<em><bean:message key="title.masterDegree.administrativeOffice"/></em>
 <h2><bean:message key="label.candidate"/></h2>
 
 

@@ -5,7 +5,7 @@
 <%@ taglib uri="http://jakarta.apache.org/taglibs/struts-example-1.0" prefix="app"%>
 <html:xhtml/>
 
-<bean:define id="site" name="site" type="net.sourceforge.fenixedu.domain.Site"/>
+<bean:define id="site" name="actual$site" type="net.sourceforge.fenixedu.domain.Site"/>
 <bean:define id="actionName" name="siteActionName"/>
 <bean:define id="contextParam" name="siteContextParam"/>
 <bean:define id="contextParamValue" name="siteContextParamValue"/>

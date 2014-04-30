@@ -6,7 +6,6 @@
 
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState"%><html:xhtml/>
 
-<em><bean:message key="title.student.portalTitle"/></em>
 <h2><bean:message key="title.student.thesis"/></h2>
 
 <div class="infoop2">

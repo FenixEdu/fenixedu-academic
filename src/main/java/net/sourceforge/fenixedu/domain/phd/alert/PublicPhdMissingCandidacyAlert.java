@@ -15,7 +15,6 @@ import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PublicPhdMissingCandidacyAlert extends PublicPhdMissingCandidacyAlert_Base {
@@ -39,7 +38,7 @@ public class PublicPhdMissingCandidacyAlert extends PublicPhdMissingCandidacyAle
     private MultiLanguageString generateSubject(final PhdProgramPublicCandidacyHashCode candidacyHashCode) {
         // TODO: if collaboration type change, then message must be different
         final ResourceBundle bundle = getResourceBundle(Locale.ENGLISH);
-        return new MultiLanguageString().with(Language.en, bundle.getString("message.phd.email.subject.missing.candidacy"));
+        return new MultiLanguageString().with(MultiLanguageString.en, bundle.getString("message.phd.email.subject.missing.candidacy"));
     }
 
     private MultiLanguageString generateBody(final PhdProgramPublicCandidacyHashCode hashCode) {
@@ -49,7 +48,7 @@ public class PublicPhdMissingCandidacyAlert extends PublicPhdMissingCandidacyAle
         final String body =
                 String.format(bundle.getString("message.phd.email.body.missing.candidacy"), submissionAccessURL,
                         hashCode.getValue());
-        return new MultiLanguageString().with(Language.en, body);
+        return new MultiLanguageString().with(MultiLanguageString.en, body);
     }
 
     @Override

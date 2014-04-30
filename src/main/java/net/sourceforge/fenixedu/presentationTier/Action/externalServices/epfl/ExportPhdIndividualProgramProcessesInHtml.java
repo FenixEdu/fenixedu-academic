@@ -43,7 +43,7 @@ import org.joda.time.Partial;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ExportPhdIndividualProgramProcessesInHtml {
 
@@ -202,9 +202,9 @@ public class ExportPhdIndividualProgramProcessesInHtml {
                 .column(process.getCandidacyDate().toString("dd/MM/yyyy")).rowEnd();
         page.rowStart().header("Area:").column(process.getPhdProgramFocusArea().getName().getContent()).rowEnd();
         page.rowStart().header(Unit.getInstitutionAcronym() + " Phd Program:")
-                .column(process.getPhdProgram().getName().getContent(Language.en)).rowEnd();
+                .column(process.getPhdProgram().getName().getContent(MultiLanguageString.en)).rowEnd();
         if (process.getExternalPhdProgram() != null) {
-            page.rowStart().header("EPFL Phd Program:").column(process.getExternalPhdProgram().getName().getContent(Language.en));
+            page.rowStart().header("EPFL Phd Program:").column(process.getExternalPhdProgram().getName().getContent(MultiLanguageString.en));
         }
         page.rowStart().header("Title:").column(string(process.getThesisTitle())).rowEnd();
         page.rowStart().header("Collaboration:").column(process.getCollaborationTypeName()).rowEnd();

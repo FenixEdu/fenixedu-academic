@@ -1,11 +1,18 @@
+<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 
-<ft:tilesView definition="df.coordinator.evaluation-management" attributeName="body-inline">
+<%
+	net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex.setCoordinatorContext(request);
+%>
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCoordinatorIndex" />
+<jsp:include page="/coordinator/context.jsp" />
+
+<f:view>
 	<f:loadBundle basename="resources/HtmlaltResources" var="htmlAltBundle"/>
 
 	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
@@ -22,13 +29,11 @@
 				<h:selectOneMenu value="#{CoordinatorEvaluationsBackingBean.executionPeriodID}" onchange="this.form.submit()">
 					<f:selectItems value="#{CoordinatorEvaluationsBackingBean.executionPeriodSelectItems}"/>
 				</h:selectOneMenu>
-				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
 
 				<h:outputText value="#{bundle['property.curricularYear']}: " escape="false" />
 				<h:selectOneMenu value="#{CoordinatorEvaluationsBackingBean.curricularYearID}" onchange="this.form.submit()">
 					<f:selectItems value="#{CoordinatorEvaluationsBackingBean.curricularYearSelectItems}"/>
 				</h:selectOneMenu>
-				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID2' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 
 				<h:outputText value="#{bundle['label.evaluation.type']}: "/>
 				<h:selectOneMenu value="#{CoordinatorEvaluationsBackingBean.evaluationType}" onchange="this.form.submit()">
@@ -37,7 +42,6 @@
 					<f:selectItem itemLabel="#{bundle['label.evaluation.type.project']}" itemValue="net.sourceforge.fenixedu.domain.Project"/>
 					<f:selectItem itemLabel="#{bundle['label.evaluation.type.exam']}" itemValue="net.sourceforge.fenixedu.domain.Exam"/>
 				</h:selectOneMenu>
-				<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID3' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'>" escape="false"/>
 			</h:panelGrid>
 		<h:outputText value="</div>" escape="false"/>
 
@@ -73,7 +77,7 @@
 				<tr><td colspan="5" class="header">
 					<c:out value="${executionCourseEvaluationEntry.key.sigla} - ${executionCourseEvaluationEntry.key.nome}" />
 					<c:out value=" | "/>
-					<c:url var="createEvaluationURL" value="createEvaluation.faces">
+					<c:url var="createEvaluationURL" value="#{facesContext.externalContext.requestContextPath}/coordinator/evaluation/createEvaluation.faces">
 						<c:param name="degreeCurricularPlanID" value="${CoordinatorEvaluationsBackingBean.degreeCurricularPlanID}"/>
 						<c:param name="executionPeriodID" value="${CoordinatorEvaluationsBackingBean.executionPeriodID}"/>
 						<c:param name="curricularYearID" value="${CoordinatorEvaluationsBackingBean.curricularYearID}"/>
@@ -94,7 +98,7 @@
 								<fmt:formatDate var="date" pattern="dd/MM/yyyy" value="${evaluation.dayDate}"/>
 								<fmt:formatDate var="begin" pattern="dd/MM/yyyy" value="${evaluation.beginningDate}"/>
 								<fmt:formatDate var="end" pattern="dd/MM/yyyy" value="${evaluation.endDate}"/>
-								<c:url var="editEvaluationURL" value="editEvaluation.faces">
+								<c:url var="editEvaluationURL" value="#{facesContext.externalContext.requestContextPath}/coordinator/evaluation/editEvaluation.faces">
 									<c:param name="degreeCurricularPlanID" value="${CoordinatorEvaluationsBackingBean.degreeCurricularPlanID}"/>
 									<c:param name="executionPeriodID" value="${CoordinatorEvaluationsBackingBean.executionPeriodID}"/>
 									<c:param name="curricularYearID" value="${CoordinatorEvaluationsBackingBean.curricularYearID}"/>
@@ -110,7 +114,7 @@
 									<c:out value="${bundle['label.edit']}"/>
 								</a>
 								<c:out value=" | "/>
-								<c:url var="deleteEvaluationURL" value="deleteEvaluation.faces">
+								<c:url var="deleteEvaluationURL" value="#{facesContext.externalContext.requestContextPath}/coordinator/evaluation/deleteEvaluation.faces">
 									<c:param name="degreeCurricularPlanID" value="${CoordinatorEvaluationsBackingBean.degreeCurricularPlanID}"/>
 									<c:param name="executionPeriodID" value="${CoordinatorEvaluationsBackingBean.executionPeriodID}"/>
 									<c:param name="curricularYearID" value="${CoordinatorEvaluationsBackingBean.curricularYearID}"/>
@@ -139,7 +143,7 @@
 							<td>
 								<fmt:formatDate var="begin" pattern="dd/MM/yyyy HH:mm" value="${evaluation.begin}"/>
 								<fmt:formatDate var="end" pattern="dd/MM/yyyy HH:mm" value="${evaluation.end}"/>
-								<c:url var="editEvaluationURL" value="editEvaluation.faces">
+								<c:url var="editEvaluationURL" value="#{facesContext.externalContext.requestContextPath}/coordinator/evaluation/editEvaluation.faces">
 									<c:param name="degreeCurricularPlanID" value="${CoordinatorEvaluationsBackingBean.degreeCurricularPlanID}"/>
 									<c:param name="executionPeriodID" value="${CoordinatorEvaluationsBackingBean.executionPeriodID}"/>
 									<c:param name="curricularYearID" value="${CoordinatorEvaluationsBackingBean.curricularYearID}"/>
@@ -155,7 +159,7 @@
 									<c:out value="${bundle['label.edit']}"/>
 								</a>
 								<c:out value=" | "/>
-								<c:url var="deleteEvaluationURL" value="deleteEvaluation.faces">
+								<c:url var="deleteEvaluationURL" value="#{facesContext.externalContext.requestContextPath}/coordinator/evaluation/deleteEvaluation.faces">
 									<c:param name="degreeCurricularPlanID" value="${CoordinatorEvaluationsBackingBean.degreeCurricularPlanID}"/>
 									<c:param name="executionPeriodID" value="${CoordinatorEvaluationsBackingBean.executionPeriodID}"/>
 									<c:param name="curricularYearID" value="${CoordinatorEvaluationsBackingBean.curricularYearID}"/>
@@ -193,4 +197,4 @@
 		</table>
 	</f:verbatim>
 
-</ft:tilesView>
+</f:view>

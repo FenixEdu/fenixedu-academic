@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -69,7 +70,6 @@ import org.joda.time.DateTime;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public abstract class Party extends Party_Base implements Comparable<Party> {
@@ -1605,7 +1605,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
                     JSONArray interestsArray = new JSONArray();
                     for (ResearchInterest interest : sorted) {
                         JSONObject jsonInterest = new JSONObject();
-                        for (Language langage : interest.getInterest().getAllLanguages()) {
+                        for (Locale langage : interest.getInterest().getAllLocales()) {
                             jsonInterest.put(langage.toString(), interest.getInterest().getContent(langage));
                         }
                         interestsArray.add(jsonInterest);
@@ -1735,16 +1735,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.messaging.PartyAnnouncementBoard> getBoards() {
-        return getBoardsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyBoards() {
-        return !getBoardsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.accounting.Event> getEvents() {
         return getEventsSet();
     }
@@ -1792,16 +1782,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     @Deprecated
     public boolean hasAnyInvitationAccountabilities() {
         return !getInvitationAccountabilitiesSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.tests.NewPermissionUnit> getPermissionUnits() {
-        return getPermissionUnitsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPermissionUnits() {
-        return !getPermissionUnitsSet().isEmpty();
     }
 
     @Deprecated
@@ -1855,21 +1835,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.parking.ParkingPartyHistory> getParkingPartyHistories() {
-        return getParkingPartyHistoriesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyParkingPartyHistories() {
-        return !getParkingPartyHistoriesSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasParkingParty() {
-        return getParkingParty() != null;
-    }
-
-    @Deprecated
     public boolean hasPartyType() {
         return getPartyType() != null;
     }
@@ -1882,11 +1847,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     @Deprecated
     public boolean hasPartySocialSecurityNumber() {
         return getPartySocialSecurityNumber() != null;
-    }
-
-    @Deprecated
-    public boolean hasQuestionBank() {
-        return getQuestionBank() != null;
     }
 
     @Deprecated

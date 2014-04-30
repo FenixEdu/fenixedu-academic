@@ -15,7 +15,7 @@
 	<bean:define id="threadId" name="thread" property="externalId" />
 		<logic:present name="person">
 			<logic:present name="messages">			
-				<bean:define id="conversationMessages" name="thread" property="conversationMessages" />
+				<bean:define id="conversationMessages" name="thread" property="messageSet" />
 					<em><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.executionCourse.forum" />&nbsp;<bean:write name="forum" property="name"/></em>
 					<h2><bean:message bundle="MESSAGING_RESOURCES" key="label.viewThread.title"/></h2>
 					

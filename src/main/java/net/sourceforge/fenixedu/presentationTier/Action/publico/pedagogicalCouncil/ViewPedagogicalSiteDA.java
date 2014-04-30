@@ -1,18 +1,13 @@
 package net.sourceforge.fenixedu.presentationTier.Action.publico.pedagogicalCouncil;
 
-import java.net.MalformedURLException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.PedagogicalCouncilSite;
-import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.UnitSiteVisualizationDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.util.RequestUtils;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -34,17 +29,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "site-section-deny", path = "pedagogicalCouncil-section-deny"),
         @Forward(name = "unit-organization", path = "pedagogicalCouncil-organization") })
 public class ViewPedagogicalSiteDA extends UnitSiteVisualizationDA {
-
-    @Override
-    protected String getDirectLinkContext(HttpServletRequest request) {
-
-        MetaDomainObjectPortal portal = MetaDomainObjectPortal.getPortal(PedagogicalCouncilSite.class);
-        try {
-            return RequestUtils.absoluteURL(request, portal.getNormalizedName().getContent()).toString();
-        } catch (MalformedURLException e) {
-            return "";
-        }
-    }
 
     @Override
     protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form, HttpServletRequest request,

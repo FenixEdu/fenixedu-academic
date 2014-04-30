@@ -1,5 +1,7 @@
 package pt.utl.ist.codeGenerator.database;
 
+import java.util.Locale;
+
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod;
@@ -8,14 +10,15 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicSemesterCE
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE;
 import net.sourceforge.fenixedu.util.PeriodState;
 
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.YearMonthDay;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateExecutionYears {
     public static void createExecutionYears() {
-        Language.setLocale(Language.getDefaultLocale());
+        I18N.setLocale(Locale.getDefault());
 
         final int numYearsToCreate = 5;
         final YearMonthDay today = new YearMonthDay();

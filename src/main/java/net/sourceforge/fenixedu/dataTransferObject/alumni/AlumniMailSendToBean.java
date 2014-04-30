@@ -5,10 +5,14 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.accessControl.ConclusionYearDegreesStudentsGroup;
+import net.sourceforge.fenixedu.domain.accessControl.StudentsConcludedInExecutionYearGroup;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
+
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.NobodyGroup;
+
 import pt.ist.fenixframework.Atomic;
 
 public class AlumniMailSendToBean implements Serializable {
@@ -52,9 +56,10 @@ public class AlumniMailSendToBean implements Serializable {
 
     @Atomic
     public void createRecipientGroup(Sender sender) {
-        ConclusionYearDegreesStudentsGroup recipientsGroup =
-                new ConclusionYearDegreesStudentsGroup(getDegrees(), getEndExecutionYear());
-        Recipient recipients = Recipient.newInstance(recipientsGroup);
-        sender.addRecipients(recipients);
+        Group group = NobodyGroup.get();
+        for (Degree degree : getDegrees()) {
+            group = group.or(StudentsConcludedInExecutionYearGroup.get(degree, getEndExecutionYear()));
+        }
+        sender.addRecipients(Recipient.newInstance(group));
     }
 }

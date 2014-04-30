@@ -52,7 +52,6 @@ import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class AdministrativeOfficeDocument extends FenixReport {
@@ -150,15 +149,14 @@ public class AdministrativeOfficeDocument extends FenixReport {
     }
 
     protected AdministrativeOfficeDocument(final IDocumentRequest documentRequest) {
-        this(documentRequest, new Locale(documentRequest.getLanguage().name()));
+        this(documentRequest, documentRequest.getLanguage());
     }
 
     public AdministrativeOfficeDocument(final IDocumentRequest documentRequest, final Locale locale) {
         super(locale);
-        this.portugueseEnumerationBundle =
-                ResourceBundle.getBundle("resources.EnumerationResources", Language.getDefaultLocale());
+        this.portugueseEnumerationBundle = ResourceBundle.getBundle("resources.EnumerationResources", Locale.getDefault());
 
-        this.portugueseAcademicBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getDefaultLocale());
+        this.portugueseAcademicBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", Locale.getDefault());
 
         setResourceBundle(ResourceBundle.getBundle("resources.AcademicAdminOffice", locale));
         this.documentRequestDomainReference = documentRequest;
@@ -412,7 +410,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
         return getMLSTextContent(mls, getLanguage());
     }
 
-    protected String getMLSTextContent(final MultiLanguageString mls, final Language language) {
+    protected String getMLSTextContent(final MultiLanguageString mls, final Locale language) {
         if (mls == null) {
             return EMPTY_STR;
         }

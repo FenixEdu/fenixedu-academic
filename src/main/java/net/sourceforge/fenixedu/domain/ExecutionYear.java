@@ -806,16 +806,6 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.cardGeneration.SantanderBatch> getSantanderBatches() {
-        return getSantanderBatchesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnySantanderBatches() {
-        return !getSantanderBatchesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.curriculum.ConclusionProcessVersion> getConclusionProcessVersionsBegined() {
         return getConclusionProcessVersionsBeginedSet();
     }
@@ -873,16 +863,6 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     @Deprecated
     public boolean hasAnyGratuityReportQueueJobs() {
         return !getGratuityReportQueueJobsSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch> getCardGenerationBatches() {
-        return getCardGenerationBatchesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCardGenerationBatches() {
-        return !getCardGenerationBatchesSet().isEmpty();
     }
 
     @Deprecated

@@ -6,27 +6,30 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.DirectiveCouncilApplication.DirectiveCouncilExternalSupervision;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
+@StrutsFunctionality(app = DirectiveCouncilExternalSupervision.class, path = "manage",
+        titleKey = "link.directiveCouncil.manageExternalSupervision")
 @Mapping(path = "/manageExternalSupervision", module = "directiveCouncil")
 @Forwards({
         @Forward(name = "selectRegistrationAgreement",
-                path = "/directiveCouncil/manageExternalSupervision/selectRegistrationAgreement.jsp", tileProperties = @Tile(
-                        title = "private.steeringcouncil.externaloversight.managementofexternalsupervisors")),
-        @Forward(name = "showSupervisors", path = "/directiveCouncil/manageExternalSupervision/showSupervisors.jsp",
-                tileProperties = @Tile(title = "private.steeringcouncil.externaloversight.managementofexternalsupervisors")) })
+                path = "/directiveCouncil/manageExternalSupervision/selectRegistrationAgreement.jsp"),
+        @Forward(name = "showSupervisors", path = "/directiveCouncil/manageExternalSupervision/showSupervisors.jsp") })
 public class ManageExternalSupervisionDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepareSelectAgreement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) {
         request.setAttribute("sessionBean", new ManageExternalSupervisionBean());

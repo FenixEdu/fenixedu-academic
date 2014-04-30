@@ -7,10 +7,16 @@ import net.sourceforge.fenixedu.domain.inquiries.ExecutionCourseAudit;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.departmentMember.QUCAuditorDA;
+import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentParticipateApp;
+
+import org.fenixedu.bennu.portal.StrutsFunctionality;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@StrutsFunctionality(app = StudentParticipateApp.class, path = "quc-audit-processes",
+        titleKey = "title.inquiry.quc.auditProcesses", bundle = "InquiriesResources")
 @Mapping(path = "/qucAudit", module = "student")
 @Forwards({ @Forward(name = "viewAuditProcesses", path = "/student/inquiries/viewAuditProcesses.jsp"),
         @Forward(name = "viewProcessDetails", path = "/student/inquiries/viewProcessDetails.jsp"),

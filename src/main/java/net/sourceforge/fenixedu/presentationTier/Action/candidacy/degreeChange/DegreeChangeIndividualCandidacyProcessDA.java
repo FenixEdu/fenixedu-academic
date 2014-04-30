@@ -31,11 +31,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/caseHandlingDegreeChangeIndividualCandidacyProcess", module = "academicAdministration",
-        formBeanClass = FenixActionForm.class)
+        formBeanClass = FenixActionForm.class, functionality = DegreeChangeCandidacyProcessDA.class)
 @Forwards({
-        // @Forward(name = "intro", path =
-        // "/candidacy/mainCandidacyProcess.jsp"),
-        @Forward(name = "intro", path = "/caseHandlingDegreeChangeCandidacyProcess.do?method=listProcessAllowedActivities"),
+        @Forward(name = "intro",
+                path = "/academicAdministration/caseHandlingDegreeChangeCandidacyProcess.do?method=listProcessAllowedActivities"),
         @Forward(name = "list-allowed-activities", path = "/candidacy/degreeChange/listIndividualCandidacyActivities.jsp"),
         @Forward(name = "prepare-create-new-process", path = "/candidacy/selectPersonForCandidacy.jsp"),
         @Forward(name = "fill-personal-information", path = "/candidacy/fillPersonalInformation.jsp"),
@@ -52,9 +51,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "prepare-edit-candidacy-documents", path = "/candidacy/editCandidacyDocuments.jsp"),
         @Forward(name = "change-process-checked-state", path = "/candidacy/changeProcessCheckedState.jsp"),
         @Forward(name = "change-payment-checked-state", path = "/candidacy/changePaymentCheckedState.jsp"),
-        @Forward(name = "reject-candidacy", path = "/candidacy/rejectCandidacy.jsp")
-
-})
+        @Forward(name = "reject-candidacy", path = "/candidacy/rejectCandidacy.jsp") })
 public class DegreeChangeIndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
 
     @Override

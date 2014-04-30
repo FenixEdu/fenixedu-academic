@@ -44,8 +44,8 @@ import pt.ist.fenixframework.FenixFramework;
  * 
  */
 @Mapping(path = "/editExecutionCourse", module = "academicAdministration",
-        input = "/editExecutionCourse.do?method=prepareEditECChooseExecDegreeAndCurYear&amp;page=0", scope = "request",
-        parameter = "method", attribute = "executionCourseForm", formBean = "executionCourseForm")
+        input = "/editExecutionCourse.do?method=prepareEditECChooseExecDegreeAndCurYear&amp;page=0",
+        formBean = "executionCourseForm", functionality = EditExecutionCourseDA.class)
 @Forwards({
         @Forward(name = "editExecutionCourse", path = "/academicAdministration/executionCourseManagement/editExecutionCourse.jsp"),
         @Forward(name = "viewExecutionCourse", path = "/academicAdministration/executionCourseManagement/viewExecutionCourse.jsp"),

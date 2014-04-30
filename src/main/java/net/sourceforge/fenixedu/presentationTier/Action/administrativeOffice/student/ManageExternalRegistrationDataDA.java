@@ -23,7 +23,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-@Mapping(path = "/manageExternalRegistrationData", module = "academicAdministration")
+@Mapping(path = "/manageExternalRegistrationData", module = "academicAdministration", functionality = SearchForStudentsDA.class)
 @Forwards({ @Forward(name = "manageExternalRegistrationData",
         path = "/academicAdminOffice/student/registration/manageExternalRegistrationData.jsp") })
 public class ManageExternalRegistrationDataDA extends FenixDispatchAction {

@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadStudentsAndG
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadExportGroupingsByGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExportGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentsAndGroups;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
 import org.apache.struts.action.ActionError;
@@ -23,7 +23,6 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -33,16 +32,14 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author joaosa & rmalo
  * 
  */
-@Mapping(module = "student", path = "/viewStudentsAndGroupsByShift", scope = "request")
+@Mapping(module = "student", path = "/viewStudentsAndGroupsByShift", functionality = ViewEnroledExecutionCoursesAction.class)
 @Forwards(value = { @Forward(name = "sucess", path = "/student/viewStudentsAndGroupsByShift_bd.jsp"),
-        @Forward(name = "viewExecutionCourseProjects", path = "/viewExecutionCourseProjects.do") })
-public class ViewStudentsAndGroupsByShiftAction extends FenixContextAction {
+        @Forward(name = "viewExecutionCourseProjects", path = "/student/viewExecutionCourseProjects.do") })
+public class ViewStudentsAndGroupsByShiftAction extends FenixAction {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixActionException, FenixServiceException {
-
-        User userView = getUserView(request);
 
         String groupPropertiesCodeString = request.getParameter("groupPropertiesCode");
         String shiftCodeString = request.getParameter("shiftCode");

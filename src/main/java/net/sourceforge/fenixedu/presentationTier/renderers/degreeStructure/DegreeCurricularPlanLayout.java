@@ -5,6 +5,8 @@ import java.math.RoundingMode;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import org.fenixedu.commons.i18n.I18N;
+
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -23,7 +25,7 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableRow;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.utl.ist.fenix.tools.util.Pair;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 abstract class DegreeCurricularPlanLayout extends Layout {
 
@@ -34,7 +36,7 @@ abstract class DegreeCurricularPlanLayout extends Layout {
     static private final int MAX_COL_SPAN_FOR_TEXT_ON_GROUPS_WITH_CHILDS = 21;
     static private final int MAX_COL_SPAN_FOR_TEXT_ON_CURRICULAR_COURSES = 21;
 
-    private final ResourceBundle apr = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
+    private final ResourceBundle apr = ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
     private DegreeCurricularPlanRenderer degreeCurricularPlanRenderer;
 
     protected DegreeCurricularPlanLayout(DegreeCurricularPlanRenderer degreeCurricularPlanRenderer) {

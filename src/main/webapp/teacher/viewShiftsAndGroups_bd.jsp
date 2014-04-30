@@ -15,8 +15,6 @@
 
 <%@ page import="java.util.Calendar" %>
 
-<logic:present name="siteView" property="component">
-	<bean:define id="component" name="siteView" property="component" />
 	<bean:define id="numberOfStudentsOutsideAttendsSet" name="component" property="numberOfStudentsOutsideAttendsSet" />
 	<bean:define id="numberOfStudentsInsideAttendsSet" name="component" property="numberOfStudentsInsideAttendsSet" />
 	<bean:define id="groupingOID" name="component" property="infoGrouping.externalId" />
@@ -46,7 +44,7 @@
 			</p>
 			<ul class="mtop05">
 				<li>
-					<html:link page="<%="/prepareInsertStudentsInAttendsSet.do?method=prepareInsertStudentsInAttendsSet&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+ "&amp;groupingOID=" + groupingOID.toString()%>">
+					<html:link page="<%="/studentGroupManagement.do?method=prepareInsertStudentsInAttendsSet&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+ "&amp;groupingOID=" + groupingOID.toString()%>">
 		    			<bean:message key="link.insertStudentsInAttendsSet"/>
 			    	</html:link>
 		    	</li>
@@ -58,19 +56,19 @@
 		</p>
 	
 		<p class="mbottom05">	
-			<html:link page="<%= "/editGroupProperties.do?method=prepareEditGroupProperties&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="objectCode" paramName="objectCode" >
+			<html:link page="<%= "/studentGroupManagement.do?method=prepareEditGroupProperties&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="executionCourseID" paramName="executionCourseID" >
 				<bean:message key="link.editGroupProperties"/>
 			</html:link>
 			| 
-			<html:link page="<%= "/viewAttendsSet.do?method=viewAttendsSet&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode") + "&amp;groupingOID=" + groupingOID.toString()%>" paramId="objectCode" paramName="objectCode" >
+			<html:link page="<%= "/studentGroupManagement.do?method=viewAttendsSet&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode") + "&amp;groupingOID=" + groupingOID.toString()%>" paramId="executionCourseID" paramName="executionCourseID" >
 			<bean:message key="link.viewAttendsSet"/>
 			</html:link></b>
 			| 
-			<html:link page="<%= "/exportGroupProperties.do?method=preparePublic&amp;nextPage=executionCourseSearch&amp;inputPage=chooseContext&amp;executionPeriodOID=" + request.getAttribute(PresentationConstants.EXECUTION_PERIOD_OID) + "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="objectCode" paramName="objectCode" >
+			<html:link page="<%= "/exportGroupProperties.do?method=preparePublic&amp;nextPage=executionCourseSearch&amp;inputPage=chooseContext&amp;executionPeriodOID=" + request.getAttribute(PresentationConstants.EXECUTION_PERIOD_OID) + "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="executionCourseID" paramName="executionCourseID" >
 				<bean:message key="link.exportGroupProperties"/>
 			</html:link>
 			| 
-			<html:link page="<%= "/deleteGroupProperties.do?method=deleteGroupProperties&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="objectCode" paramName="objectCode" onclick='<%= onclick.toString() %>'>
+			<html:link page="<%= "/studentGroupManagement.do?method=deleteGroupProperties&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="executionCourseID" paramName="executionCourseID" onclick='<%= onclick.toString() %>'>
 				<bean:message key="link.deleteGroupProperties"/>
 			</html:link>
 		</p>
@@ -89,7 +87,7 @@
 		
 		<ul class="mtop15">
 			<li>
-				<html:link page="<%="/viewAllStudentsAndGroups.do?method=viewAllStudentsAndGroups&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+				<html:link page="<%="/studentGroupManagement.do?method=viewAllStudentsAndGroups&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
 			    	<bean:message key="link.viewAllStudentsAndGroups"/>
 		    	</html:link>
 	    	</li>
@@ -102,7 +100,7 @@
 		<logic:greaterThan name="numberOfStudentsOutsideAttendsSet" value="0">
 			<p>
 				<span color="red">Atenção: <b><bean:write name="numberOfStudentsOutsideAttendsSet"/></b> <bean:message key="message.numberOfStudentsOutsideAttendsSet"/></span>
-				<html:link page="<%="/prepareInsertStudentsInAttendsSet.do?method=prepareInsertStudentsInAttendsSet&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+ "&amp;groupingOID=" + groupingOID.toString()%>">
+				<html:link page="<%="/studentGroupManagement.do?method=prepareInsertStudentsInAttendsSet&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+ "&amp;groupingOID=" + groupingOID.toString()%>">
 	   			<bean:message key="link.insertStudentsInAttendsSet"/>
 		    	</html:link>
 			</p>
@@ -111,19 +109,19 @@
 		<p class="mtop15"><b><bean:message key="label.groupPropertiesManagement"/></b>
 		
 		<p class="mbottom05">
-			<html:link page="<%= "/editGroupProperties.do?method=prepareEditGroupProperties&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="objectCode" paramName="objectCode" >
+			<html:link page="<%= "/studentGroupManagement.do?method=prepareEditGroupProperties&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="executionCourseID" paramName="executionCourseID" >
 				<bean:message key="link.editGroupProperties"/>
 			</html:link>
 			, 
-			<html:link page="<%= "/viewAttendsSet.do?method=viewAttendsSet&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode") + "&amp;groupingOID=" + groupingOID.toString()%>" paramId="objectCode" paramName="objectCode" >
+			<html:link page="<%= "/studentGroupManagement.do?method=viewAttendsSet&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode") + "&amp;groupingOID=" + groupingOID.toString()%>" paramId="executionCourseID" paramName="executionCourseID" >
 				<bean:message key="link.viewAttendsSet"/>
 			</html:link></b>
 			, 
-			<html:link page="<%= "/exportGroupProperties.do?method=preparePublic&amp;nextPage=executionCourseSearch&amp;inputPage=chooseContext&amp;executionPeriodOID=" + request.getAttribute(PresentationConstants.EXECUTION_PERIOD_OID) + "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="objectCode" paramName="objectCode" >
+			<html:link page="<%= "/exportGroupProperties.do?method=preparePublic&amp;nextPage=executionCourseSearch&amp;inputPage=chooseContext&amp;executionPeriodOID=" + request.getAttribute(PresentationConstants.EXECUTION_PERIOD_OID) + "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="executionCourseID" paramName="executionCourseID" >
 				<bean:message key="link.exportGroupProperties"/>
 			</html:link>
 			, 
-			<html:link page="<%= "/deleteGroupProperties.do?method=deleteGroupProperties&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="objectCode" paramName="objectCode" onclick='<%= onclick.toString() %>'>
+			<html:link page="<%= "/studentGroupManagement.do?method=deleteGroupProperties&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="executionCourseID" paramName="executionCourseID" onclick='<%= onclick.toString() %>'>
 				<bean:message key="link.deleteGroupProperties"/>
 			</html:link>
 		</p>
@@ -137,7 +135,7 @@
 		
 		<ul class="mtop15">
 			<li>
-				<html:link page="<%="/viewAllStudentsAndGroups.do?method=viewAllStudentsAndGroups&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+				<html:link page="<%="/studentGroupManagement.do?method=viewAllStudentsAndGroups&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
 			    	<bean:message key="link.viewAllStudentsAndGroups"/>
 		    	</html:link>
 	    	</li>
@@ -152,7 +150,7 @@
 			</p>
 			<ul class="mtop05">
 				<li>
-					<html:link page="<%="/prepareInsertStudentsInAttendsSet.do?method=prepareInsertStudentsInAttendsSet&amp;objectCode=" + pageContext.findAttribute("objectCode")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+ "&amp;groupingOID=" + groupingOID.toString()%>">
+					<html:link page="<%="/studentGroupManagement.do?method=prepareInsertStudentsInAttendsSet&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID")+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")+ "&amp;groupingOID=" + groupingOID.toString()%>">
 	    			<bean:message key="link.insertStudentsInAttendsSet"/>
 			    	</html:link>
 		    	</li>
@@ -162,15 +160,15 @@
 		<p class="mtop15"><b><bean:message key="label.groupPropertiesManagement"/></b></p>
 
 		<p class="mbottom05">		
-			<html:link page="<%= "/editGroupProperties.do?method=prepareEditGroupProperties&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="objectCode" paramName="objectCode" >
+			<html:link page="<%= "/studentGroupManagement.do?method=prepareEditGroupProperties&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="executionCourseID" paramName="executionCourseID" >
 				<bean:message key="link.editGroupProperties"/>
 			</html:link>
 			, 
-			<html:link page="<%= "/viewAttendsSet.do?method=viewAttendsSet&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode") + "&amp;groupingOID=" + groupingOID.toString()%>" paramId="objectCode" paramName="objectCode" >
+			<html:link page="<%= "/studentGroupManagement.do?method=viewAttendsSet&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode") + "&amp;groupingOID=" + groupingOID.toString()%>" paramId="executionCourseID" paramName="executionCourseID" >
 				<bean:message key="link.viewAttendsSet"/>
 			</html:link></b>
 			, 
-			<html:link page="<%= "/exportGroupProperties.do?method=preparePublic&amp;nextPage=executionCourseSearch&amp;inputPage=chooseContext&amp;executionPeriodOID=" + request.getAttribute(PresentationConstants.EXECUTION_PERIOD_OID) + "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="objectCode" paramName="objectCode" >
+			<html:link page="<%= "/exportGroupProperties.do?method=preparePublic&amp;nextPage=executionCourseSearch&amp;inputPage=chooseContext&amp;executionPeriodOID=" + request.getAttribute(PresentationConstants.EXECUTION_PERIOD_OID) + "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>" paramId="executionCourseID" paramName="executionCourseID" >
 				<bean:message key="link.exportGroupProperties"/>
 			</html:link>
 		</p>
@@ -215,7 +213,7 @@
 			<tr>
 								
 								<td>
-									<html:link page="<%="/viewStudentsAndGroupsWithoutShift.do?method=viewStudentsAndGroupsWithoutShift&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode") %>" >
+									<html:link page="<%="/studentGroupManagement.do?method=viewStudentsAndGroupsWithoutShift&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID") + "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode") %>" >
 		               					Sem Turno
 									</html:link>
 								</td>
@@ -243,7 +241,7 @@
 						 		</td>
 								
 								<td>
-									<html:link page="<%= "/insertStudentGroup.do?method=prepareCreateStudentGroup&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+									<html:link page="<%= "/studentGroupManagement.do?method=prepareCreateStudentGroup&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID") + "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
 										<bean:message key="link.insertGroup"/>
 									</html:link>		   								
 								</td>						
@@ -252,7 +250,7 @@
 		                        <logic:notEmpty name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList">
 		                        [<logic:iterate id="infoSiteStudentGroup" name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList" >
 									<bean:define id="infoStudentGroup" name="infoSiteStudentGroup" property="infoStudentGroup"/>
-									<bean:define id="urlString" type="java.lang.String">/viewStudentGroupInformation.do?method=viewStudentGroupInformation&amp;objectCode=<%= pageContext.findAttribute("objectCode") %>&amp;groupPropertiesCode=<%= request.getParameter("groupPropertiesCode") %></bean:define>
+									<bean:define id="urlString" type="java.lang.String">/studentGroupManagement.do?method=viewStudentGroupInformation&amp;executionCourseID=<%= pageContext.findAttribute("executionCourseID") %>&amp;groupPropertiesCode=<%= request.getParameter("groupPropertiesCode") %></bean:define>
 		                        	<html:link page="<%= urlString %>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="externalId">
 		               					<bean:write name="infoStudentGroup" property="groupNumber"/>
 									</html:link>
@@ -278,7 +276,7 @@
 			 		<logic:empty name="infoShift" property="infoLessons">
 							<tr>
 								<td  rowspan="1">
-									<html:link page="<%="/viewStudentsAndGroupsByShift.do?method=viewStudentsAndGroupsByShift&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;shiftCode=" + shiftCode.toString()+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode") %>" >
+									<html:link page="<%="/studentGroupManagement.do?method=viewStudentsAndGroupsByShift&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID") + "&amp;shiftCode=" + shiftCode.toString()+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode") %>" >
 		               					<bean:write name="infoShift" property="nome"/>
 									</html:link>
 								</td>
@@ -302,7 +300,7 @@
 		                        <logic:notEmpty name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList">
 		                        [<logic:iterate id="infoSiteStudentGroup" name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList" >
 									<bean:define id="infoStudentGroup" name="infoSiteStudentGroup" property="infoStudentGroup"/>	
-		                        	<html:link page="<%="/viewStudentGroupInformation.do?method=viewStudentGroupInformation&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;shiftCode=" + shiftCode.toString()+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode") %>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="externalId">
+		                        	<html:link page="<%="/studentGroupManagement.do?method=viewStudentGroupInformation&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID") + "&amp;shiftCode=" + shiftCode.toString()+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode") %>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="externalId">
 		               					<bean:write name="infoStudentGroup" property="groupNumber"/>
 									</html:link>
 								</logic:iterate>]
@@ -326,7 +324,7 @@
 							<tr>
 								
 								<td  rowspan="<%=((InfoShift) infoShift).getInfoLessons().size() %>">
-									<html:link page="<%="/viewStudentsAndGroupsByShift.do?method=viewStudentsAndGroupsByShift&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;shiftCode=" + shiftCode.toString()+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode") %>" >
+									<html:link page="<%="/studentGroupManagement.do?method=viewStudentsAndGroupsByShift&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID") + "&amp;shiftCode=" + shiftCode.toString()+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode") %>" >
 		               					<bean:write name="infoShift" property="nome"/>
 									</html:link>
 									
@@ -357,7 +355,7 @@
 								
 								<td width="13%" rowspan="<%=((InfoShift) infoShift).getInfoLessons().size() %>">							 		
 		   																
-								 	<html:link page="<%= "/insertStudentGroup.do?method=prepareCreateStudentGroup&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;shiftCode=" + shiftCode.toString()+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
+								 	<html:link page="<%= "/studentGroupManagement.do?method=prepareCreateStudentGroup&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID") + "&amp;shiftCode=" + shiftCode.toString()+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode")%>">
 										<bean:message key="link.insertGroup"/>
 									</html:link>	   
 									
@@ -368,7 +366,7 @@
 		                        <logic:notEmpty name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList">
 		                        [<logic:iterate id="infoSiteStudentGroup" name="infoSiteGroupsByShift" property="infoSiteStudentGroupsList" >
 									<bean:define id="infoStudentGroup" name="infoSiteStudentGroup" property="infoStudentGroup"/>	
-		                        	<html:link page="<%="/viewStudentGroupInformation.do?method=viewStudentGroupInformation&amp;objectCode=" + pageContext.findAttribute("objectCode") + "&amp;shiftCode=" + shiftCode.toString()+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode") %>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="externalId">
+		                        	<html:link page="<%="/studentGroupManagement.do?method=viewStudentGroupInformation&amp;executionCourseID=" + pageContext.findAttribute("executionCourseID") + "&amp;shiftCode=" + shiftCode.toString()+ "&amp;groupPropertiesCode=" + request.getParameter("groupPropertiesCode") %>" paramId="studentGroupCode" paramName="infoStudentGroup" paramProperty="externalId">
 		               					<bean:write name="infoStudentGroup" property="groupNumber"/>
 									</html:link>
 								</logic:iterate>]
@@ -413,11 +411,3 @@
 		</table>
 		
 	</logic:notPresent>	
-
-</logic:present>
-
-<logic:notPresent name="siteView" property="component">
-<p>
-	<span class="warning0"><bean:message key="message.shifts.not.available" /></span>
-</p>
-</logic:notPresent>

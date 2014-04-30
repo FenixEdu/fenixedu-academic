@@ -12,10 +12,11 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class PhdSchoolRegistrationDeclarationDocument extends FenixReport {
 
@@ -26,7 +27,7 @@ public class PhdSchoolRegistrationDeclarationDocument extends FenixReport {
     public PhdSchoolRegistrationDeclarationDocument(final PhdIndividualProgramProcess process) {
         this.process = process;
 
-        setResourceBundle(ResourceBundle.getBundle("resources.PhdResources", Language.getLocale()));
+        setResourceBundle(ResourceBundle.getBundle("resources.PhdResources", I18N.getLocale()));
         fillReport();
     }
 
@@ -50,7 +51,7 @@ public class PhdSchoolRegistrationDeclarationDocument extends FenixReport {
         addParameter("executionYear", process.getExecutionYear().getName());
         addParameter("phdProgramName", process.getPhdProgram().getName().getContent());
 
-        addParameter("documentDate", new LocalDate().toString(DD_MMMM_YYYY, Language.getLocale()));
+        addParameter("documentDate", new LocalDate().toString(DD_MMMM_YYYY, I18N.getLocale()));
     }
 
     private String getStudentNumber() {

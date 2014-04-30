@@ -2,13 +2,15 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeCoordinatorsGroup;
+import net.sourceforge.fenixedu.domain.accessControl.CoordinatorGroup;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
+import net.sourceforge.fenixedu.domain.cms.CmsContent;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.injectionCode.IGroup;
+
+import org.fenixedu.bennu.core.groups.Group;
+
 import pt.ist.fenixframework.Atomic;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class DegreeSite extends DegreeSite_Base {
@@ -20,37 +22,31 @@ public class DegreeSite extends DegreeSite_Base {
     }
 
     @Override
-    public IGroup getOwner() {
-        return new CurrentDegreeCoordinatorsGroup(getDegree());
+    public Group getOwner() {
+        return CoordinatorGroup.get(getDegree());
     }
 
     @Override
-    public List<IGroup> getContextualPermissionGroups() {
-        List<IGroup> groups = super.getContextualPermissionGroups();
+    public List<Group> getContextualPermissionGroups() {
+        List<Group> groups = super.getContextualPermissionGroups();
 
-        groups.add(new CurrentDegreeCoordinatorsGroup(getDegree()));
-        groups.add(new RoleGroup(RoleType.TEACHER));
+        groups.add(CoordinatorGroup.get(getDegree()));
+        groups.add((Group) RoleGroup.get(RoleType.TEACHER));
 
         return groups;
     }
 
     @Override
-    protected void disconnect() {
+    public void delete() {
         setDegree(null);
-        super.disconnect();
+        super.delete();
     }
 
     @Override
     public MultiLanguageString getName() {
         final Degree degree = getDegree();
         final String name = degree.getSigla();
-        return new MultiLanguageString().with(Language.pt, name);
-    }
-
-    @Override
-    public void setNormalizedName(final MultiLanguageString normalizedName) {
-        // unable to optimize because we cannot track changes to name correctly.
-        // don't call super.setNormalizedName() !
+        return new MultiLanguageString().with(MultiLanguageString.pt, name);
     }
 
     @Override
@@ -75,4 +71,14 @@ public class DegreeSite extends DegreeSite_Base {
         return getDegree() != null;
     }
 
+    @Override
+    public String getReversePath() {
+        return super.getReversePath() + "/" + getDegree().getSigla().toLowerCase();
+    }
+
+    @Override
+    public CmsContent getInitialContent() {
+        List<Section> sections = getOrderedSections();
+        return sections.isEmpty() ? null : sections.get(0);
+    }
 }

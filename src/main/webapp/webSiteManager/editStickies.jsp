@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <html:xhtml/>
@@ -7,6 +8,8 @@
 
 <bean:define id="contextPrefix" name="contextPrefix" type="java.lang.String"/>
 <bean:define id="extraParameters" name="extraParameters" type="java.lang.String"/>
+
+<jsp:include page="/commons/renderers/treeRendererHeader.jsp" />
 
 <em><bean:message key="label.webSiteManagement" bundle="MESSAGING_RESOURCES"/></em>
 

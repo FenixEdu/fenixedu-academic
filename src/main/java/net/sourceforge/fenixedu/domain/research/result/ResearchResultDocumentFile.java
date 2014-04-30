@@ -1,13 +1,14 @@
 package net.sourceforge.fenixedu.domain.research.result;
 
 import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
-import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.predicates.ResultPredicates;
+
+import org.fenixedu.bennu.core.groups.AnyoneGroup;
+import org.fenixedu.bennu.core.groups.Group;
+
 import pt.ist.fenixframework.FenixFramework;
 
 public class ResearchResultDocumentFile extends ResearchResultDocumentFile_Base {
@@ -50,16 +51,13 @@ public class ResearchResultDocumentFile extends ResearchResultDocumentFile_Base 
     public final static Group getPermittedGroup(FileResultPermittedGroupType permissionType) {
         switch (permissionType) {
         case INSTITUTION:
-            return new RoleGroup(Role.getRoleByRoleType(RoleType.PERSON));
-
+            return RoleGroup.get(RoleType.PERSON);
         case PUBLIC:
-            return new EveryoneGroup();
-
+            return AnyoneGroup.get();
         case RESEARCHER:
-            return new RoleGroup(Role.getRoleByRoleType(RoleType.RESEARCHER));
-
+            return RoleGroup.get(RoleType.RESEARCHER);
         default:
-            return new EveryoneGroup();
+            return AnyoneGroup.get();
         }
     }
 

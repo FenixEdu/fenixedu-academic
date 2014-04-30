@@ -5,7 +5,6 @@
 
 <html:xhtml/>
 
-<em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="label.serviceRequests" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
 

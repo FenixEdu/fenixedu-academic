@@ -3,9 +3,11 @@ package net.sourceforge.fenixedu.domain.candidacyProcess;
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.NoOneGroup;
-import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
+
+import org.fenixedu.bennu.core.groups.NobodyGroup;
+
 import pt.ist.fenixframework.Atomic;
 
 public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocumentFile_Base {
@@ -21,14 +23,14 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
         this.setCandidacyFileActive(Boolean.TRUE);
         addIndividualCandidacy(candidacy);
         setCandidacyFileType(type);
-        init(filename, filename, contents, new NoOneGroup());
+        init(filename, filename, contents, NobodyGroup.get());
     }
 
     protected IndividualCandidacyDocumentFile(IndividualCandidacyDocumentFileType type, byte[] contents, String filename) {
         this();
         this.setCandidacyFileActive(Boolean.TRUE);
         setCandidacyFileType(type);
-        init(filename, filename, contents, new NoOneGroup());
+        init(filename, filename, contents, NobodyGroup.get());
     }
 
     @Atomic
@@ -44,8 +46,7 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
         }
 
         // Academic Administration Permissions
-        for (AcademicProgram program : AcademicAuthorizationGroup.getProgramsForOperation(person,
-                AcademicOperationType.MANAGE_CANDIDACY_PROCESSES)) {
+        for (AcademicProgram program : AcademicAuthorizationGroup.getProgramsForOperation(person, AcademicOperationType.MANAGE_CANDIDACY_PROCESSES)) {
             for (IndividualCandidacy individualCandidacy : getIndividualCandidacySet()) {
                 if (individualCandidacy.getAllDegrees().contains(program)) {
                     return true;

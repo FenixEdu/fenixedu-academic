@@ -13,9 +13,8 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.FileContent.EducationalResourceType;
-import net.sourceforge.fenixedu.domain.contents.Attachment;
-import net.sourceforge.fenixedu.domain.contents.Container;
-import net.sourceforge.fenixedu.domain.contents.Content;
+import net.sourceforge.fenixedu.domain.Section;
+import net.sourceforge.fenixedu.domain.Site;
 import pt.ist.fenixframework.FenixFramework;
 
 import com.google.common.base.Strings;
@@ -157,21 +156,25 @@ public class SearchDSpaceCoursesBean implements Serializable {
         }
     }
 
-    protected void search(Container container) {
-        for (Content child : container.getChildrenAsContent()) {
-            if (child.isContainer()) {
-                search((Container) child);
-            } else if (child instanceof Attachment) {
-                FileContent file = ((Attachment) child).getFile();
-                if (!educationalResourceTypes.isEmpty() && !educationalResourceTypes.contains(file.getResourceType())) {
-                    continue;
-                }
-                if (!Strings.isNullOrEmpty(searchText) && !file.getFilename().contains(searchText)
-                        && !file.getDisplayName().contains(searchText)) {
-                    continue;
-                }
-                results.add(file);
+    protected void search(Site site) {
+        for (Section section : site.getAssociatedSectionSet()) {
+            search(section);
+        }
+    }
+
+    protected void search(Section container) {
+        for (Section child : container.getChildrenSections()) {
+            search(child);
+        }
+        for (FileContent file : container.getFileContentSet()) {
+            if (!educationalResourceTypes.isEmpty() && !educationalResourceTypes.contains(file.getResourceType())) {
+                continue;
             }
+            if (!Strings.isNullOrEmpty(searchText) && !file.getFilename().contains(searchText)
+                    && !file.getDisplayName().contains(searchText)) {
+                continue;
+            }
+            results.add(file);
         }
     }
 

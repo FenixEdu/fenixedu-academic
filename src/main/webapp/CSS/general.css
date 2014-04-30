@@ -274,7 +274,6 @@ table.tdtop td { vertical-align: top; }
 table.tdmiddle td { vertical-align: middle !important; }
 table.vamiddle td, table.vamiddle th { vertical-align: middle; }
 
-.thwhite th { background: #fff !important; }
 .thbgfafafa th { background: #fafafa !important; }
 
 /* font */
@@ -573,12 +572,6 @@ fieldset {
 margin: 0.4em 0; padding: 0.4em 0;
 border: none;
 /*background-color: #f5f5f5;*/
-}
-
-small {
-display: block;
-margin-left: 10em;
-color: #d55;
 }
 
 .lfloat label, .lfloat2 label, lfloat3 label {
@@ -1178,23 +1171,9 @@ text-decoration: none;
 border-bottom: 1px solid #ddd;
 }
 
-
-input.btn{
-color:#005;
-font-family:'trebuchet ms',helvetica,sans-serif;
-font-size:74%;
-font-weight:normal;
-background-color:#eaeaea;
-border:1px solid;
-}
-
-
 td.noborder {
 border: none;
 }
-
-th.parking { width: 90px;}
-td.parking { width: 400px;}
 
 tr.trhighlight1 td { background: #fff; }
 tr.trhighlight2 td { background: #fafacc; }
@@ -1306,7 +1285,6 @@ background: #fff;
 
 
 /* display curricular plan */
-.boldFontClass { font-weight: bold }
 .bluecell { background: #EDF3FE; }
 .lightBluecell { background: #F9F9FF; width: 100% }
 .bgwhite { background: #fff; }
@@ -1577,10 +1555,8 @@ display: none;
 .left { text-align: left; }
 
 table {
-color: #333;
+color: #4b565c;
 }
-
-h1, h2, h3 { font-family: Trebuchet MS, Arial, Helvetica, sans-serif; }
 
 h1	{
 font-size: 1.7em;
@@ -2203,7 +2179,7 @@ padding-right: 0.5em;
 line-height: 2.5em;
 }
 
-ul.tcloud li a { border: none !important; }
+ul.tcloud li a { border: none !important; text-decoration: none; }
 
 
 ul.tcloud li a span {
@@ -2854,3 +2830,66 @@ div.chelp div.chelptext a {
 font-weight: normal;
 }
 
+a.hlink {
+background: url(../images/icon_help_green.gif) top right no-repeat;
+display: block;
+width: 18px;
+height: 18px;
+border: none !important;
+outline: none;
+}
+
+span.helpicon {
+padding-right: 1em;
+float: right;
+}
+
+#popup_container {
+	font-family: Arial, sans-serif;
+	font-size: 12px;
+	min-width: 300px; /* Dialog will be no smaller than this */
+	max-width: 600px; /* Dialog will wrap after this width */
+	background: #FFF;
+	border: solid 5px #999;
+	color: #000;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+}
+#popup_title {
+	font-size: 14px;
+	font-weight: bold;
+	text-align: center;
+	line-height: 1.75em;
+	color: #666;
+	background: #CCC url(images/title.gif) top repeat-x;
+	border: solid 1px #FFF;
+	border-bottom: solid 1px #999;
+	cursor: default;
+	padding: 0em;
+	margin: 0em;
+}
+#popup_content {
+	background: 16px 16px no-repeat url(images/info.gif);
+	padding: 1em 1.75em;
+	margin: 0em;
+}
+#popup_content.alert {
+	background-image: url(images/info.gif);
+}
+#popup_content.confirm {
+	background-image: url(images/important.gif);
+}
+#popup_content.prompt {
+	background-image: url(images/help.gif);
+}
+#popup_message {
+	padding-left: 48px;
+}
+#popup_panel {
+	text-align: center;
+	margin: 1em 0em 0em 1em;
+}
+#popup_prompt {
+	margin: .5em 0em;
+}

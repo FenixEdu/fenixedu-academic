@@ -8,21 +8,27 @@ import net.sourceforge.fenixedu.domain.accounting.PaymentCodeMapping;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeMapping.PaymentCodeMappingBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerPaymentsApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@StrutsFunctionality(app = ManagerPaymentsApp.class, path = "payment-codes", titleKey = "label.payments.paymentCodes",
+        bundle = "AcademicAdminOffice")
 @Mapping(path = "/paymentCodesAttribution", module = "manager")
 @Forwards({ @Forward(name = "viewCodes", path = "/manager/payments/codes/viewCodes.jsp"),
         @Forward(name = "createPaymentCodeMapping", path = "/manager/payments/codes/createPaymentCodeMapping.jsp") })
 public class PaymentCodesAttributionDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward prepareViewPaymentCodeMappings(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         request.setAttribute("paymentCodeMappingBean", new PaymentCodeMappingBean());
@@ -36,7 +42,7 @@ public class PaymentCodesAttributionDA extends FenixDispatchAction {
         request.setAttribute("paymentCodeMappingBean", bean);
 
         if (bean.hasExecutionInterval()) {
-            request.setAttribute("paymentCodeMappings", bean.getExecutionInterval().getPaymentCodeMappings());
+            request.setAttribute("paymentCodeMappings", bean.getExecutionInterval().getPaymentCodeMappingsSet());
         }
 
         return mapping.findForward("viewCodes");
@@ -64,7 +70,7 @@ public class PaymentCodesAttributionDA extends FenixDispatchAction {
             return mapping.findForward("createPaymentCodeMapping");
         }
 
-        request.setAttribute("paymentCodeMappings", bean.getExecutionInterval().getPaymentCodeMappings());
+        request.setAttribute("paymentCodeMappings", bean.getExecutionInterval().getPaymentCodeMappingsSet());
         RenderUtils.invalidateViewState();
         bean.clear();
         return mapping.findForward("viewCodes");
@@ -84,7 +90,7 @@ public class PaymentCodesAttributionDA extends FenixDispatchAction {
         bean.setExecutionInterval(codeMapping.getExecutionInterval());
 
         request.setAttribute("paymentCodeMappingBean", bean);
-        request.setAttribute("paymentCodeMappings", bean.getExecutionInterval().getPaymentCodeMappings());
+        request.setAttribute("paymentCodeMappings", bean.getExecutionInterval().getPaymentCodeMappingsSet());
 
         try {
             codeMapping.delete();

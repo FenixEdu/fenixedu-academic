@@ -9,6 +9,8 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
 
+import org.fenixedu.bennu.core.security.Authenticate;
+
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
@@ -31,7 +33,7 @@ public class DegreeCurricularPlanPredicates {
                         return true;
                     }
 
-                    boolean isCurricularPlanMember = dcp.getCurricularPlanMembersGroup().isMember(person);
+                    boolean isCurricularPlanMember = dcp.getCurricularPlanMembersGroup().isMember(person.getUser());
 
                     switch (dcp.getCurricularStage()) {
                     case DRAFT:
@@ -64,7 +66,7 @@ public class DegreeCurricularPlanPredicates {
 
                 @Override
                 public boolean evaluate(DegreeCurricularPlan dcp) {
-                    return !dcp.isBolonhaDegree() || dcp.getCurricularPlanMembersGroup().isMember(AccessControl.getPerson());
+                    return !dcp.isBolonhaDegree() || dcp.getCurricularPlanMembersGroup().isMember(Authenticate.getUser());
                 }
 
             };

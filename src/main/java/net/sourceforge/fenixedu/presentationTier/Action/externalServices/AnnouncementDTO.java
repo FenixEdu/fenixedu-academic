@@ -4,13 +4,14 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.externalServices;
 
+import java.util.Locale;
+
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementCategory;
 import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.joda.time.DateTime;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -48,7 +49,7 @@ public class AnnouncementDTO {
     public AnnouncementDTO() {
     }
 
-    public AnnouncementDTO(final Announcement announcement, final Language language) {
+    public AnnouncementDTO(final Announcement announcement, final Locale language) {
 
         setCreationDate(getFormattedDate(announcement.getCreationDate()));
         setLastModification(getFormattedDate(announcement.getLastModification()));
@@ -82,11 +83,11 @@ public class AnnouncementDTO {
         return dateTime == null ? null : dateTime.toString(DATE_TIME_FORMAT);
     }
 
-    private String getContentFrom(final MultiLanguageString multiLanguageString, final Language language) {
+    private String getContentFrom(final MultiLanguageString multiLanguageString, final Locale language) {
         if (multiLanguageString == null) {
             return null;
         }
-        return multiLanguageString.hasLanguage(language) ? multiLanguageString.getContent(language) : multiLanguageString
+        return multiLanguageString.hasLocale(language) ? multiLanguageString.getContent(language) : multiLanguageString
                 .getContent();
     }
 
@@ -234,7 +235,7 @@ public class AnnouncementDTO {
         this.categories = categories;
     }
 
-    private void setCategoriesFromAnnouncement(Announcement announcement, final Language language) {
+    private void setCategoriesFromAnnouncement(Announcement announcement, final Locale language) {
         java.util.List<String> categories = new java.util.ArrayList<String>();
 
         for (AnnouncementCategory category : announcement.getCategories()) {

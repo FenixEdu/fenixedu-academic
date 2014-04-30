@@ -783,7 +783,7 @@
 		<property name="contextRelative" value="true"/>
 		<property name="moduleRelative" value="true"/>
 		<property name="blankTarget" value="false"/>
-		<property name="linkFormat" value="/studentTutorship.do?method=showStudentRegistration&amp;studentNumber=${student.number}&amp;registrationOID=${externalId}"/>	
+		<property name="linkFormat" value="/studentTutorshipCurriculum.do?method=showStudentRegistration&amp;studentNumber=${student.number}&amp;registrationOID=${externalId}"/>	
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="registration.number"/>
 	</slot>
@@ -802,7 +802,7 @@
 		<property name="contextRelative" value="true"/>
 		<property name="moduleRelative" value="true"/>
 		<property name="blankTarget" value="false"/>
-		<property name="linkFormat" value="/studentTutorship.do?method=showStudentRegistration&amp;studentNumber=${student.number}"/>	
+		<property name="linkFormat" value="/studentTutorshipCurriculum.do?method=showStudentRegistration&amp;studentNumber=${student.number}"/>	
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="registration.number"/>
 	</slot>

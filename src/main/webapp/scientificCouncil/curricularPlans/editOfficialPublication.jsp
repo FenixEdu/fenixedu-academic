@@ -1,3 +1,4 @@
+<%@ page isELIgnored="true"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <html:xhtml/>
@@ -111,6 +112,6 @@
 
 <html:link
 	page="<%= "/curricularPlans/editDegree.faces?degreeId="
-							+ officialPub.getDegree().getExternalId() + "&amp;" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/scientificCouncil") %>">
+							+ officialPub.getDegree().getExternalId() %>">
 	<bean:message key="back" bundle="SCIENTIFIC_COUNCIL_RESOURCES" />
 </html:link>

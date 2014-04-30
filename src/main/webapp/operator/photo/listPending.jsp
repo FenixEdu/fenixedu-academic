@@ -7,7 +7,6 @@
 
 <html:xhtml />
 
-<em><bean:message key="operator.module.title" bundle="MANAGER_RESOURCES" /></em>
 <h2><bean:message key="label.operator.photo.title" bundle="MANAGER_RESOURCES" /></h2>
 
 <p><strong>Fotografias pendentes para aprovação</strong></p>

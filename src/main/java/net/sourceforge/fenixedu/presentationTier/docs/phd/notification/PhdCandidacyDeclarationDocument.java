@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.docs.phd.notification;
 
+import java.util.Locale;
+
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
@@ -8,14 +10,12 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
-
 public class PhdCandidacyDeclarationDocument extends FenixReport {
     private PhdProgramCandidacyProcess candidacyProcess;
 
-    private Language language;
+    private Locale language;
 
-    public PhdCandidacyDeclarationDocument(PhdProgramCandidacyProcess candidacyProcess, Language language) {
+    public PhdCandidacyDeclarationDocument(PhdProgramCandidacyProcess candidacyProcess, Locale language) {
         setCandidacyProcess(candidacyProcess);
         setLanguage(language);
 
@@ -23,11 +23,11 @@ public class PhdCandidacyDeclarationDocument extends FenixReport {
     }
 
     @Override
-    public Language getLanguage() {
+    public Locale getLanguage() {
         return language;
     }
 
-    public void setLanguage(Language language) {
+    public void setLanguage(Locale language) {
         this.language = language;
     }
 
@@ -63,7 +63,7 @@ public class PhdCandidacyDeclarationDocument extends FenixReport {
 
     @Override
     public String getReportTemplateKey() {
-        return getClass().getName() + "." + getLanguage().name();
+        return getClass().getName() + "." + getLanguage().getLanguage();
     }
 
 }

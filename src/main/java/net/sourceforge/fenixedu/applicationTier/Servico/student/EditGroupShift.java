@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
@@ -38,6 +37,7 @@ import net.sourceforge.fenixedu.predicates.RolePredicates;
 
 import org.apache.struts.util.MessageResources;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.UserGroup;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -130,7 +130,7 @@ public class EditGroupShift {
                         .getGroupNumber().toString(), executionCourseNames.toString());
         final String groupName = messages.getMessage("message.group.name", studentGroup.getGroupNumber());
         final Collection<Recipient> recipients =
-                Collections.singletonList(new Recipient(groupName, new FixedSetGroup(recievers)));
+                Collections.singletonList(new Recipient(groupName, UserGroup.of(Person.convertToUsers(recievers))));
 
         SystemSender systemSender = Bennu.getInstance().getSystemSender();
         new Message(systemSender, systemSender.getConcreteReplyTos(), recipients,

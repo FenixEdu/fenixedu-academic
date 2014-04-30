@@ -1,6 +1,6 @@
 /*
  * Created on Dec 17, 2003
- *  
+ *
  */
 package net.sourceforge.fenixedu.presentationTier.Action.coordinator;
 
@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadExecutionYea
 import net.sourceforge.fenixedu.applicationTier.Servico.coordinator.ReadTeachersInformation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
-import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -29,16 +28,16 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
- * 
+ *
  */
-@Mapping(module = "coordinator", path = "/teachersInformation", attribute = "teacherInformationForm",
-        formBean = "teacherInformationForm", scope = "request")
-@Forwards(value = { @Forward(name = "show", path = "/coordinator/teachers/viewTeachersInformation.jsp") })
+@Mapping(module = "coordinator", path = "/teachersInformation", formBean = "teacherInformationForm",
+        functionality = DegreeCoordinatorIndex.class)
+@Forwards(@Forward(name = "show", path = "/coordinator/teachers/viewTeachersInformation.jsp"))
 public class ReadTeachersInformationAction extends FenixAction {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @seeorg.apache.struts.action.Action#execute(org.apache.struts.action.
      * ActionMapping, org.apache.struts.action.ActionForm,
      * javax.servlet.http.HttpServletRequest,
@@ -47,7 +46,7 @@ public class ReadTeachersInformationAction extends FenixAction {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        CoordinatedDegreeInfo.setCoordinatorContext(request);
+        DegreeCoordinatorIndex.setCoordinatorContext(request);
         String degreeCurricularPlanID = (String) request.getAttribute("degreeCurricularPlanID");
 
         String executionDegreeID = request.getParameter("executionDegreeId");

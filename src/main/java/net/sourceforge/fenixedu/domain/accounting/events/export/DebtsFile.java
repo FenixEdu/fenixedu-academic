@@ -10,12 +10,9 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent;
-import net.sourceforge.fenixedu.domain.accounting.events.InstitutionAffiliationEvent;
 import net.sourceforge.fenixedu.domain.residence.ResidenceMonth;
 import net.sourceforge.fenixedu.domain.residence.ResidenceYear;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
-
-import org.fenixedu.bennu.core.domain.Bennu;
 
 public abstract class DebtsFile extends DebtsFile_Base {
 
@@ -57,14 +54,6 @@ public abstract class DebtsFile extends DebtsFile_Base {
                     }
                 }
             }
-        }
-
-        for (InstitutionAffiliationEvent event : Bennu.getInstance().getInstitutionUnit().getOpenAffiliationEventSet()) {
-            Person person = event.getPerson();
-            if (!result.containsKey(person)) {
-                result.put(person, new ArrayList<Event>());
-            }
-            result.get(person).add(event);
         }
 
         return result;

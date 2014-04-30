@@ -1,15 +1,16 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
-<%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-tiles" prefix="ft"%>
+<%@ taglib uri="http://fenixedu.org/taglib/jsf-portal" prefix="fp"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/taglib/jsf-fenix" prefix="fc"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 
-<ft:tilesView definition="scientificCouncil.masterPage" attributeName="body-inline">
+<fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.ScientificCouncilApplication$ScientificCompetenceCoursesManagement" />
+
+<f:view>
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 
 	<fc:dataRepeater rendered="#{!empty CompetenceCourseManagement.departmentCompetenceCourses}" value="#{CompetenceCourseManagement.departmentCompetenceCourses}" var="competenceCourse">
 
-		<h:outputText value="<em>#{scouncilBundle['competenceCourse']}</em>" escape="false" />
 		<h:outputText value="<h2>#{competenceCourse.name}</h2>" escape="false"/>
 
 		<h:outputText value="<ul class='nobullet padding1 indent0 mtop15'>" escape="false"/>
@@ -208,4 +209,4 @@
 		<h:outputText value="<em>#{scouncilBundle['no.competence.courses']}</em>" escape="false" />
 	</h:panelGroup>
 
-</ft:tilesView>
+</f:view>

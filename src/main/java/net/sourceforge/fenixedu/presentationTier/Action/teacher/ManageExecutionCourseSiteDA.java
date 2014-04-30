@@ -5,60 +5,50 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Item;
-import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteManagementDA;
+import net.sourceforge.fenixedu.presentationTier.Action.teacher.executionCourse.ExecutionCourseBaseAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.fenixedu.bennu.core.domain.User;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
+@Mapping(path = "/manageExecutionCourseSite", module = "teacher", functionality = ManageExecutionCourseDA.class)
+@Forwards({ @Forward(name = "createSection", path = "/commons/sites/createSection.jsp"),
+        @Forward(name = "sectionsManagement", path = "/teacher/executionCourse/site/sectionsManagement.jsp"),
+        @Forward(name = "section", path = "/commons/sites/section.jsp"),
+        @Forward(name = "edit-fileItem-name", path = "/commons/sites/editFileItemDisplayName.jsp"),
+        @Forward(name = "editSection", path = "/commons/sites/editSection.jsp"),
+        @Forward(name = "createItem", path = "/commons/sites/createItem.jsp"),
+        @Forward(name = "editItem", path = "/commons/sites/editItem.jsp"),
+        @Forward(name = "uploadFile", path = "/commons/sites/uploadFile.jsp"),
+        @Forward(name = "editFile", path = "/commons/sites/editFile.jsp"),
+        @Forward(name = "organizeItems", path = "/commons/sites/organizeItems.jsp"),
+        @Forward(name = "organizeFiles", path = "/commons/sites/organizeFiles.jsp"),
+        @Forward(name = "confirmSectionDelete", path = "/commons/sites/confirmSectionDelete.jsp"),
+        @Forward(name = "editSectionPermissions", path = "/commons/sites/editSectionPermissions.jsp"),
+        @Forward(name = "editItemPermissions", path = "/commons/sites/editItemPermissions.jsp"),
+        @Forward(name = "addInstitutionSection", path = "/commons/sites/addInstitutionSection.jsp") })
 public class ManageExecutionCourseSiteDA extends SiteManagementDA {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        propageContextIds(request);
-
-        return super.execute(mapping, actionForm, request, response);
+        ExecutionCourseBaseAction.propageContextIds(request);
+        request.setAttribute("siteActionName", "/manageExecutionCourseSite.do");
+        request.setAttribute("siteContextParam", "executionCourseID");
+        request.setAttribute("siteContextParamValue", ((ExecutionCourse) request.getAttribute("executionCourse")).getExternalId());
+        ActionForward forward = super.execute(mapping, actionForm, request, response);
+        return ExecutionCourseBaseAction.forward(request, forward.getPath());
     }
 
     public ExecutionCourse getExecutionCourse(HttpServletRequest request) {
         return (ExecutionCourse) request.getAttribute("executionCourse");
-    }
-
-    public static void propageContextIds(final HttpServletRequest request) {
-        String executionCourseIDString = request.getParameter("executionCourseID");
-
-        if (executionCourseIDString == null || executionCourseIDString.length() == 0) {
-            executionCourseIDString = request.getParameter("objectCode");
-        }
-
-        if (executionCourseIDString != null && executionCourseIDString.length() > 0) {
-            final ExecutionCourse executionCourse = findExecutionCourse(request, executionCourseIDString);
-            request.setAttribute("executionCourse", executionCourse);
-        }
-    }
-
-    private static ExecutionCourse findExecutionCourse(final HttpServletRequest request, final String executionCourseID) {
-        final User userView = getUserView(request);
-
-        if (userView != null) {
-            final Person person = userView.getPerson();
-            if (person != null) {
-                for (final Professorship professorship : person.getProfessorshipsSet()) {
-                    final ExecutionCourse executionCourse = professorship.getExecutionCourse();
-                    if (executionCourse.getExternalId().equals(executionCourseID)) {
-                        return executionCourse;
-                    }
-                }
-            }
-        }
-
-        return null;
     }
 
     @Override
@@ -79,15 +69,7 @@ public class ManageExecutionCourseSiteDA extends SiteManagementDA {
 
     @Override
     protected String getItemLocationForFile(HttpServletRequest request, Item item, Section section) {
-
-        String path = section.getSite().getReversePath();
-        if (path == null) {
-            return null;
-        }
-
-        String resourceLocation =
-                request.getScheme() + "://" + request.getServerName() + request.getContextPath() + path + item.getReversePath();
-        return resourceLocation;
+        return item.getFullPath();
     }
 
 }

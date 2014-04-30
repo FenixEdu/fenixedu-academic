@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.ScientificCouncilApplication.ScientificTeachersApp;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.commons.lang.StringUtils;
@@ -33,24 +34,22 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
+@StrutsFunctionality(app = ScientificTeachersApp.class, path = "authorizations", titleKey = "label.authorizations")
 @Mapping(path = "/teacherAuthorization", module = "scientificCouncil")
-@Forwards({
-        @Forward(name = "createTeacherAuthorization", path = "/scientificCouncil/createTeacherAuthorization.jsp",
-                tileProperties = @Tile(title = "private.scientificcouncil.teachers.authorizations")),
-        @Forward(name = "listTeacherAuthorization", path = "/scientificCouncil/listTeacherAuthorization.jsp",
-                tileProperties = @Tile(title = "private.scientificcouncil.teachers.authorizations")),
-        @Forward(name = "teacherAuthorizationsUpload", path = "/scientificCouncil/teacherAuthorizationsUpload.jsp",
-                tileProperties = @Tile(title = "private.scientificcouncil.teachers.authorizations")) })
+@Forwards({ @Forward(name = "createTeacherAuthorization", path = "/scientificCouncil/createTeacherAuthorization.jsp"),
+        @Forward(name = "listTeacherAuthorization", path = "/scientificCouncil/listTeacherAuthorization.jsp"),
+        @Forward(name = "teacherAuthorizationsUpload", path = "/scientificCouncil/teacherAuthorizationsUpload.jsp") })
 public class TeacherAuthorizationManagement extends FenixDispatchAction {
 
     public static class TeacherAuthorizationManagementBean implements Serializable {
@@ -293,6 +292,7 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
 
     }
 
+    @EntryPoint
     public ActionForward list(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         ArrayList<ExternalTeacherAuthorization> teacher = new ArrayList<ExternalTeacherAuthorization>();

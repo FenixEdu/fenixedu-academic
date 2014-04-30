@@ -34,13 +34,15 @@ import net.sourceforge.fenixedu.domain.space.RoomClassification;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.EvaluationManagementBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
 
+import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.util.MessageResources;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBackingBean {
 
@@ -116,7 +118,11 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
     }
 
     public String getAcademicInterval() {
-        return (academicInterval == null) ? academicInterval = getAndHoldStringParameter("academicInterval") : academicInterval;
+        return academicInterval == null ? academicInterval = getAndHoldStringParameter("academicInterval") : academicInterval;
+    }
+
+    public void setAcademicInterval(String academicInterval) {
+        this.academicInterval = academicInterval;
     }
 
     protected AcademicInterval getAcademicIntervalObject() {
@@ -253,6 +259,16 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
         return buildingSelectItems;
     }
 
+    public Collection<SelectItem> getAcademicIntervals() throws FenixServiceException {
+        List<AcademicInterval> intervals = AcademicInterval.readAcademicIntervals(AcademicPeriod.SEMESTER);
+        Collections.sort(intervals, new ReverseComparator(AcademicInterval.COMPARATOR_BY_BEGIN_DATE));
+        List<SelectItem> items = new ArrayList<>();
+        for (AcademicInterval interval : intervals) {
+            items.add(new SelectItem(interval.getResumedRepresentationInStringFormat(), interval.getPathName()));
+        }
+        return items;
+    }
+
     public Collection<SelectItem> getRoomTypeSelectItems() throws FenixServiceException {
         Collection<RoomClassification> roomClassificationsForEducation = rootDomainObject.getRoomClassificationSet();
         final List<SelectItem> roomTypeSelectItems = new ArrayList<SelectItem>();
@@ -260,7 +276,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
                 .sortByRoomClassificationAndCode(roomClassificationsForEducation)) {
             if (classification.hasParentRoomClassification()) {
                 roomTypeSelectItems.add(new SelectItem(String.valueOf(classification.getExternalId()), classification
-                        .getPresentationCode() + " - " + classification.getName().getContent(Language.getLanguage())));
+                        .getPresentationCode() + " - " + classification.getName().getContent(I18N.getLocale())));
             }
         }
         return roomTypeSelectItems;
@@ -311,7 +327,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
                                 final ExecutionCourse executionCourse =
                                         writtenEvaluation.getAssociatedExecutionCoursesSet().iterator().next();
                                 final CalendarLink calendarLink =
-                                        new CalendarLink(executionCourse, writtenEvaluation, Language.getLocale());
+                                        new CalendarLink(executionCourse, writtenEvaluation, I18N.getLocale());
                                 calendarLink.setLinkParameters(constructLinkParameters(executionCourse, writtenEvaluation));
                                 calendarLinks.add(calendarLink);
                             }

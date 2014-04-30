@@ -1,9 +1,11 @@
 package net.sourceforge.fenixedu.domain.util.email;
 
-import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.ResearchUnitElementGroup;
-import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
+import net.sourceforge.fenixedu.domain.accessControl.UnitGroup;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+
+import org.fenixedu.bennu.core.groups.Group;
+
 import pt.ist.fenixframework.Atomic;
 
 public class ResearchUnitBasedSender extends ResearchUnitBasedSender_Base {
@@ -19,6 +21,7 @@ public class ResearchUnitBasedSender extends ResearchUnitBasedSender_Base {
 
     @Atomic
     public static ResearchUnitBasedSender newInstance(Unit unit) {
-        return new ResearchUnitBasedSender(unit, Sender.getNoreplyMail(), new ResearchUnitElementGroup((ResearchUnit) unit));
+        return new ResearchUnitBasedSender(unit, Sender.getNoreplyMail(), UnitGroup.get(unit,
+                AccountabilityTypeEnum.RESEARCH_CONTRACT, false));
     }
 }

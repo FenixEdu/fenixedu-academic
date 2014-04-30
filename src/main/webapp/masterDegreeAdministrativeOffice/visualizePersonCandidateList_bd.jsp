@@ -17,7 +17,6 @@
 	<bean:write name="path"/>.do?method=visualize<%= "&" %>candidateID=
 </bean:define>
 
-	<em><bean:message key="title.masterDegree.administrativeOffice"/></em>
 	<h2><bean:message key="label.candidate"/></h2>
 
 <logic:iterate id="candidate" name="candidateList" >

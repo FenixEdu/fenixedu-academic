@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import org.fenixedu.commons.i18n.I18N;
+
 import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
@@ -17,7 +19,7 @@ import net.sourceforge.fenixedu.domain.candidacy.workflow.PrintSystemAccessDataO
 import net.sourceforge.fenixedu.domain.candidacy.workflow.RegistrationOperation;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 public class IMDCandidacy extends IMDCandidacy_Base {
 
@@ -40,7 +42,7 @@ public class IMDCandidacy extends IMDCandidacy_Base {
 
     @Override
     public String getDescription() {
-        return ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale()).getString("label.imdCandidacy")
+        return ResourceBundle.getBundle("resources.CandidateResources", I18N.getLocale()).getString("label.imdCandidacy")
                 + " - " + getExecutionDegree().getDegreeCurricularPlan().getName() + " - "
                 + getExecutionDegree().getExecutionYear().getYear();
     }

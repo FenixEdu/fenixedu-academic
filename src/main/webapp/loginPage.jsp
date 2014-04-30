@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<%@page import="net.sourceforge.fenixedu.domain.Instalation"%>
+<%@page import="org.fenixedu.bennu.portal.domain.PortalConfiguration"%>
 <%@page
 	import="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
@@ -7,7 +7,7 @@
 <html:html xhtml="true">
 
 <head>
-<title><%=Instalation.getInstance().getInstalationName()%> - <bean:message
+<title><%=PortalConfiguration.getInstance().getApplicationTitle().getContent()%> - <bean:message
 		key="title.login" bundle="GLOBAL_RESOURCES" /></title>
 
 <link href="<%=request.getContextPath()%>/CSS/login.css"
@@ -47,8 +47,6 @@
 					<tr>
 						<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.username" property="username" styleId="username" /></td>
 					</tr>
-
-					<html:hidden property="pendingRequest" value="<%=request.getParameter("pendingRequest")%>" />
 
 					<tr>
 						<td><html:password bundle="HTMLALT_RESOURCES" altKey="password.password" property="password" redisplay="false" styleId="password" /></td>

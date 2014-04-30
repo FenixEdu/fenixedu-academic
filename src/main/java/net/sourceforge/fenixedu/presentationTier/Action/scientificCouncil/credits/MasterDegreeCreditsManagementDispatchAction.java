@@ -29,9 +29,12 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.ScientificCouncilApplication.ScientificCreditsApp;
+import net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -40,8 +43,11 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.apache.struts.action.ExceptionHandler;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
@@ -49,7 +55,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.Pair;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
@@ -59,30 +64,23 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
  * @author Ricardo Rodrigues Modified by Manuel Pinto
  */
 
+@StrutsFunctionality(app = ScientificCreditsApp.class, path = "master-degree-credits", titleKey = "link.credits.masterDegree")
 @Mapping(module = "scientificCouncil", path = "/masterDegreeCreditsManagement",
-        input = "/masterDegreeCreditsManagement.do?method=prepareEdit", attribute = "masterDegreeCreditsForm",
-        formBean = "masterDegreeCreditsForm", scope = "request", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "showCreditsReport", path = "/scientificCouncil/credits/showMasterDegreeCreditsReport.jsp",
-                tileProperties = @Tile(title = "private.scientificcouncil.credits.releasefor3rdcycle")),
-        @Forward(name = "chooseMasterDegreeExecution", path = "/scientificCouncil/credits/chooseMasterDegreeExecution.jsp",
-                tileProperties = @Tile(title = "private.scientificcouncil.credits.releasefor3rdcycle")),
-        @Forward(name = "editMasterDegreeCredits", path = "/scientificCouncil/credits/editMasterDegreeCredits.jsp",
-                tileProperties = @Tile(title = "private.scientificcouncil.credits.releasefor3rdcycle")),
-        @Forward(name = "successfulEdit", path = "/masterDegreeCreditsManagement.do?method=viewMasterDegreeCredits",
-                tileProperties = @Tile(title = "private.scientificcouncil.credits.releasefor3rdcycle")) })
-@Exceptions(
-        value = {
-                @ExceptionHandling(type = java.lang.NumberFormatException.class, key = "error.credits.invalidNumber",
-                        handler = org.apache.struts.action.ExceptionHandler.class,
-                        path = "/masterDegreeCreditsManagement.do?method=prepareEdit", scope = "request"),
-                @ExceptionHandling(type = net.sourceforge.fenixedu.domain.exceptions.DomainException.class,
-                        handler = net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler.class,
-                        scope = "request") })
+        input = "/masterDegreeCreditsManagement.do?method=prepareEdit", formBean = "masterDegreeCreditsForm")
+@Forwards({ @Forward(name = "showCreditsReport", path = "/scientificCouncil/credits/showMasterDegreeCreditsReport.jsp"),
+        @Forward(name = "chooseMasterDegreeExecution", path = "/scientificCouncil/credits/chooseMasterDegreeExecution.jsp"),
+        @Forward(name = "editMasterDegreeCredits", path = "/scientificCouncil/credits/editMasterDegreeCredits.jsp"),
+        @Forward(name = "successfulEdit", path = "/masterDegreeCreditsManagement.do?method=viewMasterDegreeCredits") })
+@Exceptions({
+        @ExceptionHandling(type = NumberFormatException.class, key = "error.credits.invalidNumber",
+                handler = ExceptionHandler.class, path = "/masterDegreeCreditsManagement.do?method=prepareEdit",
+                scope = "request"),
+        @ExceptionHandling(type = DomainException.class, handler = FenixDomainExceptionHandler.class, scope = "request") })
 public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAction {
 
     private final static String LINE_BRAKE = "\n";
 
+    @EntryPoint
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws FenixServiceException {
 

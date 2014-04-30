@@ -33,9 +33,10 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import java.util.Locale;
 
 /**
  * 
@@ -198,7 +199,7 @@ public class ViewTeacherService extends FenixBackingBean {
 
     private List<SelectItem> getExecutionPeriods() throws FenixServiceException {
 
-        ResourceBundle rb = ResourceBundle.getBundle("resources.DepartmentMemberResources", Language.getLocale());
+        ResourceBundle rb = ResourceBundle.getBundle("resources.DepartmentMemberResources", I18N.getLocale());
 
         List<SelectItem> result = new ArrayList<SelectItem>();
         result.add(new SelectItem(BOTH_SEMESTERS_ID, rb.getString("label.teacherService.bothSemesters")));
@@ -259,7 +260,7 @@ public class ViewTeacherService extends FenixBackingBean {
             loadDistributionServiceDataByCourse();
         }
 
-        ResourceBundle rb = ResourceBundle.getBundle("resources.DepartmentMemberResources", Language.getLocale());
+        ResourceBundle rb = ResourceBundle.getBundle("resources.DepartmentMemberResources", I18N.getLocale());
         final StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("teacher distribution");
         fillSpreadSheetHeaders(spreadsheet, rb);
         fillSpreadSheedResults(spreadsheet, rb);
@@ -461,7 +462,7 @@ public class ViewTeacherService extends FenixBackingBean {
 
     private List<SelectItem> getViewOptions() throws FenixServiceException {
 
-        ResourceBundle rb = ResourceBundle.getBundle("resources.DepartmentMemberResources", Language.getLocale());
+        ResourceBundle rb = ResourceBundle.getBundle("resources.DepartmentMemberResources", I18N.getLocale());
 
         List<SelectItem> result = new ArrayList<SelectItem>();
         result.add(new SelectItem(VIEW_COURSE_INFORMATION, rb.getString("label.teacherService.viewCourseInfo")));
@@ -474,7 +475,7 @@ public class ViewTeacherService extends FenixBackingBean {
 
     private List<SelectItem> getByTeacherViewOptions() throws FenixServiceException {
 
-        ResourceBundle rb = ResourceBundle.getBundle("resources.DepartmentMemberResources", Language.getLocale());
+        ResourceBundle rb = ResourceBundle.getBundle("resources.DepartmentMemberResources", I18N.getLocale());
         List<SelectItem> result = new ArrayList<SelectItem>();
         result.add(new SelectItem(VIEW_CREDITS_INFORMATION, rb.getString("label.teacherService.viewCreditsInfo")));
 

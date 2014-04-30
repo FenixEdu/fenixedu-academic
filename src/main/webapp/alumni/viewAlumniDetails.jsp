@@ -13,7 +13,6 @@
 </html:messages>
 
 
-<em><bean:message key="label.alumni.main.title" bundle="ALUMNI_RESOURCES" /></em>
 <h2><bean:message key="link.search.alumni" bundle="ALUMNI_RESOURCES" /></h2>
 
 <p class="mtop15 mbottom05">

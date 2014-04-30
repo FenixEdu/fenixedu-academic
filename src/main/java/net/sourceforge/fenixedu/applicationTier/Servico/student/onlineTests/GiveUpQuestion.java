@@ -31,8 +31,8 @@ import pt.ist.fenixframework.Atomic;
 public class GiveUpQuestion {
 
     @Atomic
-    public static void run(Registration registration, DistributedTest distributedTest, String exerciseCode, Integer itemCode,
-            String path) throws FenixServiceException {
+    public static void run(Registration registration, DistributedTest distributedTest, String exerciseCode, Integer itemCode)
+            throws FenixServiceException {
         check(RolePredicates.STUDENT_PREDICATE);
         if (distributedTest == null) {
             throw new FenixServiceException();
@@ -44,7 +44,7 @@ public class GiveUpQuestion {
             if (studentTestQuestion.getQuestion().getExternalId().equals(exerciseCode)) {
                 ParseSubQuestion parse = new ParseSubQuestion();
                 try {
-                    parse.parseStudentTestQuestion(studentTestQuestion, path.replace('\\', '/'));
+                    parse.parseStudentTestQuestion(studentTestQuestion);
                 } catch (Exception e) {
                     throw new FenixServiceException(e);
                 }
@@ -89,8 +89,7 @@ public class GiveUpQuestion {
             nextStudentTestQuestion.setTestQuestionMark(Double.valueOf(0));
             nextStudentTestQuestion.setItemId(nextItem);
             nextStudentTestQuestion.setQuestion(thisStudentTestQuestion.getQuestion());
-            nextStudentTestQuestion.setTestQuestionValue(getNextQuestionValue(thisStudentTestQuestion, nextStudentTestQuestion,
-                    path.replace('\\', '/')));
+            nextStudentTestQuestion.setTestQuestionValue(getNextQuestionValue(thisStudentTestQuestion, nextStudentTestQuestion));
         }
 
         new StudentTestLog(distributedTest, registration, "Desistiu da pergunta/alínea: "
@@ -99,10 +98,10 @@ public class GiveUpQuestion {
     }
 
     private static Double getNextQuestionValue(StudentTestQuestion thisStudentTestQuestion,
-            StudentTestQuestion nextStudentTestQuestion, String path) throws FenixServiceException {
+            StudentTestQuestion nextStudentTestQuestion) throws FenixServiceException {
         ParseSubQuestion parse = new ParseSubQuestion();
         try {
-            parse.parseStudentTestQuestion(nextStudentTestQuestion, path);
+            parse.parseStudentTestQuestion(nextStudentTestQuestion);
         } catch (Exception e) {
             throw new FenixServiceException(e);
         }

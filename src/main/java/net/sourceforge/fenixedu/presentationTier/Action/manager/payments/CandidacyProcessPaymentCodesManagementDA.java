@@ -10,23 +10,28 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerPaymentsApp;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@StrutsFunctionality(app = ManagerPaymentsApp.class, path = "candidacy-payment-codes", titleKey = "title.candidacy.payment.codes")
 @Mapping(path = "/candidacyPaymentCodes", module = "manager")
 @Forwards({ @Forward(name = "index", path = "/manager/payments/candidacyProcess/index.jsp"),
         @Forward(name = "create", path = "/manager/payments/candidacyProcess/create.jsp"),
         @Forward(name = "showNewPaymentCodes", path = "/manager/payments/candidacyProcess/showNewPaymentCodes.jsp") })
 public class CandidacyProcessPaymentCodesManagementDA extends FenixDispatchAction {
 
+    @EntryPoint
     public ActionForward index(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
             final HttpServletResponse response) {
 

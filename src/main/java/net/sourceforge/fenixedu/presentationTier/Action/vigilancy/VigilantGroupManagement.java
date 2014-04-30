@@ -37,12 +37,15 @@ import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.vigilancy.examCoordination.ExamCoordinationApplication;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -50,22 +53,37 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "examCoordination", path = "/vigilancy/vigilantGroupManagement", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "incompatibilities", path = "manage-incompatibilities"),
-        @Forward(name = "blank", path = "blank"), @Forward(name = "editVigilantsInGroups", path = "edit-Vigilants-In-Group"),
-        @Forward(name = "prepareVigilantGroup", path = "vigilantGroup-create"),
-        @Forward(name = "editVigilantGroupPoints", path = "edit-VigilantGroup-Points"),
-        @Forward(name = "vigilants", path = "edit-vigilants"),
-        @Forward(name = "editVigilantBounds", path = "edit-Vigilant-Bounds"),
-        @Forward(name = "editVigilantStartPoints", path = "edit-Vigilant-StartPoints"),
-        @Forward(name = "addVigilants", path = "add-vigilants"), @Forward(name = "removeVigilants", path = "remove-vigilants"),
-        @Forward(name = "selectPreviousPointsSchema", path = "select-Previous-Points-Schema"),
-        @Forward(name = "addIncompatiblePersonToVigilant", path = "add-IncompatiblePerson-To-Vigilant"),
-        @Forward(name = "showPoints", path = "show-points"),
-        @Forward(name = "manageVigilantGroups", path = "manage-vigilant-groups"),
-        @Forward(name = "showStats", path = "show-stats"), @Forward(name = "attributes", path = "edit-attributes"),
-        @Forward(name = "editCoordinators", path = "edit-coordinators") })
+@StrutsFunctionality(app = ExamCoordinationApplication.class, path = "vigilant-groups",
+        titleKey = "label.vigilancy.VigilantGroupManagement")
+@Mapping(module = "examCoordination", path = "/vigilancy/vigilantGroupManagement")
+@Forwards({ @Forward(name = "incompatibilities", path = "/examCoordinator/vigilancy/manageGroupsIncompatibilities.jsp"),
+        @Forward(name = "blank", path = "/commons/blank.jsp"),
+        @Forward(name = "editVigilantsInGroups", path = "/examCoordinator/vigilancy/manageVigilantsInGroups.jsp"),
+        @Forward(name = "prepareVigilantGroup", path = "/examCoordinator/vigilancy/createVigilantGroup.jsp"),
+        @Forward(name = "editVigilantGroupPoints", path = "/examCoordinator/vigilancy/editVigilantGroupPoints.jsp"),
+        @Forward(name = "vigilants", path = "/examCoordinator/vigilancy/editVigilantsInVigilantGroup.jsp"),
+        @Forward(name = "editVigilantBounds", path = "/examCoordinator/vigilancy/manageVigilantsConvokableStatus.jsp"),
+        @Forward(name = "editVigilantStartPoints", path = "/examCoordinator/vigilancy/manageVigilantsStartPoints.jsp"),
+        @Forward(name = "selectPreviousPointsSchema", path = "/examCoordinator/vigilancy/selectPreviousPointsSchema.jsp"),
+        @Forward(name = "addIncompatiblePersonToVigilant", path = "/examCoordinator/vigilancy/addIncompatibilityToVigilant.jsp"),
+        @Forward(name = "showPoints", path = "/examCoordinator/vigilancy/showPoints.jsp"),
+        @Forward(name = "manageVigilantGroups", path = "/examCoordinator/vigilancy/manageVigilantGroups.jsp"),
+        @Forward(name = "showStats", path = "/examCoordinator/vigilancy/showGroupStats.jsp"),
+        @Forward(name = "attributes", path = "/examCoordinator/vigilancy/editVigilantGroup.jsp"),
+        @Forward(name = "editCoordinators", path = "/examCoordinator/vigilancy/editCoordinatorsInVigilantGroup.jsp") })
 public class VigilantGroupManagement extends FenixDispatchAction {
+
+    @StrutsFunctionality(app = ExamCoordinationApplication.class, path = "incompatibilities",
+            titleKey = "label.vigilancy.displayIncompatibleInformation")
+    @Mapping(module = "examCoordination", path = "/vigilancy/incompatibilitiesVigilantGroupManagement")
+    public static class IncompatibilitiesVigilantGroupManagement extends VigilantGroupManagement {
+        @Override
+        @EntryPoint
+        public ActionForward prepareManageIncompatiblesOfVigilants(ActionMapping mapping, ActionForm form,
+                HttpServletRequest request, HttpServletResponse response) throws Exception {
+            return super.prepareManageIncompatiblesOfVigilants(mapping, form, request, response);
+        }
+    }
 
     public ActionForward generateReportForGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
@@ -217,6 +235,7 @@ public class VigilantGroupManagement extends FenixDispatchAction {
         return vigilantWrapperBeans;
     }
 
+    @EntryPoint
     public ActionForward prepareVigilantGroupManagement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 

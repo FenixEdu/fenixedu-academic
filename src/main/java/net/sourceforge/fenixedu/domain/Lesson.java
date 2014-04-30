@@ -29,12 +29,12 @@ import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.predicates.ResourceAllocationRolePredicates;
 import net.sourceforge.fenixedu.util.DiaSemana;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
@@ -836,7 +836,7 @@ public class Lesson extends Lesson_Base {
     }
 
     private boolean isDayValid(YearMonthDay day, Campus lessonCampus) {
-        return /* !Holiday.isHoliday(day.toLocalDate(), lessonCampus) && */ getPeriod().nestedOccupationPeriodsContainsDay(day);
+        return /* !Holiday.isHoliday(day.toLocalDate(), lessonCampus) && */getPeriod().nestedOccupationPeriodsContainsDay(day);
     }
 
     public YearMonthDay getNextPossibleLessonInstanceDate() {
@@ -1070,7 +1070,7 @@ public class Lesson extends Lesson_Base {
             EventBean bean;
             Set<AllocatableSpace> location = new HashSet<>();
 
-            String url = FenixConfigurationManager.getFenixUrl() + getExecutionCourse().getSite().getReversePath();
+            String url = CoreConfiguration.getConfiguration().applicationUrl() + getExecutionCourse().getSite().getReversePath();
 
             if (lessonInstance != null) {
 

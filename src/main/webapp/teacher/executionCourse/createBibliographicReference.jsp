@@ -12,7 +12,7 @@
 </div>
 
 <logic:present name="executionCourse">
-		<html:form action="/createBibliographicReference">
+		<html:form action="/manageBibliographicReference">
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createBibliographicReference"/>
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 			<bean:define id="executionCourseID" type="java.lang.String" name="executionCourse" property="externalId"/>

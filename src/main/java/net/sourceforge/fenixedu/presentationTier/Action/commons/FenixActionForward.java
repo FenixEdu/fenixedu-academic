@@ -6,10 +6,12 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.config.ModuleConfig;
 import org.apache.struts.util.ModuleUtils;
 
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
+
 public class FenixActionForward extends ActionForward {
 
     private static final long serialVersionUID = 1L;
-    private HttpServletRequest request;
+    private final HttpServletRequest request;
 
     public FenixActionForward(HttpServletRequest request, ActionForward forward) {
         super(forward);
@@ -34,13 +36,9 @@ public class FenixActionForward extends ActionForward {
         String module = getPathModule();
 
         String context = request.getContextPath();
-        String checksum =
-                pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.calculateChecksum(context
-                        + module + current);
+        String checksum = GenericChecksumRewriter.calculateChecksum(context + module + current, request.getSession(false));
 
-        return String.format("%s%s%s%s=%s", current, mark, amp,
-                pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.CHECKSUM_ATTRIBUTE_NAME,
-                checksum);
+        return String.format("%s%s%s%s=%s", current, mark, amp, GenericChecksumRewriter.CHECKSUM_ATTRIBUTE_NAME, checksum);
     }
 
     private String getPathModule() {

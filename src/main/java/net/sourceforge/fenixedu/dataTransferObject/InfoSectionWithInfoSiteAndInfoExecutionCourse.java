@@ -17,7 +17,7 @@ public class InfoSectionWithInfoSiteAndInfoExecutionCourse extends InfoSection {
     public void copyFromDomain(Section section) {
         super.copyFromDomain(section);
         if (section != null) {
-            ExecutionCourseSite site = (ExecutionCourseSite) section.getSite();
+            ExecutionCourseSite site = (ExecutionCourseSite) section.getOwnerSite();
             final InfoSite infoSite = InfoSite.newInfoFromDomain(site);
             infoSite.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(site.getExecutionCourse()));
             setInfoSite(infoSite);

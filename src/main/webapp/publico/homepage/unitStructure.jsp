@@ -4,7 +4,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt" %>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/string-1.0.1" prefix="string" %>
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
 <html:xhtml/>
 
 <logic:present name="currentUnit">
@@ -15,7 +14,7 @@
 		<logic:notEqual name="initialCurrentUnit" property="type.name" value="AGGREGATE_UNIT">			
 			<logic:notEmpty name="initialCurrentUnit" property="webAddress">
 				<bean:define id="url" type="java.lang.String" name="initialCurrentUnit" property="webAddress"/>
-				<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><html:link href="<%= url %>"><bean:write name="initialCurrentUnit" property="name"/></html:link>
+				<html:link href="<%= url %>"><bean:write name="initialCurrentUnit" property="name"/></html:link>
 			</logic:notEmpty>			
 			<logic:empty name="initialCurrentUnit" property="webAddress">
 				<bean:write name="initialCurrentUnit" property="name"/>
@@ -27,7 +26,7 @@
 	<logic:empty name="initialCurrentUnit" property="type">
 		<logic:notEmpty name="initialCurrentUnit" property="webAddress">
 			<bean:define id="url" type="java.lang.String" name="initialCurrentUnit" property="webAddress"/>
-			<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><html:link href="<%= url %>"><bean:write name="initialCurrentUnit" property="name"/></html:link>
+			<html:link href="<%= url %>"><bean:write name="initialCurrentUnit" property="name"/></html:link>
 		</logic:notEmpty>			
 		<logic:empty name="initialCurrentUnit" property="webAddress">
 			<bean:write name="initialCurrentUnit" property="name"/>

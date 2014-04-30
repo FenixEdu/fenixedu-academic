@@ -8,7 +8,6 @@
 
 <logic:present name="<%= PresentationConstants.LIST_INFOEXECUTIONCOURSE %>" scope="request">
 	<bean:size id="numberInfoExecutionCourses" name="<%= PresentationConstants.LIST_INFOEXECUTIONCOURSE %>"/>
-	<bean:define id="searchExecutionCourse" name="searchExecutionCourse"/>
 	<logic:notEqual name="numberInfoExecutionCourses" value="0">
 		<table class="tstyle4 tdcenter">
 			<tr>

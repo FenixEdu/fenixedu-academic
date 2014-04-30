@@ -13,16 +13,16 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYear
 import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.ResultPublicationBean.ResultPublicationType;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.Site.SiteMapper;
 import net.sourceforge.fenixedu.domain.UnitSite;
-import net.sourceforge.fenixedu.domain.contents.Container;
-import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
+import net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.SiteVisualizationDA;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -32,16 +32,19 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+
+import com.google.common.base.Strings;
 
 public class UnitSiteVisualizationDA extends SiteVisualizationDA {
 
     public static final int ANNOUNCEMENTS_NUMBER = 3;
 
-    public static final MultiLanguageString ANNOUNCEMENTS_NAME = new MultiLanguageString().with(Language.pt, "Anúncios");
+    public static final MultiLanguageString ANNOUNCEMENTS_NAME = new MultiLanguageString().with(MultiLanguageString.pt,
+            "Anúncios");
 
-    public static final MultiLanguageString EVENTS_NAME = new MultiLanguageString().with(Language.pt, "Eventos");
+    public static final MultiLanguageString EVENTS_NAME = new MultiLanguageString().with(MultiLanguageString.pt, "Eventos");
 
     @Override
     protected ActionForward getSiteDefaultView(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -121,19 +124,23 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
     }
 
     protected UnitSite getUnitSite(HttpServletRequest request) {
-        FilterFunctionalityContext context = (FilterFunctionalityContext) AbstractFunctionalityContext.getCurrentContext(request);
-        Container container = (Container) context.getLastContentInPath(UnitSite.class);
-        return (UnitSite) container;
+        return SiteMapper.getSite(request);
     }
 
     protected Unit getUnit(HttpServletRequest request) {
         Unit unit = (Unit) request.getAttribute("unit");
 
         if (unit == null) {
-            FilterFunctionalityContext context =
-                    (FilterFunctionalityContext) AbstractFunctionalityContext.getCurrentContext(request);
-            UnitSite site = (UnitSite) context.getSelectedContainer();
+            UnitSite site = SiteMapper.getSite(request);
+            if (site == null) {
+                String siteId = FenixContextDispatchAction.getFromRequest("siteID", request);
+                if (!Strings.isNullOrEmpty(siteId)) {
+                    site = FenixFramework.getDomainObject(siteId);
+                    OldCmsSemanticURLHandler.selectSite(request, site);
+                }
+            }
             unit = site.getUnit();
+            request.setAttribute("unit", unit);
         }
 
         return unit;
@@ -175,6 +182,10 @@ public class UnitSiteVisualizationDA extends SiteVisualizationDA {
     public ActionForward showPublications(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         Unit unit = getUnit(request);
+
+        if (unit != null && unit.getSite() != null) {
+            OldCmsSemanticURLHandler.selectSite(request, unit.getSite());
+        }
 
         IViewState viewState = RenderUtils.getViewState("executionYearIntervalBean");
 

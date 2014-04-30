@@ -6,22 +6,14 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
-
-
-<em><bean:message bundle="MESSAGING_RESOURCES" key="label.manage.channels"/></em>
 <h2><bean:message bundle="MESSAGING_RESOURCES" key="messaging.annoucenment.edit.label"/></h2>
 
 <jsp:include flush="true" page="/messaging/context.jsp"/>
 
-<bean:define id="contextPrefix" name="contextPrefix" />
-<bean:define id="extraParameters" name="extraParameters" />
 <bean:define id="announcementBoardId" name="announcementBoard" property="externalId"/>
 
 
-<bean:define id="action"><%= "method=viewAnnouncements&announcementBoardId=" + announcementBoardId + "&" + extraParameters %></bean:define>
-
-<fr:form action="<%=  contextPrefix + action %>">
+<fr:form action="/announcementManagement.do?method=viewAnnouncements&announcementBoardId=${announcementBoardId}&executionCourseID=${executionCourseID}">
 
 
 <p class="mtop2 mbottom025"><strong><bean:message key="label.messaging.requiredFields" bundle="MESSAGING_RESOURCES"/>:</strong></p>
@@ -59,7 +51,7 @@
 			<fr:message for="announcement-body-validated" />
 		</td>
 	</tr>
-	<logic:notEmpty name="announcementBoard" property="files">
+	<logic:notEmpty name="announcementBoard" property="fileContentSet">
 		<tr>
 		<th>
 			<bean:message key="link.insertFile" bundle="SITE_RESOURCES"/>
@@ -72,18 +64,18 @@
 				<p><fr:view name="file" property="displayName"/>
 				   <span class="color888">(<fr:view name="file" property="filename"/>)
 				   <bean:write name="file" property="externalId"/>
-				   <fr:view name="file" property="permittedGroup" layout="null-as-label" type="net.sourceforge.fenixedu.domain.accessControl.Group">
+				   <fr:view name="file" property="permittedGroup" layout="null-as-label" type="org.fenixedu.bennu.core.groups.Group">
 	                                        <fr:layout>
-	                                            <fr:property name="label" value="<%= String.format("label.%s", net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup.class.getName()) %>"/>
+	                                            <fr:property name="label" value="label.public"/>
 	                                            <fr:property name="key" value="true"/>
 	                                            <fr:property name="bundle" value="SITE_RESOURCES"/>
 	                                            <fr:property name="subLayout" value="values"/>
-	                                            <fr:property name="subSchema" value="permittedGroup.class.text"/>
+	                                            <fr:property name="subSchema" value="permittedGroup.name"/>
 	                                        </fr:layout>
 	                                    </fr:view>
 	                </span> - <bean:define id="downloadUrl" name="file" property="downloadUrl"/>
 					<bean:define id="displayName" name="file" property="displayName"/>
-                    <%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#" onclick="<%= "insertLink('" + downloadUrl + "', '"+ displayName + "');"%>"><bean:message key="link.insert.file.in.editor" bundle="SITE_RESOURCES"/></a>
+                    <%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX %><a href="#" onclick="<%= "insertLink('" + downloadUrl + "', '"+ displayName + "');"%>"><bean:message key="link.insert.file.in.editor" bundle="SITE_RESOURCES"/></a>
                     </p>
 			</logic:iterate>
 			</div>
@@ -213,7 +205,7 @@
 
 	<p>
 		<fr:edit name="announcement"  slot="creator">
-			<fr:hidden name="person"/>
+			<fr:hidden name="LOGGED_USER_ATTRIBUTE" property="person" />
 		</fr:edit>		
 
 	<p>

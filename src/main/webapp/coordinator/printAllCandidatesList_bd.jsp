@@ -6,6 +6,7 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.PrintAllCandidatesListDispatchAction" %>
 
+<jsp:include page="/coordinator/context.jsp" />
 
 <h2>Imprimir Lista de Candidatos</h2>
 

@@ -11,7 +11,6 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ExternalPhdProgram extends ExternalPhdProgram_Base {
@@ -29,7 +28,7 @@ public class ExternalPhdProgram extends ExternalPhdProgram_Base {
 
         check(name, nameEn, acronym, forCollaborationType);
 
-        MultiLanguageString nameI18N = new MultiLanguageString(Language.pt, name).with(Language.en, nameEn);
+        MultiLanguageString nameI18N = new MultiLanguageString(MultiLanguageString.pt, name).with(MultiLanguageString.en, nameEn);
 
         setName(nameI18N);
 

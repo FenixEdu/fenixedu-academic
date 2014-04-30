@@ -38,21 +38,18 @@ import org.fenixedu.bennu.core.domain.User;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author joaosa and rmalo
  * 
  */
-@Mapping(module = "student", path = "/enrollStudentGroupShift", attribute = "groupEnrolmentForm",
-        formBean = "groupEnrolmentForm", scope = "request", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "sucess", path = "/student/enrollStudentGroupShift_bd.jsp"),
-        @Forward(name = "insucess", path = "/viewEnroledExecutionCourses.do?method=prepare"),
-        @Forward(name = "viewStudentGroupInformation", path = "/viewStudentGroupInformation.do"),
-        @Forward(name = "viewShiftsAndGroups", path = "/viewShiftsAndGroups.do"),
-        @Forward(name = "viewExecutionCourseProjects", path = "/viewExecutionCourseProjects.do", tileProperties = @Tile(
-                title = "private.student.subscribe.groups")) })
+@Mapping(module = "student", path = "/enrollStudentGroupShift", formBean = "groupEnrolmentForm",
+        functionality = ViewEnroledExecutionCoursesAction.class)
+@Forwards(value = { @Forward(name = "sucess", path = "/student/enrollStudentGroupShift_bd.jsp"),
+        @Forward(name = "insucess", path = "/student/viewEnroledExecutionCourses.do?method=prepare"),
+        @Forward(name = "viewStudentGroupInformation", path = "/student/viewStudentGroupInformation.do"),
+        @Forward(name = "viewShiftsAndGroups", path = "/student/viewShiftsAndGroups.do"),
+        @Forward(name = "viewExecutionCourseProjects", path = "/student/viewExecutionCourseProjects.do") })
 public class EnrollStudentGroupShiftDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareEnrollStudentGroupShift(ActionMapping mapping, ActionForm form, HttpServletRequest request,

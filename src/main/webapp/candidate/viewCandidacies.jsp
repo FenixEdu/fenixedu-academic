@@ -4,7 +4,6 @@
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 
-<em><bean:message key="portal.candidate" /></em>
 <h2><bean:message key="title.candidacies" /></h2>
 
 

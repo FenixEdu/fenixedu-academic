@@ -27,14 +27,14 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.util.MessageResources;
+import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixframework.FenixFramework;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBean {
 
@@ -179,7 +179,7 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
     public String getDegreeName() {
         final Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
         return locale.getLanguage().equals(Locale.ENGLISH.getLanguage()) ? getDegree().getNameFor(getExecutionYear()).getContent(
-                Language.en) : getDegree().getNameFor(getExecutionYear()).getContent(Language.pt);
+                MultiLanguageString.en) : getDegree().getNameFor(getExecutionYear()).getContent(MultiLanguageString.pt);
     }
 
     public List<SelectItem> getDegreeCurricularPlanSelectItems() {
@@ -241,7 +241,7 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
                                 if (!(evaluation instanceof Exam) || ((Exam) evaluation).isExamsMapPublished()) {
                                     final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
                                     CalendarLink calendarLink =
-                                            new CalendarLink(executionCourse, writtenEvaluation, Language.getLocale());
+                                            new CalendarLink(executionCourse, writtenEvaluation, I18N.getLocale());
                                     calendarLinks.add(calendarLink);
                                     calendarLink.setLinkParameters(constructLinkParameters(executionCourse));
                                 }
@@ -306,8 +306,7 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
     }
 
     public String getApplicationContext() {
-        final String appContext = FenixConfigurationManager.getConfiguration().appContext();
-        return (appContext != null && appContext.length() > 0) ? "/" + appContext : "";
+        return getRequest().getContextPath();
     }
 
     public void setCurricularYearID(String curricularYearID) {

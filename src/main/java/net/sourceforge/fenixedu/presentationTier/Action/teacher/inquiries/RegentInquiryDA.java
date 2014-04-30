@@ -35,8 +35,9 @@ import net.sourceforge.fenixedu.domain.inquiries.RegentInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.domain.inquiries.TeacherInquiryTemplate;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.ViewTeacherInquiryPublicResults;
+import net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA;
+import net.sourceforge.fenixedu.presentationTier.Action.teacher.executionCourse.ExecutionCourseBaseAction;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -44,27 +45,11 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(path = "/regentInquiry", module = "teacher")
-@Forwards({
-        @Forward(name = "inquiryResultsResume", path = "/teacher/inquiries/regentInquiryResultsResume.jsp",
-                tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp",
-                        title = "private.teacher.qucreportsandresults.regent")),
-        @Forward(name = "inquiriesClosed", path = "/teacher/inquiries/regentInquiryClosed.jsp", tileProperties = @Tile(
-                navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp",
-                title = "private.teacher.qucreportsandresults.regent")),
-        @Forward(name = "inquiryUnavailable", path = "/teacher/inquiries/regentInquiryUnavailable.jsp", tileProperties = @Tile(
-                navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp",
-                title = "private.teacher.qucreportsandresults.regent")),
-        @Forward(name = "regentInquiry", path = "/teacher/inquiries/regentInquiry.jsp", tileProperties = @Tile(
-                navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp",
-                title = "private.teacher.qucreportsandresults.regent")) })
-public class RegentInquiryDA extends FenixDispatchAction {
+@Mapping(path = "/regentInquiry", module = "teacher", functionality = ManageExecutionCourseDA.class)
+public class RegentInquiryDA extends ExecutionCourseBaseAction {
 
     public ActionForward showInquiriesPrePage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
@@ -80,13 +65,13 @@ public class RegentInquiryDA extends FenixDispatchAction {
         if (inquiryTemplate == null
                 || (inquiryTemplate.getExecutionPeriod().getNextExecutionPeriod().isCurrent() && !inquiryTemplate.isOpen() && !inquiryTemplate
                         .getExecutionPeriod().hasAnyInquiryResults())) {
-            return actionMapping.findForward("inquiriesClosed");
+            return forward(request, "/teacher/inquiries/regentInquiryClosed.jsp");
         } else if (!inquiryTemplate.isOpen()) {
             request.setAttribute("readMode", "readMode");
         }
 
         if (!professorship.getPerson().hasToAnswerRegentInquiry(professorship)) {
-            return actionMapping.findForward("inquiryUnavailable");
+            return forward(request, "/teacher/inquiries/regentInquiryUnavailable.jsp");
         }
 
         List<CurricularCourseResumeResult> coursesResultResume = new ArrayList<CurricularCourseResumeResult>();
@@ -158,7 +143,7 @@ public class RegentInquiryDA extends FenixDispatchAction {
         request.setAttribute("coursesResultResume", coursesResultResume);
 
         ViewTeacherInquiryPublicResults.setTeacherScaleColorException(executionCourse.getExecutionPeriod(), request);
-        return actionMapping.findForward("inquiryResultsResume");
+        return forward(request, "/teacher/inquiries/regentInquiryResultsResume.jsp");
     }
 
     static InquiryResponseState getFilledState(ExecutionCourse executionCourse, Professorship professorship,
@@ -194,7 +179,7 @@ public class RegentInquiryDA extends FenixDispatchAction {
         request.setAttribute("executionCourse", professorship.getExecutionCourse());
         request.setAttribute("regentInquiryBean", regentInquiryBean);
 
-        return actionMapping.findForward("regentInquiry");
+        return forward(request, "/teacher/inquiries/regentInquiry.jsp");
     }
 
     public ActionForward showTeacherInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
@@ -263,7 +248,7 @@ public class RegentInquiryDA extends FenixDispatchAction {
             request.setAttribute("executionPeriod", regentInquiryBean.getProfessorship().getExecutionCourse()
                     .getExecutionPeriod());
             request.setAttribute("executionCourse", regentInquiryBean.getProfessorship().getExecutionCourse());
-            return actionMapping.findForward("regentInquiry");
+            return forward(request, "/teacher/inquiries/regentInquiry.jsp");
         }
 
         RenderUtils.invalidateViewState("regentInquiryBean");

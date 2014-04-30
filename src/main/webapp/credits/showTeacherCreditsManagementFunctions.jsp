@@ -8,8 +8,6 @@
 
 <jsp:include page="teacherCreditsStyles.jsp"/>
 
-
-<em><bean:message key="label.managementFunctionNote" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></em>
 <h3><bean:message key="label.managementFunctionNote" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
 
 <logic:present name="personFunctions">
