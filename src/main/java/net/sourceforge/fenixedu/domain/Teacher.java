@@ -34,8 +34,6 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessi
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalExemption;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
-import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
-import net.sourceforge.fenixedu.domain.research.result.ResultTeacher;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
@@ -52,7 +50,6 @@ import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.util.OrientationType;
 import net.sourceforge.fenixedu.util.PeriodState;
-import net.sourceforge.fenixedu.util.PublicationArea;
 import net.sourceforge.fenixedu.util.PublicationType;
 import net.sourceforge.fenixedu.util.State;
 
@@ -120,34 +117,6 @@ public class Teacher extends Teacher_Base {
     /***************************************************************************
      * BUSINESS SERVICES *
      **************************************************************************/
-
-    public void addToTeacherInformationSheet(ResearchResult result, PublicationArea publicationArea) {
-        new ResultTeacher(result, this, publicationArea);
-    }
-
-    public void removeFromTeacherInformationSheet(ResearchResult result) {
-        for (ResultTeacher resultTeacher : getTeacherResults()) {
-            if (resultTeacher.getResult().equals(result)) {
-                resultTeacher.delete();
-                return;
-            }
-        }
-    }
-
-    public boolean canAddResultToTeacherInformationSheet(PublicationArea area) {
-        /* method based on canAddPublicationToTeacherInformationSheet */
-        int count = 0;
-        for (ResultTeacher resultTeacher : getTeacherResults()) {
-            if (resultTeacher.getPublicationArea().equals(area)) {
-                count++;
-            }
-        }
-        if (count < 5) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     public List<Professorship> responsibleFors() {
         final List<Professorship> result = new ArrayList<Professorship>();
@@ -1632,16 +1601,6 @@ public class Teacher extends Teacher_Base {
     @Deprecated
     public boolean hasAnyAppraiserExpectationEvaluationGroups() {
         return !getAppraiserExpectationEvaluationGroupsSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.research.result.ResultTeacher> getTeacherResults() {
-        return getTeacherResultsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyTeacherResults() {
-        return !getTeacherResultsSet().isEmpty();
     }
 
     @Deprecated

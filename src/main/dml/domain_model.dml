@@ -410,14 +410,6 @@ valueType net.sourceforge.fenixedu.util.ProviderRegimeType as ProviderRegimeType
     internalizeWith getEnum();
 }
 
-valueType net.sourceforge.fenixedu.util.PublicationArea as PublicationArea {
-    externalizeWith {
-        String getName();
-    }
-
-    internalizeWith getEnum();
-}
-
 valueType net.sourceforge.fenixedu.util.PublicationType as PublicationType {
     externalizeWith {
         int getValue();
@@ -4289,10 +4281,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
     class research.result.ResultParticipation  {
         Integer personOrder;
         ResultParticipationRole role;
-    }
-
-    class research.result.ResultTeacher  {
-        PublicationArea publicationArea;
     }
 
     class research.result.ResultUnitAssociation  {
@@ -12893,20 +12881,6 @@ relation ResultParticipationResearchResult {
     research.result.ResearchResult playsRole result;
 }
 
-relation ResultTeacherResearchResult {
-    research.result.ResultTeacher playsRole resultTeachers {
-        multiplicity *;
-    }
-    research.result.ResearchResult playsRole result;
-}
-
-relation ResultTeacherTeacher {
-    research.result.ResultTeacher playsRole teacherResults {
-        multiplicity *;
-    }
-    Teacher playsRole teacher;
-}
-
 relation RoomClassificationRoomClassification {
     space.RoomClassification playsRole childRoomClassifications {
         multiplicity *;
@@ -14211,13 +14185,6 @@ relation RootDomainObjectResourceResponsibility {
 relation RootDomainObjectResultParticipation {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     research.result.ResultParticipation playsRole resultParticipations {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectResultTeacher {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    research.result.ResultTeacher playsRole resultTeachers {
         multiplicity *;
     }
 }

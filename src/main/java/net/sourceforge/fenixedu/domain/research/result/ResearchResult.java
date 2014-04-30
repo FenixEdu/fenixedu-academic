@@ -162,10 +162,6 @@ public abstract class ResearchResult extends ResearchResult_Base {
         if (!hasPersonParticipation(requestingPerson) && !this.getCreator().equals(requestingPerson)) {
             throw new DomainException("error.researcher.Result.onlyParticipantsCanDelete");
         }
-
-        for (; !getResultTeachers().isEmpty(); getResultTeachers().iterator().next().delete()) {
-            ;
-        }
         removeAssociations();
         setRootDomainObject(null);
         deleteDomainObject();
@@ -314,10 +310,6 @@ public abstract class ResearchResult extends ResearchResult_Base {
         }
 
         for (; !getResultUnitAssociations().isEmpty(); getResultUnitAssociations().iterator().next().delete()) {
-
-        }
-
-        for (; !getResultTeachers().isEmpty(); getResultTeachers().iterator().next().delete()) {
 
         }
         // These should be the last to remove, because of access control
@@ -477,16 +469,6 @@ public abstract class ResearchResult extends ResearchResult_Base {
     @Deprecated
     public boolean hasAnyResultDocumentFiles() {
         return !getResultDocumentFilesSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.research.result.ResultTeacher> getResultTeachers() {
-        return getResultTeachersSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyResultTeachers() {
-        return !getResultTeachersSet().isEmpty();
     }
 
     @Deprecated
