@@ -42,7 +42,7 @@ public abstract class File extends File_Base {
     }
 
     public boolean isPrivate() {
-        return !getPermittedGroup().isMember(null);
+        return getPermittedGroup() == null || !getPermittedGroup().isMember(null);
     }
 
     @Deprecated
