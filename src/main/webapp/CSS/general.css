@@ -274,7 +274,6 @@ table.tdtop td { vertical-align: top; }
 table.tdmiddle td { vertical-align: middle !important; }
 table.vamiddle td, table.vamiddle th { vertical-align: middle; }
 
-.thwhite th { background: #fff !important; }
 .thbgfafafa th { background: #fafafa !important; }
 
 /* font */
@@ -573,12 +572,6 @@ fieldset {
 margin: 0.4em 0; padding: 0.4em 0;
 border: none;
 /*background-color: #f5f5f5;*/
-}
-
-small {
-display: block;
-margin-left: 10em;
-color: #d55;
 }
 
 .lfloat label, .lfloat2 label, lfloat3 label {
