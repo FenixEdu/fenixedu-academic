@@ -5,7 +5,6 @@ import java.io.IOException;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.student.thesis.ScientificCouncilOrStudentThesisAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile;
@@ -52,13 +51,12 @@ public class CreateThesisDissertationFile extends CreateThesisFile {
                     publication.getResultDocumentFilesSet().iterator().next();
 
             final FileResultPermittedGroupType permittedGroupType = researchResultDocumentFile.getFileResultPermittedGroupType();
-            final Group permittedGroup = researchResultDocumentFile.getPermittedGroup();
 
             researchResultDocumentFile.delete();
 
             byte[] content = FileUtils.readFileToByteArray(fileToUpload);
 
-            publication.addDocumentFile(content, fileName, file.getDisplayName(), permittedGroupType, permittedGroup);
+            publication.addDocumentFile(content, fileName, file.getDisplayName(), permittedGroupType);
             publication.setThesis(thesis);
 
         }

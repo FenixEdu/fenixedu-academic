@@ -13,11 +13,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile.FileResultPermittedGroupType;
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis.ThesisType;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
@@ -132,9 +130,8 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
             break;
         }
 
-        Group group = ResearchResultDocumentFile.getPermittedGroup(groupType);
         publication.addDocumentFile(dissertation.getContents(), dissertation.getFilename(), dissertation.getDisplayName(),
-                groupType, group);
+                groupType);
 
         publication.setThesis(thesis);
         author.addPersonRoleByRoleType(RoleType.RESEARCHER);
