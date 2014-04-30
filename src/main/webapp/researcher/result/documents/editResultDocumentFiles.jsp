@@ -25,12 +25,7 @@
 <bean:define id="cancel" value="<%="/result/resultDocumentFilesManagement.do?forwardTo=editDocumentFiles&method=backToResult&" + parameters%>"/>
 
 <%-- Use Case Titles --%>
-<logic:equal name="resultType" value="ResultPatent">
-	<p><em><bean:message key="link.patentsManagement" bundle="RESEARCHER_RESOURCES"/></em></p> 
-</logic:equal>
-<logic:notEqual name="resultType" value="ResultPatent">
-	<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.publications"/></em></p>
-</logic:notEqual>
+<p><em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.publications"/></em></p>
 
 <h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultDocumentFiles.useCase.title"/></h2>
 

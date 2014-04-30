@@ -654,15 +654,6 @@ extends="eventCreation">
 	</slot>
 </schema>
 
-<schema name="result.simple.detail.patent" type="net.sourceforge.fenixedu.domain.research.result.ResearchResult">	
-	<slot name="title" layout="link">
-		<property name="useParent" value="true"/>
- 		<property name="linkFormat" value="/researcher/resultPatents/showPatent.do?resultId=${externalId}"/>
-		<property name="contextRelative" value="true"/>
-		<property name="classes" value="bold"/>
-	</slot>
-</schema>
-
 <schema name="unit.name" type="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
 	<slot name="name"/>
 </schema>
@@ -671,132 +662,6 @@ extends="eventCreation">
 </schema>
 <schema name="event.name" type="net.sourceforge.fenixedu.domain.research.activity.ResearchEvent">
 	<slot name="name"/>
-</schema>
-
-<!-- Schemas used for Result Patents Management -->
-<schema name="patent-default" type="net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent" bundle="RESEARCHER_RESOURCES">
-	<slot name="title" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
-		<property name="size" value="45"/>
-	</slot>
-	<slot name="orderedResultParticipations" layout="flowLayout" key="label.resultParticipations">
-		<property name="eachLayout" value="values"/>
-		<property name="eachSchema" value="publication.resultParticipation"/>
-		<property name="htmlSeparator" value=", "/>
-	</slot>
-	<slot name="resultUnitAssociations" layout="flowLayout" key="researcher.project.editProject.units">
-		<property name="eachLayout" value="values"/>
-		<property name="eachSchema" value="resultUnit.name"/>
-		<property name="htmlSeparator" value=","/>
-	</slot>
-	<slot name="note" layout="area">
-		<property name="rows" value="5"/>
-		<property name="columns" value="60"/>
-	</slot>
-	<slot name="patentType"/>
-	<slot name="patentStatus"/>
-	<slot name="registrationDate" layout="year-month" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="size" value="10"/>
-		<property name="maxLength" value="7"/>
-	</slot>
-	<slot name="approvalDate" layout="year-month">
-		<property name="size" value="10"/>
-		<property name="maxLength" value="7"/>
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
-			<property name="dateFormat" value="MM/yyyy"/>
-		</validator>
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	</slot>
-	<slot name="country" layout="menu-select">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider"/> 
-		<property name="format" value="${name}"/>
-		<property name="sortBy" value="name"/>
-	</slot>
-	<slot name="local"/>
-	<slot name="patentNumber"/>
-	<slot name="url">
-		<property name="size" value="30"/>
-		<property name="link" value="true"/>
-	</slot>
-</schema>
-
-<schema name="patent-default-edit" type="net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent" bundle="RESEARCHER_RESOURCES">
-	<slot name="title" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
-		<property name="size" value="45"/>
-	</slot>
-	<slot name="note" layout="area">
-		<property name="rows" value="5"/>
-		<property name="columns" value="60"/>
-	</slot>
-	<slot name="patentType"/>
-	<slot name="patentStatus"/>
-	<slot name="registrationDate" layout="year-month">
-		<property name="size" value="10"/>
-	  	<property name="maxLength" value="7"/>
-	  	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
-			<property name="dateFormat" value="MM/yyyy"/>
-		</validator>
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	</slot>
-	<slot name="approvalDate" layout="year-month">
-		<property name="size" value="10"/>
-		<property name="maxLength" value="7"/>
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
-			<property name="dateFormat" value="MM/yyyy"/>
-		</validator>
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	</slot>
-	<slot name="country" layout="menu-select">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CountryProvider"/> 
-		<property name="format" value="${name}"/>
-		<property name="sortBy" value="name"/>
-	</slot>
-	<slot name="local"/>
-	<slot name="patentNumber"/>
-	<slot name="url" layout="input-with-comment">
-		<property name="subProperty(size)" value="60"/>
-		<property name="bundle" value="RESEARCHER_RESOURCES"/>
-		<property name="comment" value="label.url.explanation"/>
-		<property name="commentClasses" value="smalltxt color555"/>
-	</slot>
-</schema>
-
-
-<schema name="patent.create" extends="patent-default-edit" bundle="RESEARCHER_RESOURCES"
-		type="net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent" 
-		constructor="participation,title,note,patentType,patentStatus,registrationDate,approvalDate,country,local,patentNumber,url">
-	<slot name="participation" hidden="true"/>
-</schema>
-
-<schema name="patent.edit" type="net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent" 
-		bundle="RESEARCHER_RESOURCES" extends="patent-default-edit">
-	<setter signature="setEditAll(title,note,patentType,patentStatus,registrationDate,approvalDate,country,local,patentNumber,url)"/>
-</schema>
-
-<schema name="patent.viewEditData" extends="patent-default" bundle="RESEARCHER_RESOURCES"
-		type="net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent">
-	<slot name="title"/>
-	<slot name="note"/>
-	<slot name="registrationDate"/>
-	<slot name="approvalDate"/>
-	<slot name="country" layout="format">
-		<property name="format" value="${name}"/>
-	</slot>
-	<slot name="url" layout="input-with-comment">
-		<property name="subProperty(size)" value="60"/>
-		<property name="bundle" value="RESEARCHER_RESOURCES"/>
-		<property name="comment" value="label.url.explanation"/>
-		<property name="commentClasses" value="smalltxt color555"/>
-	</slot>
-</schema>
-<schema name="result.patentShortList" type="net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent">
-	<slot name="title" layout="link">
-        <property name="linkFormat"><![CDATA[/resultPatents/prepareDetails.do?resultId=${externalId}]]></property>
-        <property name="useParent" value="true"/>
-	</slot>
-	<slot name="registrationDate"/>
-	<slot name="approvalDate"/>
-	<slot name="lastModificationDate"/>
 </schema>
 
 <!-- Schemas used for Result Participations Management -->
@@ -2148,16 +2013,6 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Co
 	</slot>
 </schema>
  
-<schema name="patent.Title" bundle="RESEARCHER_RESOURCES"
-	type="net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication">	
-	<slot name="title" layout="link">
-		<property name="useParent" value="true"/>
-		<property name="moduleRelative" value="true"/>
-		<property name="contextRelative" value="true"/>
-		<property name="destination" value="view.patent"/>
-	</slot>
-</schema>
-
 <schema name="publication.Title" bundle="RESEARCHER_RESOURCES"
 	type="net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication">	
 	<slot name="title" layout="link">

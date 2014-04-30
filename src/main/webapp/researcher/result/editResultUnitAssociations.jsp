@@ -24,13 +24,7 @@
 <bean:define id="addSugestion" value="<%="/resultAssociations/addSugestion.do?" + parameters%>"/>
 
 <%-- Title --%>		
-<logic:equal name="resultType" value="ResultPatent">
-	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResearchResultPatent.management.title"/></em>
-</logic:equal>
-
-<logic:notEqual name="resultType" value="ResultPatent">
-	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.publications"/></em>
-</logic:notEqual>
+<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.publications"/></em>
 
 <h3><fr:view name="result" property="title"/></h3>
 

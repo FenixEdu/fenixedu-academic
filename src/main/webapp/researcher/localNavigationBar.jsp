@@ -14,7 +14,6 @@
 
 <ul style="margin-top: 0.75em;">
 	<li><html:link page="/resultPublications/listPublications.do"><bean:message bundle="RESEARCHER_RESOURCES" key="link.Publications"/></html:link></li>
-	<li><html:link page="/resultPatents/management.do"><bean:message bundle="RESEARCHER_RESOURCES" key="link.patentsManagement"/></html:link></li>			
 	<li><html:link page="/activities/activitiesManagement.do?method=listActivities"><bean:message bundle="RESEARCHER_RESOURCES" key="link.activitiesManagement"/></html:link></li>
     <li><html:link page="/career/careerManagement.do?method=showCareer"><bean:message bundle="RESEARCHER_RESOURCES" key="label.career"/></html:link></li>
 </ul>

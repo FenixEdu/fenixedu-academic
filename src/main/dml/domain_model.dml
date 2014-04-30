@@ -126,8 +126,6 @@ enum net.sourceforge.fenixedu.domain.research.activity.ResearchActivityStage    
 enum net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile.FileResultPermittedGroupType              as FileResultPermittedGroupType;
 enum net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole                          as ResultParticipationRole;
 enum net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation.ResultUnitAssociationRole                      as ResultUnitAssociationRole;
-enum net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent.ResultPatentStatus                       as ResultPatentStatus;
-enum net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent.ResultPatentType                         as ResultPatentType;
 enum net.sourceforge.fenixedu.domain.research.result.publication.ScopeType                                                as ScopeType;
 enum net.sourceforge.fenixedu.domain.research.result.publication.Thesis.ThesisType                                        as ThesisType;
 enum net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType                                  as AcademicServiceRequestSituationType;
@@ -4144,15 +4142,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
         String uniqueStorageId;
         String url;
     }
-
-        class research.result.patent.ResearchResultPatent extends research.result.ResearchResult {
-            Partial approvalDate;
-            String local;
-            String patentNumber;
-            ResultPatentStatus patentStatus;
-            ResultPatentType patentType;
-            Partial registrationDate;
-        }
 
         class research.result.publication.ResearchResultPublication extends research.result.ResearchResult {
             MultiLanguageString keywords;

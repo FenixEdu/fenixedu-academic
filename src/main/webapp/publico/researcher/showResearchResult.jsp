@@ -8,24 +8,13 @@
 
 	<logic:notPresent name="hideResultPageTitle">
 		<bean:define id="resultType" name="result" property="class.simpleName"/>
-		<logic:notEqual name="resultType" value="ResearchResultPatent">
 		<h1><bean:message key="label.publication" bundle="RESEARCHER_RESOURCES"/></h1>
-		</logic:notEqual>
-		<logic:equal name="resultType" value="ResearchResultPatent">
-			<h1><bean:message key="label.patent" bundle="RESEARCHER_RESOURCES"/></h1>
-		</logic:equal>
 	</logic:notPresent>
 	
 	<h2>
-	<logic:notEqual name="resultType" value="ResearchResultPatent">
 		<bean:message key="label.publication" bundle="RESEARCHER_RESOURCES"/>
-	</logic:notEqual>
-	<logic:equal name="resultType" value="ResearchResultPatent">
-		<bean:message key="label.patent" bundle="RESEARCHER_RESOURCES"/>
-	</logic:equal>
 	</h2>
 	
-	<logic:notEqual name="resultType" value="ResearchResultPatent">
 	<bean:define id="schema" name="result" property="schema"/>				
 	<fr:view name="result" schema="<%= schema + ".mainInfo" %>">
 	<fr:layout name="tabular-nonNullValues">
@@ -33,17 +22,6 @@
 		<fr:property name="rowClasses" value="tdbold,,,,,,,,,,,,,,,,,,,,,,,,,,"/>
 	</fr:layout>
 	</fr:view>
-	</logic:notEqual>
-
-	<logic:equal name="resultType" value="ResearchResultPatent">
-	<fr:view name="result" schema="patent.viewEditData">
-	<fr:layout name="tabular-nonNullValues">
-		<fr:property name="classes" value="tstyle2 thwhite thnowrap thlight thleft thtop ulnomargin width100pc"/>
-		<fr:property name="rowClasses" value="tdbold,,,,,,,,,,,,,,,,,,,,,,,,,,"/>
-	</fr:layout>
-	</fr:view>
-	</logic:equal>
-
 	
 	<logic:notPresent name="hideResultFiles">
 		<%-- Documents --%>

@@ -30,12 +30,7 @@
 <bean:define id="creationSchema" name="creationSchema" type="java.lang.String"/>
 
 <%-- Title --%>		
-<logic:equal name="resultType" value="ResultPatent">
-	<em>Patentes</em> <!-- tobundle -->
-</logic:equal>
-<logic:notEqual name="resultType" value="ResultPatent">
-	<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.publications"/></em>
-</logic:notEqual>
+<em><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultPublication.publications"/></em>
 <h2>
 	<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultEventAssociation.useCase.title"/>: 
 	<fr:view name="result" property="title"/>

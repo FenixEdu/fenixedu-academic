@@ -110,7 +110,6 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PHDProgramCandidacy;
 import net.sourceforge.fenixedu.domain.research.Researcher;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
-import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
 import net.sourceforge.fenixedu.domain.research.result.publication.PreferredPublication;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.space.Campus;
@@ -701,29 +700,6 @@ public class Person extends Person_Base {
             }
         }
         return resultPublications;
-    }
-
-    public List<ResearchResultPatent> getResearchResultPatents() {
-        final List<ResearchResultPatent> resultPatents = new ArrayList<ResearchResultPatent>();
-        ResearchResult result = null;
-        for (final ResultParticipation resultParticipation : this.getResultParticipations()) {
-            result = resultParticipation.getResult();
-            // filter only patent participations
-            if (result instanceof ResearchResultPatent) {
-                resultPatents.add((ResearchResultPatent) result);
-            }
-        }
-        return resultPatents;
-    }
-
-    public List<ResearchResultPatent> getResearchResultPatentsByExecutionYear(final ExecutionYear executionYear) {
-        final List<ResearchResultPatent> resultPatents = new ArrayList<ResearchResultPatent>();
-        for (final ResearchResultPatent patent : getResearchResultPatents()) {
-            if (executionYear.belongsToCivilYear(patent.getApprovalYear())) {
-                resultPatents.add(patent);
-            }
-        }
-        return resultPatents;
     }
 
     public Boolean getIsExamCoordinatorInCurrentYear() {

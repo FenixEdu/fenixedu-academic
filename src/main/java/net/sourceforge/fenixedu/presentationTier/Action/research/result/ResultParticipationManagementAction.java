@@ -42,9 +42,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
         @Forward(name = "editParticipation", path = "/researcher/result/participations/editResultParticipations.jsp",
                 tileProperties = @Tile(head = "/commons/renderers/treeRendererHeader.jsp")),
         @Forward(name = "ListPublications", path = "/resultPublications/listPublications.do", tileProperties = @Tile(
-                title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.publications")),
-        @Forward(name = "editPatent", path = "/resultPatents/showPatent.do"),
-        @Forward(name = "listPatents", path = "/resultPatents/management.do") })
+                title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.publications")) })
 public class ResultParticipationManagementAction extends ResultsManagementAction {
 
     private static final Logger logger = LoggerFactory.getLogger(ResultParticipationManagementAction.class);

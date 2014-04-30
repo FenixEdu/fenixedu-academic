@@ -21,8 +21,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(module = "researcher", path = "/result/resultDocumentFilesManagement", scope = "session", parameter = "method")
 @Forwards(value = { @Forward(name = "viewEditPublication", path = "/resultPublications/showPublication.do"),
         @Forward(name = "ListPublications", path = "/resultPublications/listPublications.do"),
-        @Forward(name = "editPatent", path = "/resultPatents/showPatent.do"),
-        @Forward(name = "listPatents", path = "/resultPatents/management.do"),
         @Forward(name = "editDocumentFiles", path = "/researcher/result/documents/editResultDocumentFiles.jsp") })
 public class ResultDocumentFilesManagementAction extends ResultsManagementAction {
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,

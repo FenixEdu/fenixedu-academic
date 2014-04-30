@@ -37,7 +37,6 @@ import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation;
-import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
 import net.sourceforge.fenixedu.domain.research.result.publication.Article;
 import net.sourceforge.fenixedu.domain.research.result.publication.Book;
 import net.sourceforge.fenixedu.domain.research.result.publication.BookPart;
@@ -1097,17 +1096,6 @@ public class Unit extends Unit_Base {
 
     public boolean isSiteAvailable() {
         return hasSite();
-    }
-
-    public List<ResearchResultPatent> getAssociatedPatents() {
-        Set<ResearchResultPatent> patents = new HashSet<ResearchResultPatent>();
-
-        for (ResultUnitAssociation association : getResultUnitAssociations()) {
-            if (association.getResult() instanceof ResearchResultPatent) {
-                patents.add((ResearchResultPatent) association.getResult());
-            }
-        }
-        return new ArrayList<ResearchResultPatent>(patents);
     }
 
     public List<UnitFile> getAccessibileFiles(Person person) {

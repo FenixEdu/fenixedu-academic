@@ -80,7 +80,6 @@
             <!-- Results Management -->
             <action forward="/publications/management.do?method={1}" path="/resultPublications/*"></action>
             <action forward="/publications/bibtexManagement.do?method={1}" path="/bibtexManagement/*"></action>
-            <action forward="/patents/management.do?method={1}" path="/resultPatents/*"></action>
             <action forward="/result/resultParticipationManagement.do?method={1}" path="/resultParticipations/*"></action>
             <action forward="/result/resultDocumentFilesManagement.do?method={1}" path="/resultDocumentFiles/*"></action>
             <action forward="/result/resultAssociationsManagement.do?method={1}" path="/resultAssociations/*"></action>
@@ -111,7 +110,6 @@
                   <forward path="/resultPublications/listPublications.do" name="PublicationsManagement"></forward>
             </action>
             <!-- Result Publication Search Action  Mapping -->
-            <!-- Result Patents Management Action Mapping -->
             <!-- Result Participation Management Action Mapping -->
             <!-- Result Document Files Management Action Mapping -->
             <!-- Result Associations Management Action Mapping -->

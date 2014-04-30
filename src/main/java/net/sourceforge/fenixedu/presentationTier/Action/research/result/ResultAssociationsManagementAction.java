@@ -31,13 +31,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
                 title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.publications")),
         @Forward(name = "ListPublications", path = "/resultPublications/listPublications.do", tileProperties = @Tile(
                 title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.publications")),
-        @Forward(name = "editPatent", path = "/resultPatents/showPatent.do", tileProperties = @Tile(
-                title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.patents")),
         @Forward(name = "editEventAssociations", path = "/researcher/result/editResultEventAssociations.jsp",
                 tileProperties = @Tile(
-                        title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.publications")),
-        @Forward(name = "listPatents", path = "/resultPatents/management.do", tileProperties = @Tile(
-                title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.patents")) })
+                        title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.publications")) })
 public class ResultAssociationsManagementAction extends ResultsManagementAction {
 
     private static final Logger logger = LoggerFactory.getLogger(ResultAssociationsManagementAction.class);

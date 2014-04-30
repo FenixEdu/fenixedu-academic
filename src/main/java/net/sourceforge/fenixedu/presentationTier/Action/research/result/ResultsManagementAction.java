@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.R
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearchUnit;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
-import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
 import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -46,9 +45,7 @@ public class ResultsManagementAction extends FenixDispatchAction {
         }
 
         request.setAttribute("resultId", result.getExternalId());
-        if (result instanceof ResearchResultPatent) {
-            return mapping.findForward("editPatent");
-        } else if (result instanceof ResearchResultPublication) {
+        if (result instanceof ResearchResultPublication) {
             return mapping.findForward("viewEditPublication");
         }
         return null;
@@ -59,9 +56,6 @@ public class ResultsManagementAction extends FenixDispatchAction {
         final String resultType = (String) getFromRequest(request, "resultType");
 
         if (!(resultType == null || resultType.equals(""))) {
-            if (resultType.compareTo(ResearchResultPatent.class.getSimpleName()) == 0) {
-                return mapping.findForward("listPatents");
-            }
             return mapping.findForward("ListPublications");
         }
         return null;

@@ -18,13 +18,7 @@
 <bean:define id="backLink" value="<%="/resultParticipations/backToResult.do?" + parameters%>"/>
 
 <!-- Titles -->
-<logic:equal name="resultType" value="ResultPatent">
-	<p><em><bean:message key="researcher.viewCurriculum.publicationsTitle" bundle="RESEARCHER_RESOURCES"/></em></p> 
-</logic:equal>
-
-<logic:notEqual name="resultType" value="ResultPatent">
-	<p><em><bean:message key="researcher.viewCurriculum.publicationsTitle" bundle="RESEARCHER_RESOURCES"/></em></p> 
-</logic:notEqual>
+<p><em><bean:message key="researcher.viewCurriculum.publicationsTitle" bundle="RESEARCHER_RESOURCES"/></em></p> 
 
 <h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResultParticipation.useCase.title"/></h2>
 
