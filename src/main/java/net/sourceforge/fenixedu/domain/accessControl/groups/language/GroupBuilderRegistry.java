@@ -95,6 +95,7 @@ import net.sourceforge.fenixedu.domain.accessControl.WebSiteManagersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup.AcademicAuthorizationGroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.ActiveStudentsFromDegreeTypeGroup;
+import net.sourceforge.fenixedu.domain.accessControl.groups.BennuGroupBridge;
 import net.sourceforge.fenixedu.domain.accessControl.groups.DepartmentAdministrativeOfficeGroup;
 import net.sourceforge.fenixedu.domain.accessControl.groups.DepartmentPresidentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.groups.InternalOrExternalTeacherGroup;
@@ -108,6 +109,7 @@ import net.sourceforge.fenixedu.domain.research.AuthorGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.Pair;
 
 /**
@@ -327,4 +329,7 @@ public class GroupBuilderRegistry {
         }
     }
 
+    public static Group getGroupBridge(String oid) {
+        return new BennuGroupBridge(FenixFramework.<org.fenixedu.bennu.core.domain.groups.Group> getDomainObject(oid));
+    }
 }
