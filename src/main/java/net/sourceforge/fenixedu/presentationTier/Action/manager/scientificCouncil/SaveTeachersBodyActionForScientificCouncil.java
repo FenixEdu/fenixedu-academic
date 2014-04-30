@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidArgumentsActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits.MasterDegreeCreditsManagementDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -29,8 +30,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "scientificCouncil", path = "/saveTeachersBody", input = "/readTeacherInCharge.do",
-        attribute = "masterDegreeCreditsForm", formBean = "masterDegreeCreditsForm", scope = "request")
-@Forwards(value = { @Forward(name = "readCurricularCourse", path = "/masterDegreeCreditsManagement.do?method=prepareEdit") })
+        formBean = "masterDegreeCreditsForm", functionality = MasterDegreeCreditsManagementDispatchAction.class)
+@Forwards(value = { @Forward(name = "readCurricularCourse",
+        path = "/scientificCouncil/masterDegreeCreditsManagement.do?method=prepareEdit") })
 @Exceptions(value = {
         @ExceptionHandling(type = net.sourceforge.fenixedu.domain.exceptions.DomainException.class,
                 handler = net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler.class, scope = "request"),

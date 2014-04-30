@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ShowAllTeacherCreditsResumeAction;
+import net.sourceforge.fenixedu.presentationTier.Action.credits.scientificCouncil.ScientificCouncilViewTeacherCreditsDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -18,8 +19,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(module = "scientificCouncil", path = "/showAllTeacherCreditsResume", attribute = "teacherCreditsSheetForm",
-        formBean = "teacherCreditsSheetForm", scope = "request", parameter = "method")
+@Mapping(module = "scientificCouncil", path = "/showAllTeacherCreditsResume", formBean = "teacherCreditsSheetForm",
+        functionality = ScientificCouncilViewTeacherCreditsDA.class)
 @Forwards(value = { @Forward(name = "search-teacher-form", path = "search-for-teacher-credits"),
         @Forward(name = "teacher-not-found", path = "search-for-teacher-credits"),
         @Forward(name = "show-all-credits-resume", path = "/credits/commons/listAllTeacherCreditsResume.jsp") })

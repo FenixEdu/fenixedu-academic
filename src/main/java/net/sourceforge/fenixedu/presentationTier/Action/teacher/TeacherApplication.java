@@ -24,4 +24,9 @@ public class TeacherApplication {
     public static class TeacherTeachingApp {
     }
 
+    @StrutsApplication(bundle = "AcademicAdminOffice", path = "mobility", titleKey = "label.application.mobility",
+            accessGroup = "role(TEACHER)", hint = "Teacher")
+    public static class TeacherMobilityApp {
+    }
+
 }

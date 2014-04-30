@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ManageTeacherAdviseServiceDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.credits.scientificCouncil.ScientificCouncilViewTeacherCreditsDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -31,13 +32,15 @@ import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "scientificCouncil", path = "/teacherAdviseServiceManagement",
         input = "/teacherAdviseServiceManagement.do?method=showTeacherAdvises&page=0",
-        attribute = "teacherDegreeFinalProjectStudentForm", formBean = "teacherDegreeFinalProjectStudentForm", scope = "request",
-        parameter = "method")
-@Forwards(value = {
+        formBean = "teacherDegreeFinalProjectStudentForm", functionality = ScientificCouncilViewTeacherCreditsDA.class)
+@Forwards({
         @Forward(name = "list-teacher-advise-services", path = "/credits/adviseServices/showTeacherAdviseServices.jsp"),
-        @Forward(name = "successfull-delete", path = "/teacherAdviseServiceManagement.do?method=showTeacherAdvises&page=0"),
-        @Forward(name = "successfull-edit", path = "/teacherAdviseServiceManagement.do?method=showTeacherAdvises&page=0"),
-        @Forward(name = "teacher-not-found", path = "/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&page=0") })
+        @Forward(name = "successfull-delete",
+                path = "/scientificCouncil/teacherAdviseServiceManagement.do?method=showTeacherAdvises&page=0"),
+        @Forward(name = "successfull-edit",
+                path = "/scientificCouncil/teacherAdviseServiceManagement.do?method=showTeacherAdvises&page=0"),
+        @Forward(name = "teacher-not-found",
+                path = "/scientificCouncil/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&page=0") })
 @Exceptions(
         value = {
                 @ExceptionHandling(

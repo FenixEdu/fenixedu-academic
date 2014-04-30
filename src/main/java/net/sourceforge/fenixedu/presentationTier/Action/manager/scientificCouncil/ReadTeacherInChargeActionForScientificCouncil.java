@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits.MasterDegreeCreditsManagementDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -29,7 +30,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "scientificCouncil", path = "/readTeacherInCharge", input = "/readCurricularCourse.do",
-        attribute = "masterDegreeCreditsForm", formBean = "masterDegreeCreditsForm", scope = "request")
+        formBean = "masterDegreeCreditsForm", functionality = MasterDegreeCreditsManagementDispatchAction.class)
 @Forwards({ @Forward(name = "readExecutionCourseTeachers", path = "/scientificCouncil/credits/readTeachers_bd.jsp") })
 public class ReadTeacherInChargeActionForScientificCouncil extends FenixAction {
 

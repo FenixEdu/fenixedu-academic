@@ -129,7 +129,7 @@
 		showRules="<%=request.getParameter("showRules")%>"
 		hideCourses="<%=request.getParameter("hideCourses")%>"
 		reportsAvailable="true"
-		module="/scientificCouncil"/>
+		module="/scientificCouncil/curricularPlans"/>
 
 	<h:outputText value="<p>" escape="false"/>
 	<h:form>

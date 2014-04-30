@@ -23,8 +23,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/caseHandlingMobilityIndividualApplicationProcess", module = "teacher", formBeanClass = FenixActionForm.class)
-@Forwards({ @Forward(name = "intro", path = "/caseHandlingMobilityApplicationProcess.do?method=listProcessAllowedActivities"),
+@Mapping(path = "/caseHandlingMobilityIndividualApplicationProcess", module = "teacher", formBeanClass = FenixActionForm.class,
+        functionality = ErasmusCandidacyProcessDA.class)
+@Forwards({
+        @Forward(name = "intro", path = "/teacher/caseHandlingMobilityApplicationProcess.do?method=listProcessAllowedActivities"),
         @Forward(name = "list-allowed-activities", path = "/candidacy/erasmus/listIndividualCandidacyActivities.jsp"),
         @Forward(name = "set-coordinator-validation", path = "/teacher/candidacy/erasmus/setCoordinatorValidation.jsp"),
         @Forward(name = "visualize-alerts", path = "/candidacy/erasmus/visualizeAlerts.jsp"),

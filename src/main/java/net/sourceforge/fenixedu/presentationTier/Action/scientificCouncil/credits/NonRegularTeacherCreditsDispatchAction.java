@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.credits.scientificCouncil.ScientificCouncilViewTeacherCreditsDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -25,7 +26,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/manageNonRegularTeachingService", module = "scientificCouncil")
+@Mapping(path = "/manageNonRegularTeachingService", module = "scientificCouncil",
+        functionality = ScientificCouncilViewTeacherCreditsDA.class)
 @Forwards({ @Forward(name = "chooseNonRegularTeacher", path = "/scientificCouncil/credits/chooseNonRegularTeacher.jsp"),
         @Forward(name = "showNonRegularTeachingService", path = "/teacher/credits/showNonRegularTeachingService.jsp"),
         @Forward(name = "editNonRegularTeachingService", path = "/teacher/credits/editNonRegularTeachingService.jsp") })

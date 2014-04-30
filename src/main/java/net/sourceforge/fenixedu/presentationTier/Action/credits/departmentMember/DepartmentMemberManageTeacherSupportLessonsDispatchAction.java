@@ -28,14 +28,17 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "departmentMember", path = "/supportLessonsManagement",
-        input = "/supportLessonsManagement.do?method=prepareEdit&page=0", attribute = "supportLessonForm",
-        formBean = "supportLessonForm", scope = "request", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "successfull-delete", path = "/degreeTeachingServiceManagement.do?method=showTeachingServiceDetails"),
-        @Forward(name = "successfull-edit", path = "/degreeTeachingServiceManagement.do?method=showTeachingServiceDetails"),
+        input = "/supportLessonsManagement.do?method=prepareEdit&page=0", formBean = "supportLessonForm",
+        functionality = DepartmentMemberViewTeacherCreditsDA.class)
+@Forwards({
+        @Forward(name = "successfull-delete",
+                path = "/departmentMember/degreeTeachingServiceManagement.do?method=showTeachingServiceDetails"),
+        @Forward(name = "successfull-edit",
+                path = "/departmentMember/degreeTeachingServiceManagement.do?method=showTeachingServiceDetails"),
         @Forward(name = "edit-support-lesson", path = "/credits/supportLessons/editSupportLesson.jsp"),
-        @Forward(name = "list-support-lessons", path = "/degreeTeachingServiceManagement.do?method=showTeachingServiceDetails"),
-        @Forward(name = "teacher-not-found", path = "/credits.do?method=viewAnnualTeachingCredits") })
+        @Forward(name = "list-support-lessons",
+                path = "/departmentMember/degreeTeachingServiceManagement.do?method=showTeachingServiceDetails"),
+        @Forward(name = "teacher-not-found", path = "/departmentMember/credits.do?method=viewAnnualTeachingCredits") })
 @Exceptions(
         value = {
                 @ExceptionHandling(

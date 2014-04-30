@@ -23,13 +23,15 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "scientificCouncil", path = "/supportLessonsManagement",
-        input = "/supportLessonsManagement.do?method=prepareEdit&page=0", attribute = "supportLessonForm",
-        formBean = "supportLessonForm", scope = "request", parameter = "method")
-@Forwards(value = {
-        @Forward(name = "successfull-delete", path = "/degreeTeachingServiceManagement.do?method=showTeachingServiceDetails"),
-        @Forward(name = "successfull-edit", path = "/degreeTeachingServiceManagement.do?method=showTeachingServiceDetails"),
+        input = "/supportLessonsManagement.do?method=prepareEdit&page=0", formBean = "supportLessonForm",
+        functionality = ScientificCouncilViewTeacherCreditsDA.class)
+@Forwards({
+        @Forward(name = "successfull-delete",
+                path = "/scientificCouncil/degreeTeachingServiceManagement.do?method=showTeachingServiceDetails"),
+        @Forward(name = "successfull-edit",
+                path = "/scientificCouncil/degreeTeachingServiceManagement.do?method=showTeachingServiceDetails"),
         @Forward(name = "edit-support-lesson", path = "/credits/supportLessons/editSupportLesson.jsp"),
-        @Forward(name = "teacher-not-found", path = "/credits.do?method=viewAnnualTeachingCredits") })
+        @Forward(name = "teacher-not-found", path = "/scientificCouncil/credits.do?method=viewAnnualTeachingCredits") })
 @Exceptions(
         value = {
                 @ExceptionHandling(

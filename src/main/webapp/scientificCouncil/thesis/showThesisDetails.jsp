@@ -3,6 +3,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.thesis.ThesisFile"%>
 <%@page import="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString"%>
 <%@page import="org.fenixedu.commons.i18n.I18N"%>
+<%@page import="java.util.Locale"%>
 <%@page import="java.util.List"%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState"%>
 <%@page import="net.sourceforge.fenixedu.domain.Degree"%>
@@ -107,7 +108,7 @@
 </div>
 
 <%
-	final List<Language> languages = thesis.getLanguages();
+	final List<Locale> languages = thesis.getLanguages();
 %>
 <table class="tstyle4 thlight mtop05" style="margin-left: 35px; width: 90%;">
 	<tr>
@@ -115,10 +116,10 @@
 			<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.language"/>
 		</th>
 		<%
-			for (final Language language : languages) {
+			for (final Locale language : languages) {
 		%>
 				<th>
-					<bean:message bundle="LANGUAGE_RESOURCES" key="<%= "language." + language.name() %>"/>
+					<bean:message bundle="LANGUAGE_RESOURCES" key="<%= "language." + language %>"/>
 				</th>
 		<%
 			}
@@ -129,7 +130,7 @@
 			<bean:message bundle="STUDENT_RESOURCES" key="finalDegreeWorkProposalHeader.title"/>
 		</th>
 		<%
-			for (final Language language : languages) {
+			for (final Locale language : languages) {
 			    final MultiLanguageString mls = thesis.getTitle();
 			    final String string = mls == null ? null : mls.getContent(language);
 		%>
@@ -145,7 +146,7 @@
 			<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.thesis.keywords"/>
 		</th>
 		<%
-			for (final Language language : languages) {
+			for (final Locale language : languages) {
 			    final MultiLanguageString mls = thesis.getKeywords();
 			    final String string = mls == null ? null : mls.getContent(language);
 		%>
@@ -161,7 +162,7 @@
 			<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.thesis.abstract"/>
 		</th>
 		<%
-			for (final Language language : languages) {
+			for (final Locale language : languages) {
 			    final MultiLanguageString mls = thesis.getThesisAbstract();
 			    final String string = mls == null ? null : mls.getContent(language);
 		%>

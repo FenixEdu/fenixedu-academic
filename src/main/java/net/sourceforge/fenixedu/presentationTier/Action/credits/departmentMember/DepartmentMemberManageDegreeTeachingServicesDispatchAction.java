@@ -25,10 +25,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(module = "departmentMember", path = "/degreeTeachingServiceManagement",
         input = "/degreeTeachingServiceManagement.do?method=showTeachingServiceDetails",
         attribute = "teacherExecutionCourseShiftProfessorshipForm", formBean = "teacherExecutionCourseShiftProfessorshipForm",
-        scope = "request", parameter = "method")
+        functionality = DepartmentMemberViewTeacherCreditsDA.class)
 @Forwards(value = {
-        @Forward(name = "teacher-not-found", path = "/credits.do?method=viewAnnualTeachingCredits"),
-        @Forward(name = "sucessfull-edit", path = "/credits.do?method=viewAnnualTeachingCredits"),
+        @Forward(name = "teacher-not-found", path = "/departmentMember/credits.do?method=viewAnnualTeachingCredits"),
+        @Forward(name = "sucessfull-edit", path = "/departmentMember/credits.do?method=viewAnnualTeachingCredits"),
         @Forward(name = "show-teaching-service-percentages",
                 path = "/credits/degreeTeachingService/showTeachingServicePercentages.jsp") })
 @Exceptions(value = { @ExceptionHandling(type = java.lang.NumberFormatException.class,

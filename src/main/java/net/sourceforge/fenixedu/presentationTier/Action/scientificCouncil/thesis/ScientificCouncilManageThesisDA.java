@@ -42,12 +42,15 @@ import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.AbstractManageThesisDA;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState;
+import net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.ScientificCouncilApplication.ScientificDisserationsApp;
 import net.sourceforge.fenixedu.presentationTier.Action.student.thesis.ThesisFileBean;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionDegreesWithDissertationByExecutionYearProvider;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -61,7 +64,7 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 import com.google.common.io.ByteStreams;
 
-// @StrutsFunctionality(app = ScientificDisserationsApp.class, path = "list-old", titleKey = "navigation.list.jury.proposals")
+@StrutsFunctionality(app = ScientificDisserationsApp.class, path = "list", titleKey = "navigation.list.jury.proposals")
 @Mapping(path = "/scientificCouncilManageThesis", module = "scientificCouncil")
 @Forwards({ @Forward(name = "list-thesis", path = "/scientificCouncil/thesis/listThesis.jsp"),
         @Forward(name = "review-proposal", path = "/scientificCouncil/thesis/reviewProposal.jsp"),
@@ -76,6 +79,29 @@ import com.google.common.io.ByteStreams;
         @Forward(name = "change-information-with-docs", path = "/scientificCouncil/thesis/changeInformationWithDocs.jsp"),
         @Forward(name = "search-student", path = "/scientificCouncil/thesis/searchStudent.jsp") })
 public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
+
+    @StrutsFunctionality(app = ScientificDisserationsApp.class, path = "define-rules", titleKey = "navigation.thesis.info")
+    @Mapping(path = "/defineDissertationRules", module = "scientificCouncil")
+    public static class DefineDissertationRules extends ScientificCouncilManageThesisDA {
+        @EntryPoint
+        @Override
+        public ActionForward dissertations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+                HttpServletResponse response) throws Exception {
+            return super.dissertations(mapping, actionForm, request, response);
+        }
+    }
+
+    @StrutsFunctionality(app = ScientificDisserationsApp.class, path = "define-periods",
+            titleKey = "navigation.list.thesis.creation.periods")
+    @Mapping(path = "/defineDissertationPeriods", module = "scientificCouncil")
+    public static class DefineDissertationPeriods extends ScientificCouncilManageThesisDA {
+        @EntryPoint
+        @Override
+        public ActionForward listThesisCreationPeriods(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+                HttpServletResponse response) throws Exception {
+            return super.listThesisCreationPeriods(mapping, actionForm, request, response);
+        }
+    }
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -161,6 +187,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
         return getDomainObject(request, "executionYearID");
     }
 
+    @EntryPoint
     public ActionForward listThesis(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         ThesisContextBean bean = getContextBean(request);

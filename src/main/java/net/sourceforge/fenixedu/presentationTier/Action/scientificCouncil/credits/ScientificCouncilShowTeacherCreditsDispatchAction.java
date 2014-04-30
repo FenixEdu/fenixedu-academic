@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.credits.CreditLineDTO;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ShowTeacherCreditsDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.credits.scientificCouncil.ScientificCouncilViewTeacherCreditsDA;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -21,10 +22,12 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "scientificCouncil", path = "/showFullTeacherCreditsSheet", attribute = "teacherCreditsSheetForm",
-        formBean = "teacherCreditsSheetForm", scope = "request", parameter = "method")
-@Forwards(value = { @Forward(name = "show-teacher-credits", path = "/scientificCouncil/credits/showTeacherCredits.jsp"),
-        @Forward(name = "teacher-not-found", path = "/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&page=0") })
+@Mapping(module = "scientificCouncil", path = "/showFullTeacherCreditsSheet", formBean = "teacherCreditsSheetForm",
+        functionality = ScientificCouncilViewTeacherCreditsDA.class)
+@Forwards({
+        @Forward(name = "show-teacher-credits", path = "/scientificCouncil/credits/showTeacherCredits.jsp"),
+        @Forward(name = "teacher-not-found",
+                path = "/scientificCouncil/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&page=0") })
 public class ScientificCouncilShowTeacherCreditsDispatchAction extends ShowTeacherCreditsDispatchAction {
 
     public ActionForward showTeacherCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,

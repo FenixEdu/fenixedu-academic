@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.mobility.outbound.OutboundMobilityCandida
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.SearchForStudentsDA;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.httpclient.HttpStatus;
@@ -30,7 +31,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/viewStudentApplication", module = "academicAdministration", parameter = "method")
+@Mapping(path = "/viewStudentApplication", module = "academicAdministration", functionality = SearchForStudentsDA.class)
 @Forwards({ @Forward(name = "view", path = "/student/application/view.jsp") })
 public class ViewStudentApplicationDA extends FenixDispatchAction {
 
@@ -75,15 +76,17 @@ public class ViewStudentApplicationDA extends FenixDispatchAction {
             final Registration candidacyRegistration = individualCandidacy.getRegistration();
             if (candidacyRegistration != null) {
                 final Student student = candidacyRegistration.getStudent();
-                if (student !=  null) {
+                if (student != null) {
                     if (student.getPerson() == person) {
                         return true;
                     }
                     for (final Registration registration : student.getRegistrationsSet()) {
-                        for (final OutboundMobilityCandidacySubmission submission : registration.getOutboundMobilityCandidacySubmissionSet()) {
+                        for (final OutboundMobilityCandidacySubmission submission : registration
+                                .getOutboundMobilityCandidacySubmissionSet()) {
                             for (final OutboundMobilityCandidacy candidacy : submission.getOutboundMobilityCandidacySet()) {
                                 final OutboundMobilityCandidacyContest contest = candidacy.getOutboundMobilityCandidacyContest();
-                                final OutboundMobilityCandidacyContestGroup group = contest.getOutboundMobilityCandidacyContestGroup();
+                                final OutboundMobilityCandidacyContestGroup group =
+                                        contest.getOutboundMobilityCandidacyContestGroup();
                                 for (final Person coordinator : group.getMobilityCoordinatorSet()) {
                                     if (coordinator == person) {
                                         return true;

@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.manager.InsertProfessorS
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits.MasterDegreeCreditsManagementDispatchAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -23,9 +24,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "scientificCouncil", path = "/insertProfessorShipByNumber",
-        input = "/insertProfessorShipByNumber.do?method=prepareInsert&page=0", formBean = "masterDegreeCreditsForm")
+        input = "/insertProfessorShipByNumber.do?method=prepareInsert&page=0", formBean = "masterDegreeCreditsForm",
+        functionality = MasterDegreeCreditsManagementDispatchAction.class)
 @Forwards(value = { @Forward(name = "insertProfessorShip", path = "/manager/insertTeacherByNumber_bd.jsp"),
-        @Forward(name = "readTeacherInCharge", path = "/readTeacherInCharge.do") })
+        @Forward(name = "readTeacherInCharge", path = "/scientificCouncil/readTeacherInCharge.do") })
 @Exceptions(value = { @ExceptionHandling(
         type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class,
         key = "presentationTier.Action.exceptions.NonExistingActionException",

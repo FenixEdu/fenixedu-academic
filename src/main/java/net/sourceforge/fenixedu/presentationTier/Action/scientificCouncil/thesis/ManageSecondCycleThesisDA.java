@@ -42,7 +42,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 import com.google.common.io.ByteStreams;
 
-@StrutsFunctionality(app = ScientificDisserationsApp.class, path = "list", titleKey = "navigation.list.jury.proposals")
+@StrutsFunctionality(app = ScientificDisserationsApp.class, path = "list-new", titleKey = "navigation.list.jury.proposals.new")
 @Mapping(path = "/manageSecondCycleThesis", module = "scientificCouncil")
 @Forwards({
         @Forward(name = "firstPage", path = "/scientificCouncil/thesis/firstPage.jsp"),

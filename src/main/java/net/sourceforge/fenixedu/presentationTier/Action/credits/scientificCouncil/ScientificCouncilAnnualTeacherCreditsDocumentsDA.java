@@ -13,7 +13,8 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(module = "scientificCouncil", path = "/annualTeachingCreditsDocument", scope = "request", parameter = "method")
+@Mapping(module = "scientificCouncil", path = "/annualTeachingCreditsDocument",
+        functionality = ScientificCouncilViewTeacherCreditsDA.class)
 public class ScientificCouncilAnnualTeacherCreditsDocumentsDA extends AnnualTeacherCreditsDocumentsDA {
 
     @Override
