@@ -14,11 +14,14 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.UnitSiteVisualizationDA;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -29,6 +32,9 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.FenixFramework;
+
+import com.google.common.base.Strings;
 
 @Mapping(module = "publico", path = "/department/departmentSite", scope = "session", parameter = "method")
 @Forwards(value = { @Forward(name = "department-employees", path = "department-employees"),
@@ -55,7 +61,12 @@ public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        request.setAttribute("department", getDepartment(request));
+        Department department = getDepartment(request);
+        if (department != null) {
+            request.setAttribute("department", department);
+            request.setAttribute("unit", department.getDepartmentUnit());
+            OldCmsSemanticURLHandler.selectSite(request, department.getDepartmentUnit().getSite());
+        }
         return super.execute(mapping, actionForm, request, response);
     }
 
@@ -71,11 +82,13 @@ public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
     }
 
     private Department getDepartment(HttpServletRequest request) {
-        Unit unit = getUnit(request);
-        if (unit == null) {
-            return null;
+        String selectedDepartmentUnitId = FenixContextDispatchAction.getFromRequest("selectedDepartmentUnitID", request);
+        if (!Strings.isNullOrEmpty(selectedDepartmentUnitId)) {
+            DepartmentUnit departmentUnit = FenixFramework.getDomainObject(selectedDepartmentUnitId);
+            return departmentUnit != null ? departmentUnit.getDepartment() : null;
         } else {
-            return unit.getDepartment();
+            Unit unit = getUnit(request);
+            return unit != null ? unit.getDepartment() : null;
         }
     }
 
