@@ -25,13 +25,12 @@ public class ResearchResultDocumentFile extends ResearchResultDocumentFile_Base 
     }
 
     ResearchResultDocumentFile(byte[] content, ResearchResult result, String filename, String displayName,
-            FileResultPermittedGroupType permittedGroupType, Group permittedGroup) {
+            FileResultPermittedGroupType permittedGroupType) {
         this();
         checkParameters(result, filename, displayName, permittedGroupType);
         super.setResult(result);
+        init(filename, displayName, content, getPermittedGroup(permittedGroupType));
         super.setFileResultPermittedGroupType(permittedGroupType);
-//	init(filename, displayName, mimeType, checksum, checksumAlgorithm, size, externalStorageIdentification, permittedGroup);
-        init(filename, displayName, content, permittedGroup);
     }
 
     public void setEdit(String displayName, FileResultPermittedGroupType fileResultPermittedGroupType) {
@@ -64,8 +63,10 @@ public class ResearchResultDocumentFile extends ResearchResultDocumentFile_Base 
     }
 
     @Override
-    public Group getPermittedGroup() {
-        return getPermittedGroup(getFileResultPermittedGroupType());
+    public void setFileResultPermittedGroupType(FileResultPermittedGroupType fileResultPermittedGroupType) {
+        super.setFileResultPermittedGroupType(fileResultPermittedGroupType);
+        super.setPermittedGroup(getPermittedGroup(fileResultPermittedGroupType));
+
     }
 
     public final static ResearchResultDocumentFile readByOID(String oid) {
@@ -95,9 +96,7 @@ public class ResearchResultDocumentFile extends ResearchResultDocumentFile_Base 
     }
 
     private void changeFilePermission(FileResultPermittedGroupType fileResultPermittedGroupType) {
-        final Group group = getPermittedGroup(fileResultPermittedGroupType);
-        super.setFileResultPermittedGroupType(fileResultPermittedGroupType);
-        super.setPermittedGroup(group);
+        setFileResultPermittedGroupType(fileResultPermittedGroupType);
     }
 
     public void moveFileToNewResearchResultType(ResearchResult result) {

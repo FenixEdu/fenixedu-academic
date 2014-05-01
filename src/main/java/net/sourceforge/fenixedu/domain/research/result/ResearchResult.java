@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile.FileResultPermittedGroupType;
@@ -125,16 +124,16 @@ public abstract class ResearchResult extends ResearchResult_Base {
     }
 
     public ResearchResultDocumentFile addDocumentFile(byte[] content, String filename, String displayName,
-            FileResultPermittedGroupType permittedGroupType, Group permittedGroup) {
+            FileResultPermittedGroupType permittedGroupType) {
         check(this, ResultPredicates.writePredicate);
-        return addDocumentFile(content, filename, displayName, permittedGroupType, permittedGroup, Boolean.TRUE);
+        return addDocumentFile(content, filename, displayName, permittedGroupType, Boolean.TRUE);
     }
 
     public ResearchResultDocumentFile addDocumentFile(byte[] content, String filename, String displayName,
-            FileResultPermittedGroupType permittedGroupType, Group permittedGroup, Boolean isVisible) {
+            FileResultPermittedGroupType permittedGroupType, Boolean isVisible) {
         check(this, ResultPredicates.writePredicate);
         final ResearchResultDocumentFile documentFile =
-                new ResearchResultDocumentFile(content, this, filename, displayName, permittedGroupType, permittedGroup);
+                new ResearchResultDocumentFile(content, this, filename, displayName, permittedGroupType);
         documentFile.setVisible(isVisible);
         updateModifiedByAndDate();
         return documentFile;

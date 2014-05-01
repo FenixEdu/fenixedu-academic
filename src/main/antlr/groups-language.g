@@ -106,6 +106,7 @@ options {
 tokens {
 	GROUP;
 	OP;
+	GROUP_ID;
 }
 
 {
@@ -153,6 +154,9 @@ group
 		
 		expand(#group, #n, #rp);
 	}
+    |! o:NUMBER^ {
+        #group = #([GROUP_ID, "GROUP_ID"], #o);
+    }
 	;
 	
 arguments
@@ -329,6 +333,10 @@ group returns [Group group]
 				throw wrap(#g, e);
 			}
 		}
+	}
+	| #(x:GROUP_ID o:NUMBER) {
+	   String id = #o.getText();
+	   group = GroupBuilderRegistry.getGroupBridge(id);
 	}
 	;
 	

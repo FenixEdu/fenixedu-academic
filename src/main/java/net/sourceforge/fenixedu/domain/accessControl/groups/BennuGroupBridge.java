@@ -7,19 +7,30 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.groups.Group;
+import org.fenixedu.bennu.core.domain.groups.NobodyGroup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import pt.ist.fenixframework.FenixFramework;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 
 public class BennuGroupBridge extends net.sourceforge.fenixedu.domain.accessControl.Group {
+    private static final Logger logger = LoggerFactory.getLogger(BennuGroupBridge.class);
 
     private static final long serialVersionUID = 3085739530671656778L;
 
     private final Group bennuGroup;
 
     public BennuGroupBridge(Group group) {
-        this.bennuGroup = group;
+        if (FenixFramework.isDomainObjectValid(group)) {
+            this.bennuGroup = group;
+        } else {
+            logger.error("Invalid group to bridge: {}", group.getExternalId());
+            this.bennuGroup = NobodyGroup.getInstance();
+        }
     }
 
     @Override
@@ -63,5 +74,10 @@ public class BennuGroupBridge extends net.sourceforge.fenixedu.domain.accessCont
     @Override
     protected Argument[] getExpressionArguments() {
         return new Argument[] {};
+    }
+
+    @Override
+    public Group convert() {
+        return bennuGroup;
     }
 }

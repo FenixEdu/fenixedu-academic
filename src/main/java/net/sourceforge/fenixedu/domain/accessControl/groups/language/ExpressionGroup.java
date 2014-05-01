@@ -7,13 +7,11 @@ import java.util.logging.Logger;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.NodeGroup;
-import net.sourceforge.fenixedu.domain.accessControl.groups.BennuGroupBridge;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupContextRequiredException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupExpressionException;
 
 import org.fenixedu.bennu.core.domain.User;
 
-import pt.ist.fenixframework.FenixFramework;
 import antlr.RecognitionException;
 import antlr.TokenStreamException;
 import antlr.TokenStreamRecognitionException;
@@ -126,12 +124,6 @@ public class ExpressionGroup extends Group implements GroupContextProvider {
      *                when the expression is not correct
      */
     protected Group parseExpression(String expression) {
-        try {
-            Long.parseLong(expression);
-            return new BennuGroupBridge(FenixFramework.<org.fenixedu.bennu.core.domain.groups.Group> getDomainObject(expression));
-        } catch (NumberFormatException e) {
-        }
-
         GroupExpressionLexer lexer = new GroupExpressionLexer(new StringReader(expression));
         GroupExpressionParser parser = new GroupExpressionParser(lexer);
 

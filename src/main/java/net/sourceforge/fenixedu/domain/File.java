@@ -35,10 +35,7 @@ public abstract class File extends File_Base {
     }
 
     public boolean isPrivate() {
-        if (getPermittedGroup().isMember(null)) {
-            return false;
-        }
-        return true;
+        return getPermittedGroup() == null || !getPermittedGroup().isMember(null);
     }
 
     @Deprecated
