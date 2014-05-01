@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.reports.EurAceReportFile;
 import net.sourceforge.fenixedu.domain.reports.FlunkedReportFile;
 import net.sourceforge.fenixedu.domain.reports.GepReportFile;
 import net.sourceforge.fenixedu.domain.reports.GraduationReportFile;
-import net.sourceforge.fenixedu.domain.reports.PublicationReportFile;
 import net.sourceforge.fenixedu.domain.reports.RaidesDfaReportFile;
 import net.sourceforge.fenixedu.domain.reports.RaidesGraduationReportFile;
 import net.sourceforge.fenixedu.domain.reports.RaidesPhdReportFile;
@@ -109,13 +108,6 @@ public class ReportFileFactory {
         graduationReportFile.setDegreeType(degreeType);
         graduationReportFile.setExecutionYear(executionYear);
         return graduationReportFile;
-    }
-
-    @Atomic
-    public static PublicationReportFile createPublicationsReportFile(String type) {
-        final PublicationReportFile publicationReportFile = new PublicationReportFile();
-        publicationReportFile.setType(type);
-        return publicationReportFile;
     }
 
     @Atomic

@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.reports.EurAceReportFile;
 import net.sourceforge.fenixedu.domain.reports.FlunkedReportFile;
 import net.sourceforge.fenixedu.domain.reports.GepReportFile;
 import net.sourceforge.fenixedu.domain.reports.GraduationReportFile;
-import net.sourceforge.fenixedu.domain.reports.PublicationReportFile;
 import net.sourceforge.fenixedu.domain.reports.RaidesDfaReportFile;
 import net.sourceforge.fenixedu.domain.reports.RaidesGraduationReportFile;
 import net.sourceforge.fenixedu.domain.reports.RaidesPhdReportFile;
@@ -463,19 +462,6 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     }
 
     @SuppressWarnings("unused")
-    public ActionForward downloadPublications(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws IOException {
-        if (isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
-            return selectDegreeType(mapping, actionForm, request, response);
-        }
-        final String format = getFormat(request);
-
-        prepareNewJobResponse(request, ReportFileFactory.createPublicationsReportFile(format));
-
-        return selectDegreeType(mapping, actionForm, request, response);
-    }
-
-    @SuppressWarnings("unused")
     public ActionForward downloadTeachersByShift(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws IOException {
         if (isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
@@ -654,8 +640,6 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
             return TeacherCreditsReportFile.class;
         case 24:
             return EffectiveTeachingLoadReportFile.class;
-        case 25:
-            return PublicationReportFile.class;
         default:
             return null;
         }
