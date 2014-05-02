@@ -19,7 +19,7 @@
 <body>
 	<div id="container">
 		<div id="logo">
-			<img src="<%=request.getContextPath()%>/themes/ashes/img/logo.png" />
+			<img src="<%=request.getContextPath()%>/images/newImage2012/logo.png" />
 		</div>
 		<div id="content">
 			<div class="institutionName"><%=Unit.getInstitutionName()%>
