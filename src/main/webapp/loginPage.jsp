@@ -18,20 +18,10 @@
 
 <body>
 	<div id="container">
-
-		<div id="header">
-			<div id="dotist_id_container">
-				<img id="logo_image"
-					alt="<bean:message key="institution.logo" bundle="IMAGE_RESOURCES" />"
-					src="<bean:message key="fenix.logo.location" bundle="GLOBAL_RESOURCES" arg0="<%=request.getContextPath()%>"/>" />
-			</div>
+		<div id="logo">
+			<img src="<%=request.getContextPath()%>/themes/ashes/img/logo.png" />
 		</div>
-
 		<div id="content">
-			<h1>
-				<bean:message key="title.login" bundle="GLOBAL_RESOURCES" />
-			</h1>
-
 			<div class="institutionName"><%=Unit.getInstitutionName()%>
 			</div>
 				<div id="alert">
@@ -42,37 +32,18 @@
 	                </center>
 				</div>
 			<html:form action="/login">
-				<table align="center" border="0">
-
-					<tr>
-						<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.username" property="username" styleId="username" /></td>
-					</tr>
-
-					<tr>
-						<td><html:password bundle="HTMLALT_RESOURCES" altKey="password.password" property="password" redisplay="false" styleId="password" /></td>
-					</tr>
-				</table>
-
+			
+			<div class="inputContainer">
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.username" property="username" styleId="username" />		
+				<html:password bundle="HTMLALT_RESOURCES" altKey="password.password" property="password" redisplay="false" styleId="password" /></td>
+			</div>
+			
 				<div id="footer">
-					<table>
-						<tr>
-							<td>
-								<div id="support">
-									<a href="<bean:message key="institution.email.support" bundle="GLOBAL_RESOURCES" />">
-										<bean:message key="message.footer.help"	bundle="GLOBAL_RESOURCES" />
-									</a>
-								</div>
-							</td>
-							<td>
 								<div id="login_button">
 									<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.ok" styleClass="button" property="ok">
-										<bean:message key="title.login" bundle="GLOBAL_RESOURCES" />
+										&#10003;
 									</html:submit>
 								</div>
-							</td>
-
-						</tr>
-					</table>
 				</div>
 
 			</html:form>
