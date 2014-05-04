@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportGia
 import org.slf4j.Logger;
 
 import pt.ist.fenix.giafsync.GiafSync.MetadataProcessor;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 class ImportContractSituationsFromGiaf implements MetadataProcessor {
@@ -47,7 +46,7 @@ class ImportContractSituationsFromGiaf implements MetadataProcessor {
         ResultSet result = preparedStatement.executeQuery();
         while (result.next()) {
             String giafId = result.getString("emp_sit");
-            MultiLanguageString description = new MultiLanguageString(Language.pt, result.getString("sit_dsc"));
+            MultiLanguageString description = new MultiLanguageString(MultiLanguageString.pt, result.getString("sit_dsc"));
             String type = result.getString("sit_prc");
             Boolean endSituation = giafId.equals("290") || giafId.equals("177") ? false : endSituationList.contains(type);
             Boolean serviceExemption = serviceExemptionList.contains(type);

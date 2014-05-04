@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html lang="en" class="ie ie9"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html dir="ltr" lang="{{currentLocale}}"> <!--<![endif]-->
+  <head>
+
+	<!-- Basic Page Needs -->
+	<meta charset="utf-8">
+	<meta http-equiv="Content-Language" content="{{currentLocale.language}}" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="Description" content="FenixEdu™ is an open-source academic information platform." />
+	<meta name="Keywords" content="FenixEdu, open-source, academic, information, platform, academic administration, higher education, e-learning" />
+	<meta name="Language" content="{{currentLocale}}" />
+	<meta name="Robots" content="all" />
+	<meta name="Author" content="FenixEdu" />
+	<meta name="Email" content="hello@fenixedu.org" />
+	<meta name="Copyright" content="Técnico Lisboa — Instituto Superior Técnico" />
+	<meta name="Distribution" content="Global" />
+	<meta name="Rating" content="General" />
+
+	<!-- OpenGraph Specific Metas -->
+	<meta property="og:title" content="FenixEdu™" />
+	<meta property="og:type" content="application" />
+	<meta property="og:image" content="/img/logo_og.png" />
+	<meta property="og:url" content="http://www.fenixedu.org" />
+	<meta property="og:site_name" content="FenixEdu" />
+	<meta property="og:description" content="FenixEdu™ is an open-source academic information platform." />
+	<meta property="fb:profile_id" content="379238245509413" />
+
+	<!-- Mobile Specific Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <title>{% block title %}{{ functionality.title.content }} · {{ selectedTopLevel.title.content }}{% endblock %}</title>
+
+    <!-- Bootstrap core CSS -->
+	<link rel="stylesheet" type="text/css" media="screen" href="{{contextPath}}/CSS/general.css">
+    <link href="{{contextPath}}/themes/ashes/css/style.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="{{contextPath}}/bennu-portal/js/jquery.min.js"></script>
+	<script src="{{contextPath}}/themes/ashes/js/bootstrap.min.js"></script>
+	<script> setLang = function(l) {
+		$.post('{{contextPath}}/api/bennu-core/profile/locale/' + l.replace('_', '-')).always(function() { location.reload(); });
+	}
+	</script>
+	
+	<!-- Favicons & TouchIcons-->
+	<link rel="shortcut icon" type="image/x-icon" href="{{contextPath}}/api/bennu-portal/configuration/favicon">
+
+	<!-- For iPad with high-resolution Retina display running iOS ≥ 7: -->
+	<link rel="apple-touch-icon-precomposed" sizes="152x152" href="{{contextPath}}/images/newImage2012/apple-touch-icon-152x152-precomposed.png">
+	<!-- For iPad with high-resolution Retina display running iOS ≤ 6: -->
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{contextPath}}/images/newImage2012/apple-touch-icon-144x144-precomposed.png">
+	<!-- For iPhone with high-resolution Retina display running iOS ≥ 7: -->
+	<link rel="apple-touch-icon-precomposed" sizes="120x120" href="{{contextPath}}/images/newImage2012/apple-touch-icon-120x120-precomposed.png">
+	<!-- For iPhone with high-resolution Retina display running iOS ≤ 6: -->
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{contextPath}}/images/newImage2012/apple-touch-icon-114x114-precomposed.png">
+	<!-- For the iPad mini and the first- and second-generation iPad on iOS ≥ 7: -->
+	<link rel="apple-touch-icon-precomposed" sizes="76x76" href="{{contextPath}}/images/newImage2012/apple-touch-icon-76x76-precomposed.png">
+	<!-- For the iPad mini and the first- and second-generation iPad on iOS ≤ 6: -->
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{contextPath}}/images/newImage2012/apple-touch-icon-72x72-precomposed.png">
+	<!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+	<link rel="apple-touch-icon-precomposed" href="{{contextPath}}/images/newImage2012/apple-touch-icon-precomposed.png">
+
+  </head>
+
+  <body>
+  	{% block topbar %}
+	<div class="row">
+		<!-- Bar -->
+		<div class="col-lg-12 fenixEduBar">
+			<h1 class="institutionLogo">
+				<a href="{{contextPath}}/" target="_blank">{{config.applicationTitle.content}}</a>
+			</h1>
+			<div class="authentication">
+				{% if loggedUser == null %}
+				<h1 class="logout">
+					<a class="button" href="{{contextPath}}/loginPage.jsp">Login</a>
+				</h1>
+				{% else %}
+				<p class="user">
+					{{loggedUser.presentationName}}
+				</p>
+			
+				{% if devMode %}
+				<h1>
+						<a class="button">DEVELOPMENT</a>
+				</h1>
+				{% endif %}
+				
+				<h1 class="logout">
+					<a class="button" href="{{contextPath}}/logoff.do">Logout</a>
+				</h1>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+	{% endblock %}
+  	<div class="content">
+
+	<header class="row" role="banner">
+		<div class="col-sm-2 logo-container text-center">
+			<img src="{{contextPath}}/api/bennu-portal/configuration/logo" alt="FenixEdu"/>
+		</div>
+		<nav class="col-sm-10" role="navigation">
+			<ul class="nav navbar-bottom nav-pills nav-menu">
+			{% for item in config.menu.userMenu %}
+				<li class="{% if item == selectedTopLevel %}active{% endif %}"><a href="{{contextPath}}{{item.fullPath}}">{{item.title.content}}</a></li>
+			{% endfor %}
+			</ul>
+		</nav>
+	</header>
+	<div class="row">
+		{% block mainContainer %}
+		<nav class="col-sm-2" id="context">
+		{% if functionality.parent.parent == config.menu %}
+			{% set root = functionality %}
+		{% else %}
+			{% set root = functionality.parent %}
+		{% endif %}
+		{% for item in root.parent.availableChildContainers %}
+			<ul class="nav nav-pills nav-stacked">
+				<li class="navheader"><strong>{{item.title.content}}</strong></li>
+				{% for child in item.userMenu %}
+					<li><a href="{{contextPath}}{{child.fullPath}}">{{child.title.content}}</a></li>
+				{% endfor %}
+			</ul>
+		{% endfor %}
+		</nav>
+		<main class="col-sm-10" role="main">
+			<ol class="breadcrumb">
+			{% for item in functionality.pathFromRoot %}
+				<li><a href="{{contextPath}}{{item.fullPath}}">{{item.title.content}}</a></li>
+			{% endfor %}
+
+				<span class="pull-right">
+					{% for locale in locales %}
+						<a class="locale-changer {% if locale == currentLocale %}active{% endif %}" title="{{locale.displayName}}" onclick="setLang('{{locale}}')">{{locale.language}}</a>
+					{% endfor %}
+				</span>
+			</ol>
+			<div id="main-content-wrapper">
+				{{body}}
+			</div>
+		</main>
+		{% endblock %}
+	</div>
+	</div>
+		<footer class="row" role="contentinfo" >
+				<div class="col-sm-2 text-center">
+					<img src="{{contextPath}}/themes/ashes/img/logo_fenixedu_footer.svg" alt="Powered by FenixEdu">
+				</div>
+				<p class="col-sm-10">
+					<span>{{config.applicationCopyright.content}}</span>
+					<a href="{{contextPath}}/exceptionHandlingAction.do?method=prepareSupportHelp&contextId={{functionality.externalId}}" target="_blank">
+						{{i18n('resources.ApplicationResources', 'support.Contact')}}
+					</a>
+				</p>
+		</footer>
+	</body>
+</html>

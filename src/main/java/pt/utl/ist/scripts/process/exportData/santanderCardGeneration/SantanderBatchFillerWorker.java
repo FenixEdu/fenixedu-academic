@@ -16,9 +16,6 @@ import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
-import net.sourceforge.fenixedu.domain.cardGeneration.SantanderBatch;
-import net.sourceforge.fenixedu.domain.cardGeneration.SantanderEntry;
-import net.sourceforge.fenixedu.domain.cardGeneration.SantanderProblem;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -34,6 +31,9 @@ import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.idcards.domain.SantanderBatch;
+import org.fenixedu.idcards.domain.SantanderEntry;
+import org.fenixedu.idcards.domain.SantanderProblem;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 import org.slf4j.Logger;
@@ -98,7 +98,7 @@ public class SantanderBatchFillerWorker {
          * 1. Teacher
          * 2. Researcher
          * 3. Employee
-         * 4. GrantOwner
+         * 4. GrantOwner 
          * 5. Student
          */
         String line = null;

@@ -33,6 +33,26 @@
                     <meminitial>1536</meminitial>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>de.sandroboehme.lesscss</groupId>
+                <artifactId>lesscss-maven-plugin</artifactId>
+                <version>1.6.1.1.0</version>
+                <configuration>
+                    <sourceDirectory>${project.basedir}/src/main/less/themes/ashes/less</sourceDirectory>
+                    <outputDirectory>${project.build.directory}/classes/META-INF/resources/themes/ashes/css</outputDirectory>
+                    <compress>true</compress>
+                    <includes>
+                        <include>style.less</include>
+                    </includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
@@ -40,17 +60,22 @@
         <dependency>
             <groupId>pt.ist</groupId>
             <artifactId>fenix</artifactId>
-            <version>2.2.0</version>
+            <version>3.0.0.M1</version>
         </dependency>
         <dependency>
             <groupId>org.fenixedu</groupId>
             <artifactId>bennu-scheduler</artifactId>
-            <version>2.0.0</version>
+            <version>3.0.1</version>
         </dependency>
         <dependency>
             <groupId>com.oracle</groupId>
             <artifactId>ojdbc14</artifactId>
             <version>9.0.2.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.fenixedu</groupId>
+            <artifactId>fenixedu-id-cards</artifactId>
+            <version>1.0.0.M1</version>
         </dependency>
     </dependencies>
 
