@@ -4054,44 +4054,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
         String namePart;
     }
 
-    class precedences.Precedence  {
-    }
-
-    class precedences.Restriction  {
-    }
-
-        class precedences.RestrictionByCurricularCourse extends precedences.Restriction {
-        }
-
-            class precedences.RestrictionDoneCurricularCourse extends precedences.RestrictionByCurricularCourse {
-            }
-
-                class precedences.RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse extends precedences.RestrictionDoneCurricularCourse {
-                }
-
-                    class precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse extends precedences.RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse {
-                    }
-
-                    class precedences.RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse extends precedences.RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse {
-                    }
-
-            class precedences.RestrictionNotDoneCurricularCourse extends precedences.RestrictionByCurricularCourse {
-            }
-
-                class precedences.RestrictionNotEnrolledInCurricularCourse extends precedences.RestrictionNotDoneCurricularCourse {
-                }
-
-        class precedences.RestrictionByNumberOfCurricularCourses extends precedences.Restriction {
-            Integer numberOfCurricularCourses;
-        }
-
-            class precedences.RestrictionByNumberOfDoneCurricularCourses extends precedences.RestrictionByNumberOfCurricularCourses {
-            }
-
-        class precedences.RestrictionPeriodToApply extends precedences.Restriction {
-            PeriodToApplyRestriction periodToApplyRestriction;
-        }
-
     class reimbursementGuide.ReimbursementGuide  {
         YearMonthDay creationYearMonthDay;
         Integer number;
@@ -4989,21 +4951,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
                 class OptionalEnrolment extends Enrolment {
                 }
                 
-            class FakeEnrollment  {
-            	String stuff;
-            	DateTime creationDate;
-            }
-            
-            class FakeShift  {
-		        Integer capacity;
-		        String name;
-            }
-            
-            class FakeShiftEnrollment  {
-            	String stuff;
-            	DateTime creationDate;
-            }
-
             class studentCurriculum.Dismissal extends studentCurriculum.CurriculumLine {
             }
 
@@ -10101,20 +10048,6 @@ relation CurricularCourseNotNeedToEnrollInCurricularCourse {
     CurricularCourse playsRole curricularCourse;
 }
 
-relation CurricularCoursePrecedence {
-    precedences.Precedence playsRole precedences {
-        multiplicity *;
-    }
-    CurricularCourse playsRole curricularCourse;
-}
-
-relation CurricularCourseRestrictionByCurricularCourse {
-    precedences.RestrictionByCurricularCourse playsRole restrictionsByCurricularCourse {
-        multiplicity *;
-    }
-    CurricularCourse playsRole precedentCurricularCourse;
-}
-
 relation CurricularCourseScientificArea {
     CurricularCourse playsRole associatedCurricularCourses {
         multiplicity *;
@@ -10516,48 +10449,6 @@ relation EmployeeHistoricWorkingPlaceCostCenter {
 relation EmployeePerson {
     Employee playsRole employee;
     Person playsRole person;
-}
-
-relation FakeEnrollmentPerson {
-	Person playsRole person;
-	FakeEnrollment playsRole fakeEnrollment {
-		multiplicity *;
-	}
-}
-
-relation FakeEnrollmentRootDomainObject {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	FakeEnrollment playsRole fakeEnrollments {
-		multiplicity *;
-	}
-}
-
-relation FakeShiftRootDomainObject {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	FakeShift playsRole fakeShifts {
-		multiplicity *;
-	}
-}
-
-relation FakeShiftEnrollmentRootDomainObject {
-	.org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-	FakeShiftEnrollment playsRole fakeShiftEnrollments {
-		multiplicity *;
-	}
-}
-
-relation FakeShiftEnrollments {
-	FakeShift playsRole fakeShift;
-	FakeShiftEnrollment playsRole fakeShiftEnrollments {
-		multiplicity *;
-	}
-}
-
-relation FakeShiftEnrollmentPerson {
-	Person playsRole person;
-	FakeShiftEnrollment playsRole fakeShiftEnrollments {
-		multiplicity *;
-	}
 }
 
 relation EnrolmentCreditsInAnySecundaryArea {
@@ -12331,13 +12222,6 @@ relation PhysicalAddressCountryOfResidence {
         multiplicity *;
     }
     Country playsRole countryOfResidence;
-}
-
-relation PrecedenceRestriction {
-    precedences.Precedence playsRole precedence;
-    precedences.Restriction playsRole restrictions {
-        multiplicity *;
-    }
 }
 
 relation PrecedentDegreeInformationCountry {
@@ -14131,13 +14015,6 @@ relation RootDomainObjectPostingRule {
     }
 }
 
-relation RootDomainObjectPrecedence {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    precedences.Precedence playsRole precedences {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectPrecedentDegreeInformation {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     student.PrecedentDegreeInformation playsRole precedentDegreeInformation {
@@ -14344,13 +14221,6 @@ relation RootDomainObjectResourceAllocation {
 relation RootDomainObjectResourceResponsibility {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     resource.ResourceResponsibility playsRole resourceResponsibility {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectRestriction {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    precedences.Restriction playsRole restrictions {
         multiplicity *;
     }
 }

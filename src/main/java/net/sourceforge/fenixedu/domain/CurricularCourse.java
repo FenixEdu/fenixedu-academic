@@ -32,8 +32,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
-import net.sourceforge.fenixedu.domain.precedences.Restriction;
-import net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -407,17 +405,6 @@ public class CurricularCourse extends CurricularCourse_Base {
     // -------------------------------------------------------------
     // BEGIN: Only for enrollment purposes
     // -------------------------------------------------------------
-
-    public List<RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse> getRestrictionsHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse() {
-        List<RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse> result =
-                new ArrayList<RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse>();
-        for (final Restriction restriction : getRestrictionsByCurricularCourse()) {
-            if (restriction instanceof RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse) {
-                result.add((RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse) restriction);
-            }
-        }
-        return result;
-    }
 
     public boolean hasRestrictionDone(final CurricularCourse precedence) {
         if (!isBolonhaDegree()) {
@@ -1498,11 +1485,11 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public MultiLanguageString getObjectivesI18N(ExecutionSemester period) {
         if (isBolonhaDegree()) {
-            return new MultiLanguageString(MultiLanguageString.pt, getCompetenceCourse().getObjectives(period)).with(MultiLanguageString.en,
-                    getCompetenceCourse().getObjectivesEn(period));
+            return new MultiLanguageString(MultiLanguageString.pt, getCompetenceCourse().getObjectives(period)).with(
+                    MultiLanguageString.en, getCompetenceCourse().getObjectivesEn(period));
         }
-        return new MultiLanguageString(MultiLanguageString.pt, getCurriculumFactoryEditCurriculum(period).getObjectives()).with(MultiLanguageString.en,
-                getCurriculumFactoryEditCurriculum(period).getObjectivesEn());
+        return new MultiLanguageString(MultiLanguageString.pt, getCurriculumFactoryEditCurriculum(period).getObjectives()).with(
+                MultiLanguageString.en, getCurriculumFactoryEditCurriculum(period).getObjectivesEn());
     }
 
     public String getProgram(ExecutionSemester period) {
@@ -1535,15 +1522,16 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public MultiLanguageString getProgramI18N(ExecutionSemester period) {
         if (isBolonhaDegree()) {
-            return new MultiLanguageString(MultiLanguageString.pt, getCompetenceCourse().getProgram(period)).with(MultiLanguageString.en,
-                    getCompetenceCourse().getProgramEn(period));
+            return new MultiLanguageString(MultiLanguageString.pt, getCompetenceCourse().getProgram(period)).with(
+                    MultiLanguageString.en, getCompetenceCourse().getProgramEn(period));
         }
-        return new MultiLanguageString(MultiLanguageString.pt, getCurriculumFactoryEditCurriculum(period).getProgram()).with(MultiLanguageString.en,
-                getCurriculumFactoryEditCurriculum(period).getProgramEn());
+        return new MultiLanguageString(MultiLanguageString.pt, getCurriculumFactoryEditCurriculum(period).getProgram()).with(
+                MultiLanguageString.en, getCurriculumFactoryEditCurriculum(period).getProgramEn());
     }
 
     public MultiLanguageString getPrerequisitesI18N() {
-        return new MultiLanguageString(MultiLanguageString.pt, getPrerequisites()).with(MultiLanguageString.en, getPrerequisitesEn());
+        return new MultiLanguageString(MultiLanguageString.pt, getPrerequisites()).with(MultiLanguageString.en,
+                getPrerequisitesEn());
     }
 
     public String getEvaluationMethod(ExecutionSemester period) {
@@ -1584,12 +1572,12 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public MultiLanguageString getEvaluationMethodI18N(ExecutionSemester period) {
         if (isBolonhaDegree()) {
-            return new MultiLanguageString(MultiLanguageString.pt, getCompetenceCourse().getEvaluationMethod(period)).with(MultiLanguageString.en,
-                    getCompetenceCourse().getEvaluationMethodEn(period));
+            return new MultiLanguageString(MultiLanguageString.pt, getCompetenceCourse().getEvaluationMethod(period)).with(
+                    MultiLanguageString.en, getCompetenceCourse().getEvaluationMethodEn(period));
         }
         return new MultiLanguageString(MultiLanguageString.pt, getExecutionCoursesByExecutionPeriod(period).iterator().next()
-                .getEvaluationMethodText()).with(MultiLanguageString.en, getExecutionCoursesByExecutionPeriod(period).iterator().next()
-                .getEvaluationMethodTextEn());
+                .getEvaluationMethodText()).with(MultiLanguageString.en, getExecutionCoursesByExecutionPeriod(period).iterator()
+                .next().getEvaluationMethodTextEn());
     }
 
     public RegimeType getRegime(final ExecutionSemester period) {
@@ -2338,16 +2326,6 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.precedences.Precedence> getPrecedences() {
-        return getPrecedencesSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPrecedences() {
-        return !getPrecedencesSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.CurricularCourseScope> getScopes() {
         return getScopesSet();
     }
@@ -2415,16 +2393,6 @@ public class CurricularCourse extends CurricularCourse_Base {
     @Deprecated
     public boolean hasAnyAssociatedInquiriesRegistries() {
         return !getAssociatedInquiriesRegistriesSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.precedences.RestrictionByCurricularCourse> getRestrictionsByCurricularCourse() {
-        return getRestrictionsByCurricularCourseSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyRestrictionsByCurricularCourse() {
-        return !getRestrictionsByCurricularCourseSet().isEmpty();
     }
 
     @Deprecated

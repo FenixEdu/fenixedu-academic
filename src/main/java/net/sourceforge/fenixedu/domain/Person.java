@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -168,7 +169,6 @@ import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import java.util.Locale;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.google.common.collect.FluentIterable;
@@ -1323,8 +1323,8 @@ public class Person extends Person_Base {
                 && !hasAnyExportGroupingSenders() && !hasAnyResponsabilityTransactions() && !hasAnyMasterDegreeCandidates()
                 && !hasAnyGuides() && !hasEmployee() && !hasTeacher() && !hasAnyPayedGuides() && !hasAnyPayedReceipts()
                 && !hasAnyResearchInterests() && !hasAnyProjectParticipations() && !hasAnyParticipations()
-                && !hasAnyPersonFunctions() && (!hasHomepage() || getHomepage().isDeletable())
-                && !hasAnyInternalParticipants() && !hasAnyCreatedQualifications() && !hasAnyCreateJobs();
+                && !hasAnyPersonFunctions() && (!hasHomepage() || getHomepage().isDeletable()) && !hasAnyInternalParticipants()
+                && !hasAnyCreatedQualifications() && !hasAnyCreateJobs();
     }
 
     public ExternalContract getExternalContract() {
@@ -5306,16 +5306,6 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.FakeEnrollment> getFakeEnrollment() {
-        return getFakeEnrollmentSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyFakeEnrollment() {
-        return !getFakeEnrollmentSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Qualification> getAssociatedQualifications() {
         return getAssociatedQualificationsSet();
     }
@@ -5463,16 +5453,6 @@ public class Person extends Person_Base {
     @Deprecated
     public boolean hasAnyUploadedFiles() {
         return !getUploadedFilesSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.FakeShiftEnrollment> getFakeShiftEnrollments() {
-        return getFakeShiftEnrollmentsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyFakeShiftEnrollments() {
-        return !getFakeShiftEnrollmentsSet().isEmpty();
     }
 
     @Deprecated
