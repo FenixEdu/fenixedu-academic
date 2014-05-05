@@ -6,7 +6,6 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 <%@ page import="net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType" %>
 <%@ page import="net.sourceforge.fenixedu.domain.curriculum.EnrollmentState" %>
-<%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentInExtraCurricularCourse" %>
 <%@ page import="net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment" %>
 
   <span class="error"><!-- Error messages go here --><html:errors /></span>

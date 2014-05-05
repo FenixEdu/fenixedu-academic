@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorizedServiceDeleteException;
-import net.sourceforge.fenixedu.applicationTier.Servico.teacher.DeleteProfessorship.ExistingAssociatedCredits;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.RemoveProfessorshipWithPerson;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
@@ -38,11 +37,9 @@ import pt.ist.fenixframework.FenixFramework;
         formBean = "teacherExecutionCourseForm", validate = false,
         functionality = TeacherSearchForExecutionCourseAssociation.class)
 @Forwards({ @Forward(name = "successfull-delete", path = "/departmentAdmOffice/showTeacherProfessorshipsForManagement.do") })
-@Exceptions(value = {
-        @ExceptionHandling(type = notAuthorizedServiceDeleteException.class, key = "message.professorship.isResponsibleFor",
-                handler = ExceptionHandler.class, path = "/showTeacherProfessorshipsForManagement.do", scope = "request"),
-        @ExceptionHandling(type = ExistingAssociatedCredits.class, key = "message.existing.associatedCredits",
-                handler = ExceptionHandler.class, path = "/showTeacherProfessorshipsForManagement.do", scope = "request") })
+@Exceptions(value = { @ExceptionHandling(type = notAuthorizedServiceDeleteException.class,
+        key = "message.professorship.isResponsibleFor", handler = ExceptionHandler.class,
+        path = "/showTeacherProfessorshipsForManagement.do", scope = "request") })
 public class RemoveProfessorshipAction extends FenixDispatchAction {
 
     @Override
