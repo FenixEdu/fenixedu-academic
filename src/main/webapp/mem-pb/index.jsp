@@ -1,0 +1,1 @@
+<html><META http-equiv="refresh" content="0;URL=${pageContext.request.contextPath}/cursos/mem-pb"><body></body></html>
