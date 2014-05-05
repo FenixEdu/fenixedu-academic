@@ -65,11 +65,23 @@ public class LessonInstance extends LessonInstance_Base {
         setRootDomainObject(Bennu.getInstance());
         setBeginDateTime(beginDateTime);
         setEndDateTime(endDateTime);
+
+        YearMonthDay nextPossibleDay = findNextPossibleDateAfter(day, lesson);
+
         setLesson(lesson);
 
         summaryAndCourseLoadManagement(summary, lesson);
-        lesson.refreshPeriodAndInstancesInSummaryCreation(lesson.isBiWeeklyOffset() ? day.plusDays(8) : day.plusDays(1));
+        lesson.refreshPeriodAndInstancesInSummaryCreation(nextPossibleDay);
         lessonInstanceSpaceOccupationManagement(room);
+    }
+
+    private YearMonthDay findNextPossibleDateAfter(YearMonthDay day, Lesson lesson) {
+        for (YearMonthDay lessonDay : lesson.getAllLessonDatesWithoutInstanceDates()) {
+            if (lessonDay.isAfter(day)) {
+                return lessonDay;
+            }
+        }
+        return lesson.isBiWeeklyOffset() ? day.plusDays(8) : day.plusDays(1);
     }
 
     public LessonInstance(Lesson lesson, YearMonthDay day) {
