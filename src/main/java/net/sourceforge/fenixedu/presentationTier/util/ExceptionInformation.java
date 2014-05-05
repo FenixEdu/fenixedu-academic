@@ -190,7 +190,8 @@ public class ExceptionInformation {
         }
 
         private boolean isExternalClass(String className) {
-            return StringUtils.startsWith(className, "net.sourceforge.fenixedu") || StringUtils.startsWith(className, "pt.ist");
+            return StringUtils.startsWith(className, "net.sourceforge.fenixedu") || StringUtils.startsWith(className, "pt.ist")
+                    || StringUtils.startsWith(className, "org.fenixedu");
         }
 
         private String getSimpleClassName(String className) {
