@@ -149,7 +149,7 @@
 				
 				<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserve&punctualReserveID=<bean:write name="punctualRequest" property="externalId"/></bean:define>
 				<fr:edit id="roomsReserveNewComment" name="roomsReserveBean" slot="description" 
-					validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"
+					validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator"
 					type="net.sourceforge.fenixedu.dataTransferObject.teacher.RoomsReserveBean">
 					<fr:edit name="roomsReserveBean" id="roomsReserveBeanWithNewComment" nested="true" visible="false"/>
 					<fr:layout name="area">

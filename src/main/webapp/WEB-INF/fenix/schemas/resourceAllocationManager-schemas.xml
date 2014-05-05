@@ -68,7 +68,7 @@
 
 <schema name="FinalizeCreationOfRoomsPunctualScheduling" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.RoomsPunctualSchedulingBean" bundle="SOP_RESOURCES">	
 	<slot name="emailsTo" key="label.email.tos"/>
-	<slot name="smallDescription" key="label.small.description" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+	<slot name="smallDescription" key="label.small.description" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
 		<property name="size" value="50" />
 	</slot>	
 	<slot name="completeDescription" layout="area" key="label.complete.description">

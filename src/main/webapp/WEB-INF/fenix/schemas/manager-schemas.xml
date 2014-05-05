@@ -460,7 +460,7 @@
 </schema>
 
 <schema name="CreateAcademicCalendarRootEntryCalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES" >
-	<slot name="title" key="label.academicCalendar.title" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"/>
+	<slot name="title" key="label.academicCalendar.title" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator"/>
 	<slot name="description" key="label.academicCalendar.description"/>
 	<slot name="templateEntry" layout="menu-select" key="label.template.academic.calendar">				
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.manager.TemplateAcademicCalendarProvider"/>
@@ -474,7 +474,7 @@
 </schema>
 
 <schema name="CreateAcademicCalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES">	
-	<slot name="title" key="label.academicCalendar.title" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"/>
+	<slot name="title" key="label.academicCalendar.title" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator"/>
 	<slot name="description" key="label.academicCalendar.description"/>
 	<slot name="begin" key="label.begin" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="end" key="label.end" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>	    				
@@ -509,7 +509,7 @@
 
 
 <schema name="EditAcademicCalendarRootEntryCalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES">
-	<slot name="title" key="label.academicCalendar.title" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"/>
+	<slot name="title" key="label.academicCalendar.title" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator"/>
 	<slot name="description" key="label.academicCalendar.description"/>
 	<slot name="templateEntry" layout="menu-select" key="label.template.academic.calendar">				
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.manager.TemplateAcademicCalendarProvider"/>
@@ -519,7 +519,7 @@
 </schema>
 
 <schema name="EditAcademicCalendarEntryType" type="net.sourceforge.fenixedu.dataTransferObject.manager.academicCalendarManagement.CalendarEntryBean" bundle="MANAGER_RESOURCES">	
-	<slot name="title" key="label.academicCalendar.title" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"/>
+	<slot name="title" key="label.academicCalendar.title" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator"/>
 	<slot name="description" key="label.academicCalendar.description"/>
 	<slot name="begin" key="label.begin" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="end" key="label.end" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>	

@@ -26,7 +26,7 @@
     	     action="<%= "/manageSecondCycleThesis.do?method=showThesisDetails&amp;thesisOid=" + thesis.getExternalId() %>"
         	 schema="thesis.jury.proposal.information.edit">
 		<fr:schema type="net.sourceforge.fenixedu.domain.thesis.Thesis" bundle="APPLICATION_RESOURCES">
-    		<fr:slot name="finalTitle" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+    		<fr:slot name="finalTitle" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
         		<fr:property name="size" value="80"/>
     		</fr:slot>
     		<fr:slot name="keywords" layout="null-as-label" key="label.thesis.keywords">

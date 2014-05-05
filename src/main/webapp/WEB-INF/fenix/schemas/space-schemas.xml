@@ -226,7 +226,7 @@
 
 <schema name="RoomClassificationFactory" type="net.sourceforge.fenixedu.domain.space.RoomClassification$RoomClassificationFactory" bundle="SPACE_RESOURCES">
 	<slot name="code" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator"/>
+	<slot name="name" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator"/>
 </schema>
 <schema name="RoomClassificationInList" type="net.sourceforge.fenixedu.domain.space.RoomClassification" bundle="SPACE_RESOURCES">
 	<slot name="presentationCode"/>

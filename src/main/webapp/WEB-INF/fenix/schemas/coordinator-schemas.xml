@@ -355,7 +355,7 @@
     <slot name="student" layout="format" read-only="true">
         <property name="format" value="${person.name} (${number})"/>
     </slot>
-    <slot name="finalTitle" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+    <slot name="finalTitle" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
         <property name="size" value="60"/>
     </slot>
 <!-- 
@@ -373,7 +373,7 @@
     <slot name="student" layout="format" read-only="true">
         <property name="format" value="${person.name} (${number})"/>
     </slot>
-    <slot name="finalTitle" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+    <slot name="finalTitle" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
         <property name="size" value="60"/>
     </slot>
     <slot name="comment" layout="longText">

@@ -20,7 +20,7 @@
 </schema>	
 
 <schema name="researchInterest.simpleCreate" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.ResearchInterest">
-	<slot name="interest" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+	<slot name="interest" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
 		<property name="size" value="40"/>
 	</slot>
 </schema>	
@@ -29,10 +29,10 @@
 	<slot name="role" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="project.number" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="project.acronym"/>
-	<slot name="project.title" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+	<slot name="project.title" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
 		<property name="size" value="75"/>
 	</slot>
-	<slot name="project.projectAbstract" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+	<slot name="project.projectAbstract" layout="area" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="5"/>
 		<property name="columns" value="75"/>
 	</slot>
@@ -43,10 +43,10 @@
 <schema name="project.edit-defaults" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.project.Project">
 	<slot name="number" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="acronym"/>
-	<slot name="title" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+	<slot name="title" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
 		<property name="size" value="75"/>
 	</slot>
-	<slot name="projectAbstract" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+	<slot name="projectAbstract" layout="area" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="5"/>
 		<property name="columns" value="75"/>
 	</slot>
@@ -746,7 +746,7 @@ extends="eventCreation">
 </schema>
 
 <schema name="Cooperation.edit-defaults" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.activity.Cooperation">
-	<slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+	<slot name="name" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
 		<property name="size" value="75"/>
 	</slot>
 	<slot name="startDate" key="label.event.startDate" layout="year-month-day">
@@ -1364,11 +1364,11 @@ extends="eventCreation">
 <schema name="result.publication.details.Book" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.research.result.publication.Book">
 	<slot name="title"/>
-	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+	<slot name="note" layout="area" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="5"/>
 		<property name="columns" value="60"/>
 	</slot>
-	<slot name="keywords" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+	<slot name="keywords" layout="area" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="2"/>
 		<property name="columns" value="60"/>
 	</slot>
@@ -1443,11 +1443,11 @@ extends="eventCreation">
 <schema name="result.publication.details.BookPart" bundle="RESEARCHER_RESOURCES" 
 		type="net.sourceforge.fenixedu.domain.research.result.publication.BookPart">
 	<slot name="title"/>
-	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+	<slot name="note" layout="area" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="5"/>
 		<property name="columns" value="60"/>
 	</slot>
-	<slot name="keywords" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+	<slot name="keywords" layout="area" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="2"/>
 		<property name="columns" value="60"/>
 	</slot>
@@ -1614,11 +1614,11 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 <schema name="result.publication.details.Article" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.research.result.publication.Article">
 	<slot name="title"/>
-	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+	<slot name="note" layout="area" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="5"/>
 		<property name="columns" value="60"/>
 	</slot>
-	<slot name="keywords" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+	<slot name="keywords" layout="area" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="2"/>
 		<property name="columns" value="60"/>
 	</slot>
@@ -1690,11 +1690,11 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 <schema name="result.publication.details.Inproceedings" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings">
 	<slot name="title"/>
-	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+	<slot name="note" layout="area" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="5"/>
 		<property name="columns" value="60"/>
 	</slot>
-	<slot name="keywords" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+	<slot name="keywords" layout="area" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="2"/>
 		<property name="columns" value="60"/>
 	</slot>
@@ -1725,11 +1725,11 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Cr
 <schema name="result.publication.details.Proceedings" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.research.result.publication.Proceedings">
 	<slot name="title"/>
-	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+	<slot name="note" layout="area" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="5"/>
 		<property name="columns" value="60"/>
 	</slot>
-	<slot name="keywords" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+	<slot name="keywords" layout="area" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="2"/>
 		<property name="columns" value="60"/>
 	</slot> 	
@@ -1899,11 +1899,11 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Co
 <schema name="result.publication.details.Thesis" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.research.result.publication.Thesis">
 	<slot name="title"/>
-	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+	<slot name="note" layout="area" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="5"/>
 		<property name="columns" value="60"/>
 	</slot>
-	<slot name="keywords" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+	<slot name="keywords" layout="area" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="2"/>
 		<property name="columns" value="60"/>
 	</slot>	
@@ -1948,11 +1948,11 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Co
 <schema name="result.publication.details.Manual" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.research.result.publication.Manual">
 	<slot name="title"/>
-	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+	<slot name="note" layout="area" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="5"/>
 		<property name="columns" value="60"/>
 	</slot>
-	<slot name="keywords" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+	<slot name="keywords" layout="area" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="2"/>
 		<property name="columns" value="60"/>
 	</slot>
@@ -1999,11 +1999,11 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Co
 <schema name="result.publication.details.TechnicalReport" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport">
 	<slot name="title"/>
-	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+	<slot name="note" layout="area" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="5"/>
 		<property name="columns" value="60"/>
 	</slot>
-	<slot name="keywords" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+	<slot name="keywords" layout="area" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="2"/>
 		<property name="columns" value="60"/>
 	</slot>
@@ -2062,11 +2062,11 @@ type="net.sourceforge.fenixedu.dataTransferObject.research.result.publication.Co
 <schema name="result.publication.details.OtherPublication" bundle="RESEARCHER_RESOURCES"
 		type="net.sourceforge.fenixedu.domain.research.result.publication.OtherPublication">
 	<slot name="title"/>
-	<slot name="note" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+	<slot name="note" layout="area" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="5"/>
 		<property name="columns" value="60"/>
 	</slot>
-	<slot name="keywords" layout="area" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+	<slot name="keywords" layout="area" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
 		<property name="rows" value="2"/>
 		<property name="columns" value="60"/>
 	</slot>
@@ -2905,7 +2905,7 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 </schema>
 
 <schema name="result.prize.association" constructor="name, description,year,researchResult" type="net.sourceforge.fenixedu.domain.research.Prize" bundle="RESEARCHER_RESOURCES">
-	<slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+	<slot name="name" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
 		<property name="size" value="60"/>
 	</slot>
 	<slot name="description" layout="area" key="research.PrizeAssociation.PrizeDescription">
@@ -2919,7 +2919,7 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 </schema>
 
 <schema name="create.prize" type="net.sourceforge.fenixedu.presentationTier.Action.research.PrizeBean" bundle="RESEARCHER_RESOURCES">
-	<slot name="name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+	<slot name="name" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
 		<property name="size" value="60"/>
 	</slot>
 	<slot name="description" layout="area" key="research.PrizeAssociation.PrizeDescription">

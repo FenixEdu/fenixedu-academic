@@ -148,7 +148,7 @@
     <slot name="url" key="label.site.link.url" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="size" value="70"/>
     </slot>
-    <slot name="label" key="label.site.link.label"  validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+    <slot name="label" key="label.site.link.label"  validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
         <property name="size" value="40"/>
     </slot>
 </schema>
@@ -298,7 +298,7 @@
 </schema>
 
 <schema name="site.functions.create.function" type="net.sourceforge.fenixedu.dataTransferObject.VariantBean" bundle="SITE_RESOURCES">
-	<slot name="MLString" key="label.function.name" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+	<slot name="MLString" key="label.function.name" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
 		<property name="size" value="60"/>
 	</slot>
 </schema>
