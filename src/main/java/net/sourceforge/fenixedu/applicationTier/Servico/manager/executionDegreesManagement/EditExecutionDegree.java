@@ -8,9 +8,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
@@ -37,7 +37,7 @@ public class EditExecutionDegree {
             throw new FenixServiceException("error.noExecutionDegree");
         }
 
-        final Campus campus = (Campus) FenixFramework.getDomainObject(campusID);
+        final Space campus = (Space) FenixFramework.getDomainObject(campusID);
         if (campus == null) {
             throw new FenixServiceException("error.noCampus");
         }

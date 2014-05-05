@@ -9,9 +9,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ContentManagementLog;
 import net.sourceforge.fenixedu.domain.File;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.predicates.AnnouncementPredicates;
 
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
@@ -284,7 +284,7 @@ public class Announcement extends Announcement_Base {
 
     @Atomic
     public static Announcement createAnnouncement(AnnouncementBoard board, String authorName, String authorEmail,
-            MultiLanguageString body, Campus campus, List<AnnouncementCategory> categories, String place,
+            MultiLanguageString body, Space campus, List<AnnouncementCategory> categories, String place,
             DateTime publicationBeginDate, DateTime publicationEndDate, DateTime referedSubjectBeginDate,
             DateTime referedSubjectEndDate, MultiLanguageString subject, MultiLanguageString excerpt, Boolean isVisible,
             String editorNotes, String fileName, byte[] fileContents) {

@@ -49,7 +49,6 @@ import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -94,6 +93,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
@@ -2097,18 +2097,18 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         return getDegreeCurricularPlan().getPresentationName(executionYear);
     }
 
-    final public Campus getCurrentCampus() {
-        final Campus currentCampus = getDegreeCurricularPlan().getCurrentCampus();
+    final public Space getCurrentCampus() {
+        final Space currentCampus = getDegreeCurricularPlan().getCurrentCampus();
         return currentCampus == null ? getLastCampus() : currentCampus;
     }
 
-    final public Campus getCampus(final ExecutionYear executionYear) {
-        final Campus result = getDegreeCurricularPlan().getCampus(executionYear);
+    final public Space getCampus(final ExecutionYear executionYear) {
+        final Space result = getDegreeCurricularPlan().getCampus(executionYear);
         return result == null ? getLastCampus() : result;
     }
 
-    final public Campus getLastCampus() {
-        final Campus lastScpCampus = getDegreeCurricularPlan().getCampus(getLastExecutionYear());
+    final public Space getLastCampus() {
+        final Space lastScpCampus = getDegreeCurricularPlan().getCampus(getLastExecutionYear());
         return lastScpCampus == null ? getDegreeCurricularPlan().getLastCampus() : lastScpCampus;
     }
 
@@ -2406,7 +2406,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         final Person person = AccessControl.getPerson();
 
         final boolean hasUpdateRegistrationAfterConclusionProcessPermission =
-                AcademicAuthorizationGroup.getProgramsForOperation(person, AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION).contains(this.getDegree());
+                AcademicAuthorizationGroup.getProgramsForOperation(person,
+                        AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION).contains(this.getDegree());
 
         if (courseGroup != null) {
             final CurriculumGroup group = findCurriculumGroupFor(courseGroup);
@@ -2661,7 +2662,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     private void checkPermission(final Person responsiblePerson, final CurriculumLineLocationBean bean) {
 
         final boolean hasUpdateRegistrationAfterConclusionPermission =
-                AcademicAuthorizationGroup.getProgramsForOperation(responsiblePerson, AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION).contains(this.getDegree());
+                AcademicAuthorizationGroup.getProgramsForOperation(responsiblePerson,
+                        AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION).contains(this.getDegree());
 
         if (bean.getCurriculumGroup().getParentCycleCurriculumGroup() != null
                 && bean.getCurriculumGroup().getParentCycleCurriculumGroup().isConclusionProcessed()
@@ -2851,7 +2853,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
         if (enrolment.getParentCycleCurriculumGroup() != null
                 && enrolment.getParentCycleCurriculumGroup().isConclusionProcessed()
-                && !AcademicAuthorizationGroup.getProgramsForOperation(person, AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION).contains(this.getDegree())) {
+                && !AcademicAuthorizationGroup.getProgramsForOperation(person,
+                        AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION).contains(this.getDegree())) {
             throw new DomainException("error.StudentCurricularPlan.cannot.move.is.not.authorized");
         }
 
@@ -2893,7 +2896,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
         if (enrolment.getParentCycleCurriculumGroup() != null
                 && enrolment.getParentCycleCurriculumGroup().isConclusionProcessed()
-                && !AcademicAuthorizationGroup.getProgramsForOperation(person, AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION).contains(this.getDegree())) {
+                && !AcademicAuthorizationGroup.getProgramsForOperation(person,
+                        AcademicOperationType.UPDATE_REGISTRATION_AFTER_CONCLUSION).contains(this.getDegree())) {
             throw new DomainException("error.StudentCurricularPlan.cannot.move.is.not.authorized");
         }
 
@@ -3055,11 +3059,13 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public boolean isAllowedToManageEnrolments() {
-        return AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.STUDENT_ENROLMENTS).contains(this.getDegree());
+        return AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+                AcademicOperationType.STUDENT_ENROLMENTS).contains(this.getDegree());
     }
 
     public boolean isAllowedToManageAccountingEvents() {
-        return AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_ACCOUNTING_EVENTS).contains(this.getDegree());
+        return AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+                AcademicOperationType.MANAGE_ACCOUNTING_EVENTS).contains(this.getDegree());
     }
 
     @Deprecated

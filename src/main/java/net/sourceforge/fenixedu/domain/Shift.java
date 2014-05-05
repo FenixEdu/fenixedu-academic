@@ -496,9 +496,9 @@ public class Shift extends Shift_Base {
         for (final Lesson lesson : getAssociatedLessonsSet()) {
             if (lesson.hasSala()) {
                 if (capacity == 0) {
-                    capacity = (lesson.getSala()).getNormalCapacity();
+                    capacity = (lesson.getSala()).getAllocatableCapacity();
                 } else {
-                    capacity = Math.min(capacity, (lesson.getSala()).getNormalCapacity());
+                    capacity = Math.min(capacity, (lesson.getSala()).getAllocatableCapacity());
                 }
             }
         }
@@ -566,7 +566,7 @@ public class Shift extends Shift_Base {
                 stringBuilder.append(lesson.getEndHourMinuteSecond().toString("HH:mm"));
                 if (lesson.hasSala()) {
                     stringBuilder.append(" - ");
-                    stringBuilder.append(lesson.getSala().getIdentification());
+                    stringBuilder.append(lesson.getSala().getName());
                 }
                 if (iterator.hasNext()) {
                     stringBuilder.append(" ; ");
@@ -590,7 +590,7 @@ public class Shift extends Shift_Base {
                 stringBuilder.append(lesson.getEndHourMinuteSecond().toString("HH:mm"));
                 if (lesson.hasSala()) {
                     stringBuilder.append(" - ");
-                    stringBuilder.append(lesson.getSala().getIdentification());
+                    stringBuilder.append(lesson.getSala().getName());
                 }
                 if (iterator.hasNext()) {
                     stringBuilder.append(" ; ");

@@ -4,9 +4,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -25,7 +25,7 @@ public class GiafProfessionalData extends GiafProfessionalData_Base {
             final ProfessionalContractType professionalContractType, final String professionalContractTypeGiafId,
             final ProfessionalCategory professionalCategory, final String professionalCategoryGiafId,
             final LocalDate professionalCategoryDate, final ProfessionalRegime professionalRegime,
-            final String professionalRegimeGiafId, final LocalDate professionalRegimeDate, final Campus campus,
+            final String professionalRegimeGiafId, final LocalDate professionalRegimeDate, final Space campus,
             final DateTime creationDate, final DateTime modifiedDate) {
         super();
         setRootDomainObject(Bennu.getInstance());

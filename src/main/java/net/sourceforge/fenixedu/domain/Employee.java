@@ -19,10 +19,10 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfession
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
@@ -250,7 +250,7 @@ public class Employee extends Employee_Base {
         return null;
     }
 
-    public Campus getCurrentCampus() {
+    public Space getCurrentCampus() {
         PersonProfessionalData personProfessionalData = getPerson().getPersonProfessionalData();
         if (personProfessionalData != null) {
             GiafProfessionalData giafProfessionalData = personProfessionalData.getGiafProfessionalData();

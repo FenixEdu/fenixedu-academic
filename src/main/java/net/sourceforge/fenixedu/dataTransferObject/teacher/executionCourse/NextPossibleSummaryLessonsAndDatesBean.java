@@ -8,11 +8,11 @@ import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.FenixFramework;
@@ -41,7 +41,7 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable, Com
 
     private HourMinuteSecond time;
 
-    private AllocatableSpace roomReference;
+    private Space roomReference;
 
     public NextPossibleSummaryLessonsAndDatesBean() {
     }
@@ -54,7 +54,7 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable, Com
         setTime(lesson.getBeginHourMinuteSecond());
     }
 
-    public NextPossibleSummaryLessonsAndDatesBean(Shift shift, YearMonthDay date, HourMinuteSecond time, AllocatableSpace room) {
+    public NextPossibleSummaryLessonsAndDatesBean(Shift shift, YearMonthDay date, HourMinuteSecond time, Space room) {
         setShift(shift);
         setDate(date);
         setExtraLesson(true);
@@ -72,9 +72,9 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable, Com
             StringBuilder builder = new StringBuilder();
             builder.append(getDate().toDateTimeAtMidnight().toString("E")).append(" (");
             builder.append(getTime().toString("HH:mm")).append(")");
-            AllocatableSpace room = getRoom();
+            Space room = getRoom();
             if (room != null) {
-                builder.append(" ").append(room.getIdentification());
+                builder.append(" ").append(room.getName());
             }
             return builder.toString();
         }
@@ -178,11 +178,11 @@ public class NextPossibleSummaryLessonsAndDatesBean implements Serializable, Com
         this.lessonReference = lesson;
     }
 
-    public AllocatableSpace getRoom() {
+    public Space getRoom() {
         return this.roomReference;
     }
 
-    public void setRoom(AllocatableSpace room) {
+    public void setRoom(Space room) {
         this.roomReference = room;
     }
 

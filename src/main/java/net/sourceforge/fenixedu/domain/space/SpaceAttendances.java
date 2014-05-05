@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.domain.space;
 
 import net.sourceforge.fenixedu.domain.Person;
 
+import org.fenixedu.spaces.domain.SpaceClassification;
+import org.fenixedu.spaces.domain.UnavailableException;
 import org.joda.time.DateTime;
 
 public class SpaceAttendances extends SpaceAttendances_Base {
@@ -13,8 +15,13 @@ public class SpaceAttendances extends SpaceAttendances_Base {
     }
 
     public String getOccupationDesctiption() {
-        if (hasOccupiedLibraryPlace() && getOccupiedLibraryPlace() instanceof RoomSubdivision) {
-            return getOccupiedLibraryPlace().getSpaceInformation().getPresentationName();
+        try {
+            if (hasOccupiedLibraryPlace()
+                    && SpaceClassification.getByName("Room Subdivision").equals(getOccupiedLibraryPlace().getClassification())) {
+                return getOccupiedLibraryPlace().getName();
+            }
+        } catch (UnavailableException e) {
+            return null;
         }
         return "-";
     }

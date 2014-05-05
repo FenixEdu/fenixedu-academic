@@ -34,7 +34,6 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessi
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalExemption;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
@@ -58,6 +57,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Interval;
@@ -1255,7 +1255,7 @@ public class Teacher extends Teacher_Base {
         return RoleType.TEACHER;
     }
 
-    public boolean teachesAt(final Campus campus) {
+    public boolean teachesAt(final Space campus) {
         for (final Professorship professorship : getProfessorshipsSet()) {
             final ExecutionCourse executionCourse = professorship.getExecutionCourse();
             if (executionCourse.getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {

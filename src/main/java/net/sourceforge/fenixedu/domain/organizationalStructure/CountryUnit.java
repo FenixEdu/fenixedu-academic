@@ -11,17 +11,19 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.Atomic;
+
 import java.util.Locale;
+
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CountryUnit extends CountryUnit_Base {
@@ -35,7 +37,7 @@ public class CountryUnit extends CountryUnit_Base {
 
     public static CountryUnit createNewCountryUnit(MultiLanguageString countryName, String countryNameCard,
             Integer costCenterCode, String countryAcronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
-            String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Campus campus) {
+            String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Space campus) {
 
         CountryUnit countryUnit = new CountryUnit();
         countryUnit.init(countryName, countryNameCard, costCenterCode, countryAcronym, beginDate, endDate, webAddress,
@@ -57,7 +59,7 @@ public class CountryUnit extends CountryUnit_Base {
     public void edit(MultiLanguageString unitName, String unitNameCard, Integer unitCostCenter, String acronym,
             YearMonthDay beginDate, YearMonthDay endDate, String webAddress, UnitClassification classification,
             Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces,
-            Campus campus) {
+            Space campus) {
 
         super.edit(unitName, unitNameCard, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department,
                 degree, administrativeOffice, canBeResponsibleOfSpaces, campus);

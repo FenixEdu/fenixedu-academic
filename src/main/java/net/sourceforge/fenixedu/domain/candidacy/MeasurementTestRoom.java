@@ -3,9 +3,9 @@ package net.sourceforge.fenixedu.domain.candidacy;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.spaces.domain.Space;
 
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
 
@@ -72,7 +72,7 @@ public class MeasurementTestRoom extends MeasurementTestRoom_Base {
         return getCapacity().intValue() - getRegistrationsSet().size() > 0;
     }
 
-    public Campus getCampus() {
+    public Space getCampus() {
         return getShift().getTest().getCampus();
     }
 

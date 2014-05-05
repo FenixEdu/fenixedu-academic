@@ -15,6 +15,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.model.SelectItem;
@@ -47,11 +48,11 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitClassification;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.FenixFramework;
@@ -502,8 +503,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public List<SelectItem> getCampuss() {
         List<SelectItem> list = new ArrayList<SelectItem>();
-        List<Campus> activeCampus = Campus.getAllActiveCampus();
-        for (Campus campus : activeCampus) {
+        Set<Space> activeCampus = Space.getAllCampus();
+        for (Space campus : activeCampus) {
             SelectItem selectItem = new SelectItem();
             selectItem.setLabel(campus.getName());
             selectItem.setValue(campus.getExternalId().toString());
@@ -592,7 +593,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         CreateNewUnitParameters parameters = new CreateNewUnitParameters(this, 1);
 
         MultiLanguageString unitName =
-                new MultiLanguageString(MultiLanguageString.pt, this.getUnitName()).with(MultiLanguageString.en, this.getUnitNameEn());
+                new MultiLanguageString(MultiLanguageString.pt, this.getUnitName()).with(MultiLanguageString.en,
+                        this.getUnitNameEn());
 
         try {
             CreateUnit.run(null, unitName, this.getUnitNameCard(), this.getUnitCostCenter(), this.getUnitAcronym(),

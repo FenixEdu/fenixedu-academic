@@ -1216,10 +1216,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
         class candidacy.CandidacySummaryFile extends File {
         }
 
-        class space.BlueprintFile extends File {
-            ByteArray contentFile;
-        }
-
         class thesis.ThesisFile extends File {
             Locale language;
             String subTitle;
@@ -1232,18 +1228,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
         class careerWorkshop.CareerWorkshopConfirmationSpreadsheet extends File {
         }
 
-
-    class GenericEvent  {
-        MultiLanguageString description;
-        FrequencyType frequency;
-        MultiLanguageString title;
-        YearMonthDay beginDate;
-        YearMonthDay endDate;
-        HourMinuteSecond startTimeDateHourMinuteSecond;
-        HourMinuteSecond endTimeDateHourMinuteSecond;
-        Boolean dailyFrequencyMarkSunday;
-        Boolean dailyFrequencyMarkSaturday;
-    }
 
     class GratuitySituation  {
         String exemptionDescription;
@@ -1467,24 +1451,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
         Integer fileSize;
         String filename;
         DateTime submissionDateTime;
-    }
-
-    class PunctualRoomsOccupationComment  {
-        MultiLanguageString description;
-        DateTime instant;
-        MultiLanguageString subject;
-    }
-
-    class PunctualRoomsOccupationRequest  {
-        Integer employeeReadComments;
-        Integer identification;
-        DateTime instant;
-        Integer teacherReadComments;
-    }
-
-    class PunctualRoomsOccupationStateInstant  {
-        DateTime instant;
-        RequestState requestState;
     }
 
     class Qualification  {
@@ -4037,20 +4003,11 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
         Boolean allowsToBeSearched;
     }
 
-    class resource.Resource  {
-    }
-
-    class resource.ResourceAllocation  {
-    }
-
-        class space.SpaceOccupation extends resource.ResourceAllocation {
+        class space.SpaceOccupation extends .org.fenixedu.spaces.domain.occupation.Occupation {
         }
 
             class space.EventSpaceOccupation extends space.SpaceOccupation {                
             }
-
-                class space.GenericEventSpaceOccupation extends space.EventSpaceOccupation {
-                }
 
                 class space.LessonSpaceOccupation extends space.EventSpaceOccupation {
                 }
@@ -4060,48 +4017,7 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
                 
                 class space.WrittenEvaluationSpaceOccupation extends space.EventSpaceOccupation {
                 }
-
-            class space.PersonSpaceOccupation extends space.SpaceOccupation {
-                YearMonthDay begin;
-                YearMonthDay end;
-            }
-
-            class space.UnitSpaceOccupation extends space.SpaceOccupation {
-                YearMonthDay begin;
-                YearMonthDay end;
-            }           
-
-        class space.Space extends resource.Resource {
-            YearMonthDay createdOn;
-        }
-
-            class space.AllocatableSpace extends space.Space {
-            }
-
-                class space.Room extends space.AllocatableSpace {
-                    Integer examCapacity;
-                    Integer normalCapacity;
-                }
-
-                class space.RoomSubdivision extends space.AllocatableSpace {
-                }
-
-            class space.Building extends space.Space {
-            }
-
-            class space.Campus extends space.Space {
-            }
-
-            class space.Floor extends space.Space {
-            }
-
-    class resource.ResourceResponsibility  {
-        YearMonthDay begin;
-        YearMonthDay end;
-    }
-
-        class space.SpaceResponsibility extends resource.ResourceResponsibility {
-        }
+                
 
     class serviceRequests.InstitutionRegistryCodeGenerator  {
         Integer currentFirstCycle;
@@ -4318,53 +4234,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
 		        	}
 
     
-    class space.Blueprint  {
-        YearMonthDay validFrom;
-        YearMonthDay validUntil;
-    }
-
-    class space.RoomClassification  {
-        Integer code;
-        MultiLanguageString name;
-    }
-
-    class space.SpaceInformation  {
-    	Integer capacity;
-        String blueprintNumber;
-        YearMonthDay validFrom;
-        YearMonthDay validUntil;
-        String emails;
-    }
-
-        class space.BuildingInformation extends space.SpaceInformation {
-            String name;
-        }
-
-        class space.CampusInformation extends space.SpaceInformation {
-            String name;
-        }
-
-        class space.FloorInformation extends space.SpaceInformation {
-            Integer level;
-        }
-
-        class space.RoomInformation extends space.SpaceInformation {
-            Boolean ageQuality;
-            BigDecimal area;
-            String description;
-            Boolean distanceFromSanitaryInstalationsQuality;
-            String doorNumber;
-            Boolean heightQuality;
-            String identification;
-            Boolean illuminationQuality;
-            String observations;
-            Boolean securityQuality;
-        }
-
-        class space.RoomSubdivisionInformation extends space.SpaceInformation {
-            String identification;
-        }
-        
     class space.SpaceAttendances {
     	String personIstUsername;
     	String responsibleForEntranceIstUsername;
@@ -7162,6 +7031,9 @@ class accessControl.PersistentProfessorshipsGroup extends accessControl.FenixPre
 
 class accessControl.PersistentMembersLinkGroup extends accessControl.FenixPersistentGroup;
 
+
+
+
 /*
  * Relations definitions
  * 
@@ -7723,7 +7595,7 @@ relation InquiryRoomAnswerRoom {
 	inquiries.InquiryRoomAnswer playsRole inquiryRoomAnswers {
 		multiplicity *;
 	}
-	space.AllocatableSpace playsRole room;
+	.org.fenixedu.spaces.domain.Space playsRole room;
 }
 
 relation QuestionAnswerInquiryAnswer {
@@ -7995,7 +7867,7 @@ relation MeasurementTestExecutionYear {
 }
 
 relation MeasurementTestCampus {
-    space.Campus playsRole campus;
+    .org.fenixedu.spaces.domain.Space playsRole campus;
     
     candidacy.MeasurementTest playsRole measurementTests {
         multiplicity *;
@@ -8004,7 +7876,7 @@ relation MeasurementTestCampus {
 
 
 relation RootDomainObjectDefaultCampus {
-	space.Campus playsRole defaultCampus;
+	.org.fenixedu.spaces.domain.Space playsRole defaultCampus;
 	.org.fenixedu.bennu.core.domain.Bennu playsRole defaultCampusRootDomainObject;
 }
 
@@ -9304,11 +9176,6 @@ relation DocumentRequestDocuments {
     }
 }
 
-relation BlueprintBlueprintFile {
-    space.Blueprint playsRole blueprint;
-    space.BlueprintFile playsRole blueprintFile;
-}
-
 relation BranchCurricularCourseScope {
     Branch playsRole branch;
     CurricularCourseScope playsRole scopes {
@@ -9317,7 +9184,7 @@ relation BranchCurricularCourseScope {
 }
 
 relation CampusInformationLocality {
-    space.CampusInformation playsRole campusInformation {
+    .org.fenixedu.spaces.domain.Space playsRole campusInformation {
         multiplicity *;
     }
     Locality playsRole locality;
@@ -10390,7 +10257,7 @@ relation ExecutionDegreeCampus {
     ExecutionDegree playsRole executionDegrees {
         multiplicity *;
     }
-    space.Campus playsRole campus;
+    .org.fenixedu.spaces.domain.Space playsRole campus;
 }
 
 relation ExecutionDegreeCoordinator {
@@ -10728,13 +10595,6 @@ relation FunctionParentInherentFunction {
     organizationalStructure.Function playsRole parentInherentFunction;
 }
 
-relation GenericEventGenericEventSpaceOccupation {
-    GenericEvent playsRole genericEvent;
-    space.GenericEventSpaceOccupation playsRole genericEventSpaceOccupations {
-        multiplicity *;
-    }
-}
-
 relation GoalExecutionCourse {
     ExportGrouping playsRole exportGroupings {
         multiplicity *;
@@ -10994,7 +10854,7 @@ relation InquiriesRoomDomainRoom {
     oldInquiries.InquiriesRoom playsRole associatedInquiriesRooms {
         multiplicity *;
     }
-    space.AllocatableSpace playsRole room;
+    .org.fenixedu.spaces.domain.Space playsRole room;
 }
 
 relation InquiriesRoomInquiriesCourse {
@@ -11473,13 +11333,6 @@ relation PartyPartyType {
     }
 }
 
-relation PartyResourceResponsibility {
-    resource.ResourceResponsibility playsRole resourceResponsibility {
-        multiplicity *;
-    }
-    organizationalStructure.Party playsRole party;
-}
-
 relation PartyTypeChildConnectionRule {
     organizationalStructure.PartyType playsRole allowedChildPartyType;
     organizationalStructure.ConnectionRule playsRole allowedParentConnectionRules {
@@ -11651,13 +11504,6 @@ relation PersonAccountingEvent {
     }
 }
 
-relation PersonBlueprint {
-    Person playsRole creationPerson;
-    space.Blueprint playsRole blueprints {
-        multiplicity *;
-    }
-}
-
 relation PersonCandidacy {
     Person playsRole person;
     candidacy.Candidacy playsRole candidacies {
@@ -11698,13 +11544,6 @@ relation PersonNamePersonNamePart {
 relation PersonPersonName {
     Person playsRole person;
     person.PersonName playsRole personName;
-}
-
-relation PersonPersonSpaceOccupation {
-    space.PersonSpaceOccupation playsRole personSpaceOccupations {
-        multiplicity *;
-    }
-    Person playsRole person;
 }
 
 relation PersonRole {
@@ -11946,55 +11785,6 @@ relation PublicationsNumberTeacher {
         multiplicity *;
     }
     Teacher playsRole teacher;
-}
-
-relation PunctualRoomsOccupationCommentPerson {
-    Person playsRole owner;
-    PunctualRoomsOccupationComment playsRole punctualRoomsOccupationComments {
-        multiplicity *;
-    }
-}
-
-relation PunctualRoomsOccupationRequestGenericEvent {
-    PunctualRoomsOccupationRequest playsRole punctualRoomsOccupationRequest;
-    GenericEvent playsRole genericEvents {
-        multiplicity *;
-    }
-}
-
-relation PunctualRoomsOccupationRequestPerson {
-    Person playsRole requestor;
-    PunctualRoomsOccupationRequest playsRole punctualRoomsOccupationRequests {
-        multiplicity *;
-    }
-}
-
-relation PunctualRoomsOccupationRequestCampus {
-    space.Campus playsRole campus;
-    PunctualRoomsOccupationRequest playsRole punctualRoomsOccupationRequests {
-        multiplicity *;
-    }
-}
-
-relation PunctualRoomsOccupationRequestPunctualRoomsOccupationComment {
-    PunctualRoomsOccupationRequest playsRole request;
-    PunctualRoomsOccupationComment playsRole comments {
-        multiplicity *;
-    }
-}
-
-relation PunctualRoomsOccupationRequestPunctualRoomsOccupationStateInstant {
-    PunctualRoomsOccupationRequest playsRole request;
-    PunctualRoomsOccupationStateInstant playsRole stateInstants {
-        multiplicity *;
-    }
-}
-
-relation PunctualRoomsOccupationRequestToProcessPerson {
-    Person playsRole owner;
-    PunctualRoomsOccupationRequest playsRole punctualRoomsOccupationRequestsToProcess {
-        multiplicity *;
-    }
 }
 
 relation QualificationCountry {
@@ -12296,39 +12086,11 @@ relation ResearcherPerson {
     research.Researcher playsRole researcher;
 }
 
-relation ResourceAllocationResource {
-    resource.Resource playsRole resource;
-    resource.ResourceAllocation playsRole resourceAllocations {
-        multiplicity *;
-    }
-}
-
-relation ResourceResourceResponsibility {
-    resource.ResourceResponsibility playsRole resourceResponsibility {
-        multiplicity *;
-    }
-    resource.Resource playsRole resource;
-}
-
-relation RoomClassificationRoomClassification {
-    space.RoomClassification playsRole childRoomClassifications {
-        multiplicity *;
-    }
-    space.RoomClassification playsRole parentRoomClassification;
-}
-
-relation RoomRoomClassification {
-    space.RoomInformation playsRole roomInformations {
-        multiplicity *;
-    }
-    space.RoomClassification playsRole roomClassification;
-}
-
 relation RoomSummary {
     Summary playsRole associatedSummaries {
         multiplicity *;
     }
-    space.AllocatableSpace playsRole room;
+    .org.fenixedu.spaces.domain.Space playsRole room;
 }
 
 relation RootDomainExamCoordinator {
@@ -12451,13 +12213,6 @@ relation RootDomainObjectAttends {
 relation RootDomainObjectBibliographicReference {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     BibliographicReference playsRole bibliographicReferences {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectBlueprint {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    space.Blueprint playsRole blueprints {
         multiplicity *;
     }
 }
@@ -12997,13 +12752,6 @@ relation RootDomainObjectGeneralClassProperty {
     }
 }
 
-relation RootDomainObjectGenericEvent {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    GenericEvent playsRole genericEvents {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectGratuitySituation {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     GratuitySituation playsRole gratuitySituations {
@@ -13408,27 +13156,6 @@ relation RootDomainObjectPublicationsNumber {
     }
 }
 
-relation RootDomainObjectPunctualRoomsOccupationComment {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    PunctualRoomsOccupationComment playsRole punctualRoomsOccupationComments {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectPunctualRoomsOccupationRequest {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    PunctualRoomsOccupationRequest playsRole punctualRoomsOccupationRequests {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectPunctualRoomsOccupationStateInstant {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    PunctualRoomsOccupationStateInstant playsRole punctualRoomsOccupationStateInstants {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectQualification {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Qualification playsRole qualifications {
@@ -13513,26 +13240,7 @@ relation RootDomainObjectResidenceCandidacies {
     }
 }
 
-relation RootDomainObjectResource {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    resource.Resource playsRole resources {
-        multiplicity *;
-    }
-}
 
-relation RootDomainObjectResourceAllocation {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    resource.ResourceAllocation playsRole resourceAllocations {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectResourceResponsibility {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    resource.ResourceResponsibility playsRole resourceResponsibility {
-        multiplicity *;
-    }
-}
 
 relation RootDomainObjectRole {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
@@ -13541,12 +13249,6 @@ relation RootDomainObjectRole {
     }
 }
 
-relation RootDomainObjectRoomClassification {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    space.RoomClassification playsRole roomClassification {
-        multiplicity *;
-    }
-}
 
 relation RootDomainObjectScheduleing {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
@@ -13667,12 +13369,6 @@ relation RootDomainObjectSibsPaymentFileProcessReport {
     }
 }
 
-relation RootDomainObjectSpaceInformation {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    space.SpaceInformation playsRole spaceInformations {
-        multiplicity *;
-    }
-}
 
 relation RootDomainObjectStudent {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
@@ -14296,27 +13992,6 @@ relation SiteTemplatePointsContainer {
 }
 */
 
-relation SpaceBlueprint {
-    space.Space playsRole space;
-    space.Blueprint playsRole blueprints {
-        multiplicity *;
-    }
-}
-
-relation SpaceSpace {
-    space.Space playsRole containedSpaces {
-        multiplicity *;
-    }
-    space.Space playsRole suroundingSpace;
-}
-
-relation SpaceSpaceInformation {
-    space.SpaceInformation playsRole spaceInformations {
-        multiplicity *;
-    }
-    space.Space playsRole space;
-}
-
 relation StudentCandidacyExecutionDegree {
     ExecutionDegree playsRole executionDegree;
     candidacy.StudentCandidacy playsRole studentCandidacies {
@@ -14781,7 +14456,7 @@ relation InstitutionUnitDegreeDesignation {
 }
 
 relation UnitCampus {
-    space.Campus playsRole campus;
+    .org.fenixedu.spaces.domain.Space playsRole campus;
     organizationalStructure.Unit playsRole units {
         multiplicity *;
     }
@@ -14914,13 +14589,6 @@ relation UnitUnitName {
     organizationalStructure.UnitName playsRole unitName;
 }
 
-relation UnitUnitSpaceOccupation {
-    organizationalStructure.Unit playsRole unit;
-    space.UnitSpaceOccupation playsRole unitSpaceOccupations {
-        multiplicity *;
-    }
-}
-
 relation UserPerson {
     Person playsRole person;
     .org.fenixedu.bennu.core.domain.User playsRole user;
@@ -14979,7 +14647,7 @@ relation WrittenEvaluationEnrolmentRoom {
     WrittenEvaluationEnrolment playsRole writtenEvaluationEnrolments {
         multiplicity *;
     }
-    space.AllocatableSpace playsRole room;
+    .org.fenixedu.spaces.domain.Space playsRole room;
 }
 
 relation WrittenEvaluationEnrolmentStudent {
@@ -15116,7 +14784,7 @@ relation PersonProfessionalDataPerson {
 }
 
 relation GiafProfessionalDataPersonCampus {
-    space.Campus playsRole campus;
+    .org.fenixedu.spaces.domain.Space playsRole campus;
     personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalDatas {
         multiplicity *;
     }
@@ -16323,7 +15991,7 @@ relation AnnouncementCategoryAnnouncement {
 }
 
 relation AnnouncementCampus {
-    space.Campus playsRole campus;
+    .org.fenixedu.spaces.domain.Space playsRole campus;
     messaging.Announcement playsRole announcements {
         multiplicity *;
     }
@@ -17255,7 +16923,7 @@ relation ImportCandidaciesFromDgesProcessDgesImportationStudentFile {
 }
 
 relation DgesStudentImportationProcessCampus {
-	space.Campus playsRole dgesStudentImportationForCampus;
+	.org.fenixedu.spaces.domain.Space playsRole dgesStudentImportationForCampus;
 	student.importation.DgesStudentImportationProcess playsRole dgesStudentImportationProcess {
 		multiplicity*;
 	}
@@ -17380,13 +17048,13 @@ relation ProfessorshipUser {
 
 relation RootDomainObjectHasLibraries {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObjectForLibrary;
-    space.Space playsRole libraries {
+    .org.fenixedu.spaces.domain.Space playsRole libraries {
         multiplicity *;
     }
 }
 
 relation SpacesHaveAttendances {
-    space.Space playsRole occupiedLibraryPlace {
+    .org.fenixedu.spaces.domain.Space playsRole occupiedLibraryPlace {
     	multiplicity 0..1;
     }
     space.SpaceAttendances playsRole currentAttendance {
@@ -17395,7 +17063,7 @@ relation SpacesHaveAttendances {
 }
 
 relation SpacesHaveAttendanceHistory {
-    space.Space playsRole visitedLibraryPlace {
+    .org.fenixedu.spaces.domain.Space playsRole visitedLibraryPlace {
     	multiplicity 0..1;
     }
     space.SpaceAttendances playsRole pastAttendances {
@@ -18056,7 +17724,7 @@ relation PersistentStudentGroupCampus {
     public accessControl.PersistentStudentGroup playsRole studentGroup {
         multiplicity *;
     }
-    public space.Campus playsRole campus {
+    public .org.fenixedu.spaces.domain.Space playsRole campus {
         multiplicity 0..1;
     }
 }
@@ -18128,7 +17796,7 @@ relation PersistentTeacherGroupCampus {
     public accessControl.PersistentTeacherGroup playsRole teacherGroup {
         multiplicity *;
     }
-    public space.Campus playsRole campus {
+    public .org.fenixedu.spaces.domain.Space playsRole campus {
         multiplicity 0..1;
     }
 }
@@ -18335,7 +18003,7 @@ relation PersistentCampusEmployeeGroupCampus {
     public accessControl.PersistentCampusEmployeeGroup playsRole campusEmployeeGroup {
         multiplicity 0..1;
     }
-    public space.Campus playsRole campus {
+    public .org.fenixedu.spaces.domain.Space playsRole campus {
         multiplicity 1..1;
     }
 }
@@ -18381,69 +18049,6 @@ relation FilePermittedGroup {
 		multiplicity *;
 	}
 	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole accessGroup {
-		multiplicity 0..1;
-	}
-}
-
-relation SpaceExtensionOccupationsAccessGroup {
-	protected space.Space playsRole spaceAsExtensionOccupationsAccessGroup {
-		multiplicity *;
-	}
-	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole extensionOccupationsGroup {
-		multiplicity 0..1;
-	}
-}
-
-relation SpaceGenericEventOccupationsAccessGroup {
-	protected space.Space playsRole spaceAsGenericEventOccupationsAccessGroup {
-		multiplicity *;
-	}
-	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole genericEventOccupationsGroup {
-		multiplicity 0..1;
-	}
-}
-
-relation SpaceLessonOccupationsAccessGroup {
-	protected space.Space playsRole spaceAsLessonOccupationsAccessGroup {
-		multiplicity *;
-	}
-	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole lessonOccupationsGroup {
-		multiplicity 0..1;
-	}
-}
-
-relation SpacePersonOccupationsAccessGroup {
-	protected space.Space playsRole spaceAsPersonOccupationsAccessGroup {
-		multiplicity *;
-	}
-	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole personOccupationsGroup {
-		multiplicity 0..1;
-	}
-}
-
-relation SpaceSpaceManagementAccessGroup {
-	protected space.Space playsRole spaceAsSpaceManagementAccessGroup {
-		multiplicity *;
-	}
-	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole spaceManagementGroup {
-		multiplicity 0..1;
-	}
-}
-
-relation SpaceUnitOccupationsAccessGroup {
-	protected space.Space playsRole spaceAsUnitOccupationsAccessGroup {
-		multiplicity *;
-	}
-	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole unitOccupationsGroup {
-		multiplicity 0..1;
-	}
-}
-
-relation SpaceWrittenEvaluationOccupationsAccessGroup {
-	protected space.Space playsRole spaceAsWrittenEvaluationOccupationsAccessGroup {
-		multiplicity *;
-	}
-	protected .org.fenixedu.bennu.core.domain.groups.PersistentGroup playsRole writtenEvaluationOccupationsGroup {
 		multiplicity 0..1;
 	}
 }
@@ -18539,3 +18144,4 @@ relation RemoteSystemDomainRoot {
     RemoteSystem playsRole remoteSystem;
     .pt.ist.fenixframework.DomainRoot playsRole domainRoot;
 }
+

@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryCoordinatorAnswer;
 import net.sourceforge.fenixedu.domain.interfaces.HasExecutionYear;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicCalendarEntry;
@@ -42,6 +41,7 @@ import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -120,7 +120,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
         setRootDomainObject(Bennu.getInstance());
     }
 
-    protected ExecutionDegree(DegreeCurricularPlan degreeCurricularPlan, ExecutionYear executionYear, Campus campus,
+    protected ExecutionDegree(DegreeCurricularPlan degreeCurricularPlan, ExecutionYear executionYear, Space campus,
             Boolean publishedExamMap) {
         this();
 
@@ -176,7 +176,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
         }
     }
 
-    public void edit(ExecutionYear executionYear, Campus campus, Boolean publishedExamMap,
+    public void edit(ExecutionYear executionYear, Space campus, Boolean publishedExamMap,
             OccupationPeriod periodLessonsFirstSemester, OccupationPeriod periodExamsFirstSemester,
             OccupationPeriod periodLessonsSecondSemester, OccupationPeriod periodExamsSecondSemester,
             OccupationPeriod periodExamsSpecialSeason, OccupationPeriod gradeSubmissionNormalSeasonFirstSemester,
@@ -635,7 +635,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     }
 
     public static ExecutionDegree readByDegreeCodeAndExecutionYearAndCampus(String degreeCode, ExecutionYear executionYear,
-            Campus campus) {
+            Space campus) {
         for (final Degree degree : Degree.readAllByDegreeCode(degreeCode)) {
             final ExecutionDegree executionDegree =
                     degree.getMostRecentDegreeCurricularPlan().getExecutionDegreeByYear(executionYear);

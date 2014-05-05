@@ -46,8 +46,6 @@ import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context.DegreeModuleScopeContext;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
-import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -63,13 +61,14 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.util.MessageResources;
 import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.spaces.domain.Space;
+import org.fenixedu.spaces.domain.UnavailableException;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import java.util.Locale;
 
 public class SOPEvaluationManagementBackingBean extends EvaluationManagementBackingBean {
 
@@ -552,10 +551,9 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         List<SelectItem> calendarPeriodItems = new ArrayList<SelectItem>(7);
 
         calendarPeriodItems.add(new SelectItem(0, messages.getMessage(I18N.getLocale(), "label.calendarPeriodItem.all")));
-        calendarPeriodItems.add(new SelectItem(1, messages.getMessage(I18N.getLocale(),
-                "label.calendarPeriodItem.lesson.period")));
-        calendarPeriodItems.add(new SelectItem(2, messages.getMessage(I18N.getLocale(),
-                "label.calendarPeriodItem.exam.period")));
+        calendarPeriodItems
+                .add(new SelectItem(1, messages.getMessage(I18N.getLocale(), "label.calendarPeriodItem.lesson.period")));
+        calendarPeriodItems.add(new SelectItem(2, messages.getMessage(I18N.getLocale(), "label.calendarPeriodItem.exam.period")));
 
         return calendarPeriodItems;
     }
@@ -880,9 +878,12 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         for (final WrittenEvaluation writtenTest : associatedWrittenEvaluations) {
             int totalCapacity = 0;
             final StringBuilder buffer = new StringBuilder(20);
-            for (final AllocatableSpace room : writtenTest.getAssociatedRooms()) {
-                buffer.append(room.getIdentification()).append("; ");
-                totalCapacity += room.getCapacidadeExame();
+            for (final Space room : writtenTest.getAssociatedRooms()) {
+                try {
+                    buffer.append(room.getName()).append("; ");
+                    totalCapacity += (Integer) room.getMetadata("examCapacity");
+                } catch (UnavailableException e) {
+                }
             }
             if (buffer.length() > 0) {
                 buffer.delete(buffer.length() - 2, buffer.length() - 1);
@@ -992,8 +993,14 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         if (this.getViewState().getAttribute("chosenRoomsIDs") == null && this.getEvaluationID() != null) {
             List<String> associatedRooms = new ArrayList<String>();
 
-            for (AllocatableSpace room : ((WrittenEvaluation) this.getEvaluation()).getAssociatedRooms()) {
-                associatedRooms.add(room.getExternalId() + "-" + room.getExamCapacity());
+            for (Space room : ((WrittenEvaluation) this.getEvaluation()).getAssociatedRooms()) {
+                Integer examCapacity;
+                try {
+                    examCapacity = room.getMetadata("examCapacity");
+                } catch (UnavailableException e) {
+                    examCapacity = 0;
+                }
+                associatedRooms.add(room.getExternalId() + "-" + examCapacity);
             }
 
             String[] selectedRooms = {};
@@ -1036,7 +1043,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                         HourMinuteSecond.fromCalendarFields(examEndTime), dayOfWeek, null, null, Boolean.FALSE);
 
         if (this.getEvaluationID() != null) {
-            for (AllocatableSpace room : ((WrittenEvaluation) this.getEvaluation()).getAssociatedRooms()) {
+            for (Space room : ((WrittenEvaluation) this.getEvaluation()).getAssociatedRooms()) {
                 InfoRoom associatedRoom = InfoRoom.newInfoFromDomain(room);
                 if (!availableInfoRoom.contains(associatedRoom)) {
                     availableInfoRoom.add(associatedRoom);
@@ -1094,8 +1101,14 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         return infoRoom.getExternalId() + "-" + infoRoom.getCapacidadeExame();
     }
 
-    private String getRoomWithExamCapacityString(Room room) {
-        return room.getExternalId() + "-" + room.getCapacidadeExame();
+    private String getRoomWithExamCapacityString(Space room) {
+        Integer examCapacity;
+        try {
+            examCapacity = room.getMetadata("examCapacity");
+        } catch (UnavailableException e) {
+            examCapacity = 0;
+        }
+        return room.getExternalId() + "-" + examCapacity;
     }
 
     public String getAssociatedRooms() throws FenixServiceException {
@@ -1104,8 +1117,8 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         if (this.getChosenRoomsIDs() != null && this.getChosenRoomsIDs().length != 0) {
             for (String chosenRoomString : this.getChosenRoomsIDs()) {
                 String chosenRoomID = getRoomID(chosenRoomString);
-                AllocatableSpace room = (AllocatableSpace) FenixFramework.getDomainObject(chosenRoomID);
-                result.append(room.getIdentification());
+                Space room = (Space) FenixFramework.getDomainObject(chosenRoomID);
+                result.append(room.getName());
                 result.append("; ");
             }
 

@@ -3,8 +3,8 @@ package net.sourceforge.fenixedu.dataTransferObject.spaceManager;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
@@ -17,12 +17,12 @@ public class ViewEventSpaceOccupationsBean implements Serializable {
 
     private YearMonthDay day;
 
-    private AllocatableSpace allocatableSpaceReference;
+    private Space allocatableSpaceReference;
 
     public static int MONDAY_IN_JODA_TIME = 1;
     public static int SATURDAY_IN_JODA_TIME = 6;
 
-    public ViewEventSpaceOccupationsBean(YearMonthDay day, AllocatableSpace allocatableSpace) {
+    public ViewEventSpaceOccupationsBean(YearMonthDay day, Space allocatableSpace) {
 
         setAllocatableSpace(allocatableSpace);
 
@@ -39,11 +39,11 @@ public class ViewEventSpaceOccupationsBean implements Serializable {
         }
     }
 
-    public AllocatableSpace getAllocatableSpace() {
+    public Space getAllocatableSpace() {
         return allocatableSpaceReference;
     }
 
-    public void setAllocatableSpace(AllocatableSpace space) {
+    public void setAllocatableSpace(Space space) {
         this.allocatableSpaceReference = space;
     }
 

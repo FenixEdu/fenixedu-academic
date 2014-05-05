@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.colorPickers;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoGenericEvent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstanceAggregation;
+import net.sourceforge.fenixedu.dataTransferObject.InfoOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenEvaluation;
 import net.sourceforge.fenixedu.domain.Lesson;
@@ -25,7 +25,7 @@ public class ExecutionCourseTimeTableColorPicker extends ColorPicker {
         if (infoShowOccupation instanceof InfoWrittenEvaluation) {
             return key((InfoWrittenEvaluation) infoShowOccupation);
         }
-        if (infoShowOccupation instanceof InfoGenericEvent) {
+        if (infoShowOccupation instanceof InfoOccupation) {
             return "GenericEvent";
         }
         return "Other";

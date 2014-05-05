@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.Campus;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -176,7 +176,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
 
             request.setAttribute("executionDegree", executionDegree);
             request.setAttribute("executionYears", ExecutionYear.readNotClosedExecutionYears());
-            request.setAttribute("campus", Campus.getAllActiveCampus());
+            request.setAttribute("campus", SpaceUtils.getAllActiveCampus());
 
             form.set("executionYearID", executionDegree.getExecutionYear().getExternalId());
             form.set("campusID", executionDegree.getCampus().getExternalId());

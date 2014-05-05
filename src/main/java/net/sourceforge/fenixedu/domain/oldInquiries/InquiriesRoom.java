@@ -6,9 +6,9 @@ package net.sourceforge.fenixedu.domain.oldInquiries;
 
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.InfoInquiriesRoom;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.spaces.domain.Space;
 
 /**
  * @author Jo�o Fialho & Rita Ferreira
@@ -21,7 +21,7 @@ public class InquiriesRoom extends InquiriesRoom_Base {
         setRootDomainObject(Bennu.getInstance());
     }
 
-    protected InquiriesRoom(InquiriesCourse inquiriesCourse, AllocatableSpace room, InfoInquiriesRoom infoInquiriesRoom) {
+    protected InquiriesRoom(InquiriesCourse inquiriesCourse, Space room, InfoInquiriesRoom infoInquiriesRoom) {
         this();
         if ((inquiriesCourse == null) || (room == null)) {
             throw new DomainException("The inquiriesCourse and room should not be null!");

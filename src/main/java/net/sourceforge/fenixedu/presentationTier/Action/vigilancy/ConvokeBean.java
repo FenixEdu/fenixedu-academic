@@ -6,10 +6,13 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 import net.sourceforge.fenixedu.domain.vigilancy.strategies.UnavailableInformation;
+
+import org.fenixedu.spaces.domain.Space;
+import org.fenixedu.spaces.domain.UnavailableException;
+
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class ConvokeBean extends VigilantGroupBean implements Serializable {
@@ -195,10 +198,13 @@ public class ConvokeBean extends VigilantGroupBean implements Serializable {
     public String getRoomsAsString() {
 
         String rooms = "";
-        for (AllocatableSpace room : this.getWrittenEvaluation().getAssociatedRooms()) {
-            rooms +=
-                    room.getName() + "-" + RenderUtils.getResourceString("VIGILANCY_RESOURCES", "label.vigilancy.capacity") + ":"
-                            + room.getCapacidadeExame() + "\n";
+        for (Space room : this.getWrittenEvaluation().getAssociatedRooms()) {
+            try {
+                rooms +=
+                        room.getName() + "-" + RenderUtils.getResourceString("VIGILANCY_RESOURCES", "label.vigilancy.capacity")
+                                + ":" + room.getMetadata("examCapacity") + "\n";
+            } catch (UnavailableException e) {
+            }
         }
         return rooms;
     }

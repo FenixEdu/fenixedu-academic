@@ -1,5 +1,5 @@
 <%@page import="java.util.List"%>
-<%@page import="net.sourceforge.fenixedu.domain.space.AllocatableSpace"%>
+<%@page import="org.fenixedu.spaces.domain.Space"%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
 <%@page import="org.joda.time.Weeks"%>
 <%@page import="org.joda.time.Interval"%>
@@ -149,12 +149,12 @@
 					</td>
 					<td>
 						<logic:notEmpty name="olesson" property="sala">
-							<bean:write name="olesson" property="sala.nome"/>
+							<bean:write name="olesson" property="sala.name"/>
 						</logic:notEmpty>	
 					</td>
 					<td>
 						<logic:notEmpty name="olesson" property="sala">
-							<bean:write name="olesson" property="sala.capacidadeNormal"/>
+							<bean:write name="olesson" property="sala.allocatableCapacity"/>
 						</logic:notEmpty>
 					</td>
 				</tr>
@@ -180,8 +180,8 @@
 			 			value="<%= lesson.getShift().getExternalId().toString() %>"/>
 
 			<select name="spaceOID">
-				<% for (final AllocatableSpace space : (List<AllocatableSpace>) request.getAttribute("emptySpaces")) { %>
-					<option value="<%= space.getExternalId() %>"><%= space.getCompleteIdentification() %></option>
+				<% for (final Space space : (List<Space>) request.getAttribute("emptySpaces")) { %>
+					<option value="<%= space.getExternalId() %>"><%= space.getNameWithParents() %></option>
 				<% } %>
 			</select>
 
@@ -217,4 +217,3 @@
 				</tr>
 			</logic:iterate>
 		</table>
-

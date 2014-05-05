@@ -6,13 +6,15 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.FrequencyType;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
+import org.fenixedu.spaces.domain.Space;
+import org.fenixedu.spaces.domain.UnavailableException;
 import org.joda.time.DateTime;
 
-public class WrittenTestsRoomManager extends HashSet<Room> {
+public class WrittenTestsRoomManager extends HashSet<Space> {
 
     private final Map<ExecutionSemester, EvaluationRoomManager> evaluationRoomManagerMap =
             new HashMap<ExecutionSemester, EvaluationRoomManager>();
@@ -27,25 +29,28 @@ public class WrittenTestsRoomManager extends HashSet<Room> {
         }
 
         DateTime dateTime;
-        Room oldRoom;
+        Space oldRoom;
 
-        do {
-            dateTime = evaluationRoomManager.getNextDateTime();
-            oldRoom = evaluationRoomManager.getNextOldRoom();
+        try {
+            do {
+                dateTime = evaluationRoomManager.getNextDateTime();
+                oldRoom = evaluationRoomManager.getNextOldRoom();
 
-        } while (!oldRoom
-                .isFree(dateTime.toYearMonthDay(), dateTime.plusMinutes(120).toYearMonthDay(),
-                        new HourMinuteSecond(dateTime.getHourOfDay(), dateTime.getMinuteOfHour(), dateTime.getSecondOfMinute()),
-                        dateTime.plusMinutes(120).getHourOfDay() == 0 ? new HourMinuteSecond(dateTime.plusMinutes(119)
-                                .getHourOfDay(), dateTime.plusMinutes(119).getMinuteOfHour(), dateTime.plusMinutes(119)
-                                .getSecondOfMinute()) : new HourMinuteSecond(dateTime.plusMinutes(120).getHourOfDay(), dateTime
-                                .plusMinutes(120).getMinuteOfHour(), dateTime.plusMinutes(120).getSecondOfMinute()),
-                        new DiaSemana(dateTime.getDayOfWeek() + 1), FrequencyType.DAILY, Boolean.TRUE, Boolean.TRUE));
-
-        return dateTime;
+            } while (SpaceUtils.isFree(oldRoom, dateTime.toYearMonthDay(), dateTime.plusMinutes(120).toYearMonthDay(),
+                    new HourMinuteSecond(dateTime.getHourOfDay(), dateTime.getMinuteOfHour(), dateTime.getSecondOfMinute()),
+                    dateTime.plusMinutes(120).getHourOfDay() == 0 ? new HourMinuteSecond(
+                            dateTime.plusMinutes(119).getHourOfDay(), dateTime.plusMinutes(119).getMinuteOfHour(), dateTime
+                                    .plusMinutes(119).getSecondOfMinute()) : new HourMinuteSecond(dateTime.plusMinutes(120)
+                            .getHourOfDay(), dateTime.plusMinutes(120).getMinuteOfHour(), dateTime.plusMinutes(120)
+                            .getSecondOfMinute()), new DiaSemana(dateTime.getDayOfWeek() + 1), FrequencyType.DAILY, Boolean.TRUE,
+                    Boolean.TRUE));
+            return dateTime;
+        } catch (UnavailableException e) {
+        }
+        return null;
     }
 
-    public Room getNextOldRoom(final ExecutionSemester executionPeriod) {
+    public Space getNextOldRoom(final ExecutionSemester executionPeriod) {
         final EvaluationRoomManager evaluationRoomManager = evaluationRoomManagerMap.get(executionPeriod);
         return evaluationRoomManager.getNextOldRoom();
     }

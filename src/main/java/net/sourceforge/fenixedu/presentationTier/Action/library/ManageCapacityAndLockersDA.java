@@ -3,9 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.library;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.space.RoomSubdivision;
-import net.sourceforge.fenixedu.domain.space.RoomSubdivisionInformation;
-import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.lang.StringUtils;
@@ -14,7 +11,12 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
-import org.joda.time.YearMonthDay;
+import org.fenixedu.spaces.domain.Information;
+import org.fenixedu.spaces.domain.Space;
+import org.fenixedu.spaces.domain.SpaceClassification;
+import org.fenixedu.spaces.domain.UnavailableException;
+import org.fenixedu.spaces.ui.InformationBean;
+import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -42,8 +44,8 @@ public class ManageCapacityAndLockersDA extends FenixDispatchAction {
         Space library = libraryInformation.getLibrary();
 
         if (library != null) {
-            libraryInformation.setCapacity(library.getSpaceInformation().getCapacity());
-            libraryInformation.setLockers(library.getActiveContainedSpacesCount());
+            libraryInformation.setCapacity(library.getAllocatableCapacity());
+            libraryInformation.setLockers(library.getValidChildrenSet().size());
         }
 
         RenderUtils.invalidateViewState();
@@ -57,11 +59,14 @@ public class ManageCapacityAndLockersDA extends FenixDispatchAction {
         LibraryInformation libraryInformation = getRenderedObject("libraryUpdate");
 
         Space library = libraryInformation.getLibrary();
+        if (!library.isActive()) {
+            throw new UnsupportedOperationException("Library not active");
+        }
         setCapacity(library, libraryInformation.getCapacity());
-        setLockers(library, libraryInformation.getLockers(), new YearMonthDay());
+        setLockers(library, libraryInformation.getLockers(), new DateTime());
 
-        libraryInformation.setCapacity(libraryInformation.getLibrary().getSpaceInformation().getCapacity());
-        libraryInformation.setLockers(libraryInformation.getLibrary().getActiveContainedSpacesCount());
+        libraryInformation.setCapacity(library.getAllocatableCapacity());
+        libraryInformation.setLockers(library.getValidChildrenSet().size());
 
         request.setAttribute("libraryInformation", libraryInformation);
         return mapping.findForward("libraryUpdateCapacityAndLockers");
@@ -76,29 +81,44 @@ public class ManageCapacityAndLockersDA extends FenixDispatchAction {
     }
 
     private void setCapacity(Space library, int capacity) {
-        library.getSpaceInformation().setCapacity(capacity);
+        InformationBean bean;
+        try {
+            bean = library.bean();
+        } catch (UnavailableException e) {
+            bean = new InformationBean();
+        }
+        bean.setAllocatableCapacity(capacity);
+        library.bean(bean);
     }
 
-    private void setLockers(Space library, int lockers, YearMonthDay today) {
+    private void setLockers(Space library, int lockers, DateTime today) {
         int highestLocker = 0;
-        for (Space space : library.getActiveContainedSpaces()) {
-            RoomSubdivisionInformation info = (RoomSubdivisionInformation) space.getSpaceInformation();
-            int lockerNumber = Integer.parseInt(info.getIdentification());
-            if (lockerNumber > lockers) {
-                space.getMostRecentSpaceInformation().setValidUntil(today);
-            } else {
-                setCapacity(space, 1);
-            }
-            if (lockerNumber > highestLocker) {
-                highestLocker = lockerNumber;
+        for (org.fenixedu.spaces.domain.Space relSpace : library.getChildrenSet()) {
+            Space space = (Space) relSpace;
+            int lockerNumber;
+            try {
+                lockerNumber = Integer.parseInt(space.getName());
+                if (lockerNumber > lockers) {
+                    final InformationBean bean = space.bean();
+                    bean.setValidUntil(today);
+                    space.bean(bean);
+                } else {
+                    setCapacity(space, 1);
+                }
+                if (lockerNumber > highestLocker) {
+                    highestLocker = lockerNumber;
+                }
+            } catch (NumberFormatException | UnavailableException e) {
             }
         }
         if (highestLocker < lockers) {
             for (int i = highestLocker + 1; i <= lockers; i++) {
-                RoomSubdivision room =
-                        new RoomSubdivision(library, StringUtils.leftPad(Integer.toString(i), String.valueOf(lockers).length(),
-                                '0'), today, null);
-                setCapacity(room, 1);
+                final InformationBean bean =
+                        Information.builder()
+                                .name(StringUtils.leftPad(Integer.toString(i), String.valueOf(lockers).length(), '0'))
+                                .classification(SpaceClassification.getByName("Room Subdivision")).validFrom(today)
+                                .allocatableCapacity(1).bean();
+                new Space(library, bean);
             }
         }
     }

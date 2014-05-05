@@ -339,6 +339,11 @@
 			<artifactId>joda-time</artifactId>
 			<version>2.3</version>
 		</dependency>
+		<dependency>
+			<groupId>org.fenixedu</groupId>
+			<artifactId>fenixedu-spaces</artifactId>
+			<version>1.0.0.M2</version>
+		</dependency>
 	</dependencies>
 
 	<repositories>

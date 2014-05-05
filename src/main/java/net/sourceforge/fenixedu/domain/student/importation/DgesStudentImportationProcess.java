@@ -38,13 +38,13 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 import org.slf4j.Logger;
@@ -62,14 +62,14 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
         super();
     }
 
-    protected DgesStudentImportationProcess(final ExecutionYear executionYear, final Campus campus, final EntryPhase entryPhase,
+    protected DgesStudentImportationProcess(final ExecutionYear executionYear, final Space campus, final EntryPhase entryPhase,
             DgesStudentImportationFile dgesStudentImportationFile) {
         this();
 
         init(executionYear, campus, entryPhase, dgesStudentImportationFile);
     }
 
-    protected void init(final ExecutionYear executionYear, final Campus campus, final EntryPhase entryPhase,
+    protected void init(final ExecutionYear executionYear, final Space campus, final EntryPhase entryPhase,
             DgesStudentImportationFile dgesStudentImportationFile) {
         super.init(executionYear, entryPhase);
         String[] args = new String[0];

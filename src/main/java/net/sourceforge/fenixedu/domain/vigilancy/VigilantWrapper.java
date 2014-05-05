@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 
@@ -24,6 +23,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
@@ -193,8 +193,8 @@ public class VigilantWrapper extends VigilantWrapper_Base {
         return getTeacher() != null && getTeacher().getCategory() != null ? getTeacher().getCategory().getName().getContent() : "";
     }
 
-    public List<Campus> getCampus() {
-        List<Campus> campus = new ArrayList<Campus>();
+    public List<Space> getCampus() {
+        List<Space> campus = new ArrayList<Space>();
         Employee employee = this.getPerson().getEmployee();
         if (employee != null) {
             final GiafProfessionalData giafProfessionalData =
@@ -208,19 +208,19 @@ public class VigilantWrapper extends VigilantWrapper_Base {
     }
 
     public String getCampusNames() {
-        List<Campus> campusList = this.getCampus();
+        List<Space> campusList = this.getCampus();
         String campusNames = "";
-        for (Campus campus : campusList) {
+        for (Space campus : campusList) {
             if (campusNames.length() != 0) {
                 campusNames = campusNames + ", ";
             }
-            campusNames += campus.getSpaceInformation().getPresentationName();
+            campusNames += campus.getName();
         }
         return campusNames;
     }
 
-    public Boolean isAvailableInCampus(Campus campus) {
-        List<Campus> campusList = this.getCampus();
+    public Boolean isAvailableInCampus(Space campus) {
+        List<Space> campusList = this.getCampus();
 
         /*
          * If campusList is empty it's best to say that he is available and then

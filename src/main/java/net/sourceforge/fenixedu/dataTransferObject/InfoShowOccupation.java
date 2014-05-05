@@ -2,8 +2,9 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Calendar;
 
+import org.fenixedu.spaces.domain.Space;
+
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
@@ -48,7 +49,7 @@ public abstract class InfoShowOccupation extends InfoObject implements ISiteComp
         return new HourMinuteSecond(end.get(Calendar.HOUR_OF_DAY), end.get(Calendar.MINUTE), end.get(Calendar.SECOND));
     }
 
-    public AllocatableSpace getAllocatableSpace() {
+    public Space getAllocatableSpace() {
         final InfoRoomOccupation infoOccupation = getInfoRoomOccupation();
         final InfoRoom infoRoom = infoOccupation == null ? null : infoOccupation.getInfoRoom();
         return infoRoom == null ? null : infoRoom.getRoom();

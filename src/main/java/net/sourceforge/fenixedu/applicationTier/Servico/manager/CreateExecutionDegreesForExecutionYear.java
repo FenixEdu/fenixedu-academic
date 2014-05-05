@@ -13,9 +13,10 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
-import net.sourceforge.fenixedu.domain.space.Campus;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
@@ -36,7 +37,7 @@ public class CreateExecutionDegreesForExecutionYear {
         check(RolePredicates.MANAGER_OR_OPERATOR_PREDICATE);
 
         final ExecutionYear executionYear = FenixFramework.getDomainObject(executionYearID);
-        final Campus campus = readCampusByName(campusName);
+        final Space campus = readCampusByName(campusName);
 
         final OccupationPeriod lessonSeason1 = getOccupationPeriod(lessonSeason1BeginDate, lessonSeason1EndDate);
         final OccupationPeriod lessonSeason2 =
@@ -77,9 +78,12 @@ public class CreateExecutionDegreesForExecutionYear {
         return created;
     }
 
-    private static Campus readCampusByName(String campusName) {
-        for (Campus campus : Campus.getAllActiveCampus()) {
-            if (campus.getName().equalsIgnoreCase(campusName)) {
+    private static Space readCampusByName(String campusName) {
+        if (campusName == null) {
+            return null;
+        }
+        for (Space campus : SpaceUtils.getAllActiveCampus()) {
+            if (campusName.equalsIgnoreCase(campus.getName())) {
                 return campus;
             }
         }

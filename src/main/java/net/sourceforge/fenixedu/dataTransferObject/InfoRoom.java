@@ -6,45 +6,67 @@
 
 package net.sourceforge.fenixedu.dataTransferObject;
 
+import net.sourceforge.fenixedu.domain.space.SpaceUtils;
+
+import org.fenixedu.spaces.domain.Space;
+import org.fenixedu.spaces.domain.SpaceClassification;
+import org.fenixedu.spaces.domain.UnavailableException;
+
 /**
  * @author tfc130
  */
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
-import net.sourceforge.fenixedu.domain.space.Building;
-import net.sourceforge.fenixedu.domain.space.RoomClassification;
 
 public class InfoRoom extends InfoObject implements Comparable {
 
-    private final AllocatableSpace room;
+    private final Space room;
 
-    public InfoRoom(final AllocatableSpace room) {
+    public InfoRoom(final Space room) {
         this.room = room;
     }
 
     public String getNome() {
-        return getRoom().getNome();
+        return getRoom().getName();
     }
 
     public String getEdificio() {
-        Building building = getRoom().getBuilding();
-        return building != null ? building.getName() : "";
+        Space building;
+        try {
+            building = SpaceUtils.getSpaceBuilding(getRoom());
+            return building != null ? building.getName() : "";
+        } catch (UnavailableException e1) {
+            return "";
+        }
     }
 
     public Integer getPiso() {
-        return getRoom().getPiso();
+        try {
+            return getRoom().getMetadata("level");
+        } catch (UnavailableException e) {
+            return null;
+        }
     }
 
     public String getTipo() {
-        RoomClassification roomClassification = getRoom().getRoomClassification();
-        return roomClassification != null ? roomClassification.getName().getContent() : "";
+        SpaceClassification roomClassification;
+        try {
+            roomClassification = getRoom().getClassification();
+            return roomClassification != null ? roomClassification.getName().getContent() : "";
+        } catch (UnavailableException e) {
+            return "";
+        }
     }
 
     public Integer getCapacidadeNormal() {
-        return getRoom().getCapacidadeNormal() == null ? Integer.valueOf(0) : getRoom().getCapacidadeNormal();
+        return getRoom().getAllocatableCapacity() == null ? Integer.valueOf(0) : getRoom().getAllocatableCapacity();
     }
 
     public Integer getCapacidadeExame() {
-        return getRoom().getCapacidadeExame() == null ? Integer.valueOf(0) : getRoom().getCapacidadeExame();
+        try {
+            return (Integer) (getRoom().getMetadata("examCapacity") == null ? Integer.valueOf(0) : getRoom().getMetadata(
+                    "examCapacity"));
+        } catch (UnavailableException e) {
+            return null;
+        }
     }
 
     @Override
@@ -62,7 +84,7 @@ public class InfoRoom extends InfoObject implements Comparable {
         return getNome().compareToIgnoreCase(((InfoRoom) obj).getNome());
     }
 
-    public static InfoRoom newInfoFromDomain(final AllocatableSpace room) {
+    public static InfoRoom newInfoFromDomain(final Space room) {
         return room == null ? null : new InfoRoom(room);
     }
 
@@ -76,7 +98,7 @@ public class InfoRoom extends InfoObject implements Comparable {
         throw new Error("Method should not be called!");
     }
 
-    public AllocatableSpace getRoom() {
+    public Space getRoom() {
         return room;
     }
 

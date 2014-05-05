@@ -12,11 +12,11 @@ import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -31,7 +31,7 @@ public class DegreeUnit extends DegreeUnit_Base {
     public static DegreeUnit createNewInternalDegreeUnit(MultiLanguageString unitName, String unitNameCard,
             Integer costCenterCode, String acronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
             AccountabilityType accountabilityType, String webAddress, Degree degree, UnitClassification classification,
-            Boolean canBeResponsibleOfSpaces, Campus campus) {
+            Boolean canBeResponsibleOfSpaces, Space campus) {
 
         DegreeUnit degreeUnit = new DegreeUnit();
         degreeUnit.init(unitName, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress, classification, null,
@@ -48,7 +48,7 @@ public class DegreeUnit extends DegreeUnit_Base {
     public void edit(MultiLanguageString unitName, String unitNameCard, Integer unitCostCenter, String acronym,
             YearMonthDay beginDate, YearMonthDay endDate, String webAddress, UnitClassification classification,
             Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces,
-            Campus campus) {
+            Space campus) {
 
         super.edit(unitName, unitNameCard, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department,
                 degree, administrativeOffice, canBeResponsibleOfSpaces, campus);

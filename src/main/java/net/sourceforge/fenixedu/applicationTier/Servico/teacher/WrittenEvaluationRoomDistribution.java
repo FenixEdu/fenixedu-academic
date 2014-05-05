@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.fenixedu.spaces.domain.Space;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseAndExamLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -10,7 +12,6 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -30,7 +31,7 @@ public class WrittenEvaluationRoomDistribution {
         } else {
             studentsToDistribute = readAllStudentsAttendingExecutionCourses(writtenEvaluation);
         }
-        final List<AllocatableSpace> selectedRooms = readRooms(writtenEvaluation, roomIDs);
+        final List<Space> selectedRooms = readRooms(writtenEvaluation, roomIDs);
         if (!selectedRooms.containsAll(writtenEvaluation.getAssociatedRooms())) {
             // if the selected rooms are different of the evaluation rooms
             // then the user probably selected repeated rooms
@@ -42,14 +43,14 @@ public class WrittenEvaluationRoomDistribution {
         }
     }
 
-    private List<AllocatableSpace> readRooms(final WrittenEvaluation writtenEvaluation, final List<String> roomIDs) {
+    private List<Space> readRooms(final WrittenEvaluation writtenEvaluation, final List<String> roomIDs) {
 
         List<String> selectedRoomIDs = removeDuplicatedEntries(roomIDs);
-        final List<AllocatableSpace> writtenEvaluationRooms = writtenEvaluation.getAssociatedRooms();
-        final List<AllocatableSpace> selectedRooms = new ArrayList<AllocatableSpace>(selectedRoomIDs.size());
+        final List<Space> writtenEvaluationRooms = writtenEvaluation.getAssociatedRooms();
+        final List<Space> selectedRooms = new ArrayList<Space>(selectedRoomIDs.size());
 
         for (final String roomID : selectedRoomIDs) {
-            for (final AllocatableSpace room : writtenEvaluationRooms) {
+            for (final Space room : writtenEvaluationRooms) {
                 if (room.getExternalId().equals(roomID)) {
                     selectedRooms.add(room);
                     break;

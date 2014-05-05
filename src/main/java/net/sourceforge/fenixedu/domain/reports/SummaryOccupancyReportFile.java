@@ -9,8 +9,8 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
@@ -62,8 +62,8 @@ public class SummaryOccupancyReportFile extends SummaryOccupancyReportFile_Base 
                     row.setCell(getTeacherId(summary));
                     row.setCell(getTeacherName(summary));
                     row.setCell(getSchedule(summary));
-                    final AllocatableSpace room = summary.getRoom();
-                    row.setCell(room == null ? "" : room.getIdentification());
+                    final Space room = summary.getRoom();
+                    row.setCell(room == null ? "" : room.getName());
                     row.setCell(summary.getStudentsNumber());
                 }
             }

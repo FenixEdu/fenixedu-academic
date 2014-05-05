@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitClassification;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
@@ -40,7 +40,7 @@ public class EditUnit {
         Degree degree = FenixFramework.getDomainObject(degreeID);
         Department department = FenixFramework.getDomainObject(departmentID);
         AdministrativeOffice administrativeOffice = FenixFramework.getDomainObject(administrativeOfficeID);
-        Campus campus = (Campus) FenixFramework.getDomainObject(campusID);
+        Space campus = (Space) FenixFramework.getDomainObject(campusID);
 
         unit.edit(unitName, unitNameCard, costCenterCode, acronym, begin, end, webAddress, classification, department, degree,
                 administrativeOffice, canBeResponsibleOfSpaces, campus);

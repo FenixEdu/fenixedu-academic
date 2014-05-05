@@ -6,30 +6,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.fenixedu.commons.i18n.I18N;
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
-import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
-import java.util.Locale;
+
+import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.spaces.domain.Space;
+import org.fenixedu.spaces.domain.occupation.Occupation;
 
 public class WrittenEvaluationsByRoomBackingBean extends
         net.sourceforge.fenixedu.presentationTier.backBeans.sop.evaluation.WrittenEvaluationsByRoomBackingBean {
 
     @Override
-    public Map<AllocatableSpace, List<CalendarLink>> getWrittenEvaluationCalendarLinks() throws FenixServiceException {
-        final Collection<AllocatableSpace> rooms = getRoomsToDisplayMap();
+    public Map<Space, List<CalendarLink>> getWrittenEvaluationCalendarLinks() throws FenixServiceException {
+        final Collection<Space> rooms = getRoomsToDisplayMap();
         if (rooms != null) {
-            final Map<AllocatableSpace, List<CalendarLink>> calendarLinksMap =
-                    new HashMap<AllocatableSpace, List<CalendarLink>>();
-            for (final AllocatableSpace room : rooms) {
+            final Map<Space, List<CalendarLink>> calendarLinksMap = new HashMap<Space, List<CalendarLink>>();
+            for (final Space room : rooms) {
                 final List<CalendarLink> calendarLinks = new ArrayList<CalendarLink>();
-                for (final ResourceAllocation roomOccupation : room.getResourceAllocationsSet()) {
-                    if (roomOccupation.isWrittenEvaluationSpaceOccupation()) {
+                for (final Occupation roomOccupation : room.getOccupationSet()) {
+                    if (roomOccupation instanceof WrittenEvaluationSpaceOccupation) {
                         Collection<WrittenEvaluation> writtenEvaluations =
                                 ((WrittenEvaluationSpaceOccupation) roomOccupation).getWrittenEvaluationsSet();
                         for (WrittenEvaluation writtenEvaluation : writtenEvaluations) {

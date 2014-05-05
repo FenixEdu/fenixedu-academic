@@ -30,8 +30,6 @@ import org.joda.time.Interval;
 import org.joda.time.LocalTime;
 import org.joda.time.YearMonthDay;
 
-import java.util.Locale;
-
 public class StudentPortalBean implements Serializable {
 
     public class ExecutionCoursesAnnouncements {
@@ -284,7 +282,7 @@ public class StudentPortalBean implements Serializable {
                     if (writtenEvaluationEnrolment.getStudent() != null
                             && writtenEvaluationEnrolment.getStudent().getStudent() == getStudent()) {
                         if (writtenEvaluationEnrolment.getRoom() != null) {
-                            this.room = writtenEvaluationEnrolment.getRoom().getIdentification();
+                            this.room = writtenEvaluationEnrolment.getRoom().getName();
                             return;
                         } else {
                             break;

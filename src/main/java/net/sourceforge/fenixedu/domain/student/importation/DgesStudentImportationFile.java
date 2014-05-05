@@ -1,11 +1,12 @@
 package net.sourceforge.fenixedu.domain.student.importation;
 
+import org.fenixedu.spaces.domain.Space;
+
 import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import pt.ist.fenixframework.Atomic;
 
 public class DgesStudentImportationFile extends DgesStudentImportationFile_Base {
@@ -19,7 +20,7 @@ public class DgesStudentImportationFile extends DgesStudentImportationFile_Base 
     }
 
     @Atomic
-    public static DgesStudentImportationFile create(byte[] contents, String filename, ExecutionYear executionYear, Campus campus,
+    public static DgesStudentImportationFile create(byte[] contents, String filename, ExecutionYear executionYear, Space campus,
             EntryPhase entryPhase) {
         if (executionYear == null) {
             throw new DomainException("error.DgesStudentImportationFile.execution.year.is.null");

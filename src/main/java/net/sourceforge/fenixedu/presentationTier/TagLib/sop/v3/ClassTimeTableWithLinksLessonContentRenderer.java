@@ -12,9 +12,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstanceAggregation
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
@@ -53,9 +53,9 @@ public class ClassTimeTableWithLinksLessonContentRenderer extends LessonSlotCont
             strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint())
                     .append(")&nbsp;");
 
-            final AllocatableSpace allocatableSpace = lesson.getAllocatableSpace();
+            final Space allocatableSpace = lesson.getAllocatableSpace();
             if (allocatableSpace != null) {
-                strBuffer.append(allocatableSpace.getNome());
+                strBuffer.append(allocatableSpace.getName());
             }
 
             return strBuffer;
@@ -93,9 +93,9 @@ public class ClassTimeTableWithLinksLessonContentRenderer extends LessonSlotCont
             strBuffer.append("&nbsp;").append("&nbsp;(").append(aggregation.getShift().getShiftTypesCodePrettyPrint())
                     .append(")&nbsp;");
 
-            final AllocatableSpace allocatableSpace = aggregation.getAllocatableSpace();
+            final Space allocatableSpace = aggregation.getAllocatableSpace();
             if (allocatableSpace != null) {
-                strBuffer.append(allocatableSpace.getNome());
+                strBuffer.append(allocatableSpace.getName());
             }
 
             return strBuffer;

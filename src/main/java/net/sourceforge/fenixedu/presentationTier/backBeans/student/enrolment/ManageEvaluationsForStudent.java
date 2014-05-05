@@ -20,11 +20,11 @@ import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.spaces.domain.Space;
 
 public class ManageEvaluationsForStudent extends DisplayEvaluationsForStudentToEnrol {
 
@@ -81,13 +81,17 @@ public class ManageEvaluationsForStudent extends DisplayEvaluationsForStudentToE
                             this.evaluationsWithEnrolmentPeriodOpened.add(writtenEvaluation);
                         } else {
                             this.evaluationsWithEnrolmentPeriodClosed.add(writtenEvaluation);
-                            final AllocatableSpace room = registration.getRoomFor(writtenEvaluation);
-                            getStudentRooms().put(writtenEvaluation.getExternalId(), room != null ? room.getNome() : "-");
+                            final Space room = registration.getRoomFor(writtenEvaluation);
+                            String roomName;
+                            roomName = room != null ? room.getName() : "-";
+                            getStudentRooms().put(writtenEvaluation.getExternalId(), roomName);
                         }
                     } catch (final DomainException e) {
                         getEvaluationsWithoutEnrolmentPeriod().add(writtenEvaluation);
-                        final AllocatableSpace room = registration.getRoomFor(writtenEvaluation);
-                        getStudentRooms().put(writtenEvaluation.getExternalId(), room != null ? room.getNome() : "-");
+                        final Space room = registration.getRoomFor(writtenEvaluation);
+                        String value;
+                        value = room != null ? room.getName() : "-";
+                        getStudentRooms().put(writtenEvaluation.getExternalId(), value);
                     } finally {
                         getEnroledEvaluationsForStudent().put(writtenEvaluation.getExternalId(),
                                 Boolean.valueOf(registration.isEnroledIn(writtenEvaluation)));

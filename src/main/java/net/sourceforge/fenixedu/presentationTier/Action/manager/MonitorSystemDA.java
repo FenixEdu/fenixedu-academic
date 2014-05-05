@@ -32,9 +32,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup;
-import net.sourceforge.fenixedu.domain.space.Room;
-import net.sourceforge.fenixedu.domain.space.RoomClassification;
-import net.sourceforge.fenixedu.domain.space.RoomInformation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
@@ -165,13 +162,13 @@ public class MonitorSystemDA extends FenixDispatchAction {
             logger.info("Warming up cache for enrolment period. Load of current semester information took {}ms.", e - s);
 
             s = System.currentTimeMillis();
-            for (final RoomClassification roomClassification : rootDomainObject.getRoomClassificationSet()) {
-                for (final RoomInformation roomInformation : roomClassification.getRoomInformationsSet()) {
-                    roomInformation.getDescription();
-                    final Room room = roomInformation.getRoom();
-                    room.getNormalCapacity();
-                }
-            }
+//            for (final RoomClassification roomClassification : rootDomainObject.getRoomClassificationSet()) {
+//                for (final RoomInformation roomInformation : roomClassification.getRoomInformationsSet()) {
+//                    roomInformation.getDescription();
+//                    final Room room = roomInformation.getRoom();
+//                    room.getNormalCapacity();
+//                }
+//            }
             e = System.currentTimeMillis();
             logger.info("Warming up cache for enrolment period. Load of room listing took {}ms.", e - s);
 

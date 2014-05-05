@@ -6,9 +6,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlot;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContentRenderer;
+
+import org.fenixedu.spaces.domain.Space;
 
 /**
  * @author jpvl
@@ -28,12 +29,12 @@ public class ShiftTimeTableLessonContentRenderer extends LessonSlotContentRender
             strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla());
             strBuffer.append("(");
             strBuffer.append(lesson.getInfoShift().getShiftTypesPrettyPrint()).append(")");
-            final AllocatableSpace allocatableSpace = lesson.getAllocatableSpace();
+            final Space allocatableSpace = lesson.getAllocatableSpace();
             if (allocatableSpace != null) {
                 strBuffer.append("<a href='").append(context).append("/publico/");
                 strBuffer.append("siteViewer.do?method=roomViewer&amp;roomName=");
-                strBuffer.append(allocatableSpace.getNome()).append("'>");
-                strBuffer.append(allocatableSpace.getNome()).append("</a>");
+                strBuffer.append(allocatableSpace.getName()).append("'>");
+                strBuffer.append(allocatableSpace.getName()).append("</a>");
             }
 
         } else if (showOccupation instanceof InfoLessonInstance) {
@@ -43,12 +44,12 @@ public class ShiftTimeTableLessonContentRenderer extends LessonSlotContentRender
             strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla());
             strBuffer.append("(");
             strBuffer.append(lesson.getShiftTypesPrettyPrint()).append(")");
-            final AllocatableSpace allocatableSpace = lesson.getAllocatableSpace();
+            final Space allocatableSpace = lesson.getAllocatableSpace();
             if (allocatableSpace != null) {
                 strBuffer.append("<a href='").append(context).append("/publico/");
                 strBuffer.append("siteViewer.do?method=roomViewer&amp;roomName=");
-                strBuffer.append(allocatableSpace.getNome()).append("'>");
-                strBuffer.append(allocatableSpace.getNome()).append("</a>");
+                strBuffer.append(allocatableSpace.getName()).append("'>");
+                strBuffer.append(allocatableSpace.getName()).append("</a>");
             }
 
         } else if (showOccupation instanceof InfoExam) {

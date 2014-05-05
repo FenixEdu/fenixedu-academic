@@ -36,7 +36,6 @@ import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.util.FunctionalityPrinters;
 import net.sourceforge.fenixedu.domain.util.email.UnitBasedSender;
@@ -50,6 +49,7 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.commons.StringNormalizer;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
@@ -71,7 +71,7 @@ public class Unit extends Unit_Base {
 
     protected void init(MultiLanguageString name, String unitNameCard, Integer costCenterCode, String acronym,
             YearMonthDay beginDate, YearMonthDay endDate, String webAddress, UnitClassification classification,
-            AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces, Campus campus) {
+            AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces, Space campus) {
 
         setPartyName(name);
         if (acronym != null) {
@@ -129,7 +129,7 @@ public class Unit extends Unit_Base {
     public void edit(MultiLanguageString unitName, String unitNameCard, Integer unitCostCenter, String acronym,
             YearMonthDay beginDate, YearMonthDay endDate, String webAddress, UnitClassification classification,
             Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces,
-            Campus campus) {
+            Space campus) {
 
         init(unitName, unitNameCard, unitCostCenter, acronym, beginDate, endDate, webAddress, classification,
                 administrativeOffice, canBeResponsibleOfSpaces, campus);
@@ -205,16 +205,16 @@ public class Unit extends Unit_Base {
                 && !hasAnyPayedGuides() && !hasAnyPayedReceipts() && !hasAnyExternalCurricularCourses()
                 && !hasUnitServiceAgreementTemplate() && getBoardsSet().isEmpty() && (!hasSite() || getSite().isDeletable())
                 && !hasAnyOwnedReceipts() && !hasAnyPrecedentDegreeInformations()
-                && !hasAnyCandidacyPrecedentDegreeInformations() && !hasAnyUnitSpaceOccupations() && !hasAnyExamCoordinators()
+                && !hasAnyCandidacyPrecedentDegreeInformations() && !hasAnyExamCoordinators()
                 && !hasAnyExternalRegistrationDatas() && !hasAnyFiles() && !hasAnyPersistentGroups()
                 && !hasAnyExternalCourseLoadRequests() && !hasAnyExternalProgramCertificateRequests()
                 && !getUnitGroupSet().isEmpty();
     }
 
     @Override
-    public Campus getCampus() {
+    public Space getCampus() {
 
-        Campus campus = super.getCampus();
+        Space campus = super.getCampus();
 
         if (campus != null) {
             return campus;
@@ -806,7 +806,7 @@ public class Unit extends Unit_Base {
     public static Unit createNewUnit(MultiLanguageString unitName, String unitNameCard, Integer costCenterCode, String acronym,
             YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, AccountabilityType accountabilityType,
             String webAddress, UnitClassification classification, AdministrativeOffice administrativeOffice,
-            Boolean canBeResponsibleOfSpaces, Campus campus) {
+            Boolean canBeResponsibleOfSpaces, Space campus) {
 
         Unit unit = new Unit();
         unit.init(unitName, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress, classification,
@@ -1571,16 +1571,6 @@ public class Unit extends Unit_Base {
     @Deprecated
     public boolean hasAnyFiles() {
         return !getFilesSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.space.UnitSpaceOccupation> getUnitSpaceOccupations() {
-        return getUnitSpaceOccupationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyUnitSpaceOccupations() {
-        return !getUnitSpaceOccupationsSet().isEmpty();
     }
 
     @Deprecated

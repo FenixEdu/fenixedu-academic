@@ -22,8 +22,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.SectionUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitClassification;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
-import net.sourceforge.fenixedu.domain.space.Campus;
 
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
@@ -43,7 +43,7 @@ public class CreateUnit {
                 canBeResponsibleOfSpaces, campusID);
 
         Integer costCenterCode = getCostCenterCode(unitCostCenter);
-        Campus campus = (Campus) FenixFramework.getDomainObject(campusID);
+        Space campus = (Space) FenixFramework.getDomainObject(campusID);
 
         if (type != null) {
 

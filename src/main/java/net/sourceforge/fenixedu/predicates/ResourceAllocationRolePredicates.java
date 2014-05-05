@@ -4,9 +4,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationComment;
-import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
-import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationStateInstant;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -75,36 +72,5 @@ public class ResourceAllocationRolePredicates {
             };
 
     // Punctual Rooms Occupation Management Predicates
-
-    public static final AccessControlPredicate<PunctualRoomsOccupationRequest> checkPermissionsToManagePunctualRoomsOccupationRequests =
-            new AccessControlPredicate<PunctualRoomsOccupationRequest>() {
-                @Override
-                public boolean evaluate(PunctualRoomsOccupationRequest request) {
-
-                    Person loggedPerson = AccessControl.getPerson();
-
-                    if (loggedPerson.hasRole(RoleType.TEACHER) || loggedPerson.hasAnyProfessorships()) {
-                        return true;
-                    }
-
-                    return AccessControl.getPerson().hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER);
-                }
-            };
-
-    public static final AccessControlPredicate<PunctualRoomsOccupationComment> checkPermissionsToManagePunctualRoomsOccupationComments =
-            new AccessControlPredicate<PunctualRoomsOccupationComment>() {
-                @Override
-                public boolean evaluate(PunctualRoomsOccupationComment comment) {
-                    return checkPermissionsToManagePunctualRoomsOccupationRequests.evaluate(comment.getRequest());
-                }
-            };
-
-    public static final AccessControlPredicate<PunctualRoomsOccupationStateInstant> checkPermissionsToManagePunctualRoomsOccupationStateInstants =
-            new AccessControlPredicate<PunctualRoomsOccupationStateInstant>() {
-                @Override
-                public boolean evaluate(PunctualRoomsOccupationStateInstant stateInstant) {
-                    return checkPermissionsToManagePunctualRoomsOccupationRequests.evaluate(stateInstant.getRequest());
-                }
-            };
 
 }

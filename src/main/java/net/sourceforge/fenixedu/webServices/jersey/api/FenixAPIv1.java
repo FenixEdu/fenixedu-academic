@@ -1,9 +1,7 @@
 package net.sourceforge.fenixedu.webServices.jersey.api;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,7 +27,6 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-import javax.ws.rs.core.StreamingOutput;
 
 import net.fortuna.ical4j.model.Calendar;
 import net.sourceforge.fenixedu.applicationTier.Factory.RoomSiteComponentBuilder;
@@ -38,9 +35,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.student.UnEnrollStudentI
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoGenericEvent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
+import net.sourceforge.fenixedu.dataTransferObject.InfoOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteRoomTimeTable;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenEvaluation;
@@ -80,13 +77,7 @@ import net.sourceforge.fenixedu.domain.contacts.WebAddress;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
-import net.sourceforge.fenixedu.domain.space.Blueprint;
-import net.sourceforge.fenixedu.domain.space.BlueprintFile;
-import net.sourceforge.fenixedu.domain.space.Campus;
-import net.sourceforge.fenixedu.domain.space.Room;
-import net.sourceforge.fenixedu.domain.space.Space;
-import net.sourceforge.fenixedu.domain.space.SpaceInformation;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
@@ -99,7 +90,6 @@ import net.sourceforge.fenixedu.domain.util.icalendar.EvaluationEventBean;
 import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
 import net.sourceforge.fenixedu.presentationTier.Action.ICalendarSyncPoint;
 import net.sourceforge.fenixedu.presentationTier.Action.externalServices.OAuthUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.spaceManager.ManageSpaceBlueprintsDA;
 import net.sourceforge.fenixedu.presentationTier.backBeans.student.enrolment.DisplayEvaluationsForStudentToEnrol;
 import net.sourceforge.fenixedu.util.ContentType;
 import net.sourceforge.fenixedu.util.EvaluationType;
@@ -142,6 +132,7 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -365,7 +356,7 @@ public class FenixAPIv1 {
 
             Set<FenixSpace> rooms = new HashSet<>();
             if (eventBean.getRooms() != null) {
-                for (AllocatableSpace room : eventBean.getRooms()) {
+                for (Space room : eventBean.getRooms()) {
                     if (room != null) {
                         rooms.add(FenixSpace.getSimpleSpace(room));
                     }
@@ -907,7 +898,7 @@ public class FenixAPIv1 {
         String typeName = degree.getDegreeType().getFilteredName();
         String degreeUrl = CoreConfiguration.getConfiguration().applicationUrl() + degree.getSite().getReversePath();
 
-        for (Campus campus : degree.getCampus(executionYear)) {
+        for (Space campus : degree.getCampus(executionYear)) {
             degreeCampus.add(FenixSpace.getSimpleSpace(campus));
         }
 
@@ -1244,7 +1235,7 @@ public class FenixAPIv1 {
         Set<ExecutionCourse> courses = new HashSet<>();
         String writtenEvaluationId = writtenEvaluation.getExternalId();
         if (student != null) {
-            Room assignedRoom = null;
+            Space assignedRoom = null;
             for (ExecutionCourse executionCourse : writtenEvaluation.getAssociatedExecutionCoursesSet()) {
                 final Registration registration = executionCourse.getRegistration(student.getPerson());
                 final Attends attendsByStudent = executionCourse.getAttendsByStudent(student);
@@ -1255,7 +1246,7 @@ public class FenixAPIv1 {
 
             final WrittenEvaluationEnrolment evalEnrolment = writtenEvaluation.getWrittenEvaluationEnrolmentFor(student);
             if (evalEnrolment != null) {
-                assignedRoom = (Room) evalEnrolment.getRoom();
+                assignedRoom = (Space) evalEnrolment.getRoom();
             }
 
             if (type.equals(EvaluationType.EXAM_TYPE)) {
@@ -1309,7 +1300,7 @@ public class FenixAPIv1 {
 
         List<FenixSpace> campi = new ArrayList<>();
 
-        for (Campus campus : Space.getAllCampus()) {
+        for (Space campus : Space.getAllCampus()) {
             campi.add(FenixSpace.getSimpleSpace(campus));
         }
         return campi;
@@ -1330,70 +1321,70 @@ public class FenixAPIv1 {
     public FenixSpace spacesByOid(@PathParam("id") String oid, @QueryParam("day") String day) {
 
         Space space = getDomainObject(oid, Space.class);
-        if (space.isRoom()) {
-            return getFenixRoom((Room) space, getRoomDay(day));
+        if (SpaceUtils.isRoom(space)) {
+            return getFenixRoom((Space) space, getRoomDay(day));
         }
         return FenixSpace.getSpace(space);
     }
 
-    /**
-     * Returns the blueprint of this space
-     * 
-     * @param oid
-     * @param day
-     *            ("dd/mm/yyyy")
-     * @return
-     */
-    @GET
-    @Path("spaces/{id}/blueprint")
-    @FenixAPIPublic
-    public Response spaceBlueprint(@PathParam("id") String oid, final @QueryParam("format") String format) {
+//    /**
+//     * Returns the blueprint of this space
+//     * 
+//     * @param oid
+//     * @param day
+//     *            ("dd/mm/yyyy")
+//     * @return
+//     */
+//    @GET
+//    @Path("spaces/{id}/blueprint")
+//    @FenixAPIPublic
+//    public Response spaceBlueprint(@PathParam("id") String oid, final @QueryParam("format") String format) {
+//
+//        final boolean isDwgFormat = format != null && format.equals("dwg");
+//        final Space space = getDomainObject(oid, Space.class);
+//        Blueprint mostRecentBlueprint = space.getMostRecentBlueprint();
+//        mostRecentBlueprint = (mostRecentBlueprint == null) ? space.getSuroundingSpaceMostRecentBlueprint() : mostRecentBlueprint;
+//        StreamingOutput stream;
+//
+//        if (mostRecentBlueprint != null) {
+//            if (isDwgFormat) {
+//                final BlueprintFile blueprintFile = mostRecentBlueprint.getBlueprintFile();
+//                final InputStream inputStream = new ByteArrayInputStream(blueprintFile.getContentFile().getBytes());
+//                stream = new StreamingOutput() {
+//
+//                    @Override
+//                    public void write(OutputStream output) throws IOException, WebApplicationException {
+//                        Streams.copy(inputStream, output, false);
+//                    }
+//                };
+//            } else {
+//                final Blueprint blueprint = mostRecentBlueprint;
+//                stream = new StreamingOutput() {
+//                    @Override
+//                    public void write(OutputStream os) throws IOException, WebApplicationException {
+//                        SpaceInformation spaceInformation = space.getSpaceInformation();
+//                        Boolean isSuroundingSpaceBlueprint = true;
+//                        Boolean isToViewOriginalSpaceBlueprint = false;
+//                        Boolean viewBlueprintNumbers = true;
+//                        Boolean isToViewIdentifications = true;
+//                        Boolean isToViewDoorNumbers = false;
+//                        BigDecimal scalePercentage = new BigDecimal(100);
+////                        ManageSpaceBlueprintsDA.writeBlueprint(spaceInformation, isSuroundingSpaceBlueprint,
+////                                isToViewOriginalSpaceBlueprint, viewBlueprintNumbers, isToViewIdentifications,
+////                                isToViewDoorNumbers, scalePercentage, blueprint, os);
+//                        os.flush();
+//                    }
+//                };
+//            }
+//            final String contentType = isDwgFormat ? "application/dwg" : "image/jpeg";
+//            final String filename = space.getExternalId() + (isDwgFormat ? ".dwg" : ".jpg");
+//            return Response.ok(stream, contentType).header("Content-Disposition", "attachment; filename=" + filename).build();
+//        }
+//
+//        return Response.noContent().build();
+//    }
 
-        final boolean isDwgFormat = format != null && format.equals("dwg");
-        final Space space = getDomainObject(oid, Space.class);
-        Blueprint mostRecentBlueprint = space.getMostRecentBlueprint();
-        mostRecentBlueprint = (mostRecentBlueprint == null) ? space.getSuroundingSpaceMostRecentBlueprint() : mostRecentBlueprint;
-        StreamingOutput stream;
-
-        if (mostRecentBlueprint != null) {
-            if (isDwgFormat) {
-                final BlueprintFile blueprintFile = mostRecentBlueprint.getBlueprintFile();
-                final InputStream inputStream = new ByteArrayInputStream(blueprintFile.getContentFile().getBytes());
-                stream = new StreamingOutput() {
-
-                    @Override
-                    public void write(OutputStream output) throws IOException, WebApplicationException {
-                        Streams.copy(inputStream, output, false);
-                    }
-                };
-            } else {
-                final Blueprint blueprint = mostRecentBlueprint;
-                stream = new StreamingOutput() {
-                    @Override
-                    public void write(OutputStream os) throws IOException, WebApplicationException {
-                        SpaceInformation spaceInformation = space.getSpaceInformation();
-                        Boolean isSuroundingSpaceBlueprint = true;
-                        Boolean isToViewOriginalSpaceBlueprint = false;
-                        Boolean viewBlueprintNumbers = true;
-                        Boolean isToViewIdentifications = true;
-                        Boolean isToViewDoorNumbers = false;
-                        BigDecimal scalePercentage = new BigDecimal(100);
-                        ManageSpaceBlueprintsDA.writeBlueprint(spaceInformation, isSuroundingSpaceBlueprint,
-                                isToViewOriginalSpaceBlueprint, viewBlueprintNumbers, isToViewIdentifications,
-                                isToViewDoorNumbers, scalePercentage, blueprint, os);
-                        os.flush();
-                    }
-                };
-            }
-            final String contentType = isDwgFormat ? "application/dwg" : "image/jpeg";
-            final String filename = space.getExternalId() + (isDwgFormat ? ".dwg" : ".jpg");
-            return Response.ok(stream, contentType).header("Content-Disposition", "attachment; filename=" + filename).build();
-        }
-
-        return Response.noContent().build();
-    }
-
-    private FenixSpace.Room getFenixRoom(Room room, java.util.Calendar rightNow) {
+    private FenixSpace.Room getFenixRoom(Space room, java.util.Calendar rightNow) {
 
         InfoSiteRoomTimeTable bodyComponent = new InfoSiteRoomTimeTable();
         RoomSiteComponentBuilder builder = new RoomSiteComponentBuilder();
@@ -1467,9 +1458,9 @@ public class FenixAPIv1 {
                                         description);
                     }
 
-                } else if (showOccupation instanceof InfoGenericEvent) {
+                } else if (showOccupation instanceof InfoOccupation) {
 
-                    InfoGenericEvent infoGenericEvent = (InfoGenericEvent) showOccupation;
+                    InfoOccupation infoGenericEvent = (InfoOccupation) showOccupation;
                     String description = infoGenericEvent.getDescription();
                     String title = infoGenericEvent.getTitle();
                     String start = dataFormatHour.format(infoGenericEvent.getInicio().getTime());

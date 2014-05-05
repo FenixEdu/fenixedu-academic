@@ -108,9 +108,6 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessi
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PHDProgramCandidacy;
 import net.sourceforge.fenixedu.domain.research.Researcher;
-import net.sourceforge.fenixedu.domain.space.Campus;
-import net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation;
-import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 import net.sourceforge.fenixedu.domain.teacher.Career;
@@ -1271,13 +1268,11 @@ public class Person extends Person_Base {
 
     private boolean canBeDeleted() {
         return !hasAnyPartyContacts() && !hasAnyChilds() && !hasAnyParents() && !hasAnyDomainObjectActionLogs()
-                && !hasAnyExportGroupingReceivers() && !hasAnyPersistentGroups() && !hasAnyPersonSpaceOccupations()
-                && !hasAnyPunctualRoomsOccupationComments()
-                && !hasAnyPunctualRoomsOccupationRequests() && !hasAnyPunctualRoomsOccupationRequestsToProcess()
-                && !hasAnyAssociatedQualifications() && !hasAnyAssociatedAlteredCurriculums() && !hasAnyEnrolmentEvaluations()
-                && !hasAnyExportGroupingSenders() && !hasAnyResponsabilityTransactions() && !hasAnyMasterDegreeCandidates()
-                && !hasAnyGuides() && !hasEmployee() && !hasTeacher() && !hasAnyPayedGuides() && !hasAnyPayedReceipts()
-                && !hasAnyPersonFunctions() && (!hasHomepage() || getHomepage().isDeletable()) && !hasAnyInternalParticipants()
+                && !hasAnyExportGroupingReceivers() && !hasAnyPersistentGroups() && !hasAnyAssociatedQualifications()
+                && !hasAnyAssociatedAlteredCurriculums() && !hasAnyEnrolmentEvaluations() && !hasAnyExportGroupingSenders()
+                && !hasAnyResponsabilityTransactions() && !hasAnyMasterDegreeCandidates() && !hasAnyGuides() && !hasEmployee()
+                && !hasTeacher() && !hasAnyPayedGuides() && !hasAnyPayedReceipts() && !hasAnyPersonFunctions()
+                && (!hasHomepage() || getHomepage().isDeletable()) && !hasAnyInternalParticipants()
                 && !hasAnyCreatedQualifications() && !hasAnyCreateJobs();
     }
 
@@ -2698,30 +2693,6 @@ public class Person extends Person_Base {
         return hasHomepage() && getHomepage().getActivated();
     }
 
-    public List<PunctualRoomsOccupationRequest> getPunctualRoomsOccupationRequestsOrderByMoreRecentComment() {
-        final List<PunctualRoomsOccupationRequest> result = new ArrayList<PunctualRoomsOccupationRequest>();
-        result.addAll(getPunctualRoomsOccupationRequests());
-        if (!result.isEmpty()) {
-            Collections.sort(result, PunctualRoomsOccupationRequest.COMPARATOR_BY_MORE_RECENT_COMMENT_INSTANT);
-        }
-        return result;
-    }
-
-    public List<PunctualRoomsOccupationRequest> getPunctualRoomsOccupationRequestsToProcessOrderByDate(Campus campus) {
-        final List<PunctualRoomsOccupationRequest> result = new ArrayList<PunctualRoomsOccupationRequest>();
-        for (final PunctualRoomsOccupationRequest request : getPunctualRoomsOccupationRequestsToProcess()) {
-            if (!request.getCurrentState().equals(RequestState.RESOLVED)
-                    && (request.getCampus() == null || request.getCampus().equals(campus))) {
-                result.add(request);
-            }
-        }
-
-        if (!result.isEmpty()) {
-            Collections.sort(result, PunctualRoomsOccupationRequest.COMPARATOR_BY_INSTANT);
-        }
-        return result;
-    }
-
     public String getFirstAndLastName() {
         final String[] name = getName().split(" ");
         return name[0] + " " + name[name.length - 1];
@@ -3177,18 +3148,6 @@ public class Person extends Person_Base {
             return getEmployee().getEmployeeNumber();
         }
         return 0;
-    }
-
-    public List<Space> getActivePersonSpaces() {
-        final List<Space> result = new ArrayList<Space>();
-        final Set<PersonSpaceOccupation> personSpaceOccupationsSet = getPersonSpaceOccupationsSet();
-        final YearMonthDay current = new YearMonthDay();
-        for (final PersonSpaceOccupation personSpaceOccupation : personSpaceOccupationsSet) {
-            if (personSpaceOccupation.contains(current)) {
-                result.add(personSpaceOccupation.getSpace());
-            }
-        }
-        return result;
     }
 
     public Collection<Forum> getForuns(final ExecutionSemester executionSemester) {
@@ -4606,16 +4565,6 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.PunctualRoomsOccupationComment> getPunctualRoomsOccupationComments() {
-        return getPunctualRoomsOccupationCommentsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPunctualRoomsOccupationComments() {
-        return !getPunctualRoomsOccupationCommentsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Qualification> getCreatedQualifications() {
         return getCreatedQualificationsSet();
     }
@@ -4723,16 +4672,6 @@ public class Person extends Person_Base {
     @Deprecated
     public boolean hasAnyPhdEmail() {
         return !getPhdEmailSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest> getPunctualRoomsOccupationRequests() {
-        return getPunctualRoomsOccupationRequestsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPunctualRoomsOccupationRequests() {
-        return !getPunctualRoomsOccupationRequestsSet().isEmpty();
     }
 
     @Deprecated
@@ -5066,26 +5005,6 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest> getPunctualRoomsOccupationRequestsToProcess() {
-        return getPunctualRoomsOccupationRequestsToProcessSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPunctualRoomsOccupationRequestsToProcess() {
-        return !getPunctualRoomsOccupationRequestsToProcessSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.space.Blueprint> getBlueprints() {
-        return getBlueprintsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyBlueprints() {
-        return !getBlueprintsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.Role> getPersonRoles() {
         return getPersonRolesSet();
     }
@@ -5383,16 +5302,6 @@ public class Person extends Person_Base {
     @Deprecated
     public boolean hasAnyManageableDepartmentCredits() {
         return !getManageableDepartmentCreditsSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation> getPersonSpaceOccupations() {
-        return getPersonSpaceOccupationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPersonSpaceOccupations() {
-        return !getPersonSpaceOccupationsSet().isEmpty();
     }
 
     @Deprecated

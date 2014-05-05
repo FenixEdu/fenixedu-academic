@@ -5,11 +5,11 @@ import java.util.HashSet;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.space.Room;
 
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 
-public class ExamRoomManager extends HashSet<Room> {
+public class ExamRoomManager extends HashSet<Space> {
 
     private final Map<ExecutionSemester, EvaluationRoomManager> evaluationRoomManagerMap =
             new HashMap<ExecutionSemester, EvaluationRoomManager>();
@@ -25,7 +25,7 @@ public class ExamRoomManager extends HashSet<Room> {
         return evaluationRoomManager.getNextDateTime();
     }
 
-    public Room getNextOldRoom(final ExecutionSemester executionPeriod) {
+    public Space getNextOldRoom(final ExecutionSemester executionPeriod) {
         final EvaluationRoomManager evaluationRoomManager = evaluationRoomManagerMap.get(executionPeriod);
         return evaluationRoomManager.getNextOldRoom();
     }

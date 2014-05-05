@@ -13,9 +13,10 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.EventSpaceOccupation;
+import net.sourceforge.fenixedu.domain.space.LessonInstanceSpaceOccupation;
+import net.sourceforge.fenixedu.domain.space.LessonSpaceOccupation;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.icalendar.EvaluationEventBean;
 import net.sourceforge.fenixedu.predicates.WrittenTestPredicates;
@@ -24,6 +25,9 @@ import net.sourceforge.fenixedu.util.EvaluationType;
 
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.spaces.domain.Space;
+import org.fenixedu.spaces.domain.UnavailableException;
+import org.fenixedu.spaces.domain.occupation.Occupation;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
@@ -35,7 +39,7 @@ import org.joda.time.YearMonthDay;
 public class WrittenTest extends WrittenTest_Base {
 
     public WrittenTest(Date testDate, Date testStartTime, Date testEndTime, List<ExecutionCourse> executionCoursesToAssociate,
-            List<DegreeModuleScope> curricularCourseScopesToAssociate, List<AllocatableSpace> rooms, GradeScale gradeScale,
+            List<DegreeModuleScope> curricularCourseScopesToAssociate, List<Space> rooms, GradeScale gradeScale,
             String description) {
 
         super();
@@ -54,7 +58,7 @@ public class WrittenTest extends WrittenTest_Base {
     }
 
     public void edit(Date testDate, Date testStartTime, Date testEndTime, List<ExecutionCourse> executionCoursesToAssociate,
-            List<DegreeModuleScope> curricularCourseScopesToAssociate, List<AllocatableSpace> rooms, GradeScale gradeScale,
+            List<DegreeModuleScope> curricularCourseScopesToAssociate, List<Space> rooms, GradeScale gradeScale,
             String description) {
 
         checkEvaluationDate(testDate, executionCoursesToAssociate);
@@ -182,8 +186,8 @@ public class WrittenTest extends WrittenTest_Base {
         return false;
     }
 
-    public Collection<AllocatableSpace> getTeacherAvailableRooms(Teacher teacher) {
-        Collection<AllocatableSpace> rooms = new ArrayList<AllocatableSpace>();
+    public Collection<Space> getTeacherAvailableRooms(Teacher teacher) {
+        Collection<Space> rooms = new ArrayList<Space>();
         for (ExecutionCourse executionCourse : getAssociatedExecutionCoursesSet()) {
             if (executionCourse.teacherLecturesExecutionCourse(teacher)) {
                 for (Lesson lesson : executionCourse.getLessons()) {
@@ -197,8 +201,8 @@ public class WrittenTest extends WrittenTest_Base {
         return rooms;
     }
 
-    public Collection<AllocatableSpace> getAvailableRooms() {
-        Collection<AllocatableSpace> rooms = new ArrayList<AllocatableSpace>();
+    public Collection<Space> getAvailableRooms() {
+        Collection<Space> rooms = new ArrayList<Space>();
         for (ExecutionCourse executionCourse : getAssociatedExecutionCoursesSet()) {
             for (Lesson lesson : executionCourse.getLessons()) {
                 if (lesson.getRoomOccupation() != null
@@ -210,11 +214,11 @@ public class WrittenTest extends WrittenTest_Base {
         return rooms;
     }
 
-    public void teacherEditRooms(Teacher teacher, ExecutionSemester executionSemester, List<AllocatableSpace> rooms) {
-        Collection<AllocatableSpace> teacherAvailableRooms = getTeacherAvailableRooms(teacher);
-        List<AllocatableSpace> associatedRooms = getAssociatedRooms();
+    public void teacherEditRooms(Teacher teacher, ExecutionSemester executionSemester, List<Space> rooms) {
+        Collection<Space> teacherAvailableRooms = getTeacherAvailableRooms(teacher);
+        List<Space> associatedRooms = getAssociatedRooms();
 
-        for (AllocatableSpace room : rooms) {
+        for (Space room : rooms) {
             if (!associatedRooms.contains(room)) {
                 if (!teacherAvailableRooms.contains(room)) {
                     throw new DomainException("error.room.does.not.belong.to.teachers.avaliable.rooms");
@@ -223,7 +227,7 @@ public class WrittenTest extends WrittenTest_Base {
             }
         }
 
-        for (AllocatableSpace room : associatedRooms) {
+        for (Space room : associatedRooms) {
             if (!rooms.contains(room) && canTeacherRemoveRoom(executionSemester, teacher, room)) {
                 removeRoomOccupation(room);
             }
@@ -238,24 +242,29 @@ public class WrittenTest extends WrittenTest_Base {
     }
 
     @Override
-    public boolean canBeAssociatedToRoom(AllocatableSpace room) {
-        for (ResourceAllocation resourceAllocation : room.getResourceAllocationsForCheck()) {
-            if (resourceAllocation.isEventSpaceOccupation()) {
-                EventSpaceOccupation eventSpaceOccupation = (EventSpaceOccupation) resourceAllocation;
-                if (!eventSpaceOccupation.isLessonInstanceSpaceOccupation() && !eventSpaceOccupation.isLessonSpaceOccupation()) {
-                    if (eventSpaceOccupation.alreadyWasOccupiedIn(getBeginningDateTime().toYearMonthDay(), getEndDateTime()
-                            .toYearMonthDay(), getBeginningDateHourMinuteSecond(), getEndDateHourMinuteSecond(), getDayOfWeek(),
-                            null, null, null)) {
-                        return false;
+    public boolean canBeAssociatedToRoom(Space room) {
+        try {
+            for (Occupation resourceAllocation : SpaceUtils.getResourceAllocationsForCheck(room)) {
+                if (resourceAllocation instanceof EventSpaceOccupation) {
+                    EventSpaceOccupation eventSpaceOccupation = (EventSpaceOccupation) resourceAllocation;
+                    if (!(eventSpaceOccupation instanceof LessonInstanceSpaceOccupation)
+                            && !(eventSpaceOccupation instanceof LessonSpaceOccupation)) {
+                        if (eventSpaceOccupation.alreadyWasOccupiedIn(getBeginningDateTime().toYearMonthDay(), getEndDateTime()
+                                .toYearMonthDay(), getBeginningDateHourMinuteSecond(), getEndDateHourMinuteSecond(),
+                                getDayOfWeek(), null, null, null)) {
+                            return false;
+                        }
                     }
                 }
             }
+        } catch (UnavailableException e) {
+            return false;
         }
         return true;
     }
 
-    public boolean canTeacherRemoveRoom(ExecutionSemester executionSemester, Teacher teacher, AllocatableSpace room) {
-        for (Lesson lesson : room.getAssociatedLessons(executionSemester)) {
+    public boolean canTeacherRemoveRoom(ExecutionSemester executionSemester, Teacher teacher, Space room) {
+        for (Lesson lesson : SpaceUtils.getAssociatedLessons(room, executionSemester)) {
             if (lesson.isAllIntervalIn(new Interval(getBeginningDateTime(), getEndDateTime()))) {
                 if (lesson.getExecutionCourse().teacherLecturesExecutionCourse(teacher)) {
                     return true;

@@ -20,10 +20,7 @@ import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.EventSpaceOccupation;
 import net.sourceforge.fenixedu.domain.util.email.ConcreteReplyTo;
 import net.sourceforge.fenixedu.domain.util.email.Message;
@@ -36,6 +33,8 @@ import net.sourceforge.fenixedu.util.Season;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.spaces.domain.Space;
+import org.fenixedu.spaces.domain.occupation.Occupation;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
@@ -59,7 +58,7 @@ public class EditWrittenEvaluation {
         final List<ExecutionCourse> executionCoursesToAssociate = readExecutionCourses(executionCourseIDs);
         final List<DegreeModuleScope> degreeModuleScopeToAssociate = readCurricularCourseScopesAndContexts(degreeModuleScopeIDs);
 
-        List<AllocatableSpace> roomsToAssociate = null;
+        List<Space> roomsToAssociate = null;
         if (roomIDs != null) {
             roomsToAssociate = readRooms(roomIDs);
         }
@@ -71,7 +70,7 @@ public class EditWrittenEvaluation {
             notifyVigilants(writtenEvaluation, writtenEvaluationDate, writtenEvaluationStartTime);
         }
 
-        final List<AllocatableSpace> previousRooms = writtenEvaluation.getAssociatedRooms();
+        final List<Space> previousRooms = writtenEvaluation.getAssociatedRooms();
 
         if (examSeason != null) {
             ((Exam) writtenEvaluation).edit(writtenEvaluationDate, writtenEvaluationStartTime, writtenEvaluationEndTime,
@@ -100,7 +99,7 @@ public class EditWrittenEvaluation {
         }
 
         if (roomsToAssociate != null) {
-            for (final AllocatableSpace allocatableSpace : roomsToAssociate) {
+            for (final Space allocatableSpace : roomsToAssociate) {
                 int intervalCount = 0;
                 DateTime beginDateTime =
                         new DateTime(writtenEvaluationStartTime.getTime()).withSecondOfMinute(0).withMillisOfSecond(0);
@@ -110,14 +109,15 @@ public class EditWrittenEvaluation {
                         new DateTime(writtenEvaluationEndTime.getTime()).withSecondOfMinute(0).withMillisOfSecond(0);
                 // YearMonthDay endYMD = endDateTime.toYearMonthDay();
 
-                for (ResourceAllocation resource : allocatableSpace.getResourceAllocationsSet()) {
-                    if (resource.isEventSpaceOccupation()) {
-                        EventSpaceOccupation eventSpaceOccupation = (EventSpaceOccupation) resource;
+                for (Occupation occupation : allocatableSpace.getOccupationSet()) {
+                    if (occupation instanceof EventSpaceOccupation) {
+                        EventSpaceOccupation eventSpaceOccupation = (EventSpaceOccupation) occupation;
                         List<Interval> intervals =
                                 eventSpaceOccupation.getEventSpaceOccupationIntervals(beginDateTime, endDateTime);
                         intervalCount += intervals.size();
                         if (intervalCount > 1) {
-                            throw new DomainException("error.noRoom", allocatableSpace.getName());
+                            String name;
+                            name = allocatableSpace.getName();
                         }
                     }
                 }
@@ -132,10 +132,10 @@ public class EditWrittenEvaluation {
         return hourDiference > 0 || minuteDifference > 5;
     }
 
-    private List<AllocatableSpace> readRooms(final List<String> roomIDs) throws FenixServiceException {
-        final List<AllocatableSpace> result = new ArrayList<AllocatableSpace>();
+    private List<Space> readRooms(final List<String> roomIDs) throws FenixServiceException {
+        final List<Space> result = new ArrayList<Space>();
         for (final String roomID : roomIDs) {
-            final AllocatableSpace room = (AllocatableSpace) FenixFramework.getDomainObject(roomID);
+            final Space room = (Space) FenixFramework.getDomainObject(roomID);
             if (room == null) {
                 throw new FenixServiceException("error.noRoom");
             }
@@ -204,8 +204,8 @@ public class EditWrittenEvaluation {
                 tos.add(person);
             }
             Sender sender = Bennu.getInstance().getSystemSender();
-            new Message(sender, new ConcreteReplyTo(group.getContactEmail()).asCollection(),
-                    new Recipient(UserGroup.of(Person.convertToUsers(tos))).asCollection(), subject, body, "");
+            new Message(sender, new ConcreteReplyTo(group.getContactEmail()).asCollection(), new Recipient(UserGroup.of(Person
+                    .convertToUsers(tos))).asCollection(), subject, body, "");
         }
     }
 

@@ -1,11 +1,12 @@
 package net.sourceforge.fenixedu.domain.reports;
 
+import org.fenixedu.spaces.domain.Space;
+
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
@@ -62,14 +63,14 @@ public class WrittenEvaluationReportFile extends WrittenEvaluationReportFile_Bas
                         int normalVacancy = 0;
                         for (final WrittenEvaluationSpaceOccupation roomOccupation : writtenEvaluation
                                 .getWrittenEvaluationSpaceOccupations()) {
-                            final AllocatableSpace room = roomOccupation.getRoom();
+                            final Space room = roomOccupation.getRoom();
                             if (rooms.length() > 0) {
                                 rooms.append(", ");
                             }
-                            rooms.append(room.getIdentification());
-                            final Integer examCapacity = room.getExamCapacity();
+                            rooms.append(room.getName());
+                            final Integer examCapacity = room.getMetadata("examCapacity");
                             examVacancy += examCapacity == null ? 0 : examCapacity.intValue();
-                            final Integer normalCapacity = room.getNormalCapacity();
+                            final Integer normalCapacity = room.getAllocatableCapacity();
                             normalVacancy += normalCapacity == null ? 0 : normalCapacity.intValue();
                         }
                         row.setCell(rooms.toString());

@@ -17,7 +17,7 @@ public class Locality extends Locality_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.space.CampusInformation> getCampusInformation() {
+    public java.util.Set<org.fenixedu.spaces.domain.Space> getCampusInformation() {
         return getCampusInformationSet();
     }
 

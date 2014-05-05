@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.domain.space;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.resource.Resource;
 
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.spaces.domain.Space;
 
 public abstract class SpaceOccupation extends SpaceOccupation_Base {
 
@@ -17,7 +17,10 @@ public abstract class SpaceOccupation extends SpaceOccupation_Base {
 
     public void checkPermissionsToManageSpaceOccupations() {
         User user = Authenticate.getUser();
-        if (getSpace().personHasPermissionsToManageSpace(user)) {
+        Space r = getSpace();
+        if (SpaceUtils.personIsSpacesAdministrator(user.getPerson())
+                || r.getManagementAccessGroupWithChainOfResponsability() != null
+                && r.getManagementAccessGroupWithChainOfResponsability().isMember(user)) {
             return;
         }
 
@@ -40,19 +43,6 @@ public abstract class SpaceOccupation extends SpaceOccupation_Base {
     }
 
     public Space getSpace() {
-        return (Space) getResource();
-    }
-
-    @Override
-    public void setResource(Resource resource) {
-        super.setResource(resource);
-        if (!resource.isSpace()) {
-            throw new DomainException("error.allocation.invalid.resource.type");
-        }
-    }
-
-    @Override
-    public boolean isSpaceOccupation() {
-        return true;
+        return getSpaceSet().isEmpty() ? null : getSpaceSet().iterator().next();
     }
 }

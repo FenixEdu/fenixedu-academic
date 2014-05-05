@@ -19,10 +19,10 @@ import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.contacts.WebAddress;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.spaces.domain.Space;
 
 public class PersonInformationBean {
 
@@ -108,7 +108,7 @@ public class PersonInformationBean {
             if (currentWorkingPlace != null) {
                 setEmployeeUnit(currentWorkingPlace.getName());
             }
-            Campus currentCampus = person.getEmployee().getCurrentCampus();
+            Space currentCampus = person.getEmployee().getCurrentCampus();
             if (currentCampus != null) {
                 setCampus(currentCampus.getName());
             }

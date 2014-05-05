@@ -11,11 +11,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlot;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContentRendererShift;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
@@ -66,9 +66,9 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer extends LessonSlotCon
             strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint())
                     .append(")&nbsp;");
 
-            final AllocatableSpace allocatableSpace = lesson.getAllocatableSpace();
+            final Space allocatableSpace = lesson.getAllocatableSpace();
             if (allocatableSpace != null) {
-                strBuffer.append(allocatableSpace.getNome());
+                strBuffer.append(allocatableSpace.getName());
             }
             strBuffer.append("</span>");
         } else if (showOccupation instanceof InfoLessonInstance) {
@@ -105,9 +105,9 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer extends LessonSlotCon
             strBuffer.append("&nbsp;").append("&nbsp;(")
                     .append(infoLessonInstanceAggregation.getShift().getShiftTypesCodePrettyPrint()).append(")&nbsp;");
 
-            final AllocatableSpace allocatableSpace = infoLessonInstanceAggregation.getAllocatableSpace();
+            final Space allocatableSpace = infoLessonInstanceAggregation.getAllocatableSpace();
             if (allocatableSpace != null) {
-                strBuffer.append(allocatableSpace.getNome());
+                strBuffer.append(allocatableSpace.getName());
             }
             strBuffer.append("</span>");
         }

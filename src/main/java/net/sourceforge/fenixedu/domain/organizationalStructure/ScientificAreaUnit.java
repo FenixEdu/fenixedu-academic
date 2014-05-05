@@ -16,11 +16,11 @@ import net.sourceforge.fenixedu.domain.accessControl.UnitGroup;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -35,7 +35,7 @@ public class ScientificAreaUnit extends ScientificAreaUnit_Base {
     public static ScientificAreaUnit createNewInternalScientificArea(MultiLanguageString name, String unitNameCard,
             Integer costCenterCode, String acronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
             AccountabilityType accountabilityType, String webAddress, UnitClassification classification,
-            Boolean canBeResponsibleOfSpaces, Campus campus) {
+            Boolean canBeResponsibleOfSpaces, Space campus) {
 
         ScientificAreaUnit scientificAreaUnit = new ScientificAreaUnit();
         scientificAreaUnit.init(name, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress, classification,
@@ -51,7 +51,7 @@ public class ScientificAreaUnit extends ScientificAreaUnit_Base {
     public void edit(MultiLanguageString unitName, String unitNameCard, Integer unitCostCenter, String acronym,
             YearMonthDay beginDate, YearMonthDay endDate, String webAddress, UnitClassification classification,
             Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces,
-            Campus campus) {
+            Space campus) {
 
         super.edit(unitName, unitNameCard, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department,
                 degree, administrativeOffice, canBeResponsibleOfSpaces, campus);

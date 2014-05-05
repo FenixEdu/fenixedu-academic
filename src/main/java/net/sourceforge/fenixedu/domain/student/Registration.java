@@ -85,8 +85,6 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.PastDiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.curriculum.AverageType;
 import net.sourceforge.fenixedu.domain.student.curriculum.ConclusionProcess;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
@@ -119,6 +117,8 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.spaces.domain.Space;
+import org.fenixedu.spaces.domain.UnavailableException;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.ReadableInstant;
@@ -129,7 +129,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixframework.Atomic;
-import java.util.Locale;
 
 public class Registration extends Registration_Base {
 
@@ -516,7 +515,7 @@ public class Registration extends Registration_Base {
         return false;
     }
 
-    final public AllocatableSpace getRoomFor(final WrittenEvaluation writtenEvaluation) {
+    final public Space getRoomFor(final WrittenEvaluation writtenEvaluation) {
         for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : this.getWrittenEvaluationEnrolments()) {
             if (writtenEvaluationEnrolment.getWrittenEvaluation() == writtenEvaluation) {
                 return writtenEvaluationEnrolment.getRoom();
@@ -1852,7 +1851,8 @@ public class Registration extends Registration_Base {
     private void checkIfReachedAttendsLimit() {
         final User userView = Authenticate.getUser();
         if (userView == null
-                || !AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(), AcademicOperationType.STUDENT_ENROLMENTS).contains(this.getDegree())) {
+                || !AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
+                        AcademicOperationType.STUDENT_ENROLMENTS).contains(this.getDegree())) {
             if (readAttendsInCurrentExecutionPeriod().size() >= MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD) {
                 throw new DomainException("error.student.reached.attends.limit",
                         String.valueOf(MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD));
@@ -2091,8 +2091,10 @@ public class Registration extends Registration_Base {
     }
 
     final public boolean isAllowedToManageRegistration() {
-        return AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.MANAGE_REGISTRATIONS).contains(getDegree())
-                || AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(), AcademicOperationType.VIEW_FULL_STUDENT_CURRICULUM).contains(getDegree());
+        return AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+                AcademicOperationType.MANAGE_REGISTRATIONS).contains(getDegree())
+                || AcademicAuthorizationGroup.getProgramsForOperation(AccessControl.getPerson(),
+                        AcademicOperationType.VIEW_FULL_STUDENT_CURRICULUM).contains(getDegree());
     }
 
     public boolean isCurricularCourseApproved(final CurricularCourse curricularCourse) {
@@ -3301,16 +3303,16 @@ public class Registration extends Registration_Base {
         return getActiveStateType().isInactive();
     }
 
-    public Campus getCampus() {
+    public Space getCampus() {
         return getLastStudentCurricularPlan().getLastCampus();
     }
 
-    public Campus getCampus(final ExecutionYear executionYear) {
+    public Space getCampus(final ExecutionYear executionYear) {
         final StudentCurricularPlan scp = getStudentCurricularPlan(executionYear);
         return scp == null ? getLastStudentCurricularPlan().getCampus(executionYear) : scp.getCampus(executionYear);
     }
 
-    final public String getIstUniversity() {
+    final public String getIstUniversity() throws UnavailableException {
         return getCampus().getName();
     }
 

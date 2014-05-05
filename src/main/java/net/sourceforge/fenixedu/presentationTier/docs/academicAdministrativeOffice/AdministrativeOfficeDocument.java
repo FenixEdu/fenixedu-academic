@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Locality;
 import net.sourceforge.fenixedu.domain.OptionalEnrolment;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
@@ -280,7 +281,8 @@ public class AdministrativeOfficeDocument extends FenixReport {
         addParameter("administrativeOfficeCoordinator", adminOfficeUnit.getActiveUnitCoordinator());
         addParameter("administrativeOfficeName", getMLSTextContent(adminOfficeUnit.getPartyName()));
 
-        addParameter("employeeLocation", adminOfficeUnit.getCampus().getLocation());
+        final Locality locality = adminOfficeUnit.getCampus().getLocality();
+        addParameter("employeeLocation", locality != null ? locality.getName() : null);
         addParameter("supervisingUnit", getResourceBundle().getString("label.academicDocument.direcaoAcademica"));
 
         addParameter("institutionName", getInstitutionName());
@@ -536,7 +538,8 @@ public class AdministrativeOfficeDocument extends FenixReport {
                 MessageFormat.format(departmentAndInstitute, getMLSTextContent(adminOfficeUnit.getPartyName()), institutionName));
 
         addParameter("administrativeOfficeCoordinator", coordinator);
-        String location = adminOfficeUnit.getCampus().getLocation();
+        final Locality locality = adminOfficeUnit.getCampus().getLocality();
+        String location = locality != null ? locality.getName() : null;
         String dateDD = new LocalDate().toString("dd", getLocale());
         String dateMMMM = new LocalDate().toString("MMMM", getLocale());
         String dateYYYY = new LocalDate().toString("yyyy", getLocale());

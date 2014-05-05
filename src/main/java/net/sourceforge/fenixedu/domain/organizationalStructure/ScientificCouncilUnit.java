@@ -12,9 +12,9 @@ import net.sourceforge.fenixedu.domain.accessControl.PersonsInFunctionGroup;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -97,7 +97,7 @@ public class ScientificCouncilUnit extends ScientificCouncilUnit_Base {
     public static ScientificCouncilUnit createScientificCouncilUnit(MultiLanguageString name, String unitNameCard,
             Integer costCenterCode, String acronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
             AccountabilityType accountabilityType, String webAddress, UnitClassification classification,
-            Boolean canBeResponsibleOfSpaces, Campus campus) {
+            Boolean canBeResponsibleOfSpaces, Space campus) {
         ScientificCouncilUnit scu = new ScientificCouncilUnit();
         scu.init(name, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress, classification, null,
                 canBeResponsibleOfSpaces, campus);

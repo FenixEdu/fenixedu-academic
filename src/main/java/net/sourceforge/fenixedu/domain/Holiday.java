@@ -4,10 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.LocalDate;
 import org.joda.time.Partial;
@@ -108,10 +108,10 @@ public class Holiday extends Holiday_Base {
         return isHoliday(date, null);
     }
 
-    public static boolean isHoliday(LocalDate date, Campus campus) {
+    public static boolean isHoliday(LocalDate date, Space campus) {
         for (Holiday holiday : Bennu.getInstance().getHolidaysSet()) {
-            if ((holiday.getLocality() == null || (campus != null && holiday.getLocality() == campus.getSpaceInformation()
-                    .getLocality())) && holiday.getDate().isMatch(date)) {
+            if ((holiday.getLocality() == null || (campus != null && holiday.getLocality() == campus.getLocality()))
+                    && holiday.getDate().isMatch(date)) {
                 return true;
             }
         }

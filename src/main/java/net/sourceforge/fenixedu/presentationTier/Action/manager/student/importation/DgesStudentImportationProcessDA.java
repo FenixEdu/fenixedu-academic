@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.QueueJob;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.importation.DgesBaseProcessLauncher;
 import net.sourceforge.fenixedu.domain.student.importation.DgesStudentImportationFile;
 import net.sourceforge.fenixedu.domain.student.importation.DgesStudentImportationProcess;
@@ -24,6 +23,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.fenixedu.spaces.domain.Space;
 
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -164,7 +164,7 @@ public class DgesStudentImportationProcessDA extends FenixDispatchAction {
         private Long filesize;
 
         private ExecutionYear executionYear;
-        private Campus campus;
+        private Space campus;
         private EntryPhase phase;
 
         public DgesBaseProcessBean(final ExecutionYear executionYear) {
@@ -203,11 +203,11 @@ public class DgesStudentImportationProcessDA extends FenixDispatchAction {
             this.executionYear = executionYear;
         }
 
-        public Campus getCampus() {
+        public Space getCampus() {
             return campus;
         }
 
-        public void setCampus(Campus campus) {
+        public void setCampus(Space campus) {
             this.campus = campus;
         }
 

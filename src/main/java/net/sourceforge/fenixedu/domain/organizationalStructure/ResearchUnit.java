@@ -14,13 +14,13 @@ import net.sourceforge.fenixedu.domain.ResearchUnitSite;
 import net.sourceforge.fenixedu.domain.accessControl.UnitGroup;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.util.email.ResearchUnitBasedSender;
 import net.sourceforge.fenixedu.domain.util.email.UnitBasedSender;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
@@ -35,7 +35,7 @@ public class ResearchUnit extends ResearchUnit_Base {
 
     public static ResearchUnit createNewResearchUnit(MultiLanguageString name, String unitNameCard, Integer costCenterCode,
             String acronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, AccountabilityType accountabilityType,
-            String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Campus campus) {
+            String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Space campus) {
 
         ResearchUnit researchUnit = new ResearchUnit();
         researchUnit.init(name, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress, classification, null,
@@ -59,7 +59,7 @@ public class ResearchUnit extends ResearchUnit_Base {
     public void edit(MultiLanguageString unitName, String unitNameCard, Integer unitCostCenter, String acronym,
             YearMonthDay beginDate, YearMonthDay endDate, String webAddress, UnitClassification classification,
             Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces,
-            Campus campus) {
+            Space campus) {
 
         super.edit(unitName, unitNameCard, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department,
                 degree, administrativeOffice, canBeResponsibleOfSpaces, campus);

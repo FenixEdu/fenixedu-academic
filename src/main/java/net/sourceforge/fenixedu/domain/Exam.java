@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.icalendar.EvaluationEventBean;
@@ -14,14 +14,15 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.Season;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.spaces.domain.Space;
+import org.fenixedu.spaces.domain.UnavailableException;
 
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class Exam extends Exam_Base {
 
     public Exam(Date examDay, Date examStartTime, Date examEndTime, List<ExecutionCourse> executionCoursesToAssociate,
-            List<DegreeModuleScope> curricularCourseScopesToAssociate, List<AllocatableSpace> rooms, GradeScale gradeScale,
-            Season season) {
+            List<DegreeModuleScope> curricularCourseScopesToAssociate, List<Space> rooms, GradeScale gradeScale, Season season) {
 
         super();
         checkScopeAndSeasonConstrains(executionCoursesToAssociate, curricularCourseScopesToAssociate, season);
@@ -40,8 +41,7 @@ public class Exam extends Exam_Base {
     }
 
     public void edit(Date examDay, Date examStartTime, Date examEndTime, List<ExecutionCourse> executionCoursesToAssociate,
-            List<DegreeModuleScope> curricularCourseScopesToAssociate, List<AllocatableSpace> rooms, GradeScale gradeScale,
-            Season season) {
+            List<DegreeModuleScope> curricularCourseScopesToAssociate, List<Space> rooms, GradeScale gradeScale, Season season) {
 
         // It's necessary to remove this associations before check some
         // constrains
@@ -106,7 +106,7 @@ public class Exam extends Exam_Base {
 
         outter: for (Exam exam : Exam.readExams()) {
             for (WrittenEvaluationSpaceOccupation occupation : exam.getWrittenEvaluationSpaceOccupations()) {
-                if (!(occupation.getRoom()).getNome().equals(room)) {
+                if (!(occupation.getRoom()).getName().equals(room)) {
                     continue outter;
                 }
             }
@@ -178,9 +178,13 @@ public class Exam extends Exam_Base {
     }
 
     @Override
-    public boolean canBeAssociatedToRoom(AllocatableSpace room) {
-        return room.isFree(getBeginningDateTime().toYearMonthDay(), getEndDateTime().toYearMonthDay(),
-                getBeginningDateHourMinuteSecond(), getEndDateHourMinuteSecond(), getDayOfWeek(), null, null, null);
+    public boolean canBeAssociatedToRoom(Space room) {
+        try {
+            return SpaceUtils.isFree(room, getBeginningDateTime().toYearMonthDay(), getEndDateTime().toYearMonthDay(),
+                    getBeginningDateHourMinuteSecond(), getEndDateHourMinuteSecond(), getDayOfWeek(), null, null, null);
+        } catch (UnavailableException e) {
+            return false;
+        }
     }
 
     @Override
