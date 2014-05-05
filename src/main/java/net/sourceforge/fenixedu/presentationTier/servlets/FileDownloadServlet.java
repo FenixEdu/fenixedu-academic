@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.servlets.startup.FenixInitializer.FenixCustomExceptionHandler;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
-import org.apache.commons.httpclient.HttpStatus;
+import org.fenixedu.bennu.core.filters.CasAuthenticationFilter;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
 
 import pt.ist.fenixframework.DomainObject;
@@ -46,7 +46,7 @@ public class FileDownloadServlet extends HttpServlet {
     public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException {
         final File file = getFileFromURL(request.getRequestURI());
         if (file == null) {
-            sendBadRequest(response);
+            request.getRequestDispatcher("/notFound.jsp").forward(request, response);
         } else {
             // Translate old paths (/downloadFile/<oid>) to the new ones (/downloadFile/<oid>/<filename>)
             if (request.getPathInfo().equals("/" + file.getExternalId())) {
@@ -62,29 +62,22 @@ public class FileDownloadServlet extends HttpServlet {
                     stream.write(content);
                     stream.flush();
                 }
-            } else if (file.isPrivate() && person == null) {
+            } else if (file.isPrivate() && person == null
+                    && request.getAttribute(CasAuthenticationFilter.AUTHENTICATION_EXCEPTION_KEY) == null) {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.sendRedirect(sendLoginRedirect(request, file));
             } else {
                 response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                response.getWriter().write(HttpStatus.getStatusText(HttpStatus.SC_FORBIDDEN));
-                response.getWriter().close();
+                request.getRequestDispatcher("/unauthorized.jsp").forward(request, response);
             }
         }
     }
 
     private String sendLoginRedirect(final HttpServletRequest request, final File file) throws IOException {
-        final boolean isCasEnabled = CoreConfiguration.casConfig().isCasEnabled();
-        if (isCasEnabled) {
+        if (CoreConfiguration.casConfig().isCasEnabled()) {
             return CoreConfiguration.casConfig().getCasLoginUrl(URLEncoder.encode(file.getDownloadUrl(), Charsets.UTF_8.name()));
         }
         return FenixConfigurationManager.getConfiguration().getLoginPage() + "?service=" + request.getRequestURI();
-    }
-
-    private void sendBadRequest(final HttpServletResponse response) throws IOException {
-        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        response.getWriter().write(HttpStatus.getStatusText(HttpStatus.SC_BAD_REQUEST));
-        response.getWriter().close();
     }
 
     public final static File getFileFromURL(String url) {

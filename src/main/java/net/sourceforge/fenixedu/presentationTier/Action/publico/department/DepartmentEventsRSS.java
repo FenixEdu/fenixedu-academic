@@ -14,7 +14,7 @@ public class DepartmentEventsRSS extends AnnouncementRSS {
     @Override
     protected String getFeedTitle(HttpServletRequest request, AnnouncementBoard board) {
         UnitAnnouncementBoard unitBoard = (UnitAnnouncementBoard) board;
-        return unitBoard.getUnit().getNameWithAcronym() + ": " + board.getName();
+        return unitBoard == null ? "" : unitBoard.getUnit().getNameWithAcronym() + ": " + board.getName();
     }
 
     @Override

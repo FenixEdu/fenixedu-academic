@@ -161,31 +161,7 @@
       <!-- ========== Action Mapping Definitions =============================== -->
       <action-mappings type="org.apache.struts.action.ActionMapping">
             <action forward="/consultExams.jsp" path="/consultExams"></action>
-            <!-- null pointer exceptions from readByOId -->
-            <action forward="/nonExistingError.jsp" path="/nonExistingObject"></action>
-            <!-- page not found -->
-            <action path="/notFound" type="net.sourceforge.fenixedu.presentationTier.Action.NotFoundAction">
-            </action>
-            <action forward="df.notAuthorized" path="/notAuthorized">
-            </action>
             <!-- page fronting actions -->
-            <action scope="request" validate="true" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.publico.InitiateSessionDispatchAction" input="/index.do?method=prepare&amp;page=0" name="pagedIndexForm" path="/index">
-                  <forward path="/index.jsp" name="showForm"></forward>
-                  <forward path="/index.do?method=prepare&amp;page=0" name="choose"></forward>
-            </action>
-            <action scope="request" validate="true" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.publico.InitiateSessionDispatchAction" input="/index.do?method=prepare&amp;page=0" name="pagedIndexForm" path="/indexNew">
-                  <forward path="consultRooms" name="showForm"></forward>
-                  <!--<forward name="choose" path="/index.do?method=prepare&amp;page=0"/>-->
-            </action>
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.ConsultTimeTablesDispatchAction" scope="request" path="/consultTimeTables" parameter="method">
-                  <forward path="/consultTimeTablesCriterias.jsp" name="criteriaPage"></forward>
-                  <forward path="/viewClasses.do" name="showTimeTables"></forward>
-            </action>
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseContextDispatchAction" validate="true" scope="request" path="/chooseContextDA" parameter="method" name="chooseSearchContextForm" input="/chooseContextDA.do?method=preparePublic&amp;page=0&amp;inputPage=chooseContext">
-                  <forward path="/chooseContext.jsp" name="chooseContext"></forward>
-                  <forward path="/viewClasses.do" name="classSearch"></forward>
-                  <forward path="/prepareSelectExecutionCourseAction.do" name="executionCourseSearch"></forward>
-            </action>
             <action type="net.sourceforge.fenixedu.presentationTier.Action.commons.ChooseContextDispatchActionNew" validate="false" scope="request" path="/chooseContextDANew" parameter="method" name="chooseSearchContextForm" input="/chooseContextDANew.do?method=prepare&amp;page=0&amp;inputPage=chooseContext">
                   <forward path="/chooseContextDANew.do?method=nextPagePublic&amp;page=0&amp;nextPage=classSearch&amp;inputPage=chooseContext" name="prepare"></forward>
                   <forward path="/chooseContext.jsp" name="chooseContext"></forward>
@@ -196,9 +172,6 @@
             <!-- Turnos -->
             <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.PrepareSelectExecutionCourseAction" path="/prepareSelectExecutionCourseAction">
                   <forward path="/prepareSelectExecutionCourse.jsp" name="sucess"></forward>
-            </action>
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchAction" scope="request" parameter="method" input="/chooseContextDA.do?method=nextPagePublic&amp;nextPage=executionCourseSearch" name="chooseExecutionCourseFormWithDynamicMailDistribution" path="/viewSiteExecutionCourse">
-                  <forward path="/executionCourseSite.jsp" name="sucess"></forward>
             </action>
             <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.ExecutionCourseDA" parameter="method" path="/executionCourse">
                   <forward path="execution-course-first-page" name="execution-course-first-page"></forward>
@@ -241,9 +214,6 @@
             <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.RoomSiteViewerDispatchAction" validate="true" scope="request" path="/viewRoomNew" name="indexForm" parameter="method" input="/chooseRoomsFormNew.do">
                   <forward path="/siteViewerRoomNew.do?method=roomViewer" name="roomViewer"></forward>
             </action>
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.SelectSemesterAction" path="/prepareViewRoomOcupation">
-                  <forward path="/chooseSemester.jsp" name="Sucess"></forward>
-            </action>
             <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewClassTimeTableAction" path="/viewClassTimeTable" input="/viewClassTimeTable.jsp">
                   <forward path="/viewClassTimeTable.jsp" name="Sucess"></forward>
             </action>
@@ -252,17 +222,10 @@
             </action>
             <!-- Start of Gesdis-->
             <!-- Summaries -->
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchAction" validate="true" parameter="method" input="/executionCourseNotFound.jsp" scope="request" name="showSummaryForm" path="/viewSite">
-                  <forward path="executionCourseSite" name="sucess"></forward>
-                  <forward path="moved-permanently" name="moved-permanently"></forward>
-            </action>
             <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchActionNew" validate="true" parameter="method" input="/executionCourseNotFoundNew.jsp" scope="request" name="showSummaryForm" path="/viewSiteNew">
                   <forward path="/executionCourseSiteNew.jsp" name="sucess"></forward>
             </action>
             <!-- Site viewer -->
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchAction" validate="true" parameter="method" input="/executionCourseNotFound.jsp" scope="request" name="showSummaryForm" path="/viewSiteSummaries">
-                  <forward path="/executionCourseSite.jsp" name="sucess"></forward>
-            </action>
             <!-- End of Gesdis-->
             <!-- EXAMS -->
             <action validate="true" scope="request" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ChooseExamDayAndShiftDispatchAction" name="chooseDayAndShiftForm" input="/chooseDayAndShift.jsp" path="/chooseDayAndShiftForm">
@@ -290,15 +253,8 @@
                   <forward path="viewRoom" name="roomViewer"></forward>
                   <forward path="viewExecutionCourse" name="executionCourseViewer"></forward>
             </action>
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchAction" parameter="method" scope="request" input="/siteViewerError.jsp" path="/siteViewerRoomNew">
-                  <forward path="viewRoomNew" name="roomViewer"></forward>
-                  <forward path="viewExecutionCourse" name="executionCourseViewer"></forward>
-            </action>
             <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchActionNew" parameter="method" scope="request" input="/siteViewerError.jsp" path="/siteViewerNew">
                   <forward path="viewRoom" name="roomViewer"></forward>
-                  <forward path="/viewExecutionCourse.jsp" name="executionCourseViewer"></forward>
-            </action>
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.SiteViewerDispatchAction" scope="request" validate="true" parameter="method" path="/viewExecutionCourse" input="/prepareSelectExecutionCourse.jsp" name="chooseExecutionCourseForm">
                   <forward path="/viewExecutionCourse.jsp" name="executionCourseViewer"></forward>
             </action>
             <!-- by gedl September the 11th, 2003 -->
@@ -319,12 +275,8 @@
             </action>
             <!--   "/showDegreeSite.do?method=showCurricularPlan"  -->
             <action forward="/finalDegreeWorks.do?method=prepareSearch&amp;page=0" path="/viewFinalDegreeWorkProposals"></action>
-            <action parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.publico.sms.SmsControllerDispatchAction" path="/smsController"></action>
             <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.PrepareSelectExecutionCourseAction" path="/prepareSelectExecutionCourseActionNew">
                   <forward path="/showDegreeCurricularPlanNew.do?method=showCurricularPlan&amp;page=0" name="sucess"></forward>
-            </action>
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewAllExamsByDegreeAndCurricularYearAction" path="/viewAllExamsByDegreeAndCurricularYear">
-                  <forward path="viewAllExamsByDegreeAndCurricularYear" name="Sucess"></forward>
             </action>
             <action parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.publico.ViewHomepageDA" path="/showPublications">
                   <forward path="show-publications" name="showPublications"></forward>

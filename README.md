@@ -10,7 +10,6 @@ FenixEdu is a modular software platform for academic and administrative manageme
 - [Setup environment](#setup-environment)
 - [Compiling](#compiling)
 - [Bootstrapping](#bootstrapping)
-- [Generate Fenix API Documentation](#generate-fenix-api-documentation)
 - [Generate Fenix DML Zip](#generate-fenix-dml-zip)
 - [Troubleshooting](#troubleshooting)
 	- [Error compiling JasperReports](#error-compiling-jasperreports)
@@ -32,13 +31,6 @@ To compile Fenix, simply run:
 To initialize an instalation of Fenix in an empty Database, see: 
 
 http://fenixedu.org/dev/tutorials/install-fenix-edu/
-
-##Generate Fenix API Documentation
-
-    mvn test -PGenerateFenixAPIDocs
-
-creates `target/miredot/index.html`
-
 
 ##Generate Fenix DML Zip
 

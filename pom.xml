@@ -305,11 +305,6 @@
 			<version>2.2.3</version>
 		</dependency>
 		<dependency>
-			<groupId>com.qmino</groupId>
-			<artifactId>miredot-annotations</artifactId>
-			<version>1.2</version>
-		</dependency>
-		<dependency>
 			<groupId>pt.ist</groupId>
 			<artifactId>fenix-legacy-tools</artifactId>
 			<version>2.0.0</version>
@@ -346,51 +341,11 @@
 		</dependency>
 	</dependencies>
 
-	<profiles>
-		<profile>
-			<id>GenerateFenixAPIDocs</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>com.qmino</groupId>
-						<artifactId>miredot-maven-plugin</artifactId>
-						<version>1.2</version>
-						<executions>
-							<execution>
-								<goals>
-									<goal>restdoc</goal>
-								</goals>
-							</execution>
-						</executions>
-						<configuration>
-							<licence> <!-- Free open source license for the pro version of MireDot, valid for one year (expires 2014-09-23) -->
-								UHJvamVjdHxwdC5pc3R8ZmVuaXgjTUN3Q0ZIWGIrVlJsQ2hIWUJLUDJONWkyNG1CekpObHlBaFJDTnZ2K0hqZlcraVhoVFhwRG1BVWlubG9DVlE9PQ==
-							</licence>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
-
 	<repositories>
 		<repository>
 			<id>fenix-ashes-maven-repository</id>
 			<url>https://fenix-ashes.ist.utl.pt/nexus/content/groups/fenix-ashes-maven-repository</url>
 		</repository>
-		<repository>
-			<id>miredot</id>
-			<name>MireDot Releases</name>
-			<url>http://nexus.qmino.com/content/repositories/miredot</url>
-		</repository>
 	</repositories>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>miredot</id>
-			<name>MireDot Releases</name>
-			<url>http://nexus.qmino.com/content/repositories/miredot</url>
-		</pluginRepository>
-	</pluginRepositories>
 
 </project>

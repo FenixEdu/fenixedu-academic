@@ -108,9 +108,9 @@
 				
 				<div id="period" class="period first-period <%= periodType %> <%= newObject ? "newObject" : "" %>">
 					<header id="header">
-						<h4><bean:write name="period" property="name"/> <span><bean:write name="period" property="datesString"/></span></h4>
-						<span id="size">
+						<h4><bean:write name="period" property="name"/> <span class="small"><bean:write name="period" property="datesString"/> - 
 						<bean:message key="label.Total" bundle="APPLICATION_RESOURCES"/>: <bean:write name="size"/> <bean:message key="label.degrees" bundle="APPLICATION_RESOURCES"/></span>
+						</h4>
 						<span class="saveButton"><i> - <bean:message key="label.occupation.period.unsavedChanges" bundle="SOP_RESOURCES"/></i></span>
 						<a href="javascript:void(0);" class="edit-period"><img src="${pageContext.request.contextPath}/images/iconEditOff.png" /> <bean:message key="label.edit" bundle="APPLICATION_RESOURCES"/></a>
 					</header>

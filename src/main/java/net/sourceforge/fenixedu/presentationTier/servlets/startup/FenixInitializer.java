@@ -234,10 +234,10 @@ public class FenixInitializer implements ServletContextListener {
                 }
 
                 return (uri.indexOf("external/") == -1) && (uri.indexOf("login.do") == -1) && (uri.indexOf("loginCAS.do") == -1)
-                        && (uri.indexOf("loginExpired.do") == -1) && (uri.indexOf("logoff.do") == -1)
-                        && (uri.indexOf("publico/") == -1) && (uri.indexOf("showErrorPage.do") == -1)
-                        && (uri.indexOf("showErrorPageRegistered.do") == -1) && (uri.indexOf("exceptionHandlingAction.do") == -1)
-                        && (uri.indexOf("siteMap.do") == -1) && (uri.indexOf("fenixEduIndex.do") == -1);
+                        && (uri.indexOf("logoff.do") == -1) && (uri.indexOf("publico/") == -1)
+                        && (uri.indexOf("showErrorPage.do") == -1) && (uri.indexOf("showErrorPageRegistered.do") == -1)
+                        && (uri.indexOf("exceptionHandlingAction.do") == -1) && (uri.indexOf("siteMap.do") == -1)
+                        && (uri.indexOf("fenixEduIndex.do") == -1);
             }
 
         });

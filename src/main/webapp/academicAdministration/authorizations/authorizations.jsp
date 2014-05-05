@@ -63,7 +63,7 @@
 		<div class="edit-authorizations">
 			<div id="period" class="authorization period  ui-droppable ${memberRules.key.unit ? 'unit' : 'person'}">
 				<header id="header">
-					<h5>
+					<h4>
 						<logic:equal name="memberRules" property="key.person" value="true">
 							<bean:message bundle="APPLICATION_RESOURCES" key="person" />:
 							<bean:write name="memberRules" property="key.name" /> -
@@ -73,7 +73,7 @@
 							<bean:message bundle="APPLICATION_RESOURCES" key="label.party" />:
 							<bean:write name="memberRules" property="key.name" />
 						</logic:equal>
-					</h5>
+					</h4>
 					<html:link action="/authorizations.do?method=managePartyAuthorization" paramId="partyId" paramName="memberRules"
 							paramProperty="key.externalId" styleClass="edit-auth">
 						<img src="${pageContext.request.contextPath}/images/iconEditOff.png" />

@@ -33,7 +33,7 @@ public class HomeAction extends Action {
 
     private MenuItem findTopLevelContainer() {
         for (MenuItem item : PortalConfiguration.getInstance().getMenu().getOrderedChild()) {
-            if (item.isAvailableForCurrentUser()) {
+            if (item.isAvailableForCurrentUser() && item.isVisible()) {
                 return item;
             }
         }

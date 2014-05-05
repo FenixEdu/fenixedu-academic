@@ -137,7 +137,7 @@
             </action>
       </action-mappings>
       <!-- ========== Controller Configuration ================================ -->
-      <controller processorClass="pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessor"></controller>
+      <controller processorClass="pt.ist.fenixWebFramework.renderers.plugin.SimpleRenderersRequestProcessor"></controller>
       <!-- ========== Message Resources Definitions ============================ -->
       <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
       <message-resources null="false" parameter="resources.ResearcherResources"></message-resources>
@@ -152,13 +152,6 @@
       <!-- ========== Plug Ins Configuration ================================= -->
       <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
             <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml" property="pathnames"></set-property>
-      </plug-in>
-      <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin">
-            <set-property value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/researcher/tiles-researcher-definitions.xml,/WEB-INF/tiles/researcher/tiles-researcher-pages-definitions.xml" property="definitions-config"></set-property>
-            <set-property value="true" property="moduleAware"></set-property>
-            <set-property value="true" property="definitions-parser-validate"></set-property>
-            <set-property value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" property="factoryClassname"></set-property>
-            <set-property value="researcher.masterPage" property="defaultTileDefinition"></set-property>
       </plug-in>
       <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
 </struts-config>

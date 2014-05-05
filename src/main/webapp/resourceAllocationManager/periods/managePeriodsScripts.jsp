@@ -42,7 +42,7 @@ ul {
 }
 
 #period header {
-	padding: 6px 14px;
+	padding: 15px 14px;
 	border-bottom: 1px solid #cccccc;
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
@@ -50,6 +50,8 @@ ul {
 	text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.5);
 	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.08), 0px 1px 3px
 		rgba(255, 255, 255, 0.6) inset;
+	display: block;
+	margin-top: 0;
 }
 
 #period header h2 span {
@@ -58,15 +60,13 @@ ul {
 
 #period header span {
 	color: #666;
-	font-size: 13px;
-	font-weight: normal;
 }
 
 #period header a.edit-period {
 	color: #848484;
 	font-size: 12px;
 	font-weight: bold;
-	float: right;
+	float: right !important;
 	margin-top: -14px;
 	text-decoration: none;
 	border-bottom: none;
@@ -136,7 +136,7 @@ ul.courses-list {
 	display: inline-block;
 	margin-left: 8px;
 	margin-bottom: 8px;
-	padding: 3px 5px;
+	padding: 5px 5px;
 }
 
 #periods-filters span.classes,

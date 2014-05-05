@@ -163,7 +163,7 @@ public class AnnouncementRSS extends RSSAction {
     protected final AnnouncementBoard getSelectedBoard(HttpServletRequest request) {
         final String id = request.getParameter("announcementBoardId");
         final DomainObject object = FenixFramework.getDomainObject(id);
-        return object instanceof AnnouncementBoard ? (AnnouncementBoard) object : null;
+        return object instanceof AnnouncementBoard && FenixFramework.isDomainObjectValid(object) ? (AnnouncementBoard) object : null;
     }
 
     @Override

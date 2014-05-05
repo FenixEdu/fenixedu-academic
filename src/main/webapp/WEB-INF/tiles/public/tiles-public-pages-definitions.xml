@@ -133,10 +133,6 @@
 		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
 		<put name="body" value="/publico/viewExamsMap_bd.jsp"/>
 	</definition>
-	<definition name="executionCourseSite" extends="definition.publico.executionCourseSitePage">
-		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
-		<put name="body" value="/publico/executionCourseSite.jsp"/>
-	</definition>
 	<definition name="viewClasses" extends="definition.public.mainPageIST">
 		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />
 		<put name="body" value="/publico/viewClasses1_bd.jsp"/>

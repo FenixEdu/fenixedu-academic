@@ -1,11 +1,10 @@
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
-<%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <html:html xhtml="true">
 <body>
 	<div id="header">
-		<tiles:insert page="/commons/fenixEduBar.jsp" />
+		<jsp:include page="/commons/fenixEduBar.jsp" />
 	</div>
 	
 	<div id="content">
@@ -15,13 +14,13 @@
 		</div>
 		<center class="button-holder">
 		<% if(AccessControl.getPerson() != null){%>
-		<a class="page-button primary" href="<%= request.getContextPath() + "/home.do" %>">
+		<!-- NO_CHECKSUM --><a class="page-button primary" href="<%= request.getContextPath() + "/home.do" %>">
 			<bean:message key="local.private" bundle="GLOBAL_RESOURCES"/></a>
 		<% }%>
-		<a class="page-button" href="<%= request.getContextPath() + "/siteMap.do" %>">
+		<!-- NO_CHECKSUM --><a class="page-button" href="<%= request.getContextPath() + "/siteMap.do" %>">
 			<bean:message key="local.site.map" bundle="GLOBAL_RESOURCES"/></a>
 		<% if(AccessControl.getPerson() != null){%>
-		<a class="page-button" href="<%= request.getContextPath() + "/exceptionHandlingAction.do?method=prepareSupportHelp" %>">
+		<!-- NO_CHECKSUM --><a class="page-button" href="<%= request.getContextPath() + "/exceptionHandlingAction.do?method=prepareSupportHelp" %>">
 			<bean:message key="local.support.form" bundle="GLOBAL_RESOURCES"/></a>
 		<% }%>
 		</center>

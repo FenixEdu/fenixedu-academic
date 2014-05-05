@@ -24,6 +24,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixframework.DomainObject;
+
 public abstract class PublicShowThesesDA extends FenixDispatchAction {
 
     protected Boolean getFromRequestBoolean(String parameter, HttpServletRequest request) {
@@ -146,10 +148,14 @@ public abstract class PublicShowThesesDA extends FenixDispatchAction {
 
     public ActionForward showThesisDetails(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        Thesis thesis = getDomainObject(request, "thesisID");
-        request.setAttribute("thesis", thesis);
-
-        return mapping.findForward("showThesisDetails");
+        DomainObject thesis = getDomainObject(request, "thesisID");
+        if (thesis instanceof Thesis) {
+            request.setAttribute("thesis", thesis);
+            return mapping.findForward("showThesisDetails");
+        } else {
+            request.getRequestDispatcher("/notFound.jsp").forward(request, response);
+            return null;
+        }
     }
 
     public ActionForward showResult(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

@@ -31,4 +31,8 @@ public final class DefaultForwards {
     public static class NotFoundAction extends ForwardAction {
     }
 
+    @Mapping(path = "/fenixEduIndex", parameter = "/fenixEduIndex.jsp")
+    public static class FenixEduIndexAction extends ForwardAction {
+    }
+
 }

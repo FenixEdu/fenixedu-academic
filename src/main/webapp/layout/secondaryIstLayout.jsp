@@ -30,8 +30,7 @@
 <p class="skipnav"><a href="#main">Saltar men&uacute; de navega&ccedil;&atilde;o</a></p>
 <!-- START HEADER -->
 	<div id="logoist">
-		<h1><a href="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>"><%= net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName().getContent() %></a></h1>
-		<!-- <img alt="[Logo] Instituto Superior Técnico" height="51" src="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>img/wwwist.gif" width="234" /> -->
+		<a href="<%= net.sourceforge.fenixedu.domain.Installation.getInstance().getInstituitionURL() %>"><img src="${pageContext.request.contextPath}/api/bennu-portal/configuration/logo" /></a>
 	</div>
 	<div id="header_links"><a href="https://fenix.ist.utl.pt/loginPage.jsp">Login <%=PortalConfiguration.getInstance().getApplicationTitle().getContent() %></a> | <a href="#">Contactos</a></div>
 <!-- END HEADER -->

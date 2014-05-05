@@ -6,7 +6,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://jakarta.apache.org/taglibs/datetime-1.0" prefix="dt"%>
-<%@ taglib uri="http://jakarta.apache.org/taglibs/string-1.0.1" prefix="str"%>
 <html:xhtml />
 
 <bean:define id="institutionUrl" type="java.lang.String">
@@ -15,12 +14,6 @@
 <bean:define id="institutionName" type="java.lang.String">
 	<%=Unit.getInstitutionName()%>
 </bean:define>
-<bean:define id="centralApplicationsUrl" type="java.lang.String">
-	<bean:message key="centralApplications.url" bundle="GLOBAL_RESOURCES" />
-</bean:define>
-	<bean:define id="supportLink" type="java.lang.String">mailto:<bean:message key="suporte.mail" bundle="GLOBAL_RESOURCES" />
-</bean:define>
-<%-- <bean:define id="contextId" name="<%=net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY%>" property="selectedTopLevelContainer.externalId" /> --%>
 
 <head>
 	<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/fenixEduBar.css" media="screen" />
@@ -34,7 +27,7 @@
 	<div id="authentication">
 		<logic:notPresent name="LOGGED_USER_ATTRIBUTE">
 			<h1 id="logout">
-				<html:link styleClass="button" href="loginPage.jsp">Login</html:link>
+				<!-- NO_CHECKSUM --><html:link styleClass="button" href="loginPage.jsp">Login</html:link>
 			</h1>
 		</logic:notPresent>
 		

@@ -15,8 +15,10 @@
 
 /* Typography */
 
-header, nav, section, article, aside, footer {
-	display:block;
+#authorizationList header {
+	margin-top: 0;
+	padding-top: 5px;
+	display: block;
 }
 
 #cursos_acc.affix {
@@ -74,7 +76,7 @@ ul {
 }
 
 #period header {
-	padding: 6px 14px;
+	padding: 15px 14px;
 	border-bottom: 1px solid #cccccc;
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
@@ -98,7 +100,7 @@ ul {
 	color: #848484;
 	font-size: 12px;
 	font-weight: bold;
-	float: right;
+	float: right !important;
 	margin-top: -20px;
 	text-decoration: none;
 	border-bottom: none;
@@ -554,13 +556,8 @@ a,input,.symbol {
 		return OIDs;
 	}
 	
-	var stuff;
-	
 	function changedValue(element) {
-		
-		var newValue = element.attr("value");
-		
-		stuff = element;
+		var newValue = element.find(":selected").val();
 		
 		if($.inArray(newValue, allowPrograms) > -1) {
 			element.parents().eq(5).find("#programs").removeClass('inactive');

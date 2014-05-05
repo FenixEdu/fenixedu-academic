@@ -163,7 +163,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import com.qmino.miredot.annotations.ReturnType;
 
 @SuppressWarnings("unchecked")
 @Path("/fenix/v1")
@@ -447,7 +446,6 @@ public class FenixAPIv1 {
     @FenixAPIScope(SCHEDULE_SCOPE)
     @GET
     @Path("person/calendar/evaluations")
-    @ReturnType("net.sourceforge.fenixedu.webServices.jersey.beans.FenixCalendar")
     public Response calendarEvaluation(@QueryParam("format") String format) {
         validateFormat(format);
         final Person person = getPerson();
@@ -500,7 +498,6 @@ public class FenixAPIv1 {
     @FenixAPIScope(SCHEDULE_SCOPE)
     @GET
     @Path("person/calendar/classes")
-    @ReturnType("net.sourceforge.fenixedu.webServices.jersey.beans.FenixCalendar")
     public Response calendarClasses(@QueryParam("format") String format) {
         validateFormat(format);
         Person person = getPerson();
