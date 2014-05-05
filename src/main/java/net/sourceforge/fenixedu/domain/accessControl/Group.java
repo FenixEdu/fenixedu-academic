@@ -51,7 +51,6 @@ import org.fenixedu.bennu.core.domain.User;
  * @deprecated Use Bennu Groups instead
  */
 @Deprecated
-@Deprecated
 public abstract class Group implements Serializable, IGroup {
 
     private static final long serialVersionUID = 1L;
