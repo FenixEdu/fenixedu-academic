@@ -524,7 +524,7 @@
     
     <!-- validation for the insertGroupPropertiesForm -->
     
-   	<form name="groupPropertiesForm">   	
+   	<form name="studentGroupsForm">   	
    	<field property="name" depends="required" page="1">
 		<arg0 key="message.groupPropertiesName" resource="true"/>
 	</field>
@@ -595,7 +595,7 @@
     <!-- validation for the editGroupPropertiesForm -->
     
     
-    <form name="groupPropertiesForm1">
+    <form name="studentGroupsForm">
    	
    	<field property="name" depends="required" page="1">
 		<arg0 key="message.groupPropertiesName" resource="true"/>

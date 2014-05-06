@@ -98,4 +98,4 @@
 
 <br />
 <br />
-<html:link href="finalWorkManagement.do?method=chooseDegree"><bean:message bundle="APPLICATION_RESOURCES" key="button.back"/></html:link>
+<html:link action="/finalWorkManagement.do?method=chooseDegree"><bean:message bundle="APPLICATION_RESOURCES" key="button.back"/></html:link>

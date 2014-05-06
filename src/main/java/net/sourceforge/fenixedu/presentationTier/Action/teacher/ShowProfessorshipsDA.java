@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -26,6 +25,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
+
+import com.google.common.collect.Ordering;
 
 @StrutsFunctionality(app = TeacherTeachingApp.class, path = "manage-execution-course", titleKey = "link.manage.executionCourse")
 @Mapping(module = "teacher", path = "/showProfessorships")
@@ -52,7 +53,8 @@ public class ShowProfessorshipsDA extends FenixAction {
         request.setAttribute("executionCourses", executionCourses);
 
         final Person person = AccessControl.getPerson();
-        final SortedSet<ExecutionSemester> executionSemesters = new TreeSet<ExecutionSemester>();
+        final SortedSet<ExecutionSemester> executionSemesters =
+                new TreeSet<ExecutionSemester>(Ordering.from(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR).reverse());
         if (person != null) {
             for (final Professorship professorship : person.getProfessorshipsSet()) {
                 final ExecutionCourse executionCourse = professorship.getExecutionCourse();
@@ -65,12 +67,9 @@ public class ShowProfessorshipsDA extends FenixAction {
             }
         }
         executionSemesters.add(ExecutionSemester.readActualExecutionSemester());
-        Collections.sort(executionCourses, ExecutionCourse.EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
-        Collections.reverse(executionCourses);
 
         request.setAttribute("semesters", executionSemesters);
 
         return mapping.findForward("list");
     }
-
 }

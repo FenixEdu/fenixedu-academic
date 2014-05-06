@@ -4,28 +4,32 @@
 <c:set var="base" value="${pageContext.request.contextPath}/teacher" />
 
 <div class="row">
-	<div class="col-lg-2">
-		<br />
+	<nav class="col-sm-2" id="context">
 		<ul class="nav nav-pills nav-stacked">
-			<li>
+			<li class="navheader">
 				<strong>${executionCourse.prettyAcronym}</strong>
 			</li>
+			<c:if test="${not empty executionCourse.site}">
+				<li>
+					<a href="${executionCourse.site.fullPath}" target="_blank">
+						<bean:message key="link.executionCourseManagement.menu.view.course.page"/>
+					</a>
+				</li>
+			</c:if>
 			<li>
 				<a href="${base}/manageExecutionCourse.do?method=instructions&executionCourseID=${executionCourse.externalId}">
 					<bean:message key="label.instructions"/>
 				</a>
 			</li>
+		</ul>
+		<ul class="nav nav-pills nav-stacked">
+			<li class="navheader">
+				<strong><bean:message key="label.management" /></strong>
+			</li>
 			<c:if test="${professorship.permissions.personalization}">
 				<li>
 					<a href="${base}/alternativeSite.do?method=prepareCustomizationOptions&executionCourseID=${executionCourse.externalId}">
 						<bean:message key="link.personalizationOptions"/>
-					</a>
-				</li>
-			</c:if>
-			<c:if test="${not empty executionCourse.site}">
-				<li>
-					<a href="${executionCourse.site.fullPath}" target="_blank">
-						<bean:message key="link.executionCourseManagement.menu.view.course.page"/>
 					</a>
 				</li>
 			</c:if>
@@ -44,9 +48,8 @@
 				</li>
 			</c:if>
 		</ul>
-		<br />
 		<ul class="nav nav-pills nav-stacked">
-			<li>
+			<li class="navheader">
 				<strong><bean:message key="label.executionCourseManagement.menu.communication"/></strong>
 			</li>
 			<c:if test="${professorship.permissions.announcements}">
@@ -69,9 +72,8 @@
 				</li>
 			</c:if>
 		</ul>
-		<br />
 		<ul class="nav nav-pills nav-stacked">
-			<li>
+			<li class="navheader">
 				<strong><bean:message key="label.executionCourseManagement.menu.management"/></strong>
 			</li>
 			<c:if test="${professorship.permissions.summaries}">
@@ -127,9 +129,8 @@
 				</li>
 			</c:if>
 		</ul>
-		<br />
 		<ul class="nav nav-pills nav-stacked">
-			<li>
+			<li class="navheader">
 				<strong><bean:message key="label.executionCourseManagement.menu.curricularInfo"/></strong>
 			</li>
 			<li>
@@ -157,9 +158,8 @@
 				</li>
 			</c:if>
 		</ul>
-		<br />
 		<ul class="nav nav-pills nav-stacked">
-			<li>
+			<li class="navheader">
 				<strong><bean:message key="label.executionCourseManagement.menu.curricularUnitsQuality"/></strong>
 			</li>
 			<li>
@@ -175,13 +175,13 @@
 				</li>
 			</c:if>
 		</ul>
-	</div>
-	<div class="col-lg-10">
+	</nav>
+	<main class="col-sm-10">
 		<ol class="breadcrumb">
 			<em>${executionCourse.name} - ${executionCourse.executionPeriod.qualifiedName}
 				(<c:forEach var="degree" items="${executionCourse.degreesSortedByDegreeName}"> ${degree.sigla} </c:forEach>)
 			</em>
 		</ol>
 		<jsp:include page="${teacher$actual$page}" />
-	</div>
+	</main>
 </div>

@@ -8,8 +8,7 @@
 <fp:select actionClass="net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA" />
 
 <div class="row">
-	<div class="col-lg-2">
-		<br />
+	<nav class="col-lg-2" id="context">
 		<ul class="nav nav-pills nav-stacked">
 			<li>
 				<a href="${base}/manageExecutionCourse.do?method=instructions&executionCourseID=${executionCourse.externalId}">
@@ -17,9 +16,8 @@
 				</a>
 			</li>
 		</ul>
-		<br />
 		<ul class="nav nav-pills nav-stacked">
-			<li>
+			<li class="navheader">
 				<strong><bean:message key="link.evaluation"/></strong>
 			</li>
 			<c:if test="${professorship.permissions.evaluationSpecific}">
@@ -66,8 +64,8 @@
 				</li>
 			</c:if>
 		</ul>
-	</div>
-	<div class="col-lg-10">
+	</nav>
+	<main class="col-lg-10">
 		<ol class="breadcrumb">
 			<em>${executionCourse.name} - ${executionCourse.executionPeriod.qualifiedName}
 				(<c:forEach var="degree" items="${executionCourse.degreesSortedByDegreeName}"> ${degree.sigla} </c:forEach>)

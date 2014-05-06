@@ -66,13 +66,11 @@
     </p>
 
     <p>
-	    <h3>
-	    	<a href="${pageContext.request.contextPath}/person/manageHomepage.do?method=sections"><bean:message key="link.manage.homepage.content" /></a>
-	    </h3>
-    </p>
+		<a href="${pageContext.request.contextPath}/person/manageHomepage.do?method=sections" class="btn btn-primary"><bean:message key="label.manage.content" bundle="CONTENT_RESOURCES" /></a>
+	</p>
 
 	<p>
-        <h3 class="mtop2"><bean:message key="label.homepage.components" bundle="HOMEPAGE_RESOURCES"/></h3>
+        <h3><bean:message key="label.homepage.components" bundle="HOMEPAGE_RESOURCES"/></h3>
     </p>
 
     <div class="infoop2">

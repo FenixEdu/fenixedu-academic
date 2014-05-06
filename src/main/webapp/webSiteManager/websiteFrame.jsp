@@ -11,23 +11,26 @@
 <bean:define id="announcementsActionName" name="announcementsActionName"/>
 
 <div class="row">
-	<div class="col-lg-2">
-		<br />
+	<nav class="col-sm-2" id="context">
 		<ul class="nav nav-pills nav-stacked">
 			<li>
 				<html:link page="<%= "/index.do" %>">
 					<bean:message key="link.website.listSites"/>
 				</html:link>
 			</li>
+		</ul>
+		<ul class="nav nav-pills nav-stacked">
+			<li class="navheader">
+				<strong>${site.unit.acronym}</strong>
+			</li>
 		    <li>
-		    	<a href="${site.fullPath}">
+		    	<a href="${site.fullPath}" target="_blank">
 			    	<bean:message key="link.site.view" bundle="WEBSITEMANAGER_RESOURCES"/>
 			    </a>
 		    </li>
 		</ul>
-		<br />
 		<ul class="nav nav-pills nav-stacked">
-			<li>
+			<li class="navheader">
 				<strong><bean:message key="title.site.configuration" bundle="WEBSITEMANAGER_RESOURCES"/></strong>
 			</li>
 		    <li>
@@ -46,9 +49,8 @@
 		        </html:link>
 		    </li>
 		</ul>
-		<br />
 		<ul class="nav nav-pills nav-stacked">
-			<li>
+			<li class="navheader">
 				<strong><bean:message bundle="WEBSITEMANAGER_RESOURCES" key="title.site.manageContents"/></strong>
 			</li>
 		    <li>
@@ -93,9 +95,8 @@
 		        </html:link>
 		    </li>
 		</ul>
-		<br />
 		<ul class="nav nav-pills nav-stacked">
-			<li>
+			<li class="navheader">
 				<strong><bean:message key="title.site.manage" bundle="WEBSITEMANAGER_RESOURCES"/></strong>
 			</li>
 			<li>
@@ -105,9 +106,8 @@
 			</li>
 		</ul>
 		<c:if test="${researchUnit}">
-			<br />
 			<ul class="nav nav-pills nav-stacked">
-				<li>
+				<li class="navheader">
 					<strong><bean:message key="link.site.researchUnit" bundle="WEBSITEMANAGER_RESOURCES"/></strong>
 				</li>
 			    <li>
@@ -117,12 +117,12 @@
 			    </li>
 			</ul>
 		</c:if>
-	</div>
-	<div class="col-lg-10">
+	</nav>
+	<main class="col-sm-10">
 		<bean:define id="unitId" name="site" property="unit.externalId"/>
 		<ol class="breadcrumb">
 			<em>${site.unit.nameWithAcronym}</em>
 		</ol>
 		<jsp:include page="${actual$page}" />
-	</div>
+	</main>
 </div>

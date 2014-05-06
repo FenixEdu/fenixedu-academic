@@ -221,7 +221,7 @@
 			</fr:context>
 		</html:form>
 
-		<html:form action="/viewExecutionCourseProjects">
+		<html:form action="/studentGroupManagement">
 			<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel"
 				styleClass="inputbutton">
 				<bean:message key="button.cancel" />

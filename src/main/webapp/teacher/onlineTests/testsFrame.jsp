@@ -2,20 +2,24 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <html:xhtml/>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <div class="row">
-	<div class="col-lg-2">
-		<br />
+	<nav class="col-lg-2" id="context">
 		<ul class="nav nav-pills nav-stacked">
+			<li>
+				<html:link page="/manageExecutionCourse.do?method=instructions" paramId="executionCourseID" paramName="executionCourseID">
+					<bean:message key="label.back"/>
+				</html:link>
+			</li>
 			<li>
 				<html:link page="/testsManagement.do?method=testsFirstPage" paramId="executionCourseID" paramName="executionCourseID">
 					<bean:message key="link.home"/>
 				</html:link>
 			</li>
 		</ul>
-		<br />
 		<ul class="nav nav-pills nav-stacked">
-			<li>
+			<li class="navheader">
 				<strong><bean:message key="title.tests"/></strong>
 			</li>
 			<li>
@@ -34,9 +38,8 @@
 				</html:link>
 			</li>
 		</ul>
-		<br />
 		<ul class="nav nav-pills nav-stacked">
-			<li>
+			<li class="navheader">
 				<strong><bean:message key="title.exercises"/></strong>
 			</li>
 			<li>
@@ -55,23 +58,15 @@
 				</html:link>
 			</li>
 		</ul>
-		<br />
-		<ul class="nav nav-pills nav-stacked">
-			<li>
-				<html:link page="/manageExecutionCourse.do?method=instructions" paramId="executionCourseID" paramName="executionCourseID">
-					<bean:message key="link.executionCourseAdministration"/>
-				</html:link>
-			</li>
-		</ul>
-	</div>
-	<div class="col-lg-10">
+	</nav>
+	<main class="col-lg-10">
 		<ol class="breadcrumb">
 			<em>${executionCourse.name} - ${executionCourse.executionPeriod.qualifiedName}
 				(<c:forEach var="degree" items="${executionCourse.degreesSortedByDegreeName}"> ${degree.sigla} </c:forEach>)
 			</em>
 		</ol>
 		<jsp:include page="${teacher$actual$page}" />
-	</div>
+	</main>
 </div>
 
 <style>
