@@ -1272,7 +1272,7 @@ public class Person extends Person_Base {
     private boolean canBeDeleted() {
         return !hasAnyPartyContacts() && !hasAnyChilds() && !hasAnyParents() && !hasAnyDomainObjectActionLogs()
                 && !hasAnyExportGroupingReceivers() && !hasAnyPersistentGroups() && !hasAnyPersonSpaceOccupations()
-                && !hasAnyPunctualRoomsOccupationComments() && !hasAnyVehicleAllocations()
+                && !hasAnyPunctualRoomsOccupationComments()
                 && !hasAnyPunctualRoomsOccupationRequests() && !hasAnyPunctualRoomsOccupationRequestsToProcess()
                 && !hasAnyAssociatedQualifications() && !hasAnyAssociatedAlteredCurriculums() && !hasAnyEnrolmentEvaluations()
                 && !hasAnyExportGroupingSenders() && !hasAnyResponsabilityTransactions() && !hasAnyMasterDegreeCandidates()
@@ -4913,16 +4913,6 @@ public class Person extends Person_Base {
     @Deprecated
     public boolean hasAnyPhdAlertMessages() {
         return !getPhdAlertMessagesSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.material.PersonExtension> getExtensions() {
-        return getExtensionsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyExtensions() {
-        return !getExtensionsSet().isEmpty();
     }
 
     @Deprecated

@@ -3738,11 +3738,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
 		DateTime entryDate;
 	}
 	
-    class material.PersonExtension  {
-        YearMonthDay begin;
-        YearMonthDay end;
-    }
-
     class onlineTests.DistributedTest  {
         YearMonthDay beginDateDateYearMonthDay;
         HourMinuteSecond beginHourDateHourMinuteSecond;
@@ -4048,14 +4043,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
     class resource.ResourceAllocation  {
     }
 
-        class resource.VehicleAllocation extends resource.ResourceAllocation {
-            DateTime beginDateTime;
-            DateTime endDateTime;
-            String reason;
-            BigDecimal distance;                            
-            BigDecimal amountCharged;
-        }
-
         class space.SpaceOccupation extends resource.ResourceAllocation {
         }
 
@@ -4074,14 +4061,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
                 class space.WrittenEvaluationSpaceOccupation extends space.EventSpaceOccupation {
                 }
 
-            class space.MaterialSpaceOccupation extends space.SpaceOccupation {
-                YearMonthDay begin;
-                YearMonthDay end;
-            }
-
-                class space.ExtensionSpaceOccupation extends space.MaterialSpaceOccupation {
-                }
-
             class space.PersonSpaceOccupation extends space.SpaceOccupation {
                 YearMonthDay begin;
                 YearMonthDay end;
@@ -4091,31 +4070,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
                 YearMonthDay begin;
                 YearMonthDay end;
             }           
-
-        class material.Material extends resource.Resource {
-            YearMonthDay acquisition;
-            String barCodeNumber;
-            YearMonthDay cease;
-            String identification;
-        }
-
-            class material.Extension extends material.Material {
-            }
-
-            class material.FireExtinguisher extends material.Material {
-                String delivererEnterprise;
-                YearMonthDay loadedDate;
-                YearMonthDay toBeInspectedDate;
-            }
-
-        class resource.Vehicle extends resource.Resource {
-            YearMonthDay acquisition;
-            YearMonthDay cease;
-            String make;
-            String model;
-            String numberPlate;
-            BigDecimal allocationCostMultiplier;            
-        }
 
         class space.Space extends resource.Resource {
             YearMonthDay createdOn;
@@ -4145,9 +4099,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
         YearMonthDay begin;
         YearMonthDay end;
     }
-
-        class material.MaterialResponsibility extends resource.ResourceResponsibility {
-        }
 
         class space.SpaceResponsibility extends resource.ResourceResponsibility {
         }
@@ -11346,13 +11297,6 @@ relation MasterDegreeThesisStudentCurricularPlan {
     StudentCurricularPlan playsRole studentCurricularPlan;
 }
 
-relation MaterialSpaceOccupationMaterial {
-    material.Material playsRole material;
-    space.MaterialSpaceOccupation playsRole materialSpaceOccupations {
-        multiplicity *;
-    }
-}
-
 relation MetadataFromExecutionCourse {
     onlineTests.Metadata playsRole metadatas {
         multiplicity *;
@@ -11733,20 +11677,6 @@ relation PersonDepartment {
         multiplicity *;
     }
     Department playsRole manageableDepartmentCredits {
-        multiplicity *;
-    }
-}
-
-relation PersonExtensionExtension {
-    material.Extension playsRole extension;
-    material.PersonExtension playsRole persons {
-        multiplicity *;
-    }
-}
-
-relation PersonExtensionPerson {
-    Person playsRole person;
-    material.PersonExtension playsRole extensions {
         multiplicity *;
     }
 }
@@ -14999,13 +14929,6 @@ relation UserPerson {
 relation UserPrivateKeyUser {
     UserPrivateKey playsRole privateKey;
     .org.fenixedu.bennu.core.domain.User playsRole;
-}
-
-relation VehicleAllocationRequestor {
-    organizationalStructure.Party playsRole requestor;
-    resource.VehicleAllocation playsRole vehicleAllocations {
-        multiplicity *;
-    }
 }
 
 relation VigilantGroupBelongsToUnit {

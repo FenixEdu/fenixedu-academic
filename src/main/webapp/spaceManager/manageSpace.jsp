@@ -465,27 +465,6 @@
 		}
 	%>
 
-	<%-- Material Occupations --%>	
-	<h3 class="mtop2 mbottom05"><bean:message bundle="SPACE_RESOURCES" key="label.active.material.occupations"/></h3>
-	<logic:notEmpty name="selectedSpaceInformation" property="space.activeSpaceMaterial">
-		<fr:view schema="ViewSpaceMaterial" name="selectedSpaceInformation" property="space.activeSpaceMaterial">
-			<fr:layout name="tabular">      			
-	   			<fr:property name="classes" value="tstyle4 thlight tdcenter mvert0"/>  			
-	   		</fr:layout>	
-		</fr:view>			
-	</logic:notEmpty>
-	<logic:empty name="selectedSpaceInformation" property="space.activeSpaceMaterial">
-		<p class="mtop05 mbottom025"><em><bean:message key="label.empty.material.occupations" bundle="SPACE_RESOURCES"/>.</em></p>		
-	</logic:empty>
-	<%
-		if(thisSpace.personHasPermissionToManageExtensionOccupations(person.getUser()) || thisSpace.personHasPermissionsToManageSpace(person.getUser())){
-	%>
-	<p class="mtop025"><html:link page="/manageMaterialSpaceOccupations.do?method=showMaterialSpaceOccupations" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="externalId">
-		<bean:message bundle="SPACE_RESOURCES" key="link.manage.material.occupations"/>
-	</html:link></p>
-	<%
-		}
-	%>	
 		
 	<%
 		if(Space.personIsSpacesAdministrator(person)){

@@ -4,7 +4,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Blueprint;
-import net.sourceforge.fenixedu.domain.space.ExtensionSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.GenericEventSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.LessonInstanceSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.LessonSpaceOccupation;
@@ -88,14 +87,6 @@ public class SpacePredicates {
                 @Override
                 public boolean evaluate(GenericEventSpaceOccupation spaceOccupation) {
 //                    ResourceAllocationRole.checkIfPersonHasPermissionToManageSpacesAllocation(AccessControl.getPerson());
-                    return checkPermissionsToManageOccupations.evaluate(spaceOccupation);
-                }
-            };
-
-    public static final AccessControlPredicate<ExtensionSpaceOccupation> checkPermissionsToManageExtensionSpaceOccupations =
-            new AccessControlPredicate<ExtensionSpaceOccupation>() {
-                @Override
-                public boolean evaluate(ExtensionSpaceOccupation spaceOccupation) {
                     return checkPermissionsToManageOccupations.evaluate(spaceOccupation);
                 }
             };

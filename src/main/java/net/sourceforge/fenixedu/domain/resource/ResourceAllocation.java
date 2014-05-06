@@ -29,10 +29,6 @@ public abstract class ResourceAllocation extends ResourceAllocation_Base {
         return false;
     }
 
-    public boolean isVehicleAllocation() {
-        return false;
-    }
-
     public boolean isPersonSpaceOccupation() {
         return false;
     }

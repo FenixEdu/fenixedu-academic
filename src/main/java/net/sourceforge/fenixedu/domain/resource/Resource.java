@@ -27,10 +27,6 @@ public abstract class Resource extends Resource_Base {
         return false;
     }
 
-    public boolean isVehicle() {
-        return false;
-    }
-
     public boolean isMaterial() {
         return false;
     }

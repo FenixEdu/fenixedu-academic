@@ -93,8 +93,6 @@ Documentation:
         <property name="format" value="${degree.sigla} ${initialDateYearMonthDay.year}"/>
     </renderer>
         
-    <renderer type="net.sourceforge.fenixedu.domain.resource.Vehicle" layout="vehicle-plain" class="net.sourceforge.fenixedu.presentationTier.renderers.VehiclePlainRenderer"/>
-    
     <renderer type="net.sourceforge.fenixedu.domain.Shift" layout="shift-plain" class="net.sourceforge.fenixedu.presentationTier.renderers.ShiftPlainRenderer"/>
 
  	<renderer type="net.sourceforge.fenixedu.domain.Lesson" layout="lesson-plain" class="net.sourceforge.fenixedu.presentationTier.renderers.LessonPlainRenderer"/>

@@ -22,8 +22,6 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.material.Extension;
-import net.sourceforge.fenixedu.domain.material.Material;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
@@ -225,16 +223,6 @@ public abstract class Space extends Space_Base {
         return result;
     }
 
-    public List<MaterialSpaceOccupation> getMaterialSpaceOccupations() {
-        List<MaterialSpaceOccupation> materialSpaceOccupations = new ArrayList<MaterialSpaceOccupation>();
-        for (ResourceAllocation allocation : getResourceAllocations()) {
-            if (allocation.isMaterialSpaceOccupation()) {
-                materialSpaceOccupations.add((MaterialSpaceOccupation) allocation);
-            }
-        }
-        return materialSpaceOccupations;
-    }
-
     public List<UnitSpaceOccupation> getUnitSpaceOccupations() {
         List<UnitSpaceOccupation> unitSpaceOccupations = new ArrayList<UnitSpaceOccupation>();
         for (ResourceAllocation allocation : getResourceAllocations()) {
@@ -368,53 +356,6 @@ public abstract class Space extends Space_Base {
         return unitSpaceOccupations;
     }
 
-    public SortedSet<Material> getActiveSpaceMaterial() {
-        SortedSet<Material> spaceMaterial = new TreeSet<Material>(Material.COMPARATOR_BY_CLASS_NAME);
-        YearMonthDay current = new YearMonthDay();
-        for (MaterialSpaceOccupation materialSpaceOccupation : getMaterialSpaceOccupations()) {
-            if (materialSpaceOccupation.isActive(current)) {
-                spaceMaterial.add(materialSpaceOccupation.getMaterial());
-            }
-        }
-        return spaceMaterial;
-    }
-
-    public SortedSet<MaterialSpaceOccupation> getActiveMaterialSpaceOccupationsToLoggedPerson() {
-        return getMaterialSpaceOccupationsToLoggedPersonByState(true);
-    }
-
-    public SortedSet<MaterialSpaceOccupation> getInactiveMaterialSpaceOccupationsToLoggedPerson() {
-        return getMaterialSpaceOccupationsToLoggedPersonByState(false);
-    }
-
-    private SortedSet<MaterialSpaceOccupation> getMaterialSpaceOccupationsToLoggedPersonByState(boolean state) {
-
-        SortedSet<MaterialSpaceOccupation> materialOccupations =
-                new TreeSet<MaterialSpaceOccupation>(MaterialSpaceOccupation.COMPARATOR_BY_CLASS_NAME);
-        YearMonthDay current = new YearMonthDay();
-        User user = Authenticate.getUser();
-
-        for (MaterialSpaceOccupation materialSpaceOccupation : getMaterialSpaceOccupations()) {
-            if (materialSpaceOccupation.isActive(current) == state
-                    && (materialSpaceOccupation.getSpace().personHasPermissionsToManageSpace(user) || (materialSpaceOccupation
-                            .getAccessGroup() != null && materialSpaceOccupation.getAccessGroup().isMember(user)))) {
-                materialOccupations.add(materialSpaceOccupation);
-            }
-        }
-        return materialOccupations;
-    }
-
-    public Set<? extends MaterialSpaceOccupation> getMaterialSpaceOccupationsByMaterialClass(
-            Class<? extends MaterialSpaceOccupation> clazz) {
-        Set<MaterialSpaceOccupation> materialOccupations = new HashSet<MaterialSpaceOccupation>();
-        for (MaterialSpaceOccupation occupation : getMaterialSpaceOccupations()) {
-            if (occupation.getClass().equals(clazz)) {
-                materialOccupations.add(occupation);
-            }
-        }
-        return materialOccupations;
-    }
-
     public static Set<DomainObjectActionLog> getListOfChangesInSpacesOrderedByInstant() {
         Set<Class<? extends DomainObject>> classs = new HashSet<>();
         if (personIsSpacesAdministrator(Authenticate.getUser().getPerson())) {
@@ -432,7 +373,6 @@ public abstract class Space extends Space_Base {
             classs.add(UnitSpaceOccupation.class);
             classs.add(SpaceResponsibility.class);
             classs.add(PersonSpaceOccupation.class);
-            classs.add(ExtensionSpaceOccupation.class);
             classs.add(RoomSubdivisionInformation.class);
             return DomainObjectActionLog.readDomainObjectActionLogsOrderedByInstant(classs);
         }
@@ -1237,17 +1177,6 @@ public abstract class Space extends Space_Base {
             }
         }
         return executionCoursesToTest;
-    }
-
-    public Set<Extension> getActiveSpaceExtensions() {
-        Set<Extension> result = new HashSet<Extension>();
-        YearMonthDay current = new YearMonthDay();
-        for (MaterialSpaceOccupation materialSpaceOccupation : getMaterialSpaceOccupations()) {
-            if (materialSpaceOccupation.getMaterial().isExtension() && materialSpaceOccupation.isActive(current)) {
-                result.add((Extension) materialSpaceOccupation.getMaterial());
-            }
-        }
-        return result;
     }
 
     public SpaceAttendances addAttendance(Person person, String responsibleUsername) {

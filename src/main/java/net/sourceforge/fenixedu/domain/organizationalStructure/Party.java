@@ -430,7 +430,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     private boolean canBeDeleted() {
-        return !hasAnyResourceResponsibility() && !hasAnyVehicleAllocations() && !hasAnyPayedReceipts();
+        return !hasAnyResourceResponsibility() && !hasAnyPayedReceipts();
     }
 
     public static Party readByContributorNumber(String contributorNumber) {
@@ -1168,16 +1168,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     @Deprecated
     public boolean hasAnyPartyContacts() {
         return !getPartyContactsSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.resource.VehicleAllocation> getVehicleAllocations() {
-        return getVehicleAllocationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyVehicleAllocations() {
-        return !getVehicleAllocationsSet().isEmpty();
     }
 
     @Deprecated

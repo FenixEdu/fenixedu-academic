@@ -352,60 +352,6 @@
     </slot>        
 </schema>
 
-<!-- Material  -->
-<schema name="ViewMaterialDetails" type="net.sourceforge.fenixedu.domain.material.Material" bundle="SPACE_RESOURCES">
-	<slot name="class" layout="label">
-		<property name="labelFormat" value="label.${simpleName}" />
-		<property name="bundle" value="SPACE_RESOURCES" />
-	</slot>	
-	<slot name="presentationDetails" key="label.material.details"/>
-	<slot name="barCodeNumber" key="label.material.barCodeNumber"/>	
-	<slot name="owner" key="label.material.owner">	
-		<property name="format" value="${presentationName}"/>
-	</slot>					
-</schema>
-<schema name="ViewSpaceMaterial" type="net.sourceforge.fenixedu.domain.material.Material" bundle="SPACE_RESOURCES" extends="ViewMaterialDetails">
-</schema>
-<schema name="ViewMaterialSpaceOccupations" type="net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation" bundle="SPACE_RESOURCES">
-	<slot name="material.class" layout="label">
-		<property name="labelFormat" value="label.${simpleName}" />
-		<property name="bundle" value="SPACE_RESOURCES" />
-	</slot>
-	<slot name="material.barCodeNumber"/>
-	<slot name="material.presentationDetails" key="label.material.details"/>
-	<slot name="material.owner" key="label.material.owner">	
-		<property name="format" value="${presentationName}"/>
-	</slot>
-	<slot name="begin" />
-	<slot name="end" />					
-</schema>
-<schema name="ChooseMaterialType" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.MaterialTypeBean" bundle="SPACE_RESOURCES">
-	<slot name="materialType" layout="menu-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">				
-		<property name="excludedValues" value="FIRE_EXTINGUISHER" />	
-		<property name="bundle" value="SPACE_RESOURCES"/>
-		<property name="destination" value="postBack"/>			
-    </slot>        
-</schema>
-<schema name="AddNewMaterialSpaceOccupation" type="net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation" bundle="SPACE_RESOURCES">
-	<slot name="begin" key="label.begin.date" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="end" key="label.end.date"/>
-</schema>
-
-<!-- Material: Extension  -->
-<schema name="ChooseExtension" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.MaterialTypeBean" bundle="SPACE_RESOURCES">
-	<slot name="material" layout="extensionNumber-as-extension" key="label.extension" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />		
-</schema>	
-<schema name="AddNewExtensionSpaceOccupation" type="net.sourceforge.fenixedu.domain.space.ExtensionSpaceOccupation" 
-	extends="AddNewMaterialSpaceOccupation" bundle="SPACE_RESOURCES" constructor="space, extension, begin, end">
-	<slot name="space" hidden="true"/>
-	<slot name="extension" hidden="true"/>
-</schema>
-<schema name="EditExtensionSpaceOccupation" type="net.sourceforge.fenixedu.domain.space.MaterialSpaceOccupation" bundle="SPACE_RESOURCES" >
-	<slot name="begin" key="label.begin.date" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="end" key="label.end.date"/>
-	<setter signature="setOccupationInterval(begin, end)" />
-</schema>
-
 <!-- Access Groups -->
 <schema name="ViewPersonToListAccessGroups" type="net.sourceforge.fenixedu.domain.Person" bundle="SPACE_RESOURCES">
 	<slot name="name" />
@@ -618,10 +564,6 @@
 </schema>
 
 
-
-<schema name="SelectedSpaceExtensionsSchema" type="net.sourceforge.fenixedu.domain.material.Extension" bundle="DEFAULT">
-	<slot name="number"/>	
-</schema>
 
 <schema name="ViewSelectedSpaceContainedSpaces" type="net.sourceforge.fenixedu.domain.space.Space" bundle="DEFAULT">
 	<slot name="class" layout="label" key="label.space.type">
