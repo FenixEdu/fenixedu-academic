@@ -3044,11 +3044,6 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 </schema>
 
 
-<schema name="edit.expert.allowed.contacts" type="net.sourceforge.fenixedu.domain.research.Researcher" bundle="RESEARCHER_RESOURCES">
-	<slot name="allowsContactByStudents"/>
-	<slot name="allowsContactByMedia"/>
-	<slot name="allowsContactByOtherResearchers"/>
-</schema>
 <schema name="researcher.career" type="net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer" bundle="DOMAIN_RESOURCES"
 	constructor="person, beginYear, endYear, function, entity">
     <slot name="person" hidden="true" />

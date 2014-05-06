@@ -4174,11 +4174,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
 
     class research.Researcher  {
         Boolean allowsToBeSearched;
-        Boolean allowsContactByStudents;
-        Boolean allowsContactByMedia;
-        Boolean allowsContactByOtherResearchers;
-        String keywordsPt;
-        String keywordsEn;
     }
 
     class research.result.ResearchResult  {
@@ -12798,13 +12793,6 @@ relation ResearcherRootDomainObject {
 
 relation ResearcherPerson {
     Person playsRole person;
-    research.Researcher playsRole researcher;
-}
-
-relation ResearchPartyContact {
-    contacts.PartyContact playsRole availableContacts {
-        multiplicity *;
-    } 
     research.Researcher playsRole researcher;
 }
 

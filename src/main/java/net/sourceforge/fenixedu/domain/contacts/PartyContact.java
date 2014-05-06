@@ -586,11 +586,6 @@ public abstract class PartyContact extends PartyContact_Base {
     }
 
     @Deprecated
-    public boolean hasResearcher() {
-        return getResearcher() != null;
-    }
-
-    @Deprecated
     public boolean hasPrevPartyContact() {
         return getPrevPartyContact() != null;
     }
