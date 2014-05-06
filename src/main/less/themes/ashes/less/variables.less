@@ -253,25 +253,25 @@
 
 // Extra small screen / phone
 // Note: Deprecated @screen-xs and @screen-phone as of v3.0.1
-@screen-xs:                  480px;
+@screen-xs:                  1px;
 @screen-xs-min:              @screen-xs;
 @screen-phone:               @screen-xs-min;
 
 // Small screen / tablet
 // Note: Deprecated @screen-sm and @screen-tablet as of v3.0.1
-@screen-sm:                  768px;
+@screen-sm:                  1px;
 @screen-sm-min:              @screen-sm;
 @screen-tablet:              @screen-sm-min;
 
 // Medium screen / desktop
 // Note: Deprecated @screen-md and @screen-desktop as of v3.0.1
-@screen-md:                  992px;
+@screen-md:                  1px;
 @screen-md-min:              @screen-md;
 @screen-desktop:             @screen-md-min;
 
 // Large screen / wide desktop
 // Note: Deprecated @screen-lg and @screen-lg-desktop as of v3.0.1
-@screen-lg:                  1200px;
+@screen-lg:                  1px;
 @screen-lg-min:              @screen-lg;
 @screen-lg-desktop:          @screen-lg-min;
 
@@ -462,19 +462,19 @@
 
 @state-success-text:             @brand-success;
 @state-success-bg:               #dff0d8;
-@state-success-border:           darken(@state-success-text, 5%);
+@state-success-border:           darken(spin(@state-success-bg, -10), 5%);
 
 @state-info-text:                @brand-info;
 @state-info-bg:                  #d9edf7;
-@state-info-border:              darken(@state-info-text, 7%);
+@state-info-border:              darken(spin(@state-info-bg, -10), 7%);
 
 @state-warning-text:             @brand-warning;
 @state-warning-bg:               #fcf8e3;
-@state-warning-border:           darken(@state-warning-text, 5%);
+@state-warning-border:           darken(spin(@state-warning-bg, -10), 5%);
 
 @state-danger-text:              @brand-danger;
 @state-danger-bg:                #f2dede;
-@state-danger-border:            darken(@state-danger-text, 5%);
+@state-danger-border:            darken(spin(@state-danger-bg, -10), 5%);
 
 
 //== Tooltips

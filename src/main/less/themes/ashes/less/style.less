@@ -145,6 +145,10 @@ input {
    outline: none;
 }
 
+body {
+  min-width: 1100px;
+}
+
 header {
     background: transparent;
     border-bottom: 1px solid @body-bg;
@@ -249,7 +253,7 @@ nav#context {
         }
         li {
             & > a {
-                padding: 7.5px 0 7.5px 7.5px;
+                padding: 6px 0 6px 7.5px;
                 color: @gray-darker;
                 border-radius: 0;
                 display: block;
@@ -653,4 +657,13 @@ label,
 
 .btn{
   outline: none;
+}
+
+@media print {
+    nav, header, footer, ol.breadcrumb, .fenixEduBar {
+      display: none;
+    }
+    a[href]:after {
+      content: none !important;
+    }
 }
