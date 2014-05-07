@@ -456,6 +456,8 @@ a,input,.symbol {
 
 </style>
 
+<link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/jqTheme/ui.all.css">
+
 <script src="${pageContext.request.contextPath}/javaScript/jquery/jquery-ui.js"></script>
 
 <script type="text/javascript">

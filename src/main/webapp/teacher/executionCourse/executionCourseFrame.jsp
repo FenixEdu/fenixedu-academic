@@ -16,16 +16,6 @@
 					</a>
 				</li>
 			</c:if>
-			<li>
-				<a href="${base}/manageExecutionCourse.do?method=instructions&executionCourseID=${executionCourse.externalId}">
-					<bean:message key="label.instructions"/>
-				</a>
-			</li>
-		</ul>
-		<ul class="nav nav-pills nav-stacked">
-			<li class="navheader">
-				<strong><bean:message key="label.management" /></strong>
-			</li>
 			<c:if test="${professorship.permissions.personalization}">
 				<li>
 					<a href="${base}/alternativeSite.do?method=prepareCustomizationOptions&executionCourseID=${executionCourse.externalId}">

@@ -3,7 +3,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 
 <div class="row">
-	<div class="col-lg-2">
+	<nav class="col-lg-2" id="context">
 		<br />
 		<ul class="nav nav-pills nav-stacked">
 			<li>
@@ -22,11 +22,11 @@
         		</li>
 			</c:forEach>
 		</ul>
-	</div>
-	<div class="col-lg-10">
+	</nav>
+	<main class="col-lg-10">
 		<ol class="breadcrumb">
 			<em>${site.unit.nameWithAcronym}</em>
 		</ol>
 		<jsp:include page="${actual$page}" />
-	</div>
+	</main>
 </div>

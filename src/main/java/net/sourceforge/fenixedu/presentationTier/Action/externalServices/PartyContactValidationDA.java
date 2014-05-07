@@ -19,8 +19,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "external", path = "/partyContactValidation", scope = "request", parameter = "method")
-@Forwards({ @Forward(name = "emailValidation", path = "emailValidation"),
-        @Forward(name = "phoneValidation", path = "phoneValidation") })
+@Forwards({ @Forward(name = "emailValidation", path = "/publico/emailValidation.jsp"),
+        @Forward(name = "phoneValidation", path = "/publico/phoneValidation.jsp") })
 public class PartyContactValidationDA extends FenixDispatchAction {
 
     private static final Logger logger = LoggerFactory.getLogger(PartyContactValidationDA.class);

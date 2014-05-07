@@ -52,8 +52,8 @@ import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 @Mapping(module = "external", path = "/oauth", scope = "request", parameter = "method")
-@Forwards({ @Forward(name = "showAuthorizationPage", path = "showAuthorizationPage"),
-        @Forward(name = "oauthErrorPage", path = "oauthErrorPage") })
+@Forwards({ @Forward(name = "showAuthorizationPage", path = "/auth/showAuthorizationPage.jsp"),
+        @Forward(name = "oauthErrorPage", path = "/auth/oauthErrorPage.jsp") })
 public class OAuthAction extends FenixDispatchAction {
 
     private static final Logger logger = LoggerFactory.getLogger(OAuthAction.class);
