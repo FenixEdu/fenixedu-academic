@@ -12,7 +12,7 @@
 
 <ul>
 	<li>
-		<html:link page="<%= "/sendEmailToResearchUnitGroups.do?method=prepare&unitExternalId=" + unitExternalId %>">
+		<html:link page="<%= "/sendEmailToResearchUnitGroups.do?method=prepare&unitExternalId=" + unitExternalId + "&unitId=" + unitExternalId %>">
 			<bean:message key="label.sendEmailToGroups" bundle="RESEARCHER_RESOURCES"/>
 		</html:link>
 		<br/>

@@ -48,7 +48,7 @@ public class UnitFileBean implements Serializable {
     }
 
     private void setupGroups(Group permittedGroup) {
-        group = group.or(permittedGroup);
+        group = group == null ? permittedGroup : group.or(permittedGroup);
     }
 
     public UnitFile getFile() {

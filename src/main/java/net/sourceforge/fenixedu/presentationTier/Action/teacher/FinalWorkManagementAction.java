@@ -106,14 +106,14 @@ import pt.ist.fenixframework.FenixFramework;
 @Mapping(path = "/finalWorkManagement", module = "teacher", formBean = "finalWorkInformationForm",
         input = "/finalWorkManagement.do?method=prepareFinalWorkInformation")
 @Forwards({
-        @Forward(name = "sucess", path = "/teacher/finalWorkManagement.do?method=chooseDegree"),
+        @Forward(name = "sucess", path = "/finalWorkManagement.do?method=chooseDegree", contextRelative = false),
         @Forward(name = "submitFinalWorkProposal", path = "/teacher/submitFinalWorkProposal_bd.jsp"),
         @Forward(name = "showTeacherName", path = "/teacher/submitFinalWorkProposal_bd.jsp"),
         @Forward(name = "coorientatorVisibility", path = "/teacher/submitFinalWorkProposal_bd.jsp"),
         @Forward(name = "chooseDegreeForFinalWorkProposal", path = "/teacher/chooseDegreeForFinalWorkProposal_bd.jsp"),
-        @Forward(name = "OutOfSubmisionPeriod", path = "/teacher/finalWorkManagement.do?method=chooseDegree"),
-        @Forward(name = "SubmitionOfFinalDegreeWorkProposalSucessful",
-                path = "/teacher/finalWorkManagement.do?method=chooseDegree"),
+        @Forward(name = "OutOfSubmisionPeriod", path = "/finalWorkManagement.do?method=chooseDegree", contextRelative = false),
+        @Forward(name = "SubmitionOfFinalDegreeWorkProposalSucessful", path = "/finalWorkManagement.do?method=chooseDegree",
+                contextRelative = false),
         @Forward(name = "viewFinalDegreeWorkProposal", path = "/teacher/viewFinalDegreeWorkProposal_bd.jsp"),
         @Forward(name = "ShowStudentCurricularPlans", path = "/student/curriculum/viewCurricularPlans_bd.jsp"),
         @Forward(name = "ShowStudentCurriculum", path = "/student/curriculum/displayStudentCurriculum_bd.jsp"),

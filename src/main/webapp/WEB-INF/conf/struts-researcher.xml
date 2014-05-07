@@ -117,24 +117,6 @@
             <!-- Result Participation Management Action Mapping -->
             <!-- Result Document Files Management Action Mapping -->
             <!-- Result Associations Management Action Mapping -->
-            <action validate="true" scope="request" attribute="finalWorkInformationForm" name="finalWorkInformationForm" input="/finalWorkManagement.do?method=prepareFinalWorkInformation&amp;page=0" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.FinalWorkManagementAction" path="/finalWorkManagement">
-                  <forward path="df.page.chooseDegreeForFinalWorkProposal" name="chooseDegreeForFinalWorkProposal"></forward>
-                  <forward path="df.page.finalWorkSubmit" name="submitFinalWorkProposal"></forward>
-                  <forward path="df.page.finalWorkSubmit" name="showTeacherName"></forward>
-                  <forward path="df.page.finalWorkSubmit" name="coorientatorVisibility"></forward>
-                  <forward path="/finalWorkManagement.do?method=chooseDegree&amp;page=0" name="OutOfSubmisionPeriod"></forward>
-                  <forward path="/finalWorkManagement.do?method=chooseDegree&amp;page=0" name="SubmitionOfFinalDegreeWorkProposalSucessful"></forward>
-                  <forward path="df.page.viewfinalDegreeWorkProposal" name="viewFinalDegreeWorkProposal"></forward>
-                  <forward path="df.page.showStudentCurricularPlans" name="ShowStudentCurricularPlans"></forward>
-                  <forward path="df.page.showStudentCurriculum" name="ShowStudentCurriculum"></forward>
-                  <forward path="df.page.transposeFinalDegreeWorkProposal" name="transposeFinalDegreeWorkProposal"></forward>
-                  <forward path="df.page.notAuthorized" name="NotAuthorized"></forward>
-                  <forward path="df.page.final.degree.work.print" name="print"></forward>
-            </action>
-            <action validate="true" scope="request" attribute="finalWorkInformationForm" name="finalWorkInformationForm" input="/finalWorkManagement.do?method=chooseDegree&amp;page=0" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.FinalWorkManagementAction" path="/finalDegreeWorkAttribution">
-                  <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" key="error.message.GroupAlreadyAttributed" type="net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.TeacherAttributeFinalDegreeWork$GroupAlreadyAttributed"></exception>
-                  <forward path="/finalWorkManagement.do?method=chooseDegree&amp;page=0" name="sucess"></forward>
-            </action>
       </action-mappings>
       <!-- ========== Controller Configuration ================================ -->
       <controller processorClass="pt.ist.fenixWebFramework.renderers.plugin.SimpleRenderersRequestProcessor"></controller>

@@ -10,20 +10,23 @@ import net.sourceforge.fenixedu.domain.CareerType;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.teacher.Career;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.research.ResearcherApplication.CurriculumApp;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.portal.EntryPoint;
+import org.fenixedu.bennu.portal.StrutsFunctionality;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@StrutsFunctionality(app = CurriculumApp.class, path = "career", titleKey = "label.career")
 @Mapping(path = "/career/careerManagement", module = "researcher")
-@Forwards(@Forward(name = "showCareer", path = "/researcher/career/showCareer.jsp", tileProperties = @Tile(
-        title = "private.operator.personnelmanagement.managementfaculty.teacherevaluation.professionalcareer")))
+@Forwards(@Forward(name = "showCareer", path = "/researcher/career/showCareer.jsp"))
 public class CareerManagementDispatchAction extends FenixDispatchAction {
+    @EntryPoint
     public ActionForward showCareer(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) {
         Person person = getLoggedPerson(request);
