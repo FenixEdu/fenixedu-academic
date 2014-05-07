@@ -4070,11 +4070,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
         Integer year;
     }
 
-    class research.ResearchInterest  {
-        MultiLanguageString interest;
-        Integer interestOrder;
-    }
-
     class research.activity.ArticleAssociation  {
     }
 
@@ -11854,13 +11849,6 @@ relation PartyCountry {
     Country playsRole nationality;
 }
 
-relation PartyInterest {
-    organizationalStructure.Party playsRole party;
-    research.ResearchInterest playsRole researchInterests {
-        multiplicity *;
-    }
-}
-
 relation PartyPartyContact {
     organizationalStructure.Party playsRole party;
     contacts.PartyContact playsRole partyContacts {
@@ -14136,13 +14124,6 @@ relation RootDomainObjectReimbursementGuideEntry {
 relation RootDomainObjectReimbursementGuideSituation {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     reimbursementGuide.ReimbursementGuideSituation playsRole reimbursementGuideSituations {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectResearchInterest {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    research.ResearchInterest playsRole researchInterests {
         multiplicity *;
     }
 }

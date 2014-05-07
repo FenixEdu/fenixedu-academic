@@ -1323,8 +1323,8 @@ public class Person extends Person_Base {
                 && !hasAnyAssociatedQualifications() && !hasAnyAssociatedAlteredCurriculums() && !hasAnyEnrolmentEvaluations()
                 && !hasAnyExportGroupingSenders() && !hasAnyResponsabilityTransactions() && !hasAnyMasterDegreeCandidates()
                 && !hasAnyGuides() && !hasEmployee() && !hasTeacher() && !hasAnyPayedGuides() && !hasAnyPayedReceipts()
-                && !hasAnyResearchInterests() && !hasAnyProjectParticipations() && !hasAnyParticipations()
-                && !hasAnyPersonFunctions() && (!hasHomepage() || getHomepage().isDeletable()) && !hasAnyInternalParticipants()
+                && !hasAnyProjectParticipations() && !hasAnyParticipations() && !hasAnyPersonFunctions()
+                && (!hasHomepage() || getHomepage().isDeletable()) && !hasAnyInternalParticipants()
                 && !hasAnyCreatedQualifications() && !hasAnyCreateJobs();
     }
 

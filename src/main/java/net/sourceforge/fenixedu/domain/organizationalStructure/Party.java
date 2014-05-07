@@ -10,10 +10,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Country;
@@ -34,8 +31,6 @@ import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.contacts.WebAddress;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.Prize;
-import net.sourceforge.fenixedu.domain.research.ResearchInterest;
-import net.sourceforge.fenixedu.domain.research.ResearchInterest.ResearchInterestComparator;
 import net.sourceforge.fenixedu.domain.research.activity.Cooperation;
 import net.sourceforge.fenixedu.domain.research.activity.CooperationParticipation;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
@@ -67,8 +62,6 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.StringNormalizer;
 import org.joda.time.DateTime;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -1592,32 +1585,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
         return this.getResearchResultPublicationsByType(Unstructured.class, firstExecutionYear, lastExecutionYear);
     }
 
-    public static String readAllResearchInterests() {
-        JSONArray result = new JSONArray();
-        for (Party party : Bennu.getInstance().getPartysSet()) {
-            if (party instanceof Person && ((Person) party).getUsername() != null) {
-                Person person = (Person) party;
-                if (person.hasAnyResearchInterests()) {
-                    JSONObject jsonPerson = new JSONObject();
-                    jsonPerson.put("istId", person.getUsername());
-                    SortedSet<ResearchInterest> sorted = new TreeSet<ResearchInterest>(new ResearchInterestComparator());
-                    sorted.addAll(party.getResearchInterestsSet());
-                    JSONArray interestsArray = new JSONArray();
-                    for (ResearchInterest interest : sorted) {
-                        JSONObject jsonInterest = new JSONObject();
-                        for (Locale langage : interest.getInterest().getAllLocales()) {
-                            jsonInterest.put(langage.toString(), interest.getInterest().getContent(langage));
-                        }
-                        interestsArray.add(jsonInterest);
-                    }
-                    jsonPerson.put("interests", interestsArray);
-                    result.add(jsonPerson);
-                }
-            }
-        }
-        return result.toJSONString();
-    }
-
     //
     // Site
     //
@@ -1782,16 +1749,6 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     @Deprecated
     public boolean hasAnyInvitationAccountabilities() {
         return !getInvitationAccountabilitiesSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.research.ResearchInterest> getResearchInterests() {
-        return getResearchInterestsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyResearchInterests() {
-        return !getResearchInterestsSet().isEmpty();
     }
 
     @Deprecated

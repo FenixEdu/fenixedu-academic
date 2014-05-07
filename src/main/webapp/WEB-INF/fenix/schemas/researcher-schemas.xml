@@ -6,25 +6,6 @@
 	<slot name="nickname" key="researcher.viewCurriculum.name"/>
 </schema>; 
 
-<schema name="researchInterest.summary" type="net.sourceforge.fenixedu.domain.research.ResearchInterest">
-	<slot name="order"/>
-	<slot name="interest"/>
-</schema>	
-
-<schema name="researchInterest.name" type="net.sourceforge.fenixedu.domain.research.ResearchInterest">
-	<slot name="interest"/>
-</schema>	
-
-<schema name="researchInterest.title" type="net.sourceforge.fenixedu.domain.research.ResearchInterest">
-	<slot name="interest"/>
-</schema>	
-
-<schema name="researchInterest.simpleCreate" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.ResearchInterest">
-	<slot name="interest" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
-		<property name="size" value="40"/>
-	</slot>
-</schema>	
-
 <schema name="projectParticipation.create-defaults" bundle="RESEARCHER_RESOURCES" type="net.sourceforge.fenixedu.domain.research.project.ProjectParticipation">
 	<slot name="role" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="project.number" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
@@ -3029,17 +3010,6 @@ type="net.sourceforge.fenixedu.domain.research.activity.EventEdition">
 		<property name="key" value="true"/>
 		<property name="subLayout" value="values"/>
 		<property name="subSchema" value="showPhone"/>
-	</slot>
-	<slot name="researchInterests" layout="prefixed">
-		<property name="prefixBundle" value="RESEARCHER_RESOURCES"/>
-		<property name="prefixKey" value="researcher.interests.title"/>
-		<property name="emptyBundle" value="RESEARCHER_RESOURCES"/>
-		<property name="emptyKey" value="label.personalCard.notDefined"/>
-		<property name="separator" value=":"/>
-		<property name="subProperty(sortBy)" value="order"/>
-		<property name="subProperty(classes)" value="ulindent15 nobullet lheight15 smalltxt mtop1"/>
-		<property name="subProperty(eachLayout)" value="values"/>
-		<property name="subProperty(eachSchema)" value="researchInterest.name"/>
 	</slot>
 </schema>
 

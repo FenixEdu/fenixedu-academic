@@ -1,9 +1,6 @@
 package net.sourceforge.fenixedu.domain.research;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
@@ -36,18 +33,6 @@ public class Researcher extends Researcher_Base {
         setPerson(null);
         setRootDomainObject(null);
         super.deleteDomainObject();
-    }
-
-    public List<ResearchInterest> getResearchInterests() {
-        List<ResearchInterest> orderedInterests = new ArrayList<ResearchInterest>(getPerson().getResearchInterests());
-        Collections.sort(orderedInterests, new Comparator<ResearchInterest>() {
-            @Override
-            public int compare(ResearchInterest researchInterest1, ResearchInterest researchInterest2) {
-                return researchInterest1.getInterestOrder().compareTo(researchInterest2.getInterestOrder());
-            }
-        });
-
-        return orderedInterests;
     }
 
     private String normalizeKeywords(String keywordList) {

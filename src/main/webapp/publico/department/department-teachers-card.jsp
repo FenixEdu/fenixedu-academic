@@ -40,21 +40,6 @@
 				</logic:notEmpty>
 			</logic:present>
 			
-			<logic:notEmpty name="teacher" property="person.researchInterests">
-				<p class="mtop025 mbottom05">
-					<bean:message key="label.teacher.scientificInterests" bundle="PUBLIC_DEPARTMENT_RESOURCES"/>: 
-					<fr:view name="teacher" property="person.researchInterests" sortBy="interestOrder">
-						<fr:layout name="flowLayout">
-							<fr:property name="classes" value="color888"/>
-							<fr:property name="eachLayout" value="values"/>
-							<fr:property name="eachSchema" value="researchInterest.title"/>
-							<fr:property name="htmlSeparator" value=", "/>
-							<fr:property name="indented" value="false"/>
-						</fr:layout>
-					</fr:view>
-				</p>
-			</logic:notEmpty>
-
             <table class="personInfo2 mvert0 thlight thtop">
                 <fr:view name="teacher" property="person.emailAddresses">
                     <fr:layout name="contact-table">
