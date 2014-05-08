@@ -9,8 +9,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -39,14 +37,10 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessNumber;
 import net.sourceforge.fenixedu.domain.photograph.PictureMode;
-import net.sourceforge.fenixedu.domain.research.result.publication.PreferredPublication;
-import net.sourceforge.fenixedu.domain.research.result.publication.PreferredPublication.PreferredComparator;
-import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.util.ContentType;
-import net.sourceforge.fenixedu.webServices.ExportPublications;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -60,9 +54,6 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 
 @Path("/fenix/jersey/services")
 public class JerseyServices {
@@ -171,37 +162,6 @@ public class JerseyServices {
     }
 
     @GET
-    @Path("preferred")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String readPreferred() {
-        JsonArray array = new JsonArray();
-        for (Party party : Bennu.getInstance().getPartysSet()) {
-            if (party instanceof Person) {
-                Person person = (Person) party;
-                if (person.getUsername() != null && !person.getPreferredPublicationSet().isEmpty()) {
-                    SortedSet<ResearchResultPublication> results = new TreeSet<>(new PreferredComparator(person));
-                    for (PreferredPublication preferred : person.getPreferredPublicationSet()) {
-                        results.add(preferred.getPreferredPublication());
-                    }
-                    JsonObject researcher = new JsonObject();
-                    researcher.addProperty("istID", person.getUsername());
-                    JsonArray preferences = new JsonArray();
-                    int count = 5;
-                    for (ResearchResultPublication publication : results) {
-                        if (count-- == 0) {
-                            break;
-                        }
-                        preferences.add(new JsonPrimitive(publication.getExternalId()));
-                    }
-                    researcher.add("preference", preferences);
-                    array.add(researcher);
-                }
-            }
-        }
-        return array.toString();
-    }
-
-    @GET
     @Path("researchers")
     @Produces(MediaType.APPLICATION_JSON)
     public String readResearchers() {
@@ -264,13 +224,6 @@ public class JerseyServices {
             }
             researchUnitMap.get(user).add(unit);
         }
-    }
-
-    @GET
-    @Path("publications")
-    @Produces(MediaType.APPLICATION_XML)
-    public byte[] readPublications() {
-        return new ExportPublications().harverst();
     }
 
     @GET

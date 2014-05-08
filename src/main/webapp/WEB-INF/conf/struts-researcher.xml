@@ -73,47 +73,7 @@
       <!-- ========== Global Forward Definitions =============================== -->
       <global-forwards type="org.apache.struts.action.ActionForward"></global-forwards>
       <!-- ========== Action Mapping Definitions =============================== -->
-      <action-mappings type="org.apache.struts.action.ActionMapping">
-            <!--  INTERESTS  -->
-            <!--  PROJECTS  -->
-            <!--  ACTIVITIES  -->
-            <!-- Results Management -->
-            <action forward="/publications/management.do?method={1}" path="/resultPublications/*"></action>
-            <action forward="/publications/bibtexManagement.do?method={1}" path="/bibtexManagement/*"></action>
-            <action forward="/result/resultParticipationManagement.do?method={1}" path="/resultParticipations/*"></action>
-            <action forward="/result/resultDocumentFilesManagement.do?method={1}" path="/resultDocumentFiles/*"></action>
-            <action forward="/result/resultAssociationsManagement.do?method={1}" path="/resultAssociations/*"></action>
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.research.result.publication.ResultPublicationsManagementDispatchAction" parameter="method" path="/showResearchResult">
-                  <forward path="publications.viewEditPublication" name="ViewEditPublication"></forward>
-            </action>
-            <!-- Result Publications Management Action Mapping -->
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.research.result.publication.ResultPublicationsManagementDispatchAction" parameter="method" path="/publications/management">
-                  <forward path="publications.publicationsManagement" name="ListPublications"></forward>
-                  <forward path="setUnitToAll.publicationsManagement" name="setUnitToAll"></forward>
-                  <forward path="publications.viewEditPublication" name="ViewEditPublication"></forward>
-                  <forward path="publications.createPublication" name="PreparedToCreate"></forward>
-                  <forward path="publications.editPublicationData" name="PreparedToEdit"></forward>
-                  <forward path="publications.viewEditPublication" name="PreparedToDelete"></forward>
-                  <forward path="/resultPublications/listPublications.do" name="PublicationDeleted"></forward>
-                  <forward path="show-result-loggedin" name="ShowResult"></forward>
-                  <forward path="edit-journal" name="editJournal"></forward>
-                  <forward path="edit-event" name="editEvent"></forward>
-                  <forward path="/resultPublications/listPublications.do" name="backFromDetails"></forward>
-                  <forward path="/researchUnitFunctionalities.do?method=preparePublications" name="ListUnitPublications"></forward>
-                  <forward path="/resultAssociations/prepareEditUnitAssociations.do" name="forwardToUnitAssociation"></forward>
-            </action>
-            <!-- Bibtex Publications Management Action Mapping -->
-            <action type="net.sourceforge.fenixedu.presentationTier.Action.research.result.publication.BibTexManagementDispatchAction" parameter="method" path="/publications/bibtexManagement">
-                  <forward path="/result/publications/bibtex/showPublicationBibtex.jsp" name="PublicationExportedToBibtex"></forward>
-                  <forward path="publications.openBibtexFile" name="OpenBibtexFile"></forward>
-                  <forward path="publications.importBibtex" name="ImportBibtex"></forward>
-                  <forward path="/resultPublications/listPublications.do" name="PublicationsManagement"></forward>
-            </action>
-            <!-- Result Publication Search Action  Mapping -->
-            <!-- Result Participation Management Action Mapping -->
-            <!-- Result Document Files Management Action Mapping -->
-            <!-- Result Associations Management Action Mapping -->
-      </action-mappings>
+      <action-mappings type="org.apache.struts.action.ActionMapping"></action-mappings>
       <!-- ========== Controller Configuration ================================ -->
       <controller processorClass="pt.ist.fenixWebFramework.renderers.plugin.SimpleRenderersRequestProcessor"></controller>
       <!-- ========== Message Resources Definitions ============================ -->

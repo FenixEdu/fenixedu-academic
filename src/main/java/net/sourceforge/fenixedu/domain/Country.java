@@ -394,16 +394,6 @@ public class Country extends Country_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.research.result.ResearchResult> getResults() {
-        return getResultsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyResults() {
-        return !getResultsSet().isEmpty();
-    }
-
-    @Deprecated
     public boolean hasName() {
         return getName() != null;
     }

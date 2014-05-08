@@ -57,16 +57,6 @@ Documentation:
 
     <renderer type="net.sourceforge.fenixedu.domain.File" layout="link" class="net.sourceforge.fenixedu.presentationTier.renderers.FileLinkRenderer"/>
 
-	<!--@ This layout shows participations for a given activity in the research package -->
-	<renderer type="java.util.List" layout="show-participation-list" class="net.sourceforge.fenixedu.presentationTier.renderers.ParticipationsRenderer">
-		<property name="moduleRelative" value="false"/>
-		<property name="contextRelative" value="true"/>
-		<property name="linkFormat" value="/homepage/${istUsername}"/>
-		<property name="showRoles" value="false"/>
-		<property name="showRoleMessage" value="false"/>
-		<property name="contextAvailable" value="true"/>
-	</renderer>
-
     <renderer type="net.sourceforge.fenixedu.domain.Person" layout="person-email-identity" class="net.sourceforge.fenixedu.presentationTier.renderers.EmailIdentityRenderer"/>
   
   	<renderer type="net.sourceforge.fenixedu.domain.Person" layout="person-presentation-card" class="net.sourceforge.fenixedu.presentationTier.renderers.PersonalCardRenderer">
@@ -227,8 +217,6 @@ Documentation:
         <property name="template" value="/departmentMember/viewDepartmentTeachersExpectations/renderers/layouts/printPersonalExpectationTemplate.jsp"/>
     </renderer>
     
-	<renderer type="net.sourceforge.fenixedu.domain.research.activity.JournalIssue" class="net.sourceforge.fenixedu.presentationTier.renderers.JournalIssueRenderer"/> 
- 
     <!--@ Renders one or more (in case of group union) groups names. The group must support getName -->
     <renderer type="org.fenixedu.bennu.core.groups.Group" layout="show-groups" class="net.sourceforge.fenixedu.presentationTier.renderers.GroupRenderer"/>
     
@@ -363,10 +351,6 @@ Documentation:
     
     <renderer mode="input" layout="pages" type="net.sourceforge.fenixedu.dataTransferObject.PageContainerBean" class="net.sourceforge.fenixedu.presentationTier.renderers.PagesRenderer" />
     
-    <renderer layout="scientific-journal-stage" type="java.lang.Object" class="net.sourceforge.fenixedu.presentationTier.renderers.ScientificJournalStageRenderer" />
-    
-    <renderer layout="event-stage" type="java.lang.Object" class="net.sourceforge.fenixedu.presentationTier.renderers.EventStageRenderer" />
-
     <renderer layout="banner-weight" type="java.lang.Integer" class="net.sourceforge.fenixedu.presentationTier.renderers.UnitSiteBannerWeightRenderer" />
 	
     <renderer type="net.sourceforge.fenixedu.domain.Grade"

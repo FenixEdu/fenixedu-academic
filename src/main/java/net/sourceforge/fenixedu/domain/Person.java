@@ -108,10 +108,6 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessi
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PHDProgramCandidacy;
 import net.sourceforge.fenixedu.domain.research.Researcher;
-import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
-import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
-import net.sourceforge.fenixedu.domain.research.result.publication.PreferredPublication;
-import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.Space;
@@ -686,20 +682,6 @@ public class Person extends Person_Base {
             }
         }
         return null;
-    }
-
-    @Override
-    public List<ResearchResultPublication> getResearchResultPublications() {
-        final List<ResearchResultPublication> resultPublications = new ArrayList<ResearchResultPublication>();
-        ResearchResult result = null;
-        for (final ResultParticipation resultParticipation : this.getResultParticipations()) {
-            result = resultParticipation.getResult();
-            // filter only publication participations
-            if (result instanceof ResearchResultPublication) {
-                resultPublications.add((ResearchResultPublication) result);
-            }
-        }
-        return resultPublications;
     }
 
     public Boolean getIsExamCoordinatorInCurrentYear() {
@@ -1285,10 +1267,6 @@ public class Person extends Person_Base {
         if (hasResearcher()) {
             getResearcher().delete();
         }
-
-        for (final PreferredPublication preferred : getPreferredPublication()) {
-            preferred.delete();
-        }
     }
 
     private boolean canBeDeleted() {
@@ -1299,8 +1277,8 @@ public class Person extends Person_Base {
                 && !hasAnyAssociatedQualifications() && !hasAnyAssociatedAlteredCurriculums() && !hasAnyEnrolmentEvaluations()
                 && !hasAnyExportGroupingSenders() && !hasAnyResponsabilityTransactions() && !hasAnyMasterDegreeCandidates()
                 && !hasAnyGuides() && !hasEmployee() && !hasTeacher() && !hasAnyPayedGuides() && !hasAnyPayedReceipts()
-                && !hasAnyParticipations() && !hasAnyPersonFunctions() && (!hasHomepage() || getHomepage().isDeletable())
-                && !hasAnyInternalParticipants() && !hasAnyCreatedQualifications() && !hasAnyCreateJobs();
+                && !hasAnyPersonFunctions() && (!hasHomepage() || getHomepage().isDeletable()) && !hasAnyInternalParticipants()
+                && !hasAnyCreatedQualifications() && !hasAnyCreateJobs();
     }
 
     public ExternalContract getExternalContract() {
@@ -1475,16 +1453,12 @@ public class Person extends Person_Base {
 
             case TEACHER:
                 removeRoleIfPresent(person, RoleType.EMPLOYEE);
-                if (!person.hasAnyParticipations()) {
-                    removeRoleIfPresent(person, RoleType.RESEARCHER);
-                }
+                removeRoleIfPresent(person, RoleType.RESEARCHER);
                 removeRoleIfPresent(person, RoleType.DEPARTMENT_MEMBER);
                 break;
 
             case EMPLOYEE:
-                if (!person.hasAnyParticipations()) {
-                    removeRoleIfPresent(person, RoleType.RESEARCHER);
-                }
+                removeRoleIfPresent(person, RoleType.RESEARCHER);
                 removeRoleIfPresent(person, RoleType.SEMINARIES_COORDINATOR);
                 removeRoleIfPresent(person, RoleType.DIRECTIVE_COUNCIL);
                 removeRoleIfPresent(person, RoleType.COORDINATOR);
@@ -4442,16 +4416,6 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.research.result.ResearchResult> getCreatedResults() {
-        return getCreatedResultsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCreatedResults() {
-        return !getCreatedResultsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.messaging.ForumSubscription> getForumSubscriptions() {
         return getForumSubscriptionsSet();
     }
@@ -4539,16 +4503,6 @@ public class Person extends Person_Base {
     @Deprecated
     public boolean hasAnyExportGroupingSenders() {
         return !getExportGroupingSendersSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.research.activity.ArticleAssociation> getArticleAssociations() {
-        return getArticleAssociationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyArticleAssociations() {
-        return !getArticleAssociationsSet().isEmpty();
     }
 
     @Deprecated
@@ -4692,16 +4646,6 @@ public class Person extends Person_Base {
     }
 
     @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.research.activity.EventConferenceArticlesAssociation> getEventConferenceArticlesAssociations() {
-        return getEventConferenceArticlesAssociationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyEventConferenceArticlesAssociations() {
-        return !getEventConferenceArticlesAssociationsSet().isEmpty();
-    }
-
-    @Deprecated
     public java.util.Set<net.sourceforge.fenixedu.domain.student.RegistrationProtocol> getRegistrationProtocols() {
         return getRegistrationProtocolsSet();
     }
@@ -4709,16 +4653,6 @@ public class Person extends Person_Base {
     @Deprecated
     public boolean hasAnyRegistrationProtocols() {
         return !getRegistrationProtocolsSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.research.result.ResultParticipation> getResultParticipations() {
-        return getResultParticipationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyResultParticipations() {
-        return !getResultParticipationsSet().isEmpty();
     }
 
     @Deprecated
@@ -4789,16 +4723,6 @@ public class Person extends Person_Base {
     @Deprecated
     public boolean hasAnyPhdEmail() {
         return !getPhdEmailSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.research.result.publication.PreferredPublication> getPreferredPublication() {
-        return getPreferredPublicationSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPreferredPublication() {
-        return !getPreferredPublicationSet().isEmpty();
     }
 
     @Deprecated

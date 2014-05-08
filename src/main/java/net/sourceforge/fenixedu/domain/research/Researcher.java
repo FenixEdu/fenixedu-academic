@@ -6,22 +6,9 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 
-import org.apache.commons.collections.comparators.ReverseComparator;
 import org.fenixedu.bennu.core.domain.Bennu;
 
 public class Researcher extends Researcher_Base {
-
-    public static Comparator<Researcher> PUBLICATION_VOLUME_COMPARATOR = new ReverseComparator(new Comparator<Researcher>() {
-
-        @Override
-        public int compare(Researcher r1, Researcher r2) {
-            Integer resultParticipationsCount = r1.getPerson().getResultParticipationsSet().size();
-            Integer resultParticipationsCount2 = r2.getPerson().getResultParticipationsSet().size();
-            return resultParticipationsCount.compareTo(resultParticipationsCount2);
-        }
-
-    });
-
     public Researcher(Person person) {
         super();
         setPerson(person);

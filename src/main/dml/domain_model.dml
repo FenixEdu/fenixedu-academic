@@ -119,15 +119,6 @@ enum net.sourceforge.fenixedu.domain.person.Gender                              
 enum net.sourceforge.fenixedu.domain.person.IDDocumentType                                                                as IDDocumentType;
 enum net.sourceforge.fenixedu.domain.person.MaritalStatus                                                                 as MaritalStatus;
 enum net.sourceforge.fenixedu.domain.person.RoleType                                                                      as RoleType;
-enum net.sourceforge.fenixedu.domain.research.activity.CooperationType                                                    as CooperationType;
-enum net.sourceforge.fenixedu.domain.research.activity.EventType                                                          as activity.EventType;
-enum net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole                    as ResearchActivityParticipationRole;
-enum net.sourceforge.fenixedu.domain.research.activity.ResearchActivityStage                                              as ResearchActivityStage;
-enum net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile.FileResultPermittedGroupType              as FileResultPermittedGroupType;
-enum net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole                          as ResultParticipationRole;
-enum net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation.ResultUnitAssociationRole                      as ResultUnitAssociationRole;
-enum net.sourceforge.fenixedu.domain.research.result.publication.ScopeType                                                as ScopeType;
-enum net.sourceforge.fenixedu.domain.research.result.publication.Thesis.ThesisType                                        as ThesisType;
 enum net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType                                  as AcademicServiceRequestSituationType;
 enum net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentPurposeType                                 as DocumentPurposeType;
 enum net.sourceforge.fenixedu.domain.student.EnrolmentModel                                                               as EnrolmentModel;
@@ -172,7 +163,6 @@ enum net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumen
 enum net.sourceforge.fenixedu.domain.accounting.events.DegreeFinalizationCertificateRequestJustificationType              as DegreeFinalizationCertificateRequestJustificationType;
 enum net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicEventJustificationType                     as AcademicEventJustificationType;
 enum net.sourceforge.fenixedu.domain.EntryPhase                                                                           as EntryPhase;
-enum net.sourceforge.fenixedu.domain.research.result.publication.PreferredPublicationPriority                             as PreferredPublicationPriority;
 enum net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationContext                                                as EnrolmentEvaluationContext;
 enum net.sourceforge.fenixedu.domain.curriculum.CurriculumValidationEvaluationPhase                                       as CurriculumValidationEvaluationPhase;
 enum net.sourceforge.fenixedu.domain.phd.debts.PhdEventExemptionJustificationType                                         as PhdEventExemptionJustificationType;
@@ -1230,11 +1220,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
         }
         
         class candidacy.CandidacySummaryFile extends File {
-        }
-
-        class research.result.ResearchResultDocumentFile extends File {
-            FileResultPermittedGroupType fileResultPermittedGroupType;
-            Boolean visible;
         }
 
         class space.BlueprintFile extends File {
@@ -4059,189 +4044,8 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
         State state;
     }
 
-    class research.activity.ArticleAssociation  {
-    }
-
-    class research.activity.Cooperation  {
-        CooperationType cooperationType;
-        YearMonthDay endDate;
-        String name;
-        YearMonthDay startDate;
-    }
-
-    class research.activity.EventConferenceArticlesAssociation  {
-    }
-
-    class research.activity.EventEdition  {
-        String edition;
-        YearMonthDay endDate;
-        String eventLocation;
-        String organization;
-        YearMonthDay startDate;
-        String url;
-    }
-
-    class research.activity.JournalIssue  {
-        Month month;
-        String number;
-        Boolean specialIssue;
-        String specialIssueComment;
-        String url;
-        String volume;
-        Integer year;
-    }
-
-    class research.activity.Participation  {
-        ResearchActivityParticipationRole role;
-        MultiLanguageString roleMessage;
-    }
-
-        class research.activity.CooperationParticipation extends research.activity.Participation {
-        }
-
-        class research.activity.EventEditionParticipation extends research.activity.Participation {
-        }
-
-        class research.activity.EventParticipation extends research.activity.Participation {
-        }
-
-        class research.activity.JournalIssueParticipation extends research.activity.Participation {
-        }
-
-        class research.activity.ScientificJournalParticipation extends research.activity.Participation {
-            YearMonthDay beginDate;
-            YearMonthDay endDate;
-        }
-
-    class research.activity.ResearchEvent  {
-        activity.EventType eventType;
-        ScopeType locationType;
-        String name;
-        ResearchActivityStage stage;
-        String url;
-    }
-
-    class research.activity.ScientificJournal  {
-        String issn;
-        ScopeType locationType;
-        String name;
-        String publisher;
-        ResearchActivityStage stage;
-        String url;
-    }
-
     class research.Researcher  {
         Boolean allowsToBeSearched;
-    }
-
-    class research.result.ResearchResult  {
-        DateTime lastModificationDate;
-        String modifiedBy;
-        MultiLanguageString note;
-        String title;
-        String uniqueStorageId;
-        String url;
-    }
-
-        class research.result.publication.ResearchResultPublication extends research.result.ResearchResult {
-            MultiLanguageString keywords;
-            Month month;
-            String organization;
-            String publisher;
-            Integer year;
-        }
-
-        class research.result.publication.PreferredPublication  {
-            PreferredPublicationPriority priority;
-        }
-        
-            class research.result.publication.Article extends research.result.publication.ResearchResultPublication {
-                Integer firstPage;
-                Integer issn;
-                String journal;
-                String language;
-                Integer lastPage;
-            }
-
-            class research.result.publication.Book extends research.result.publication.ResearchResultPublication {
-                String address;
-                String edition;
-                String isbn;
-                String language;
-                Integer numberPages;
-                ScopeType scope;
-                String series;
-                String volume;
-            }
-
-            class research.result.publication.BookPart extends research.result.publication.ResearchResultPublication {
-                String address;
-                String bookTitle;
-                String chapter;
-                String edition;
-                Integer firstPage;
-                Integer lastPage;
-                String series;
-                String volume;
-            }
-
-            class research.result.publication.ConferenceArticles extends research.result.publication.ResearchResultPublication {
-                String conference;
-                ScopeType scope;
-            }
-
-                class research.result.publication.Inproceedings extends research.result.publication.ConferenceArticles {
-                    String address;
-                    Integer firstPage;
-                    String language;
-                    Integer lastPage;
-                }
-
-                class research.result.publication.Proceedings extends research.result.publication.ConferenceArticles {
-                    String address;
-                }
-
-            class research.result.publication.Manual extends research.result.publication.ResearchResultPublication {
-                String address;
-                String edition;
-            }
-
-            class research.result.publication.OtherPublication extends research.result.publication.ResearchResultPublication {
-                String address;
-                String howPublished;
-                String language;
-                Integer numberPages;
-                String otherPublicationType;
-            }
-
-            class research.result.publication.TechnicalReport extends research.result.publication.ResearchResultPublication {
-                String address;
-                String language;
-                String number;
-                Integer numberPages;
-                String technicalReportType;
-            }
-
-            class research.result.publication.Thesis extends research.result.publication.ResearchResultPublication {
-                String address;
-                String language;
-                Month monthBegin;
-                Integer numberPages;
-                String scientificArea;
-                ThesisType thesisType;
-                Integer yearBegin;
-            }
-
-            class research.result.publication.Unstructured extends research.result.publication.ResearchResultPublication {
-            }
-
-    class research.result.ResultParticipation  {
-        Integer personOrder;
-        ResultParticipationRole role;
-    }
-
-    class research.result.ResultUnitAssociation  {
-        ResultUnitAssociationRole role;
     }
 
     class resource.Resource  {
@@ -9490,11 +9294,6 @@ relation AnyCurricularCourseDepartmentUnit {
     organizationalStructure.DepartmentUnit playsRole departmentUnit;
 }
 
-relation ArticleAssociationArticle {
-    research.activity.ArticleAssociation playsRole articleAssociation;
-    research.result.publication.Article playsRole article;
-}
-
 relation AttendsEnrolment {
     Attends playsRole attends {
         multiplicity *;
@@ -9795,11 +9594,6 @@ relation ConclusionProcessVersionIngressionYear {
     ExecutionYear playsRole ingressionYear;
 }
 
-relation ConferenceArticlesEventConferenceArticlesAssociation {
-    research.result.publication.ConferenceArticles playsRole conferenceArticle;
-    research.activity.EventConferenceArticlesAssociation playsRole eventConferenceArticlesAssociation;
-}
-
 relation ConnectionRuleAccountabilityType {
     organizationalStructure.AccountabilityType playsRole accountabilityType;
     organizationalStructure.ConnectionRule playsRole connectionRules {
@@ -9852,13 +9646,6 @@ relation VigilantWrapperRootDomainObject {
 relation PersonIncompatibleVigilant {
     Person playsRole incompatiblePerson;
     Person playsRole incompatibleVigilant;
-}
-
-relation CooperationUnit {
-    research.activity.Cooperation playsRole cooperation {
-        multiplicity *;
-    }
-    organizationalStructure.Unit playsRole unit;
 }
 
 relation CoordinatorTeacher {
@@ -10531,20 +10318,6 @@ relation EvaluationExecutionCourse {
         multiplicity *;
     }
     Evaluation playsRole associatedEvaluations {
-        multiplicity *;
-    }
-}
-
-relation EventEditionEventConferenceArticlesAssociation {
-    research.activity.EventEdition playsRole eventEdition;
-    research.activity.EventConferenceArticlesAssociation playsRole eventConferenceArticlesAssociations {
-        multiplicity *;
-    }
-}
-
-relation EventEventEdition {
-    research.activity.ResearchEvent playsRole event;
-    research.activity.EventEdition playsRole eventEditions {
         multiplicity *;
     }
 }
@@ -11389,20 +11162,6 @@ relation InvitationParty {
     }
 }
 
-relation JournalIssueArticleAssociation {
-    research.activity.JournalIssue playsRole journalIssue;
-    research.activity.ArticleAssociation playsRole articleAssociations {
-        multiplicity *;
-    }
-}
-
-relation JournalIssueScientificJournal {
-    research.activity.ScientificJournal playsRole scientificJournal;
-    research.activity.JournalIssue playsRole journalIssues {
-        multiplicity *;
-    }
-}
-
 relation LessonLessonSpaceOccupation {
     Lesson playsRole lesson;
     space.LessonSpaceOccupation playsRole lessonSpaceOccupation;
@@ -11707,55 +11466,6 @@ relation OtherTypeCreditLineExecutionPeriod {
     ExecutionSemester playsRole executionPeriod;
 }
 
-relation ParticipationParty {
-    organizationalStructure.Party playsRole party;
-    research.activity.Participation playsRole participations {
-        multiplicity *;
-    }
-}
-
-relation ParticipationRootDomainObject {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    research.activity.Participation playsRole participations {
-        multiplicity *;
-    }
-}
-
-relation ParticipationsInCooperation {
-    research.activity.Cooperation playsRole cooperation;
-    research.activity.CooperationParticipation playsRole participations {
-        multiplicity *;
-    }
-}
-
-relation ParticipationsInEvent {
-    research.activity.ResearchEvent playsRole event;
-    research.activity.EventParticipation playsRole participations {
-        multiplicity *;
-    }
-}
-
-relation ParticipationsInEventEdition {
-    research.activity.EventEdition playsRole eventEdition;
-    research.activity.EventEditionParticipation playsRole participations {
-        multiplicity *;
-    }
-}
-
-relation ParticipationsInJournalIssue {
-    research.activity.JournalIssue playsRole journalIssue;
-    research.activity.JournalIssueParticipation playsRole participations {
-        multiplicity *;
-    }
-}
-
-relation ParticipationsInScientificJournal {
-    research.activity.ScientificJournal playsRole scientificJournal;
-    research.activity.ScientificJournalParticipation playsRole participations {
-        multiplicity *;
-    }
-}
-
 relation PartyPartySocialSecurityNumber {
     organizationalStructure.Party playsRole party;
     organizationalStructure.PartySocialSecurityNumber playsRole partySocialSecurityNumber;
@@ -12010,13 +11720,6 @@ relation PersonAccountingEvent {
     }
 }
 
-relation PersonArticleAssociation {
-    Person playsRole creator;
-    research.activity.ArticleAssociation playsRole articleAssociations {
-        multiplicity *;
-    }
-}
-
 relation PersonBlueprint {
     Person playsRole creationPerson;
     space.Blueprint playsRole blueprints {
@@ -12043,13 +11746,6 @@ relation PersonDepartment {
         multiplicity *;
     }
     Department playsRole manageableDepartmentCredits {
-        multiplicity *;
-    }
-}
-
-relation PersonEventConferenceArticlesAssociation {
-    Person playsRole person;
-    research.activity.EventConferenceArticlesAssociation playsRole eventConferenceArticlesAssociations {
         multiplicity *;
     }
 }
@@ -12326,11 +12022,6 @@ relation PublicationCollaborators {
     Person playsRole publicationCollaborators {
         multiplicity *;
     }
-}
-
-relation PublicationThesisPointsProcessThesis {
-    research.result.publication.Thesis playsRole publication;
-    thesis.Thesis playsRole thesis;
 }
 
 relation PublicationsNumberTeacher {
@@ -12688,54 +12379,6 @@ relation ResearcherPerson {
     research.Researcher playsRole researcher;
 }
 
-relation ResearchResultCountry {
-    Country playsRole country;
-    research.result.ResearchResult playsRole results {
-        multiplicity *;
-    }
-}
-
-relation ResearchResultCreator {
-    research.result.ResearchResult playsRole createdResults {
-        multiplicity *;
-    }
-    Person playsRole creator;
-}
-
-relation PreferredPublicationRootDomainObject {
-    research.result.publication.PreferredPublication playsRole preferredPublication {
-        multiplicity *;
-    }
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject {
-    	multiplicity 1..1;
-    }
-}
-
-relation PreferredPublicationsOwner {
-    research.result.publication.PreferredPublication playsRole preferredPublication {
-        multiplicity *;
-    }
-    Person playsRole personThatPrefers {
-        multiplicity 1..1;
-    }
-}
-
-relation PreferredPublicationsPublication {
-    research.result.publication.ResearchResultPublication playsRole preferredPublication {
-        multiplicity 1..1;
-    }
-    research.result.publication.PreferredPublication playsRole personThatPrefers {
-        multiplicity *;
-    }
-}
-
-relation ResearchResultUnitAssociationResult {
-    research.result.ResultUnitAssociation playsRole resultUnitAssociations {
-        multiplicity *;
-    }
-    research.result.ResearchResult playsRole result;
-}
-
 relation ResourceAllocationResource {
     resource.Resource playsRole resource;
     resource.ResourceAllocation playsRole resourceAllocations {
@@ -12748,34 +12391,6 @@ relation ResourceResourceResponsibility {
         multiplicity *;
     }
     resource.Resource playsRole resource;
-}
-
-relation ResulUnitAssociationUnit {
-    research.result.ResultUnitAssociation playsRole resultUnitAssociations {
-        multiplicity *;
-    }
-    organizationalStructure.Unit playsRole unit;
-}
-
-relation ResultDocumentFileResearchResult {
-    research.result.ResearchResultDocumentFile playsRole resultDocumentFiles {
-        multiplicity *;
-    }
-    research.result.ResearchResult playsRole result;
-}
-
-relation ResultParticipationPerson {
-    Person playsRole person;
-    research.result.ResultParticipation playsRole resultParticipations {
-        multiplicity *;
-    }
-}
-
-relation ResultParticipationResearchResult {
-    research.result.ResultParticipation playsRole resultParticipations {
-        multiplicity *;
-    }
-    research.result.ResearchResult playsRole result;
 }
 
 relation RoomClassificationRoomClassification {
@@ -12909,13 +12524,6 @@ relation RootDomainObjectAdvise {
     }
 }
 
-relation RootDomainObjectArticleAssociation {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    research.activity.ArticleAssociation playsRole articleAssociations {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectAttends {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Attends playsRole attendss {
@@ -13017,13 +12625,6 @@ relation RootDomainObjectContext {
 relation RootDomainObjectContributor {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     Contributor playsRole contributors {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectCooperation {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    research.activity.Cooperation playsRole cooperations {
         multiplicity *;
     }
 }
@@ -13341,27 +12942,6 @@ relation RootDomainObjectEvaluationMethod {
     }
 }
 
-relation RootDomainObjectEvent {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    research.activity.ResearchEvent playsRole events {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectEventConferenceArticlesAssociation {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    research.activity.EventConferenceArticlesAssociation playsRole eventConferenceArticlesAssociations {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectEventEdition {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    research.activity.EventEdition playsRole eventEditions {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectExecutionCourse {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     ExecutionCourse playsRole executionCourses {
@@ -13648,13 +13228,6 @@ relation RootDomainObjectInstitutionUnit {
 relation RootDomainObjectInsuranceValue {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     InsuranceValue playsRole insuranceValues {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectJournalIssues {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    research.activity.JournalIssue playsRole journalIssues {
         multiplicity *;
     }
 }
@@ -14016,13 +13589,6 @@ relation RootDomainObjectReimbursementGuideSituation {
     }
 }
 
-relation RootDomainObjectResearchResult {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    research.result.ResearchResult playsRole results {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectResidenceCandidacies {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     student.ResidenceCandidacies playsRole residenceCandidaciess {
@@ -14047,20 +13613,6 @@ relation RootDomainObjectResourceAllocation {
 relation RootDomainObjectResourceResponsibility {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     resource.ResourceResponsibility playsRole resourceResponsibility {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectResultParticipation {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    research.result.ResultParticipation playsRole resultParticipations {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectResultUnitAssociation {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    research.result.ResultUnitAssociation playsRole resultUnitAssociations {
         multiplicity *;
     }
 }
@@ -14096,13 +13648,6 @@ relation RootDomainObjectSchoolClass {
 relation RootDomainObjectScientificArea {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
     ScientificArea playsRole scientificAreas {
-        multiplicity *;
-    }
-}
-
-relation RootDomainObjectScientificJournal {
-    .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;
-    research.activity.ScientificJournal playsRole scientificJournals {
         multiplicity *;
     }
 }

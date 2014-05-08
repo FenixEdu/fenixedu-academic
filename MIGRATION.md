@@ -216,7 +216,7 @@ Before migrating to version 3.0, you must first ensure that:
 
     -- Removing instances of deleted QueueJob and File Subclasses
     DELETE QUEUE_JOB, GENERIC_FILE from QUEUE_JOB left join GENERIC_FILE on GENERIC_FILE.OID = QUEUE_JOB.OID_FILE join FF$DOMAIN_CLASS_INFO on QUEUE_JOB.OID >> 32 = DOMAIN_CLASS_ID where DOMAIN_CLASS_NAME = 'net.sourceforge.fenixedu.domain.reports.PublicationReportFile'\G
-    DELETE FROM GENERIC_FILE where OID >> 32 in (SELECT DOMAIN_CLASS_ID from FF$DOMAIN_CLASS_INFO where DOMAIN_CLASS_NAME in ('net.sourceforge.fenixedu.domain.documents.LibraryMissingCardsDocument', 'net.sourceforge.fenixedu.domain.documents.LibraryMissingLettersDocument'));
+    DELETE FROM GENERIC_FILE where OID >> 32 in (SELECT DOMAIN_CLASS_ID from FF$DOMAIN_CLASS_INFO where DOMAIN_CLASS_NAME in ('net.sourceforge.fenixedu.domain.documents.LibraryMissingCardsDocument', 'net.sourceforge.fenixedu.domain.documents.LibraryMissingLettersDocument', 'net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile'));
 
     -- Creating tables for Content subclasses (Site, Forum, Announcement, AnnouncementBoard, etc)
     alter table `DEPARTMENT` add `OID_FORUM` bigint unsigned;

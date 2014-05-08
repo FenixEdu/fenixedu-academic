@@ -170,31 +170,7 @@
   		<put name="css-headers" value="/publico/alumni/alumniCSSHeader.jsp" />
   		<put name="hideLanguage" value="true" />
 	</definition>
-	
-	<definition name="show-result" extends="definition.public.secondaryMainPageIST">
-		<put name="titleString" value="public.general.viewResearchPublication" />
-		<put name="bundle" value="TITLES_RESOURCES" />
-		<put name="body" value="/publico/researcher/showResearchResult.jsp" />
-	</definition>
-	
-	<definition name="show.journal" extends="definition.public.secondaryMainPageIST">
-		<put name="titleString" value="public.general.viewJournalOrMagazine" />
-		<put name="bundle" value="TITLES_RESOURCES" />
-       	<put name="body" value="/publico/researcher/showJournal.jsp"/>  
-    </definition>
 
-    <definition name="show.event" extends="definition.public.secondaryMainPageIST">
-    	<put name="titleString" value="public.general.showEvents" />
-		<put name="bundle" value="TITLES_RESOURCES" />
-       	<put name="body" value="/publico/researcher/showEvent.jsp"/>  
-    </definition>    
-    
-    <definition name="show-participationDetails" extends="definition.public.secondaryMainPageIST">
-    	<put name="titleString" value="public.general.eventDetails" />
-		<put name="bundle" value="TITLES_RESOURCES" />
-		<put name="body" value="/publico/researcher/participationDetails.jsp"/>
-	</definition>	
-	
     <definition name="showThesisDetails" extends="definition.public.secondaryMainPageIST">
     	<put name="titleString" value="public.general.showThesisDetails" />
 		<put name="bundle" value="TITLES_RESOURCES" />

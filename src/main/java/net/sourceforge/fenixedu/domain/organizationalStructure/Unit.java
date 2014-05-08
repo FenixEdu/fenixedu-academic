@@ -36,19 +36,6 @@ import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation;
-import net.sourceforge.fenixedu.domain.research.result.publication.Article;
-import net.sourceforge.fenixedu.domain.research.result.publication.Book;
-import net.sourceforge.fenixedu.domain.research.result.publication.BookPart;
-import net.sourceforge.fenixedu.domain.research.result.publication.Inproceedings;
-import net.sourceforge.fenixedu.domain.research.result.publication.Manual;
-import net.sourceforge.fenixedu.domain.research.result.publication.OtherPublication;
-import net.sourceforge.fenixedu.domain.research.result.publication.Proceedings;
-import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResultPublication;
-import net.sourceforge.fenixedu.domain.research.result.publication.ScopeType;
-import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalReport;
-import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
-import net.sourceforge.fenixedu.domain.research.result.publication.Unstructured;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.util.FunctionalityPrinters;
@@ -216,12 +203,12 @@ public class Unit extends Unit_Base {
         return (!hasAnyParents() || (getParentsSet().size() == 1 && getParentUnits().size() == 1)) && !hasAnyChilds()
                 && !hasAnyFunctions() && !hasAnyVigilantGroups() && !hasAnyAssociatedNonAffiliatedTeachers()
                 && !hasAnyPayedGuides() && !hasAnyPayedReceipts() && !hasAnyExternalCurricularCourses()
-                && !hasAnyResultUnitAssociations() && !hasUnitServiceAgreementTemplate() && !hasAnyParticipations()
-                && getBoardsSet().isEmpty() && (!hasSite() || getSite().isDeletable()) && !hasAnyOwnedReceipts()
-                && !hasAnyPrecedentDegreeInformations() && !hasAnyCandidacyPrecedentDegreeInformations()
-                && !hasAnyUnitSpaceOccupations() && !hasAnyExamCoordinators() && !hasAnyExternalRegistrationDatas()
-                && !hasAnyCooperation() && !hasAnyFiles() && !hasAnyPersistentGroups() && !hasAnyExternalCourseLoadRequests()
-                && !hasAnyExternalProgramCertificateRequests() && !getUnitGroupSet().isEmpty();
+                && !hasUnitServiceAgreementTemplate() && getBoardsSet().isEmpty() && (!hasSite() || getSite().isDeletable())
+                && !hasAnyOwnedReceipts() && !hasAnyPrecedentDegreeInformations()
+                && !hasAnyCandidacyPrecedentDegreeInformations() && !hasAnyUnitSpaceOccupations() && !hasAnyExamCoordinators()
+                && !hasAnyExternalRegistrationDatas() && !hasAnyFiles() && !hasAnyPersistentGroups()
+                && !hasAnyExternalCourseLoadRequests() && !hasAnyExternalProgramCertificateRequests()
+                && !getUnitGroupSet().isEmpty();
     }
 
     @Override
@@ -1078,7 +1065,6 @@ public class Unit extends Unit_Base {
         destinationUnit.getChilds().addAll(externalContracts);
         destinationUnit.getPayedReceipts().addAll(fromUnit.getPayedReceipts());
         destinationUnit.getPayedGuides().addAll(fromUnit.getPayedGuides());
-        destinationUnit.getResultUnitAssociations().addAll(fromUnit.getResultUnitAssociations());
         destinationUnit.getAssociatedNonAffiliatedTeachers().addAll(fromUnit.getAssociatedNonAffiliatedTeachers());
         destinationUnit.getPrecedentDegreeInformations().addAll(fromUnit.getPrecedentDegreeInformations());
 
@@ -1332,256 +1318,6 @@ public class Unit extends Unit_Base {
      * ResearchResultPublication getters
      */
 
-    public List<ResearchResultPublication> getBooks(Boolean checkSubunits) {
-        return this.getResearchResultPublicationsByType(Book.class, checkSubunits);
-    }
-
-    public List<ResearchResultPublication> getBooks(ExecutionYear executionYear, Boolean checkSubunits) {
-        return this.getResearchResultPublicationsByType(Book.class, executionYear, checkSubunits);
-    }
-
-    public List<ResearchResultPublication> getBooks(ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear,
-            Boolean checkSubunits) {
-        return this.getResearchResultPublicationsByType(Book.class, firstExecutionYear, lastExecutionYear, checkSubunits);
-    }
-
-    public List<ResearchResultPublication> getInbooks(Boolean checkSubunits) {
-        return this.getResearchResultPublicationsByType(BookPart.class, checkSubunits);
-    }
-
-    public List<ResearchResultPublication> getInbooks(ExecutionYear executionYear, Boolean checkSubunits) {
-        return this.getResearchResultPublicationsByType(BookPart.class, executionYear, checkSubunits);
-    }
-
-    public List<ResearchResultPublication> getInbooks(ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear,
-            Boolean checkSubunits) {
-        return this.getResearchResultPublicationsByType(BookPart.class, firstExecutionYear, lastExecutionYear, checkSubunits);
-    }
-
-    public List<ResearchResultPublication> getArticles(ScopeType locationType, Boolean checkSubunits) {
-        return filterArticlesWithType(this.getResearchResultPublicationsByType(Article.class, checkSubunits), locationType);
-    }
-
-    public List<ResearchResultPublication> getArticles(ScopeType locationType, ExecutionYear executionYear, Boolean checkSubunits) {
-        return filterArticlesWithType(this.getResearchResultPublicationsByType(Article.class, executionYear, checkSubunits),
-                locationType);
-    }
-
-    public List<ResearchResultPublication> getArticles(ScopeType locationType, ExecutionYear firstExecutionYear,
-            ExecutionYear lastExecutionYear, Boolean checkSubunits) {
-        return filterArticlesWithType(
-                this.getResearchResultPublicationsByType(Article.class, firstExecutionYear, lastExecutionYear, checkSubunits),
-                locationType);
-    }
-
-    public List<ResearchResultPublication> getArticles(Boolean checkSubunits) {
-        return this.getResearchResultPublicationsByType(Article.class, checkSubunits);
-    }
-
-    public List<ResearchResultPublication> getArticles(ExecutionYear executionYear, Boolean checkSubunits) {
-        return this.getResearchResultPublicationsByType(Article.class, executionYear, checkSubunits);
-    }
-
-    public List<ResearchResultPublication> getArticles(ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear,
-            Boolean checkSubunits) {
-        return this.getResearchResultPublicationsByType(Article.class, firstExecutionYear, lastExecutionYear, checkSubunits);
-    }
-
-    public List<ResearchResultPublication> getInproceedings(ScopeType locationType, Boolean checkSubunits) {
-        return filterInproceedingsWithType(this.getResearchResultPublicationsByType(Inproceedings.class, checkSubunits),
-                locationType);
-    }
-
-    public List<ResearchResultPublication> getInproceedings(ScopeType locationType, ExecutionYear executionYear,
-            Boolean checkSubunits) {
-        return filterInproceedingsWithType(
-                this.getResearchResultPublicationsByType(Inproceedings.class, executionYear, checkSubunits), locationType);
-    }
-
-    public List<ResearchResultPublication> getInproceedings(ScopeType locationType, ExecutionYear firstExecutionYear,
-            ExecutionYear lastExecutionYear, Boolean checkSubunits) {
-        return filterInproceedingsWithType(this.getResearchResultPublicationsByType(Inproceedings.class, firstExecutionYear,
-                lastExecutionYear, checkSubunits), locationType);
-    }
-
-    public List<ResearchResultPublication> getInproceedings(Boolean checkSubunits) {
-        return this.getResearchResultPublicationsByType(Inproceedings.class, checkSubunits);
-    }
-
-    public List<ResearchResultPublication> getInproceedings(ExecutionYear executionYear, Boolean checkSubunits) {
-        return this.getResearchResultPublicationsByType(Inproceedings.class, executionYear, checkSubunits);
-    }
-
-    public List<ResearchResultPublication> getInproceedings(ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear,
-            Boolean checkSubunits) {
-        return this
-                .getResearchResultPublicationsByType(Inproceedings.class, firstExecutionYear, lastExecutionYear, checkSubunits);
-    }
-
-    public List<ResearchResultPublication> getProceedings(Boolean checkSubunits) {
-        return this.getResearchResultPublicationsByType(Proceedings.class, checkSubunits);
-    }
-
-    public List<ResearchResultPublication> getProceedings(ExecutionYear executionYear, Boolean checkSubunits) {
-        return this.getResearchResultPublicationsByType(Proceedings.class, executionYear, checkSubunits);
-    }
-
-    public List<ResearchResultPublication> getProceedings(ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear,
-            Boolean checkSubunits) {
-        return this.getResearchResultPublicationsByType(Proceedings.class, firstExecutionYear, lastExecutionYear, checkSubunits);
-    }
-
-    public List<ResearchResultPublication> getTheses(Boolean checkSubunits) {
-        return this.getResearchResultPublicationsByType(Thesis.class, checkSubunits);
-    }
-
-    public List<ResearchResultPublication> getTheses(ExecutionYear executionYear, Boolean checkSubunits) {
-        return this.getResearchResultPublicationsByType(Thesis.class, executionYear, checkSubunits);
-    }
-
-    public List<ResearchResultPublication> getTheses(ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear,
-            Boolean checkSubunits) {
-        return this.getResearchResultPublicationsByType(Thesis.class, firstExecutionYear, lastExecutionYear, checkSubunits);
-    }
-
-    public List<ResearchResultPublication> getManuals(Boolean checkSubunits) {
-        return this.getResearchResultPublicationsByType(Manual.class, checkSubunits);
-    }
-
-    public List<ResearchResultPublication> getManuals(ExecutionYear executionYear, Boolean checkSubunits) {
-        return this.getResearchResultPublicationsByType(Manual.class, executionYear, checkSubunits);
-    }
-
-    public List<ResearchResultPublication> getManuals(ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear,
-            Boolean checkSubunits) {
-        return this.getResearchResultPublicationsByType(Manual.class, firstExecutionYear, lastExecutionYear, checkSubunits);
-    }
-
-    public List<ResearchResultPublication> getTechnicalReports(Boolean checkSubunits) {
-        return this.getResearchResultPublicationsByType(TechnicalReport.class, checkSubunits);
-    }
-
-    public List<ResearchResultPublication> getTechnicalReports(ExecutionYear executionYear, Boolean checkSubunits) {
-        return this.getResearchResultPublicationsByType(TechnicalReport.class, executionYear, checkSubunits);
-    }
-
-    public List<ResearchResultPublication> getTechnicalReports(ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear,
-            Boolean checkSubunits) {
-        return this.getResearchResultPublicationsByType(TechnicalReport.class, firstExecutionYear, lastExecutionYear,
-                checkSubunits);
-    }
-
-    public List<ResearchResultPublication> getOtherPublications(Boolean checkSubunits) {
-        return this.getResearchResultPublicationsByType(OtherPublication.class, checkSubunits);
-    }
-
-    public List<ResearchResultPublication> getOtherPublications(ExecutionYear executionYear, Boolean checkSubunits) {
-        return this.getResearchResultPublicationsByType(OtherPublication.class, executionYear, checkSubunits);
-    }
-
-    public List<ResearchResultPublication> getOtherPublications(ExecutionYear firstExecutionYear,
-            ExecutionYear lastExecutionYear, Boolean checkSubunits) {
-        return this.getResearchResultPublicationsByType(OtherPublication.class, firstExecutionYear, lastExecutionYear,
-                checkSubunits);
-    }
-
-    public List<ResearchResultPublication> getUnstructureds(Boolean checkSubunits) {
-        return this.getResearchResultPublicationsByType(Unstructured.class, checkSubunits);
-    }
-
-    public List<ResearchResultPublication> getUnstructureds(ExecutionYear executionYear, Boolean checkSubunits) {
-        return this.getResearchResultPublicationsByType(Unstructured.class, executionYear, checkSubunits);
-    }
-
-    public List<ResearchResultPublication> getUnstructureds(ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear,
-            Boolean checkSubunits) {
-        return this.getResearchResultPublicationsByType(Unstructured.class, firstExecutionYear, lastExecutionYear, checkSubunits);
-    }
-
-    @Override
-    public List<ResearchResultPublication> getResearchResultPublications() {
-        Set<ResearchResultPublication> publications = new HashSet<ResearchResultPublication>();
-
-        for (ResultUnitAssociation association : getResultUnitAssociations()) {
-            if (association.getResult() instanceof ResearchResultPublication) {
-                publications.add((ResearchResultPublication) association.getResult());
-            }
-        }
-        return new ArrayList<ResearchResultPublication>(publications);
-    }
-
-    public List<ResearchResultPublication> getResearchResultPublications(Boolean checkSubunits) {
-
-        List<ResearchResultPublication> publications = new ArrayList<ResearchResultPublication>(getResearchResultPublications());
-
-        if (checkSubunits.equals(Boolean.TRUE)) {
-
-            Set<ResearchResultPublication> uniquePublications = new HashSet<ResearchResultPublication>(publications);
-            for (Unit unit : getAllSubUnits()) {
-                uniquePublications.addAll(unit.getResearchResultPublications());
-            }
-
-            return new ArrayList<ResearchResultPublication>(uniquePublications);
-        }
-
-        return publications;
-
-    }
-
-    protected List<ResearchResultPublication> getResearchResultPublicationsByType(
-            final Class<? extends ResearchResultPublication> clazz, Boolean checkSubunits) {
-        return filterResultPublicationsByType(clazz, getResearchResultPublications(checkSubunits));
-    }
-
-    protected List<ResearchResultPublication> getResearchResultPublicationsByType(
-            final Class<? extends ResearchResultPublication> clazz, ExecutionYear executionYear, Boolean checkSubunits) {
-        return filterResultPublicationsByType(clazz, getResearchResultPublicationsByExecutionYear(executionYear, checkSubunits));
-    }
-
-    protected List<ResearchResultPublication> getResearchResultPublicationsByType(
-            final Class<? extends ResearchResultPublication> clazz, ExecutionYear firstExecutionYear,
-            ExecutionYear lastExecutionYear, Boolean checkSubunits) {
-        return filterResultPublicationsByType(clazz,
-                getResearchResultPublicationsByExecutionYear(firstExecutionYear, lastExecutionYear, checkSubunits));
-    }
-
-    protected List<ResearchResultPublication> getResearchResultPublicationsByExecutionYear(ExecutionYear executionYear,
-            Boolean checkSubunits) {
-
-        List<ResearchResultPublication> publications = getResearchResultPublicationsByExecutionYear(executionYear);
-
-        if (checkSubunits.equals(Boolean.TRUE)) {
-
-            Set<ResearchResultPublication> uniquePublications = new HashSet<ResearchResultPublication>(publications);
-            for (Unit unit : getAllSubUnits()) {
-                uniquePublications.addAll(unit.getResearchResultPublicationsByExecutionYear(executionYear));
-            }
-
-            return new ArrayList<ResearchResultPublication>(uniquePublications);
-        }
-
-        return publications;
-    }
-
-    protected List<ResearchResultPublication> getResearchResultPublicationsByExecutionYear(ExecutionYear firstExecutionYear,
-            ExecutionYear lastExecutionYear, Boolean checkSubunits) {
-
-        List<ResearchResultPublication> publications =
-                getResearchResultPublicationsByExecutionYear(firstExecutionYear, lastExecutionYear);
-
-        if (checkSubunits.equals(Boolean.TRUE)) {
-            Set<ResearchResultPublication> uniquePublications = new HashSet<ResearchResultPublication>(publications);
-            for (Unit unit : getAllSubUnits()) {
-                uniquePublications.addAll(unit
-                        .getResearchResultPublicationsByExecutionYear(firstExecutionYear, lastExecutionYear));
-            }
-
-            return new ArrayList<ResearchResultPublication>(uniquePublications);
-        }
-
-        return publications;
-    }
-
     @Override
     public Country getCountry() {
         if (super.getCountry() != null) {
@@ -1725,16 +1461,6 @@ public class Unit extends Unit_Base {
     @Deprecated
     public boolean hasAnyExamCoordinators() {
         return !getExamCoordinatorsSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.research.activity.Cooperation> getCooperation() {
-        return getCooperationSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyCooperation() {
-        return !getCooperationSet().isEmpty();
     }
 
     @Deprecated
@@ -2015,16 +1741,6 @@ public class Unit extends Unit_Base {
     @Deprecated
     public boolean hasAnyFunctions() {
         return !getFunctionsSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation> getResultUnitAssociations() {
-        return getResultUnitAssociationsSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyResultUnitAssociations() {
-        return !getResultUnitAssociationsSet().isEmpty();
     }
 
     @Deprecated

@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
-import java.util.HashSet;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.person.RoleType;
+
 import org.fenixedu.bennu.core.annotation.GroupOperator;
-import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
 import org.joda.time.DateTime;
@@ -27,13 +27,7 @@ public class ResearchAuthorGroup extends FenixGroup {
 
     @Override
     public Set<User> getMembers() {
-        Set<User> users = new HashSet<>();
-        for (User user : Bennu.getInstance().getUserSet()) {
-            if (!user.getPerson().getResultParticipationsSet().isEmpty()) {
-                users.add(user);
-            }
-        }
-        return users;
+        return RoleGroup.get(RoleType.RESEARCHER).getMembers();
     }
 
     @Override
@@ -43,7 +37,7 @@ public class ResearchAuthorGroup extends FenixGroup {
 
     @Override
     public boolean isMember(User user) {
-        return user != null && !user.getPerson().getResultParticipationsSet().isEmpty();
+        return RoleGroup.get(RoleType.RESEARCHER).isMember(user);
     }
 
     @Override

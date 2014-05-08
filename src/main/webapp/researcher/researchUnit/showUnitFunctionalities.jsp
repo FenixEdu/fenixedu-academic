@@ -20,17 +20,6 @@
 			<bean:message key="label.sendEmailToGroups.explanation" bundle="RESEARCHER_RESOURCES"/>
 		</span>
 	</li>
-    <logic:equal name="unit" property="currentUserAbleToInsertOthersPublications" value="true">
-	<li>
-			<html:link page="<%= "/researchUnitFunctionalities.do?method=preparePublications&unitId=" + unitID %>">
-						<bean:message key="link.Publications" bundle="RESEARCHER_RESOURCES"/>
-			</html:link>
-			<br/>
-			<span class="color888">
-				<bean:message key="label.Publications.explanation" bundle="RESEARCHER_RESOURCES"/>
-			</span>
-	</li>
-	</logic:equal>
 	<logic:equal name="unit" property="currentUserAbleToDefineGroups" value="true">
 		<li>
 			<html:link page="<%= "/researchUnitFunctionalities.do?method=configureGroups&unitId=" + unitID %>">

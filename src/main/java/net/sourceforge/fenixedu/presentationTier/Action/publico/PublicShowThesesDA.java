@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisState;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -161,8 +160,8 @@ public abstract class PublicShowThesesDA extends FenixDispatchAction {
     public ActionForward showResult(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        ResearchResult result = getDomainObject(request, "thesisID");
-        request.setAttribute("result", result);
+//        ResearchResult result = getDomainObject(request, "thesisID");
+//        request.setAttribute("result", result);
 
         return mapping.findForward("showResult");
     }

@@ -88,6 +88,10 @@
 	<slot name="absence" key="label.absences" layout="values" schema="view.absence.name"/>
 </schema>
 
+<schema name="country.name" type="net.sourceforge.fenixedu.domain.Country">
+    <slot name="name" />
+</schema>
+
 <schema name="view.person.personGrantOwnerEquivalent" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalExemption" bundle="CONTRACTS_RESOURCES">
 	<slot name="beginDate"/>
 	<slot name="endDate"/>
