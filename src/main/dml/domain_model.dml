@@ -5807,13 +5807,8 @@ class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionP
             Boolean showCurrentAttendingExecutionCourses;
             Boolean showCurrentExecutionCourses;
             Boolean showEmail;
-            Boolean showInterests;
             Boolean showMobileTelephone;
-            Boolean showParticipations;
-            Boolean showPatents;
             Boolean showPhoto;
-            Boolean showPrizes;
-            Boolean showPublications;
             Boolean showResearchUnitHomepage;
             Boolean showTelephone;
             Boolean showUnit;

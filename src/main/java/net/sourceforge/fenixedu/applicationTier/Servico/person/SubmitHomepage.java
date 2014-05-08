@@ -13,9 +13,7 @@ public class SubmitHomepage {
     public static void run(final Person person, final Boolean activated, final Boolean showUnit, final Boolean showCategory,
             final Boolean showPhoto, final Boolean showResearchUnitHomepage, final Boolean showCurrentExecutionCourses,
             final Boolean showActiveStudentCurricularPlans, final Boolean showAlumniDegrees, final String researchUnitHomepage,
-            final MultiLanguageString researchUnit, final Boolean showCurrentAttendingExecutionCourses,
-            final Boolean showPublications, final Boolean showPatents, final Boolean showInterests,
-            final Boolean showParticipations, final Boolean showPrizes) {
+            final MultiLanguageString researchUnit, final Boolean showCurrentAttendingExecutionCourses) {
         check(RolePredicates.PERSON_PREDICATE);
 
         Homepage homepage = person.initializeSite();
@@ -31,11 +29,6 @@ public class SubmitHomepage {
         homepage.setResearchUnitHomepage(researchUnitHomepage);
         homepage.setResearchUnit(researchUnit);
         homepage.setShowCurrentAttendingExecutionCourses(showCurrentAttendingExecutionCourses);
-        homepage.setShowPublications(showPublications);
-        homepage.setShowPatents(showPatents);
-        homepage.setShowInterests(showInterests);
-        homepage.setShowParticipations(showParticipations);
-        homepage.setShowPrizes(showPrizes);
     }
 
 }

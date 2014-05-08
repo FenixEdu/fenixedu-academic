@@ -26,11 +26,6 @@
                   <form-property type="java.lang.String" name="researchUnitHomepage"></form-property>
                   <form-property type="java.lang.String" name="researchUnit"></form-property>
                   <form-property type="java.lang.String" name="showCurrentAttendingExecutionCourses"></form-property>
-                  <form-property type="java.lang.String" name="showPublications"></form-property>
-                  <form-property type="java.lang.String" name="showPatents"></form-property>
-                  <form-property type="java.lang.String" name="showInterests"></form-property>
-                  <form-property type="java.lang.String" name="showParticipations"></form-property>
-                  <form-property type="java.lang.String" name="showPrizes"></form-property>
             </form-bean>
       </form-beans>
       <!-- ========== Global Exception Definitions ============================== -->

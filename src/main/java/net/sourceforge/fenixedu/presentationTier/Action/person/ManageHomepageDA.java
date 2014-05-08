@@ -90,11 +90,6 @@ public class ManageHomepageDA extends SiteManagementDA {
                     homepage.getResearchUnit() != null ? homepage.getResearchUnit().getContent() : null);
             dynaActionForm.set("showCurrentAttendingExecutionCourses",
                     booleanString(homepage.getShowCurrentAttendingExecutionCourses()));
-            dynaActionForm.set("showPublications", booleanString(homepage.getShowPublications()));
-            dynaActionForm.set("showPatents", booleanString(homepage.getShowPatents()));
-            dynaActionForm.set("showInterests", booleanString(homepage.getShowInterests()));
-            dynaActionForm.set("showParticipations", booleanString(homepage.getShowParticipations()));
-            dynaActionForm.set("showPrizes", booleanString(homepage.getShowPrizes()));
         }
 
         SortedSet<Attends> personAttendsSortedByExecutionCourseName =
@@ -129,11 +124,6 @@ public class ManageHomepageDA extends SiteManagementDA {
         final String showAlumniDegrees = (String) dynaActionForm.get("showAlumniDegrees");
         final String researchUnitHomepage = (String) dynaActionForm.get("researchUnitHomepage");
         final String researchUnit = (String) dynaActionForm.get("researchUnit");
-        final String showPublications = (String) dynaActionForm.get("showPublications");
-        final String showPatents = (String) dynaActionForm.get("showPatents");
-        final String showInterests = (String) dynaActionForm.get("showInterests");
-        final String showParticipations = (String) dynaActionForm.get("showParticipations");
-        final String showPrizes = (String) dynaActionForm.get("showPrizes");
 
         final MultiLanguageString researchUnitMultiLanguageString;
         if (researchUnit != null && researchUnit.length() > 0) {
@@ -147,9 +137,7 @@ public class ManageHomepageDA extends SiteManagementDA {
                 Boolean.valueOf(showCategory), Boolean.valueOf(showPhoto), Boolean.valueOf(showResearchUnitHomepage),
                 Boolean.valueOf(showCurrentExecutionCourses), Boolean.valueOf(showActiveStudentCurricularPlans),
                 Boolean.valueOf(showAlumniDegrees), researchUnitHomepage, researchUnitMultiLanguageString,
-                Boolean.valueOf(showCurrentAttendingExecutionCourses), Boolean.valueOf(showPublications),
-                Boolean.valueOf(showPatents), Boolean.valueOf(showInterests), Boolean.valueOf(showParticipations),
-                Boolean.valueOf(showPrizes));
+                Boolean.valueOf(showCurrentAttendingExecutionCourses));
 
         return options(mapping, actionForm, request, response);
     }

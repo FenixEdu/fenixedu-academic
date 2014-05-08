@@ -45,9 +45,6 @@ public class Homepage extends Homepage_Base {
         setShowCurrentExecutionCourses(false);
         setShowActiveStudentCurricularPlans(false);
         setShowAlumniDegrees(false);
-        setShowPublications(false);
-        setShowPatents(false);
-        setShowInterests(false);
         setShowCurrentAttendingExecutionCourses(false);
     }
 
