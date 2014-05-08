@@ -10,8 +10,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYearIntervalBean;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -228,10 +226,5 @@ public abstract class SiteVisualizationDA extends FenixDispatchAction {
 
     protected String getDirectLinkContext(HttpServletRequest request) {
         return null;
-    }
-
-    protected ExecutionYearIntervalBean generateSearchBean() {
-        return new ExecutionYearIntervalBean(ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear(3),
-                ExecutionYear.readCurrentExecutionYear());
     }
 }

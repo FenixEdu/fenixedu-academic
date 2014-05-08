@@ -9,7 +9,6 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYearIntervalBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
@@ -42,7 +41,6 @@ import com.google.common.base.Strings;
         @Forward(name = "department-degrees", path = "department-degrees"),
         @Forward(name = "frontPage-INTRO_BANNER", path = "department-site-front-page-intro-banner"),
         @Forward(name = "eventsAction", path = "/department/events.do"),
-        @Forward(name = "showPublications", path = "department-show-publications"),
         @Forward(name = "department-teachers-category", path = "department-teachers-category"),
         @Forward(name = "unit-subunits", path = "department-subunits"),
         @Forward(name = "frontPage-BANNER_INTRO", path = "department-site-front-page-banner-intro"),
@@ -266,10 +264,5 @@ public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
         }
 
         teachers.add(teacher);
-    }
-
-    @Override
-    protected void preparePublicationsForResponse(HttpServletRequest request, Unit unit, ExecutionYearIntervalBean bean) {
-        putPublicationsOnRequest(request, unit, bean, Boolean.TRUE);
     }
 }

@@ -22,7 +22,6 @@ import pt.ist.fenixframework.FenixFramework;
 @Forwards(value = { @Forward(name = "announcementsAction", path = "/researchSite/manageResearchUnitAnnouncements.do"),
         @Forward(name = "frontPage-INTRO_BANNER", path = "research-site-front-page-intro-banner"),
         @Forward(name = "eventsAction", path = "/researchSite/manageResearchUnitAnnouncements.do"),
-        @Forward(name = "showPublications", path = "show-research-unit-publications"),
         @Forward(name = "showBoardAnnouncements", path = "show-research-unit-board-announcements"),
         @Forward(name = "unit-subunits", path = "show-research-unit-subunits"),
         @Forward(name = "frontPage-BANNER_INTRO", path = "research-site-front-page-banner-intro"),

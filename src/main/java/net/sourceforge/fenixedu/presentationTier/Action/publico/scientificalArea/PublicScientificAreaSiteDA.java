@@ -35,7 +35,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "view-courses", path = "scientific-area-site-courses"),
         @Forward(name = "frontPage-INTRO_BANNER", path = "basicUnit-site-front-page-intro-banner"),
         @Forward(name = "eventsAction", path = "/scientificArea/events.do"),
-        @Forward(name = "showPublications", path = "scientific-area-publications"),
         @Forward(name = "frontPage-BANNER_INTRO", path = "basicUnit-site-front-page-banner-intro"),
         @Forward(name = "unit-subunits", path = "basicUnit-subunits"),
         @Forward(name = "view-employees", path = "scientific-area-site-employees"),
