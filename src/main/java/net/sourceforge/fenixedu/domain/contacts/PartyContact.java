@@ -596,6 +596,6 @@ public abstract class PartyContact extends PartyContact_Base {
     }
 
     private static Set<PartyContact> getAllInstancesOf(Class<? extends PartyContact> type) {
-        return Sets.newHashSet(Iterables.filter(Bennu.getInstance().getPartyContactsSet(), type));
+        return Sets.<PartyContact> newHashSet(Iterables.filter(Bennu.getInstance().getPartyContactsSet(), type));
     }
 }

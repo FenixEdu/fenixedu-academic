@@ -48,7 +48,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.utl.ist.fenix.tools.util.Pair;
-import java.util.Locale;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
@@ -130,7 +129,7 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 
     protected CandidacyProcess getCurrentOpenParentProcess() {
         Set<Process> degreeChangeCandidacyProcesses =
-                Sets.newHashSet(Iterables.filter(Bennu.getInstance().getProcessesSet(), getParentProcessType()));
+                Sets.<Process> newHashSet(Iterables.filter(Bennu.getInstance().getProcessesSet(), getParentProcessType()));
 
         for (Process candidacyProcess : degreeChangeCandidacyProcesses) {
             if (candidacyProcess instanceof CandidacyProcess && ((CandidacyProcess) candidacyProcess).hasOpenCandidacyPeriod()) {

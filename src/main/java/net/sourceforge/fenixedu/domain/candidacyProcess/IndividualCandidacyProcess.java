@@ -453,6 +453,6 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
     }
 
     private static Set<IndividualCandidacyProcess> getAllInstancesOf(final Class<? extends IndividualCandidacyProcess> type) {
-        return Sets.newHashSet(Iterables.filter(Bennu.getInstance().getProcessesSet(), type));
+        return Sets.<IndividualCandidacyProcess> newHashSet(Iterables.filter(Bennu.getInstance().getProcessesSet(), type));
     }
 }

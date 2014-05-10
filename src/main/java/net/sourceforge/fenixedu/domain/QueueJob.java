@@ -60,13 +60,13 @@ public abstract class QueueJob extends QueueJob_Base {
 
     public static List<QueueJob> getAllJobsForClassOrSubClass(final Class<? extends QueueJob> type, int maxSize,
             Comparator<QueueJob> comparator) {
-        List<QueueJob> jobs = Lists.newArrayList(Iterables.filter(Bennu.getInstance().getQueueJobSet(), type));
+        List<QueueJob> jobs = Lists.<QueueJob> newArrayList(Iterables.filter(Bennu.getInstance().getQueueJobSet(), type));
         Collections.sort(jobs, comparator);
         return jobs.size() > maxSize ? jobs.subList(0, maxSize) : jobs;
     }
 
     public static List<QueueJob> getUndoneJobsForClass(final Class<? extends QueueJob> type) {
-        return Lists.newArrayList(Iterables.filter(Bennu.getInstance().getQueueJobUndoneSet(), type));
+        return Lists.<QueueJob> newArrayList(Iterables.filter(Bennu.getInstance().getQueueJobUndoneSet(), type));
     }
 
     public Priority getPriority() {
