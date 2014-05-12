@@ -16,7 +16,7 @@
 <fr:form action="/tutorTeachers.do">
     <fr:edit id="yearSelection" name="yearSelection">
         <fr:schema bundle="COORDINATOR_RESOURCES"
-            type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.tutor.TutorTeachersManagementDispatchAction$YearSelection">
+            type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.TutorTeachersManagementDispatchAction$YearSelection">
             <fr:slot name="executionYear" layout="menu-select-postback">
                 <fr:property name="providerClass"
                     value="net.sourceforge.fenixedu.presentationTier.renderers.providers.FutureAndCurrentAcademicIntervalYears" />
@@ -42,7 +42,7 @@
      + degreeCurricularPlanID + "&academicInterval=" + academicInterval %>">
         <fr:edit id="selector" name="selector">
             <fr:schema bundle="COORDINATOR_RESOURCES"
-                type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.tutor.TutorTeachersManagementDispatchAction$TutorshipIntentionSelector">
+                type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.TutorTeachersManagementDispatchAction$TutorshipIntentionSelector">
                 <fr:slot name="department.acronym" key="label.teacher.department" readOnly="true" />
                 <fr:slot name="teacher.person.name" key="label.teacher.name" readOnly="true" />
                 <fr:slot name="teacher.person.istUsername" key="label.istUsername" readOnly="true" />

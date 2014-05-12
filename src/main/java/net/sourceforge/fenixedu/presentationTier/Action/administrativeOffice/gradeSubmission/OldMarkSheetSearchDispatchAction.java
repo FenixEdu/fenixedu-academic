@@ -23,7 +23,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
         @Forward(name = "searchMarkSheet", path = "/academicAdministration/gradeSubmission/oldMarkSheets/markSheetManagement.jsp"),
         @Forward(name = "viewMarkSheet", path = "/academicAdministration/gradeSubmission/oldMarkSheets/viewMarkSheet.jsp"),
         @Forward(name = "removeMarkSheet", path = "/academicAdministration/gradeSubmission/oldMarkSheets/removeMarkSheet.jsp"),
-        @Forward(name = "searchMarkSheetFilled", path = "/oldMarkSheetManagement.do?method=prepareSearchMarkSheetFilled"),
+        @Forward(name = "searchMarkSheetFilled",
+                path = "/academicAdministration/oldMarkSheetManagement.do?method=prepareSearchMarkSheetFilled"),
         @Forward(name = "confirmMarkSheet", path = "/academicAdministration/gradeSubmission/oldMarkSheets/confirmMarkSheet.jsp"),
         @Forward(name = "choosePrinter", path = "/academicAdministration/printMarkSheet.do?method=choosePrinterMarkSheet") })
 public class OldMarkSheetSearchDispatchAction extends MarkSheetSearchDispatchAction {

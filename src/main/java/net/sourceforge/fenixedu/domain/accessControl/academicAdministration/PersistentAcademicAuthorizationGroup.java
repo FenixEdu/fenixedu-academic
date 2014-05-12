@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.accessControl.academicAdministration;
 
 import java.text.Collator;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
@@ -263,8 +264,9 @@ public class PersistentAcademicAuthorizationGroup extends PersistentAcademicAuth
         for (PersistentAccessGroup group : party.getPersistentAccessGroupSet()) {
             if (group.isActive() && group instanceof PersistentAcademicAuthorizationGroup) {
                 PersistentAcademicAuthorizationGroup academicGroup = (PersistentAcademicAuthorizationGroup) group;
-                if (academicGroup.getOperation().equals(operation) && academicGroup.getFullProgramSet().containsAll(programs)
-                        && academicGroup.getOfficeSet().containsAll(offices)) {
+                if (academicGroup.getOperation().equals(operation)
+                        && academicGroup.getFullProgramSet().containsAll(nullToEmptySet(programs))
+                        && academicGroup.getOfficeSet().containsAll(nullToEmptySet(offices))) {
                     groups.add(academicGroup);
                 }
             }
@@ -283,6 +285,10 @@ public class PersistentAcademicAuthorizationGroup extends PersistentAcademicAuth
             }
         }
         return groups;
+    }
+
+    private static <T> Set<T> nullToEmptySet(Set<T> set) {
+        return set == null ? Collections.<T> emptySet() : set;
     }
 
     public static Set<PersistentAcademicAuthorizationGroup> getGroupsFor(Party party, Scope scope) {

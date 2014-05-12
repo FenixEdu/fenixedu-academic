@@ -109,7 +109,7 @@
     display: block; 
     border:solid #000 1px;
 }
-.content{
+.agreement-content{
     padding:5px;
     overflow: scroll; overflow-x:hidden;
     height:300px;
@@ -120,7 +120,7 @@
 	<p><bean:message bundle="APPLICATION_RESOURCES" key="oauthapps.text.manage.applications.register"/></p>
 </div>
 <div class="page">
-<div class="content">
+<div class="agreement-content">
 	<bean:write name="serviceAgreement" filter="false"/>
 </div>
 </div>

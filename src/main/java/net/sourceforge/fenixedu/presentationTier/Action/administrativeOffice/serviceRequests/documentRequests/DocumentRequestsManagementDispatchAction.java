@@ -312,18 +312,8 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
             return mapping.findForward("processNewAcademicServiceRequest");
         } else {
             addActionMessage(request, "document.request.created.with.success");
-            return buildActionForward(mapping.findForward("viewRegistrationDetails"), registration);
+            return mapping.findForward("viewRegistrationDetails");
         }
-    }
-
-    private ActionForward buildActionForward(ActionForward forward, Registration registration) {
-        ActionForward forwardBuilded = new ActionForward();
-        forwardBuilded.setName(forward.getName());
-        forwardBuilded.setRedirect(true);
-        StringBuilder path = new StringBuilder(forward.getPath());
-        // path.append("&registrationID=").append(registration.getExternalId());
-        forwardBuilded.setPath(path.toString());
-        return forwardBuilded;
     }
 
     public ActionForward useAllPostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -332,7 +322,8 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
         final DocumentRequestCreateBean documentRequestCreateBean = getRenderedObject();
         if (documentRequestCreateBean.isToUseAll()) {
             Set<Degree> degrees =
-                    AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(), AcademicOperationType.SERVICE_REQUESTS);
+                    AcademicAuthorizationGroup.getDegreesForOperation(AccessControl.getPerson(),
+                            AcademicOperationType.SERVICE_REQUESTS);
             Set<Enrolment> aprovedEnrolments = new HashSet<Enrolment>();
             for (Degree degree : degrees) {
                 for (final Registration registration : documentRequestCreateBean.getStudent().getRegistrationsFor(degree)) {

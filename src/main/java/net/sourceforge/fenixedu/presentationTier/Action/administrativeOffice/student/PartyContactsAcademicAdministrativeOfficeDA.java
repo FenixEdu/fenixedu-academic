@@ -32,7 +32,7 @@ import pt.ist.fenixframework.FenixFramework;
 @Forwards({ @Forward(name = "createPartyContact", path = "/academicAdminOffice/createPartyContact.jsp"),
         @Forward(name = "editPartyContact", path = "/academicAdminOffice/editPartyContact.jsp"),
         @Forward(name = "inputValidationCode", path = "/academicAdminOffice/inputValidationCode.jsp"),
-        @Forward(name = "editPersonalData", path = "/student.do?method=prepareEditPersonalData") })
+        @Forward(name = "editPersonalData", path = "/academicAdministration/student.do?method=prepareEditPersonalData") })
 public class PartyContactsAcademicAdministrativeOfficeDA extends PartyContactsManagementDispatchAction {
 
     private Student getStudent(final HttpServletRequest request) {

@@ -159,6 +159,7 @@ import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.user.management.UserLoginPeriod;
 import org.fenixedu.bennu.user.management.UserManager;
 import org.fenixedu.commons.StringNormalizer;
+import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
@@ -2785,7 +2786,7 @@ public class Person extends Person_Base {
             final List<Role> roles = new ArrayList<Role>(getPersonRolesSet());
             Collections.sort(roles, Role.COMPARATOR_BY_ROLE_TYPE);
 
-            final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources");
+            final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
 
             for (final Role personRole : roles) {
 

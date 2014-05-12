@@ -45,7 +45,7 @@ public class ErasmusCandidacyProcessDA extends
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         if (!AccessControl.getPerson().getTeacher().isErasmusCoordinator()) {
-            return new ActionForward("blank", "/blank.jsp", false, "");
+            return new ActionForward("unauthorized", "/unauthorized.jsp", false, "");
         }
         setChooseDegreeBean(request);
         ActionForward forward = super.execute(mapping, actionForm, request, response);

@@ -45,7 +45,13 @@ public class AnnouncementsManagementDA extends AnnouncementManagement {
             request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
         }
 
-        return super.execute(mapping, actionForm, request, response);
+        ActionForward forward = super.execute(mapping, actionForm, request, response);
+        if (forward.getPath().endsWith(".jsp")) {
+            request.setAttribute("actualPage", forward.getPath());
+            return new ActionForward("/coordinatorFrame.jsp");
+        } else {
+            return forward;
+        }
     }
 
     public DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {

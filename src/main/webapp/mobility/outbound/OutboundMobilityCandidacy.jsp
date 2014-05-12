@@ -25,7 +25,6 @@
     	column-count: 4; column-gap: 10px;
 	}
 	.fullSpace { width: 100%; }
-	.fullSpace th { width: 15%; }
 	.savedGrade { font-size: large; color: green; font-weight: bold; }
 </style>
 <script type="text/javascript">

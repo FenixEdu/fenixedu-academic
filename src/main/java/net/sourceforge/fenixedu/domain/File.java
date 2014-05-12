@@ -68,6 +68,7 @@ public abstract class File extends File_Base {
     @Override
     public void delete() {
         disconnect();
+        setAccessGroup(null);
         super.delete();
     }
 
