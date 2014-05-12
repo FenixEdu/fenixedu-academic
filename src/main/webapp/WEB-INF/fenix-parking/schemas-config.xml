@@ -440,7 +440,7 @@
 	<slot name="parkingCardNumber" key="label.cardNumber"/>
 </schema>
 
-<schema name="read.msAccessFile" type="net.sourceforge.fenixedu.dataTransferObject.research.result.OpenFileBean">
+<schema name="read.msAccessFile" type="net.sourceforge.fenixedu.dataTransferObject.commons.OpenFileBean">
 	<slot name="inputStream" key="label.msAccessFile" bundle="PARKING_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 		<property name="fileNameSlot" value="fileName"/>

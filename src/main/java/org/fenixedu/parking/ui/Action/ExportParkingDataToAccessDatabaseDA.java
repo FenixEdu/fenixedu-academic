@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.research.result.OpenFileBean;
+import net.sourceforge.fenixedu.dataTransferObject.commons.OpenFileBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
