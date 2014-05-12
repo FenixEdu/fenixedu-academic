@@ -21,6 +21,9 @@ public class FenixIstConfiguration {
 
         @ConfigurationProperty(key = "ldap.sync.services.password")
         public String ldapSyncServicesPassword();
+
+        @ConfigurationProperty(key = "sotisURL", defaultValue = "https://sotis.tecnico.ulisboa.pt")
+        public String sotisURL();
     }
 
     public static ConfigurationProperties getConfiguration() {
