@@ -9,77 +9,103 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum RegistrationAgreement {
 
-    NORMAL(true, true, true),
+    NORMAL(true, true, true, false),
 
-    AFA(false, false, false),
+    AFA(false, false, false, false),
 
-    MA(false, false, false),
+    MA(false, false, false, false),
 
-    NC(false, false, false),
+    NC(false, false, false, false),
 
-    ERASMUS(false, false, true),
+    ERASMUS(false, false, true, false),
 
-    SOCRATES(false, false, true),
+    SOCRATES(false, false, true, false),
 
-    SOCRATES_ERASMUS(false, false, true),
+    SOCRATES_ERASMUS(false, false, true, false),
 
-    TEMPUS(false, false, true),
+    TEMPUS(false, false, true, false),
 
-    BILATERAL_AGREEMENT(false, false, true),
+    BILATERAL_AGREEMENT(false, false, true, false),
 
-    ALFA2(false, false, true),
+    ALFA2(false, false, true, false),
 
-    UNIFOR(false, false, true),
+    UNIFOR(false, false, true, false),
 
-    TIME(false, false, true),
+    TIME(false, false, true, false),
 
-    TOTAL(false, true, true),
+    TOTAL(false, true, true, false),
 
-    OTHER_EXTERNAL(false, false, true),
+    OTHER_EXTERNAL(false, false, true, false),
 
-    MITP(false, true, true),
+    MITP(false, true, true, false),
 
-    SMILE(false, false, true),
+    SMILE(false, false, true, false),
 
-    ANGOLA_TELECOM(false, true, true),
+    ANGOLA_TELECOM(false, true, true, false),
 
-    ERASMUS_MUNDUS(false, false, true),
+    ERASMUS_MUNDUS(false, false, true, false),
 
-    ALMEIDA_GARRETT(false, false, true),
+    ALMEIDA_GARRETT(false, false, true, false),
 
-    INOV_IST(false, false, true),
+    INOV_IST(false, false, true, false),
 
-    TECMIC(false, false, true),
-    
-    IST_UCP(false, false, true),
-    
-    IST_USP(false, false, true),
-    
-    CLUSTER(false, false, true),
-    
-    EUSYSBIO(false, false, true),
+    TECMIC(false, false, true, false),
 
-    IST_ISA(false, false, true),
-    
-    IST_PHARMACY_FACULTY(false, false, true),
+    IST_UCP(false, false, true, false),
 
-    IBERO_SANTANDER(false, false, true),
-    
-    BRAZIL_SANTANDER(false, false, true),
+    IST_USP(false, false, true, false),
 
-    CHINA_AGREEMENTS(false, false, true),
-    
-    RUSSIA_AGREEMENTS(false, false, true),
+    CLUSTER(false, false, true, false),
 
-    AFRICA_AGREEMENTS(false, false, true),
-    
-    BRAZIL_AGREEMENTS(false, false, true),
+    EUSYSBIO(false, false, true, false),
 
-    SCIENCE_WITHOUT_BORDERS(false, false, true),
-    
-    USA_AGREEMENTS(false, true, true),
-    
-    KIC_INNOENERGY(false, false, true);
+    IST_ISA(false, false, true, false),
+
+    IST_PHARMACY_FACULTY(false, false, true, false),
+
+    IBERO_SANTANDER(false, false, true, false),
+
+    BRAZIL_SANTANDER(false, false, true, false),
+
+    CHINA_AGREEMENTS(false, false, true, false),
+
+    RUSSIA_AGREEMENTS(false, false, true, false),
+
+    AFRICA_AGREEMENTS(false, false, true, false),
+
+    BRAZIL_AGREEMENTS(false, false, true, false),
+
+    INDIA_AGREEMENTS(false, false, true, false),
+
+    JAPAN_AGREEMENTS(false, false, true, false),
+
+    THAILAND_AGREEMENTS(false, false, true, false),
+
+    SCIENCE_WITHOUT_BORDERS(false, false, true, false),
+
+    USA_AGREEMENTS(false, true, true, false),
+
+    KIC_INNOENERGY(false, false, true, true),
+
+    KIC_RENE(false, false, true, true),
+
+    KIC_SELECT(false, false, true, true),
+
+    KIC_ENTECH(false, false, true, true),
+
+    KIC_CLEAN_COAL(false, false, true, true),
+
+    DOUBLE_DEGREE_CLUSTER(false, false, true, false),
+
+    DOUBLE_DEGREE_BRAZIL(false, false, true, false),
+
+    DOUBLE_DEGREE_FRANCE(false, false, true, false),
+
+    DOUBLE_DEGREE_ITALY(false, false, true, false),
+
+    DOUBLE_DEGREE_CHINA(false, false, true, false),
+
+    DOUBLE_DEGREE_NETHERLANDS(false, false, true, false);
 
     private boolean enrolmentByStudentAllowed;
 
@@ -87,10 +113,14 @@ public enum RegistrationAgreement {
 
     private boolean allowsIDCard;
 
-    private RegistrationAgreement(final boolean enrolmentByStudentAllowed, final boolean payGratuity, final boolean allowsIDCard) {
+    private boolean onlyAllowedDegreeEnrolment;
+
+    private RegistrationAgreement(final boolean enrolmentByStudentAllowed, final boolean payGratuity, final boolean allowsIDCard,
+            final boolean onlyAllowedDegreeEnrolment) {
         this.enrolmentByStudentAllowed = enrolmentByStudentAllowed;
         this.payGratuity = payGratuity;
         this.allowsIDCard = allowsIDCard;
+        this.onlyAllowedDegreeEnrolment = onlyAllowedDegreeEnrolment;
     }
 
     public boolean isNormal() {
@@ -115,6 +145,10 @@ public enum RegistrationAgreement {
 
     public boolean allowsIDCard() {
         return this.allowsIDCard;
+    }
+
+    public boolean isOnlyAllowedDegreeEnrolment() {
+        return onlyAllowedDegreeEnrolment;
     }
 
     public static RegistrationAgreement getByLegacyCode(int code) {

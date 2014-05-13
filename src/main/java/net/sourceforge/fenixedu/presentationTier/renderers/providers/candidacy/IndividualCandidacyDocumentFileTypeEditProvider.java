@@ -191,6 +191,7 @@ public class IndividualCandidacyDocumentFileTypeEditProvider {
             fileTypesList.add(IndividualCandidacyDocumentFileType.LEARNING_AGREEMENT);
             fileTypesList.add(IndividualCandidacyDocumentFileType.CV_DOCUMENT);
             fileTypesList.add(IndividualCandidacyDocumentFileType.TRANSCRIPT_OF_RECORDS);
+            fileTypesList.add(IndividualCandidacyDocumentFileType.ENGLISH_LEVEL_DECLARATION);
 
             return fileTypesList;
         }
@@ -213,14 +214,11 @@ public class IndividualCandidacyDocumentFileTypeEditProvider {
             IndividualCandidacyProcess individualCandidacyProcess = uploadBean.getIndividualCandidacyProcess();
 
             fileTypesList.add(IndividualCandidacyDocumentFileType.PHOTO);
-
             fileTypesList.add(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION);
-
             fileTypesList.add(IndividualCandidacyDocumentFileType.LEARNING_AGREEMENT);
-
             fileTypesList.add(IndividualCandidacyDocumentFileType.CV_DOCUMENT);
-
             fileTypesList.add(IndividualCandidacyDocumentFileType.TRANSCRIPT_OF_RECORDS);
+            fileTypesList.add(IndividualCandidacyDocumentFileType.ENGLISH_LEVEL_DECLARATION);
 
             return fileTypesList;
         }
