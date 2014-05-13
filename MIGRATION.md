@@ -298,14 +298,16 @@ Before migrating to version 3.0, you must first ensure that:
     ```
 5. Start your application and login with a manager user. Once you login, you will be redirected to the application's start page. If you want to manually manage the new menu structure, go to `http://your-app/bennu-admin` and click on 'Manage Portal'. If you wish to import the menu structure using a script, you must go to `http://your-app/bennu-scheduler-ui/#custom` and run the task. A sample task (containing IST's structure) can be found at: https://gist.github.com/jcarvalho/cc89b00606135cf6ce97.
 
-6. You now need to configure the revamped CMS. You need to instantiate SiteTemplates for every different site you want to support, as well as connecting them to Portal Functionalities. An example script can be found at `https://gist.github.com/jcarvalho/0c16a878255a7afe6971`. It contains paths and names that are specific to IST's installation, but you can use it as the starting point to configure your own sites.
+6. You now need to configure the revamped CMS. You need to instantiate SiteTemplates for every different site you want to support, as well as connecting them to Portal Functionalities. An example script can be found at https://gist.github.com/jcarvalho/0c16a878255a7afe6971. It contains paths and names that are specific to IST's installation, but you can use it as the starting point to configure your own sites.
 
-7. After the sites have been created, run the following task to import the previously existing FunctionalityCalls
+7. After the sites have been created, run the following task to import the previously existing FunctionalityCalls. Replace the /path/to/json with a server accessible location of the calls.json file exported previously and /path/to/transformations/json to a server accessible location of a translations file with all the transformations you need to do. An example of this last file can be found here https://gist.github.com/pedrosan7os/0bc8d3e7368c5a88acbc.
 
     ```java
     package pt.ist.fenix;
 
     import java.io.FileReader;
+    import java.util.HashMap;
+    import java.util.Map;
 
     import net.sourceforge.fenixedu.domain.Section;
     import net.sourceforge.fenixedu.domain.Site;
@@ -328,6 +330,15 @@ Before migrating to version 3.0, you must first ensure that:
 
         @Override
         public void runTask() throws Exception {
+            JsonArray transformationsArray = new JsonParser().parse(new FileReader("/path/to/transformations/json")).getAsJsonArray();
+            Map<String, String> transformations = new HashMap<>();
+            for (JsonElement element : transformationsArray) {
+                JsonObject json = element.getAsJsonObject();
+                String path = json.get("path").getAsString();
+                String transformed = json.get("transformed").getAsString();
+                transformations.put(path, transformed);
+            }
+
             JsonArray array = new JsonParser().parse(new FileReader("/path/to/json")).getAsJsonArray();
 
             int count = 0;
@@ -335,7 +346,7 @@ Before migrating to version 3.0, you must first ensure that:
             for (JsonElement element : array) {
                 JsonObject json = element.getAsJsonObject();
                 String path = json.get("path").getAsString();
-                TemplatedSection template = findTemplate(path);
+                TemplatedSection template = findTemplate(path, transformations);
                 if (template == null) {
                     taskLog("Could not find template for path %s\n", path);
                     continue;
@@ -360,10 +371,16 @@ Before migrating to version 3.0, you must first ensure that:
             taskLog("Done\nImported %s calls\n", count);
         }
 
-        private TemplatedSection findTemplate(String path) {
+        private TemplatedSection findTemplate(String path, Map<String, String> transformations) {
+            String actualPath;
+            if (transformations.containsKey(path)) {
+                actualPath = transformations.get(path);
+            } else {
+                actualPath = path;
+            }
             for (SiteTemplate template : Bennu.getInstance().getSiteTemplateSet()) {
                 for (TemplatedSection section : template.getTemplatedSectionSet()) {
-                    if (section.getCustomPath().equals(path)) {
+                    if (section.getCustomPath().equals(actualPath)) {
                         return section;
                     }
                 }
