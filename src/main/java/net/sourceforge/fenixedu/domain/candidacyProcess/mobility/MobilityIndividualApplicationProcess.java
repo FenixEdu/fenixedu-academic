@@ -60,7 +60,6 @@ import org.restlet.data.Status;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Locale;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class MobilityIndividualApplicationProcess extends MobilityIndividualApplicationProcess_Base {
@@ -190,7 +189,8 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
     static private boolean isAllowedToManageProcess(MobilityIndividualApplicationProcess process, User userView) {
         Set<AcademicProgram> programs =
-                AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(), AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
+                AcademicAuthorizationGroup.getProgramsForOperation(userView.getPerson(),
+                        AcademicOperationType.MANAGE_INDIVIDUAL_CANDIDACIES);
 
         if (process == null || process.getCandidacy() == null) {
             return false;
@@ -282,6 +282,10 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
             missingDocumentFiles.add(IndividualCandidacyDocumentFileType.TRANSCRIPT_OF_RECORDS);
         }
 
+        if (getActiveFileForType(IndividualCandidacyDocumentFileType.ENGLISH_LEVEL_DECLARATION) == null) {
+            missingDocumentFiles.add(IndividualCandidacyDocumentFileType.ENGLISH_LEVEL_DECLARATION);
+        }
+
         return missingDocumentFiles;
     }
 
@@ -304,8 +308,8 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
     @Override
     public String getDisplayName() {
-        return ResourceBundle.getBundle("resources/CaseHandlingResources", I18N.getLocale()).getString(
-                getClass().getSimpleName());
+        return ResourceBundle.getBundle("resources/CaseHandlingResources", I18N.getLocale())
+                .getString(getClass().getSimpleName());
     }
 
     public List<CurricularCourse> getSortedSelectedCurricularCourses() {

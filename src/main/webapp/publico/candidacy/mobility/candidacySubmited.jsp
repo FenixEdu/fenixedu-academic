@@ -43,7 +43,9 @@
 
 <logic:equal name="individualCandidacyProcess" property="allRequiredFilesUploaded" value="false">
 <div class="infoop1">
-	<p><bean:message key="message.missing.document.files" bundle="CANDIDATE_RESOURCES"/></p>
+	
+	<p><span class="infoop2">Your application process has to be completed before the end of the application period. The documents submited after that period will <strong>NOT</strong> be accepted.</span></p>
+	<p><span class="infoop2"><bean:message key="message.missing.document.files" bundle="CANDIDATE_RESOURCES"/></span></p>
 	
 	<ul class="mbottom15">
 		<li><b>Passport photo</b> - The photo will be used to generate <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> student card.</li>
@@ -51,6 +53,7 @@
 		<li><b>Learning agreement</b> - The learning agreement will be available in your application process page after the form submission. You're required to download, sign, stamp and reupload the document.</li>
 		<li><b>Curriculum vitae</b></li>
 		<li><b>Transcript of records</b></li>
+		<li><b>Declaration of your english level</b></li>
 	</ul>
 	
 	<%--
