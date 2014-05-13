@@ -43,7 +43,6 @@ enum net.sourceforge.fenixedu.domain.Option                                     
 enum net.sourceforge.fenixedu.domain.PartyClassification                                                                  as PartyClassification;
 enum net.sourceforge.fenixedu.domain.PhotoState                                                                           as PhotoState;
 enum net.sourceforge.fenixedu.domain.PhotoType                                                                            as PhotoType;
-enum net.sourceforge.fenixedu.domain.PhotographContentSize                                                                as PhotographContentSize;
 enum net.sourceforge.fenixedu.domain.photograph.AspectRatio																  as AspectRatio;
 enum net.sourceforge.fenixedu.domain.photograph.PictureMode																  as PictureMode;
 enum net.sourceforge.fenixedu.domain.photograph.PictureSize																  as PictureSize;
@@ -1144,11 +1143,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
         DateTime stateChange;
     }
 
-    class PhotographContent  {
-        PhotographContentSize size;
-        ByteArray content;
-    }
-    
     class photograph.Picture {
     	Integer width;
     	Integer height;
@@ -10701,13 +10695,6 @@ relation PreviousPhotograph {
    Photograph playsRole next;
 }
 
-relation PhotographContent {
-    Photograph playsRole photograph;
-    PhotographContent playsRole content {
-        multiplicity *;
-    }
-}
-
 relation PhotographOriginal {
 	Photograph playsRole photograph;
 	photograph.PictureOriginal playsRole original;
@@ -18067,20 +18054,6 @@ relation DepartmentReductionService {
     	multiplicity *;
 	}
 }
-
-relation PictureFile {
-    photograph.Picture playsRole picture;
-    File playsRole file;
-/**
-	This should be the multiplicity rule, but it cannot be
-	used until all current pictures have their byte arrays
-	transfered to files.
-    {
-        multiplicity 1..1;
-    }
-*/
-}
-
 
 relation RootDomainObjectApps {
     .org.fenixedu.bennu.core.domain.Bennu playsRole rootDomainObject;  

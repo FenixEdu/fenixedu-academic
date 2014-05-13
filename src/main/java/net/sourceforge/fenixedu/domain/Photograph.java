@@ -60,22 +60,6 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
         setSubmission(new DateTime());
     }
 
-    @Deprecated
-    public Photograph(ContentType contentType, ByteArray content, ByteArray compressed, PhotoType photoType) {
-        this();
-        setContentType(contentType);
-        setPhotoType(photoType);
-        new PhotographContent(this, PhotographContentSize.DOC_SIZE, compressed);
-        if (content != null) {
-            new PhotographContent(this, PhotographContentSize.RAW, content);
-        }
-    }
-
-    @Deprecated
-    public Photograph(ContentType contentType, ByteArray content, PhotoType photoType) {
-        this(contentType, content, compressImage(content.getBytes(), contentType), photoType);
-    }
-
     public Photograph(PhotoType photoType, ContentType contentType, ByteArray original) {
         this();
         setPhotoType(photoType);
@@ -158,21 +142,6 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
             previous.setState(PhotoState.USER_REJECTED);
         }
         super.setPrevious(previous);
-    }
-
-    @Deprecated
-    public byte[] getContents() {
-        return getContents(PhotographContentSize.DOC_SIZE);
-    }
-
-    @Deprecated
-    public byte[] getContents(PhotographContentSize size) {
-        for (PhotographContent content : getContentSet()) {
-            if (content.getSize().equals(size)) {
-                return content.getBytes();
-            }
-        }
-        throw new DomainException("error.photograph.has.no.content.of.requested.size");
     }
 
     @Atomic
@@ -289,16 +258,6 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
     private void logState(String keyLabel) {
         final String personViewed = PersonInformationLog.getPersonNameForLogDescription(getPerson());
         PersonInformationLog.createLog(getPerson(), "resources.MessagingResources", keyLabel, personViewed);
-    }
-
-    @Deprecated
-    public java.util.Set<net.sourceforge.fenixedu.domain.PhotographContent> getContent() {
-        return getContentSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyContent() {
-        return !getContentSet().isEmpty();
     }
 
     @Deprecated
