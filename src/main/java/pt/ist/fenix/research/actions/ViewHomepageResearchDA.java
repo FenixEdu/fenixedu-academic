@@ -19,7 +19,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
 
-@Mapping(module = "public", path = "/viewHomepageResearch")
+@Mapping(module = "publico", path = "/viewHomepageResearch")
 @Forwards({
         @Forward(path = "/publico/homepage/research/showPublications.jsp", name = "showPublications", tileProperties = @Tile(
                 extend = "definition.public.homepage")),
