@@ -257,6 +257,7 @@ Before migrating to version 3.0, you must first ensure that:
 
     -- Migrate Groups
     update FF$DOMAIN_CLASS_INFO set DOMAIN_CLASS_NAME = 'net.sourceforge.fenixedu.domain.accessControl.PersistentRoleGroup' where DOMAIN_CLASS_NAME = 'net.sourceforge.fenixedu.domain.accessControl.RoleCustomGroup';
+    alter table ROLE change OID_ROLE_CUSTOM_GROUP OID_ROLE_GROUP bigint unsigned;
 
     alter table DEGREE_CURRICULAR_PLAN change CURRICULAR_PLAN_MEMBERS_GROUP OID_MEMBERS_GROUP bigint unsigned;
     alter table DEPARTMENT change COMPETENCE_COURSE_MEMBERS_GROUP OID_MEMBERS_GROUP bigint unsigned;
