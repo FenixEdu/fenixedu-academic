@@ -32,6 +32,10 @@ public class ChangeStudentsShift {
             throws FenixServiceException {
         check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
 
+        if (newShiftId != null && newShiftId.isEmpty()) {
+            return;
+        }
+
         final Shift oldShift = FenixFramework.getDomainObject(oldShiftId);
         final Shift newShift = FenixFramework.getDomainObject(newShiftId);
 

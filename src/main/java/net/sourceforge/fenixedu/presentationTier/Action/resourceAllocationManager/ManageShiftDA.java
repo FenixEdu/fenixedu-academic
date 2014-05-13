@@ -57,7 +57,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
-import java.util.Locale;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -67,7 +66,7 @@ import java.util.Locale;
         formBean = "createShiftForm", functionality = ExecutionPeriodDA.class)
 @Forwards({ @Forward(name = "EditShift", path = "/resourceAllocationManager/manageShift_bd.jsp"),
         @Forward(name = "ViewStudentsEnroled", path = "/resourceAllocationManager/viewStudentsEnroledInShift_bd.jsp"),
-        @Forward(name = "continue", path = "/resourceAllocationManager/manageShift.do?method=prepareEditShift") })
+        @Forward(name = "Continue", path = "/resourceAllocationManager/manageShift.do?method=prepareEditShift") })
 @Exceptions({
         @ExceptionHandling(handler = FenixErrorExceptionHandler.class, type = ExistingActionException.class,
                 key = "resources.Action.exceptions.ExistingActionException", scope = "request"),
@@ -76,7 +75,7 @@ import java.util.Locale;
 public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
 
     @Mapping(path = "/manageShiftMultipleItems", module = "resourceAllocationManager",
-            input = "/manageShift.do?method=prepareEditShift", formBean = "selectMultipleItemsForm",
+            input = "/manageShift.do?method=prepareEditShift&page=0", formBean = "selectMultipleItemsForm",
             functionality = ExecutionPeriodDA.class)
     @Forwards(@Forward(name = "EditShift", path = "/resourceAllocationManager/manageShift.do?method=prepareEditShift"))
     public static class ManageShiftMultipleItemsDA extends ManageShiftDA {

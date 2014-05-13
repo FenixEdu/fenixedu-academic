@@ -33,6 +33,8 @@ public class PublishExams extends FenixAction {
                         .getParameter(PresentationConstants.ACADEMIC_INTERVAL));
         SwitchPublishedExamsFlag.run(academicInterval);
 
+        request.setAttribute("academicInterval", academicInterval);
+
         return mapping.findForward("switch");
     }
 

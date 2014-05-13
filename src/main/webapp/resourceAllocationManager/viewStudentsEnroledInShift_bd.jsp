@@ -14,6 +14,10 @@
 <bean:define id="shiftId" name="<%= PresentationConstants.SHIFT %>" property="externalId"/>
 <bean:define id="shiftType" name="<%= PresentationConstants.SHIFT %>" property="shiftTypesIntegerComparator"/>
 
+<html:link action="/manageShift.do?method=prepareEditShift&page=0&shift_oid=${shift.externalId}&execution_course_oid=${executionCourseOID}&academicInterval=${academicInterval}&curricular_year_oid=${curricular_year_oid}&execution_degree_oid=${execution_degree_oid}">
+	<bean:message key="button.back" />
+</html:link>
+
 <h3>Alunos Inscritos <span class="small">${shift.nome}</span></h3>
 
 <p>
@@ -80,7 +84,6 @@
 </p>
 
 <logic:present name="<%= PresentationConstants.SHIFTS %>" scope="request">
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="changeStudentsShift"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.oldShiftId" property="oldShiftId" value="<%= pageContext.findAttribute("shiftId").toString() %>"/>
 

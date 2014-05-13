@@ -9,7 +9,8 @@
 
 <jsp:include page="/commons/contextExecutionCourseAndExecutionDegreeAndCurricularYear.jsp" />
 
-<h2><bean:message key="link.manage.turnos"/></h2>
+<h2><bean:message key="link.manage.turnos"/> 
+	<span class="small">${context_selection_bean.executionDegree.degreeCurricularPlan.name} - ${context_selection_bean.curricularYear.year}º ano (${context_selection_bean.academicInterval.pathName})</span></h2>
 
 <jsp:include page="context.jsp"/>
 

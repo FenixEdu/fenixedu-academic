@@ -120,10 +120,10 @@
 	 	<tr>
 	        <th><bean:message key="property.lesson.new.begin.date"/>:</th>
     	    <td>
-        	 	<html:text bundle="HTMLALT_RESOURCES" altKey="text.week" property="newBeginDate" size="8" maxlength="10"
+        	 	<html:text bundle="HTMLALT_RESOURCES" altKey="text.week" property="newBeginDate" size="10" maxlength="10"
         	 			onchange="<%= "changeStartDate('" + firstPossibleLessonDay.toString("yyyy-MM-dd") + " 00:00:00');" %>"/>        	 	
         	 	<b><bean:message key="label.until"/></b>        	 	
-        	 	<html:text bundle="HTMLALT_RESOURCES" altKey="text.week" property="newEndDate" size="8" maxlength="10"
+        	 	<html:text bundle="HTMLALT_RESOURCES" altKey="text.week" property="newEndDate" size="10" maxlength="10"
         	 			onchange="<%= "changeEndDate('" + firstPossibleLessonDay.toString("yyyy-MM-dd") + " 00:00:00', '" + lastPossibleLessonDay.toString("yyyy-MM-dd") + " 00:00:00');" %>"/>
         	 	<bean:message key="property.lesson.new.begin.date.format"/>        	 	        	 
     	    </td> 

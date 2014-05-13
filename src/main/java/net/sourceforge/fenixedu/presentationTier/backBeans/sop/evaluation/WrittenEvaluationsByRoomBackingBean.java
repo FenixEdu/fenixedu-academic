@@ -61,7 +61,8 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
 
     private String examCapacity;
 
-    private String academicInterval;
+    private String academicInterval = AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.SEMESTER)
+            .getResumedRepresentationInStringFormat();
 
     private String startDate;
 

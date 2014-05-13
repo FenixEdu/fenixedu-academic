@@ -37,15 +37,12 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.commons.i18n.I18N;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import java.util.Locale;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -58,8 +55,6 @@ import java.util.Locale;
 @Exceptions(@ExceptionHandling(handler = FenixErrorExceptionHandler.class, type = ExistingActionException.class,
         key = "resources.Action.exceptions.ExistingActionException", scope = "request"))
 public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContextDispatchAction {
-
-    private static final Logger logger = LoggerFactory.getLogger(ManageShiftsDA.class);
 
     @Mapping(path = "/deleteShifts", module = "resourceAllocationManager", input = "/manageShifts.do?method=listShifts&page=0",
             formBean = "selectMultipleItemsForm", functionality = ExecutionPeriodDA.class)
@@ -197,8 +192,6 @@ public class ManageShiftsDA extends FenixExecutionDegreeAndCurricularYearContext
 
     private void readAndSetInfoToManageShifts(HttpServletRequest request) throws FenixServiceException, Exception {
         ContextSelectionBean context = (ContextSelectionBean) request.getAttribute(PresentationConstants.CONTEXT_SELECTION_BEAN);
-        logger.warn(String.format("ContextSelectionBean: academicInterval %s executionDegree %s curricularYear %s",
-                context.getAcademicInterval(), context.getExecutionDegree(), context.getCurricularYear()));
         List<InfoShift> infoShifts =
                 ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear.run(context.getAcademicInterval(),
                         new InfoExecutionDegree(context.getExecutionDegree()),

@@ -14,16 +14,12 @@
 <p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
 <fr:form action="/mainExams.do?method=prepare">
-	<fr:edit schema="academicIntervalSelectionBean.choose" name="bean">
+	<fr:edit schema="academicIntervalSelectionBean.choosePostBack" name="bean">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />
 		</fr:layout>
 	</fr:edit>
-
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-		<bean:message key="label.choose" />
-	</html:submit>
 </fr:form>
 <br />
 

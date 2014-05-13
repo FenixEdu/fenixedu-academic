@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.ContextSelectionBean;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.RAMApplication.RAMEvaluationsApp;
 
@@ -36,6 +37,10 @@ public class MainExamsDA extends FenixDispatchAction {
         ContextSelectionBean contextSelectionBean = getRenderedObject();
         if (contextSelectionBean == null) {
             contextSelectionBean = new ContextSelectionBean();
+            AcademicInterval fromAttribute = (AcademicInterval) request.getAttribute("academicInterval");
+            if (fromAttribute != null) {
+                contextSelectionBean.setAcademicInterval(fromAttribute);
+            }
         }
         RenderUtils.invalidateViewState();
         request.setAttribute("bean", contextSelectionBean);

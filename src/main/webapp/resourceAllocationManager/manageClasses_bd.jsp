@@ -7,7 +7,9 @@
 
 <jsp:include page="/commons/contextExecutionDegreeAndCurricularYear.jsp"/>
 
-<h2>Manipular Turmas <span class="small">${executionDegree.executionDegree.degreeCurricularPlan.name}</span></h2>
+<h2>Manipular Turmas <span class="small">${context_selection_bean.executionDegree.degreeCurricularPlan.name} - ${context_selection_bean.curricularYear.year}º ano (${context_selection_bean.academicInterval.pathName})</span></h2>
+
+<jsp:include page="context.jsp" />
 
 <html:form action="/manageClasses" focus="className">
 
