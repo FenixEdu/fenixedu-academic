@@ -2612,7 +2612,7 @@ public class Person extends Person_Base {
 
     public String getHomepageWebAddress() {
         if (hasHomepage() && getHomepage().isHomepageActivated()) {
-            return "/homepage/" + getUsername();
+            return getHomepage().getFullPath();
         }
         if (isDefaultWebAddressVisible() && getDefaultWebAddress().hasUrl()) {
             return getDefaultWebAddress().getUrl();

@@ -41,7 +41,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.image.TextPngCreator;
 
-@Mapping(module = "public", path = "/viewHomepage")
+@Mapping(module = "publico", path = "/viewHomepage")
 @Forwards({ @Forward(name = "view-homepage", path = "view-homepage"), @Forward(path = "view-homepage", name = "view-homepage"),
         @Forward(path = "list-homepages-teachers", name = "list-homepages-teachers"),
         @Forward(path = "list-homepages-employees", name = "list-homepages-employees"),
