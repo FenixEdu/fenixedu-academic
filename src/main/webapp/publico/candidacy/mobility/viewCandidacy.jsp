@@ -134,10 +134,10 @@
 	<b class="highlight1"><bean:message key="label.process.id" bundle="CANDIDATE_RESOURCES"/>: <bean:write name="individualCandidacyProcess" property="processCode"/></b>
 </p>
 
-
-
 <logic:equal name="individualCandidacyProcess" property="allRequiredFilesUploaded" value="false">
-	<p class="mtop05"><bean:message key="message.missing.document.files" bundle="CANDIDATE_RESOURCES"/></p>
+
+	<p><span class="infoop2">Your application process has to be completed before the end of the application period. The documents submited after that period will <strong>NOT</strong> be accepted.</span></p>
+	<p><span class="infoop2"><bean:message key="message.missing.document.files" bundle="CANDIDATE_RESOURCES"/></span></p>
 	
 	<ul>
 		<li><b>Passport photo</b> - The photo will be used to generate <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%> student card.</li>
@@ -145,6 +145,7 @@
 		<li><b>Learning agreement</b> - You're required to download, sign, stamp and reupload the document.</li>
 		<li><b>Curriculum vitae</b></li>
 		<li><b>Transcript of records</b></li>
+		<li><b>Declaration of your english level</b></li>
 	</ul>
 			
 	<p class="mbottom05"><em><bean:message key="message.ist.conditions.note" arg0="<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>" bundle="CANDIDATE_RESOURCES"/></em></p>

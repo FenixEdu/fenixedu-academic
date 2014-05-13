@@ -15,7 +15,7 @@
 	<url>http://fenix-ashes.ist.utl.pt</url>
 
 	<properties>
-		<jasper.threads>3</jasper.threads>
+		<jasper.threads>1</jasper.threads>
 		<skipTests>true</skipTests>
 	</properties>
 

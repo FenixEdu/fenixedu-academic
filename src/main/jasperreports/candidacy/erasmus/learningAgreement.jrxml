@@ -268,7 +268,7 @@
 				<textElement>
 					<font isBold="false" pdfFontName="Helvetica"/>
 				</textElement>
-				<text><![CDATA[ GRI - IST, Av. Rovisco Pais,  1049-001 Lisboa, Phone 351218417362, Fax 351218419280]]></text>
+				<text><![CDATA[ NMCI - IST, Av. Rovisco Pais,  1049-001 Lisboa, Phone 351218417362, Fax 351218419280]]></text>
 			</staticText>
 		</band>
 	</summary>

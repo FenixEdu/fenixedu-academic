@@ -2248,7 +2248,10 @@
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusUniversityProvider" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
-	
+	<slot name="homeInstitutionAddress" key="label.erasmus.home.institution.address.detailed" >			 				
+		<property name="size" value="50"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>			 				
+	</slot>
 	<slot name="schoolLevel" key="label.erasmus.home.previous.concluded.degree.type" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForMobilityStudentProvider" />
 	</slot>
@@ -2295,6 +2298,10 @@
 		<property name="maxLength" value="50"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>			 				
 	</slot>
+	<slot name="homeInstitutionAddress" key="label.erasmus.home.institution.address.detailed" >			 				
+		<property name="size" value="50"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>			 				
+	</slot>
 </schema>
 
 <schema name="MobilityIndividualApplicationProcess.choose.program" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentDataBean" bundle="ACADEMIC_OFFICE_RESOURCES">
@@ -2313,6 +2320,10 @@
 		</validator>			 				
 		<property name="size" value="50"/>
 		<property name="maxLength" value="50"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>			 				
+	</slot>
+	<slot name="homeInstitutionAddress" key="label.erasmus.home.institution.address.detailed" >			 				
+		<property name="size" value="50"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>			 				
 	</slot>
 </schema> 

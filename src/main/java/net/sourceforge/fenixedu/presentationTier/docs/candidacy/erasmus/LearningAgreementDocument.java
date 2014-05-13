@@ -43,8 +43,9 @@ public class LearningAgreementDocument extends FenixReport {
 
         for (CurricularCourse course : process.getCandidacy().getCurricularCourses()) {
             result.append(
-                    FenixStringTools.multipleLineRightPadWithSuffix(course.getNameI18N().getContent(Language.en), LINE_LENGTH,
-                            END_CHAR, course.getEctsCredits().toString())).append(LINE_BREAK);
+                    FenixStringTools.multipleLineRightPadWithSuffix(course.getNameI18N().getContent(Language.en)
+                            + " (" + course.getDegree().getSigla() + ")", LINE_LENGTH, END_CHAR, course.getEctsCredits()
+                            .toString())).append(LINE_BREAK);
         }
 
         return result.toString();

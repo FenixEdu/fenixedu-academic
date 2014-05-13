@@ -282,6 +282,10 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
             missingDocumentFiles.add(IndividualCandidacyDocumentFileType.TRANSCRIPT_OF_RECORDS);
         }
 
+        if (getActiveFileForType(IndividualCandidacyDocumentFileType.ENGLISH_LEVEL_DECLARATION) == null) {
+            missingDocumentFiles.add(IndividualCandidacyDocumentFileType.ENGLISH_LEVEL_DECLARATION);
+        }
+
         return missingDocumentFiles;
     }
 
