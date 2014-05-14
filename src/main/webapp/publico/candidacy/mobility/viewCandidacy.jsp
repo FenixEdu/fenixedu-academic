@@ -136,7 +136,7 @@
 
 <logic:equal name="individualCandidacyProcess" property="allRequiredFilesUploaded" value="false">
 
-	<p><span class="infoop2">Your application process has to be completed before the end of the application period. The documents submited after that period will <strong>NOT</strong> be accepted.</span></p>
+	<p><span class="infoop2"><bean:message key="message.candidacy.warning.incomplete.process" bundle="CANDIDATE_RESOURCES"/></span></p>
 	<p><span class="infoop2"><bean:message key="message.missing.document.files" bundle="CANDIDATE_RESOURCES"/></span></p>
 	
 	<ul>
