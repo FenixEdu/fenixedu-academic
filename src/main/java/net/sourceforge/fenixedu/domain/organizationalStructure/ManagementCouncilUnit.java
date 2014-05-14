@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import net.sourceforge.fenixedu.domain.ManagementCouncilSite;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -20,7 +20,7 @@ public class ManagementCouncilUnit extends ManagementCouncilUnit_Base {
     public static ManagementCouncilUnit createManagementCouncilUnit(MultiLanguageString name, String unitNameCard,
             Integer costCenterCode, String acronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
             AccountabilityType accountabilityType, String webAddress, UnitClassification classification,
-            Boolean canBeResponsibleOfSpaces, Campus campus) {
+            Boolean canBeResponsibleOfSpaces, Space campus) {
 
         if (!PartyType.getPartiesSet(PartyTypeEnum.MANAGEMENT_COUNCIL).isEmpty()) {
             throw new DomainException("error.can.only.exist.one.managementCouncilUnit");

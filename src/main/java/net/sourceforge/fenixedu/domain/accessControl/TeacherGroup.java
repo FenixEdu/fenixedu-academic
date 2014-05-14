@@ -14,12 +14,12 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.fenixedu.bennu.core.annotation.GroupArgument;
 import org.fenixedu.bennu.core.annotation.GroupOperator;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 
 import com.google.common.base.Objects;
@@ -35,7 +35,7 @@ public class TeacherGroup extends FenixGroup {
     private ExecutionCourse executionCourse;
 
     @GroupArgument
-    private Campus campus;
+    private Space campus;
 
     @GroupArgument
     private Department department;
@@ -47,7 +47,7 @@ public class TeacherGroup extends FenixGroup {
         super();
     }
 
-    private TeacherGroup(Degree degree, ExecutionCourse executionCourse, Campus campus, Department department,
+    private TeacherGroup(Degree degree, ExecutionCourse executionCourse, Space campus, Department department,
             ExecutionYear executionYear) {
         this();
         this.degree = degree;
@@ -61,7 +61,7 @@ public class TeacherGroup extends FenixGroup {
         return new TeacherGroup(degree, null, null, null, null);
     }
 
-    public static TeacherGroup get(Campus campus) {
+    public static TeacherGroup get(Space campus) {
         return new TeacherGroup(null, null, campus, null, null);
     }
 
@@ -73,7 +73,7 @@ public class TeacherGroup extends FenixGroup {
         return new TeacherGroup(null, executionCourse, null, null, null);
     }
 
-    public static TeacherGroup get(Degree degree, ExecutionCourse executionCourse, Campus campus, Department department,
+    public static TeacherGroup get(Degree degree, ExecutionCourse executionCourse, Space campus, Department department,
             ExecutionYear executionYear) {
         return new TeacherGroup(degree, executionCourse, campus, department, executionYear);
     }

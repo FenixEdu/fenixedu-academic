@@ -23,9 +23,9 @@ public class EnrolledLessonBean {
         setBegin(lesson.getBeginHourMinuteSecond().toDateTimeAtCurrentTime().toDate());
         setEnd(lesson.getEndHourMinuteSecond().toDateTimeAtCurrentTime().toDate());
         if (lesson.getRoomOccupation() != null) {
-            setRoom(lesson.getRoomOccupation().getRoom().getIdentification());
+            setRoom(lesson.getRoomOccupation().getRoom().getName());
         } else if (lesson.getLastLessonInstance() != null && lesson.getLastLessonInstance().getRoom() != null) {
-            setRoom(lesson.getLastLessonInstance().getRoom().getIdentification());
+            setRoom(lesson.getLastLessonInstance().getRoom().getName());
         }
     }
 

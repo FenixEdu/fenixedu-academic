@@ -10,13 +10,14 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
 import net.sourceforge.fenixedu.predicates.SpacePredicates;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.spaces.domain.Space;
+import org.fenixedu.spaces.domain.occupation.Occupation;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
@@ -26,12 +27,13 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
     // @Checked(
     // "SpacePredicates.checkPermissionsToManageWrittenEvaluationSpaceOccupations"
     // )
-    public WrittenEvaluationSpaceOccupation(AllocatableSpace allocatableSpace) {
+    public WrittenEvaluationSpaceOccupation(Space allocatableSpace) {
 
         super();
 
-        ResourceAllocation allocation =
-                allocatableSpace.getFirstOccurrenceOfResourceAllocationByClass(WrittenEvaluationSpaceOccupation.class);
+        Occupation allocation =
+                SpaceUtils
+                        .getFirstOccurrenceOfResourceAllocationByClass(allocatableSpace, WrittenEvaluationSpaceOccupation.class);
         if (allocation != null) {
             throw new DomainException("error.WrittenEvaluationSpaceOccupation.occupation.for.this.space.already.exists");
         }
@@ -49,7 +51,9 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
         }
 
         if (!writtenEvaluation.canBeAssociatedToRoom(getRoom())) {
-            throw new DomainException("error.roomOccupied", getRoom().getName());
+            String name;
+            name = getRoom().getName();
+            throw new DomainException("error.roomOccupied", name);
         }
 
         addWrittenEvaluations(writtenEvaluation);
@@ -86,18 +90,13 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
     }
 
     @Override
-    public boolean isWrittenEvaluationSpaceOccupation() {
-        return true;
-    }
-
-    @Override
     protected boolean intersects(YearMonthDay startDate, YearMonthDay endDate) {
         return true;
     }
 
     @Override
     public Group getAccessGroup() {
-        return getSpace().getWrittenEvaluationOccupationsAccessGroupWithChainOfResponsibility();
+        return getSpace().getOccupationsAccessGroupWithChainOfResponsability();
     }
 
     @Override

@@ -7,13 +7,14 @@ import java.math.RoundingMode;
 import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.LessonInstanceSpaceOccupation;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.predicates.ResourceAllocationRolePredicates;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.Minutes;
@@ -51,7 +52,7 @@ public class LessonInstance extends LessonInstance_Base {
             throw new DomainException("error.lessonInstance.already.exist");
         }
 
-        AllocatableSpace room = lesson.getSala();
+        Space room = lesson.getSala();
 
         HourMinuteSecond beginTime = lesson.getBeginHourMinuteSecond();
         HourMinuteSecond endTime = lesson.getEndHourMinuteSecond();
@@ -102,7 +103,7 @@ public class LessonInstance extends LessonInstance_Base {
             throw new DomainException("error.lessonInstance.already.exist");
         }
 
-        AllocatableSpace room = lesson.getSala();
+        Space room = lesson.getSala();
 
         HourMinuteSecond beginTime = lesson.getBeginHourMinuteSecond();
         HourMinuteSecond endTime = lesson.getEndHourMinuteSecond();
@@ -170,11 +171,11 @@ public class LessonInstance extends LessonInstance_Base {
         return start != null && end != null && start.isBefore(end);
     }
 
-    private void lessonInstanceSpaceOccupationManagement(AllocatableSpace space) {
+    private void lessonInstanceSpaceOccupationManagement(Space space) {
         if (space != null) {
             LessonInstanceSpaceOccupation instanceSpaceOccupation =
-                    (LessonInstanceSpaceOccupation) space
-                            .getFirstOccurrenceOfResourceAllocationByClass(LessonInstanceSpaceOccupation.class);
+                    (LessonInstanceSpaceOccupation) SpaceUtils.getFirstOccurrenceOfResourceAllocationByClass(space,
+                            LessonInstanceSpaceOccupation.class);
 
             instanceSpaceOccupation =
                     instanceSpaceOccupation == null ? new LessonInstanceSpaceOccupation(space) : instanceSpaceOccupation;
@@ -220,7 +221,7 @@ public class LessonInstance extends LessonInstance_Base {
                 .getSecondOfMinute());
     }
 
-    public AllocatableSpace getRoom() {
+    public Space getRoom() {
         return hasLessonInstanceSpaceOccupation() ? getLessonInstanceSpaceOccupation().getRoom() : null;
     }
 
@@ -233,7 +234,7 @@ public class LessonInstance extends LessonInstance_Base {
         result.append(getDayOfweek().getDiaSemanaString()).append(" (");
         result.append(getStartTime().toString("HH:mm")).append(" - ");
         result.append(getEndDateTime().toString("HH:mm")).append(") ");
-        result.append(getRoom() != null ? getRoom().getIdentification() : "");
+        result.append(getRoom() != null ? getRoom().getName() : "");
         return result.toString();
     }
 

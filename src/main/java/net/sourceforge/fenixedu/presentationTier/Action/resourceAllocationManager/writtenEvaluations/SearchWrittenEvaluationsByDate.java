@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.RAMApplication.RAMEvaluationsApp;
 import net.sourceforge.fenixedu.util.BundleUtil;
@@ -129,7 +129,7 @@ public class SearchWrittenEvaluationsByDate extends FenixDispatchAction {
         }
         request.setAttribute("availableRoomIndicationMsg", BundleUtil.getStringFromResourceBundle(
                 "resources.ResourceAllocationManagerResources", "info.total.students.vs.available.seats",
-                totalOfStudents.toString(), Room.countAllAvailableSeatsForExams().toString()));
+                totalOfStudents.toString(), SpaceUtils.countAllAvailableSeatsForExams().toString()));
         request.setAttribute("writtenEvaluations", writtenEvaluations);
         return mapping.findForward("show");
     }

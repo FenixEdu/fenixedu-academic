@@ -9,19 +9,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
-import net.sourceforge.fenixedu.domain.space.Building;
-import net.sourceforge.fenixedu.domain.space.Space;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.RAMApplication.RAMSchedulesApp;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.fenixedu.spaces.domain.Space;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -30,17 +30,13 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 import com.google.common.collect.Ordering;
 
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-
 /**
  * @author Luis Cruz e Sara Ribeiro
  */
 @StrutsFunctionality(app = RAMSchedulesApp.class, path = "room-schedules", titleKey = "link.schedules.listAllByRoom")
 @Mapping(path = "/viewAllRoomsSchedulesDA", module = "resourceAllocationManager")
 @Forwards({ @Forward(name = "choose", path = "/resourceAllocationManager/choosePavillionsToViewRoomsSchedules.jsp"),
-    @Forward(name = "list", path = "/resourceAllocationManager/viewAllRoomsSchedules.jsp") })
+        @Forward(name = "list", path = "/resourceAllocationManager/viewAllRoomsSchedules.jsp") })
 public class ViewAllRoomsSchedulesDA extends FenixDispatchAction {
 
     public static class ChooseBuildingBean implements Serializable {
@@ -48,7 +44,7 @@ public class ViewAllRoomsSchedulesDA extends FenixDispatchAction {
         private static final long serialVersionUID = -663198492313971329L;
 
         private AcademicInterval academicInterval;
-        private List<Building> selectedBuildings;
+        private List<Space> selectedBuildings;
 
         public ChooseBuildingBean() {
             this.academicInterval = AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.SEMESTER);
@@ -62,8 +58,8 @@ public class ViewAllRoomsSchedulesDA extends FenixDispatchAction {
             this.academicInterval = academicInterval;
         }
 
-        public List<Building> getAvailableBuildings() {
-            return Ordering.from(Space.COMPARATOR_BY_PRESENTATION_NAME).sortedCopy(Building.getAllActiveBuildings());
+        public List<Space> getAvailableBuildings() {
+            return Ordering.from(SpaceUtils.COMPARATOR_BY_PRESENTATION_NAME).sortedCopy(SpaceUtils.getAllActiveBuildings());
         }
 
         public List<AcademicInterval> getAvailableIntervals() {
@@ -71,11 +67,11 @@ public class ViewAllRoomsSchedulesDA extends FenixDispatchAction {
                     .sortedCopy(AcademicInterval.readAcademicIntervals(AcademicPeriod.SEMESTER));
         }
 
-        public List<Building> getSelectedBuildings() {
+        public List<Space> getSelectedBuildings() {
             return selectedBuildings;
         }
 
-        public void setSelectedBuildings(List<Building> selectedBuildings) {
+        public void setSelectedBuildings(List<Space> selectedBuildings) {
             this.selectedBuildings = selectedBuildings;
         }
     }
@@ -96,15 +92,15 @@ public class ViewAllRoomsSchedulesDA extends FenixDispatchAction {
             throws Exception {
         ChooseBuildingBean bean = getRenderedObject();
 
-        List<AllocatableSpace> rooms = new ArrayList<AllocatableSpace>();
-        for (Building building : bean.getSelectedBuildings()) {
-            rooms.addAll(building.getAllActiveSubRoomsForEducation());
+        List<Space> rooms = new ArrayList<Space>();
+        for (Space building : bean.getSelectedBuildings()) {
+            rooms.addAll(SpaceUtils.getAllActiveSubRoomsForEducation(building));
         }
 
         final List<RoomLessonsBean> beans = new ArrayList<RoomLessonsBean>();
-        for (final AllocatableSpace room : rooms) {
-            if (room.containsIdentification()) {
-                final List<Lesson> lessons = room.getAssociatedLessons(bean.getAcademicInterval());
+        for (final Space room : rooms) {
+            if (!StringUtils.isEmpty(room.getName())) {
+                final List<Lesson> lessons = SpaceUtils.getAssociatedLessons(room, bean.getAcademicInterval());
                 final List<InfoLesson> infoLessons = new ArrayList<InfoLesson>(lessons.size());
                 for (Lesson lesson : lessons) {
                     infoLessons.add(InfoLesson.newInfoFromDomain(lesson));
@@ -119,16 +115,16 @@ public class ViewAllRoomsSchedulesDA extends FenixDispatchAction {
     }
 
     public static class RoomLessonsBean {
-        private final AllocatableSpace room;
+        private final Space room;
         private final List<InfoLesson> lessons;
 
-        public RoomLessonsBean(AllocatableSpace room, List<InfoLesson> lessons) {
+        public RoomLessonsBean(Space room, List<InfoLesson> lessons) {
             super();
             this.room = room;
             this.lessons = lessons;
         }
 
-        public AllocatableSpace getRoom() {
+        public Space getRoom() {
             return room;
         }
 

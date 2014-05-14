@@ -6,9 +6,9 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
-import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.spaces.domain.Space;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
@@ -19,7 +19,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 
 public class PersistentStudentGroup extends PersistentStudentGroup_Base {
-    protected PersistentStudentGroup(DegreeType degreeType, Degree degree, CycleType cycle, Campus campus,
+    protected PersistentStudentGroup(DegreeType degreeType, Degree degree, CycleType cycle, Space campus,
             ExecutionCourse executionCourse, CurricularYear curricularYear, ExecutionYear executionYear) {
         super();
         setDegreeType(degreeType);
@@ -66,7 +66,7 @@ public class PersistentStudentGroup extends PersistentStudentGroup_Base {
         return getInstance(FluentIterable.from(degree.getStudentGroupSet()), null, degree, cycle, null, null, null, null);
     }
 
-    public static PersistentStudentGroup getInstance(Campus campus) {
+    public static PersistentStudentGroup getInstance(Space campus) {
         return getInstance(FluentIterable.from(campus.getStudentGroupSet()), null, null, null, campus, null, null, null);
     }
 
@@ -80,7 +80,7 @@ public class PersistentStudentGroup extends PersistentStudentGroup_Base {
                 null, null);
     }
 
-    public static PersistentStudentGroup getInstance(DegreeType degreeType, Degree degree, CycleType cycle, Campus campus,
+    public static PersistentStudentGroup getInstance(DegreeType degreeType, Degree degree, CycleType cycle, Space campus,
             ExecutionCourse executionCourse, CurricularYear curricularYear, ExecutionYear executionYear) {
         if (curricularYear != null) {
             return getInstance(FluentIterable.from(curricularYear.getStudentGroupSet()), degreeType, degree, cycle, campus,
@@ -103,7 +103,7 @@ public class PersistentStudentGroup extends PersistentStudentGroup_Base {
     }
 
     private static PersistentStudentGroup getInstance(FluentIterable<PersistentStudentGroup> options, DegreeType degreeType,
-            Degree degree, CycleType cycle, Campus campus, ExecutionCourse executionCourse, CurricularYear curricularYear,
+            Degree degree, CycleType cycle, Space campus, ExecutionCourse executionCourse, CurricularYear curricularYear,
             ExecutionYear executionYear) {
         Optional<PersistentStudentGroup> instance =
                 select(options, degreeType, degree, cycle, campus, executionCourse, curricularYear, executionYear);
@@ -113,7 +113,7 @@ public class PersistentStudentGroup extends PersistentStudentGroup_Base {
 
     @Atomic(mode = TxMode.WRITE)
     private static PersistentStudentGroup create(FluentIterable<PersistentStudentGroup> options, DegreeType degreeType,
-            Degree degree, CycleType cycle, Campus campus, ExecutionCourse executionCourse, CurricularYear curricularYear,
+            Degree degree, CycleType cycle, Space campus, ExecutionCourse executionCourse, CurricularYear curricularYear,
             ExecutionYear executionYear) {
         Optional<PersistentStudentGroup> instance =
                 select(options, degreeType, degree, cycle, campus, executionCourse, curricularYear, executionYear);
@@ -122,7 +122,7 @@ public class PersistentStudentGroup extends PersistentStudentGroup_Base {
     }
 
     private static Optional<PersistentStudentGroup> select(FluentIterable<PersistentStudentGroup> options,
-            final DegreeType degreeType, final Degree degree, final CycleType cycle, final Campus campus,
+            final DegreeType degreeType, final Degree degree, final CycleType cycle, final Space campus,
             final ExecutionCourse executionCourse, final CurricularYear curricularYear, final ExecutionYear executionYear) {
         return options.firstMatch(new Predicate<PersistentStudentGroup>() {
             @Override

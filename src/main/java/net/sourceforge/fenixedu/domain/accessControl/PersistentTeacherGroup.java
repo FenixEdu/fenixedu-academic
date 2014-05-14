@@ -4,9 +4,9 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.spaces.domain.Space;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
@@ -17,7 +17,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 
 public class PersistentTeacherGroup extends PersistentTeacherGroup_Base {
-    protected PersistentTeacherGroup(Degree degree, ExecutionCourse executionCourse, Campus campus, Department department,
+    protected PersistentTeacherGroup(Degree degree, ExecutionCourse executionCourse, Space campus, Department department,
             ExecutionYear executionYear) {
         super();
         setDegree(degree);
@@ -46,7 +46,7 @@ public class PersistentTeacherGroup extends PersistentTeacherGroup_Base {
         return getInstance(FluentIterable.from(degree.getTeacherGroupSet()), degree, null, null, null, null);
     }
 
-    public static PersistentTeacherGroup getInstance(Campus campus) {
+    public static PersistentTeacherGroup getInstance(Space campus) {
         return getInstance(FluentIterable.from(campus.getTeacherGroupSet()), null, null, campus, null, null);
     }
 
@@ -58,7 +58,7 @@ public class PersistentTeacherGroup extends PersistentTeacherGroup_Base {
         return getInstance(FluentIterable.from(executionCourse.getTeacherGroupSet()), null, executionCourse, null, null, null);
     }
 
-    public static PersistentTeacherGroup getInstance(Degree degree, ExecutionCourse executionCourse, Campus campus,
+    public static PersistentTeacherGroup getInstance(Degree degree, ExecutionCourse executionCourse, Space campus,
             Department department, ExecutionYear executionYear) {
         if (degree != null) {
             return getInstance(degree);
@@ -76,21 +76,21 @@ public class PersistentTeacherGroup extends PersistentTeacherGroup_Base {
     }
 
     private static PersistentTeacherGroup getInstance(FluentIterable<PersistentTeacherGroup> options, Degree degree,
-            ExecutionCourse executionCourse, Campus campus, Department department, ExecutionYear executionYear) {
+            ExecutionCourse executionCourse, Space campus, Department department, ExecutionYear executionYear) {
         Optional<PersistentTeacherGroup> instance = select(options, degree, executionCourse, campus, department, executionYear);
         return instance.isPresent() ? instance.get() : create(options, degree, executionCourse, campus, department, executionYear);
     }
 
     @Atomic(mode = TxMode.WRITE)
     private static PersistentTeacherGroup create(FluentIterable<PersistentTeacherGroup> options, Degree degree,
-            ExecutionCourse executionCourse, Campus campus, Department department, ExecutionYear executionYear) {
+            ExecutionCourse executionCourse, Space campus, Department department, ExecutionYear executionYear) {
         Optional<PersistentTeacherGroup> instance = select(options, degree, executionCourse, campus, department, executionYear);
         return instance.isPresent() ? instance.get() : new PersistentTeacherGroup(degree, executionCourse, campus, department,
                 executionYear);
     }
 
     private static Optional<PersistentTeacherGroup> select(FluentIterable<PersistentTeacherGroup> options, final Degree degree,
-            final ExecutionCourse executionCourse, final Campus campus, final Department department,
+            final ExecutionCourse executionCourse, final Space campus, final Department department,
             final ExecutionYear executionYear) {
         return options.firstMatch(new Predicate<PersistentTeacherGroup>() {
             @Override

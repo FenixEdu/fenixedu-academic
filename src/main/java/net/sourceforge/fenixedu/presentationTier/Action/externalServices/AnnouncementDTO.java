@@ -8,8 +8,8 @@ import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementCategory;
-import net.sourceforge.fenixedu.domain.space.Campus;
 
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -223,7 +223,7 @@ public class AnnouncementDTO {
         return this.campus;
     }
 
-    public void setCampus(Campus campus) {
+    public void setCampus(Space campus) {
         this.campus = campus == null ? "EXTERNAL" : campus.getName();
     }
 

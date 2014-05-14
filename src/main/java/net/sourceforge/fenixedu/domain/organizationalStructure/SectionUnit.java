@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.Campus;
 
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -16,7 +16,7 @@ public class SectionUnit extends SectionUnit_Base {
 
     public static Unit createNewSectionUnit(MultiLanguageString name, String unitNameCard, Integer costCenterCode,
             String acronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, AccountabilityType accountabilityType,
-            String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Campus campus) {
+            String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Space campus) {
 
         SectionUnit sectionUnit = new SectionUnit();
         sectionUnit.init(name, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress, classification, null,

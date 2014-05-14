@@ -7,8 +7,11 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.space.Space;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
+
+import org.fenixedu.spaces.domain.Space;
+
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
@@ -19,9 +22,12 @@ public class LibraryInformation implements Serializable {
         public Object provide(Object source, Object currentValue) {
             LibraryInformation attendance = (LibraryInformation) source;
             Set<Space> availableSpaces = new HashSet<Space>();
-            for (Space space : attendance.getLibrary().getActiveContainedSpaces()) {
-                if (space.canAddAttendance()) {
-                    availableSpaces.add(space);
+            for (org.fenixedu.spaces.domain.Space space : attendance.getLibrary().getValidChildrenSet()) {
+                Space newSpace = (Space) space;
+                Integer allocatableCapacity;
+                allocatableCapacity = newSpace.getAllocatableCapacity();
+                if (SpaceUtils.currentAttendaceCount(newSpace) < allocatableCapacity) {
+                    availableSpaces.add((Space) space);
                 }
             }
             return availableSpaces;

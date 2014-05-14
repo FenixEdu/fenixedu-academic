@@ -12,10 +12,10 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.QueueJob;
 import net.sourceforge.fenixedu.domain.QueueJobResult;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.spaces.domain.Space;
 
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
@@ -91,7 +91,7 @@ public class ExportExistingStudentsFromImportationProcess extends ExportExisting
     }
 
     private void addRow(final Spreadsheet spreadsheet, final String studentNumber, String studentName, String documentIdNumber,
-            final ExecutionDegree executionDegree, final ExecutionYear executionYear, final Campus campus,
+            final ExecutionDegree executionDegree, final ExecutionYear executionYear, final Space campus,
             String importationFilename) {
         final Row row = spreadsheet.addRow();
 
@@ -100,7 +100,9 @@ public class ExportExistingStudentsFromImportationProcess extends ExportExisting
         row.setCell(2, documentIdNumber);
         row.setCell(3, executionDegree.getDegreeCurricularPlan().getName());
         row.setCell(4, executionYear.getYear());
-        row.setCell(5, campus.getName());
+        String name;
+        name = campus.getName();
+        row.setCell(5, name);
         row.setCell(6, importationFilename);
     }
 

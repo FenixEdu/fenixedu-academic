@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.fenixedu.spaces.domain.UnavailableException;
 
 public class CoordinatorWrittenTestsInformationBackingBean extends CoordinatorEvaluationManagementBackingBean {
 
@@ -54,8 +55,11 @@ public class CoordinatorWrittenTestsInformationBackingBean extends CoordinatorEv
             final StringBuilder buffer = new StringBuilder(20);
 
             for (final WrittenEvaluationSpaceOccupation roomOccupation : writtenTest.getWrittenEvaluationSpaceOccupations()) {
-                buffer.append(roomOccupation.getRoom().getNome()).append(";");
-                totalCapacity += roomOccupation.getRoom().getCapacidadeExame();
+                try {
+                    buffer.append(roomOccupation.getRoom().getName()).append(";");
+                    totalCapacity += (Integer) roomOccupation.getRoom().getMetadata("examCapacity");
+                } catch (UnavailableException e) {
+                }
             }
             if (buffer.length() > 0) {
                 buffer.deleteCharAt(buffer.length() - 1);

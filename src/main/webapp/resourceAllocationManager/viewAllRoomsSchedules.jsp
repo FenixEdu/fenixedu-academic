@@ -35,23 +35,25 @@
 		</thead>
 		<tr>
 			<td class="listClasses">
-				${bean.room.nome}
+				${bean.room.name}
 			</td>
 			<td class="listClasses">
-				${bean.room.roomClassification.name}
+				${bean.room.classification.name}
 			</td>
 			<td class="listClasses">
-				${bean.room.spaceBuilding.name}
+				${bean.room.parent.name}
 			</td>
 			<td class="listClasses">
-				${bean.room.piso}
+				x
 			</td>
 			<td class="listClasses">
-				${bean.room.capacidadeNormal}
+				${bean.room.allocatableCapacity}
 			</td>
 			<td class="listClasses">
-				${bean.room.capacidadeExame}
+				y
 			</td>
+			
+			<%-- ${bean.room.parent.metadata("level")} --%>
 		</tr>
 	</table>
 	<c:set var="lessons" value="${bean.lessons}" />

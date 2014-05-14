@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadAvailableRoomsForExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.RAMApplication.RAMEvaluationsApp;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -28,6 +27,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -169,7 +169,7 @@ public class RoomSearchDA extends FenixDispatchAction {
         String sortParameter = request.getParameter("sortParameter");
         List<InfoRoom> availableRooms = new ArrayList<InfoRoom>();
         for (String element : availableRoomsId) {
-            final AllocatableSpace room = FenixFramework.getDomainObject(element);
+            final Space room = FenixFramework.getDomainObject(element);
             availableRooms.add(InfoRoom.newInfoFromDomain(room));
         }
         if ((sortParameter != null) && (sortParameter.length() != 0)) {

@@ -16,7 +16,7 @@
 	<slot name="professionalRegimeDate" key="label.date"/>
 </schema>
 
-<schema name="view.campus.name" type="net.sourceforge.fenixedu.domain.space.Campus" bundle="CONTRACTS_RESOURCES">
+<schema name="view.campus.name" type="org.fenixedu.spaces.domain.Space" bundle="CONTRACTS_RESOURCES">
 	<slot name="name" key="label.campus" layout="null-as-label"/>
 </schema>
 

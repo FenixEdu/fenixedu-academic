@@ -12,13 +12,13 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.presentationTier.Action.messaging.AnnouncementManagement;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.spaces.domain.Space;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -46,7 +46,7 @@ public class DegreeAnnouncementsDA extends AnnouncementManagement {
             OldCmsSemanticURLHandler.selectSite(request, degree.getSite());
         }
 
-        Collection<Campus> campus = degree.getCurrentCampus();
+        Collection<Space> campus = degree.getCurrentCampus();
         if (campus.isEmpty()) {
             campus = degree.getCurrentCampus();
         }

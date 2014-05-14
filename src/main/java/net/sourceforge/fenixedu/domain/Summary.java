@@ -11,11 +11,11 @@ import java.util.List;
 import java.util.SortedSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
@@ -58,7 +58,7 @@ public class Summary extends Summary_Base {
 
     public Summary(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber, Boolean isExtraLesson,
             Professorship professorship, String teacherName, Teacher teacher, Shift shift, Lesson lesson, YearMonthDay date,
-            AllocatableSpace room, Partial hour, ShiftType type, Boolean taught) {
+            Space room, Partial hour, ShiftType type, Boolean taught) {
 
         super();
         setRootDomainObject(Bennu.getInstance());
@@ -72,7 +72,7 @@ public class Summary extends Summary_Base {
 
     public void edit(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber, Boolean isExtraLesson,
             Professorship professorship, String teacherName, Teacher teacher, Shift shift, Lesson lesson, YearMonthDay date,
-            AllocatableSpace room, Partial hour, ShiftType type, Boolean taught) {
+            Space room, Partial hour, ShiftType type, Boolean taught) {
 
         fillSummaryWithInfo(title, summaryText, studentsNumber, isExtraLesson, professorship, teacherName, teacher, shift,
                 lesson, date, room, hour, type, taught);
@@ -84,7 +84,7 @@ public class Summary extends Summary_Base {
 
     private void fillSummaryWithInfo(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber,
             Boolean isExtraLesson, Professorship professorship, String teacherName, Teacher teacher, Shift shift, Lesson lesson,
-            YearMonthDay day, AllocatableSpace room, Partial hour, ShiftType type, Boolean taught) {
+            YearMonthDay day, Space room, Partial hour, ShiftType type, Boolean taught) {
 
         setShift(shift);
         setSummaryDateYearMonthDay(day);
@@ -144,7 +144,7 @@ public class Summary extends Summary_Base {
                 && getSummaryDateYearMonthDay() != null && getSummaryHourHourMinuteSecond() != null && getIsExtraLesson() != null;
     }
 
-    private void lessonInstanceManagement(Lesson lesson, YearMonthDay day, AllocatableSpace room) {
+    private void lessonInstanceManagement(Lesson lesson, YearMonthDay day, Space room) {
         LessonInstance lessonInstance = lesson.getLessonInstanceFor(day);
         if (lessonInstance == null) {
             new LessonInstance(this, lesson);
@@ -283,7 +283,7 @@ public class Summary extends Summary_Base {
     }
 
     @Override
-    public AllocatableSpace getRoom() {
+    public Space getRoom() {
         if (isExtraSummary()) {
             return super.getRoom();
         } else if (hasLessonInstance()) {

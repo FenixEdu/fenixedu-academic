@@ -93,7 +93,7 @@ padding: 0;
 								<td><fr:view name="lesson" property="beginHourMinuteSecond"/></td>
 								<td><fr:view name="lesson" property="endHourMinuteSecond"/></td>
 								<td><logic:notEmpty name="lesson" property="sala">
-									<bean:write name="lesson" property="sala.nome"/>
+									<bean:write name="lesson" property="sala.name"/>
 									</logic:notEmpty>
 									<logic:empty name="lesson" property="sala">
 										-

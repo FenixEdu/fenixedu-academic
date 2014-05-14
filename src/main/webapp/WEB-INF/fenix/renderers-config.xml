@@ -93,8 +93,6 @@ Documentation:
         <property name="format" value="${degree.sigla} ${initialDateYearMonthDay.year}"/>
     </renderer>
         
-    <renderer type="net.sourceforge.fenixedu.domain.resource.Vehicle" layout="vehicle-plain" class="net.sourceforge.fenixedu.presentationTier.renderers.VehiclePlainRenderer"/>
-    
     <renderer type="net.sourceforge.fenixedu.domain.Shift" layout="shift-plain" class="net.sourceforge.fenixedu.presentationTier.renderers.ShiftPlainRenderer"/>
 
  	<renderer type="net.sourceforge.fenixedu.domain.Lesson" layout="lesson-plain" class="net.sourceforge.fenixedu.presentationTier.renderers.LessonPlainRenderer"/>
@@ -324,9 +322,6 @@ Documentation:
     <!--@ The layout username-as-person allows you to insert a person given a username -->
     <renderer mode="input" type="net.sourceforge.fenixedu.domain.Teacher" layout="teacherId-as-teacher" class="net.sourceforge.fenixedu.presentationTier.renderers.TeacherIdStringInputRenderer"/>
 
-	<!--@ The layout extensionNumber-as-extension allows you to insert a Extension given a Extension Number -->
-    <renderer mode="input" type="net.sourceforge.fenixedu.domain.material.Material" layout="extensionNumber-as-extension" class="net.sourceforge.fenixedu.presentationTier.renderers.ExtensionNumberStringInputRenderer"/>
-
 	<!--@ Layout that allows you to render a list with checkboxes with postback -->
 	<renderer mode="input" type="java.util.Collection" layout="option-select-postback" class="pt.ist.fenixWebFramework.renderers.CheckBoxOptionListRendererWithPostBack"/>
     
@@ -335,14 +330,6 @@ Documentation:
               layout="format-name-number">
 		<property name="format" value="${name}" />
 	</renderer>
-    
-    <renderer type="net.sourceforge.fenixedu.domain.space.RoomClassification" layout="roomClassification-label" class="pt.ist.fenixWebFramework.renderers.FormatRenderer">
-        <property name="format" value="${presentationCode} - ${name}"/>
-    </renderer>
-
-	<renderer type="net.sourceforge.fenixedu.domain.space.Space" layout="spaceInformation-presentationName-label" class="pt.ist.fenixWebFramework.renderers.FormatRenderer">
-        <property name="format" value="${spaceInformation.presentationName}"/>
-    </renderer>
     
 	<renderer mode="input" type="net.sourceforge.fenixedu.domain.student.Student" layout="by-number" class="net.sourceforge.fenixedu.presentationTier.renderers.StudentByNumberInputRenderer"/>
     

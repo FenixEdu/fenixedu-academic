@@ -14,20 +14,23 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.TeacherAuthorization;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Invitation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.SpaceAttendances;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.spaces.domain.Space;
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.renderers.DataProvider;
@@ -42,9 +45,10 @@ public class LibraryAttendance implements Serializable {
         public Object provide(Object source, Object currentValue) {
             LibraryAttendance attendance = (LibraryAttendance) source;
             Set<Space> availableSpaces = new HashSet<Space>();
-            for (Space space : attendance.getLibrary().getActiveContainedSpaces()) {
-                if (space.canAddAttendance()) {
-                    availableSpaces.add(space);
+            for (org.fenixedu.spaces.domain.Space space : attendance.getLibrary().getValidChildrenSet()) {
+                Space newSpace = (Space) space;
+                if (SpaceUtils.currentAttendaceCount(newSpace) < newSpace.getAllocatableCapacity()) {
+                    availableSpaces.add(newSpace);
                 }
             }
             return availableSpaces;
@@ -181,7 +185,9 @@ public class LibraryAttendance implements Serializable {
         if (person != null) {
             Set<Space> spaces = new HashSet<Space>();
             spaces.add(library);
-            spaces.addAll(library.getActiveContainedSpaces());
+            for (org.fenixedu.spaces.domain.Space newSpace : library.getChildrenSet()) {
+                spaces.add((Space) newSpace);
+            }
             for (Space space : spaces) {
                 for (SpaceAttendances attendance : space.getCurrentAttendanceSet()) {
                     if (person.equals(attendance.getPerson())) {
@@ -298,15 +304,20 @@ public class LibraryAttendance implements Serializable {
 
     public Set<SpaceAttendances> getLibraryAttendances() {
         Set<SpaceAttendances> attendances = new HashSet<SpaceAttendances>();
-        attendances.addAll(library.getCurrentAttendance());
-        for (Space space : library.getActiveContainedSpaces()) {
-            attendances.addAll(space.getCurrentAttendance());
+        attendances.addAll(library.getCurrentAttendanceSet());
+        for (org.fenixedu.spaces.domain.Space space : library.getValidChildrenSet()) {
+            Space newSpace = (Space) space;
+            attendances.addAll(newSpace.getCurrentAttendanceSet());
         }
         return attendances;
     }
 
     public boolean isFull() {
-        return !getLibrary().canAddAttendance();
+        Space r = getLibrary();
+        Integer allocatableCapacity;
+        allocatableCapacity = r.getAllocatableCapacity();
+
+        return SpaceUtils.currentAttendaceCount(r) < allocatableCapacity;
     }
 
     public void search() {
@@ -342,7 +353,7 @@ public class LibraryAttendance implements Serializable {
     @Atomic
     public void enterSpace() {
         Space space = getSelectedSpace() != null ? getSelectedSpace() : library;
-        setPersonAttendance(space.addAttendance(getPerson(), AccessControl.getPerson().getIstUsername()));
+        setPersonAttendance(addAttendance(space, getPerson(), AccessControl.getPerson().getIstUsername()));
     }
 
     @Atomic
@@ -354,4 +365,18 @@ public class LibraryAttendance implements Serializable {
         }
     }
 
+    private static SpaceAttendances addAttendance(Space space, Person person, String responsibleUsername) {
+        if (person == null) {
+            return null;
+        }
+        Integer allocatableCapacity;
+        allocatableCapacity = space.getAllocatableCapacity();
+        if (!(SpaceUtils.currentAttendaceCount(space) < allocatableCapacity)) {
+            throw new DomainException("error.space.maximumAttendanceExceeded");
+        }
+        SpaceAttendances attendance = new SpaceAttendances(person.getIstUsername(), responsibleUsername, new DateTime());
+        space.addCurrentAttendance(attendance);
+        space.addPastAttendances(attendance);
+        return attendance;
+    }
 }

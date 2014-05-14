@@ -8,10 +8,10 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.spaces.domain.Space;
 
 public class MeasurementTest extends MeasurementTest_Base {
 
@@ -20,7 +20,7 @@ public class MeasurementTest extends MeasurementTest_Base {
         setRootDomainObject(Bennu.getInstance());
     }
 
-    public MeasurementTest(EntryPhase entryPhase, ExecutionYear executionYear, Campus campus) {
+    public MeasurementTest(EntryPhase entryPhase, ExecutionYear executionYear, Space campus) {
         this();
         String[] args = {};
 
@@ -78,7 +78,7 @@ public class MeasurementTest extends MeasurementTest_Base {
         return result;
     }
 
-    public static MeasurementTest readBy(EntryPhase entryPhase, ExecutionYear executionYear, Campus campus) {
+    public static MeasurementTest readBy(EntryPhase entryPhase, ExecutionYear executionYear, Space campus) {
         for (final MeasurementTest test : Bennu.getInstance().getMeasurementTestsSet()) {
             if (test.isFor(entryPhase, executionYear, campus)) {
                 return test;
@@ -88,7 +88,7 @@ public class MeasurementTest extends MeasurementTest_Base {
         return null;
     }
 
-    private boolean isFor(EntryPhase entryPhase, ExecutionYear executionYear, Campus campus) {
+    private boolean isFor(EntryPhase entryPhase, ExecutionYear executionYear, Space campus) {
         return getEntryPhase().equals(entryPhase) && getExecutionYear() == executionYear && getCampus() == campus;
     }
 

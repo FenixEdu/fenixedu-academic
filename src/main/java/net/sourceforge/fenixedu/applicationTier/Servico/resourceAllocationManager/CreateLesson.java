@@ -15,10 +15,11 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
@@ -37,10 +38,10 @@ public class CreateLesson {
 
         final Shift shift = FenixFramework.getDomainObject(infoShift.getExternalId());
 
-        AllocatableSpace room = null;
+        Space room = null;
         if (infoRoomOccupation != null) {
             room =
-                    infoRoomOccupation.getInfoRoom() != null ? AllocatableSpace
+                    infoRoomOccupation.getInfoRoom() != null ? SpaceUtils
                             .findAllocatableSpaceForEducationByName(infoRoomOccupation.getInfoRoom().getNome()) : null;
         }
 

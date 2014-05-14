@@ -189,12 +189,12 @@
 					</td>
 					<td>
 						<logic:notEmpty name="olesson" property="sala">
-							<bean:write name="olesson" property="sala.nome"/>
+							<bean:write name="olesson" property="sala.name"/>
 						</logic:notEmpty>	
 					</td>
 					<td>
 						<logic:notEmpty name="olesson" property="sala">
-							<bean:write name="olesson" property="sala.capacidadeNormal"/>
+							<bean:write name="olesson" property="sala.allocatableCapacity"/>
 						</logic:notEmpty>
 					</td>
 				</tr>

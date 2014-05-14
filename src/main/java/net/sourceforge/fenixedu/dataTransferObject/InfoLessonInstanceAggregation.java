@@ -12,10 +12,10 @@ import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.joda.time.Weeks;
@@ -29,11 +29,11 @@ public class InfoLessonInstanceAggregation extends InfoShowOccupation {
     private final int weekDay;
     private final HourMinuteSecond begin;
     private final HourMinuteSecond end;
-    private final AllocatableSpace allocatableSpace;
+    private final Space allocatableSpace;
     private final SortedSet<LocalDate> dates = new TreeSet<LocalDate>();
 
     public InfoLessonInstanceAggregation(final Shift shift, final int weekDay, final HourMinuteSecond begin,
-            final HourMinuteSecond end, final AllocatableSpace allocatableSpace) {
+            final HourMinuteSecond end, final Space allocatableSpace) {
         this.shift = shift;
         this.weekDay = weekDay;
         this.begin = begin;
@@ -113,7 +113,7 @@ public class InfoLessonInstanceAggregation extends InfoShowOccupation {
     }
 
     @Override
-    public AllocatableSpace getAllocatableSpace() {
+    public Space getAllocatableSpace() {
         return allocatableSpace;
     }
 

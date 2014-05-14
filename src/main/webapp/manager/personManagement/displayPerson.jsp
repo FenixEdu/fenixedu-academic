@@ -174,7 +174,7 @@ function check(e,v){
 						</logic:present>					
 					</logic:present>									
 					   
-					<bean:define id="personSpaces" name="personalInfo" property="activePersonSpaces"></bean:define>
+					<%-- <bean:define id="personSpaces" name="personalInfo" property="activePersonSpaces"></bean:define>
 					<logic:notEmpty name="personSpaces">
 						<tr>
 							<td class="ppleft2"><bean:message key="label.person.rooms" bundle="APPLICATION_RESOURCES"/>:</td>	   						
@@ -188,7 +188,7 @@ function check(e,v){
 								</fr:view>
 							</td>																		
 						</tr>			
-					</logic:notEmpty>
+					</logic:notEmpty> --%>
 					
 					<logic:notEmpty name="personalInfo" property="teacher" >
 						<logic:notEmpty  name="personalInfo" property="teacher.currentCategory" >

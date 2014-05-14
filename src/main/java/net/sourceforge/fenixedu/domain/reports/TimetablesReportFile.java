@@ -122,7 +122,7 @@ public class TimetablesReportFile extends TimetablesReportFile_Base {
 
                                 // Sala
                                 if (lesson.getSala() != null) {
-                                    row.setCell(lesson.getSala().getNome());
+                                    row.setCell(lesson.getSala().getName());
                                 } else {
                                     row.setCell("");
                                 }
@@ -184,7 +184,7 @@ public class TimetablesReportFile extends TimetablesReportFile_Base {
 
                                 // Sala
                                 if (lesson.getSala() != null) {
-                                    row.setCell(lesson.getSala().getNome());
+                                    row.setCell(lesson.getSala().getName());
                                 } else {
                                     row.setCell("");
                                 }

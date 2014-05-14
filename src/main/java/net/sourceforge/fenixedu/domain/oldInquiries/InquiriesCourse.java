@@ -24,9 +24,9 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistryState;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryNotAnsweredJustification;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 
 /**
@@ -102,7 +102,7 @@ public class InquiriesCourse extends InquiriesCourse_Base {
         new InquiriesTeacher(this, nonAffiliatedTeacher, shiftType, infoInquiriesTeacher);
     }
 
-    public void createInquiriesRoom(AllocatableSpace room, InfoInquiriesRoom infoInquiriesRoom) {
+    public void createInquiriesRoom(Space room, InfoInquiriesRoom infoInquiriesRoom) {
         new InquiriesRoom(this, room, infoInquiriesRoom);
     }
 

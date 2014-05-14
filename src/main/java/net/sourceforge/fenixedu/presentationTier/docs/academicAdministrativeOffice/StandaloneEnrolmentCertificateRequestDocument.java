@@ -6,6 +6,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.Locality;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.StandaloneEnrolmentCertificateRequest;
@@ -108,7 +109,8 @@ public class StandaloneEnrolmentCertificateRequestDocument extends Administrativ
         Person coordinator = loggedEmployee.getCurrentWorkingPlace().getActiveUnitCoordinator();
         String adminOfficeName = getMLSTextContent(loggedEmployee.getCurrentWorkingPlace().getPartyName());
         String institutionName = getInstitutionName();
-        String location = loggedEmployee.getCurrentCampus().getLocation();
+        final Locality locality = loggedEmployee.getCurrentCampus().getLocality();
+        String location = locality != null ? locality.getName() : null;
         String dateDD = new LocalDate().toString("dd", getLocale());
         String dateMMMM = new LocalDate().toString("MMMM", getLocale());
         String dateYYYY = new LocalDate().toString("yyyy", getLocale());

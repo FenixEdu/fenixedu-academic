@@ -4,7 +4,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoGenericEvent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstanceAggregation;
@@ -31,11 +30,9 @@ public class ClassTimeTableColorPicker extends ColorPicker {
         }
         if (infoShowOccupation instanceof InfoWrittenEvaluation) {
             return key((InfoWrittenEvaluation) infoShowOccupation);
-        }
-        if (infoShowOccupation instanceof InfoGenericEvent) {
+        } else {
             return "GenericEvent";
         }
-        return "Other";
     }
 
     private String key(final Lesson lesson) {

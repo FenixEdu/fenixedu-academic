@@ -567,7 +567,7 @@ extends="presentSimpleConvokesWithoutLink">
 		</slot>
 </schema>
 
-<schema name="presentRooms" type="net.sourceforge.fenixedu.domain.space.Room">
+<schema name="presentRooms" type="org.fenixedu.spaces.domain.Space">
 	<slot name="name"/>
 </schema>
 	

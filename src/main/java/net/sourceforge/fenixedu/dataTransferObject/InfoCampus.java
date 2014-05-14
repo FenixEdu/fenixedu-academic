@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.space.Campus;
+import org.fenixedu.spaces.domain.Space;
 
 /**
  * @author Tânia Pousão Create on 10/Nov/2003
@@ -52,14 +52,14 @@ public class InfoCampus extends InfoObject {
         return result;
     }
 
-    public void copyFromDomain(Campus campus) {
+    public void copyFromDomain(Space campus) {
         super.copyFromDomain(campus);
         if (campus != null) {
             setName(campus.getName());
         }
     }
 
-    public static InfoCampus newInfoFromDomain(Campus campus) {
+    public static InfoCampus newInfoFromDomain(Space campus) {
         InfoCampus infoCampus = null;
         if (campus != null) {
             infoCampus = new InfoCampus();

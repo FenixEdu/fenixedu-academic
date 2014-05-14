@@ -61,7 +61,6 @@ import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -73,6 +72,7 @@ import net.sourceforge.fenixedu.util.Season;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.util.MessageResources;
+import org.fenixedu.spaces.domain.Space;
 
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
@@ -865,16 +865,16 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return WrittenTest.class.getSimpleName();
     }
 
-    public List<AllocatableSpace> getEvaluationRooms() throws FenixServiceException {
-        final AllocatableSpace[] result = new AllocatableSpace[getEvaluationRoomsPositions().size()];
+    public List<Space> getEvaluationRooms() throws FenixServiceException {
+        final Space[] result = new Space[getEvaluationRoomsPositions().size()];
         for (final Entry<String, Integer> entry : getEvaluationRoomsPositions().entrySet()) {
-            final AllocatableSpace room = getRoom(entry.getKey());
+            final Space room = getRoom(entry.getKey());
             result[entry.getValue() - 1] = room;
         }
         return Arrays.asList(result);
     }
 
-    private AllocatableSpace getRoom(final String roomID) throws FenixServiceException {
+    private Space getRoom(final String roomID) throws FenixServiceException {
         for (final WrittenEvaluationSpaceOccupation roomOccupation : ((WrittenEvaluation) getEvaluation())
                 .getWrittenEvaluationSpaceOccupations()) {
             if (roomOccupation.getRoom().getExternalId().equals(roomID)) {
@@ -932,7 +932,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
                 new ArrayList<SelectItem>(((WrittenEvaluation) getEvaluation()).getWrittenEvaluationSpaceOccupationsSet().size());
         for (final WrittenEvaluationSpaceOccupation roomOccupation : ((WrittenEvaluation) getEvaluation())
                 .getWrittenEvaluationSpaceOccupations()) {
-            result.add(new SelectItem(roomOccupation.getRoom().getExternalId(), (roomOccupation.getRoom()).getIdentification()));
+            result.add(new SelectItem(roomOccupation.getRoom().getExternalId(), (roomOccupation.getRoom()).getName()));
         }
         return result;
     }
@@ -961,9 +961,9 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     private List<String> getRoomIDs() throws FenixServiceException {
-        final List<AllocatableSpace> rooms = getEvaluationRooms();
+        final List<Space> rooms = getEvaluationRooms();
         final List<String> result = new ArrayList(rooms.size());
-        for (final AllocatableSpace room : rooms) {
+        for (final Space room : rooms) {
             result.add(room.getExternalId());
         }
         return result;
@@ -1207,8 +1207,9 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         List<SelectItem> result = new ArrayList<SelectItem>();
         WrittenTest writtenTest = (WrittenTest) getEvaluation();
         Teacher teacher = AccessControl.getPerson().getTeacher();
-        for (AllocatableSpace room : writtenTest.getAvailableRooms()) {
-            SelectItem selectItem = new SelectItem(room.getExternalId(), room.getIdentification());
+        for (Space room : writtenTest.getAvailableRooms()) {
+            SelectItem selectItem;
+            selectItem = new SelectItem(room.getExternalId(), room.getName());
             selectItem.setDisabled(!writtenTest.canTeacherRemoveRoom(getExecutionCourse().getExecutionPeriod(), teacher, room));
             result.add(selectItem);
         }
@@ -1218,7 +1219,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public String[] getRoomsToAssociate() {
         if (roomsToAssociate == null) {
             List<String> roomIds = new ArrayList<String>();
-            for (AllocatableSpace room : ((WrittenTest) getEvaluation()).getAssociatedRooms()) {
+            for (Space room : ((WrittenTest) getEvaluation()).getAssociatedRooms()) {
                 roomIds.add(room.getExternalId());
             }
             roomsToAssociate = roomIds.toArray(new String[] {});
@@ -1239,10 +1240,10 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return "";
     }
 
-    private List<AllocatableSpace> getRooms(String[] roomsToAssociate) {
-        List<AllocatableSpace> rooms = new ArrayList<AllocatableSpace>();
+    private List<Space> getRooms(String[] roomsToAssociate) {
+        List<Space> rooms = new ArrayList<Space>();
         for (String roomId : roomsToAssociate) {
-            AllocatableSpace space = (AllocatableSpace) FenixFramework.getDomainObject(roomId);
+            Space space = (Space) FenixFramework.getDomainObject(roomId);
             if (space == null) {
                 throw new IllegalArgumentException();
             }
@@ -1352,7 +1353,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
             final Row newRow = spreadsheet.addRow();
             newRow.setCell(enrolment.getStudent().getNumber().toString());
             newRow.setCell(enrolment.getStudent().getPerson().getName());
-            newRow.setCell(enrolment.hasRoom() ? enrolment.getRoom().getIdentification() : "-");
+            newRow.setCell(enrolment.hasRoom() ? enrolment.getRoom().getName() : "-");
             newRow.setCell(enrolment.getStudent().getDegree().getNameI18N().getContent());
         }
     }

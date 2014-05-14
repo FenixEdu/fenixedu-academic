@@ -4,9 +4,9 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -20,7 +20,7 @@ public class PlanetUnit extends PlanetUnit_Base {
 
     public static PlanetUnit createNewPlanetUnit(MultiLanguageString planetName, String planetNameCard, Integer costCenterCode,
             String planetAcronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, String webAddress,
-            UnitClassification classification, Boolean canBeResponsibleOfSpaces, Campus campus) {
+            UnitClassification classification, Boolean canBeResponsibleOfSpaces, Space campus) {
 
         PlanetUnit planetUnit = new PlanetUnit();
         planetUnit.init(planetName, planetNameCard, costCenterCode, planetAcronym, beginDate, endDate, webAddress,
@@ -35,7 +35,7 @@ public class PlanetUnit extends PlanetUnit_Base {
     public void edit(MultiLanguageString unitName, String unitNameCard, Integer unitCostCenter, String acronym,
             YearMonthDay beginDate, YearMonthDay endDate, String webAddress, UnitClassification classification,
             Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces,
-            Campus campus) {
+            Space campus) {
 
         super.edit(unitName, unitNameCard, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department,
                 degree, administrativeOffice, canBeResponsibleOfSpaces, campus);

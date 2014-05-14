@@ -5,9 +5,9 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.dataTransferObject.InfoGenericEvent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
+import net.sourceforge.fenixedu.dataTransferObject.InfoOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
 import net.sourceforge.fenixedu.domain.FrequencyType;
@@ -74,9 +74,9 @@ public class SpaceManagerRoomTimeTableLessonContentRenderer extends LessonSlotCo
 
             strBuffer.append("</span>");
 
-        } else if (showOccupation instanceof InfoGenericEvent) {
+        } else if (showOccupation instanceof InfoOccupation) {
 
-            InfoGenericEvent infoGenericEvent = (InfoGenericEvent) showOccupation;
+            InfoOccupation infoGenericEvent = (InfoOccupation) showOccupation;
             strBuffer.append("<span title=\"").append(infoGenericEvent.getDescription()).append("\">");
             strBuffer.append(spaceManagerResourceBundle.getString("label.punctual.occupation")).append(" - ");
             strBuffer.append(infoGenericEvent.getTitle());

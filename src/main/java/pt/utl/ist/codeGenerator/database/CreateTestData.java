@@ -108,13 +108,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUni
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.resource.Resource;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
-import net.sourceforge.fenixedu.domain.space.Building;
-import net.sourceforge.fenixedu.domain.space.Campus;
-import net.sourceforge.fenixedu.domain.space.Floor;
-import net.sourceforge.fenixedu.domain.space.Room;
-import net.sourceforge.fenixedu.domain.space.Space;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
@@ -136,6 +130,7 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.portal.domain.PortalBootstrapper.PortalSection;
 import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.YearMonthDay;
@@ -168,6 +163,14 @@ public class CreateTestData {
         } catch (InterruptedException ie) {
             logger.warn("Caught an interrupt during the execution of an atomic action, but proceeding anyway...");
         }
+    }
+
+    private static Space getCampus() {
+        if (Space.getAllCampus().isEmpty()) {
+            throw new Error("Could not find another campus.");
+        }
+
+        return Space.getAllCampus().iterator().next();
     }
 
     private static void setPrivledges() {
@@ -264,60 +267,60 @@ public class CreateTestData {
         }
     }
 
-    public static class CreateResources extends AtomicAction {
-        private int roomCounter = 0;
-
-        Group managersGroup = null;
-
-        @Override
-        public void doIt() {
-            managersGroup = getRoleGroup(RoleType.MANAGER);
-            createCampi(1);
-            createCampi(2);
-        }
-
-        private void createCampi(int i) {
-            final Campus campus = new Campus("Herdade do Conhecimento " + i, new YearMonthDay(), null, null);
-            for (int j = i; j < i + 3; j++) {
-                createBuilding(campus, j);
-            }
-        }
-
-        private void createBuilding(final Campus campus, final int j) {
-            final Building building = new Building(campus, "Building " + j, new YearMonthDay(), null, null, "");
-            for (int k = -1; k < 2; k++) {
-                createFloor(building, k);
-            }
-        }
-
-        private void createFloor(final Building building, final int k) {
-            final Floor floor = new Floor(building, k, new YearMonthDay(), null, null);
-            for (int l = 0; l < 25; l++) {
-                createRoom(floor);
-            }
-        }
-
-        private void createRoom(Floor floor) {
-            final Room room =
-                    new Room(floor, null, getRoomName(), "", /* RoomClassification */null, new BigDecimal(30), Boolean.TRUE,
-                            Boolean.TRUE, Boolean.TRUE, Boolean.TRUE, Boolean.TRUE, "", new YearMonthDay(), null,
-                            Integer.toString(roomCounter - 1), null, null);
-            room.setExtensionOccupationsAccessGroup(managersGroup);
-            room.setGenericEventOccupationsAccessGroup(managersGroup);
-            room.setLessonOccupationsAccessGroup(managersGroup);
-            room.setPersonOccupationsAccessGroup(managersGroup);
-            room.setSpaceManagementAccessGroup(managersGroup);
-            room.setUnitOccupationsAccessGroup(managersGroup);
-            room.setWrittenEvaluationOccupationsAccessGroup(managersGroup);
-            lessonRoomManager.push(room);
-            examRoomManager.add(room);
-            writtenTestsRoomManager.add(room);
-        }
-
-        private String getRoomName() {
-            return "Room" + roomCounter++;
-        }
-    }
+//    public static class CreateResources extends AtomicAction {
+//        private int roomCounter = 0;
+//
+//        Group managersGroup = null;
+//
+//        @Override
+//        public void doIt() {
+//            managersGroup = getRoleGroup(RoleType.MANAGER);
+//            createCampi(1);
+//            createCampi(2);
+//        }
+//
+//        private void createCampi(int i) {
+//            final org.fenixedu.spaces.domain.Space campus = new org.fenixedu.spaces.domain.Space("Herdade do Conhecimento " + i, new YearMonthDay(), null, null);
+//            for (int j = i; j < i + 3; j++) {
+//                createBuilding(campus, j);
+//            }
+//        }
+//
+//        private void createBuilding(final org.fenixedu.spaces.domain.Space campus, final int j) {
+//            final Building building = new Building(campus, "Building " + j, new YearMonthDay(), null, null, "");
+//            for (int k = -1; k < 2; k++) {
+//                createFloor(building, k);
+//            }
+//        }
+//
+//        private void createFloor(final Building building, final int k) {
+//            final Floor floor = new Floor(building, k, new YearMonthDay(), null, null);
+//            for (int l = 0; l < 25; l++) {
+//                createRoom(floor);
+//            }
+//        }
+//
+//        private void createRoom(Floor floor) {
+//            final Room room =
+//                    new Room(floor, null, getRoomName(), "", /* RoomClassification */null, new BigDecimal(30), Boolean.TRUE,
+//                            Boolean.TRUE, Boolean.TRUE, Boolean.TRUE, Boolean.TRUE, "", new YearMonthDay(), null,
+//                            Integer.toString(roomCounter - 1), null, null);
+//            room.setExtensionOccupationsAccessGroup(managersGroup);
+//            room.setGenericEventOccupationsAccessGroup(managersGroup);
+//            room.setLessonOccupationsAccessGroup(managersGroup);
+//            room.setPersonOccupationsAccessGroup(managersGroup);
+//            room.setSpaceManagementAccessGroup(managersGroup);
+//            room.setUnitOccupationsAccessGroup(managersGroup);
+//            room.setWrittenEvaluationOccupationsAccessGroup(managersGroup);
+//            lessonRoomManager.push(room);
+//            examRoomManager.add(room);
+//            writtenTestsRoomManager.add(room);
+//        }
+//
+//        private String getRoomName() {
+//            return "Room" + roomCounter++;
+//        }
+//    }
 
     static AdministrativeOffice administrativeOffice;
 
@@ -504,7 +507,7 @@ public class CreateTestData {
             return degreeCurricularPlan;
         }
 
-        private void createExecutionDegrees(final DegreeCurricularPlan degreeCurricularPlan, final Campus campus) {
+        private void createExecutionDegrees(final DegreeCurricularPlan degreeCurricularPlan, final Space campus) {
             for (final ExecutionYear executionYear : getRootDomainObject().getExecutionYearsSet()) {
                 final ExecutionDegree executionDegree =
                         degreeCurricularPlan.createExecutionDegree(executionYear, campus, Boolean.FALSE);
@@ -567,20 +570,7 @@ public class CreateTestData {
             }
         }
 
-        Campus campus = null;
-
-        private Campus getCampus() {
-            for (final Resource resource : getRootDomainObject().getResourcesSet()) {
-                if (resource.isCampus()) {
-                    final Campus campus = (Campus) resource;
-                    if (this.campus != campus) {
-                        this.campus = campus;
-                        return this.campus;
-                    }
-                }
-            }
-            throw new Error("Could not find another campus.");
-        }
+        Space campus = null;
 
         Iterator<Department> departmentIterator = null;
 
@@ -981,7 +971,7 @@ public class CreateTestData {
             final Calendar cStart = toCalendar(start);
             final Calendar cEnd = toCalendar(end);
             final DiaSemana diaSemana = new DiaSemana(lessonRoomManager.getNextWeekDay());
-            final Room room = lessonRoomManager.getNextOldRoom();
+            final Space room = lessonRoomManager.getNextOldRoom();
             final ExecutionSemester executionPeriod = shift.getExecutionCourse().getExecutionPeriod();
             GenericPair<YearMonthDay, YearMonthDay> maxLessonsPeriod = shift.getExecutionCourse().getMaxLessonsPeriod();
             new Lesson(diaSemana, cStart, cEnd, shift, FrequencyType.WEEKLY, executionPeriod, maxLessonsPeriod.getLeft(),
@@ -1024,14 +1014,14 @@ public class CreateTestData {
                 startDateTime = writtenTestsRoomManager.getNextDateTime(executionPeriod);
                 endDateTime = startDateTime.plusMinutes(120);
             }
-            final Room room = writtenTestsRoomManager.getNextOldRoom(executionPeriod);
+            final Space room = writtenTestsRoomManager.getNextOldRoom(executionPeriod);
             final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
             executionCourses.add(executionCourse);
             final List<DegreeModuleScope> degreeModuleScopes = new ArrayList<DegreeModuleScope>();
             for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
                 degreeModuleScopes.addAll(curricularCourse.getDegreeModuleScopes());
             }
-            final List<AllocatableSpace> rooms = new ArrayList<AllocatableSpace>();
+            final List<Space> rooms = new ArrayList<Space>();
             rooms.add(room);
             final WrittenTest writtenTest =
                     new WrittenTest(startDateTime.toDate(), startDateTime.toDate(), endDateTime.toDate(), executionCourses,
@@ -1047,14 +1037,14 @@ public class CreateTestData {
                 startDateTime = examRoomManager.getNextDateTime(executionPeriod);
                 endDateTime = startDateTime.plusMinutes(180);
             }
-            final Room room = examRoomManager.getNextOldRoom(executionPeriod);
+            final Space room = examRoomManager.getNextOldRoom(executionPeriod);
             final List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
             executionCourses.add(executionCourse);
             final List<DegreeModuleScope> degreeModuleScopes = new ArrayList<DegreeModuleScope>();
             for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCoursesSet()) {
                 degreeModuleScopes.addAll(curricularCourse.getDegreeModuleScopes());
             }
-            final List<AllocatableSpace> rooms = new ArrayList<AllocatableSpace>();
+            final List<Space> rooms = new ArrayList<Space>();
             // rooms.add(room);
             final Exam exam =
                     new Exam(startDateTime.toDate(), startDateTime.toDate(), endDateTime.toDate(), executionCourses,
@@ -1165,7 +1155,7 @@ public class CreateTestData {
         final Person person = Person.findByUsername(adminSection.getAdminUsername());
 
         final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-        final Campus campus = Space.getAllCampus().iterator().next();
+        final Space campus = getCampus();
 
         int i = 0;
         for (final DegreeType degreeType : DegreeType.NOT_EMPTY_VALUES) {
@@ -1215,7 +1205,7 @@ public class CreateTestData {
             // createPeriodsForExecutionDegree(executionDegree);
             createSchoolClasses(executionDegree);
             // createEnrolmentPeriods(degreeCurricularPlan, executionYear);
-            executionDegree.setCampus(Space.getAllCampus().iterator().next());
+            executionDegree.setCampus(getCampus());
 
             createAgreementsAndPostingRules(executionYear, degreeCurricularPlan);
         }

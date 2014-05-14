@@ -4,15 +4,17 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.domain.FrequencyType;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace.ActiveForEducationWithNormalCapacityPredicate;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace.AllocatableSpacePredicate;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace.AllocatableSpaceTransformer;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace.IsFreeIntervalPredicate;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace.IsFreePredicate;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils.ActiveForEducationWithNormalCapacityPredicate;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils.AllocatableSpacePredicate;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils.AllocatableSpaceTransformer;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils.IsFreeIntervalPredicate;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils.IsFreePredicate;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
+import org.apache.commons.lang.StringUtils;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
@@ -23,7 +25,7 @@ public class ReadAvailableRoomsForExam {
 
     private static AllocatableSpacePredicate getSearchPredicate(final Integer normalCapacity, final Boolean withLabs) {
         return normalCapacity != null ? new ActiveForEducationWithNormalCapacityPredicate(normalCapacity) : withLabs
-                .booleanValue() ? AllocatableSpace.ACTIVE_FOR_EDUCATION_PREDICATE : AllocatableSpace.ACTIVE_FOR_EDUCATION_EXCEPT_LABS_PREDICATE;
+                .booleanValue() ? SpaceUtils.ACTIVE_FOR_EDUCATION_PREDICATE : SpaceUtils.ACTIVE_FOR_EDUCATION_EXCEPT_LABS_PREDICATE;
     }
 
     public static <T> List<T> findRooms(final Integer normalCapacity, final Boolean withLabs,
@@ -32,12 +34,12 @@ public class ReadAvailableRoomsForExam {
         final AllocatableSpacePredicate searchPredicate = getSearchPredicate(normalCapacity, withLabs);
         final AllocatableSpacePredicate hasIdentificationPredicate = new AllocatableSpacePredicate() {
             @Override
-            public boolean eval(final AllocatableSpace space) {
-                return space.containsIdentification();
+            public boolean eval(final Space space) {
+                return !StringUtils.isEmpty(space.getName());
             }
         };
 
-        return AllocatableSpace.findAllocatableSpacesByPredicates(transformer, searchPredicate, hasIdentificationPredicate,
+        return SpaceUtils.findAllocatableSpacesByPredicates(transformer, searchPredicate, hasIdentificationPredicate,
                 isFreePredicate);
     }
 
@@ -49,7 +51,7 @@ public class ReadAvailableRoomsForExam {
 
         final AllocatableSpaceTransformer<InfoRoom> transformer = new AllocatableSpaceTransformer<InfoRoom>() {
             @Override
-            public InfoRoom transform(final AllocatableSpace space) {
+            public InfoRoom transform(final Space space) {
                 return InfoRoom.newInfoFromDomain(space);
             }
         };
@@ -57,10 +59,10 @@ public class ReadAvailableRoomsForExam {
         return findRooms(normalCapacity, withLabs, transformer, isFreePredicate);
     }
 
-    public static List<AllocatableSpace> findAllocatableSpace(final Integer normalCapacity, final Boolean withLabs,
+    public static List<Space> findAllocatableSpace(final Integer normalCapacity, final Boolean withLabs,
             final Interval... intervals) {
         final AllocatableSpacePredicate isFreePredicate = new IsFreeIntervalPredicate(intervals);
-        return findRooms(normalCapacity, withLabs, AllocatableSpace.NO_TRANSFORMER, isFreePredicate);
+        return findRooms(normalCapacity, withLabs, SpaceUtils.NO_TRANSFORMER, isFreePredicate);
     }
 
 }

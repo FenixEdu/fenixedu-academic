@@ -50,8 +50,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
@@ -69,6 +67,7 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.StringNormalizer;
 import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Duration;
@@ -2051,11 +2050,11 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return false;
     }
 
-    public Set<AllocatableSpace> getAllRooms() {
-        Set<AllocatableSpace> result = new HashSet<AllocatableSpace>();
+    public Set<Space> getAllRooms() {
+        Set<Space> result = new HashSet<Space>();
         Set<Lesson> lessons = getLessons();
         for (Lesson lesson : lessons) {
-            AllocatableSpace room = lesson.getSala();
+            Space room = lesson.getSala();
             if (room != null) {
                 result.add(room);
             }
@@ -2199,7 +2198,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
         return associatedAdHocEvaluations;
     }
 
-    public boolean functionsAt(final Campus campus) {
+    public boolean functionsAt(final Space campus) {
         final ExecutionYear executionYear = getExecutionYear();
         for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
             final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();

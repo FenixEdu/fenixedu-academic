@@ -28,7 +28,7 @@ import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InterceptingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidTimeIntervalActionException;
@@ -47,6 +47,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
@@ -59,7 +60,7 @@ import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- *
+ * 
  */
 
 @Mapping(path = "/manageLesson", module = "resourceAllocationManager", input = "/manageLesson.do?method=findInput&page=0",
@@ -232,9 +233,9 @@ public class ManageLessonDA extends FenixShiftAndExecutionCourseAndExecutionDegr
         manageLessonForm.set("horaFim", "" + infoLesson.getFim().get(Calendar.HOUR_OF_DAY));
         manageLessonForm.set("minutosFim", "" + infoLesson.getFim().get(Calendar.MINUTE));
 
-        final AllocatableSpace allocatableSpace = infoLesson.getAllocatableSpace();
+        final Space allocatableSpace = infoLesson.getAllocatableSpace();
         if (allocatableSpace != null) {
-            manageLessonForm.set("nomeSala", "" + allocatableSpace.getNome());
+            manageLessonForm.set("nomeSala", "" + allocatableSpace.getName());
         }
 
         if (infoLesson.getFrequency().equals(FrequencyType.BIWEEKLY)) {
@@ -267,8 +268,8 @@ public class ManageLessonDA extends FenixShiftAndExecutionCourseAndExecutionDegr
 
         final InfoLesson infoLesson = (InfoLesson) request.getAttribute(PresentationConstants.LESSON);
         final Interval[] intervals = infoLesson.getLesson().getAllLessonIntervals().toArray(new Interval[0]);
-        final List<AllocatableSpace> emptySpaces = ReadAvailableRoomsForExam.findAllocatableSpace(null, Boolean.TRUE, intervals);
-        Collections.sort(emptySpaces, AllocatableSpace.COMPARATOR_BY_PRESENTATION_NAME);
+        final List<Space> emptySpaces = ReadAvailableRoomsForExam.findAllocatableSpace(null, Boolean.TRUE, intervals);
+        Collections.sort(emptySpaces, SpaceUtils.COMPARATOR_BY_PRESENTATION_NAME);
         request.setAttribute("emptySpaces", emptySpaces);
 
         return mapping.findForward("ChangeRoom");
@@ -277,7 +278,7 @@ public class ManageLessonDA extends FenixShiftAndExecutionCourseAndExecutionDegr
     public ActionForward changeRoom(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         final InfoLesson infoLesson = (InfoLesson) request.getAttribute(PresentationConstants.LESSON);
-        final AllocatableSpace space = getDomainObject(request, "spaceOID");
+        final Space space = getDomainObject(request, "spaceOID");
 
         try {
             EditLesson.run(infoLesson.getLesson(), space);
@@ -388,7 +389,7 @@ public class ManageLessonDA extends FenixShiftAndExecutionCourseAndExecutionDegr
 
             if (action != null && action.equals("edit")) {
                 final InfoLesson il = (InfoLesson) request.getAttribute(PresentationConstants.LESSON);
-                final AllocatableSpace allocatableSpace = il.getAllocatableSpace();
+                final Space allocatableSpace = il.getAllocatableSpace();
                 if (allocatableSpace != null) {
                     emptyRoomsList.add(infoLesson.getInfoRoomOccupation().getInfoRoom());
                     manageLessonForm.set("nomeSala", infoLesson.getInfoRoomOccupation().getInfoRoom().getNome());
@@ -448,9 +449,7 @@ public class ManageLessonDA extends FenixShiftAndExecutionCourseAndExecutionDegr
 
         InfoRoom infoSala = null;
         if (!StringUtils.isEmpty((String) manageLessonForm.get("nomeSala"))) {
-            infoSala =
-                    new InfoRoom(AllocatableSpace.findAllocatableSpaceForEducationByName((String) manageLessonForm
-                            .get("nomeSala")));
+            infoSala = new InfoRoom(SpaceUtils.findAllocatableSpaceForEducationByName((String) manageLessonForm.get("nomeSala")));
         }
 
         ActionErrors actionErrors = checkTimeIntervalAndWeekDay(inicio, fim, weekDay);

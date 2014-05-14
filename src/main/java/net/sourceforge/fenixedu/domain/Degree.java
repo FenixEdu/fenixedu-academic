@@ -35,8 +35,6 @@ import net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.space.Campus;
-import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
@@ -52,6 +50,7 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -729,8 +728,9 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     public String getFilteredName(final ExecutionYear executionYear, final Locale locale) {
         final StringBuilder res = new StringBuilder(getNameFor(executionYear).getContent(locale));
 
-        for (final net.sourceforge.fenixedu.domain.space.Campus campus : Space.getAllCampus()) {
-            final String toRemove = " - " + campus.getName();
+        for (final Space campus : Space.getAllCampus()) {
+            String toRemove;
+            toRemove = " - " + campus.getName();
             if (res.toString().contains(toRemove)) {
                 res.replace(res.indexOf(toRemove), res.indexOf(toRemove) + toRemove.length(), StringUtils.EMPTY);
             }
@@ -1247,20 +1247,20 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         }
     }
 
-    public Collection<Campus> getCampus(ExecutionYear executionYear) {
-        Set<Campus> result = new HashSet<Campus>();
+    public Collection<Space> getCampus(ExecutionYear executionYear) {
+        Set<Space> result = new HashSet<Space>();
         for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
             final ExecutionDegree executionDegree = degreeCurricularPlan.getExecutionDegreeByYear(executionYear);
             if (executionDegree != null && executionDegree.hasCampus()) {
                 result.add(executionDegree.getCampus());
             }
         }
-        return new ArrayList<Campus>(result);
+        return new ArrayList<Space>(result);
     }
 
-    public Collection<Campus> getCurrentCampus() {
+    public Collection<Space> getCurrentCampus() {
         ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-        Collection<Campus> result = this.getCampus(executionYear);
+        Collection<Space> result = this.getCampus(executionYear);
 
         if (!result.isEmpty()) {
             return result;
@@ -1274,7 +1274,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
             }
         }
 
-        return new ArrayList<Campus>();
+        return new ArrayList<Space>();
     }
 
     public String constructSchoolClassPrefix(final Integer curricularYear) {

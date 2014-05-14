@@ -4,6 +4,7 @@ import static net.sourceforge.fenixedu.injectionCode.AccessControl.check;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.FrequencyType;
@@ -15,13 +16,16 @@ import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
+import com.google.common.collect.Lists;
+
 public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
 
-    public LessonSpaceOccupation(AllocatableSpace allocatableSpace, Lesson lesson) {
+    public LessonSpaceOccupation(Space allocatableSpace, Lesson lesson) {
 //        check(this, SpacePredicates.checkPermissionsToManageLessonSpaceOccupations);
 
         super();
@@ -37,33 +41,38 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
         }
 
         if (allocatableSpace != null /* && !allocatableSpace.isFree(this) */
-                && !allocatableSpace.isFree(lesson.getAllLessonIntervalsWithoutInstanceDates().toArray(new Interval[0]))) {
-            throw new DomainException("error.LessonSpaceOccupation.room.is.not.free", allocatableSpace.getIdentification(),
-                    getPeriod().getStartYearMonthDay().toString("dd-MM-yyy"), getPeriod()
-                            .getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay().toString("dd-MM-yyy"));
+                && !allocatableSpace.isFree(Lists.newArrayList(lesson.getAllLessonIntervalsWithoutInstanceDates()))) {
+            String name;
+            name = allocatableSpace.getName();
+            throw new DomainException("error.LessonSpaceOccupation.room.is.not.free", name, getPeriod().getStartYearMonthDay()
+                    .toString("dd-MM-yyy"), getPeriod().getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay()
+                    .toString("dd-MM-yyy"));
         }
 
         setResource(allocatableSpace);
     }
 
-    public void edit(AllocatableSpace allocatableSpace) {
+    public void edit(Space allocatableSpace) {
         check(this, SpacePredicates.checkPermissionsToManageLessonSpaceOccupations);
 
         if (getPeriod() == null) {
             throw new DomainException("error.LessonSpaceOccupation.empty.period");
         }
 
+        final SortedSet<Interval> allLessonIntervalsWithoutInstanceDates =
+                getLesson().getAllLessonIntervalsWithoutInstanceDates();
         if (allocatableSpace != null /* && !allocatableSpace.isFree(this) */
-                && !allocatableSpace.isFree(getLesson().getAllLessonIntervalsWithoutInstanceDates().toArray(new Interval[0]))) {
-            throw new DomainException("error.LessonSpaceOccupation.room.is.not.free", allocatableSpace.getIdentification(),
-                    getPeriod().getStartYearMonthDay().toString("dd-MM-yyy"), getPeriod()
-                            .getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay().toString("dd-MM-yyy"));
+                && !allocatableSpace.isFree(Lists.newArrayList(allLessonIntervalsWithoutInstanceDates))) {
+            String name;
+            name = allocatableSpace.getName();
+            throw new DomainException("error.LessonSpaceOccupation.room.is.not.free", name, getPeriod().getStartYearMonthDay()
+                    .toString("dd-MM-yyy"), getPeriod().getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay()
+                    .toString("dd-MM-yyy"));
         }
 
         setResource(allocatableSpace);
     }
 
-    @Override
     public void delete() {
         check(this, SpacePredicates.checkPermissionsToDeleteLessonSpaceOccupations);
         super.setLesson(null);
@@ -106,11 +115,6 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
     }
 
     @Override
-    public boolean isLessonSpaceOccupation() {
-        return true;
-    }
-
-    @Override
     public void setLesson(Lesson lesson) {
         if (lesson == null) {
             throw new DomainException("error.LessonSpaceOccupation.empty.lesson");
@@ -125,7 +129,7 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
 
     @Override
     public Group getAccessGroup() {
-        return getSpace().getLessonOccupationsAccessGroupWithChainOfResponsibility();
+        return getSpace().getOccupationsAccessGroupWithChainOfResponsability();
     }
 
     @Override

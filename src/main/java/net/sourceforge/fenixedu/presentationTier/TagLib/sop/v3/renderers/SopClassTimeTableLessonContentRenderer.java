@@ -13,12 +13,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlot;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContentRenderer;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.LocalDate;
 
 /**
@@ -61,12 +61,12 @@ public class SopClassTimeTableLessonContentRenderer extends LessonSlotContentRen
                     .append("&amp;execution_degree_oid=").append(infoExecutionDegree.getExternalId()).append("'>")
                     .append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append("</a>").append(")&nbsp;");
 
-            final AllocatableSpace allocatableSpace = lesson.getAllocatableSpace();
+            final Space allocatableSpace = lesson.getAllocatableSpace();
             if (allocatableSpace != null) {
                 strBuffer.append(" <a href='");
                 strBuffer.append(context).append("/resourceAllocationManager/");
-                strBuffer.append("pesquisarSala.do?name=").append(allocatableSpace.getNome()).append("'>")
-                        .append(allocatableSpace.getNome()).append("</a>");
+                strBuffer.append("pesquisarSala.do?name=").append(allocatableSpace.getName()).append("'>")
+                        .append(allocatableSpace.getName()).append("</a>");
             }
 
             if (lesson.getFrequency().equals(FrequencyType.BIWEEKLY)) {
@@ -118,12 +118,12 @@ public class SopClassTimeTableLessonContentRenderer extends LessonSlotContentRen
                     .append("&amp;execution_degree_oid=").append(infoExecutionDegree.getExternalId()).append("'>")
                     .append(shift.getShiftTypesCodePrettyPrint()).append("</a>").append(")&nbsp;");
 
-            final AllocatableSpace allocatableSpace = aggregation.getAllocatableSpace();
+            final Space allocatableSpace = aggregation.getAllocatableSpace();
             if (allocatableSpace != null) {
                 strBuffer.append(" <a href='");
                 strBuffer.append(context).append("/resourceAllocationManager/");
-                strBuffer.append("pesquisarSala.do?name=").append(allocatableSpace.getNome()).append("'>")
-                        .append(allocatableSpace.getNome()).append("</a>");
+                strBuffer.append("pesquisarSala.do?name=").append(allocatableSpace.getName()).append("'>")
+                        .append(allocatableSpace.getName()).append("</a>");
             }
 
         } else if (showOccupation instanceof InfoExam) {

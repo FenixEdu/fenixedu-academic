@@ -17,11 +17,13 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.Data;
+
+import org.fenixedu.spaces.domain.Space;
+
 import pt.ist.fenixframework.FenixFramework;
 
 /**
@@ -246,7 +248,7 @@ public class CreateExecutionDegreesForExecutionYearBean extends FenixBackingBean
 
     public List getAllCampus() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        for (final Campus campus : Campus.getAllCampus()) {
+        for (final Space campus : Space.getAllCampus()) {
             result.add(new SelectItem(campus.getName(), campus.getName()));
         }
         return result;

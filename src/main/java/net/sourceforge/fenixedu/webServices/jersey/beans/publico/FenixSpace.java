@@ -3,8 +3,11 @@ package net.sourceforge.fenixedu.webServices.jersey.beans.publico;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
-import net.sourceforge.fenixedu.domain.space.Space;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils;
+
+import org.fenixedu.spaces.domain.Space;
+import org.fenixedu.spaces.domain.SpaceClassification;
+import org.fenixedu.spaces.domain.UnavailableException;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -103,24 +106,30 @@ public class FenixSpace {
 
         }
 
-        public Room(AllocatableSpace allocationSpace) {
+        public Room(Space allocationSpace) {
             this(allocationSpace, false, false, null);
         }
 
-        public Room(AllocatableSpace allocationSpace, Boolean withParentAndContainedSpaces) {
+        public Room(Space allocationSpace, Boolean withParentAndContainedSpaces) {
             this(allocationSpace, withParentAndContainedSpaces, false, null);
         }
 
-        public Room(AllocatableSpace allocationSpace, Boolean withParentAndContainedSpaces, Boolean withDescriptionAndCapacity, List<FenixRoomEvent> events) {
+        public Room(Space allocationSpace, Boolean withParentAndContainedSpaces, Boolean withDescriptionAndCapacity,
+                List<FenixRoomEvent> events) {
             super(allocationSpace, withParentAndContainedSpaces);
             if (withDescriptionAndCapacity) {
-                this.description = allocationSpace.getCompleteIdentificationWithoutCapacities();
-                this.capacity = new RoomCapacity(allocationSpace.getNormalCapacity(), allocationSpace.getExamCapacity());
+                try {
+                    this.description = allocationSpace.getName();
+                    this.capacity =
+                            new RoomCapacity(allocationSpace.getAllocatableCapacity(),
+                                    (Integer) allocationSpace.getMetadata("examCapacity"));
+                } catch (UnavailableException e) {
+                }
             }
             this.events = events;
         }
 
-        public Room(AllocatableSpace allocationSpace, List<FenixRoomEvent> events) {
+        public Room(Space allocationSpace, List<FenixRoomEvent> events) {
             this(allocationSpace, true, true, events);
         }
     }
@@ -146,7 +155,7 @@ public class FenixSpace {
 
     protected FenixSpace(Space space, boolean withParentAndContainedSpaces) {
         this.id = space.getExternalId();
-        this.name = space.getSpaceInformation().getPresentationName();
+        this.name = space.getName();
         if (withParentAndContainedSpaces) {
             setParentSpace(space);
             setContainedSpaces(space);
@@ -154,35 +163,41 @@ public class FenixSpace {
     }
 
     private void setContainedSpaces(Space space) {
-        this.containedSpaces = FluentIterable.from(space.getActiveContainedSpaces()).transform(new Function<Space, FenixSpace>() {
+        this.containedSpaces =
+                FluentIterable.from(SpaceUtils.getActiveChildrenSet(space)).transform(new Function<Space, FenixSpace>() {
 
-            @Override
-            public FenixSpace apply(Space input) {
-                return getSimpleSpace(input);
-            }
-        }).toSet();
+                    @Override
+                    public FenixSpace apply(Space input) {
+                        return getSimpleSpace(input);
+                    }
+                }).toSet();
     }
 
     private void setParentSpace(Space space) {
-        this.parentSpace = space.getSuroundingSpace() == null ? null : getSimpleSpace(space.getSuroundingSpace());
+        this.parentSpace = space.getParent() == null ? null : getSimpleSpace(space.getParent());
     }
 
     public static FenixSpace getSpace(Space space, boolean withParentAndContainedSpaces) {
         if (space == null) {
             return null;
         }
-        if (space.isCampus()) {
-            return new FenixSpace.Campus(space, withParentAndContainedSpaces);
-        }
-        if (space.isBuilding()) {
-            return new FenixSpace.Building(space, withParentAndContainedSpaces);
-        }
-        if (space.isFloor()) {
-            return new FenixSpace.Floor(space, withParentAndContainedSpaces);
-        }
+        try {
+            if (SpaceClassification.getByName("Campus").equals(space.getClassification())) {
+                return new FenixSpace.Campus(space, withParentAndContainedSpaces);
+            }
+            if (SpaceClassification.getByName("Building").equals(space.getClassification())) {
+                return new FenixSpace.Building(space, withParentAndContainedSpaces);
+            }
+            if (SpaceClassification.getByName("Floor").equals(space.getClassification())) {
+                return new FenixSpace.Floor(space, withParentAndContainedSpaces);
+            }
 
-        if (space.isRoom()) {
-            return new FenixSpace.Room((AllocatableSpace) space, withParentAndContainedSpaces);
+            if (SpaceUtils.isRoom(space)) {
+                return new FenixSpace.Room((Space) space, withParentAndContainedSpaces);
+            }
+
+        } catch (UnavailableException e) {
+            return null;
         }
 
         return null;

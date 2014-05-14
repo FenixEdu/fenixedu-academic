@@ -13,9 +13,9 @@ import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixSpace.Room;
 
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.Interval;
 
 import com.google.common.base.Function;
@@ -70,7 +70,7 @@ public class FenixSchedule {
             setRoom(instance.getRoom());
         }
 
-        public FenixLessonOccurence(final Interval interval, final AllocatableSpace room) {
+        public FenixLessonOccurence(final Interval interval, final Space room) {
             super(interval);
             setRoom(room);
         }
@@ -79,7 +79,7 @@ public class FenixSchedule {
             return room;
         }
 
-        public void setRoom(AllocatableSpace room) {
+        public void setRoom(Space room) {
             this.room = room == null ? null : new FenixSpace.Room(room, false, false, null);
         }
 
@@ -130,7 +130,7 @@ public class FenixSchedule {
                     types.add(type.name());
                 }
             }
-            Set<AllocatableSpace> spaces = new HashSet<>();
+            Set<Space> spaces = new HashSet<>();
             for (final Lesson lesson : shift.getAssociatedLessonsSet()) {
                 if (lesson.getSala() != null) {
                     spaces.add(lesson.getSala());
@@ -147,11 +147,11 @@ public class FenixSchedule {
 
         }
 
-        public void setRooms(Set<AllocatableSpace> rooms) {
-            this.rooms = FluentIterable.from(rooms).transform(new Function<AllocatableSpace, FenixSpace.Room>() {
+        public void setRooms(Set<Space> rooms) {
+            this.rooms = FluentIterable.from(rooms).transform(new Function<Space, FenixSpace.Room>() {
 
                 @Override
-                public Room apply(AllocatableSpace input) {
+                public Room apply(Space input) {
                     return new Room(input, false, true, null);
                 }
             }).toList();

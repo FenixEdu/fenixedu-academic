@@ -10,10 +10,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupationEditor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
@@ -31,9 +32,9 @@ public class EditLesson {
 
         if (aula != null) {
 
-            AllocatableSpace newRoom = null;
+            Space newRoom = null;
             if (infoRoomOccupation != null && infoRoomOccupation.getInfoRoom() != null) {
-                newRoom = AllocatableSpace.findAllocatableSpaceForEducationByName(infoRoomOccupation.getInfoRoom().getNome());
+                newRoom = SpaceUtils.findAllocatableSpaceForEducationByName(infoRoomOccupation.getInfoRoom().getNome());
             }
 
             aula.edit(newBeginDate, newEndDate, weekDay, begin, end, frequency, createLessonInstances, newRoom);
@@ -41,7 +42,7 @@ public class EditLesson {
     }
 
     @Atomic
-    public static void run(final Lesson lesson, final AllocatableSpace space) throws FenixServiceException {
+    public static void run(final Lesson lesson, final Space space) throws FenixServiceException {
         check(RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE);
         lesson.edit(space);
     }

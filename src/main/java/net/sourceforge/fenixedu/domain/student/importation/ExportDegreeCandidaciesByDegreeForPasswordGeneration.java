@@ -25,10 +25,10 @@ import net.sourceforge.fenixedu.domain.candidacy.IMDCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.fenixedu.spaces.domain.Space;
 
 public class ExportDegreeCandidaciesByDegreeForPasswordGeneration extends
         ExportDegreeCandidaciesByDegreeForPasswordGeneration_Base {
@@ -95,8 +95,8 @@ public class ExportDegreeCandidaciesByDegreeForPasswordGeneration extends
         return queueJobResult;
     }
 
-    private Campus getCampus(final Degree degree) {
-        final Collection<Campus> result = degree.getCampus(getExecutionYear());
+    private Space getCampus(final Degree degree) {
+        final Collection<Space> result = degree.getCampus(getExecutionYear());
 
         if (result.size() != 1) {
             throw new RuntimeException("Unexpected campus count");

@@ -12,9 +12,9 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
 
@@ -42,7 +42,7 @@ public class SummariesManagementBean implements Serializable {
 
     private String teacherName;
 
-    private AllocatableSpace roomReference;
+    private Space roomReference;
 
     private Integer studentsNumber;
 
@@ -77,7 +77,7 @@ public class SummariesManagementBean implements Serializable {
 
     public SummariesManagementBean(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber,
             SummaryType summaryType, Professorship professorship, String teacherName, Teacher teacher, Shift shift,
-            Lesson lesson, YearMonthDay summaryDate, AllocatableSpace summaryRoom, Partial summaryTime, Summary summary,
+            Lesson lesson, YearMonthDay summaryDate, Space summaryRoom, Partial summaryTime, Summary summary,
             Professorship professorshipLogged, ShiftType lessonType, Boolean taught) {
 
         setTitle(title);
@@ -187,11 +187,11 @@ public class SummariesManagementBean implements Serializable {
         this.shiftReference = shift;
     }
 
-    public AllocatableSpace getSummaryRoom() {
+    public Space getSummaryRoom() {
         return this.roomReference;
     }
 
-    public void setSummaryRoom(AllocatableSpace room) {
+    public void setSummaryRoom(Space room) {
         this.roomReference = room;
     }
 

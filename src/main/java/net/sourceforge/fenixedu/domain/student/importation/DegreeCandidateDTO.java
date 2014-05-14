@@ -23,9 +23,9 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitu
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
-import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.loaders.IFileLine;
@@ -389,7 +389,7 @@ public class DegreeCandidateDTO implements IFileLine {
         return person;
     }
 
-    public ExecutionDegree getExecutionDegree(final ExecutionYear executionYear, final Campus campus) {
+    public ExecutionDegree getExecutionDegree(final ExecutionYear executionYear, final Space campus) {
         return ExecutionDegree.readByDegreeCodeAndExecutionYearAndCampus(getDegreeCode(), executionYear, campus);
     }
 

@@ -17,9 +17,9 @@ import net.sourceforge.fenixedu.domain.candidacy.CandidacySituationType;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -58,7 +58,7 @@ public class RegisteredDegreeCandidaciesSelectionBean implements Serializable {
         }
     };
 
-    private Campus campus;
+    private Space campus;
     private ExecutionYear executionYear;
     private EntryPhase entryPhase;
     private DateTime beginDate;
@@ -68,11 +68,11 @@ public class RegisteredDegreeCandidaciesSelectionBean implements Serializable {
         this.executionYear = ExecutionYear.readCurrentExecutionYear();
     }
 
-    public Campus getCampus() {
+    public Space getCampus() {
         return campus;
     }
 
-    public void setCampus(Campus campus) {
+    public void setCampus(Space campus) {
         this.campus = campus;
     }
 
@@ -141,7 +141,10 @@ public class RegisteredDegreeCandidaciesSelectionBean implements Serializable {
     }
 
     public Spreadsheet export(final Set<Degree> allowedPrograms) {
-        final Spreadsheet spreadsheet = new Spreadsheet(campus.getName());
+        Spreadsheet spreadsheet;
+        String name = "N/A";
+        name = getCampus().getName();
+        spreadsheet = new Spreadsheet(name);
         addHeaders(spreadsheet);
 
         List<StudentCandidacy> result = search(allowedPrograms);
@@ -155,8 +158,9 @@ public class RegisteredDegreeCandidaciesSelectionBean implements Serializable {
     }
 
     public String getFilename() {
-        return new LocalDate().toString("ddMMyyyy") + "-Candidatos-" + campus.getName() + "-Fase"
-                + this.entryPhase.getPhaseNumber() + ".xls";
+        String name;
+        name = campus.getName();
+        return new LocalDate().toString("ddMMyyyy") + "-Candidatos-" + name + "-Fase" + this.entryPhase.getPhaseNumber() + ".xls";
     }
 
     private void addHeaders(Spreadsheet spreadsheet) {

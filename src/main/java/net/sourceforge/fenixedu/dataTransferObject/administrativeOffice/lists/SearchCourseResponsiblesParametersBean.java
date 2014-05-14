@@ -2,12 +2,13 @@ package net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists;
 
 import java.io.Serializable;
 
+import org.fenixedu.spaces.domain.Space;
+
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.space.Campus;
 
 /**
  * 
@@ -25,12 +26,12 @@ public class SearchCourseResponsiblesParametersBean implements Serializable {
 
     private CompetenceCourse competenceCourse;
 
-    private final Campus campus;
+    private final Space campus;
 
     private final Degree degree;
 
     public SearchCourseResponsiblesParametersBean(CurricularCourse curricularCourse, CompetenceCourse competenceCourse,
-            Person responsible, ExecutionSemester executionSemester, Campus campus, Degree degree) {
+            Person responsible, ExecutionSemester executionSemester, Space campus, Degree degree) {
         this.executionSemester = executionSemester;
         this.curricularCourse = curricularCourse;
         this.responsible = responsible;
@@ -71,7 +72,7 @@ public class SearchCourseResponsiblesParametersBean implements Serializable {
         return competenceCourse;
     }
 
-    public Campus getCampus() {
+    public Space getCampus() {
         return campus;
     }
 

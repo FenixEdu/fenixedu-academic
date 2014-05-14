@@ -8,11 +8,12 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadBuildings;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBuilding;
-import net.sourceforge.fenixedu.domain.space.RoomClassification;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.spaces.domain.SpaceClassification;
 
 public class Util {
 
@@ -40,16 +41,14 @@ public class Util {
             tipos.add(new LabelValueBean(name, value));
         }
 
-        Collection<RoomClassification> roomClassifications = Bennu.getInstance().getRoomClassificationSet();
-        for (RoomClassification classification : RoomClassification.sortByRoomClassificationAndCode(roomClassifications)) {
-            if (classification.hasParentRoomClassification()) {
-                tipos.add(new LabelValueBean(
-                        classification.getPresentationCode() + " - " + classification.getName().getContent(), classification
-                                .getExternalId().toString()));
+        Collection<SpaceClassification> roomClassifications = Bennu.getInstance().getRootClassificationSet();
+        for (SpaceClassification classification : SpaceUtils.sortByRoomClassificationAndCode(roomClassifications)) {
+            if (classification.getParent() != null) {
+                tipos.add(new LabelValueBean(classification.getAbsoluteCode() + " - " + classification.getName().getContent(),
+                        classification.getExternalId().toString()));
             }
         }
 
         return tipos;
     }
-
 }

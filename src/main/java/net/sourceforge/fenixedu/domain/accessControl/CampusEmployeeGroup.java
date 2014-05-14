@@ -8,13 +8,13 @@ import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 
 import org.fenixedu.bennu.core.annotation.GroupArgument;
 import org.fenixedu.bennu.core.annotation.GroupOperator;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 
 import com.google.common.base.Objects;
@@ -24,18 +24,18 @@ public class CampusEmployeeGroup extends FenixGroup {
     private static final long serialVersionUID = 4185082898828533195L;
 
     @GroupArgument
-    private Campus campus;
+    private Space campus;
 
     private CampusEmployeeGroup() {
         super();
     }
 
-    private CampusEmployeeGroup(Campus campus) {
+    private CampusEmployeeGroup(Space campus) {
         this();
         this.campus = campus;
     }
 
-    public static CampusEmployeeGroup get(Campus campus) {
+    public static CampusEmployeeGroup get(Space campus) {
         return new CampusEmployeeGroup(campus);
     }
 
@@ -73,7 +73,7 @@ public class CampusEmployeeGroup extends FenixGroup {
         return user != null && isMember(user.getPerson(), campus, when);
     }
 
-    public boolean isMember(final Person person, final Campus campus, DateTime when) {
+    public boolean isMember(final Person person, final Space campus, DateTime when) {
         //when is ignored, professional data doesn't seem to have proper historic
         if (person != null) {
             PersonProfessionalData personProfessionalData = person.getPersonProfessionalData();

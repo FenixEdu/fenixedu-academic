@@ -18,13 +18,13 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.fenixedu.bennu.core.annotation.GroupArgument;
 import org.fenixedu.bennu.core.annotation.GroupOperator;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.groups.PersistentGroup;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 
 import com.google.common.base.Joiner;
@@ -47,7 +47,7 @@ public class StudentGroup extends FenixGroup {
     private CycleType cycle;
 
     @GroupArgument
-    private Campus campus;
+    private Space campus;
 
     @GroupArgument
     private ExecutionCourse executionCourse;
@@ -62,7 +62,7 @@ public class StudentGroup extends FenixGroup {
         super();
     }
 
-    private StudentGroup(DegreeType degreeType, Degree degree, CycleType cycle, Campus campus, ExecutionCourse executionCourse,
+    private StudentGroup(DegreeType degreeType, Degree degree, CycleType cycle, Space campus, ExecutionCourse executionCourse,
             CurricularYear curricularYear, ExecutionYear executionYear) {
         super();
         this.degreeType = degreeType;
@@ -90,7 +90,7 @@ public class StudentGroup extends FenixGroup {
         return new StudentGroup(null, null, cycle, null, null, null, null);
     }
 
-    public static StudentGroup get(Campus campus) {
+    public static StudentGroup get(Space campus) {
         return new StudentGroup(null, null, null, campus, null, null, null);
     }
 
@@ -102,7 +102,7 @@ public class StudentGroup extends FenixGroup {
         return new StudentGroup(null, degree, null, null, null, curricularYear, executionYear);
     }
 
-    public static StudentGroup get(DegreeType degreeType, Degree degree, CycleType cycle, Campus campus,
+    public static StudentGroup get(DegreeType degreeType, Degree degree, CycleType cycle, Space campus,
             ExecutionCourse executionCourse, CurricularYear curricularYear, ExecutionYear executionYear) {
         return new StudentGroup(degreeType, degree, cycle, campus, executionCourse, curricularYear, executionYear);
     }
@@ -122,6 +122,7 @@ public class StudentGroup extends FenixGroup {
         if (campus != null) {
             parts.add(campus.getName());
         }
+
         if (executionCourse != null) {
             parts.add(executionCourse.getName());
         }
