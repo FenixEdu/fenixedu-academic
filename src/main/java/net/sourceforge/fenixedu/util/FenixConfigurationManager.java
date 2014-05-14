@@ -250,20 +250,6 @@ public class FenixConfigurationManager {
                 defaultValue = "2005/2006")
         public String getYearForFromMarkSheetManagment();
 
-        @ConfigurationProperty(key = "scaleRatio", defaultValue = "1200")
-        public String scaleRatio();
-
-        @ConfigurationProperty(key = "fontSize", defaultValue = "0.007")
-        public String fontSize();
-
-        @ConfigurationProperty(key = "padding", defaultValue = "0.025")
-        public String padding();
-
-        @ConfigurationProperty(key = "xAxisOffset", defaultValue = "0.075")
-        public String xAxisOffset();
-
-        @ConfigurationProperty(key = "yAxisOffset", defaultValue = "0.3")
-        public String yAxisOffset();
     }
 
     private static HostAccessControl hostAccessControl = new HostAccessControl(getConfiguration().getHostControlName());

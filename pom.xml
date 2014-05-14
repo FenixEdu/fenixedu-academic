@@ -110,11 +110,6 @@
 			<version>1.5.1</version>
 		</dependency>
 		<dependency>
-			<groupId>bibtex</groupId>
-			<artifactId>bibtex</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
 			<groupId>org.fenixedu</groupId>
 			<artifactId>bennu-renderers</artifactId>
 			<version>4.0.2</version>
@@ -182,31 +177,9 @@
 			<version>1.0.5.2</version>
 		</dependency>
 		<dependency>
-			<groupId>pt.ist</groupId>
-			<artifactId>sotis-metadata</artifactId>
-			<version>1.0.0</version>
-			<exclusions>
-				<exclusion>
-					<groupId>pt.ist</groupId>
-					<artifactId>fenix-tools</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
 			<groupId>com.thoughtworks.xstream</groupId>
 			<artifactId>xstream</artifactId>
 			<version>1.1.1</version>
-		</dependency>
-		<dependency>
-			<groupId>com.iver.cit</groupId>
-			<artifactId>jdwglib</artifactId>
-			<version>1.0.1</version>
-		</dependency>
-		<!-- This dependency is needed by jdwglib -->
-		<dependency>
-			<groupId>com.iver.cit</groupId>
-			<artifactId>fmap</artifactId>
-			<version>0.5</version>
 		</dependency>
 		<dependency>
 			<groupId>com.twilio.sdk</groupId>
