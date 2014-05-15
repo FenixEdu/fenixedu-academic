@@ -50,7 +50,7 @@ public class DepartmentFunctionalities extends UnitFunctionalities {
         if (unit != null) {
             return manageFiles(mapping, actionForm, request, response);
         }
-        Unit departmentUnit = AccessControl.getPerson().getTeacher().getCurrentWorkingDepartment().getDepartmentUnit();
+        Unit departmentUnit = AccessControl.getPerson().getEmployee().getCurrentWorkingPlace().getDepartmentUnit();
         Set<Unit> units = new TreeSet<>(Party.COMPARATOR_BY_NAME);
         units.add(departmentUnit);
 
