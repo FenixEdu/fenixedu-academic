@@ -217,7 +217,7 @@ public class DepartmentUnit extends DepartmentUnit_Base {
         if (department != null) {
 
             groups.add(TeacherGroup.get(department, currentYear));
-            groups.add(UnitGroup.workers(department.getDepartmentUnit()));
+            groups.add(UnitGroup.recursiveWorkers(department.getDepartmentUnit()));
 
             SortedSet<Degree> degrees = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
             degrees.addAll(department.getDegrees());
