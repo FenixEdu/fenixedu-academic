@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.EventSpaceOccupation;
 import net.sourceforge.fenixedu.domain.util.email.ConcreteReplyTo;
@@ -116,8 +117,7 @@ public class EditWrittenEvaluation {
                                 eventSpaceOccupation.getEventSpaceOccupationIntervals(beginDateTime, endDateTime);
                         intervalCount += intervals.size();
                         if (intervalCount > 1) {
-                            String name;
-                            name = allocatableSpace.getName();
+                            throw new DomainException("error.noRoom", allocatableSpace.getName());
                         }
                     }
                 }

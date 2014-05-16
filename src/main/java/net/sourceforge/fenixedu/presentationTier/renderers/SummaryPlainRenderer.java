@@ -49,7 +49,7 @@ public class SummaryPlainRenderer extends OutputRenderer {
                     }
                 }
                 if (lesson != null && lesson.hasSala()) {
-                    builder.append(lesson.getSala().getName().toString());
+                    builder.append(lesson.getSala().getName());
                 }
 
                 return new HtmlText(builder.toString());

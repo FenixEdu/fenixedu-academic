@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import java.util.Set;
+
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.fenixedu.bennu.core.domain.User;
@@ -19,8 +21,8 @@ public abstract class SpaceOccupation extends SpaceOccupation_Base {
         User user = Authenticate.getUser();
         Space r = getSpace();
         if (SpaceUtils.personIsSpacesAdministrator(user.getPerson())
-                || r.getManagementAccessGroupWithChainOfResponsability() != null
-                && r.getManagementAccessGroupWithChainOfResponsability().isMember(user)) {
+                || r.getManagementGroupWithChainOfResponsability() != null
+                && r.getManagementGroupWithChainOfResponsability().isMember(user)) {
             return;
         }
 
@@ -43,6 +45,7 @@ public abstract class SpaceOccupation extends SpaceOccupation_Base {
     }
 
     public Space getSpace() {
-        return getSpaceSet().isEmpty() ? null : getSpaceSet().iterator().next();
+        Set<Space> spaces = getSpaces();
+        return spaces.isEmpty() ? null : spaces.iterator().next();
     }
 }

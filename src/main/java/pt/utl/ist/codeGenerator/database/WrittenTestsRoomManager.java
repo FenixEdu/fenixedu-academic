@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.fenixedu.spaces.domain.Space;
-import org.fenixedu.spaces.domain.UnavailableException;
 import org.joda.time.DateTime;
 
 public class WrittenTestsRoomManager extends HashSet<Space> {
@@ -31,23 +30,19 @@ public class WrittenTestsRoomManager extends HashSet<Space> {
         DateTime dateTime;
         Space oldRoom;
 
-        try {
-            do {
-                dateTime = evaluationRoomManager.getNextDateTime();
-                oldRoom = evaluationRoomManager.getNextOldRoom();
+        do {
+            dateTime = evaluationRoomManager.getNextDateTime();
+            oldRoom = evaluationRoomManager.getNextOldRoom();
 
-            } while (SpaceUtils.isFree(oldRoom, dateTime.toYearMonthDay(), dateTime.plusMinutes(120).toYearMonthDay(),
-                    new HourMinuteSecond(dateTime.getHourOfDay(), dateTime.getMinuteOfHour(), dateTime.getSecondOfMinute()),
-                    dateTime.plusMinutes(120).getHourOfDay() == 0 ? new HourMinuteSecond(
-                            dateTime.plusMinutes(119).getHourOfDay(), dateTime.plusMinutes(119).getMinuteOfHour(), dateTime
-                                    .plusMinutes(119).getSecondOfMinute()) : new HourMinuteSecond(dateTime.plusMinutes(120)
-                            .getHourOfDay(), dateTime.plusMinutes(120).getMinuteOfHour(), dateTime.plusMinutes(120)
-                            .getSecondOfMinute()), new DiaSemana(dateTime.getDayOfWeek() + 1), FrequencyType.DAILY, Boolean.TRUE,
-                    Boolean.TRUE));
-            return dateTime;
-        } catch (UnavailableException e) {
-        }
-        return null;
+        } while (SpaceUtils
+                .isFree(oldRoom, dateTime.toYearMonthDay(), dateTime.plusMinutes(120).toYearMonthDay(), new HourMinuteSecond(
+                        dateTime.getHourOfDay(), dateTime.getMinuteOfHour(), dateTime.getSecondOfMinute()),
+                        dateTime.plusMinutes(120).getHourOfDay() == 0 ? new HourMinuteSecond(dateTime.plusMinutes(119)
+                                .getHourOfDay(), dateTime.plusMinutes(119).getMinuteOfHour(), dateTime.plusMinutes(119)
+                                .getSecondOfMinute()) : new HourMinuteSecond(dateTime.plusMinutes(120).getHourOfDay(), dateTime
+                                .plusMinutes(120).getMinuteOfHour(), dateTime.plusMinutes(120).getSecondOfMinute()),
+                        new DiaSemana(dateTime.getDayOfWeek() + 1), FrequencyType.DAILY, Boolean.TRUE, Boolean.TRUE));
+        return dateTime;
     }
 
     public Space getNextOldRoom(final ExecutionSemester executionPeriod) {

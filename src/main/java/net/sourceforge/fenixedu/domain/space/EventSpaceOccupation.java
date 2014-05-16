@@ -20,8 +20,6 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.spaces.domain.Space;
-import org.fenixedu.spaces.domain.SpaceClassification;
-import org.fenixedu.spaces.domain.UnavailableException;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.TimeOfDay;
@@ -60,19 +58,14 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
     }
 
     public void setResource(Space resource) {
-        try {
-            if (!(SpaceUtils.isRoom(resource) || SpaceClassification.getByName("Room Subdivision").equals(
-                    resource.getClassification()))) {
-                throw new DomainException("error.EventSpaceOccupation.invalid.resource");
-            }
-            super.addSpace(resource);
-        } catch (UnavailableException e) {
+        if (!(SpaceUtils.isRoom(resource) || SpaceUtils.isRoomSubdivision(resource))) {
             throw new DomainException("error.EventSpaceOccupation.invalid.resource");
         }
+        super.addSpace(resource);
     }
 
     public Space getRoom() {
-        return getSpaceSet().isEmpty() ? null : getSpaceSet().iterator().next();
+        return getSpace();
     }
 
     public Calendar getStartTime() {
@@ -164,6 +157,7 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
         return false;
     }
 
+    @Override
     public boolean overlaps(final Interval[] intervals) {
         for (final Interval interval : intervals) {
             if (overlaps(interval)) {

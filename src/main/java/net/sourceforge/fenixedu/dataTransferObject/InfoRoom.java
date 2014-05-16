@@ -1,6 +1,6 @@
 /*
  * InfoRoom.java
- * 
+ *
  * Created on 31 de Outubro de 2002, 12:19
  */
 
@@ -9,8 +9,6 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 
 import org.fenixedu.spaces.domain.Space;
-import org.fenixedu.spaces.domain.SpaceClassification;
-import org.fenixedu.spaces.domain.UnavailableException;
 
 /**
  * @author tfc130
@@ -29,44 +27,23 @@ public class InfoRoom extends InfoObject implements Comparable {
     }
 
     public String getEdificio() {
-        Space building;
-        try {
-            building = SpaceUtils.getSpaceBuilding(getRoom());
-            return building != null ? building.getName() : "";
-        } catch (UnavailableException e1) {
-            return "";
-        }
+        return SpaceUtils.getSpaceBuilding(getRoom()).getName();
     }
 
     public Integer getPiso() {
-        try {
-            return getRoom().getMetadata("level");
-        } catch (UnavailableException e) {
-            return null;
-        }
+        return getRoom().<Integer> getMetadata("level").orElse(null);
     }
 
     public String getTipo() {
-        SpaceClassification roomClassification;
-        try {
-            roomClassification = getRoom().getClassification();
-            return roomClassification != null ? roomClassification.getName().getContent() : "";
-        } catch (UnavailableException e) {
-            return "";
-        }
+        return getRoom().getClassification().map(c -> c.getName().getContent()).orElse("");
     }
 
     public Integer getCapacidadeNormal() {
-        return getRoom().getAllocatableCapacity() == null ? Integer.valueOf(0) : getRoom().getAllocatableCapacity();
+        return getRoom().getAllocatableCapacity();
     }
 
     public Integer getCapacidadeExame() {
-        try {
-            return (Integer) (getRoom().getMetadata("examCapacity") == null ? Integer.valueOf(0) : getRoom().getMetadata(
-                    "examCapacity"));
-        } catch (UnavailableException e) {
-            return null;
-        }
+        return getRoom().<Integer> getMetadata("examCapacity").orElse(0);
     }
 
     @Override

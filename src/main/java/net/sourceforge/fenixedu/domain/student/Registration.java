@@ -118,7 +118,6 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.spaces.domain.Space;
-import org.fenixedu.spaces.domain.UnavailableException;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.ReadableInstant;
@@ -849,7 +848,7 @@ public class Registration extends Registration_Base {
                 final CurricularCourse enrolmentCurricularCourse = enrolment.getCurricularCourse();
                 if (enrolmentCurricularCourse == curricularCourse
                         || (enrolmentCurricularCourse.getCompetenceCourse() != null && enrolmentCurricularCourse
-                                .getCompetenceCourse() == curricularCourse.getCompetenceCourse())
+                        .getCompetenceCourse() == curricularCourse.getCompetenceCourse())
                         || hasGlobalEquivalence(curricularCourse, enrolmentCurricularCourse)) {
                     enrolments.add(enrolment);
                 }
@@ -1999,11 +1998,11 @@ public class Registration extends Registration_Base {
         final StudentCurricularPlan toAsk =
                 getStudentCurricularPlan(getStartExecutionYear()) == null ? getFirstStudentCurricularPlan() : getStudentCurricularPlan(getStartExecutionYear());
 
-        if (toAsk == null) {
-            return StringUtils.EMPTY;
-        }
+                if (toAsk == null) {
+                    return StringUtils.EMPTY;
+                }
 
-        return toAsk.getPresentationName(getStartExecutionYear());
+                return toAsk.getPresentationName(getStartExecutionYear());
     }
 
     public String getDegreeNameWithDescription() {
@@ -3312,7 +3311,7 @@ public class Registration extends Registration_Base {
         return scp == null ? getLastStudentCurricularPlan().getCampus(executionYear) : scp.getCampus(executionYear);
     }
 
-    final public String getIstUniversity() throws UnavailableException {
+    final public String getIstUniversity() {
         return getCampus().getName();
     }
 
@@ -3859,7 +3858,7 @@ public class Registration extends Registration_Base {
                 if (registrationState.getExecutionYear() == executionYear
                         && (registrationState.isActive() || registrationState.getStateType() == RegistrationStateType.TRANSITED)
                         && (previous.getStateType() == RegistrationStateType.EXTERNAL_ABANDON
-                                || previous.getStateType() == RegistrationStateType.INTERRUPTED || previous.getStateType() == RegistrationStateType.FLUNKED)) {
+                        || previous.getStateType() == RegistrationStateType.INTERRUPTED || previous.getStateType() == RegistrationStateType.FLUNKED)) {
                     return true;
                 }
             }

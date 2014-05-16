@@ -42,11 +42,9 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
 
         if (allocatableSpace != null /* && !allocatableSpace.isFree(this) */
                 && !allocatableSpace.isFree(Lists.newArrayList(lesson.getAllLessonIntervalsWithoutInstanceDates()))) {
-            String name;
-            name = allocatableSpace.getName();
-            throw new DomainException("error.LessonSpaceOccupation.room.is.not.free", name, getPeriod().getStartYearMonthDay()
-                    .toString("dd-MM-yyy"), getPeriod().getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay()
-                    .toString("dd-MM-yyy"));
+            throw new DomainException("error.LessonSpaceOccupation.room.is.not.free", allocatableSpace.getName(), getPeriod()
+                    .getStartYearMonthDay().toString("dd-MM-yyy"), getPeriod().getLastOccupationPeriodOfNestedPeriods()
+                    .getEndYearMonthDay().toString("dd-MM-yyy"));
         }
 
         setResource(allocatableSpace);
@@ -63,16 +61,15 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
                 getLesson().getAllLessonIntervalsWithoutInstanceDates();
         if (allocatableSpace != null /* && !allocatableSpace.isFree(this) */
                 && !allocatableSpace.isFree(Lists.newArrayList(allLessonIntervalsWithoutInstanceDates))) {
-            String name;
-            name = allocatableSpace.getName();
-            throw new DomainException("error.LessonSpaceOccupation.room.is.not.free", name, getPeriod().getStartYearMonthDay()
-                    .toString("dd-MM-yyy"), getPeriod().getLastOccupationPeriodOfNestedPeriods().getEndYearMonthDay()
-                    .toString("dd-MM-yyy"));
+            throw new DomainException("error.LessonSpaceOccupation.room.is.not.free", allocatableSpace.getName(), getPeriod()
+                    .getStartYearMonthDay().toString("dd-MM-yyy"), getPeriod().getLastOccupationPeriodOfNestedPeriods()
+                    .getEndYearMonthDay().toString("dd-MM-yyy"));
         }
 
         setResource(allocatableSpace);
     }
 
+    @Override
     public void delete() {
         check(this, SpacePredicates.checkPermissionsToDeleteLessonSpaceOccupations);
         super.setLesson(null);
@@ -129,7 +126,7 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
 
     @Override
     public Group getAccessGroup() {
-        return getSpace().getOccupationsAccessGroupWithChainOfResponsability();
+        return getSpace().getOccupationsGroupWithChainOfResponsability();
     }
 
     @Override
