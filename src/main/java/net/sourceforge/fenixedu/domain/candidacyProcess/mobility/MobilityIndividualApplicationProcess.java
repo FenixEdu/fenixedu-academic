@@ -38,25 +38,14 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.MobilityApplicationPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
-import org.restlet.Client;
-import org.restlet.Context;
-import org.restlet.Request;
-import org.restlet.Response;
-import org.restlet.data.ChallengeResponse;
-import org.restlet.data.ChallengeScheme;
-import org.restlet.data.Method;
-import org.restlet.data.Protocol;
-import org.restlet.data.Status;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -83,7 +72,6 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
         activities.add(new EditPublicCandidacyDocumentFile());
         activities.add(new CreateStudentData());
         activities.add(new SetEIdentifierForTesting());
-        activities.add(new ImportToLDAP());
         activities.add(new BindLinkSubmitedIndividualCandidacyWithEidentifier());
         activities.add(new UploadApprovedLearningAgreement());
         activities.add(new ViewApprovedLearningAgreements());
@@ -321,14 +309,9 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     public List<ErasmusAlert> getAlertsNotViewed() {
         List<ErasmusAlert> alertsNotViewed = new ArrayList<ErasmusAlert>();
 
-        CollectionUtils.select(getAlert(), new Predicate() {
-
-            @Override
-            public boolean evaluate(Object arg0) {
-                ErasmusAlert alert = (ErasmusAlert) arg0;
-                return alert.isToFire();
-            }
-
+        CollectionUtils.select(getAlert(), arg0 -> {
+            ErasmusAlert alert = (ErasmusAlert) arg0;
+            return alert.isToFire();
         }, alertsNotViewed);
 
         Collections.sort(alertsNotViewed, Collections.reverseOrder(ErasmusAlert.WHEN_CREATED_COMPARATOR));
@@ -420,7 +403,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
             /*
              * 06/04/2009 The candidacy may be submited by someone who's not
              * authenticated in the system
-             * 
+             *
              * if (!isDegreeAdministrativeOfficeEmployee(userView)) {throw new
              * PreConditionNotValidException();}
              */
@@ -842,42 +825,6 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
             return Boolean.TRUE;
         }
 
-    }
-
-    private static class ImportToLDAP extends Activity<MobilityIndividualApplicationProcess> {
-        @Override
-        public void checkPreConditions(MobilityIndividualApplicationProcess process, User userView) {
-            if (!isManager(userView)) {
-                throw new PreConditionNotValidException();
-            }
-        }
-
-        @Override
-        protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess process,
-                User userView, Object object) {
-            boolean result = importToLDAP(process);
-
-            if (!result) {
-                throw new DomainException("error.erasmus.candidacy.user.not.imported");
-            }
-
-            return process;
-        }
-
-        @Override
-        public Boolean isVisibleForAdminOffice() {
-            return Boolean.FALSE;
-        }
-
-        @Override
-        public Boolean isVisibleForCoordinator() {
-            return Boolean.FALSE;
-        }
-
-        @Override
-        public Boolean isVisibleForGriOffice() {
-            return Boolean.FALSE;
-        }
     }
 
     private static class BindLinkSubmitedIndividualCandidacyWithEidentifier extends
@@ -1384,50 +1331,6 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
     private void enrol() {
         getCandidacy().enrol();
-    }
-
-    private static boolean importToLDAP(MobilityIndividualApplicationProcess process) {
-        String ldapServiceImportationURL = FenixConfigurationManager.getConfiguration().getLdapUserImportationServiceUrl();
-
-        Request request =
-                new Request(Method.POST, ldapServiceImportationURL + process.getPersonalDetails().getPerson().getIstUsername());
-        ChallengeScheme scheme = ChallengeScheme.HTTP_BASIC;
-
-        String ldapServiceUsername = FenixConfigurationManager.getConfiguration().getLdapUserImportationServiceUsername();
-        String ldapServicePassword = FenixConfigurationManager.getConfiguration().getLdapUserImportationServicePassword();
-
-        ChallengeResponse authentication = new ChallengeResponse(scheme, ldapServiceUsername, ldapServicePassword);
-        request.setChallengeResponse(authentication);
-
-        // Ask to the HTTP client connector to handle the call
-        Client client = null;
-        try {
-            client = new Client(Protocol.HTTPS);
-            Response response = client.handle(request);
-
-            if (response.getStatus().equals(Status.SUCCESS_OK)) {
-                logger.info("Imported username {}", process.getPersonalDetails().getPerson().getIstUsername());
-                return true;
-            } else {
-                logger.info("error.erasmus.create.user: " + process.getPersonalDetails().getPerson().getIstUsername() + " "
-                        + response.getStatus().getName() + " " + new Integer(response.getStatus().getCode()).toString());
-                throw new DomainException("error.erasmus.create.user", new String[] {
-                        process.getPersonalDetails().getPerson().getIstUsername(), response.getStatus().getName(),
-                        new Integer(response.getStatus().getCode()).toString() });
-            }
-        } finally {
-            try {
-                Context.setCurrent(null);
-                Response.setCurrent(null);
-                if (client != null) {
-                    client.stop();
-                }
-            } catch (Exception e) {
-                // Cannot stop the client, this WILL cause a memory leak!
-                logger.error(e.getMessage(), e);
-            }
-
-        }
     }
 
     public DateTime getMostRecentSentEmailAcceptedStudentActionWhenOccured() {

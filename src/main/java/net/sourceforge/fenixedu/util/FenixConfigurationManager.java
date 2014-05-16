@@ -123,15 +123,6 @@ public class FenixConfigurationManager {
         @ConfigurationProperty(key = "lastYearForCredits", defaultValue = "2010/2011")
         public String getLastYearForCredits();
 
-        @ConfigurationProperty(key = "ldap.user.importation.service.password")
-        public String getLdapUserImportationServicePassword();
-
-        @ConfigurationProperty(key = "ldap.user.importation.service.url")
-        public String getLdapUserImportationServiceUrl();
-
-        @ConfigurationProperty(key = "ldap.user.importation.service.username")
-        public String getLdapUserImportationServiceUsername();
-
         @ConfigurationProperty(key = "login.page", description = "absolute path to the login page",
                 defaultValue = "http://localhost:8080/fenix/privado")
         public String getLoginPage();
@@ -217,12 +208,6 @@ public class FenixConfigurationManager {
 
         @ConfigurationProperty(key = "startYearForCredits", defaultValue = "2002/2003")
         public String getStartYearForCredits();
-
-        @ConfigurationProperty(key = "tsdProcess.chart.height", defaultValue = "480")
-        public String getTSDProcessChartHeight();
-
-        @ConfigurationProperty(key = "tsdProcess.chart.width", defaultValue = "640")
-        public String getTSDProcessChartWidth();
 
         @ConfigurationProperty(key = "twilio.from.number")
         public String getTwilioFromNumber();
