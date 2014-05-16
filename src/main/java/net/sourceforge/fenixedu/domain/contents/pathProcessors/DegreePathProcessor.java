@@ -14,7 +14,7 @@ public class DegreePathProcessor extends AbstractPathProcessor {
 
     @Override
     public Content processPath(String path) {
-        final String unitAcronym = getDegreeName(path);
+        final String unitAcronym = insaneHack(getDegreeName(path));
         final Degree degree = Degree.readBySigla(unitAcronym);
         if (degree != null) {
             return degree.getSite();
@@ -29,6 +29,17 @@ public class DegreePathProcessor extends AbstractPathProcessor {
         }
 
         return null;
+    }
+
+    /* Temp hack just for IST :( */
+    private String insaneHack(String degreeName) {
+        if ("leti".equalsIgnoreCase(degreeName)) {
+            return "lerc";
+        }
+        if ("meti".equalsIgnoreCase(degreeName)) {
+            return "merc";
+        }
+        return degreeName;
     }
 
 }
