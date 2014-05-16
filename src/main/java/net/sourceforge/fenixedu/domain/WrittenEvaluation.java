@@ -33,7 +33,6 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.spaces.domain.Space;
-import org.fenixedu.spaces.domain.UnavailableException;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
@@ -104,11 +103,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     public Space getCampus() {
         List<Space> rooms = getAssociatedRooms();
         if (rooms.size() > 0) {
-            try {
-                return SpaceUtils.getSpaceCampus(rooms.iterator().next());
-            } catch (UnavailableException e) {
-                return null;
-            }
+            return SpaceUtils.getSpaceCampus(rooms.iterator().next());
         } else {
             return null;
         }
@@ -553,12 +548,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
         this.checkRoomsCapacityForStudents(selectedRooms, studentsToDistribute.size());
 
         for (final Space room : selectedRooms) {
-            Integer examCapacity;
-            try {
-                examCapacity = room.getMetadata("examCapacity");
-            } catch (UnavailableException e) {
-                examCapacity = 0;
-            }
+            Integer examCapacity = room.<Integer> getMetadata("examCapacity").orElse(0);
             for (int numberOfStudentsInserted = 0; numberOfStudentsInserted < examCapacity && !studentsToDistribute.isEmpty(); numberOfStudentsInserted++) {
                 final Registration registration = getRandomStudentFromList(studentsToDistribute);
                 final WrittenEvaluationEnrolment writtenEvaluationEnrolment = this.getWrittenEvaluationEnrolmentFor(registration);
@@ -611,15 +601,8 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     private void checkRoomsCapacityForStudents(final List<Space> selectedRooms, int studentsToDistributeSize) {
-        int totalCapacity = 0;
-        for (final Space room : selectedRooms) {
-            Integer examCapacity;
-            try {
-                examCapacity = room.getMetadata("examCapacity");
-                totalCapacity += (Integer) examCapacity;
-            } catch (UnavailableException e) {
-            }
-        }
+        int totalCapacity = selectedRooms.stream().mapToInt(room -> room.<Integer> getMetadata("examCapacity").orElse(0)).sum();
+
         if (studentsToDistributeSize > totalCapacity) {
             throw new DomainException("error.not.enough.room.space");
         }
@@ -681,14 +664,8 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     public Integer getCountNumberReservedSeats() {
-        int i = 0;
-        for (final WrittenEvaluationSpaceOccupation roomOccupation : getWrittenEvaluationSpaceOccupations()) {
-            try {
-                i += (Integer) (roomOccupation.getRoom()).getMetadata("examCapacity");
-            } catch (UnavailableException e) {
-            }
-        }
-        return i;
+        return getWrittenEvaluationSpaceOccupationsSet().stream()
+                .mapToInt(occupation -> occupation.getRoom().<Integer> getMetadata("examCapacity").orElse(0)).sum();
     }
 
     public Integer getCountVacancies() {
@@ -771,9 +748,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     public String getAssociatedRoomsAsString() {
         String rooms = "";
         for (Space room : getAssociatedRooms()) {
-            String name;
-            name = room.getName();
-            rooms += name + "\n";
+            rooms += room.getName() + "\n";
         }
         return rooms;
     }

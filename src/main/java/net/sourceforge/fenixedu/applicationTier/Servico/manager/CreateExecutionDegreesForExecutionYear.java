@@ -82,7 +82,7 @@ public class CreateExecutionDegreesForExecutionYear {
         if (campusName == null) {
             return null;
         }
-        for (Space campus : SpaceUtils.getAllActiveCampus()) {
+        for (Space campus : Space.getAllCampus()) {
             if (campusName.equalsIgnoreCase(campus.getName())) {
                 return campus;
             }

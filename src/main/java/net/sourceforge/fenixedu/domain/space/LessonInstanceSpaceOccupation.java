@@ -48,7 +48,7 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
             removeLessonInstances(lessonInstance);
         }
 
-        Space space = (Space) getSpaceSet().iterator().next();
+        Space space = getSpace();
         //final ExecutionCourse executionCourse = lessonInstance.getLesson().getExecutionCourse();
         if (/*!space.isOccupiedByExecutionCourse(executionCourse, lessonInstance.getBeginDateTime(),
                 lessonInstance.getEndDateTime())
@@ -57,10 +57,8 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
         !space.isFree(Lists.newArrayList(new Interval[] { new Interval(lessonInstance.getBeginDateTime(), lessonInstance
                 .getEndDateTime()) }))) {
 
-            String name;
-            name = space.getName();
-            throw new DomainException("error.LessonInstanceSpaceOccupation.room.is.not.free", name, lessonInstance.getDay()
-                    .toString("dd-MM-yy"));
+            throw new DomainException("error.LessonInstanceSpaceOccupation.room.is.not.free", space.getName(), lessonInstance
+                    .getDay().toString("dd-MM-yy"));
         }
 
         addLessonInstances(lessonInstance);

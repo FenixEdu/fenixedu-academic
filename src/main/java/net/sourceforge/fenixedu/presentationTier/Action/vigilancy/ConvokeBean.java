@@ -3,17 +3,16 @@ package net.sourceforge.fenixedu.presentationTier.Action.vigilancy;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 import net.sourceforge.fenixedu.domain.vigilancy.strategies.UnavailableInformation;
-
-import org.fenixedu.spaces.domain.Space;
-import org.fenixedu.spaces.domain.UnavailableException;
-
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+
+import com.google.common.base.Joiner;
 
 public class ConvokeBean extends VigilantGroupBean implements Serializable {
 
@@ -196,17 +195,13 @@ public class ConvokeBean extends VigilantGroupBean implements Serializable {
     }
 
     public String getRoomsAsString() {
-
-        String rooms = "";
-        for (Space room : this.getWrittenEvaluation().getAssociatedRooms()) {
-            try {
-                rooms +=
-                        room.getName() + "-" + RenderUtils.getResourceString("VIGILANCY_RESOURCES", "label.vigilancy.capacity")
-                                + ":" + room.getMetadata("examCapacity") + "\n";
-            } catch (UnavailableException e) {
-            }
-        }
-        return rooms;
+        return Joiner.on("\n").join(
+                getWrittenEvaluation()
+                        .getAssociatedRooms()
+                        .stream()
+                        .map(room -> room.getName() + "-"
+                                + RenderUtils.getResourceString("VIGILANCY_RESOURCES", "label.vigilancy.capacity") + ":"
+                                + room.getMetadata("examCapacity").orElse("")).collect(Collectors.toSet()));
     }
 
     public List<VigilantWrapper> getTeachersInAGivenConvokeProvider() {

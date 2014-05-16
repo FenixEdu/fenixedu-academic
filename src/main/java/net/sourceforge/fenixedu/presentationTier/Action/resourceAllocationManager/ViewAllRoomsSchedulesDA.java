@@ -59,7 +59,7 @@ public class ViewAllRoomsSchedulesDA extends FenixDispatchAction {
         }
 
         public List<Space> getAvailableBuildings() {
-            return Ordering.from(SpaceUtils.COMPARATOR_BY_PRESENTATION_NAME).sortedCopy(SpaceUtils.getAllActiveBuildings());
+            return Ordering.from(SpaceUtils.COMPARATOR_BY_PRESENTATION_NAME).sortedCopy(SpaceUtils.buildings());
         }
 
         public List<AcademicInterval> getAvailableIntervals() {

@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.util.EvaluationType;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.spaces.domain.Space;
-import org.fenixedu.spaces.domain.UnavailableException;
 import org.fenixedu.spaces.domain.occupation.Occupation;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
@@ -34,7 +33,7 @@ import org.joda.time.YearMonthDay;
 
 /**
  * @author Ana e Ricardo
- * 
+ *
  */
 public class WrittenTest extends WrittenTest_Base {
 
@@ -243,22 +242,18 @@ public class WrittenTest extends WrittenTest_Base {
 
     @Override
     public boolean canBeAssociatedToRoom(Space room) {
-        try {
-            for (Occupation resourceAllocation : SpaceUtils.getResourceAllocationsForCheck(room)) {
-                if (resourceAllocation instanceof EventSpaceOccupation) {
-                    EventSpaceOccupation eventSpaceOccupation = (EventSpaceOccupation) resourceAllocation;
-                    if (!(eventSpaceOccupation instanceof LessonInstanceSpaceOccupation)
-                            && !(eventSpaceOccupation instanceof LessonSpaceOccupation)) {
-                        if (eventSpaceOccupation.alreadyWasOccupiedIn(getBeginningDateTime().toYearMonthDay(), getEndDateTime()
-                                .toYearMonthDay(), getBeginningDateHourMinuteSecond(), getEndDateHourMinuteSecond(),
-                                getDayOfWeek(), null, null, null)) {
-                            return false;
-                        }
+        for (Occupation resourceAllocation : SpaceUtils.getResourceAllocationsForCheck(room)) {
+            if (resourceAllocation instanceof EventSpaceOccupation) {
+                EventSpaceOccupation eventSpaceOccupation = (EventSpaceOccupation) resourceAllocation;
+                if (!(eventSpaceOccupation instanceof LessonInstanceSpaceOccupation)
+                        && !(eventSpaceOccupation instanceof LessonSpaceOccupation)) {
+                    if (eventSpaceOccupation.alreadyWasOccupiedIn(getBeginningDateTime().toYearMonthDay(), getEndDateTime()
+                            .toYearMonthDay(), getBeginningDateHourMinuteSecond(), getEndDateHourMinuteSecond(), getDayOfWeek(),
+                            null, null, null)) {
+                        return false;
                     }
                 }
             }
-        } catch (UnavailableException e) {
-            return false;
         }
         return true;
     }

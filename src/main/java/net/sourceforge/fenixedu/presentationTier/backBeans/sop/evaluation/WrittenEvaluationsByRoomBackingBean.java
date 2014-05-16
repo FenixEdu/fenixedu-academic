@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.faces.model.SelectItem;
 
@@ -40,10 +41,12 @@ import org.apache.struts.util.MessageResources;
 import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.spaces.domain.Space;
 import org.fenixedu.spaces.domain.SpaceClassification;
-import org.fenixedu.spaces.domain.UnavailableException;
 import org.fenixedu.spaces.domain.occupation.Occupation;
 
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
+
+import com.google.common.base.Objects;
+import com.google.common.base.Strings;
 
 public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBackingBean {
 
@@ -149,7 +152,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
 
     private Collection<Space> getAllRooms() throws FenixServiceException {
         if (allRooms == null) {
-            allRooms = SpaceUtils.getAllActiveAllocatableSpacesForEducation();
+            allRooms = SpaceUtils.allocatableSpacesForEducation().collect(Collectors.toList());
         }
         return allRooms;
     }
@@ -182,42 +185,37 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
         final String type = getType();
         final Integer normalCapacity =
                 (getNormalCapacity() != null && getNormalCapacity().length() > 0) ? Integer.valueOf(getNormalCapacity()) : null;
-        final Integer examCapacity =
-                (getExamCapacity() != null && getExamCapacity().length() > 0) ? Integer.valueOf(getExamCapacity()) : null;
+                final Integer examCapacity =
+                        (getExamCapacity() != null && getExamCapacity().length() > 0) ? Integer.valueOf(getExamCapacity()) : null;
 
-        final Collection<Space> rooms = getAllRooms();
-        final Collection<Space> selectedRooms = new ArrayList<Space>();
+                        final Collection<Space> rooms = getAllRooms();
+                        final Collection<Space> selectedRooms = new ArrayList<Space>();
 
-        for (final Space room : rooms) {
-            boolean matchesCriteria = true;
+                        for (final Space room : rooms) {
+                            boolean matchesCriteria = true;
 
-            try {
-                if (name != null && name.length() > 0 && !room.getName().equalsIgnoreCase(name)) {
-                    matchesCriteria = false;
-                } else if (building != null && !SpaceUtils.getSpaceBuilding(room).getExternalId().equals(building)) {
-                    matchesCriteria = false;
-                } else if (floor != null
-                        && !((Integer) (SpaceUtils.getSpaceFloor(room) != null ? SpaceUtils.getSpaceFloor(room).getMetadata(
-                                "level") : null)).equals(floor)) {
-                    matchesCriteria = false;
-                } else if (type != null
-                        && type.length() > 0
-                        && (room.getClassification() == null || !room.getClassification().getExternalId().toString().equals(type))) {
-                    matchesCriteria = false;
-                } else if (normalCapacity != null && room.getAllocatableCapacity().intValue() < normalCapacity.intValue()) {
-                    matchesCriteria = false;
-                } else if (examCapacity != null && (Integer) room.getMetadata("examCapacity") < examCapacity.intValue()) {
-                    matchesCriteria = false;
-                }
-            } catch (UnavailableException e1) {
-                matchesCriteria = false;
-            }
+                            if (!Strings.isNullOrEmpty(name) && !room.getName().equalsIgnoreCase(name)) {
+                                matchesCriteria = false;
+                            } else if (building != null && !SpaceUtils.getSpaceBuilding(room).getExternalId().equals(building)) {
+                                matchesCriteria = false;
+                            } else if (floor != null
+                                    && !Objects.equal(floor,
+                                            SpaceUtils.getSpaceFloor(room).map(f -> f.<Integer> getMetadata("level").orElse(null)))) {
+                                matchesCriteria = false;
+                            } else if (type != null && type.length() > 0
+                                    && !room.getClassification().get().getExternalId().toString().equals(type)) {
+                                matchesCriteria = false;
+                            } else if (normalCapacity != null && room.getAllocatableCapacity().intValue() < normalCapacity.intValue()) {
+                                matchesCriteria = false;
+                            } else if (examCapacity != null && room.<Integer> getMetadata("examCapacity").orElse(0) < examCapacity.intValue()) {
+                                matchesCriteria = false;
+                            }
 
-            if (matchesCriteria && !StringUtils.isEmpty(room.getName())) {
-                selectedRooms.add(room);
-            }
-        }
-        return selectedRooms;
+                            if (matchesCriteria && !StringUtils.isEmpty(room.getName())) {
+                                selectedRooms.add(room);
+                            }
+                        }
+                        return selectedRooms;
     }
 
     public Collection<Space> getRooms() throws FenixServiceException {
@@ -225,7 +223,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
     }
 
     public Collection<Space> getBuildings() throws FenixServiceException {
-        return SpaceUtils.getAllActiveBuildings();
+        return SpaceUtils.buildings();
     }
 
     public Collection<Space> getRoomsToDisplayMap() throws FenixServiceException {

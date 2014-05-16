@@ -14,7 +14,7 @@ public class ReadBuildings {
     @Atomic
     public static List<InfoBuilding> run() {
         final List<InfoBuilding> result = new ArrayList<InfoBuilding>();
-        for (final Space building : SpaceUtils.getAllActiveBuildings()) {
+        for (final Space building : SpaceUtils.buildings()) {
             result.add(InfoBuilding.newInfoFromDomain(building));
         }
         return result;

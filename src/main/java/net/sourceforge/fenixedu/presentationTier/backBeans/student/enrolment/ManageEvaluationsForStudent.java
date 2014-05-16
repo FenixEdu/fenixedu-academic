@@ -82,15 +82,13 @@ public class ManageEvaluationsForStudent extends DisplayEvaluationsForStudentToE
                         } else {
                             this.evaluationsWithEnrolmentPeriodClosed.add(writtenEvaluation);
                             final Space room = registration.getRoomFor(writtenEvaluation);
-                            String roomName;
-                            roomName = room != null ? room.getName() : "-";
+                            String roomName = room != null ? room.getName() : "-";
                             getStudentRooms().put(writtenEvaluation.getExternalId(), roomName);
                         }
                     } catch (final DomainException e) {
                         getEvaluationsWithoutEnrolmentPeriod().add(writtenEvaluation);
                         final Space room = registration.getRoomFor(writtenEvaluation);
-                        String value;
-                        value = room != null ? room.getName() : "-";
+                        String value = room != null ? room.getName() : "-";
                         getStudentRooms().put(writtenEvaluation.getExternalId(), value);
                     } finally {
                         getEnroledEvaluationsForStudent().put(writtenEvaluation.getExternalId(),

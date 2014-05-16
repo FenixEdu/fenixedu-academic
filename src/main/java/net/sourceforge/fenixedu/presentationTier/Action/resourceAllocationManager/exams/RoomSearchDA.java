@@ -9,8 +9,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadAvailableRoomsForExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.RAMApplication.RAMEvaluationsApp;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -41,7 +41,7 @@ import pt.ist.fenixframework.FenixFramework;
 @StrutsFunctionality(app = RAMEvaluationsApp.class, path = "room-search", titleKey = "link.exams.searchAvailableRooms")
 @Mapping(module = "resourceAllocationManager", path = "/roomSearch", formBean = "roomSearchForm")
 @Forwards({ @Forward(name = "showRooms", path = "/resourceAllocationManager/exams/showRooms.jsp"),
-        @Forward(name = "roomSearch", path = "/resourceAllocationManager/exams/roomSearch.jsp") })
+    @Forward(name = "roomSearch", path = "/resourceAllocationManager/exams/roomSearch.jsp") })
 public class RoomSearchDA extends FenixDispatchAction {
 
     @EntryPoint
@@ -107,9 +107,9 @@ public class RoomSearchDA extends FenixDispatchAction {
 
         List<InfoRoom> availableInfoRoom = null;
         availableInfoRoom =
-                ReadAvailableRoomsForExam.run(YearMonthDay.fromCalendarFields(searchDate),
+                SpaceUtils.allocatableSpace(YearMonthDay.fromCalendarFields(searchDate),
                         YearMonthDay.fromCalendarFields(searchDate), HourMinuteSecond.fromCalendarFields(searchStartTime),
-                        HourMinuteSecond.fromCalendarFields(searchEndTime), dayOfWeek, null, null, Boolean.FALSE);
+                        HourMinuteSecond.fromCalendarFields(searchEndTime), dayOfWeek, null, null, false);
         String sdate = roomSearchForm.get("day") + "/" + roomSearchForm.get("month") + "/" + roomSearchForm.get("year");
         String startTime = roomSearchForm.get("beginningHour") + ":" + roomSearchForm.get("beginningMinute");
         String endTime = roomSearchForm.get("endHour") + ":" + roomSearchForm.get("endMinute");

@@ -33,7 +33,7 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
 
         Occupation allocation =
                 SpaceUtils
-                        .getFirstOccurrenceOfResourceAllocationByClass(allocatableSpace, WrittenEvaluationSpaceOccupation.class);
+                .getFirstOccurrenceOfResourceAllocationByClass(allocatableSpace, WrittenEvaluationSpaceOccupation.class);
         if (allocation != null) {
             throw new DomainException("error.WrittenEvaluationSpaceOccupation.occupation.for.this.space.already.exists");
         }
@@ -51,9 +51,7 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
         }
 
         if (!writtenEvaluation.canBeAssociatedToRoom(getRoom())) {
-            String name;
-            name = getRoom().getName();
-            throw new DomainException("error.roomOccupied", name);
+            throw new DomainException("error.roomOccupied", getRoom().getName());
         }
 
         addWrittenEvaluations(writtenEvaluation);
@@ -96,7 +94,7 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
 
     @Override
     public Group getAccessGroup() {
-        return getSpace().getOccupationsAccessGroupWithChainOfResponsability();
+        return getSpace().getOccupationsGroupWithChainOfResponsability();
     }
 
     @Override
