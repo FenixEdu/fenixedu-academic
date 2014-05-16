@@ -283,6 +283,9 @@ public class SantanderBatchFillerWorker {
             if (!registration.isActive()) {
                 continue;
             }
+            if (registration.getDegree().isEmpty()) {
+                continue;
+            }
             final RegistrationAgreement registrationAgreement = registration.getRegistrationAgreement();
             if (!registrationAgreement.allowsIDCard()) {
                 continue;
