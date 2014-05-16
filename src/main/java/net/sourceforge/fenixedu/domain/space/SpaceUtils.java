@@ -92,33 +92,29 @@ public class SpaceUtils {
     }
 
     public static boolean isCampus(Space space) {
-        return space.getClassification().map(c -> c.getName().equals(CAMPUS)).orElse(false);
+        return SpaceClassification.getByName(CAMPUS).equals(space.getClassification());
     }
 
     public static boolean isBuilding(Space space) {
-        return space.getClassification().map(c -> c.getName().equals(BUILDING)).orElse(false);
+        return SpaceClassification.getByName(BUILDING).equals(space.getClassification());
     }
 
     public static boolean isFloor(Space space) {
-        return space.getClassification().map(c -> c.getName().equals(FLOOR)).orElse(false);
+        return SpaceClassification.getByName(FLOOR).equals(space.getClassification());
     }
 
     public static boolean isRoomSubdivision(Space space) {
-        return space.getClassification().map(c -> c.getName().equals(ROOM_SUBDIVISION)).orElse(false);
+        return SpaceClassification.getByName(ROOM_SUBDIVISION).equals(space.getClassification());
     }
 
     public static boolean isRoom(Space space) {
-        return space
-                .getClassification()
-                .map(c -> c.getName())
-                .map(name -> !(name.equals(CAMPUS) || name.equals(BUILDING) || name.equals(FLOOR) || name
-                        .equals(ROOM_SUBDIVISION))).orElse(false);
+        return !(isCampus(space) || isBuilding(space) || isFloor(space) || isRoomSubdivision(space));
     }
 
     public static boolean isLaboratory(Space space) {
-        SpaceClassification eduLab = SpaceClassification.get(LABORATORY_FOR_EDUCATION_CODE);
-        SpaceClassification researchLab = SpaceClassification.get(LABORATORY_FOR_RESEARCHER_CODE);
-        return space.getClassification().map(c -> c.equals(eduLab) || c.equals(researchLab)).orElse(false);
+        SpaceClassification classification = space.getClassification();
+        return classification.equals(SpaceClassification.get(LABORATORY_FOR_EDUCATION_CODE))
+                || classification.equals(SpaceClassification.get(LABORATORY_FOR_RESEARCHER_CODE));
     }
 
     public static boolean isForEducation(Space space) {
