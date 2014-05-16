@@ -42,7 +42,7 @@ public class InfoRoom extends InfoObject implements Comparable {
     }
 
     public String getTipo() {
-        return getRoom().getClassification().map(c -> c.getName().getContent()).orElse("");
+        return getRoom().getClassification().getName().getContent();
     }
 
     public SpaceClassification getClassification() {
