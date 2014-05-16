@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -44,9 +45,6 @@ import org.fenixedu.spaces.domain.SpaceClassification;
 import org.fenixedu.spaces.domain.occupation.Occupation;
 
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-
-import com.google.common.base.Objects;
-import com.google.common.base.Strings;
 
 public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBackingBean {
 
@@ -148,11 +146,12 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
         getExecutionCourseID();
     }
 
-    private Collection<Space> allRooms = null;
+    private Collection<InfoRoom> allRooms = null;
 
-    private Collection<Space> getAllRooms() throws FenixServiceException {
+    private Collection<InfoRoom> getAllRooms() throws FenixServiceException {
+
         if (allRooms == null) {
-            allRooms = SpaceUtils.allocatableSpacesForEducation().collect(Collectors.toList());
+            allRooms = SpaceUtils.allocatableSpacesForEducation().map(s -> new InfoRoom(s)).collect(Collectors.toList());
         }
         return allRooms;
     }
@@ -177,7 +176,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
         return selectedRoomIDs;
     }
 
-    private Collection<Space> searchRooms() throws FenixServiceException {
+    private Collection<InfoRoom> searchRooms() throws FenixServiceException {
 
         final String name = getName();
         final String building = (getBuilding() != null && getBuilding().length() > 0) ? getBuilding() : null;
@@ -185,40 +184,38 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
         final String type = getType();
         final Integer normalCapacity =
                 (getNormalCapacity() != null && getNormalCapacity().length() > 0) ? Integer.valueOf(getNormalCapacity()) : null;
-                final Integer examCapacity =
-                        (getExamCapacity() != null && getExamCapacity().length() > 0) ? Integer.valueOf(getExamCapacity()) : null;
+        final Integer examCapacity =
+                (getExamCapacity() != null && getExamCapacity().length() > 0) ? Integer.valueOf(getExamCapacity()) : null;
 
-                        final Collection<Space> rooms = getAllRooms();
-                        final Collection<Space> selectedRooms = new ArrayList<Space>();
+        final Collection<InfoRoom> rooms = getAllRooms();
+        final Collection<InfoRoom> selectedRooms = new ArrayList<InfoRoom>();
 
-                        for (final Space room : rooms) {
-                            boolean matchesCriteria = true;
+        for (final InfoRoom room : rooms) {
+            boolean matchesCriteria = true;
 
-                            if (!Strings.isNullOrEmpty(name) && !room.getName().equalsIgnoreCase(name)) {
-                                matchesCriteria = false;
-                            } else if (building != null && !SpaceUtils.getSpaceBuilding(room).getExternalId().equals(building)) {
-                                matchesCriteria = false;
-                            } else if (floor != null
-                                    && !Objects.equal(floor,
-                                            SpaceUtils.getSpaceFloor(room).map(f -> f.<Integer> getMetadata("level").orElse(null)))) {
-                                matchesCriteria = false;
-                            } else if (type != null && type.length() > 0
-                                    && !room.getClassification().get().getExternalId().toString().equals(type)) {
-                                matchesCriteria = false;
-                            } else if (normalCapacity != null && room.getAllocatableCapacity().intValue() < normalCapacity.intValue()) {
-                                matchesCriteria = false;
-                            } else if (examCapacity != null && room.<Integer> getMetadata("examCapacity").orElse(0) < examCapacity.intValue()) {
-                                matchesCriteria = false;
-                            }
+            if (name != null && name.length() > 0 && !room.getName().equalsIgnoreCase(name)) {
+                matchesCriteria = false;
+            } else if (building != null && !room.getSpaceBuilding().getExternalId().equals(building)) {
+                matchesCriteria = false;
+            } else if (floor != null && !floor.equals(room.getPiso())) {
+                matchesCriteria = false;
+            } else if (type != null && type.length() > 0
+                    && (room.getClassification() == null || !room.getClassification().getExternalId().toString().equals(type))) {
+                matchesCriteria = false;
+            } else if (normalCapacity != null && room.getCapacidadeNormal().intValue() < normalCapacity.intValue()) {
+                matchesCriteria = false;
+            } else if (examCapacity != null && (Integer) room.getCapacidadeExame() < examCapacity.intValue()) {
+                matchesCriteria = false;
+            }
 
-                            if (matchesCriteria && !StringUtils.isEmpty(room.getName())) {
-                                selectedRooms.add(room);
-                            }
-                        }
-                        return selectedRooms;
+            if (matchesCriteria && !StringUtils.isEmpty(room.getName())) {
+                selectedRooms.add(room);
+            }
+        }
+        return selectedRooms;
     }
 
-    public Collection<Space> getRooms() throws FenixServiceException {
+    public Collection<InfoRoom> getRooms() throws FenixServiceException {
         return getSubmittedForm() ? searchRooms() : null;
     }
 
@@ -226,19 +223,19 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
         return SpaceUtils.buildings();
     }
 
-    public Collection<Space> getRoomsToDisplayMap() throws FenixServiceException {
+    public Collection<InfoRoom> getRoomsToDisplayMap() throws FenixServiceException {
         final Set<String> selectedRoomIDs = getSelectedRoomIDs();
         if (selectedRoomIDs != null) {
             return filterRooms(getAllRooms(), selectedRoomIDs);
         } else {
-            final Collection<Space> rooms = getRooms();
+            final Collection<InfoRoom> rooms = getRooms();
             return (rooms != null && rooms.size() == 1) ? getRooms() : null;
         }
     }
 
-    private Collection<Space> filterRooms(final Collection<Space> allRooms, final Set<String> selectedRoomIDs) {
-        final Collection<Space> rooms = new ArrayList<Space>(selectedRoomIDs.size());
-        for (final Space room : allRooms) {
+    private Collection<InfoRoom> filterRooms(final Collection<InfoRoom> allRooms, final Set<String> selectedRoomIDs) {
+        final Collection<InfoRoom> rooms = new ArrayList<InfoRoom>(selectedRoomIDs.size());
+        for (final InfoRoom room : allRooms) {
             if (selectedRoomIDs.contains(room.getExternalId())) {
                 rooms.add(room);
             }
@@ -276,7 +273,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
     }
 
     public Collection<SelectItem> getRoomTypeSelectItems() throws FenixServiceException {
-        Collection<SpaceClassification> roomClassificationsForEducation = rootDomainObject.getRootClassificationSet();
+        Collection<SpaceClassification> roomClassificationsForEducation = SpaceClassification.all();
         final List<SelectItem> roomTypeSelectItems = new ArrayList<SelectItem>();
         for (SpaceClassification classification : SpaceUtils.sortByRoomClassificationAndCode(roomClassificationsForEducation)) {
             if (classification.getParent() != null) {
@@ -307,8 +304,8 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
         return getAcademicIntervalObject().getEnd().toDate();
     }
 
-    public Map<Space, List<CalendarLink>> getWrittenEvaluationCalendarLinks() throws FenixServiceException {
-        final Collection<Space> rooms = getRoomsToDisplayMap();
+    public Map<InfoRoom, List<CalendarLink>> getWrittenEvaluationCalendarLinks() throws FenixServiceException {
+        final Collection<InfoRoom> rooms = getRoomsToDisplayMap();
         if (rooms != null) {
             AcademicInterval interval = getAcademicIntervalObject();
             final AcademicInterval otherAcademicInterval;
@@ -319,8 +316,9 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
                 otherAcademicInterval = null;
             }
 
-            final Map<Space, List<CalendarLink>> calendarLinksMap = new HashMap<Space, List<CalendarLink>>();
-            for (final Space room : rooms) {
+            final Map<InfoRoom, List<CalendarLink>> calendarLinksMap = new HashMap<InfoRoom, List<CalendarLink>>();
+            for (final InfoRoom infoRoom : rooms) {
+                Space room = infoRoom.getRoom();
                 final List<CalendarLink> calendarLinks = new ArrayList<CalendarLink>();
                 for (final Occupation roomOccupation : room.getOccupationSet()) {
                     if (roomOccupation instanceof WrittenEvaluationSpaceOccupation) {
@@ -338,7 +336,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
                         }
                     }
                 }
-                calendarLinksMap.put(room, calendarLinks);
+                calendarLinksMap.put(infoRoom, calendarLinks);
             }
             return calendarLinksMap;
         } else {
@@ -357,9 +355,9 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
         return false;
     }
 
-    public List<Entry<Space, List<CalendarLink>>> getWrittenEvaluationCalendarLinksEntryList() throws FenixServiceException {
-        final Map<Space, List<CalendarLink>> calendarLinks = getWrittenEvaluationCalendarLinks();
-        return (calendarLinks != null) ? new ArrayList<Entry<Space, List<CalendarLink>>>(calendarLinks.entrySet()) : null;
+    public List<Entry<InfoRoom, List<CalendarLink>>> getWrittenEvaluationCalendarLinksEntryList() throws FenixServiceException {
+        final Map<InfoRoom, List<CalendarLink>> calendarLinks = getWrittenEvaluationCalendarLinks();
+        return (calendarLinks != null) ? new ArrayList<Entry<InfoRoom, List<CalendarLink>>>(calendarLinks.entrySet()) : null;
     }
 
     private Map<String, String> constructLinkParameters(final ExecutionCourse executionCourse,

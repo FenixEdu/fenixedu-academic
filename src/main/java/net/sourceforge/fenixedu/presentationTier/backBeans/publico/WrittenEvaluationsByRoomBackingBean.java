@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
@@ -17,14 +18,15 @@ import org.fenixedu.spaces.domain.Space;
 import org.fenixedu.spaces.domain.occupation.Occupation;
 
 public class WrittenEvaluationsByRoomBackingBean extends
-        net.sourceforge.fenixedu.presentationTier.backBeans.sop.evaluation.WrittenEvaluationsByRoomBackingBean {
+net.sourceforge.fenixedu.presentationTier.backBeans.sop.evaluation.WrittenEvaluationsByRoomBackingBean {
 
     @Override
-    public Map<Space, List<CalendarLink>> getWrittenEvaluationCalendarLinks() throws FenixServiceException {
-        final Collection<Space> rooms = getRoomsToDisplayMap();
+    public Map<InfoRoom, List<CalendarLink>> getWrittenEvaluationCalendarLinks() throws FenixServiceException {
+        final Collection<InfoRoom> rooms = getRoomsToDisplayMap();
         if (rooms != null) {
-            final Map<Space, List<CalendarLink>> calendarLinksMap = new HashMap<Space, List<CalendarLink>>();
-            for (final Space room : rooms) {
+            final Map<InfoRoom, List<CalendarLink>> calendarLinksMap = new HashMap<InfoRoom, List<CalendarLink>>();
+            for (final InfoRoom infoRoom : rooms) {
+                Space room = infoRoom.getRoom();
                 final List<CalendarLink> calendarLinks = new ArrayList<CalendarLink>();
                 for (final Occupation roomOccupation : room.getOccupationSet()) {
                     if (roomOccupation instanceof WrittenEvaluationSpaceOccupation) {
@@ -42,7 +44,7 @@ public class WrittenEvaluationsByRoomBackingBean extends
                         }
                     }
                 }
-                calendarLinksMap.put(room, calendarLinks);
+                calendarLinksMap.put(infoRoom, calendarLinks);
             }
             return calendarLinksMap;
         } else {

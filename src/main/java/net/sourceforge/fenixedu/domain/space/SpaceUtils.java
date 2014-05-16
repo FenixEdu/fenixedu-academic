@@ -298,7 +298,7 @@ public class SpaceUtils {
             return space;
         }
         if (space.getParent() == null) {
-            return space;
+            return null;
         }
         return getSpaceBuilding(space.getParent());
     }

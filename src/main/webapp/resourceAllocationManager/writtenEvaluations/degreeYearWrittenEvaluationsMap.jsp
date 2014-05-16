@@ -95,7 +95,10 @@
 								</td>
 								<td>
 									<logic:iterate id="roomOccupation" name="evaluation" property="writtenEvaluationSpaceOccupations">
-										<bean:write name="roomOccupation" property="room.nome"/>; 
+										<%-- <bean:write name="roomOccupation" property="room.nome"/> --%>
+										<logic:iterate id="space" name="roomOccupation" property="space">
+												<bean:write name="space" property="name"/>
+										</logic:iterate> 
 									</logic:iterate>
 								</td>
 							</tr>
@@ -128,7 +131,10 @@
 								</td>
 								<td>
 									<logic:iterate id="roomOccupation" name="evaluation" property="writtenEvaluationSpaceOccupations">
-										<bean:write name="roomOccupation" property="room.nome"/>; 
+										<%-- <bean:write name="roomOccupation" property="room.nome"/> --%>
+										<logic:iterate id="space" name="roomOccupation" property="space">
+												<bean:write name="space" property="name"/>
+										</logic:iterate> 
 									</logic:iterate>
 								</td>
 							</tr>
