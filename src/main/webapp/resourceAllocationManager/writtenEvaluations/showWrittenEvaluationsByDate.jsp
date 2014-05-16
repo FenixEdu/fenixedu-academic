@@ -250,7 +250,9 @@ return (aVal - bVal);
 				</td>
 				<td>
 					<logic:iterate id="roomOccupation" name="writtenEvaluation" property="writtenEvaluationSpaceOccupations">
-						<bean:write name="roomOccupation" property="room.nome"/>;
+						<logic:iterate id="space" name="roomOccupation" property="space">
+							<bean:write name="space" property="name"/>
+						</logic:iterate>
 					</logic:iterate>
 				</td>
 				<td class="acenter">

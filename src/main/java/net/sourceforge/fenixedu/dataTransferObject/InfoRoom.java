@@ -9,6 +9,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 
 import org.fenixedu.spaces.domain.Space;
+import org.fenixedu.spaces.domain.SpaceClassification;
 
 /**
  * @author tfc130
@@ -26,8 +27,14 @@ public class InfoRoom extends InfoObject implements Comparable {
         return getRoom().getName();
     }
 
+    public Space getSpaceBuilding() {
+        Space building = SpaceUtils.getSpaceBuilding(getRoom());
+        return building != null ? building : null;
+    }
+
     public String getEdificio() {
-        return SpaceUtils.getSpaceBuilding(getRoom()).getName();
+        Space building = getSpaceBuilding();
+        return building != null ? building.getName() : "";
     }
 
     public Integer getPiso() {
@@ -36,6 +43,10 @@ public class InfoRoom extends InfoObject implements Comparable {
 
     public String getTipo() {
         return getRoom().getClassification().map(c -> c.getName().getContent()).orElse("");
+    }
+
+    public SpaceClassification getClassification() {
+        return getRoom().getClassification().orElse(null);
     }
 
     public Integer getCapacidadeNormal() {
@@ -77,6 +88,10 @@ public class InfoRoom extends InfoObject implements Comparable {
 
     public Space getRoom() {
         return room;
+    }
+
+    public String getName() {
+        return getNome();
     }
 
 }
