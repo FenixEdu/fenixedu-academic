@@ -112,6 +112,7 @@ public abstract class PostingRule extends PostingRule_Base {
         if (serviceAgreementTemplate == null) {
             throw new DomainException("error.accounting.agreement.postingRule.serviceAgreementTemplate.cannot.be.null");
         }
+
     }
 
     public Set<Entry> process(User user, Collection<EntryDTO> entryDTOs, Event event, Account fromAccount, Account toAccount,

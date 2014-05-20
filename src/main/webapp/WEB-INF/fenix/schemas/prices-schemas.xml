@@ -797,6 +797,8 @@
 <schema name="StandaloneEnrolmentGratuityPR.view" type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR"
 		bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
 	<slot name="ectsForYear" />
+	<slot name="ectsFactor" />
+	<slot name="gratuityFactor" />
 </schema>
 
 <schema name="GratuityWithPaymentPlanPR.view" type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR"
@@ -806,6 +808,8 @@
 <schema name="GratuityWithPaymentPlanPR.edit" type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR"
 		bundle="APPLICATION_RESOURCES">
 		<slot name="startDate"></slot>
+		<slot name="endDate"></slot>
+		<slot name="defaultGratuityAmount"></slot>
 </schema>
 
 <schema name="StandaloneEnrolmentGratuityPR.edit" type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR"
