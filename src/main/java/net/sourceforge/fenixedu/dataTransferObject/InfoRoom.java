@@ -38,7 +38,8 @@ public class InfoRoom extends InfoObject implements Comparable {
     }
 
     public Integer getPiso() {
-        return getRoom().<Integer> getMetadata("level").orElse(null);
+        Space spaceFloor = SpaceUtils.getSpaceFloor(getRoom());
+        return spaceFloor != null ? spaceFloor.<Integer> getMetadata("level").orElse(null) : null;
     }
 
     public String getTipo() {
@@ -46,7 +47,7 @@ public class InfoRoom extends InfoObject implements Comparable {
     }
 
     public SpaceClassification getClassification() {
-        return getRoom().getClassification().orElse(null);
+        return getRoom().getClassification();
     }
 
     public Integer getCapacidadeNormal() {
