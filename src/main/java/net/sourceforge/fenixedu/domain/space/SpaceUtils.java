@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.stream.Collectors;
@@ -130,7 +129,7 @@ public class SpaceUtils {
         }
 
         final Space parent = space.getParent();
-        if (isRoom(parent) || isRoomSubdivision(parent)) {
+        if (parent != null && parent.isActive() && (isRoom(parent) || isRoomSubdivision(parent))) {
             return isForEducation(parent, person);
         }
 
@@ -299,14 +298,14 @@ public class SpaceUtils {
         return getSpaceBuilding(space.getParent());
     }
 
-    public static Optional<Space> getSpaceFloor(Space space) {
+    public static Space getSpaceFloor(Space space) {
         if (isFloor(space)) {
             if (space.getParent() == null) {
-                return Optional.of(space);
+                return space;
             } else if (isFloor(space.getParent())) {
                 return getSpaceFloor(space.getParent());
             } else {
-                return Optional.of(space);
+                return space;
             }
         }
         if (space.getParent() == null) {
