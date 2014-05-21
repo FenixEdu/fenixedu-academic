@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Stream;
+
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -9,14 +13,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.spaces.domain.Space;
-
-import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.Atomic.TxMode;
-
-import com.google.common.base.Objects;
-import com.google.common.base.Optional;
-import com.google.common.base.Predicate;
-import com.google.common.collect.FluentIterable;
 
 public class PersistentStudentGroup extends PersistentStudentGroup_Base {
     protected PersistentStudentGroup(DegreeType degreeType, Degree degree, CycleType cycle, Space campus,
@@ -63,76 +59,61 @@ public class PersistentStudentGroup extends PersistentStudentGroup_Base {
     }
 
     public static PersistentStudentGroup getInstance(Degree degree, CycleType cycle) {
-        return getInstance(FluentIterable.from(degree.getStudentGroupSet()), null, degree, cycle, null, null, null, null);
+        return getInstance(degree.getStudentGroupSet().stream(), null, degree, cycle, null, null, null, null);
     }
 
     public static PersistentStudentGroup getInstance(Space campus) {
-        return getInstance(FluentIterable.from(campus.getStudentGroupSet()), null, null, null, campus, null, null, null);
+        return getInstance(campus.getStudentGroupSet().stream(), null, null, null, campus, null, null, null);
     }
 
     public static PersistentStudentGroup getInstance(Degree degree, CurricularYear curricularYear, ExecutionYear executionYear) {
-        return getInstance(FluentIterable.from(curricularYear.getStudentGroupSet()), null, degree, null, null, null,
-                curricularYear, executionYear);
+        return getInstance(curricularYear.getStudentGroupSet().stream(), null, degree, null, null, null, curricularYear,
+                executionYear);
     }
 
     public static PersistentStudentGroup getInstance(ExecutionCourse executionCourse) {
-        return getInstance(FluentIterable.from(executionCourse.getStudentGroupSet()), null, null, null, null, executionCourse,
-                null, null);
+        return getInstance(executionCourse.getStudentGroupSet().stream(), null, null, null, null, executionCourse, null, null);
     }
 
     public static PersistentStudentGroup getInstance(DegreeType degreeType, Degree degree, CycleType cycle, Space campus,
             ExecutionCourse executionCourse, CurricularYear curricularYear, ExecutionYear executionYear) {
         if (curricularYear != null) {
-            return getInstance(FluentIterable.from(curricularYear.getStudentGroupSet()), degreeType, degree, cycle, campus,
-                    executionCourse, curricularYear, executionYear);
+            return getInstance(curricularYear.getStudentGroupSet().stream(), degreeType, degree, cycle, campus, executionCourse,
+                    curricularYear, executionYear);
         }
         if (executionCourse != null) {
-            return getInstance(FluentIterable.from(executionCourse.getStudentGroupSet()), degreeType, degree, cycle, campus,
-                    executionCourse, curricularYear, executionYear);
+            return getInstance(executionCourse.getStudentGroupSet().stream(), degreeType, degree, cycle, campus, executionCourse,
+                    curricularYear, executionYear);
         }
         if (campus != null) {
-            return getInstance(FluentIterable.from(campus.getStudentGroupSet()), degreeType, degree, cycle, campus,
-                    executionCourse, curricularYear, executionYear);
+            return getInstance(campus.getStudentGroupSet().stream(), degreeType, degree, cycle, campus, executionCourse,
+                    curricularYear, executionYear);
         }
         if (degree != null) {
-            return getInstance(FluentIterable.from(degree.getStudentGroupSet()), degreeType, degree, cycle, campus,
-                    executionCourse, curricularYear, executionYear);
+            return getInstance(degree.getStudentGroupSet().stream(), degreeType, degree, cycle, campus, executionCourse,
+                    curricularYear, executionYear);
         }
         return getInstance(filter(PersistentStudentGroup.class), degreeType, degree, cycle, campus, executionCourse,
                 curricularYear, executionYear);
     }
 
-    private static PersistentStudentGroup getInstance(FluentIterable<PersistentStudentGroup> options, DegreeType degreeType,
+    private static PersistentStudentGroup getInstance(Stream<PersistentStudentGroup> options, DegreeType degreeType,
             Degree degree, CycleType cycle, Space campus, ExecutionCourse executionCourse, CurricularYear curricularYear,
             ExecutionYear executionYear) {
-        Optional<PersistentStudentGroup> instance =
-                select(options, degreeType, degree, cycle, campus, executionCourse, curricularYear, executionYear);
-        return instance.isPresent() ? instance.get() : create(options, degreeType, degree, cycle, campus, executionCourse,
-                curricularYear, executionYear);
+        return singleton(
+                () -> select(options, degreeType, degree, cycle, campus, executionCourse, curricularYear, executionYear),
+                () -> new PersistentStudentGroup(degreeType, degree, cycle, campus, executionCourse, curricularYear,
+                        executionYear));
     }
 
-    @Atomic(mode = TxMode.WRITE)
-    private static PersistentStudentGroup create(FluentIterable<PersistentStudentGroup> options, DegreeType degreeType,
-            Degree degree, CycleType cycle, Space campus, ExecutionCourse executionCourse, CurricularYear curricularYear,
-            ExecutionYear executionYear) {
-        Optional<PersistentStudentGroup> instance =
-                select(options, degreeType, degree, cycle, campus, executionCourse, curricularYear, executionYear);
-        return instance.isPresent() ? instance.get() : new PersistentStudentGroup(degreeType, degree, cycle, campus,
-                executionCourse, curricularYear, executionYear);
-    }
-
-    private static Optional<PersistentStudentGroup> select(FluentIterable<PersistentStudentGroup> options,
-            final DegreeType degreeType, final Degree degree, final CycleType cycle, final Space campus,
-            final ExecutionCourse executionCourse, final CurricularYear curricularYear, final ExecutionYear executionYear) {
-        return options.firstMatch(new Predicate<PersistentStudentGroup>() {
-            @Override
-            public boolean apply(PersistentStudentGroup group) {
-                return Objects.equal(group.getDegreeType(), degreeType) && Objects.equal(group.getDegree(), degree)
-                        && Objects.equal(group.getCycle(), cycle) && Objects.equal(group.getCampus(), campus)
-                        && Objects.equal(group.getExecutionCourse(), executionCourse)
-                        && Objects.equal(group.getCurricularYear(), curricularYear)
-                        && Objects.equal(group.getExecutionYear(), executionYear);
-            }
-        });
+    private static Optional<PersistentStudentGroup> select(Stream<PersistentStudentGroup> options, final DegreeType degreeType,
+            final Degree degree, final CycleType cycle, final Space campus, final ExecutionCourse executionCourse,
+            final CurricularYear curricularYear, final ExecutionYear executionYear) {
+        return options.filter(
+                group -> Objects.equals(group.getDegreeType(), degreeType) && Objects.equals(group.getDegree(), degree)
+                && Objects.equals(group.getCycle(), cycle) && Objects.equals(group.getCampus(), campus)
+                && Objects.equals(group.getExecutionCourse(), executionCourse)
+                && Objects.equals(group.getCurricularYear(), curricularYear)
+                && Objects.equals(group.getExecutionYear(), executionYear)).findAny();
     }
 }

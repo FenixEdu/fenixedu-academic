@@ -1,11 +1,10 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
+import java.util.Optional;
+
 import net.sourceforge.fenixedu.domain.StudentGroup;
 
 import org.fenixedu.bennu.core.groups.Group;
-
-import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.Atomic.TxMode;
 
 public class PersistentStudentGroupGroup extends PersistentStudentGroupGroup_Base {
     protected PersistentStudentGroupGroup(StudentGroup studentGroup) {
@@ -25,13 +24,7 @@ public class PersistentStudentGroupGroup extends PersistentStudentGroupGroup_Bas
     }
 
     public static PersistentStudentGroupGroup getInstance(final StudentGroup studentGroup) {
-        PersistentStudentGroupGroup instance = studentGroup.getStudentGroupGroup();
-        return instance != null ? instance : create(studentGroup);
-    }
-
-    @Atomic(mode = TxMode.WRITE)
-    private static PersistentStudentGroupGroup create(final StudentGroup studentGroup) {
-        PersistentStudentGroupGroup instance = studentGroup.getStudentGroupGroup();
-        return instance != null ? instance : new PersistentStudentGroupGroup(studentGroup);
+        return singleton(() -> Optional.ofNullable(studentGroup.getStudentGroupGroup()), () -> new PersistentStudentGroupGroup(
+                studentGroup));
     }
 }

@@ -1,11 +1,10 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
+import java.util.Optional;
+
 import net.sourceforge.fenixedu.domain.Project;
 
 import org.fenixedu.bennu.core.groups.Group;
-
-import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.Atomic.TxMode;
 
 public class PersistentProjectDepartmentGroup extends PersistentProjectDepartmentGroup_Base {
     protected PersistentProjectDepartmentGroup(Project project) {
@@ -25,13 +24,7 @@ public class PersistentProjectDepartmentGroup extends PersistentProjectDepartmen
     }
 
     public static PersistentProjectDepartmentGroup getInstance(final Project project) {
-        PersistentProjectDepartmentGroup instance = project.getProjectDepartmentGroup();
-        return instance != null ? instance : create(project);
-    }
-
-    @Atomic(mode = TxMode.WRITE)
-    private static PersistentProjectDepartmentGroup create(final Project project) {
-        PersistentProjectDepartmentGroup instance = project.getProjectDepartmentGroup();
-        return instance != null ? instance : new PersistentProjectDepartmentGroup(project);
+        return singleton(() -> Optional.ofNullable(project.getProjectDepartmentGroup()),
+                () -> new PersistentProjectDepartmentGroup(project));
     }
 }

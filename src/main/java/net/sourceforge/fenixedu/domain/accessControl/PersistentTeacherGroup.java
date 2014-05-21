@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
+import java.util.Objects;
+import java.util.stream.Stream;
+
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -7,14 +10,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.spaces.domain.Space;
-
-import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.Atomic.TxMode;
-
-import com.google.common.base.Objects;
-import com.google.common.base.Optional;
-import com.google.common.base.Predicate;
-import com.google.common.collect.FluentIterable;
 
 public class PersistentTeacherGroup extends PersistentTeacherGroup_Base {
     protected PersistentTeacherGroup(Degree degree, ExecutionCourse executionCourse, Space campus, Department department,
@@ -43,19 +38,19 @@ public class PersistentTeacherGroup extends PersistentTeacherGroup_Base {
     }
 
     public static PersistentTeacherGroup getInstance(Degree degree) {
-        return getInstance(FluentIterable.from(degree.getTeacherGroupSet()), degree, null, null, null, null);
+        return getInstance(degree.getTeacherGroupSet().stream(), degree, null, null, null, null);
     }
 
     public static PersistentTeacherGroup getInstance(Space campus) {
-        return getInstance(FluentIterable.from(campus.getTeacherGroupSet()), null, null, campus, null, null);
+        return getInstance(campus.getTeacherGroupSet().stream(), null, null, campus, null, null);
     }
 
     public static PersistentTeacherGroup getInstance(Department department, ExecutionYear executionYear) {
-        return getInstance(FluentIterable.from(department.getTeacherGroupSet()), null, null, null, department, executionYear);
+        return getInstance(department.getTeacherGroupSet().stream(), null, null, null, department, executionYear);
     }
 
     public static PersistentTeacherGroup getInstance(ExecutionCourse executionCourse) {
-        return getInstance(FluentIterable.from(executionCourse.getTeacherGroupSet()), null, executionCourse, null, null, null);
+        return getInstance(executionCourse.getTeacherGroupSet().stream(), null, executionCourse, null, null, null);
     }
 
     public static PersistentTeacherGroup getInstance(Degree degree, ExecutionCourse executionCourse, Space campus,
@@ -75,30 +70,14 @@ public class PersistentTeacherGroup extends PersistentTeacherGroup_Base {
         return null;
     }
 
-    private static PersistentTeacherGroup getInstance(FluentIterable<PersistentTeacherGroup> options, Degree degree,
+    private static PersistentTeacherGroup getInstance(Stream<PersistentTeacherGroup> options, Degree degree,
             ExecutionCourse executionCourse, Space campus, Department department, ExecutionYear executionYear) {
-        Optional<PersistentTeacherGroup> instance = select(options, degree, executionCourse, campus, department, executionYear);
-        return instance.isPresent() ? instance.get() : create(options, degree, executionCourse, campus, department, executionYear);
-    }
-
-    @Atomic(mode = TxMode.WRITE)
-    private static PersistentTeacherGroup create(FluentIterable<PersistentTeacherGroup> options, Degree degree,
-            ExecutionCourse executionCourse, Space campus, Department department, ExecutionYear executionYear) {
-        Optional<PersistentTeacherGroup> instance = select(options, degree, executionCourse, campus, department, executionYear);
-        return instance.isPresent() ? instance.get() : new PersistentTeacherGroup(degree, executionCourse, campus, department,
-                executionYear);
-    }
-
-    private static Optional<PersistentTeacherGroup> select(FluentIterable<PersistentTeacherGroup> options, final Degree degree,
-            final ExecutionCourse executionCourse, final Space campus, final Department department,
-            final ExecutionYear executionYear) {
-        return options.firstMatch(new Predicate<PersistentTeacherGroup>() {
-            @Override
-            public boolean apply(PersistentTeacherGroup group) {
-                return Objects.equal(group.getDegree(), degree) && Objects.equal(group.getExecutionCourse(), executionCourse)
-                        && Objects.equal(group.getCampus(), campus) && Objects.equal(group.getDepartment(), department)
-                        && Objects.equal(group.getExecutionYear(), executionYear);
-            }
-        });
+        return singleton(
+                () -> options.filter(
+                        group -> Objects.equals(group.getDegree(), degree)
+                                && Objects.equals(group.getExecutionCourse(), executionCourse)
+                                && Objects.equals(group.getCampus(), campus) && Objects.equals(group.getDepartment(), department)
+                                && Objects.equals(group.getExecutionYear(), executionYear)).findAny(),
+                () -> new PersistentTeacherGroup(degree, executionCourse, campus, department, executionYear));
     }
 }

@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
+import java.util.Optional;
+
 import net.sourceforge.fenixedu.domain.Grouping;
-import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.Atomic.TxMode;
 
 public class PersistentGroupingGroup extends PersistentGroupingGroup_Base {
     protected PersistentGroupingGroup(Grouping grouping) {
@@ -22,13 +22,6 @@ public class PersistentGroupingGroup extends PersistentGroupingGroup_Base {
     }
 
     public static PersistentGroupingGroup getInstance(Grouping grouping) {
-        PersistentGroupingGroup instance = grouping.getGroupingGroup();
-        return instance != null ? instance : create(grouping);
-    }
-
-    @Atomic(mode = TxMode.WRITE)
-    private static PersistentGroupingGroup create(Grouping grouping) {
-        PersistentGroupingGroup instance = grouping.getGroupingGroup();
-        return instance != null ? instance : new PersistentGroupingGroup(grouping);
+        return singleton(() -> Optional.ofNullable(grouping.getGroupingGroup()), () -> new PersistentGroupingGroup(grouping));
     }
 }

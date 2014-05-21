@@ -5,8 +5,6 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 
 import org.fenixedu.bennu.core.groups.Group;
 
-import com.google.common.base.Supplier;
-
 public class PersistentTeachersWithMarkSheetsToConfirmGroup extends PersistentTeachersWithMarkSheetsToConfirmGroup_Base {
     protected PersistentTeachersWithMarkSheetsToConfirmGroup(ExecutionSemester period, DegreeCurricularPlan degreeCurricularPlan) {
         super();
@@ -20,12 +18,7 @@ public class PersistentTeachersWithMarkSheetsToConfirmGroup extends PersistentTe
 
     public static PersistentTeachersWithMarkSheetsToConfirmGroup getInstance(final ExecutionSemester period,
             final DegreeCurricularPlan degreeCurricularPlan) {
-        return getInstance(PersistentTeachersWithMarkSheetsToConfirmGroup.class, period, degreeCurricularPlan,
-                new Supplier<PersistentTeachersWithMarkSheetsToConfirmGroup>() {
-                    @Override
-                    public PersistentTeachersWithMarkSheetsToConfirmGroup get() {
-                        return new PersistentTeachersWithMarkSheetsToConfirmGroup(period, degreeCurricularPlan);
-                    }
-                });
+        return singleton(PersistentTeachersWithMarkSheetsToConfirmGroup.class, period, degreeCurricularPlan,
+                () -> new PersistentTeachersWithMarkSheetsToConfirmGroup(period, degreeCurricularPlan));
     }
 }

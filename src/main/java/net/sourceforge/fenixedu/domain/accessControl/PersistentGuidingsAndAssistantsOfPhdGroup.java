@@ -1,11 +1,10 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
+import java.util.Optional;
+
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 
 import org.fenixedu.bennu.core.groups.Group;
-
-import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.Atomic.TxMode;
 
 public class PersistentGuidingsAndAssistantsOfPhdGroup extends PersistentGuidingsAndAssistantsOfPhdGroup_Base {
     protected PersistentGuidingsAndAssistantsOfPhdGroup(PhdIndividualProgramProcess phdIndividualProgramProcess) {
@@ -26,13 +25,7 @@ public class PersistentGuidingsAndAssistantsOfPhdGroup extends PersistentGuiding
 
     public static PersistentGuidingsAndAssistantsOfPhdGroup getInstance(
             final PhdIndividualProgramProcess phdIndividualProgramProcess) {
-        PersistentGuidingsAndAssistantsOfPhdGroup instance = phdIndividualProgramProcess.getGuidingsAndAssistantsGroup();
-        return instance != null ? instance : create(phdIndividualProgramProcess);
-    }
-
-    @Atomic(mode = TxMode.WRITE)
-    private static PersistentGuidingsAndAssistantsOfPhdGroup create(final PhdIndividualProgramProcess phdIndividualProgramProcess) {
-        PersistentGuidingsAndAssistantsOfPhdGroup instance = phdIndividualProgramProcess.getGuidingsAndAssistantsGroup();
-        return instance != null ? instance : new PersistentGuidingsAndAssistantsOfPhdGroup(phdIndividualProgramProcess);
+        return singleton(() -> Optional.ofNullable(phdIndividualProgramProcess.getGuidingsAndAssistantsGroup()),
+                () -> new PersistentGuidingsAndAssistantsOfPhdGroup(phdIndividualProgramProcess));
     }
 }

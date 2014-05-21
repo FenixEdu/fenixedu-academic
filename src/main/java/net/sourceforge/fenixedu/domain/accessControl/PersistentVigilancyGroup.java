@@ -1,11 +1,10 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
+import java.util.Optional;
+
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 
 import org.fenixedu.bennu.core.groups.Group;
-
-import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.Atomic.TxMode;
 
 public class PersistentVigilancyGroup extends PersistentVigilancyGroup_Base {
     protected PersistentVigilancyGroup(Vigilancy vigilancy) {
@@ -25,14 +24,6 @@ public class PersistentVigilancyGroup extends PersistentVigilancyGroup_Base {
     }
 
     public static PersistentVigilancyGroup getInstance(Vigilancy vigilancy) {
-        PersistentVigilancyGroup instance = vigilancy.getVigilancyGroup();
-        return instance != null ? instance : create(vigilancy);
+        return singleton(() -> Optional.ofNullable(vigilancy.getVigilancyGroup()), () -> new PersistentVigilancyGroup(vigilancy));
     }
-
-    @Atomic(mode = TxMode.WRITE)
-    private static PersistentVigilancyGroup create(Vigilancy vigilancy) {
-        PersistentVigilancyGroup instance = vigilancy.getVigilancyGroup();
-        return instance != null ? instance : new PersistentVigilancyGroup(vigilancy);
-    }
-
 }

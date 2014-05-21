@@ -1,12 +1,11 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
+import java.util.Optional;
+
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.fenixedu.bennu.core.groups.Group;
-
-import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.Atomic.TxMode;
 
 public class PersistentRoleGroup extends PersistentRoleGroup_Base {
     protected PersistentRoleGroup(Role role) {
@@ -24,13 +23,6 @@ public class PersistentRoleGroup extends PersistentRoleGroup_Base {
     }
 
     public static PersistentRoleGroup getInstance(final Role role) {
-        PersistentRoleGroup instance = role.getRoleGroup();
-        return instance != null ? instance : create(role);
-    }
-
-    @Atomic(mode = TxMode.WRITE)
-    private static PersistentRoleGroup create(final Role role) {
-        PersistentRoleGroup instance = role.getRoleGroup();
-        return instance != null ? instance : new PersistentRoleGroup(role);
+        return singleton(() -> Optional.ofNullable(role.getRoleGroup()), () -> new PersistentRoleGroup(role));
     }
 }

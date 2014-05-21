@@ -4,11 +4,8 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 
 import org.fenixedu.bennu.core.groups.Group;
 
-import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.Atomic.TxMode;
-
 public class PersistentStudentSharingDegreeOfExecutionCourseGroup extends
-        PersistentStudentSharingDegreeOfExecutionCourseGroup_Base {
+PersistentStudentSharingDegreeOfExecutionCourseGroup_Base {
     protected PersistentStudentSharingDegreeOfExecutionCourseGroup(ExecutionCourse executionCourse) {
         super();
         init(executionCourse);
@@ -20,16 +17,7 @@ public class PersistentStudentSharingDegreeOfExecutionCourseGroup extends
     }
 
     public static PersistentStudentSharingDegreeOfExecutionCourseGroup getInstance(ExecutionCourse executionCourse) {
-        PersistentStudentSharingDegreeOfExecutionCourseGroup instance =
-                select(PersistentStudentSharingDegreeOfExecutionCourseGroup.class, executionCourse);
-        return instance != null ? instance : create(executionCourse);
+        return singleton(PersistentStudentSharingDegreeOfExecutionCourseGroup.class, executionCourse,
+                () -> new PersistentStudentSharingDegreeOfExecutionCourseGroup(executionCourse));
     }
-
-    @Atomic(mode = TxMode.WRITE)
-    private static PersistentStudentSharingDegreeOfExecutionCourseGroup create(ExecutionCourse executionCourse) {
-        PersistentStudentSharingDegreeOfExecutionCourseGroup instance =
-                select(PersistentStudentSharingDegreeOfExecutionCourseGroup.class, executionCourse);
-        return instance != null ? instance : new PersistentStudentSharingDegreeOfExecutionCourseGroup(executionCourse);
-    }
-
 }

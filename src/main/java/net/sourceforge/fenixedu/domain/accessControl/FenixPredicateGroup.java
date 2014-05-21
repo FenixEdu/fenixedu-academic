@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
-import org.fenixedu.bennu.core.domain.Bennu;
+import java.util.Optional;
+import java.util.stream.Stream;
 
-import com.google.common.base.Optional;
-import com.google.common.collect.FluentIterable;
+import org.fenixedu.bennu.core.domain.Bennu;
 
 public abstract class FenixPredicateGroup extends FenixPredicateGroup_Base {
     public FenixPredicateGroup() {
@@ -17,12 +17,11 @@ public abstract class FenixPredicateGroup extends FenixPredicateGroup_Base {
         super.gc();
     }
 
-    protected static <T extends FenixPredicateGroup> FluentIterable<T> filter(Class<T> type) {
-        return FluentIterable.from(Bennu.getInstance().getFenixPredicateGroupSet()).filter(type);
+    protected static <T extends FenixPredicateGroup> Stream<T> filter(Class<T> type) {
+        return (Stream<T>) Bennu.getInstance().getFenixPredicateGroupSet().stream().filter(p -> p.getClass() == type);
     }
 
     protected static <T extends FenixPredicateGroup> Optional<T> find(Class<T> type) {
-        return FluentIterable.from(Bennu.getInstance().getFenixPredicateGroupSet()).filter(type).first();
+        return filter(type).findAny();
     }
-
 }

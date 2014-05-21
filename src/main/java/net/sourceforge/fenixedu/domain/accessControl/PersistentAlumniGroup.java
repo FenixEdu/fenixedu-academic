@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
+import java.util.Optional;
+
 import net.sourceforge.fenixedu.domain.Degree;
-import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.Atomic.TxMode;
 
 public class PersistentAlumniGroup extends PersistentAlumniGroup_Base {
     protected PersistentAlumniGroup(Degree degree) {
@@ -29,13 +29,8 @@ public class PersistentAlumniGroup extends PersistentAlumniGroup_Base {
     }
 
     public static PersistentAlumniGroup getInstance(Degree degree) {
-        PersistentAlumniGroup instance = degree == null ? find(PersistentAlumniGroup.class).orNull() : degree.getAlumniGroup();
-        return instance != null ? instance : create(degree);
-    }
-
-    @Atomic(mode = TxMode.WRITE)
-    private static PersistentAlumniGroup create(Degree degree) {
-        PersistentAlumniGroup instance = degree == null ? find(PersistentAlumniGroup.class).orNull() : degree.getAlumniGroup();
-        return instance != null ? instance : new PersistentAlumniGroup(degree);
+        return singleton(
+                () -> degree == null ? find(PersistentAlumniGroup.class) : Optional.ofNullable(degree.getAlumniGroup()),
+                        () -> new PersistentAlumniGroup(degree));
     }
 }

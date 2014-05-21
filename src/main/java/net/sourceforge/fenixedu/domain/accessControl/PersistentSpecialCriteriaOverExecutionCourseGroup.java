@@ -1,8 +1,9 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import java.util.Optional;
+import java.util.function.Supplier;
 
-import com.google.common.collect.FluentIterable;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 
 public abstract class PersistentSpecialCriteriaOverExecutionCourseGroup extends
         PersistentSpecialCriteriaOverExecutionCourseGroup_Base {
@@ -20,8 +21,10 @@ public abstract class PersistentSpecialCriteriaOverExecutionCourseGroup extends
         super.gc();
     }
 
-    protected static <T extends PersistentSpecialCriteriaOverExecutionCourseGroup> T select(Class<T> type,
-            ExecutionCourse executionCourse) {
-        return FluentIterable.from(executionCourse.getSpecialCriteriaOverExecutionCourseGroupSet()).filter(type).first().orNull();
+    protected static <T extends PersistentSpecialCriteriaOverExecutionCourseGroup> T singleton(Class<T> type,
+            ExecutionCourse executionCourse, Supplier<T> creator) {
+        return singleton(
+                () -> (Optional<T>) executionCourse.getSpecialCriteriaOverExecutionCourseGroupSet().stream()
+                        .filter(group -> group.getClass() == type).findAny(), creator);
     }
 }

@@ -1,11 +1,10 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
+import java.util.Optional;
+
 import net.sourceforge.fenixedu.domain.alumni.CerimonyInquiry;
 
 import org.fenixedu.bennu.core.groups.Group;
-
-import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.Atomic.TxMode;
 
 public class PersistentCerimonyInquiryGroup extends PersistentCerimonyInquiryGroup_Base {
     protected PersistentCerimonyInquiryGroup(CerimonyInquiry cerimonyInquiry) {
@@ -25,14 +24,7 @@ public class PersistentCerimonyInquiryGroup extends PersistentCerimonyInquiryGro
     }
 
     public static PersistentCerimonyInquiryGroup getInstance(CerimonyInquiry cerimonyInquiry) {
-        PersistentCerimonyInquiryGroup instance = cerimonyInquiry.getGroup();
-        return instance != null ? instance : create(cerimonyInquiry);
+        return singleton(() -> Optional.ofNullable(cerimonyInquiry.getGroup()), () -> new PersistentCerimonyInquiryGroup(
+                cerimonyInquiry));
     }
-
-    @Atomic(mode = TxMode.WRITE)
-    private static PersistentCerimonyInquiryGroup create(CerimonyInquiry cerimonyInquiry) {
-        PersistentCerimonyInquiryGroup instance = cerimonyInquiry.getGroup();
-        return instance != null ? instance : new PersistentCerimonyInquiryGroup(cerimonyInquiry);
-    }
-
 }

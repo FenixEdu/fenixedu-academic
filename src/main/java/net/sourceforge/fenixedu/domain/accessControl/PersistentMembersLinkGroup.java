@@ -1,9 +1,8 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
-import org.fenixedu.bennu.core.groups.Group;
+import java.util.Optional;
 
-import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.Atomic.TxMode;
+import org.fenixedu.bennu.core.groups.Group;
 
 public class PersistentMembersLinkGroup extends PersistentMembersLinkGroup_Base {
     protected PersistentMembersLinkGroup(PersistentGroupMembers persistentGroupMembers) {
@@ -23,13 +22,7 @@ public class PersistentMembersLinkGroup extends PersistentMembersLinkGroup_Base 
     }
 
     public static PersistentMembersLinkGroup getInstance(PersistentGroupMembers persistentGroupMembers) {
-        PersistentMembersLinkGroup instance = persistentGroupMembers.getMembersLinkGroup();
-        return instance != null ? instance : create(persistentGroupMembers);
-    }
-
-    @Atomic(mode = TxMode.WRITE)
-    private static PersistentMembersLinkGroup create(PersistentGroupMembers persistentGroupMembers) {
-        PersistentMembersLinkGroup instance = persistentGroupMembers.getMembersLinkGroup();
-        return instance != null ? instance : new PersistentMembersLinkGroup(persistentGroupMembers);
+        return singleton(() -> Optional.ofNullable(persistentGroupMembers.getMembersLinkGroup()),
+                () -> new PersistentMembersLinkGroup(persistentGroupMembers));
     }
 }

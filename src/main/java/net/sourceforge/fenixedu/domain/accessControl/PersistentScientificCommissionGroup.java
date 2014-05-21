@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
+import java.util.Optional;
+
 import net.sourceforge.fenixedu.domain.Degree;
 
 import org.fenixedu.bennu.core.groups.Group;
@@ -22,12 +24,7 @@ public class PersistentScientificCommissionGroup extends PersistentScientificCom
     }
 
     public static PersistentScientificCommissionGroup getInstance(Degree degree) {
-        PersistentScientificCommissionGroup instance = degree.getScientificCommissionGroup();
-        return instance != null ? instance : create(degree);
-    }
-
-    private static PersistentScientificCommissionGroup create(Degree degree) {
-        PersistentScientificCommissionGroup instance = degree.getScientificCommissionGroup();
-        return instance != null ? instance : new PersistentScientificCommissionGroup(degree);
+        return singleton(() -> Optional.ofNullable(degree.getScientificCommissionGroup()),
+                () -> new PersistentScientificCommissionGroup(degree));
     }
 }

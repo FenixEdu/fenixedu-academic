@@ -1,11 +1,10 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
+import java.util.Optional;
+
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 
 import org.fenixedu.bennu.core.groups.Group;
-
-import pt.ist.fenixframework.Atomic;
-import pt.ist.fenixframework.Atomic.TxMode;
 
 public class PersistentPersonsInFunctionGroup extends PersistentPersonsInFunctionGroup_Base {
     protected PersistentPersonsInFunctionGroup(Function function) {
@@ -25,14 +24,7 @@ public class PersistentPersonsInFunctionGroup extends PersistentPersonsInFunctio
     }
 
     public static PersistentPersonsInFunctionGroup getInstance(Function function) {
-        PersistentPersonsInFunctionGroup instance = function.getPersonsInFunctionGroup();
-        return instance != null ? instance : create(function);
+        return singleton(() -> Optional.ofNullable(function.getPersonsInFunctionGroup()),
+                () -> new PersistentPersonsInFunctionGroup(function));
     }
-
-    @Atomic(mode = TxMode.WRITE)
-    private static PersistentPersonsInFunctionGroup create(Function function) {
-        PersistentPersonsInFunctionGroup instance = function.getPersonsInFunctionGroup();
-        return instance != null ? instance : new PersistentPersonsInFunctionGroup(function);
-    }
-
 }
