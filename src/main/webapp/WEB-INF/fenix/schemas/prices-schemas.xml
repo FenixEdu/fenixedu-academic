@@ -803,13 +803,13 @@
 
 <schema name="GratuityWithPaymentPlanPR.view" type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR"
 		bundle="APPLICATION_RESOURCES" extends="PostingRule.view">
+		<slot name="defaultGratuityAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.PostingRule.defaultGratuityAmount"></slot>
 </schema>
 
 <schema name="GratuityWithPaymentPlanPR.edit" type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.GratuityWithPaymentPlanPR"
 		bundle="APPLICATION_RESOURCES">
 		<slot name="startDate"></slot>
 		<slot name="endDate"></slot>
-		<slot name="defaultGratuityAmount"></slot>
 </schema>
 
 <schema name="StandaloneEnrolmentGratuityPR.edit" type="net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.StandaloneEnrolmentGratuityPR"
