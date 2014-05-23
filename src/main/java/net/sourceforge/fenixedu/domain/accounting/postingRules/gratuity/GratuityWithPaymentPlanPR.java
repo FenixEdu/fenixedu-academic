@@ -204,6 +204,10 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base im
         return getServiceAgreementTemplate().getDefaultPaymentPlan(executionYear).calculateOriginalTotalAmount();
     }
 
+    public Money getDefaultGratuityAmount() {
+        return getDefaultGratuityAmount(ExecutionYear.readByDateTime(getCreationDate()));
+    }
+
     @Override
     public void delete() {
         checkIfCanBeDeleted();
