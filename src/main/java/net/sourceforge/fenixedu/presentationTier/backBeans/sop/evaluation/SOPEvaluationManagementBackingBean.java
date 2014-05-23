@@ -1538,6 +1538,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
     public void setSelectedCurricularYearID(Integer selectedCurricularYearID) {
         this.getViewState().setAttribute("selectedCurricularYearID", selectedCurricularYearID);
+        curricularYearID = selectedCurricularYearID;
     }
 
     public String getSelectedExecutionCourseID() {

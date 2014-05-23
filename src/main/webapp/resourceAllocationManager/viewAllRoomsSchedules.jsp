@@ -7,7 +7,7 @@
 <link href="${pageContext.request.contextPath}/CSS/dotist_timetables.css" rel="stylesheet" type="text/css" />
 
 <c:forEach var="bean" items="${beans}">
-
+	<div class="single">
 	<div class="alert alert-warning">
 		<strong>${academicInterval.pathName}</strong>
 	</div>
@@ -38,7 +38,7 @@
 				${bean.room.name}
 			</td>
 			<td class="listClasses">
-				${bean.room.classification.name}
+				${bean.room.classification.name.content}
 			</td>
 			<td class="listClasses">
 				${bean.room.parent.name}
@@ -61,7 +61,15 @@
 
 	<br />
 	<br />
+	</div>
 </c:forEach>
+
+<style type="text/css" media="print">
+.single {
+	page-break-after: always;
+	page-break-inside: avoid;
+}
+</style>
 
 <c:if test="${beans.size() == 0}">
 	<span class="error"><bean:message key="message.rooms.notExisting"/></span>

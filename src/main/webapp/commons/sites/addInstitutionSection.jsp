@@ -1,10 +1,10 @@
-<%@ page isELIgnored="true"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <html:xhtml/>
 
@@ -35,10 +35,8 @@
 
 <p class="mtop15 mbottom05"><bean:message key="label.unitSite.institutionSection.choose" bundle="SITE_RESOURCES"/>:</p>
 
-<fr:view name="template" property="templatedSection">
-	<fr:layout>
-		<fr:property name="eachLayout" value="values"/>
-		<fr:property name="eachSchema" value="site.section.name"/>
-	</fr:layout>
-	<fr:destination name="section.view" path="<%= actionName + "?method=addFromPool&amp;containerId=" +  parentId + "&amp;contentId=${externalId}&amp;oid=" + siteId + "&amp;sectionID=" + parentId + "&amp;" + context%>"/>
-</fr:view>
+<ul>
+    <c:forEach var="section" items="${template.templatedSectionSet}">
+        <li><html:link page="${actionName}?method=addFromPool&containerId=${parentId}&contentId=${section.externalId}&oid=${siteId}&sectionID=${parentId}&${context}">${section.name}</html:link></li>
+    </c:forEach>
+</ul>

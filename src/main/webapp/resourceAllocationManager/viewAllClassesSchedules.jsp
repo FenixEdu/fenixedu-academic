@@ -11,6 +11,7 @@
 <c:forEach var="degree" items="${degrees}">
 	<c:forEach var="schoolClass" items="${degree.schoolClassesSet}">
 		<c:if test="${schoolClass.academicInterval == academicInterval}">
+			<div class="single">
 			<div class="alert alert-warning">
 				${degree.presentationName} - ${academicInterval.pathName}
 			</div>
@@ -21,9 +22,17 @@
 			</div>
 			<br /><br />
 			<c:set var="foundAny" value="${true}" />
+			</div>
 		</c:if>
 	</c:forEach>
 </c:forEach>
+
+<style type="text/css" media="print">
+.single {
+	page-break-after: always;
+	page-break-inside: avoid;
+}
+</style>
 
 <c:if test="${!foundAny}">
 	<span class="error"><bean:message key="message.classes.notExisting"/></span>
