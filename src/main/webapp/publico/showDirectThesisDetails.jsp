@@ -71,7 +71,10 @@
         <html:img page="/images/icon_pdf.gif" module=""/>
         <fr:view name="file" property="size" layout="fileSize"/>
     </html:link></logic:iterate>)
-        
+
+	<p>
+		<bean:message bundle="RESEARCHER_RESOURCES" key="label.publication.subject.to.copyright"/>
+	</p>
 </logic:notEmpty>
 
 <logic:empty name="thesis" property="publication">
