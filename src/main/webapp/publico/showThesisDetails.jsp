@@ -106,7 +106,9 @@
 		}
 	%>
 	</p>
-		
+	<p>
+		<bean:message bundle="RESEARCHER_RESOURCES" key="label.publication.subject.to.copyright"/>
+	</p>
 </logic:notEmpty>
 
 <logic:empty name="thesis" property="publication">
