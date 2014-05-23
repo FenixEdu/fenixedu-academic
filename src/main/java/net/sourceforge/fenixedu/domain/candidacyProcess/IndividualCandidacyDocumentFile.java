@@ -5,6 +5,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.fenixedu.bennu.core.groups.NobodyGroup;
 
@@ -15,15 +16,6 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
     protected IndividualCandidacyDocumentFile() {
         super();
         this.setCandidacyFileActive(Boolean.TRUE);
-    }
-
-    protected IndividualCandidacyDocumentFile(IndividualCandidacyDocumentFileType type, IndividualCandidacy candidacy,
-            byte[] contents, String filename) {
-        this();
-        this.setCandidacyFileActive(Boolean.TRUE);
-        addIndividualCandidacy(candidacy);
-        setCandidacyFileType(type);
-        init(filename, filename, contents, NobodyGroup.get());
     }
 
     protected IndividualCandidacyDocumentFile(IndividualCandidacyDocumentFileType type, byte[] contents, String filename) {
@@ -46,12 +38,18 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
         }
 
         // Academic Administration Permissions
-        for (AcademicProgram program : AcademicAuthorizationGroup.getProgramsForOperation(person, AcademicOperationType.MANAGE_CANDIDACY_PROCESSES)) {
+        for (AcademicProgram program : AcademicAuthorizationGroup.getProgramsForOperation(person,
+                AcademicOperationType.MANAGE_CANDIDACY_PROCESSES)) {
             for (IndividualCandidacy individualCandidacy : getIndividualCandidacySet()) {
                 if (individualCandidacy.getAllDegrees().contains(program)) {
                     return true;
                 }
             }
+        }
+
+        // International Relation Office permissions
+        if (person.hasRole(RoleType.INTERNATIONAL_RELATION_OFFICE)) {
+            return true;
         }
 
         // Coordinators
@@ -61,6 +59,11 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
                     return true;
                 }
             }
+        }
+
+        // Mobility Coordinators
+        if (person.getTeacher() != null && !person.getTeacher().getMobilityCoordinationsSet().isEmpty()) {
+            return true;
         }
 
         // Candidates
