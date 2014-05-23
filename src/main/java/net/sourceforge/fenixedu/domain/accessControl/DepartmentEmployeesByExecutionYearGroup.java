@@ -76,6 +76,6 @@ public class DepartmentEmployeesByExecutionYearGroup extends DepartmentByExecuti
             throw new InvalidGroupException();
         }
         return PersistentUnitGroup.getInstance(getDepartment().getDepartmentUnit(), AccountabilityTypeEnum.WORKING_CONTRACT,
-                null, false);
+                null, true);
     }
 }
