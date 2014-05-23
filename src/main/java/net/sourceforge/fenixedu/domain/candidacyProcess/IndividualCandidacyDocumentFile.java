@@ -6,6 +6,8 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.NoOneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicAuthorizationGroup;
 import net.sourceforge.fenixedu.domain.accessControl.academicAdministration.AcademicOperationType;
+import net.sourceforge.fenixedu.domain.person.RoleType;
+
 import pt.ist.fenixframework.Atomic;
 
 public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocumentFile_Base {
@@ -13,15 +15,6 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
     protected IndividualCandidacyDocumentFile() {
         super();
         this.setCandidacyFileActive(Boolean.TRUE);
-    }
-
-    protected IndividualCandidacyDocumentFile(IndividualCandidacyDocumentFileType type, IndividualCandidacy candidacy,
-            byte[] contents, String filename) {
-        this();
-        this.setCandidacyFileActive(Boolean.TRUE);
-        addIndividualCandidacy(candidacy);
-        setCandidacyFileType(type);
-        init(filename, filename, contents, new NoOneGroup());
     }
 
     protected IndividualCandidacyDocumentFile(IndividualCandidacyDocumentFileType type, byte[] contents, String filename) {
@@ -53,6 +46,11 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
             }
         }
 
+        // International Relation Office permissions
+        if (person.hasRole(RoleType.INTERNATIONAL_RELATION_OFFICE)) {
+            return true;
+        }
+
         // Coordinators
         for (IndividualCandidacy individualCandidacy : getIndividualCandidacySet()) {
             for (Degree degree : individualCandidacy.getAllDegrees()) {
@@ -60,6 +58,11 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
                     return true;
                 }
             }
+        }
+
+        // Mobility Coordinators
+        if (person.getTeacher() != null && !person.getTeacher().getMobilityCoordinationsSet().isEmpty()) {
+            return true;
         }
 
         // Candidates
