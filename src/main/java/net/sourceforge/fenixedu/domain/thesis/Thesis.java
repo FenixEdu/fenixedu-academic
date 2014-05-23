@@ -772,7 +772,7 @@ public class Thesis extends Thesis_Base {
 
             updateMarkSheet();
 
-            setDocumentsAvailableAfter(new DateTime().plusMonths(6));
+            setDocumentsAvailableAfter(new DateTime().plusMonths(9));
         } else {
             throw new DomainException("thesis.already.evaluated");
         }
