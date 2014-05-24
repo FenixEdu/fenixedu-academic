@@ -57,6 +57,5 @@
       <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
             <set-property value="/WEB-INF/validator-rules.xml" property="pathnames"></set-property>
       </plug-in>
-      <plug-in className="com.octo.captcha.module.struts.CaptchaServicePlugin"></plug-in>
       <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
 </struts-config>

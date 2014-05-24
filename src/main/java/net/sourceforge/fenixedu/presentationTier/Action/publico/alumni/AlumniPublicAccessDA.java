@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.AlumniRequestType;
 import net.sourceforge.fenixedu.domain.Installation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.publico.KaptchaAction;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -34,9 +35,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.EMail;
-import java.util.Locale;
-
-import com.octo.captcha.module.struts.CaptchaServicePlugin;
 
 @Mapping(module = "publico", path = "/alumni", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "alumniPublicAccessInner", path = "alumni.alumniPublicAccessInner"),
@@ -106,11 +104,10 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
     }
 
     private boolean validateCaptcha(ActionMapping mapping, HttpServletRequest request) {
-        final String captchaId = request.getSession().getId();
         final String captchaResponse = request.getParameter("j_captcha_response");
 
         try {
-            if (!CaptchaServicePlugin.getInstance().getService().validateResponseForID(captchaId, captchaResponse)) {
+            if (!KaptchaAction.validateResponse(request.getSession(), captchaResponse)) {
                 addActionMessage("error", request, "captcha.wrong.word");
                 return false;
             }

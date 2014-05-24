@@ -36,6 +36,7 @@ import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.IndividualCandidacyProcessDA;
+import net.sourceforge.fenixedu.presentationTier.Action.publico.KaptchaAction;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -51,8 +52,6 @@ import pt.utl.ist.fenix.tools.util.Pair;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
-import com.octo.captcha.module.struts.CaptchaServicePlugin;
-import com.octo.captcha.service.CaptchaServiceException;
 
 public abstract class RefactoredIndividualCandidacyProcessPublicDA extends IndividualCandidacyProcessDA {
 
@@ -209,21 +208,13 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
             HttpServletResponse response);
 
     protected boolean validateCaptcha(ActionMapping mapping, HttpServletRequest request) {
-        final String captchaId = request.getSession().getId();
         final String captchaResponse = request.getParameter("j_captcha_response");
 
-        try {
-            if (!CaptchaServicePlugin.getInstance().getService().validateResponseForID(captchaId, captchaResponse)) {
-                addActionMessage("captcha.error", request, "captcha.wrong.word");
-                return false;
-            }
-            return true;
-        } catch (CaptchaServiceException e) { // may be thrown if the id is not
-            // valid
-            logger.error(e.getMessage(), e);
+        if (!KaptchaAction.validateResponse(request.getSession(), captchaResponse)) {
             addActionMessage("captcha.error", request, "captcha.wrong.word");
             return false;
         }
+        return true;
     }
 
     private boolean isInEnglishLocale() {

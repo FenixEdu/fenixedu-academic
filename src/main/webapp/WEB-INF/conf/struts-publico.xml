@@ -323,11 +323,6 @@
             <!--===== Content Actions ======-->
             <!-- =================== Find Spaces Interface  =================== -->
             <!-- =================== Alumni Registration  =================== -->
-            <action type="com.octo.captcha.module.struts.image.RenderImageCaptchaAction" path="/jcaptcha"></action>
-            <action validate="true" scope="request" type="com.octo.captcha.module.struts.VerifyCaptchaChallengeAction" parameter="method" path="/LoginCaptcha">
-                  <forward redirect="true" path="/alumni.do?method=validateFenixAcessData" name="success"></forward>
-                  <forward redirect="true" path="/teste.jsp" name="failure"></forward>
-            </action>
             <!-- =================== Alumni Registration  =================== -->
       </action-mappings>
       <!-- ========== Controller Configuration ================================ -->

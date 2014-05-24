@@ -4,7 +4,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
-<%@ taglib uri="http://jcaptcha.sourceforge.net" prefix="jcaptcha"%>
 
 <h1><bean:message key="label.alumni.registration" bundle="ALUMNI_RESOURCES" /></h1>
 

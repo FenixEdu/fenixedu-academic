@@ -3,9 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers;
 import java.util.Collections;
 import java.util.Properties;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import net.sourceforge.fenixedu.presentationTier.Action.publico.KaptchaAction;
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.Face;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
@@ -18,13 +16,11 @@ import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.ist.fenixWebFramework.renderers.model.MetaObject;
 import pt.ist.fenixWebFramework.renderers.model.MetaSlot;
 import pt.ist.fenixWebFramework.renderers.model.MetaSlotKey;
+import pt.ist.fenixWebFramework.renderers.plugin.RenderersRequestProcessorImpl;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.renderers.validators.HtmlChainValidator;
 import pt.ist.fenixWebFramework.renderers.validators.HtmlValidator;
 import pt.utl.ist.fenix.tools.util.Pair;
-
-import com.octo.captcha.module.struts.CaptchaServicePlugin;
-import com.octo.captcha.service.CaptchaServiceException;
 
 public class CaptchaRenderer extends InputRenderer {
 
@@ -99,7 +95,6 @@ public class CaptchaRenderer extends InputRenderer {
                     final MetaSlot metaSlot = (MetaSlot) metaObject;
                     final Class defaultValidator = CaptchaValidator.class;
                     final Properties properties = new Properties();
-                    properties.setProperty("responseId", getInputContext().getViewState().getRequest().getSession().getId());
                     metaSlot.setValidators(Collections.singletonList(new Pair<Class<HtmlValidator>, Properties>(defaultValidator,
                             properties)));
                 }
@@ -109,11 +104,7 @@ public class CaptchaRenderer extends InputRenderer {
 
     static public class CaptchaValidator extends HtmlValidator {
 
-        private static final Logger logger = LoggerFactory.getLogger(CaptchaRenderer.CaptchaValidator.class);
-
         private static final long serialVersionUID = 5199426957775725692L;
-
-        private String responseId;
 
         public CaptchaValidator() {
             super();
@@ -123,14 +114,6 @@ public class CaptchaRenderer extends InputRenderer {
         public CaptchaValidator(HtmlChainValidator htmlChainValidator) {
             super(htmlChainValidator);
             setMessage("renderers.validator.invalid.captcha.value");
-        }
-
-        public String getResponseId() {
-            return responseId;
-        }
-
-        public void setResponseId(String responseId) {
-            this.responseId = responseId;
         }
 
         @Override
@@ -143,17 +126,11 @@ public class CaptchaRenderer extends InputRenderer {
                 setMessage("renderers.validator.captcha.required");
                 setValid(false);
             } else {
-                try {
-                    if (!CaptchaServicePlugin.getInstance().getService().validateResponseForID(responseId, value)) {
-                        setMessage("renderers.validator.invalid.captcha.value");
-                        setValid(false);
-                    } else {
-                        setValid(true);
-                    }
-                } catch (CaptchaServiceException e) {
-                    logger.error(e.getMessage(), e);
+                if (!KaptchaAction.validateResponse(RenderersRequestProcessorImpl.getCurrentRequest().getSession(), value)) {
                     setMessage("renderers.validator.invalid.captcha.value");
                     setValid(false);
+                } else {
+                    setValid(true);
                 }
             }
         }
