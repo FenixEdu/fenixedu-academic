@@ -1,9 +1,11 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.RegistryDiplomaRequestEvent;
@@ -214,7 +216,18 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
 
     @Override
     public String getGraduateTitle(Locale locale) {
-        return getRegistration().getGraduateTitle(getRequestedCycle(), locale);
+        StringBuilder result = new StringBuilder();
+
+        CycleType cycleType = getRequestedCycle();
+        Degree degree = getDegree();
+        final DegreeType degreeType = getDegreeType();
+        result.append(degreeType.getGraduateTitle(cycleType, getLanguage()));
+        final String degreeFilteredName = degree.getFilteredName(getConclusionYear(), getLanguage());
+        result.append(" ")
+                .append(ResourceBundle.getBundle("resources/ApplicationResources", getLanguage()).getString("label.in"));
+        result.append(" ").append(degreeFilteredName);
+
+        return result.toString();
     }
 
     @Override

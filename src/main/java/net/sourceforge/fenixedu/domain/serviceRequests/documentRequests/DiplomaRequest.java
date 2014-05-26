@@ -7,11 +7,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.NoSuchElementException;
+import java.util.ResourceBundle;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DiplomaRequestEvent;
@@ -167,8 +169,8 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
                 throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
             }
 
-            if (!getRegistration().getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) &&
-                    !getRegistration().getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA)) {
+            if (!getRegistration().getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)
+                    && !getRegistration().getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA)) {
                 RegistryCode code = getRegistryCode();
                 if (code != null) {
                     if (!code.getDocumentRequestSet().contains(this)) {
@@ -491,7 +493,21 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
 
     @Override
     public String getGraduateTitle(Locale locale) {
-        return getRegistration().getGraduateTitle(getWhatShouldBeRequestedCycle(), locale);
+        StringBuilder result = new StringBuilder();
+
+        CycleType cycleType = getRequestedCycle();
+        Degree degree = getDegree();
+        final DegreeType degreeType = getDegreeType();
+        result.append(degreeType.getGraduateTitle(cycleType, getLanguage()));
+        final RegistrationConclusionBean registrationConclusionBean =
+                new RegistrationConclusionBean(getRegistration(), getCycleCurriculumGroup());
+        ExecutionYear executionYear = registrationConclusionBean.getConclusionYear();
+        final String degreeFilteredName = degree.getFilteredName(executionYear, getLanguage());
+        result.append(" ")
+                .append(ResourceBundle.getBundle("resources/ApplicationResources", getLanguage()).getString("label.in"));
+        result.append(" ").append(degreeFilteredName);
+
+        return result.toString();
     }
 
     public String getDegreeFilteredName() {
