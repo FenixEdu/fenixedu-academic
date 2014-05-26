@@ -125,7 +125,7 @@
 		{% else %}
 			{% set root = functionality.parent %}
 		{% endif %}
-		{% for item in root.parent.availableChildContainers %}
+		{% for item in root.parent.userMenu %}
 			<ul class="nav nav-pills nav-stacked">
 				<li class="navheader"><strong>{{item.title.content}}</strong></li>
 				{% for child in item.userMenu %}
