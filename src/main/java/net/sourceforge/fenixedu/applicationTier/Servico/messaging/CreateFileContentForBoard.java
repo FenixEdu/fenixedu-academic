@@ -9,11 +9,12 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.groups.Group;
 
 import pt.ist.fenixframework.Atomic;
+
+import com.google.common.io.Files;
 
 public class CreateFileContentForBoard {
 
@@ -28,7 +29,7 @@ public class CreateFileContentForBoard {
             displayName = file.getName();
         }
 
-        final byte[] bs = FileUtils.readFileToByteArray(file);
+        final byte[] bs = Files.toByteArray(file);
         FileContent fileContent = new FileContent(originalFilename, displayName, bs, permittedGroup, null);
 
         board.addFileContent(fileContent);

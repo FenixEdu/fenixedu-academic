@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.FenixActionForward;
 import net.sourceforge.fenixedu.presentationTier.util.struts.StrutsMessageResourceProvider;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -397,14 +396,10 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
         response.setContentType(contentType);
         response.addHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
 
-        ServletOutputStream outputStream = null;
-        try {
-            outputStream = response.getOutputStream();
+        try (ServletOutputStream outputStream = response.getOutputStream()) {
             outputStream.write(content);
             outputStream.flush();
             response.flushBuffer();
-        } finally {
-            IOUtils.closeQuietly(outputStream);
         }
     }
 

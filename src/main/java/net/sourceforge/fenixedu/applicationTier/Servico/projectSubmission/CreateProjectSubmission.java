@@ -19,10 +19,11 @@ import net.sourceforge.fenixedu.domain.accessControl.StudentGroupGroup;
 import net.sourceforge.fenixedu.domain.accessControl.TeacherGroup;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
 
-import org.apache.commons.io.IOUtils;
 import org.fenixedu.bennu.core.groups.Group;
 
 import pt.ist.fenixframework.Atomic;
+
+import com.google.common.io.ByteStreams;
 
 public class CreateProjectSubmission {
 
@@ -52,7 +53,7 @@ public class CreateProjectSubmission {
 
     private static byte[] read(final InputStream stream) {
         try {
-            return IOUtils.toByteArray(stream);
+            return ByteStreams.toByteArray(stream);
         } catch (IOException e) {
             throw new Error(e);
         }

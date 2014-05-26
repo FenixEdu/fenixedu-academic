@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -29,6 +28,8 @@ import org.fenixedu.bennu.portal.EntryPoint;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.FenixFramework;
+
+import com.google.common.io.ByteStreams;
 
 public abstract class QUCAuditorDA extends FenixDispatchAction {
 
@@ -175,7 +176,7 @@ public abstract class QUCAuditorDA extends FenixDispatchAction {
             RenderUtils.invalidateViewState();
             return forwardToFiles(mapping, request, executionCourseAudit);
         }
-        executionCourseAudit.addFile(fileBean.getFileName(), IOUtils.toByteArray(fileBean.getInputStream()));
+        executionCourseAudit.addFile(fileBean.getFileName(), ByteStreams.toByteArray(fileBean.getInputStream()));
         request.setAttribute("fileAdded", "true");
 
         return forwardToFiles(mapping, request, executionCourseAudit);

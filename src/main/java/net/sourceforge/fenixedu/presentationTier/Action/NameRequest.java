@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.CharEncoding;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -15,6 +14,8 @@ import org.fenixedu.bennu.core.domain.User;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+import com.google.common.base.Charsets;
+import com.google.common.hash.Hashing;
 import com.lowagie.text.DocumentException;
 
 @Mapping(path = "/NameResolution", module = "external")
@@ -31,7 +32,7 @@ public class NameRequest extends FenixDispatchAction {
     public ActionForward resolve(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
             final HttpServletResponse httpServletResponse) throws Exception {
 
-        String digest = DigestUtils.shaHex(storedPassword);
+        String digest = Hashing.sha1().hashString(storedPassword, Charsets.UTF_8).toString();
         String providedUsername = request.getParameter("username");
         String providedDigest = request.getParameter("password");
 

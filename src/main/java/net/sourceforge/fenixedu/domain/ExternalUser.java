@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.domain;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+
+import com.google.common.base.Charsets;
+import com.google.common.hash.Hashing;
 
 public class ExternalUser extends ExternalUser_Base {
 
@@ -18,7 +20,7 @@ public class ExternalUser extends ExternalUser_Base {
     }
 
     private String hash(final String password) {
-        return DigestUtils.shaHex(password);
+        return Hashing.sha1().hashString(password, Charsets.UTF_8).toString();
     }
 
     public boolean verify(final String username, final String password) {

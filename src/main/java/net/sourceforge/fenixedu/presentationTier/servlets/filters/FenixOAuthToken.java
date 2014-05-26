@@ -1,9 +1,10 @@
 package net.sourceforge.fenixedu.presentationTier.servlets.filters;
 
+import java.util.Base64;
+
 import net.sourceforge.fenixedu.domain.AppUserSession;
 import net.sourceforge.fenixedu.presentationTier.Action.externalServices.OAuthUtils;
 
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +33,7 @@ public class FenixOAuthToken {
             throw new FenixOAuthTokenException();
         }
 
-        String accessTokenDecoded = new String(Base64.decodeBase64(oAuthToken));
+        String accessTokenDecoded = new String(Base64.getDecoder().decode(oAuthToken));
         String[] accessTokenBuilder = accessTokenDecoded.split(":");
 
         if (accessTokenBuilder.length != 2) {
@@ -57,7 +58,7 @@ public class FenixOAuthToken {
 
     public String format() {
         String token = Joiner.on(":").join(appUserSession.getExternalId(), nounce);
-        return Base64.encodeBase64String(token.getBytes());
+        return Base64.getEncoder().encodeToString(token.getBytes());
     }
 
     private static AppUserSession appUserSession(String appUserSessionId) {

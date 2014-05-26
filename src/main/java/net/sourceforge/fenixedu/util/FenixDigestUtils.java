@@ -2,16 +2,18 @@ package net.sourceforge.fenixedu.util;
 
 import java.math.BigDecimal;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.base.Charsets;
+import com.google.common.hash.Hashing;
 
 public class FenixDigestUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(FenixDigestUtils.class);
 
     public static String createDigest(String data) {
-        return DigestUtils.shaHex(data);
+        return Hashing.sha1().hashString(data, Charsets.UTF_8).toString();
     }
 
     public static void main(String[] args) {

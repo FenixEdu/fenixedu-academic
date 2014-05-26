@@ -16,10 +16,9 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisSite;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-
-import org.apache.commons.io.IOUtils;
-
 import pt.ist.fenixframework.Atomic;
+
+import com.google.common.io.ByteStreams;
 
 public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
     private static final String SUBJECT_KEY = "thesis.evaluation.approve.subject";
@@ -38,7 +37,7 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
 
     public static byte[] readStream(final InputStream inputStream) {
         try {
-            return IOUtils.toByteArray(inputStream);
+            return ByteStreams.toByteArray(inputStream);
         } catch (final IOException e) {
             throw new Error(e);
         }

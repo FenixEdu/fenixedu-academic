@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.student.StudentApplication.StudentViewApp;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -30,6 +29,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.ist.fenixframework.FenixFramework;
+
+import com.google.common.hash.Hashing;
 
 @StrutsFunctionality(app = StudentViewApp.class, descriptionKey = "label.title.sync", path = "sync",
         bundle = "MessagingResources", titleKey = "label.title.sync")
@@ -118,7 +119,7 @@ public class ICalStudentTimeTable extends FenixDispatchAction {
                         + user.getPrivateKey().getPrivateKeyValidity().toString() + "##" + "## This is for " + to + " calendar")
                         .getBytes());
 
-        return DigestUtils.shaHex(encrypted);
+        return Hashing.sha1().hashBytes(encrypted).toString();
     }
 
     public static String getUrl(String to, Registration registration, HttpServletRequest request) throws Exception {

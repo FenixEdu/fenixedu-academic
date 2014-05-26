@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -125,8 +126,6 @@ import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixRoomEvent;
 import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixSchedule;
 import net.sourceforge.fenixedu.webServices.jersey.beans.publico.FenixSpace;
 
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.fileupload.util.Streams;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
@@ -148,6 +147,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Ordering;
+import com.google.common.io.ByteStreams;
 import com.google.common.net.HttpHeaders;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -198,7 +198,7 @@ public class FenixAPIv1 {
             if (person.isPhotoAvailableToCurrentUser()) {
                 final byte[] avatar = personalPhoto.getDefaultAvatar();
                 String type = ContentType.PNG.getMimeType();
-                String data = Base64.encodeBase64String(avatar);
+                String data = Base64.getEncoder().encodeToString(avatar);
                 photo = new FenixPhoto(type, data);
             }
         } catch (Exception npe) {
@@ -869,7 +869,7 @@ public class FenixAPIv1 {
             return new JsonObject().toString();
         }
         try {
-            return Streams.asString(resourceAsStream);
+            return new String(ByteStreams.toByteArray(resourceAsStream));
         } catch (IOException e) {
             return new JsonObject().toString();
         }
@@ -1246,7 +1246,7 @@ public class FenixAPIv1 {
 
             final WrittenEvaluationEnrolment evalEnrolment = writtenEvaluation.getWrittenEvaluationEnrolmentFor(student);
             if (evalEnrolment != null) {
-                assignedRoom = (Space) evalEnrolment.getRoom();
+                assignedRoom = evalEnrolment.getRoom();
             }
 
             if (type.equals(EvaluationType.EXAM_TYPE)) {
@@ -1322,7 +1322,7 @@ public class FenixAPIv1 {
 
         Space space = getDomainObject(oid, Space.class);
         if (SpaceUtils.isRoom(space)) {
-            return getFenixRoom((Space) space, getRoomDay(day));
+            return getFenixRoom(space, getRoomDay(day));
         }
         return FenixSpace.getSpace(space);
     }

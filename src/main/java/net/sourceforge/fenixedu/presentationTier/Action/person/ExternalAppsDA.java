@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.person;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Base64;
 import java.util.Set;
 
 import javax.servlet.ServletException;
@@ -19,10 +20,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.person.PersonApplication
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.JerseyOAuth2Filter;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
-import org.apache.commons.codec.Charsets;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.fileupload.util.Streams;
-import org.apache.commons.io.IOUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -39,11 +36,13 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.Atomic.TxMode;
 
+import com.google.common.base.Charsets;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.hash.Hashing;
+import com.google.common.io.ByteStreams;
 
 @StrutsFunctionality(app = ExternalApplicationsApp.class, path = "manage-applications",
         titleKey = "oauthapps.label.manage.applications")
@@ -252,7 +251,7 @@ public class ExternalAppsDA extends FenixDispatchAction {
                     .getStringFromResourceBundle("resources.ApplicationResources", "oauthapps.default.service.agreement");
         }
         try {
-            return Streams.asString(resourceAsStream);
+            return new String(ByteStreams.toByteArray(resourceAsStream));
         } catch (IOException e) {
             return BundleUtil
                     .getStringFromResourceBundle("resources.ApplicationResources", "oauthapps.default.service.agreement");
@@ -316,7 +315,7 @@ public class ExternalAppsDA extends FenixDispatchAction {
         if (authSessions == null) {
             return redirect("/externalApps.do?method=manageAuthorizations", request);
         } else {
-            request.setAttribute("logo", Base64.encodeBase64String(app.getLogo()));
+            request.setAttribute("logo", Base64.getEncoder().encodeToString(app.getLogo()));
             request.setAttribute("authorizations", authSessions);
             request.setAttribute("application", app);
             return mapping.findForward("viewAuthorizations");
@@ -372,7 +371,7 @@ public class ExternalAppsDA extends FenixDispatchAction {
             outputStream.write(logo);
         } else {
             InputStream placeholder = getClass().getResourceAsStream("/externalAppPlaceholder.jpg");
-            IOUtils.copy(placeholder, outputStream);
+            ByteStreams.copy(placeholder, outputStream);
         }
         outputStream.flush();
         response.flushBuffer();

@@ -15,11 +15,12 @@ import net.sourceforge.fenixedu.domain.candidacy.CandidacyDocument;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyDocumentFile;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
-import org.apache.commons.io.FileUtils;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.groups.UserGroup;
 
 import pt.ist.fenixframework.Atomic;
+
+import com.google.common.io.Files;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -58,7 +59,7 @@ public class SaveCandidacyDocumentFiles {
 
     private static byte[] read(final File file) {
         try {
-            return FileUtils.readFileToByteArray(file);
+            return Files.toByteArray(file);
         } catch (IOException e) {
             throw new Error(e);
         }

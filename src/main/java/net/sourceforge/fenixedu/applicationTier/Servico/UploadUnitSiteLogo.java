@@ -7,10 +7,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.UnitSiteFile;
-
-import org.apache.commons.io.FileUtils;
-
 import pt.ist.fenixframework.Atomic;
+
+import com.google.common.io.Files;
 
 public class UploadUnitSiteLogo {
 
@@ -29,7 +28,7 @@ public class UploadUnitSiteLogo {
             return null;
         }
 
-        UnitSiteFile file = new UnitSiteFile(name, name, FileUtils.readFileToByteArray(fileToUpload), null);
+        UnitSiteFile file = new UnitSiteFile(name, name, Files.toByteArray(fileToUpload), null);
 
         file.setPermittedGroup(null);
 

@@ -10,8 +10,10 @@ import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+
+import com.google.common.base.Charsets;
+import com.google.common.hash.Hashing;
 
 public class GenericApplication extends GenericApplication_Base {
 
@@ -62,8 +64,10 @@ public class GenericApplication extends GenericApplication_Base {
 
     private String generateConfirmationLink() {
         final String confirmationCode =
-                DigestUtils.sha512Hex(getEmail() + System.currentTimeMillis() + hashCode()
-                        + new Random(System.currentTimeMillis()).nextGaussian());
+                Hashing.sha512()
+                        .hashString(
+                                getEmail() + System.currentTimeMillis() + hashCode()
+                                        + new Random(System.currentTimeMillis()).nextGaussian(), Charsets.UTF_8).toString();
         setConfirmationCode(confirmationCode);
         return FenixConfigurationManager.getConfiguration().getGenericApplicationEmailConfirmationLink() + confirmationCode
                 + "&applicationExternalId=" + getExternalId();

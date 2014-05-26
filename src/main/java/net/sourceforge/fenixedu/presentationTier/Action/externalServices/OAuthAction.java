@@ -8,6 +8,7 @@ import static org.apache.commons.httpclient.HttpStatus.SC_BAD_REQUEST;
 import static org.apache.commons.httpclient.HttpStatus.SC_UNAUTHORIZED;
 
 import java.io.IOException;
+import java.util.Base64;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +34,6 @@ import org.apache.amber.oauth2.common.error.OAuthError;
 import org.apache.amber.oauth2.common.exception.OAuthProblemException;
 import org.apache.amber.oauth2.common.exception.OAuthSystemException;
 import org.apache.amber.oauth2.common.message.OAuthResponse;
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpHeaders;
 import org.apache.struts.action.ActionForm;
@@ -94,7 +94,7 @@ public class OAuthAction extends FenixDispatchAction {
                 //redirect person to this action with client id in session
 
                 final String cookieValue = clientId + "|" + redirectUrl;
-                response.addCookie(new Cookie(OAUTH_SESSION_KEY, Base64.encodeBase64String(cookieValue.getBytes())));
+                response.addCookie(new Cookie(OAUTH_SESSION_KEY, Base64.getEncoder().encodeToString(cookieValue.getBytes())));
                 if (CoreConfiguration.casConfig().isCasEnabled()) {
                     response.sendRedirect(CoreConfiguration.casConfig().getCasLoginUrl(
                             CoreConfiguration.getConfiguration().applicationUrl() + "/oauth/userdialog"));
@@ -128,7 +128,7 @@ public class OAuthAction extends FenixDispatchAction {
 
     public ActionForward redirectToRedirectUrl(ActionMapping mapping, HttpServletRequest request, HttpServletResponse response,
             Person person, final Cookie cookie) {
-        String cookieValue = new String(Base64.decodeBase64(cookie.getValue()));
+        String cookieValue = new String(Base64.getDecoder().decode(cookie.getValue()));
         final int indexOf = cookieValue.indexOf("|");
         String clientApplicationId = cookieValue.substring(0, indexOf);
         String redirectUrl = cookieValue.substring(indexOf + 1, cookieValue.length());

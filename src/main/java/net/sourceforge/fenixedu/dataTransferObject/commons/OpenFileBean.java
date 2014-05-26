@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import org.apache.commons.io.IOUtils;
+import com.google.common.io.ByteStreams;
 
 public class OpenFileBean implements Serializable {
 
@@ -30,7 +30,7 @@ public class OpenFileBean implements Serializable {
 
     public byte[] readStream() {
         try {
-            return IOUtils.toByteArray(inputStream);
+            return ByteStreams.toByteArray(inputStream);
         } catch (final IOException e) {
             throw new Error(e);
         }

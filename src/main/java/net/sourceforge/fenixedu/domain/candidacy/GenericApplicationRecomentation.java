@@ -6,11 +6,13 @@ import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixframework.Atomic;
+
+import com.google.common.base.Charsets;
+import com.google.common.hash.Hashing;
 
 public class GenericApplicationRecomentation extends GenericApplicationRecomentation_Base {
 
@@ -18,8 +20,10 @@ public class GenericApplicationRecomentation extends GenericApplicationRecomenta
             String email) {
         setRootDomainObject(Bennu.getInstance());
         final String confirmationCode =
-                DigestUtils.sha512Hex(getEmail() + System.currentTimeMillis() + hashCode()
-                        + new Random(System.currentTimeMillis()).nextGaussian());
+                Hashing.sha512()
+                        .hashString(
+                                getEmail() + System.currentTimeMillis() + hashCode()
+                                        + new Random(System.currentTimeMillis()).nextGaussian(), Charsets.UTF_8).toString();
         setConfirmationCode(confirmationCode);
         setEmail(email);
         setGenericApplication(application);

@@ -9,9 +9,11 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.student.Registration;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.joda.time.DateTime;
+
+import com.google.common.base.Charsets;
+import com.google.common.hash.Hashing;
 
 /**
  * @author Susana Fernandes
@@ -38,7 +40,7 @@ public class StudentTestLog extends StudentTestLog_Base {
                         dateTime.getMinuteOfHour(), dateTime.getSecondOfMinute(), 0);
         checksumCode.append(thisDateTime.getMillis());
         checksumCode.append(Bennu.getInstance().getTestChecksumsSet().iterator().next().getChecksumCode());
-        return (DigestUtils.shaHex(checksumCode.toString()));
+        return (Hashing.sha1().hashString(checksumCode.toString(), Charsets.UTF_8)).toString();
     }
 
     public void delete() {

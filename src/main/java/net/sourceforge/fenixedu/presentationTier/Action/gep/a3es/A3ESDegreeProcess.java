@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.gep.a3es;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -48,7 +49,6 @@ import net.sourceforge.fenixedu.domain.teacher.OtherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -131,7 +131,7 @@ public class A3ESDegreeProcess implements Serializable {
     }
 
     public void initialize() {
-        base64Hash = new String(Base64.encodeBase64((user + ":" + password).getBytes()));
+        base64Hash = new String(Base64.getEncoder().encode((user + ":" + password).getBytes()));
         JSONArray processes = invoke(webResource().path(API_PROCESS));
         JSONObject json = (JSONObject) processes.iterator().next();
         id = (String) json.get("id");

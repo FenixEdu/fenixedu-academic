@@ -8,17 +8,18 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.UnitFile;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
-import org.apache.commons.io.FileUtils;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.groups.UserGroup;
 
 import pt.ist.fenixframework.Atomic;
 
+import com.google.common.io.Files;
+
 public class CreateUnitFile {
 
     private static byte[] read(final File file) {
         try {
-            return FileUtils.readFileToByteArray(file);
+            return Files.toByteArray(file);
         } catch (IOException e) {
             throw new Error(e);
         }

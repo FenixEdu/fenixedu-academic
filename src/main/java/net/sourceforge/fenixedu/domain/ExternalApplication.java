@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -21,6 +20,7 @@ import pt.ist.fenixframework.Atomic;
 
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
+import com.google.common.io.ByteStreams;
 
 public class ExternalApplication extends ExternalApplication_Base {
 
@@ -88,19 +88,18 @@ public class ExternalApplication extends ExternalApplication_Base {
     public InputStream getLogoStream() {
         return null;
     }
-    
+
     public String getAuthorNameForUserDialog() {
-    	String name = getAuthorName();
+        String name = getAuthorName();
         if (!StringUtils.isBlank(name)) {
             return name;
         } else {
             return getAuthor().getPerson().getNickname();
         }
     }
-    
-    
+
     public String getAuthorAppName() {
-    	String name = getAuthorName();
+        String name = getAuthorName();
         if (!StringUtils.isBlank(name)) {
             return name;
         } else {
@@ -111,7 +110,7 @@ public class ExternalApplication extends ExternalApplication_Base {
     public void setLogoStream(InputStream stream) {
         try {
             if (stream != null) {
-                byte[] byteArray = IOUtils.toByteArray(stream);
+                byte[] byteArray = ByteStreams.toByteArray(stream);
                 if (byteArray.length > 0) {
                     setLogo(byteArray);
                 }
