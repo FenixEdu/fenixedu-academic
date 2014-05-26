@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.framework.ReadDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -15,16 +14,18 @@ import pt.ist.fenixframework.FenixFramework;
 /**
  * @author jpvl
  */
-public class ReadTeacherByOID extends ReadDomainObjectService {
+public class ReadTeacherByOID {
 
-    @Override
-    protected InfoObject newInfoFromDomain(DomainObject domainObject) {
-        return InfoTeacher.newInfoFromDomain((Teacher) domainObject);
-    }
+    protected InfoObject run(String objectId) {
+        final String externalId = objectId;
+        DomainObject domainObject = FenixFramework.getDomainObject(externalId);
+        InfoObject infoObject = null;
 
-    @Override
-    protected DomainObject readDomainObject(final String externalId) {
-        return FenixFramework.getDomainObject(externalId);
+        if (domainObject != null) {
+            infoObject = InfoTeacher.newInfoFromDomain((Teacher) domainObject);
+        }
+
+        return infoObject;
     }
 
     // Service Invokers migrated from Berserk

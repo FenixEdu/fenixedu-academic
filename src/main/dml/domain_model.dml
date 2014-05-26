@@ -372,14 +372,6 @@ valueType net.sourceforge.fenixedu.util.PeriodState as PeriodState {
     internalizeWith valueOf();
 }
 
-valueType net.sourceforge.fenixedu.util.PeriodToApplyRestriction as PeriodToApplyRestriction {
-    externalizeWith {
-        int getValue();
-    }
-
-    internalizeWith getEnum();
-}
-
 valueType net.sourceforge.fenixedu.util.ProposalState as ProposalState {
     externalizeWith {
         Integer getState();
@@ -406,14 +398,6 @@ valueType net.sourceforge.fenixedu.util.Season as Season {
     externalizeWith {
         Integer getseason();
     }
-}
-
-valueType net.sourceforge.fenixedu.util.SecretaryEnrolmentStudentReason as SecretaryEnrolmentStudentReason {
-    externalizeWith {
-        int getValue();
-    }
-
-    internalizeWith getEnum();
 }
 
 valueType net.sourceforge.fenixedu.util.SituationName as SituationName {
@@ -1512,7 +1496,6 @@ valueType net.sourceforge.fenixedu.domain.accessControl.GroupStrategy as GroupSt
 
     class SecretaryEnrolmentStudent  {
         String reasonDescription;
-        SecretaryEnrolmentStudentReason reasonType;
     }
 
     class Shift  {      

@@ -26,11 +26,6 @@ public class SecretaryEnrolmentStudent extends SecretaryEnrolmentStudent_Base {
     }
 
     @Deprecated
-    public boolean hasReasonType() {
-        return getReasonType() != null;
-    }
-
-    @Deprecated
     public boolean hasReasonDescription() {
         return getReasonDescription() != null;
     }
