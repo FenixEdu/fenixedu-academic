@@ -65,7 +65,7 @@
 			toEdit="true" 
 			toOrder="#{AcademicAdministrationCurricularCourseManagement.toOrder}"
 			executionYear="#{AcademicAdministrationCurricularCourseManagement.executionYear}"
-			module="/academicAdministration/bolonha"/>
+			module="/academicAdministration/bolonha/curricularPlans"/>
 		
 		<h:outputText value="<br/><p>" escape="false"/>
 
