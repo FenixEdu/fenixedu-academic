@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.QueueJob;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
-import net.sourceforge.fenixedu.webServices.exceptions.NotAuthorizedException;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -65,6 +64,10 @@ public class ExportParkingData extends FenixAction {
         if ((!allowedUser.equals(username)) || (!allowedPass.equals(password))) {
             throw new NotAuthorizedException();
         }
+    }
+
+    private static final class NotAuthorizedException extends RuntimeException {
+        private static final long serialVersionUID = -2836175455347962317L;
     }
 
 }
