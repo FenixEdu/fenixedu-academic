@@ -781,7 +781,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
             getCandidacyProcess().cancelDebt(person);
         }
 
-        if (hasRegistrationFee() && !getRegistrationFee().hasAnyPayments()) {
+        if (hasRegistrationFee() && !getRegistrationFee().hasAnyPayments() && getRegistrationFee().isOpen()) {
             getRegistrationFee().cancel(person);
         }
     }
