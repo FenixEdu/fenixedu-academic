@@ -16,6 +16,8 @@ public enum PhdIndividualProgramCollaborationType {
 
     MIT,
 
+    FCT,
+
     EPFL(false, false),
 
     NONE,
