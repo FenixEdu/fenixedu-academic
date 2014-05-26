@@ -263,7 +263,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     public void cancelDebt(final Person responsible) {
-        if (hasEvent()) {
+        if (hasEvent() && getEvent().isOpen()) {
             getEvent().cancel(responsible);
         }
     }
