@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.thesis;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -82,8 +83,12 @@ public class MasterDegreeThesisOperations extends FenixDispatchAction {
         DynaActionForm masterDegreeThesisForm = (DynaActionForm) form;
 
         String[] teachersNumbersArray = (String[]) masterDegreeThesisForm.get(teachersNumbersListField);
-        List<String> teachersNumbersList = Arrays.asList(teachersNumbersArray);
-        teachersNumbersList.remove(null);
+        List<String> teachersNumbersList = new ArrayList<>();
+        for (final String s : teachersNumbersArray) {
+            if (s != null && !s.isEmpty()) {
+                teachersNumbersList.add(s);
+            }
+        }
         return teachersNumbersList;
 
     }
