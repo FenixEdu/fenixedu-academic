@@ -45,8 +45,7 @@ response.setStatus(404);
 					<br/>
 					<p><bean:message key="error.message.resource.not.found.message" bundle="GLOBAL_RESOURCES" /></p>
 					<c:if test="${empty LOGGED_USER_ATTRIBUTE}">
-						<br />
-						<a href="${pageContext.request.contextPath}/loginPage.jsp">Login</a>
+						<h3><a href="${pageContext.request.contextPath}/loginPage.jsp">Login</a></h3>
 					</c:if>
 				</td>
 			</tr>
