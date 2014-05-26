@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -21,13 +22,18 @@ import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourseLog;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
+import net.sourceforge.fenixedu.domain.FileContent;
 import net.sourceforge.fenixedu.domain.FinalEvaluation;
 import net.sourceforge.fenixedu.domain.LessonInstance;
+import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.Summary;
+import net.sourceforge.fenixedu.domain.cms.CmsContent;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryCourseAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry;
@@ -43,6 +49,15 @@ import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.SystemSender;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UnionGroup;
+import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -276,8 +291,7 @@ public class MergeExecutionCourses {
 
     private void copyAttends(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo)
             throws FenixServiceException {
-        while (!executionCourseFrom.getAttends().isEmpty()) {
-            final Attends attends = executionCourseFrom.getAttends().iterator().next();
+        for (Attends attends : executionCourseFrom.getAttendsSet()) {
             final Attends otherAttends = executionCourseTo.getAttendsByStudent(attends.getRegistration());
             if (otherAttends == null) {
                 attends.setDisciplinaExecucao(executionCourseTo);
@@ -290,13 +304,11 @@ public class MergeExecutionCourses {
                     throw new FenixServiceException("Unable to merge execution courses. Registration "
                             + attends.getRegistration().getNumber() + " has an enrolment in both.");
                 }
-                for (; !attends.getAssociatedMarks().isEmpty(); otherAttends.addAssociatedMarks(attends.getAssociatedMarks()
-                        .iterator().next())) {
-                    ;
+                for (Mark mark : attends.getAssociatedMarksSet()) {
+                    otherAttends.addAssociatedMarks(mark);
                 }
-                for (; !attends.getAllStudentGroups().isEmpty(); otherAttends.addStudentGroups(attends.getAllStudentGroups()
-                        .iterator().next())) {
-                    ;
+                for (StudentGroup group : attends.getAllStudentGroups()) {
+                    otherAttends.addStudentGroups(group);
                 }
                 attends.delete();
             }
@@ -329,84 +341,72 @@ public class MergeExecutionCourses {
         final Site siteTo = executionCourseTo.getSite();
 
         if (siteFrom != null) {
-            siteTo.copySectionsAndItemsFrom(siteFrom);
-//            copyContents(executionCourseTo, siteTo, siteFrom.getOrderedDirectChildren());
+            copyContents(executionCourseTo, siteTo, siteFrom);
             siteFrom.delete();
         }
     }
 
-//    private void copyContents(final ExecutionCourse executionCourseTo, final Container parentTo, final Collection<Node> nodes) {
-//        final Set<Content> transferedContents = new HashSet<Content>();
-//
-//        for (final Node node : nodes) {
-//            final Content content = node.getChild();
-//            final ExplicitOrderNode explicitOrderNode = new ExplicitOrderNode(parentTo, content);
-//            if (node instanceof ExplicitOrderNode) {
-//                explicitOrderNode.setNodeOrder(((ExplicitOrderNode) node).getNodeOrder());
-//            }
-//            explicitOrderNode.setVisible(node.getVisible());
-//            node.delete();
-//
-//            changeGroups(executionCourseTo, content, transferedContents);
-//        }
-//
-//        if (transferedContents.size() > 0) {
-//            final Set<String> bccs = createListOfEmailAddresses(executionCourseTo);
-//            final StringBuilder message = new StringBuilder();
-//            message.append(BundleUtil
-//                    .getStringFromResourceBundle("resources.GlobalResources", "mergeExecutionCourses.email.body"));
-//
-//            for (final Content content : transferedContents) {
-//                message.append("\n\t");
-//                message.append(content.getName());
-//            }
-//
-//            message.append(BundleUtil.getStringFromResourceBundle("resources.GlobalResources",
-//                    "mergeExecutionCourses.email.greetings"));
-//            SystemSender systemSender = Bennu.getInstance().getSystemSender();
-//            new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST,
-//                    BundleUtil.getStringFromResourceBundle("resources.GlobalResources", "mergeExecutionCourses.email.subject",
-//                            new String[] { executionCourseTo.getNome() }), message.toString(), bccs);
-//        }
-//    }
+    private void copyContents(final ExecutionCourse executionCourseTo, final Site siteTo, Site siteFrom) {
+        final Set<CmsContent> transferedContents = new HashSet<>();
 
-//    private void changeGroups(final ExecutionCourse executionCourseTo, final Content content,
-//            final Set<Content> transferedContents) {
-//        content.setAvailabilityExpression(createExecutionCourseResponsibleTeachersGroup(executionCourseTo).getExpression());
-//        transferedContents.add(content);
-//        if (content.isContainer()) {
-//            final Container container = (Container) content;
-//            for (final Node node : container.getOrderedDirectChildren()) {
-//                changeGroups(executionCourseTo, node.getChild(), transferedContents);
-//            }
-//        }
+        for (final Section section : siteFrom.getAssociatedSectionSet()) {
+            section.setSite(siteTo);
+            changeGroups(executionCourseTo, section, transferedContents);
+        }
 
-//        if (content instanceof Section) {
-//            for (FileContent file : ((Section) content).getChildrenFiles()) {
-//                if (file.getPermittedGroup() != null && !(file.getPermittedGroup() instanceof EveryoneGroup)) {
-//                    file.setPermittedGroup(createExecutionCourseResponsibleTeachersGroup(executionCourseTo));
-//                }
-//            }
-//        }
-//    }
-//
-//    private Set<String> createListOfEmailAddresses(final ExecutionCourse executionCourseTo) {
-//        final Set<String> emails = new HashSet<String>();
-//        for (final Professorship professorship : executionCourseTo.getProfessorshipsSet()) {
-//            emails.add(professorship.getPerson().getEmail());
-//        }
-//        return emails;
-//    }
-//
-//    private Group createExecutionCourseResponsibleTeachersGroup(final ExecutionCourse executionCourseTo) {
-//        final Set<Group> groups = new HashSet<Group>();
-//        for (final Professorship professorship : executionCourseTo.getProfessorshipsSet()) {
-//            if (professorship.isResponsibleFor()) {
-//                groups.add(UserGroup.of(professorship.getPerson().getUser()));
-//            }
-//        }
-//        return groups.isEmpty() ? null : UnionGroup.of(groups);
-//    }
+        if (transferedContents.size() > 0) {
+            final Set<String> bccs = createListOfEmailAddresses(executionCourseTo);
+            final StringBuilder message = new StringBuilder();
+            message.append(BundleUtil.getString("resources.GlobalResources", "mergeExecutionCourses.email.body"));
+
+            for (final CmsContent content : transferedContents) {
+                message.append("\n\t");
+                message.append(content.getName());
+            }
+
+            message.append(BundleUtil.getString("resources.GlobalResources", "mergeExecutionCourses.email.greetings"));
+            SystemSender systemSender = Bennu.getInstance().getSystemSender();
+            new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST, BundleUtil.getString(
+                    "resources.GlobalResources", "mergeExecutionCourses.email.subject",
+                    new String[] { executionCourseTo.getNome() }), message.toString(), bccs);
+        }
+    }
+
+    private void changeGroups(final ExecutionCourse executionCourseTo, final CmsContent content,
+            final Set<CmsContent> transferedContents) {
+        content.setPermittedGroup(createExecutionCourseResponsibleTeachersGroup(executionCourseTo));
+        transferedContents.add(content);
+        if (content instanceof Section) {
+            final Section container = (Section) content;
+            for (final CmsContent node : container.getChildSet()) {
+                changeGroups(executionCourseTo, node, transferedContents);
+            }
+        }
+
+        for (FileContent file : content.getFileContentSet()) {
+            if (file.isPrivate()) {
+                file.setPermittedGroup(createExecutionCourseResponsibleTeachersGroup(executionCourseTo));
+            }
+        }
+    }
+
+    private Set<String> createListOfEmailAddresses(final ExecutionCourse executionCourseTo) {
+        final Set<String> emails = new HashSet<String>();
+        for (final Professorship professorship : executionCourseTo.getProfessorshipsSet()) {
+            emails.add(professorship.getPerson().getEmail());
+        }
+        return emails;
+    }
+
+    private Group createExecutionCourseResponsibleTeachersGroup(final ExecutionCourse executionCourseTo) {
+        final Set<Group> groups = new HashSet<Group>();
+        for (final Professorship professorship : executionCourseTo.getProfessorshipsSet()) {
+            if (professorship.isResponsibleFor()) {
+                groups.add(UserGroup.of(professorship.getPerson().getUser()));
+            }
+        }
+        return groups.isEmpty() ? null : UnionGroup.of(groups);
+    }
 
     private void copyProfessorships(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
         for (; !executionCourseFrom.getProfessorships().isEmpty();) {
