@@ -60,6 +60,7 @@ import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.FenixStringTools;
 import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
 import net.sourceforge.fenixedu.util.Money;
@@ -173,7 +174,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
     public AdministrativeOfficeDocument(final IDocumentRequest documentRequest, final Locale locale) {
         super(locale);
-        this.portugueseEnumerationBundle = ResourceBundle.getBundle("resources.EnumerationResources", Locale.getDefault());
+        this.portugueseEnumerationBundle = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, Locale.getDefault());
 
         this.portugueseAcademicBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", Locale.getDefault());
 

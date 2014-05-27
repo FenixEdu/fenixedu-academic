@@ -37,6 +37,7 @@ import net.sourceforge.fenixedu.domain.student.SearchStudentsWithEnrolmentsByDep
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.departmentAdmOffice.DepartmentAdmOfficeApp.DepartmentAdmOfficeStudentsApp;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -102,7 +103,7 @@ public class SearchStudentsDA extends FenixDispatchAction {
 
     private Spreadsheet getSpreadsheet(final ExecutionYear executionYear) {
         final ResourceBundle enumResourceBundle =
-                ResourceBundle.getBundle("resources.ApplicationResources", new Locale("pt", "PT"));
+                ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, new Locale("pt", "PT"));
         final Spreadsheet spreadsheet =
                 new Spreadsheet(enumResourceBundle.getString("label.student.for.academic.year") + " "
                         + executionYear.getYear().replace('/', ' '));

@@ -23,10 +23,9 @@ import java.text.Collator;
 import java.util.Comparator;
 import java.util.ResourceBundle;
 
-import org.fenixedu.commons.i18n.I18N;
-
 import net.sourceforge.fenixedu.domain.curriculum.IGrade;
-import java.util.Locale;
+
+import org.fenixedu.commons.i18n.I18N;
 
 public abstract class CourseStatisticsDTO implements Serializable, Comparable<CourseStatisticsDTO> {
 

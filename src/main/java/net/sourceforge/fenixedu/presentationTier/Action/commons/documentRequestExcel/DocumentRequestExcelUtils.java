@@ -29,8 +29,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.fenixedu.commons.i18n.I18N;
-
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
@@ -41,10 +39,13 @@ import net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServi
 import net.sourceforge.fenixedu.domain.serviceRequests.RegistryCode;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
+import net.sourceforge.fenixedu.util.BundleUtil;
+
+import org.fenixedu.commons.i18n.I18N;
+
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
 import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
 import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
-import java.util.Locale;
 
 public class DocumentRequestExcelUtils {
 
@@ -108,7 +109,7 @@ public class DocumentRequestExcelUtils {
             @Override
             protected void makeLine(AcademicServiceRequest request) {
                 IDocumentRequest document = (IDocumentRequest) request;
-                ResourceBundle enumeration = ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
+                ResourceBundle enumeration = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale());
                 addCell("Código", document.getRegistryCode().getCode());
                 addCell("Tipo de Documento", enumeration.getString(document.getDocumentRequestType().name()));
                 CycleType cycle = null;

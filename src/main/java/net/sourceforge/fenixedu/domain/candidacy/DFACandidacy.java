@@ -37,8 +37,6 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.YearMonthDay;
 
-import java.util.Locale;
-
 public class DFACandidacy extends DFACandidacy_Base {
 
     private static Map<String, Set<String>> stateMap;

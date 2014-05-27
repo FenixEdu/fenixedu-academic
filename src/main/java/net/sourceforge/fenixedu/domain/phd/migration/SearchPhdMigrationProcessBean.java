@@ -25,13 +25,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import org.fenixedu.commons.i18n.I18N;
-
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
+
+import org.fenixedu.commons.i18n.I18N;
+
 import pt.utl.ist.fenix.tools.predicates.AndPredicate;
 import pt.utl.ist.fenix.tools.predicates.InlinePredicate;
-import java.util.Locale;
 
 public class SearchPhdMigrationProcessBean implements Serializable {
 

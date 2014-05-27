@@ -37,8 +37,6 @@ import org.apache.struts.taglib.TagUtils;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.LocalDate;
 
-import java.util.Locale;
-
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
  * <br>

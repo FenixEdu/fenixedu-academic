@@ -1139,4 +1139,41 @@ public class CurriculumGroup extends CurriculumGroup_Base {
         return !getCurriculumModulesSet().isEmpty();
     }
 
+    public boolean hasEnrolmentInCurricularCourseBefore(final CurricularCourse curricularCourse, final ExecutionSemester executionSemester) {
+        for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+            if (curriculumModule.isEnrolment()) {
+                final Enrolment enrolment = (Enrolment) curriculumModule;
+                if (!enrolment.isAnnulled() && enrolment.getExecutionPeriod().isBefore(executionSemester)
+                        && enrolment.getCurricularCourse() == curricularCourse) {
+                    return true;
+                }
+            } else if (curriculumModule instanceof CurriculumGroup) {
+                final CurriculumGroup curriculumGroup = (CurriculumGroup) curriculumModule;
+                if (curriculumGroup.hasEnrolmentInCurricularCourseBefore(curricularCourse, executionSemester)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public int calculateStudentAcumulatedEnrollments(CurricularCourse curricularCourse, ExecutionSemester executionSemester) {
+        int result = 0;
+        for (final CurriculumModule curriculumModule : getCurriculumModulesSet()) {
+            if (curriculumModule.isEnrolment()) {
+                final Enrolment enrolment = (Enrolment) curriculumModule;
+                if (!enrolment.isAnnulled()
+                        && enrolment.getExecutionPeriod().isBefore(executionSemester)
+                        && enrolment.getCurricularCourse().getCurricularCourseUniqueKeyForEnrollment()
+                        .equalsIgnoreCase(curricularCourse.getCurricularCourseUniqueKeyForEnrollment())) {
+                    result++;
+                }
+            } else if (curriculumModule instanceof CurriculumGroup) {
+                final CurriculumGroup curriculumGroup = (CurriculumGroup) curriculumModule;
+                result += curriculumGroup.calculateStudentAcumulatedEnrollments(curricularCourse, executionSemester);
+            }
+        }
+        return result;
+    }
+
 }

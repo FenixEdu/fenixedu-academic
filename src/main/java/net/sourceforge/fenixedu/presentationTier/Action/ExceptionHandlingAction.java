@@ -203,7 +203,7 @@ public final class ExceptionHandlingAction extends FenixDispatchAction {
         builder.append("]");
         appendNewLine(builder, 1);
 
-        generateLabel(builder, BundleUtil.getString("resources.ApplicationResources", "label.type.single")).append("[")
+        generateLabel(builder, BundleUtil.getString(net.sourceforge.fenixedu.util.BundleUtil.APPLICATION_BUNDLE, "label.type.single")).append("[")
                 .append(getRequestTypeAsString(requestBean)).append("]");
         appendNewLine(builder, 1);
 
@@ -232,13 +232,13 @@ public final class ExceptionHandlingAction extends FenixDispatchAction {
     }
 
     private void appendUserInfo(StringBuilder builder, Person loggedPerson, SupportRequestBean requestBean) {
-        generateLabel(builder, BundleUtil.getString("resources.ApplicationResources", "label.name"));
+        generateLabel(builder, BundleUtil.getString(net.sourceforge.fenixedu.util.BundleUtil.APPLICATION_BUNDLE, "label.name"));
         if (loggedPerson != null) {
             builder.append("[").append(loggedPerson.getName()).append("]\n");
             generateLabel(builder, "Username");
             builder.append("[").append(loggedPerson.getUsername()).append("]");
         } else {
-            builder.append(BundleUtil.getString("resources.ApplicationResources", "support.mail.session.error"));
+            builder.append(BundleUtil.getString(net.sourceforge.fenixedu.util.BundleUtil.APPLICATION_BUNDLE, "support.mail.session.error"));
         }
     }
 
@@ -249,12 +249,12 @@ public final class ExceptionHandlingAction extends FenixDispatchAction {
     }
 
     private String getRequestTypeAsString(SupportRequestBean requestBean) {
-        return requestBean.getRequestType() != null ? BundleUtil.getString("resources.EnumerationResources", requestBean
+        return requestBean.getRequestType() != null ? BundleUtil.getString(net.sourceforge.fenixedu.util.BundleUtil.ENUMERATION_BUNDLE, requestBean
                 .getRequestType().getQualifiedName()) : "";
     }
 
     private String getRequestPriorityAsString(SupportRequestBean requestBean) {
-        return requestBean.getRequestPriority() != null ? BundleUtil.getString("resources.EnumerationResources",
+        return requestBean.getRequestPriority() != null ? BundleUtil.getString(net.sourceforge.fenixedu.util.BundleUtil.ENUMERATION_BUNDLE,
                 requestBean.getRequestPriority().getQualifiedName()).split(" \\(")[0] : "";
     }
 

@@ -72,6 +72,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.OptionalDismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Substitution;
 import net.sourceforge.fenixedu.domain.studentCurriculum.TemporarySubstitution;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.InvocationResult;
 import net.sourceforge.fenixedu.util.Money;
 
@@ -80,14 +81,12 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
-import java.util.Locale;
-
 public class SeparationCyclesManagement {
 
     private static final List<DegreeType> ACCEPTED_DEGREE_TYPES = Arrays.asList(DegreeType.BOLONHA_DEGREE,
             DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
 
-    private final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("resources.ApplicationResources",
+    private final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE,
             I18N.getLocale());
 
     public SeparationCyclesManagement() {

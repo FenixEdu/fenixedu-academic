@@ -21,7 +21,6 @@ package net.sourceforge.fenixedu.domain.oldInquiries;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,8 +40,6 @@ import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
 
 public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResult_Base {
-
-    transient private Map<String, String> valuesMap = null;
 
     public StudentInquiriesTeachingResult() {
         super();
@@ -512,22 +509,15 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
     }
 
     public Map<String, String> getValuesMap() {
-        if (this.valuesMap == null) {
-            synchronized (this) {
-                if (this.valuesMap == null) {
-                    Map<String, String> tmpMap = new HashMap<String, String>();
-                    if (!StringUtils.isEmpty(getHeaders()) && !StringUtils.isEmpty(getRawValues())) {
-                        String[] headers = getHeaders().split("\t");
-                        String[] values = getRawValues().split("\t");
-                        for (int i = 0; i < values.length; i++) {
-                            tmpMap.put(headers[i], values[i]);
-                        }
-                    }
-                    this.valuesMap = Collections.unmodifiableMap(tmpMap);
-                }
+        final Map<String, String> tmpMap = new HashMap<String, String>();
+        if (!StringUtils.isEmpty(getHeaders()) && !StringUtils.isEmpty(getRawValues())) {
+            String[] headers = getHeaders().split("\t");
+            String[] values = getRawValues().split("\t");
+            for (int i = 0; i < values.length; i++) {
+                tmpMap.put(headers[i], values[i]);
             }
         }
-        return valuesMap;
+        return tmpMap;
     }
 
     private static int getHeaderIndex(String headerToFind, String[] headersSplitted) {
@@ -680,7 +670,6 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
             studentInquiriesTeachingResult
                     .setUnsatisfactoryResultsStudentInteraction(fieldToBoolean(columns[unsatisfactoryResultsStudentInteractionIndex]));
             studentInquiriesTeachingResult.setInternalDegreeDisclosure(fieldToBoolean(columns[internalDegreeDisclosureIndex]));
-            studentInquiriesTeachingResult.valuesMap = null;
 
         }
     }
@@ -722,7 +711,6 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
     }
 
     public void resetValues() {
-        this.valuesMap = null; // invalidate cache
         setAverage_P6_1(null);
         setAverage_P6_2(null);
         setAverage_P6_3(null);

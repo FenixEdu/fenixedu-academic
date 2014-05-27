@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.accounting.AdministrativeOfficeFeeAndInsu
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
@@ -84,7 +85,7 @@ public class AdministrativeOfficeFeeAndInsuranceExemption extends Administrative
     }
 
     public String getKindDescription() {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources");
+        ResourceBundle bundle = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE);
         return bundle.getString(this.getClass().getSimpleName() + ".kindDescription");
     }
 }

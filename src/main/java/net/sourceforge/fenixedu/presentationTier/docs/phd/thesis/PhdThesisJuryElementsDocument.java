@@ -31,8 +31,6 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
-import java.util.Locale;
-
 public class PhdThesisJuryElementsDocument extends FenixReport {
 
     static private final long serialVersionUID = 1L;

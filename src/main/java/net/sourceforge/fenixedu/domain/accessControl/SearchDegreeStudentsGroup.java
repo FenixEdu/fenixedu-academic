@@ -442,7 +442,7 @@ public class SearchDegreeStudentsGroup implements Serializable {
             return false;
         }
 
-        final double arithmeticMean = studentCurricularPlan.getRegistration().getArithmeticMean();
+        final double arithmeticMean = studentCurricularPlan.getRegistration().getCurriculum().getAverage().doubleValue();
 
         if (minGrade != null && minGrade > arithmeticMean) {
             return false;

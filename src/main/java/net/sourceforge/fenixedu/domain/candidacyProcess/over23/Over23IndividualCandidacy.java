@@ -45,8 +45,6 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.LocalDate;
 
-import java.util.Locale;
-
 public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 
     private Over23IndividualCandidacy() {

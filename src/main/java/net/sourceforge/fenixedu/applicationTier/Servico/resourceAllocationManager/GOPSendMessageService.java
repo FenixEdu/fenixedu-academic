@@ -100,11 +100,11 @@ public class GOPSendMessageService {
         final String degreesString = StringUtils.join(degreeNames, ",");
         final String coursesString = StringUtils.join(courseNames, ",");
         final String subject =
-                BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "email.request.room.subject",
+                BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "email.request.room.subject",
                         coursesString, test.getDescription());
 
         final String body =
-                BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "email.request.room.body",
+                BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "email.request.room.body",
                         test.getDescription(), coursesString, date, time, degreesString, endTime);
         for (String email : getGOPEmail(degrees)) {
             new Message(getGOPSender(), email, subject, body);
@@ -136,14 +136,14 @@ public class GOPSendMessageService {
         String degreesString = StringUtils.join(degreeNames, ",");
 
         final String subject =
-                BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "email.request.room.subject.edit",
+                BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "email.request.room.subject.edit",
                         coursesString, test.getDescription());
 
         // O pedido de requisição de sala para {0} da disciplina {1} do(s)
         // cursos(s) {2} efecuado em {3} para o dia {4} das {5} às {6} foi
         // alterado para o dia {7} das {8} às {9}
         final String body =
-                BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "email.request.room.body.edit",
+                BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "email.request.room.body.edit",
                         test.getDescription(), coursesString, degreesString, test.getRequestRoomSentDateString(), oldDate,
                         oldStartTime, oldEndTime, date, startTime, endTime);
         for (String email : getGOPEmail(degrees)) {
@@ -156,7 +156,7 @@ public class GOPSendMessageService {
         Set<String> emails = new HashSet<String>();
         for (ExecutionDegree executionDegree : degrees) {
             String emailFromApplicationResources =
-                    BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "email.gop."
+                    BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "email.gop."
                             + executionDegree.getCampus().getName());
             if (!StringUtils.isEmpty(emailFromApplicationResources)) {
                 emails.add(emailFromApplicationResources);

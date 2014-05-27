@@ -39,31 +39,12 @@ import org.joda.time.YearMonthDay;
 
 public class PhdMigrationIndividualPersonalData extends PhdMigrationIndividualPersonalData_Base {
 
-    private transient PhdMigrationIndividualPersonalDataBean personalBean;
-
-    private PhdMigrationIndividualPersonalData() {
-        super();
-    }
-
     protected PhdMigrationIndividualPersonalData(String data) {
         setData(data);
     }
 
-    public boolean hasPersonalBean() {
-        return personalBean != null;
-    }
-
     public PhdMigrationIndividualPersonalDataBean getPersonalBean() {
-        if (hasPersonalBean()) {
-            return personalBean;
-        }
-
-        personalBean = new PhdMigrationIndividualPersonalDataBean(getData());
-        return personalBean;
-    }
-
-    public void setPersonalBean(PhdMigrationIndividualPersonalDataBean personalBean) {
-        this.personalBean = personalBean;
+        return new PhdMigrationIndividualPersonalDataBean(getData());
     }
 
     public void parse() {

@@ -21,6 +21,8 @@ package net.sourceforge.fenixedu.domain.candidacyProcess;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.util.BundleUtil;
+
 import org.fenixedu.commons.i18n.I18N;
 
 public enum IndividualCandidacyDocumentFileType {
@@ -31,7 +33,7 @@ public enum IndividualCandidacyDocumentFileType {
     APPROVED_LEARNING_AGREEMENT, ENGLISH_LEVEL_DECLARATION;
 
     public String localizedName(Locale locale) {
-        return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(qualifiedName());
+        return ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, locale).getString(qualifiedName());
     }
 
     protected String qualifiedName() {

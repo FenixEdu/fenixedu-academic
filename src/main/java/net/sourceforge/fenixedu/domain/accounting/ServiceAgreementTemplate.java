@@ -33,8 +33,6 @@ import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 
-import java.util.Locale;
-
 public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_Base {
 
     protected ServiceAgreementTemplate() {

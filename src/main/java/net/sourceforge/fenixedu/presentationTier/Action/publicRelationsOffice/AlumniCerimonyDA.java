@@ -60,7 +60,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
-import java.util.Locale;
 
 @StrutsFunctionality(app = PublicRelationsApplication.class, path = "alumni-cerimony",
         titleKey = "label.publicRelationOffice.alumniCerimony.inquiries")

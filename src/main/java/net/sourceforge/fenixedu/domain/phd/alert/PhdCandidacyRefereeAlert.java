@@ -33,7 +33,6 @@ import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
-import java.util.Locale;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdCandidacyRefereeAlert extends PhdCandidacyRefereeAlert_Base {

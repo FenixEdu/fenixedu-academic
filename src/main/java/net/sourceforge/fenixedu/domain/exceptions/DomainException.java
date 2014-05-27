@@ -20,9 +20,11 @@ package net.sourceforge.fenixedu.domain.exceptions;
 
 import javax.ws.rs.core.Response.Status;
 
+import net.sourceforge.fenixedu.util.BundleUtil;
+
 public class DomainException extends org.fenixedu.bennu.core.domain.exceptions.DomainException {
 
-    private static final String DEFAULT_BUNDLE = "resources.ApplicationResources";
+    private static final String DEFAULT_BUNDLE = BundleUtil.APPLICATION_BUNDLE;
 
     protected DomainException() {
         this(null, (String[]) null);

@@ -53,7 +53,6 @@ import org.fenixedu.commons.i18n.I18N;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import java.util.Locale;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;

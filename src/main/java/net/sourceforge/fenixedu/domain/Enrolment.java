@@ -62,6 +62,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.InternalEnrolmentWrappe
 import net.sourceforge.fenixedu.domain.studentCurriculum.OptionalDismissal;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
@@ -119,10 +120,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
             return s1 == s2 ? e1.getExternalId().compareTo(e2.getExternalId()) : s1 - s2;
         }
     };
-
-    private Integer accumulatedWeight;
-
-    private Double accumulatedEctsCredits;
 
     public Enrolment() {
         super();
@@ -251,14 +248,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     // end
-
-    final public Integer getAccumulatedWeight() {
-        return accumulatedWeight;
-    }
-
-    final public void setAccumulatedWeight(Integer accumulatedWeight) {
-        this.accumulatedWeight = accumulatedWeight;
-    }
 
     protected void initializeAsNew(StudentCurricularPlan studentCurricularPlan, CurricularCourse curricularCourse,
             ExecutionSemester executionSemester, EnrollmentCondition enrolmentCondition, String createdBy) {
@@ -1181,14 +1170,6 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
         return getLatestEnrolmentEvaluationBy(EnrolmentEvaluationType.EQUIVALENCE);
     }
 
-    final public Double getAccumulatedEctsCredits() {
-        return accumulatedEctsCredits;
-    }
-
-    final public void setAccumulatedEctsCredits(Double ectsCredits) {
-        this.accumulatedEctsCredits = ectsCredits;
-    }
-
     @Override
     final public List<Enrolment> getEnrolments() {
         return Collections.singletonList(this);
@@ -1428,14 +1409,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     @Override
     final public double getAccumulatedEctsCredits(final ExecutionSemester executionSemester) {
-        if (!isBolonhaDegree()) {
-            return accumulatedEctsCredits;
-        }
-        if (!parentAllowAccumulatedEctsCredits()) {
-            return 0d;
-        }
-
-        return getStudentCurricularPlan().getAccumulatedEctsCredits(executionSemester, getCurricularCourse());
+        return isBolonhaDegree() && !parentAllowAccumulatedEctsCredits() ? 0d : getStudentCurricularPlan()
+                .getAccumulatedEctsCredits(executionSemester, getCurricularCourse());
     }
 
     final public boolean isImprovementEnroled() {
@@ -1782,7 +1757,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     @Override
     public String getModuleTypeName() {
-        ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources");
+        ResourceBundle enumerationResources = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE);
         return enumerationResources.getString(this.getClass().getName());
     }
 

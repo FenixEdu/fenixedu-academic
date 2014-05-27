@@ -37,7 +37,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.fenixedu.commons.i18n.I18N;
 
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import java.util.Locale;
 
 public class DegreeOfficePublicCandidacyHashCode extends DegreeOfficePublicCandidacyHashCode_Base {
 

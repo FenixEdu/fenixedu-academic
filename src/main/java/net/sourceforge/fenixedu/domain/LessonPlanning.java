@@ -144,9 +144,9 @@ public class LessonPlanning extends LessonPlanning_Base {
 
     public String getLessonPlanningLabel() {
         StringBuilder builder = new StringBuilder();
-        builder.append(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.lesson")).append(" ");
+        builder.append(BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.lesson")).append(" ");
         builder.append(getOrderOfPlanning()).append(" (");
-        builder.append(BundleUtil.getStringFromResourceBundle("resources.EnumerationResources", getLessonType().getName()))
+        builder.append(BundleUtil.getStringFromResourceBundle(BundleUtil.ENUMERATION_BUNDLE, getLessonType().getName()))
                 .append(") - ");
         builder.append(getTitle().getContent());
         return builder.toString();

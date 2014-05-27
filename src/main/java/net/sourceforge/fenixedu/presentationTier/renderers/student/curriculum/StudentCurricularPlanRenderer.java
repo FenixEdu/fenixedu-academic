@@ -49,6 +49,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
@@ -71,7 +72,6 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlTableRow;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.contexts.InputContext;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
-import java.util.Locale;
 
 public class StudentCurricularPlanRenderer extends InputRenderer {
 
@@ -143,10 +143,10 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 
     private final ResourceBundle studentResources = ResourceBundle.getBundle("resources.StudentResources", I18N.getLocale());
 
-    private final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources",
+    private final ResourceBundle enumerationResources = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE,
             I18N.getLocale());
 
-    private final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources",
+    private final ResourceBundle applicationResources = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE,
             I18N.getLocale());
 
     private OrganizationType organizedBy = OrganizationType.GROUPS;

@@ -25,8 +25,6 @@ import java.util.ResourceBundle;
 
 import org.fenixedu.commons.i18n.I18N;
 
-import java.util.Locale;
-
 public enum PhdIndividualProgramDocumentType {
 
     CANDIDACY_FORM,

@@ -22,8 +22,6 @@ import java.util.ResourceBundle;
 
 import org.fenixedu.commons.i18n.I18N;
 
-import java.util.Locale;
-
 public class NullEctsComparabilityPercentages extends EctsComparabilityPercentages {
     private static final long serialVersionUID = -929489243618382282L;
 

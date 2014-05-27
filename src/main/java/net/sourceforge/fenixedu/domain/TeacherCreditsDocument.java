@@ -46,6 +46,7 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -91,7 +92,7 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
 
     private String getTeacherCreditsFile(Teacher teacher, ExecutionSemester executionSemester, TeacherService teacherService)
             throws ParseException {
-        ResourceBundle bundleEnumeration = ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
+        ResourceBundle bundleEnumeration = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale());
         CreditLineDTO creditLineDTO = ReadAllTeacherCredits.readCreditLineDTO(executionSemester, teacher);
         Unit lastWorkingUnit =
                 teacher.getLastWorkingUnit(executionSemester.getBeginDateYearMonthDay(),

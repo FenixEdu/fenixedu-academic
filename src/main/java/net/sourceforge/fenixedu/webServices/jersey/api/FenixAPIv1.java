@@ -110,6 +110,7 @@ import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
 import net.sourceforge.fenixedu.presentationTier.Action.ICalendarSyncPoint;
 import net.sourceforge.fenixedu.presentationTier.Action.externalServices.OAuthUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.student.enrolment.DisplayEvaluationsForStudentToEnrol;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.ContentType;
 import net.sourceforge.fenixedu.util.EvaluationType;
 import net.sourceforge.fenixedu.webServices.jersey.beans.FenixCalendar;
@@ -624,9 +625,9 @@ public class FenixAPIv1 {
     public FenixPayment personPayments() {
 
         Properties props = new Properties();
-        props.setProperty("application", "resources.ApplicationResources");
-        props.setProperty("enum", "resources.EnumerationResources");
-        props.setProperty("default", "resources.ApplicationResources");
+        props.setProperty("application", BundleUtil.APPLICATION_BUNDLE);
+        props.setProperty("enum", BundleUtil.ENUMERATION_BUNDLE);
+        props.setProperty("default", BundleUtil.APPLICATION_BUNDLE);
         DefaultResourceBundleProvider provider = new DefaultResourceBundleProvider(props);
         Person person = getPerson();
 

@@ -23,8 +23,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import org.fenixedu.commons.i18n.I18N;
-
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean.StudentAttendsStateType;
 import net.sourceforge.fenixedu.domain.Attends;
@@ -33,6 +31,10 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
+import net.sourceforge.fenixedu.util.BundleUtil;
+
+import org.fenixedu.commons.i18n.I18N;
+
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
@@ -47,13 +49,12 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlTableHeader;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableRow;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import java.util.Locale;
 
 public class ExecutionCourseAttendsSpreadSheetRenderer extends OutputRenderer {
 
-    private final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources",
+    private final ResourceBundle enumerationResources = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE,
             I18N.getLocale());
-    private final ResourceBundle applicationResources = ResourceBundle.getBundle("resources.ApplicationResources",
+    private final ResourceBundle applicationResources = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE,
             I18N.getLocale());
 
     private String attendsListTableClasses;

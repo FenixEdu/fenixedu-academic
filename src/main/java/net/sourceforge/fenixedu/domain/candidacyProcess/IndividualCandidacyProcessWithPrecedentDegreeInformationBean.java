@@ -24,8 +24,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import org.fenixedu.commons.i18n.I18N;
-
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -33,7 +31,9 @@ import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
-import java.util.Locale;
+import net.sourceforge.fenixedu.util.BundleUtil;
+
+import org.fenixedu.commons.i18n.I18N;
 
 abstract public class IndividualCandidacyProcessWithPrecedentDegreeInformationBean extends IndividualCandidacyProcessBean {
 
@@ -159,7 +159,7 @@ abstract public class IndividualCandidacyProcessWithPrecedentDegreeInformationBe
         }
 
         public String getLocalizedName(final Locale locale) {
-            return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(
+            return ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, locale).getString(
                     this.getClass().getSimpleName() + "." + name());
         }
 

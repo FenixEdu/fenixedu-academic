@@ -163,9 +163,9 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base impl
     }
 
     private void appendMessage(final StringBuilder stringBuilder, final int lineNumber, final String key, final String[] args) {
-        final String description = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", key, args);
+        final String description = BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, key, args);
         final String message =
-                BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "error.invalid.file.contents.line",
+                BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "error.invalid.file.contents.line",
                         Integer.toString(lineNumber), description);
         stringBuilder.append("\n\t");
         stringBuilder.append(message);

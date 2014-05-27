@@ -1164,7 +1164,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
         sb.append(BundleUtil.getStringFromResourceBundle("resources.CandidateResources", "error.mobility.report.mail.intro"));
         sb.append("\n");
         sb.append("\nError message: ");
-        sb.append(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", exception.getKey(),
+        sb.append(BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, exception.getKey(),
                 exception.getArgs()));
         sb.append("\n");
 

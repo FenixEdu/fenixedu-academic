@@ -45,10 +45,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 import com.google.common.collect.Ordering;
 
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-
 /**
  * @author Luis Cruz e Sara Ribeiro
  */

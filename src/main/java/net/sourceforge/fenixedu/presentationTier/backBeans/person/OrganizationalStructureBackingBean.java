@@ -52,6 +52,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.lang.StringUtils;
@@ -79,7 +80,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         if (getRequestParameter("unitID") != null) {
             getUnitIDHidden().setValue(getRequestParameter("unitID"));
         }
-        this.bundle = ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
+        this.bundle = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale());
     }
 
     public List<SelectItem> getExecutionYears() throws FenixServiceException {

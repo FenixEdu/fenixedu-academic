@@ -302,7 +302,7 @@ public class WrittenTest extends WrittenTest_Base {
 
     @Override
     public String getPresentationName() {
-        return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.written.test") + " "
+        return BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.written.test") + " "
                 + getDescription();
     }
 

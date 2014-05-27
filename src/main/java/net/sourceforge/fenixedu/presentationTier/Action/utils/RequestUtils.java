@@ -89,7 +89,7 @@ public class RequestUtils {
                 TODO: DUPLICATE check really needed?
                 StringBuilder label = new StringBuilder();
                 label.append(infoDegree.getDegreeType().toString());
-                label.append(" " + BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.in") + " ");
+                label.append(" " + BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.in") + " ");
                 label.append(infoDegree.getNome());
                 if (((Boolean) duplicateDegreesMap.get(infoDegree.getNome())).booleanValue()) {
                     label.append(" - ");
@@ -117,15 +117,15 @@ public class RequestUtils {
         final List<LabelValueBean> curricularYears = new ArrayList<LabelValueBean>();
         curricularYears.add(new LabelValueBean(BundleUtil.getStringFromResourceBundle("resources.RendererResources",
                 "renderers.menu.default.title"), ""));
-        curricularYears.add(new LabelValueBean(BundleUtil.getStringFromResourceBundle("resources.EnumerationResources",
+        curricularYears.add(new LabelValueBean(BundleUtil.getStringFromResourceBundle(BundleUtil.ENUMERATION_BUNDLE,
                 "1.ordinal.short"), "1"));
-        curricularYears.add(new LabelValueBean(BundleUtil.getStringFromResourceBundle("resources.EnumerationResources",
+        curricularYears.add(new LabelValueBean(BundleUtil.getStringFromResourceBundle(BundleUtil.ENUMERATION_BUNDLE,
                 "2.ordinal.short"), "2"));
-        curricularYears.add(new LabelValueBean(BundleUtil.getStringFromResourceBundle("resources.EnumerationResources",
+        curricularYears.add(new LabelValueBean(BundleUtil.getStringFromResourceBundle(BundleUtil.ENUMERATION_BUNDLE,
                 "3.ordinal.short"), "3"));
-        curricularYears.add(new LabelValueBean(BundleUtil.getStringFromResourceBundle("resources.EnumerationResources",
+        curricularYears.add(new LabelValueBean(BundleUtil.getStringFromResourceBundle(BundleUtil.ENUMERATION_BUNDLE,
                 "4.ordinal.short"), "4"));
-        curricularYears.add(new LabelValueBean(BundleUtil.getStringFromResourceBundle("resources.EnumerationResources",
+        curricularYears.add(new LabelValueBean(BundleUtil.getStringFromResourceBundle(BundleUtil.ENUMERATION_BUNDLE,
                 "5.ordinal.short"), "5"));
         return curricularYears;
     }

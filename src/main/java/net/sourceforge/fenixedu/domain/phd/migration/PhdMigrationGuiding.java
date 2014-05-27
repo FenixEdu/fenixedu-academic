@@ -38,8 +38,6 @@ import org.fenixedu.bennu.core.domain.Bennu;
 public class PhdMigrationGuiding extends PhdMigrationGuiding_Base {
     public static final String IST_INSTITUTION_CODE = "1518";
 
-    private transient PhdMigrationGuidingBean guidingBean;
-
     protected PhdMigrationGuiding() {
         super();
         setRootDomainObject(Bennu.getInstance());
@@ -119,21 +117,8 @@ public class PhdMigrationGuiding extends PhdMigrationGuiding_Base {
 
     }
 
-    public boolean hasPersonalBean() {
-        return guidingBean != null;
-    }
-
     public PhdMigrationGuidingBean getGuidingBean() {
-        if (hasPersonalBean()) {
-            return guidingBean;
-        }
-
-        guidingBean = new PhdMigrationGuidingBean(getData());
-        return guidingBean;
-    }
-
-    public void setGuidingBean(PhdMigrationGuidingBean guidingBean) {
-        this.guidingBean = guidingBean;
+        return new PhdMigrationGuidingBean(getData());
     }
 
     public void parseAndSetNumber(Map<String, String> INSTITUTION_MAP) {
@@ -141,10 +126,6 @@ public class PhdMigrationGuiding extends PhdMigrationGuiding_Base {
 
         setTeacherNumber(guidingBean.getTeacherCode());
         setInstitution(INSTITUTION_MAP.get(guidingBean.getInstitutionCode()));
-    }
-
-    public void parse() {
-        getGuidingBean();
     }
 
     public boolean isExternal() {

@@ -26,8 +26,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import org.fenixedu.commons.i18n.I18N;
-
 import net.sourceforge.fenixedu.applicationTier.Filtro.ExecutionCourseLecturingTeacherAuthorizationFilter;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -42,6 +40,7 @@ import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
 import net.sourceforge.fenixedu.util.tests.Response;
 import net.sourceforge.fenixedu.util.tests.ResponseLID;
@@ -49,9 +48,11 @@ import net.sourceforge.fenixedu.util.tests.ResponseNUM;
 import net.sourceforge.fenixedu.util.tests.ResponseSTR;
 import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
 import net.sourceforge.fenixedu.util.tests.TestType;
+
+import org.fenixedu.commons.i18n.I18N;
+
 import pt.ist.fenixframework.Atomic;
 import pt.ist.fenixframework.FenixFramework;
-import java.util.Locale;
 
 public class ChangeStudentTestQuestionMark {
     protected void run(String executionCourseId, String distributedTestId, Double newMark, String questionId, String studentId,
@@ -118,7 +119,7 @@ public class ChangeStudentTestQuestionMark {
                     mark.setPublishedMark(markValue);
                 }
             }
-            ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
+            ResourceBundle bundle = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale());
             String event =
                     MessageFormat.format(bundle.getString("message.changeStudentMarkLogMessage"), new Object[] { newMark });
 

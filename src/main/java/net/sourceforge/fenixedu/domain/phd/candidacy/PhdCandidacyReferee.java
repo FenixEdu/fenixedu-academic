@@ -23,14 +23,14 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
-import org.fenixedu.commons.i18n.I18N;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdCandidacyRefereeAlert;
+
+import org.fenixedu.commons.i18n.I18N;
+
 import pt.ist.fenixframework.Atomic;
-import java.util.Locale;
 
 public class PhdCandidacyReferee extends PhdCandidacyReferee_Base {
 

@@ -24,10 +24,9 @@ package net.sourceforge.fenixedu.util;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import org.fenixedu.commons.i18n.I18N;
-
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
-import java.util.Locale;
+
+import org.fenixedu.commons.i18n.I18N;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)

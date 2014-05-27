@@ -207,8 +207,8 @@ public class Exam extends Exam_Base {
 
     @Override
     public String getPresentationName() {
-        return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.exam") + " "
-                + BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", getSeason().getKey());
+        return BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.exam") + " "
+                + BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, getSeason().getKey());
     }
 
     @Deprecated

@@ -23,9 +23,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import org.fenixedu.commons.i18n.I18N;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
-import java.util.Locale;
+import org.fenixedu.commons.i18n.I18N;
 
 public enum AcademicServiceRequestType {
 
@@ -92,7 +92,7 @@ public enum AcademicServiceRequestType {
     }
 
     public String localizedName(Locale locale) {
-        return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getName());
+        return ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, locale).getString(getName());
     }
 
     protected String localizedName() {

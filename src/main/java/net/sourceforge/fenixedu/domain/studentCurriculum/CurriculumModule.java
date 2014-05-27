@@ -47,6 +47,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.commons.i18n.I18N;
@@ -436,7 +437,7 @@ abstract public class CurriculumModule extends CurriculumModule_Base {
         }
 
         public String getLocalizedName() {
-            return ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale()).getString(
+            return ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale()).getString(
                     ConclusionValue.class.getSimpleName() + "." + name());
         }
     }

@@ -39,7 +39,6 @@ import org.apache.poi.hssf.util.Region;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
-import java.util.Locale;
 
 public class YearDelegateElection extends YearDelegateElection_Base {
 

@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DegreeModuleToEnrolKeyConverter;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -57,7 +58,7 @@ import pt.ist.fenixWebFramework.renderers.schemas.Schema;
 
 public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 
-    private static final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources");
+    private static final ResourceBundle enumerationResources = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE);
 
     private final ResourceBundle academicAdminOfficeResources = ResourceBundle.getBundle("resources.AcademicAdminOffice");
 

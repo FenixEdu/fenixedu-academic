@@ -39,14 +39,13 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeFi
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.FenixStringTools;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
-
-import java.util.Locale;
 
 public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument {
 
@@ -218,7 +217,7 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
         final StringBuilder result = new StringBuilder();
 
         final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", locale);
-        final ResourceBundle enumerationBundle = ResourceBundle.getBundle("resources.EnumerationResources", locale);
+        final ResourceBundle enumerationBundle = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, locale);
 
         result.append(", ").append(resourceBundle.getString("documents.registration.final.arithmetic.mean"));
         result.append(SINGLE_SPACE).append(resourceBundle.getString("label.of.both"));

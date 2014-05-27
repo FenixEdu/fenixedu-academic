@@ -18,14 +18,14 @@
  */
 package net.sourceforge.fenixedu.domain.phd.serviceRequests;
 
-import org.fenixedu.spaces.domain.Space;
-
 import net.sourceforge.fenixedu.domain.AcademicProgram;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.domain.student.Student;
+
+import org.fenixedu.spaces.domain.Space;
 
 abstract public class PhdAcademicServiceRequest extends PhdAcademicServiceRequest_Base {
 

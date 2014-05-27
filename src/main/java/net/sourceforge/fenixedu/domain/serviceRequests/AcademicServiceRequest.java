@@ -45,6 +45,7 @@ import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
@@ -194,7 +195,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     protected String getDescription(final AcademicServiceRequestType academicServiceRequestType, final String specificServiceType) {
-        final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
+        final ResourceBundle enumerationResources = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale());
         final StringBuilder result = new StringBuilder();
         result.append(enumerationResources.getString(academicServiceRequestType.getQualifiedName()));
         if (specificServiceType != null) {
@@ -283,7 +284,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
     }
 
     private void sendConcludeEmail() {
-        final ResourceBundle appBundle = ResourceBundle.getBundle("resources.ApplicationResources");
+        final ResourceBundle appBundle = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE);
 
         String body = appBundle.getString("mail.academicServiceRequest.concluded.message1");
         body += " " + getServiceRequestNumberYear();

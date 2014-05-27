@@ -55,7 +55,6 @@ import pt.ist.fenixWebFramework.renderers.components.controllers.HtmlActionLinkC
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import java.util.Locale;
 
 public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer {
 

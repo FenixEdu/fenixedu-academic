@@ -50,7 +50,6 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.fenixedu.commons.i18n.I18N;
 
 import pt.ist.fenixframework.FenixFramework;
-import java.util.Locale;
 
 public class CourseGroupManagementBackingBean extends CurricularCourseManagementBackingBean {
 

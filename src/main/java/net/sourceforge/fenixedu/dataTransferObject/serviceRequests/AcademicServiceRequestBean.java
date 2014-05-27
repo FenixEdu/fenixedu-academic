@@ -34,8 +34,6 @@ import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
-import java.util.Locale;
-
 public class AcademicServiceRequestBean implements Serializable {
 
     protected AcademicServiceRequestSituationType academicServiceRequestSituationType;

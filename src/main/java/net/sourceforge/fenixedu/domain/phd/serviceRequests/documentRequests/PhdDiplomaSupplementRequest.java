@@ -48,8 +48,6 @@ import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffi
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import java.util.Locale;
-
 public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Base implements IDiplomaSupplementRequest,
         IRectorateSubmissionBatchDocumentEntry {
 

@@ -57,10 +57,6 @@ public class InfoEnrolment extends InfoObject {
         throw new Error("Method should not be called!");
     }
 
-    public Integer getAccumulatedWeight() {
-        return enrolment.getAccumulatedWeight();
-    }
-
     public String getEnrollmentTypeResourceKey() {
         return enrolment.getEnrolmentTypeName();
     }

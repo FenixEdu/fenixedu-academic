@@ -372,19 +372,8 @@ public class Context extends Context_Base implements Comparable<Context> {
         return firstCurricularPeriodOrder <= argumentOrder && argumentOrder <= lastCurricularPeriodOrder;
     }
 
-    private DegreeModuleScopeContext degreeModuleScopeContext = null;
-
-    private synchronized void initDegreeModuleScopeContext() {
-        if (degreeModuleScopeContext == null) {
-            degreeModuleScopeContext = new DegreeModuleScopeContext(this);
-        }
-    }
-
     public DegreeModuleScopeContext getDegreeModuleScopeContext() {
-        if (degreeModuleScopeContext == null) {
-            initDegreeModuleScopeContext();
-        }
-        return degreeModuleScopeContext;
+        return new DegreeModuleScopeContext(this);
     }
 
     @Override

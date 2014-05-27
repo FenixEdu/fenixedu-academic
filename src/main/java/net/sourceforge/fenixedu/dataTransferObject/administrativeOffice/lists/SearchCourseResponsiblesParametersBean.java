@@ -20,13 +20,13 @@ package net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.lists;
 
 import java.io.Serializable;
 
-import org.fenixedu.spaces.domain.Space;
-
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
+
+import org.fenixedu.spaces.domain.Space;
 
 /**
  * 

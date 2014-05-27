@@ -48,7 +48,6 @@ import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
 import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
 import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
 import pt.utl.ist.fenix.tools.spreadsheet.converters.CellConverter;
-import java.util.Locale;
 
 @StrutsFunctionality(app = AcademicAdminPaymentsApp.class, path = "sibs-reports", titleKey = "label.payments.sibs.reports",
         accessGroup = "academic(CREATE_SIBS_PAYMENTS_REPORT)")

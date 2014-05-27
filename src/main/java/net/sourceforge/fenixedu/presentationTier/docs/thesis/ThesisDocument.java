@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 
@@ -47,7 +48,7 @@ public abstract class ThesisDocument extends FenixReport {
     public ThesisDocument(Thesis thesis) {
         super();
         this.thesis = thesis;
-        setResourceBundle(ResourceBundle.getBundle("resources.ApplicationResources", getLocale()));
+        setResourceBundle(ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, getLocale()));
         fillReport();
     }
 

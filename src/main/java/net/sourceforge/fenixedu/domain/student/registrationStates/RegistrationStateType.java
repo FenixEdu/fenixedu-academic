@@ -23,9 +23,9 @@ package net.sourceforge.fenixedu.domain.student.registrationStates;
 
 import java.util.ResourceBundle;
 
-import org.fenixedu.commons.i18n.I18N;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
-import java.util.Locale;
+import org.fenixedu.commons.i18n.I18N;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -93,7 +93,7 @@ public enum RegistrationStateType {
     }
 
     public String getDescription() {
-        return ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale()).getString(getQualifiedName());
+        return ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale()).getString(getQualifiedName());
     }
 
     public boolean canReingress() {

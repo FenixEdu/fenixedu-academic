@@ -56,7 +56,6 @@ import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
-import java.util.Locale;
 
 public class UTLScholarshipReportBeanFromRegistration implements Serializable, IUTLScholarshipReportResult {
 

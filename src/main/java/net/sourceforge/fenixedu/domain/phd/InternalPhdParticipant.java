@@ -23,8 +23,6 @@ import static org.apache.commons.lang.StringUtils.isEmpty;
 
 import java.util.ResourceBundle;
 
-import org.fenixedu.commons.i18n.I18N;
-
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
@@ -32,8 +30,10 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitAcronym;
+
+import org.fenixedu.commons.i18n.I18N;
+
 import pt.ist.fenixframework.dml.runtime.RelationAdapter;
-import java.util.Locale;
 
 public class InternalPhdParticipant extends InternalPhdParticipant_Base {
 

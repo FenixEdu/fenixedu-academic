@@ -52,7 +52,7 @@ public class RadioGroupQuestion extends InquiriesQuestion {
         this(label, showValues, header);
         for (Enum enumConstant : (Enum[]) enumClass.getEnumConstants()) {
             addChoice(enumConstant.name(),
-                    BundleUtil.getStringFromResourceBundle("resources.EnumerationResources", enumConstant.name()));
+                    BundleUtil.getStringFromResourceBundle(BundleUtil.ENUMERATION_BUNDLE, enumConstant.name()));
         }
     }
 

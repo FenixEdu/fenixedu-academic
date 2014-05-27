@@ -19,13 +19,13 @@
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.Collection;
+import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 
-import java.util.Locale;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class AccountabilityType extends AccountabilityType_Base {

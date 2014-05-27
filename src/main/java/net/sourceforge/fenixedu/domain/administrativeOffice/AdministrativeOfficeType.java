@@ -20,10 +20,10 @@ package net.sourceforge.fenixedu.domain.administrativeOffice;
 
 import java.util.ResourceBundle;
 
-import org.fenixedu.commons.i18n.I18N;
-
 import net.sourceforge.fenixedu.domain.AcademicProgram;
-import java.util.Locale;
+import net.sourceforge.fenixedu.util.BundleUtil;
+
+import org.fenixedu.commons.i18n.I18N;
 
 /**
  * The {@link AdministrativeOfficeType} was used as a selector for the {@link AdministrativeOffice} from a given context (e.g. a
@@ -54,7 +54,7 @@ public enum AdministrativeOfficeType {
 
     @Deprecated
     public String getDescription() {
-        return ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale()).getString(getQualifiedName());
+        return ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale()).getString(getQualifiedName());
     }
 
     @Deprecated

@@ -52,6 +52,7 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFill
 import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingForDepartmentAdmOfficeCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingForTeacherCE;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -76,9 +77,8 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
  */
 public class ExecutionSemester extends ExecutionSemester_Base implements Comparable<ExecutionSemester> {
 
-    private static final ResourceBundle applicationResourcesBundle = ResourceBundle.getBundle("resources.ApplicationResources",
+    private static final ResourceBundle applicationResourcesBundle = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE,
             new Locale("pt"));
-    private transient OccupationPeriod lessonsPeriod;
 
     public static final Comparator<ExecutionSemester> COMPARATOR_BY_SEMESTER_AND_YEAR = new Comparator<ExecutionSemester>() {
 
@@ -143,14 +143,8 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
         super.setExecutionYear(executionYear);
     }
 
-    // Temp hack for maximum performance during enrollment period.
-    private Integer semester = null;
-
     public Integer getSemester() {
-        if (semester == null) {
-            semester = getAcademicInterval().getAcademicSemesterOfAcademicYear();
-        }
-        return semester;
+        return getAcademicInterval().getAcademicSemesterOfAcademicYear();
     }
 
     public ExecutionSemester getNextExecutionPeriod() {
@@ -488,26 +482,25 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     public OccupationPeriod getLessonsPeriod() {
+        OccupationPeriod lessonsPeriod = null;
 
-        if (lessonsPeriod == null) {
+        Collection<ExecutionDegree> degrees = getExecutionYear().getExecutionDegreesByType(DegreeType.DEGREE);
+        degrees.addAll(getExecutionYear().getExecutionDegreesByType(DegreeType.BOLONHA_DEGREE));
+        degrees.addAll(getExecutionYear().getExecutionDegreesByType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
+        degrees.addAll(getExecutionYear().getExecutionDegreesByType(DegreeType.BOLONHA_MASTER_DEGREE));
 
-            Collection<ExecutionDegree> degrees = getExecutionYear().getExecutionDegreesByType(DegreeType.DEGREE);
-            degrees.addAll(getExecutionYear().getExecutionDegreesByType(DegreeType.BOLONHA_DEGREE));
-            degrees.addAll(getExecutionYear().getExecutionDegreesByType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
-            degrees.addAll(getExecutionYear().getExecutionDegreesByType(DegreeType.BOLONHA_MASTER_DEGREE));
-
-            for (ExecutionDegree executionDegree : degrees) {
-                if (getSemester() == 1) {
-                    OccupationPeriod lessonsPeriodFirstSemester = executionDegree.getPeriodLessonsFirstSemester();
-                    lessonsPeriod =
-                            (lessonsPeriod == null || lessonsPeriodFirstSemester.isGreater(lessonsPeriod)) ? lessonsPeriodFirstSemester : lessonsPeriod;
-                } else {
-                    OccupationPeriod lessonsPeriodSecondSemester = executionDegree.getPeriodLessonsSecondSemester();
-                    lessonsPeriod =
-                            (lessonsPeriod == null || lessonsPeriodSecondSemester.isGreater(lessonsPeriod)) ? lessonsPeriodSecondSemester : lessonsPeriod;
-                }
+        for (ExecutionDegree executionDegree : degrees) {
+            if (getSemester() == 1) {
+                OccupationPeriod lessonsPeriodFirstSemester = executionDegree.getPeriodLessonsFirstSemester();
+                lessonsPeriod =
+                        (lessonsPeriod == null || lessonsPeriodFirstSemester.isGreater(lessonsPeriod)) ? lessonsPeriodFirstSemester : lessonsPeriod;
+            } else {
+                OccupationPeriod lessonsPeriodSecondSemester = executionDegree.getPeriodLessonsSecondSemester();
+                lessonsPeriod =
+                        (lessonsPeriod == null || lessonsPeriodSecondSemester.isGreater(lessonsPeriod)) ? lessonsPeriodSecondSemester : lessonsPeriod;
             }
         }
+
         return lessonsPeriod;
     }
 

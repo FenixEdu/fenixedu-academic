@@ -354,7 +354,7 @@ public abstract class PartyContact extends PartyContact_Base {
     }
 
     protected void logCreateAux(Person person, String typeKey) {
-        final String infoLabel = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", typeKey);
+        final String infoLabel = BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, typeKey);
         final String personViewed = PersonInformationLog.getPersonNameForLogDescription(person);
 
         final String descriptionKey;
@@ -373,7 +373,7 @@ public abstract class PartyContact extends PartyContact_Base {
 
     protected void logEditAux(Person person, boolean propertiesChanged, boolean valueChanged, boolean createdNewContact,
             String newValue, String typeKey) {
-        final String infoLabel = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", typeKey);
+        final String infoLabel = BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, typeKey);
         final String personViewed = PersonInformationLog.getPersonNameForLogDescription(person);
 
         boolean oldValueDiffersFromNew = false;
@@ -449,7 +449,7 @@ public abstract class PartyContact extends PartyContact_Base {
     }
 
     public void logDeleteAux(Person person, String typeKey) {
-        final String infoLabel = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", typeKey);
+        final String infoLabel = BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, typeKey);
         final String personViewed = PersonInformationLog.getPersonNameForLogDescription(person);
 
         if (isValid()) {
@@ -484,7 +484,7 @@ public abstract class PartyContact extends PartyContact_Base {
     }
 
     public void logValidAux(Person person, String typeKey) {
-        final String infoLabel = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", typeKey);
+        final String infoLabel = BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, typeKey);
         final String personViewed = PersonInformationLog.getPersonNameForLogDescription(person);
 
         if (!hasPrevPartyContact()) {
@@ -513,7 +513,7 @@ public abstract class PartyContact extends PartyContact_Base {
     }
 
     public void logRefuseAux(Person person, String typeKey) {
-        final String infoLabel = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", typeKey);
+        final String infoLabel = BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, typeKey);
         final String personViewed = PersonInformationLog.getPersonNameForLogDescription(person);
 
         if (!hasPrevPartyContact()) {

@@ -36,7 +36,7 @@
 		</p>
 		
 		<p class="mbottom05"><strong><bean:message key="label.create.equivalency.table.for.degree.curricular.plan" bundle="APPLICATION_RESOURCES"/></strong></p>
-		<fr:edit name="degreeCurricularPlan" type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"
+		<fr:edit name="degreeCurricularPlanBean" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.DegreeCurricularPlanBean"
 				schema="degreeCurricularPlan.createEquivalencyPlan">
 		    <fr:layout>
 	    	    <fr:property name="classes" value="tstyle5 thlight mtop05 thmiddle"/>

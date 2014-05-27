@@ -74,8 +74,6 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 
     private static final Logger logger = LoggerFactory.getLogger(DgesStudentImportationProcess.class);
 
-    private transient PrintWriter LOG_WRITER = null;
-
     protected DgesStudentImportationProcess() {
         super();
     }
@@ -108,18 +106,21 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
     public QueueJobResult execute() throws Exception {
 
         ByteArrayOutputStream stream = null;
+        PrintWriter LOG_WRITER = null;
         try {
             stream = new ByteArrayOutputStream();
             LOG_WRITER = new PrintWriter(new BufferedOutputStream(stream));
 
-            importCandidates();
+            importCandidates(LOG_WRITER);
         } catch (Throwable a) {
             logger.error(a.getMessage(), a);
             throw new RuntimeException(a);
         }
 
         finally {
-            LOG_WRITER.close();
+            if (LOG_WRITER != null) {
+                LOG_WRITER.close();
+            }
             stream.close();
         }
 
@@ -137,7 +138,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
         return "DgesStudentImportationProcess_result_" + getExecutionYear().getName().replaceAll("/", "-") + ".txt";
     }
 
-    public void importCandidates() {
+    public void importCandidates(final PrintWriter LOG_WRITER) {
 
         final List<DegreeCandidateDTO> degreeCandidateDTOs =
                 parseDgesFile(getDgesStudentImportationFile().getContents(), getUniversityAcronym(), getEntryPhase());
@@ -147,7 +148,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
         LOG_WRITER.println(String.format("DGES Entries for %s : %s", getDgesStudentImportationForCampus().getName(),
                 degreeCandidateDTOs.size()));
 
-        createDegreeCandidacies(employee, degreeCandidateDTOs);
+        createDegreeCandidacies(LOG_WRITER, employee, degreeCandidateDTOs);
         distributeTutorshipIntentions(degreeCandidateDTOs);
     }
 
@@ -184,7 +185,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
         }
     }
 
-    private void createDegreeCandidacies(final Employee employee, final List<DegreeCandidateDTO> degreeCandidateDTOs) {
+    private void createDegreeCandidacies(final PrintWriter LOG_WRITER, final Employee employee, final List<DegreeCandidateDTO> degreeCandidateDTOs) {
         int processed = 0;
         int personsCreated = 0;
 
@@ -194,41 +195,41 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
                 logger.info("Processed :" + processed);
             }
 
-            logCandidate(degreeCandidateDTO);
+            logCandidate(LOG_WRITER, degreeCandidateDTO);
 
             Person person = null;
             try {
                 person = degreeCandidateDTO.getMatchingPerson();
             } catch (DegreeCandidateDTO.NotFoundPersonException e) {
                 person = degreeCandidateDTO.createPerson();
-                logCreatedPerson(person);
+                logCreatedPerson(LOG_WRITER, person);
                 personsCreated++;
             } catch (DegreeCandidateDTO.TooManyMatchedPersonsException e) {
-                logTooManyMatchsForCandidate(degreeCandidateDTO);
+                logTooManyMatchsForCandidate(LOG_WRITER, degreeCandidateDTO);
                 continue;
             } catch (DegreeCandidateDTO.MatchingPersonException e) {
                 throw new RuntimeException(e);
             }
 
             if (person.hasStudent() && person.getStudent().hasAnyRegistrations()) {
-                logCandidateIsStudentWithRegistrationAlreadyExists(degreeCandidateDTO, person);
+                logCandidateIsStudentWithRegistrationAlreadyExists(LOG_WRITER, degreeCandidateDTO, person);
                 continue;
             }
 
             if (person.hasTeacher() || person.hasRole(RoleType.TEACHER)) {
-                logCandidateIsTeacher(degreeCandidateDTO, person);
+                logCandidateIsTeacher(LOG_WRITER, degreeCandidateDTO, person);
                 continue;
             }
 
             if (person.hasRole(RoleType.EMPLOYEE) || person.hasEmployee()) {
-                logCandidateIsEmployee(degreeCandidateDTO, person);
+                logCandidateIsEmployee(LOG_WRITER, degreeCandidateDTO, person);
             }
 
             person.addPersonRoleByRoleType(RoleType.CANDIDATE);
 
             if (!person.hasStudent()) {
                 new Student(person);
-                logCreatedStudent(person.getStudent());
+                logCreatedStudent(LOG_WRITER, person.getStudent());
             }
 
             voidPreviousCandidacies(person,
@@ -322,15 +323,15 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
         return null;
     }
 
-    private void logCreatedStudent(final Student student) {
+    private void logCreatedStudent(final PrintWriter LOG_WRITER, final Student student) {
         LOG_WRITER.println("Created student");
     }
 
-    private void logCreatedPerson(final Person person) {
+    private void logCreatedPerson(final PrintWriter LOG_WRITER, final Person person) {
         LOG_WRITER.println("Created person");
     }
 
-    private void logCandidate(DegreeCandidateDTO degreeCandidateDTO) {
+    private void logCandidate(final PrintWriter LOG_WRITER, DegreeCandidateDTO degreeCandidateDTO) {
         LOG_WRITER.println("-------------------------------------------------------------------");
         LOG_WRITER.println("Processing: " + degreeCandidateDTO.toString());
     }
@@ -388,24 +389,24 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
         }
     }
 
-    private void logCandidateIsEmployee(DegreeCandidateDTO degreeCandidateDTO, Person person) {
+    private void logCandidateIsEmployee(final PrintWriter LOG_WRITER, DegreeCandidateDTO degreeCandidateDTO, Person person) {
         LOG_WRITER.println(String.format("CANDIDATE WITH ID %s IS EMPLOYEE WITH NUMBER %s",
                 degreeCandidateDTO.getDocumentIdNumber(), person.getEmployee().getEmployeeNumber()));
 
     }
 
-    private void logCandidateIsTeacher(DegreeCandidateDTO degreeCandidateDTO, Person person) {
+    private void logCandidateIsTeacher(final PrintWriter LOG_WRITER, DegreeCandidateDTO degreeCandidateDTO, Person person) {
         LOG_WRITER.println(String.format("CANDIDATE WITH ID %s IS TEACHER WITH USERNAME %s",
                 degreeCandidateDTO.getDocumentIdNumber(), person.getIstUsername()));
     }
 
-    private void logCandidateIsStudentWithRegistrationAlreadyExists(DegreeCandidateDTO degreeCandidateDTO, Person person) {
+    private void logCandidateIsStudentWithRegistrationAlreadyExists(final PrintWriter LOG_WRITER, DegreeCandidateDTO degreeCandidateDTO, Person person) {
         LOG_WRITER.println(String.format("CANDIDATE WITH ID %s IS THE STUDENT %s WITH REGISTRATIONS",
                 degreeCandidateDTO.getDocumentIdNumber(), person.getStudent().getStudentNumber()));
 
     }
 
-    private void logTooManyMatchsForCandidate(DegreeCandidateDTO degreeCandidateDTO) {
+    private void logTooManyMatchsForCandidate(final PrintWriter LOG_WRITER, DegreeCandidateDTO degreeCandidateDTO) {
         LOG_WRITER.println(String.format("CANDIDATE WITH ID %s HAS MANY PERSONS", degreeCandidateDTO.getDocumentIdNumber()));
     }
 

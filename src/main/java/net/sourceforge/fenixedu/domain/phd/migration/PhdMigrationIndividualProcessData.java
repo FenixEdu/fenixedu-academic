@@ -61,6 +61,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitThesis;
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.ScheduleFirstThesisMeetingRequest;
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.SkipScheduleFirstThesisMeeting;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.User;
@@ -69,45 +70,16 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixframework.Atomic;
-import java.util.Locale;
 
 public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualProcessData_Base {
-
-    private transient PhdMigrationIndividualProcessDataBean processBean;
-
-    private PhdMigrationIndividualProcessData() {
-        super();
-    }
 
     protected PhdMigrationIndividualProcessData(String data) {
         setData(data);
         setMigrationStatus(PhdMigrationProcessStateType.NOT_MIGRATED);
     }
 
-    public boolean hasProcessBean() {
-        return processBean != null;
-    }
-
     public PhdMigrationIndividualProcessDataBean getProcessBean() {
-        if (hasProcessBean()) {
-            return processBean;
-        }
-
-        processBean = new PhdMigrationIndividualProcessDataBean(this);
-        return processBean;
-    }
-
-    public void setProcessBean(PhdMigrationIndividualProcessDataBean processBean) {
-        this.processBean = processBean;
-    }
-
-    public void parse() {
-        getProcessBean();
-    }
-
-    public void parseAndSetNumber() {
-        final PhdMigrationIndividualProcessDataBean personalBean = getProcessBean();
-        setNumber(processBean.getProcessNumber());
+        return new PhdMigrationIndividualProcessDataBean(this);
     }
 
     public boolean hasMigrationParseLog() {
@@ -160,7 +132,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
             } else {
                 try {
                     errorTranslated =
-                            ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale()).getString(
+                            ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale()).getString(
                                     messageString);
                 } catch (Exception e) {
                     errorTranslated = exceptionString + " " + messageString;
@@ -557,7 +529,6 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
         if (!StringUtils.isEmpty(getProcessBean().getGuiderNumber())) {
             final PhdMigrationGuiding migrationGuiding = getGuiding(getProcessBean().getGuiderNumber());
             if (migrationGuiding != null) {
-                migrationGuiding.parse();
                 final PhdParticipantBean guidingBean = migrationGuiding.getPhdParticipantBean(individualProcess);
                 ExecuteProcessActivity.run(individualProcess, AddGuidingInformation.class.getSimpleName(), guidingBean);
             }
@@ -566,7 +537,6 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
         if (!StringUtils.isEmpty(getProcessBean().getAssistantGuiderNumber())) {
             final PhdMigrationGuiding migrationAssistantGuiding = getGuiding(getProcessBean().getAssistantGuiderNumber());
             if (migrationAssistantGuiding != null) {
-                migrationAssistantGuiding.parse();
                 final PhdParticipantBean assistantGuidingBean =
                         migrationAssistantGuiding.getPhdParticipantBean(individualProcess);
                 ExecuteProcessActivity.run(individualProcess, AddAssistantGuidingInformation.class.getSimpleName(),

@@ -1470,9 +1470,6 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
         PhdMigrationIndividualProcessDataBean processDataBean = getRenderedObject("processDataBean");
         PhdMigrationIndividualPersonalDataBean personalDataBean = getRenderedObject("personalDataBean");
 
-        processData.setProcessBean(processDataBean);
-        processData.getPhdMigrationIndividualPersonalData().setPersonalBean(personalDataBean);
-
         try {
             processData.proceedWithMigration(Authenticate.getUser());
             addSuccessMessage(request, "message.migration.manual.candidacy.success");
@@ -1480,7 +1477,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
             addErrorMessage(request, e.getKey());
             request.setAttribute("processData", processData);
             request.setAttribute("processDataBean", processDataBean);
-            request.setAttribute("personalDataBean", personalDataBean);
+            request.setAttribute("personalDataBean", processData.getPhdMigrationIndividualPersonalData().getPersonalBean());
             return mapping.findForward("editPersonalData");
         } catch (DomainException e) {
             addErrorMessage(request, e.getKey(), e.getArgs());

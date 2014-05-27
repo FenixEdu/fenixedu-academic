@@ -51,7 +51,6 @@ import pt.ist.fenixWebFramework.renderers.model.MetaObject;
 import pt.ist.fenixWebFramework.renderers.model.MetaObjectFactory;
 import pt.ist.fenixWebFramework.renderers.model.MetaSlot;
 import pt.ist.fenixWebFramework.renderers.utils.RenderKit;
-import java.util.Locale;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)

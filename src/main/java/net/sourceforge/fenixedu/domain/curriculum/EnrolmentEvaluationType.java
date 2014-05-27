@@ -23,10 +23,10 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.util.BundleUtil;
+
 import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.commons.i18n.I18N;
-
-import java.util.Locale;
 
 /**
  * @author dcs-rjao
@@ -55,7 +55,7 @@ public enum EnrolmentEvaluationType {
             return labelValueBeans;
         }
 
-        final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.EnumerationResources", locale);
+        final ResourceBundle resourceBundle = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, locale);
         labelValueBeans =
                 new LabelValueBean[] {
                         new LabelValueBean(resourceBundle.getString(NORMAL.getQualifiedName()), NORMAL.toString()),
@@ -80,7 +80,7 @@ public enum EnrolmentEvaluationType {
     }
 
     public String getDescription() {
-        return ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale()).getString(getQualifiedName());
+        return ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale()).getString(getQualifiedName());
     }
 
 }

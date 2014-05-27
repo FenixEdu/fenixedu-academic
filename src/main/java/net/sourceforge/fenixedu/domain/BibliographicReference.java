@@ -67,11 +67,11 @@ public class BibliographicReference extends BibliographicReference_Base {
         final String type;
         if (optional) {
             type =
-                    BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
+                    BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE,
                             "option.bibliographicReference.optional");
         } else {
             type =
-                    BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
+                    BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE,
                             "option.bibliographicReference.recommended");
         }
         CurricularManagementLog.createLog(executionCourse, "resources.MessagingResources",
@@ -87,11 +87,11 @@ public class BibliographicReference extends BibliographicReference_Base {
         final String type;
         if (optional) {
             type =
-                    BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
+                    BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE,
                             "option.bibliographicReference.optional");
         } else {
             type =
-                    BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
+                    BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE,
                             "option.bibliographicReference.recommended");
         }
 

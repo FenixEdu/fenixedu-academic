@@ -25,9 +25,9 @@ package net.sourceforge.fenixedu.domain.studentCurricularPlan;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import org.fenixedu.commons.i18n.I18N;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
-import java.util.Locale;
+import org.fenixedu.commons.i18n.I18N;
 
 /**
  * @author Nuno Nunes & Joana Mota
@@ -56,6 +56,6 @@ public enum StudentCurricularPlanState {
     }
 
     public String getLocalizedName(final Locale locale) {
-        return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getName());
+        return ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, locale).getString(getName());
     }
 }

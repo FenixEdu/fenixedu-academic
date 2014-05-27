@@ -21,9 +21,10 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManag
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.space.SpaceUtils;
+
 import org.fenixedu.spaces.domain.Space;
 
-import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;

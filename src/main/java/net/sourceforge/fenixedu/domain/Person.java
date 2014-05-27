@@ -1512,8 +1512,8 @@ public class Person extends Person_Base {
 
             if (sender != null) {
                 final Recipient recipient = new Recipient(RoleGroup.get(RoleType.MANAGER));
-                new Message(sender, recipient, BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
-                        subjectKey), BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", bodyKey,
+                new Message(sender, recipient, BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE,
+                        subjectKey), BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, bodyKey,
                         person.getPresentationName()));
             }
         }
@@ -2724,7 +2724,7 @@ public class Person extends Person_Base {
             final List<Role> roles = new ArrayList<Role>(getPersonRolesSet());
             Collections.sort(roles, Role.COMPARATOR_BY_ROLE_TYPE);
 
-            final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
+            final ResourceBundle bundle = ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale());
 
             for (final Role personRole : roles) {
 
@@ -4143,7 +4143,7 @@ public class Person extends Person_Base {
 
         final String personViewed = PersonInformationLog.getPersonNameForLogDescription(this);
         if (oldValue.compareTo(newValue) != 0) {
-            String infoLabel = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", keyLabel);
+            String infoLabel = BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, keyLabel);
             String typeOfData = BundleUtil.getStringFromResourceBundle("resources.MessagingResources", keyTypeOfData);
             PersonInformationLog.createLog(this, "resources.MessagingResources", "log.personInformation.edit.generalTemplate",
                     typeOfData, infoLabel, personViewed, oldValue);
@@ -4154,10 +4154,10 @@ public class Person extends Person_Base {
         String argNew, argOld;
         argOld =
                 valueToUpdateIfNewNotNull(
-                        BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.empty"), oldValue);
+                        BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.empty"), oldValue);
         argNew =
                 valueToUpdateIfNewNotNull(
-                        BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.empty"), newValue);
+                        BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.empty"), newValue);
         logSetter(keyInfoType, argOld, argNew, keyLabel);
     }
 
@@ -4190,10 +4190,10 @@ public class Person extends Person_Base {
         String strNew, strOld;
         argOld =
                 valueToUpdateIfNewNotNull(
-                        BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.empty"), oldValue);
+                        BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.empty"), oldValue);
         argNew =
                 valueToUpdateIfNewNotNull(
-                        BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.empty"), newValue);
+                        BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.empty"), newValue);
 
         if (argOld instanceof Enum) {
             strOld = ((IPresentableEnum) argOld).getLocalizedName();
@@ -4288,7 +4288,7 @@ public class Person extends Person_Base {
                 argOld = getCountry().getName();
             }
         } else {
-            argOld = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.empty");
+            argOld = BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.empty");
         }
 
         if (arg != null) {
@@ -4298,7 +4298,7 @@ public class Person extends Person_Base {
                 argNew = arg.getName();
             }
         } else {
-            argNew = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.empty");
+            argNew = BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.empty");
         }
         super.setCountry(arg);
         logSetter("log.personInformation.edit.generalTemplate.filiation", argOld, argNew, "label.nationality");
@@ -4333,13 +4333,13 @@ public class Person extends Person_Base {
         if (getCountryOfBirth() != null) {
             argOld = getCountryOfBirth().getName();
         } else {
-            argOld = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.empty");
+            argOld = BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.empty");
         }
 
         if (arg != null) {
             argNew = arg.getName();
         } else {
-            argNew = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.empty");
+            argNew = BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.empty");
         }
         super.setCountryOfBirth(arg);
         logSetter("log.personInformation.edit.generalTemplate.filiation", argOld, argNew, "label.countryOfBirth");

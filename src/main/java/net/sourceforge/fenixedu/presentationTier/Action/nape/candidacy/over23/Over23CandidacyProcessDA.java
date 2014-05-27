@@ -56,7 +56,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.excel.SpreadsheetXLSExporter;
-import java.util.Locale;
 
 @StrutsFunctionality(app = NapeCandidaciesApp.class, path = "over-23", titleKey = "title.application.name.over23")
 @Mapping(path = "/caseHandlingOver23CandidacyProcess", module = "nape",

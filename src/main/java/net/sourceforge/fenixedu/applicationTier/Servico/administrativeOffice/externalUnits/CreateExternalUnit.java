@@ -18,6 +18,8 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.externalUnits;
 
+import java.util.Locale;
+
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement.CreateUnit;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.externalUnits.CreateExternalUnitBean;
@@ -28,7 +30,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.Atomic;
-import java.util.Locale;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateExternalUnit {

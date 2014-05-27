@@ -21,13 +21,13 @@ package net.sourceforge.fenixedu.domain;
 import java.io.ByteArrayOutputStream;
 import java.util.Locale;
 
-import org.fenixedu.commons.i18n.I18N;
-
 import net.sourceforge.fenixedu.applicationTier.Servico.student.reports.GenerateStudentReport;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.reports.GenerateStudentReport.StudentReportPredicate;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+
+import org.fenixedu.commons.i18n.I18N;
+
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
-import java.util.Locale;
 
 public class PublicRelationsStudentListQueueJob extends PublicRelationsStudentListQueueJob_Base {
 

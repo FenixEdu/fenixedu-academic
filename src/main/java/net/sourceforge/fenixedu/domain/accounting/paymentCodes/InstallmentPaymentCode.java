@@ -29,12 +29,11 @@ import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.predicates.RolePredicates;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.YearMonthDay;
-
-import java.util.Locale;
 
 @Deprecated
 public class InstallmentPaymentCode extends InstallmentPaymentCode_Base {
@@ -114,7 +113,7 @@ public class InstallmentPaymentCode extends InstallmentPaymentCode_Base {
     public String getDescription() {
         if (getInstallment().getPaymentPlan().hasSingleInstallment()) {
             final ResourceBundle enumerationResources =
-                    ResourceBundle.getBundle("resources.EnumerationResources", I18N.getLocale());
+                    ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, I18N.getLocale());
 
             return enumerationResources.getString(PaymentCodeType.TOTAL_GRATUITY.getQualifiedName());
 

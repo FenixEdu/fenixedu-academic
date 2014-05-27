@@ -22,10 +22,11 @@
  */
 package net.sourceforge.fenixedu.domain.onlineTests;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import net.sourceforge.fenixedu.domain.onlineTests.utils.ParseSubQuestion;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 
@@ -33,8 +34,6 @@ import org.fenixedu.bennu.core.domain.Bennu;
  * @author Susana Fernandes
  */
 public class Question extends Question_Base {
-
-    private List<SubQuestion> subQuestions;
 
     public Question() {
         super();
@@ -58,18 +57,15 @@ public class Question extends Question_Base {
     }
 
     public List<SubQuestion> getSubQuestions() {
-        return subQuestions;
+        return ParseSubQuestion.getSubQuestionFor(this);
     }
 
     public void setSubQuestions(List<SubQuestion> subQuestions) {
-        this.subQuestions = subQuestions;
+        ParseSubQuestion.setSubQuestionFor(this, subQuestions);
     }
 
     public void addSubQuestion(SubQuestion subQuestion) {
-        if (subQuestions == null) {
-            subQuestions = new ArrayList<SubQuestion>();
-        }
-        subQuestions.add(subQuestion);
+        ParseSubQuestion.addSubQuestionFor(this, subQuestion);
     }
 
     // public SubQuestion getSubQuestionByItem(String itemId) {

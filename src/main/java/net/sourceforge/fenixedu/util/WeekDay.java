@@ -79,11 +79,11 @@ public enum WeekDay {
     }
 
     public String getLabel() {
-        return BundleUtil.getStringFromResourceBundle("resources.EnumerationResources", name());
+        return BundleUtil.getStringFromResourceBundle(BundleUtil.ENUMERATION_BUNDLE, name());
     }
 
     public String getLabelShort() {
-        return BundleUtil.getStringFromResourceBundle("resources.EnumerationResources", name() + ".short");
+        return BundleUtil.getStringFromResourceBundle(BundleUtil.ENUMERATION_BUNDLE, name() + ".short");
     }
 
 }

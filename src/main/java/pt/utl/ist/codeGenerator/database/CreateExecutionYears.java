@@ -31,7 +31,6 @@ import net.sourceforge.fenixedu.util.PeriodState;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.YearMonthDay;
 
-import java.util.Locale;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateExecutionYears {

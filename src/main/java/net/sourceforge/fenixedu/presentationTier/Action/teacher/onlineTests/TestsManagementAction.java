@@ -88,6 +88,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.ManageExecutionCourseDA;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.executionCourse.ExecutionCourseBaseAction;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.tests.CardinalityType;
 import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
 import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
@@ -1438,13 +1439,13 @@ public class TestsManagementAction extends ExecutionCourseBaseAction {
     }
 
     private String createDefaultDistributedTestInfo(Test test) {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources");
+        ResourceBundle bundle = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE);
         return MessageFormat.format(bundle.getString("message.distributeTest.evaluation"), new Object[] { test.getTitle(),
                 test.getTestQuestions().size() });
     }
 
     private String createDefaultDistributedInquiryInfo() {
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
+        ResourceBundle bundle = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale());
         return bundle.getString("message.distributeTest.inquiry");
     }
 }

@@ -75,7 +75,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class Unit extends Unit_Base {
 
-    private static final ResourceBundle applicationResourcesBundle = ResourceBundle.getBundle("resources.ApplicationResources",
+    private static final ResourceBundle applicationResourcesBundle = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE,
             new Locale("pt"));
     public static OrderedRelationAdapter<Unit, Function> FUNCTION_ORDERED_ADAPTER;
     static {

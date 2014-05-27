@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.util.BundleUtil;
+
 import org.fenixedu.commons.i18n.I18N;
 
 public enum RegistrationAgreement {
@@ -206,7 +208,7 @@ public enum RegistrationAgreement {
     }
 
     public String getDescription(final Locale locale) {
-        return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getQualifiedName());
+        return ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, locale).getString(getQualifiedName());
     }
 
     final public static List<RegistrationAgreement> EXEMPTED_AGREEMENTS = Arrays.asList(IST_UCP);

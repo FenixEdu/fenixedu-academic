@@ -45,8 +45,6 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.LocalDate;
 
-import java.util.Locale;
-
 public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduatedPerson_Base {
 
     private DegreeCandidacyForGraduatedPerson() {

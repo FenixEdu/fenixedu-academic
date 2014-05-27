@@ -44,12 +44,11 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.fenixedu.commons.i18n.I18N;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
-
-import java.util.Locale;
 
 public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandidacy_Base {
 
@@ -258,7 +257,7 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
 
         final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", I18N.getLocale());
         final ResourceBundle candidateBundle = ResourceBundle.getBundle("resources.CandidateResources", I18N.getLocale());
-        final ResourceBundle applicationBundle = ResourceBundle.getBundle("resources.ApplicationResources", I18N.getLocale());
+        final ResourceBundle applicationBundle = ResourceBundle.getBundle(BundleUtil.APPLICATION_BUNDLE, I18N.getLocale());
 
         Formatter formatter = new Formatter(result);
 

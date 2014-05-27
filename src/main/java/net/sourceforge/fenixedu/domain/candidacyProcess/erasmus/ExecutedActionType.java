@@ -23,8 +23,6 @@ import java.util.ResourceBundle;
 
 import org.fenixedu.commons.i18n.I18N;
 
-import java.util.Locale;
-
 public enum ExecutedActionType {
     VIEWED_APPROVED_LEARNING_AGREEMENT, SENT_APPROVED_LEARNING_AGREEMENT, VIEWED_ALERT, SENT_EMAIL_ACCEPTED_STUDENT,
     SENT_EMAIL_FOR_MISSING_REQUIRED_DOCUMENTS, SENT_RECEPTION_EMAIL;

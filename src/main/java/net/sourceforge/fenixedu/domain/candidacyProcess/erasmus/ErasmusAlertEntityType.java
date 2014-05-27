@@ -21,6 +21,8 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.util.BundleUtil;
+
 public enum ErasmusAlertEntityType {
     GRI, ACADEMIC_OFFICE, COORDINATOR;
 
@@ -41,6 +43,6 @@ public enum ErasmusAlertEntityType {
     }
 
     public String getDescription(final Locale locale) {
-        return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getFullyQualifiedName());
+        return ResourceBundle.getBundle(BundleUtil.ENUMERATION_BUNDLE, locale).getString(getFullyQualifiedName());
     }
 }

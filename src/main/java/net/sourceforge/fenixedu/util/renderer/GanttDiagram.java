@@ -33,8 +33,6 @@ import org.joda.time.Days;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
-import java.util.Locale;
-
 public class GanttDiagram {
 
     public final static Comparator<Interval> INTERVAL_COMPARATOR_BY_BEGIN = new Comparator<Interval>() {

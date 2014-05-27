@@ -71,7 +71,7 @@ public class AdHocEvaluation extends AdHocEvaluation_Base {
 
     @Override
     public String getPresentationName() {
-        return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.adHocEvaluation") + " "
+        return BundleUtil.getStringFromResourceBundle(BundleUtil.APPLICATION_BUNDLE, "label.adHocEvaluation") + " "
                 + getName();
     }
 

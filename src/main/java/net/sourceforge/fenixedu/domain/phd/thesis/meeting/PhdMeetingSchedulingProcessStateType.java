@@ -24,10 +24,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import org.fenixedu.commons.i18n.I18N;
-
 import net.sourceforge.fenixedu.domain.phd.PhdProcessStateType;
-import java.util.Locale;
+
+import org.fenixedu.commons.i18n.I18N;
 
 public enum PhdMeetingSchedulingProcessStateType implements PhdProcessStateType {
 
