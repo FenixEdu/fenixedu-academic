@@ -214,7 +214,7 @@
 						</logic:present>
 					</logic:present>
 
-					<bean:define id="personSpaces" name="personalInfo"
+					<%-- <bean:define id="personSpaces" name="personalInfo"
 						property="activePersonSpaces"></bean:define>
 					<logic:notEmpty name="personSpaces">
 						<tr>
@@ -227,7 +227,7 @@
 									</fr:layout>
 								</fr:view></td>
 						</tr>
-					</logic:notEmpty>
+					</logic:notEmpty> --%>
 
 					<logic:notEmpty name="personalInfo" property="teacher">
 						<logic:notEmpty name="personalInfo"

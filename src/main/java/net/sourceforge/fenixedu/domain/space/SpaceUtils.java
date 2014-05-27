@@ -292,7 +292,7 @@ public class SpaceUtils {
         if (isBuilding(space)) {
             return space;
         }
-        if (space.getParent() == null) {
+        if (space.getParent() == null || !space.getParent().isActive()) {
             return null;
         }
         return getSpaceBuilding(space.getParent());

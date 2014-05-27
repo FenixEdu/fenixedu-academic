@@ -181,7 +181,7 @@
 
 			<select name="spaceOID">
 				<% for (final Space space : (List<Space>) request.getAttribute("emptySpaces")) { %>
-					<option value="<%= space.getExternalId() %>"><%= space.getNameWithParents() %></option>
+					<option value="<%= space.getExternalId() %>"><%= space.getPresentationName() %></option>
 				<% } %>
 			</select>
 
