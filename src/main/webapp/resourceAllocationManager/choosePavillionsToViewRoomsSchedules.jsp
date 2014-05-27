@@ -26,11 +26,12 @@
 	</fr:edit>
 
 	<html:submit onclick="this.form.method.value='choose'"><bean:message key="label.change"></bean:message></html:submit>
-
+	
 	<br />
+	
 	<fr:edit name="bean">
 		<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.ViewAllRoomsSchedulesDA$ChooseBuildingBean" bundle="SOP_RESOURCES">
-			<fr:slot name="selectedBuildings" layout="option-select" key="label.manager.degrees">
+			<fr:slot name="selectedBuildings" layout="option-select" key="label.choose.rooms">
 				<fr:property name="from" value="availableBuildings" />
 				<fr:property name="classes" value="nobullet noindent"/>
 				<fr:property name="selectAllShown" value="true" />
@@ -44,3 +45,22 @@
 		<bean:message key="label.list"/>
 	</html:submit>
 </fr:form>
+	
+	<h4>Listagens especificas (<bean:write name="bean" property="academicInterval.pathName"/>)</h4>
+	<ul>
+		<li>
+			<html:link action="/viewAllRoomsSchedulesDA.do?method=downloadRoomLessonOccupationInfo" paramId="academicIntervalString" paramName="bean" paramProperty="academicInterval.representationInStringFormat">
+				<bean:message key="link.download.room.lesson.occupation.mao"/>
+			</html:link>
+		</li>
+		<li>
+			<html:link action="/viewAllRoomsSchedulesDA.do?method=downloadScheduleList" paramId="academicIntervalString" paramName="bean" paramProperty="academicInterval.representationInStringFormat">
+				<bean:message key="link.download.schedule.list"/>
+			</html:link>
+		</li>
+		<li>
+			<html:link action="/viewAllRoomsSchedulesDA.do?method=downloadShiftAttendence" paramId="academicIntervalString" paramName="bean" paramProperty="academicInterval.representationInStringFormat">
+				<bean:message key="link.download.shiftAttendence.list"/>
+			</html:link>
+		</li>
+	</ul>
