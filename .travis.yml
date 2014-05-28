@@ -5,3 +5,4 @@ jdk:
 
 notifications:
   irc: "chat.freenode.net#fenixedu"
+  hipchat: 8c25daeb37746418c33954661573b3@FenixEdu
