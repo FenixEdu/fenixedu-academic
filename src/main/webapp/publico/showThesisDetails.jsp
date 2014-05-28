@@ -72,41 +72,30 @@
 
 <h3 class="mtop15 mbottom05"><bean:message key="title.thesis.details.publication"/></h3>
 
-<logic:notEmpty name="thesis" property="publication">
+<logic:equal name="thesis" property="evaluated" value="true">
 
-	<bean:define id="files" name="thesis" property="publication.resultDocumentFiles"/>
-	<bean:define id="extAbstract" name="thesis" property="extendedAbstract"/>
-
-	<fr:view name="thesis" property="publication.title"/>,
-	<fr:view name="thesis" property="publication.authorsNames"/>,
-	<fr:view name="thesis" property="publication.year"/>,
-	<fr:view name="thesis" property="publication.organization"/>
+	<fr:view name="thesis" property="finalTitle"/>,
+	<fr:view name="thesis" property="student.name"/>,
+	<fr:view name="thesis" property="discussed.year"/>,
 
 	<bean:define id="thesis" name="thesis" type="net.sourceforge.fenixedu.domain.thesis.Thesis"/>
-	<bean:define id="publicationId" name="thesis" property="publication.externalId"/>
 	<p>
 	<%
 		if (thesis.getDissertation().isPersonAllowedToAccess(AccessControl.getPerson())) {
 	%>
-		(<html:link target="_blank" page="<%="/bibtexExport.do?method=exportPublicationToBibtex&publicationId="+ publicationId %>">
-			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.result.publication.exportToBibTeX" />
-		</html:link>,
-		
-		<bean:define id="extAbstractDownloadUrl" name="extAbstract" property="downloadUrl" type="java.lang.String"/>
+		(<bean:define id="extAbstractDownloadUrl" name="thesis" property="extendedAbstract.downloadUrl" type="java.lang.String"/>
 		<html:link href="<%= extAbstractDownloadUrl %>">
 			<html:img page="/images/icon_pdf.gif" module=""/>
 			<bean:message bundle="RESEARCHER_RESOURCES" key="link.dissertation.download.extendedAbstract"/>
-			<fr:view name="extAbstract" property="size" layout="fileSize"/>
+			<fr:view name="thesis" property="extendedAbstract.size" layout="fileSize"/>
 		</html:link>
 		
-		<logic:iterate id="file" name="files" length="1">,
-			<bean:define id="downloadUrl" name="file" property="downloadUrl" type="java.lang.String"/>	
-			<html:link href="<%= downloadUrl %>">
-				<html:img page="/images/icon_pdf.gif" module=""/>
-				<bean:message bundle="RESEARCHER_RESOURCES" key="link.dissertation.download.thesis"/>
-				<fr:view name="file" property="size" layout="fileSize"/>
-			</html:link>
-		</logic:iterate>)
+		<bean:define id="downloadUrl" name="thesis" property="dissertation.downloadUrl" type="java.lang.String"/>	
+		<html:link href="<%= downloadUrl %>">
+			<html:img page="/images/icon_pdf.gif" module=""/>
+			<bean:message bundle="RESEARCHER_RESOURCES" key="link.dissertation.download.thesis"/>
+			<fr:view name="thesis" property="dissertation.size" layout="fileSize"/>
+		</html:link>)
 	<%
 		} else {
 	%>
@@ -114,14 +103,11 @@
 		
 		<html:img page="/images/icon_pdf.gif" module=""/>
 		<bean:message bundle="RESEARCHER_RESOURCES" key="link.dissertation.download.extendedAbstract"/>
-		<fr:view name="extAbstract" property="size" layout="fileSize"/>
+		<fr:view name="thesis" property="extendedAbstract.size" layout="fileSize"/>
 		
-		<logic:iterate id="file" name="files" length="1">,
-		<bean:define id="downloadUrl" name="file" property="downloadUrl" type="java.lang.String"/>	
-			<html:img page="/images/icon_pdf.gif" module=""/>
-			<bean:message bundle="RESEARCHER_RESOURCES" key="link.dissertation.download.thesis"/>
-			<fr:view name="file" property="size" layout="fileSize"/>
-		</logic:iterate>)
+		<html:img page="/images/icon_pdf.gif" module=""/>
+		<bean:message bundle="RESEARCHER_RESOURCES" key="link.dissertation.download.thesis"/>
+		<fr:view name="file" property="size" layout="fileSize"/>)
 	<%
 		}
 	%>
@@ -129,8 +115,8 @@
 	<p>
 		<bean:message bundle="RESEARCHER_RESOURCES" key="label.publication.subject.to.copyright"/>
 	</p>
-</logic:notEmpty>
+</logic:equal>
 
-<logic:empty name="thesis" property="publication">
+<logic:equal name="thesis" property="evaluated" value="false">
 	<em><bean:message key="message.thesis.publication.notAvailable"/></em>
-</logic:empty>
+</logic:equal>
