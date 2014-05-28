@@ -15,7 +15,6 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 
 import pt.ist.fenix.giafsync.GiafSync.MetadataProcessor;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 class ImportTypesFromGiaf implements MetadataProcessor {
@@ -64,7 +63,7 @@ class ImportTypesFromGiaf implements MetadataProcessor {
             if (StringUtils.isEmpty(nameString)) {
                 nameString = result.getString("tab_cod_dsc");
             }
-            final MultiLanguageString name = new MultiLanguageString(Language.pt, nameString);
+            final MultiLanguageString name = new MultiLanguageString(MultiLanguageString.pt, nameString);
             if (type.equalsIgnoreCase(FUNCTIONS_ACCUMULATION)) {
                 FunctionsAccumulation accumulation = metadata.accumulation(giafId);
                 if (accumulation != null) {

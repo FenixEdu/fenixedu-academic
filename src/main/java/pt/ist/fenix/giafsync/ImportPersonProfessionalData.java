@@ -18,18 +18,17 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCa
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalContractType;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalRegime;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalRelation;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportGiaf;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 
 import pt.ist.fenix.giafsync.GiafSync.ImportProcessor;
 import pt.ist.fenix.giafsync.GiafSync.Modification;
-import pt.ist.fenixframework.FenixFramework;
 
 class ImportPersonProfessionalData extends ImportProcessor {
     @Override
@@ -56,7 +55,7 @@ class ImportPersonProfessionalData extends ImportProcessor {
                 continue;
             }
 
-            final Campus campus = getCampus(result.getInt("EMP_LOC_TRAB"));
+            final Space campus = getCampus(result.getInt("EMP_LOC_TRAB"));
 
             String institutionEntryDateString = result.getString("emp_adm_emp_dt");
             final LocalDate institutionEntryDate =
@@ -212,13 +211,22 @@ class ImportPersonProfessionalData extends ImportProcessor {
         return modifications;
     }
 
-    private Campus getCampus(int campus) {
+    private static Space getCampusByName(String name) {
+        for (Space space : Space.getAllCampus()) {
+            if (space.getName().equals(name)) {
+                return space;
+            }
+        }
+        return null;
+    }
+
+    private Space getCampus(int campus) {
         if (campus == 1) {
-            return FenixFramework.getDomainObject("2465311230081");//Alameda
+            return getCampusByName("Alameda");
         } else if (campus == 2) {
-            return FenixFramework.getDomainObject("2465311230082");//Taguspark
+            return getCampusByName("Taguspark");//Taguspark
         } else if (campus == 3) {
-            return FenixFramework.getDomainObject("2465311261622");//ITN
+            return getCampusByName("Tecnológico e Nuclear");//ITN
         }
         return null;
     }
@@ -229,7 +237,7 @@ class ImportPersonProfessionalData extends ImportProcessor {
             LocalDate professionalRelationDate, ProfessionalContractType professionalContractType,
             String professionalContractTypeGiafId, ProfessionalCategory professionalCategory, String professionalCategoryGiafId,
             LocalDate professionalCategoryDate, ProfessionalRegime professionalRegime, String professionalRegimeGiafId,
-            LocalDate professionalRegimeDate, Campus campus, DateTime creationDate, DateTime modifiedDate) {
+            LocalDate professionalRegimeDate, Space campus, DateTime creationDate, DateTime modifiedDate) {
         return (Objects.equals(giafProfessionalData.getContractSituation(), contractSituation)
                 && Objects.equals(giafProfessionalData.getInstitutionEntryDate(), institutionEntryDate)
                 && Objects.equals(giafProfessionalData.getContractSituationGiafId(), contractSituationGiafId)

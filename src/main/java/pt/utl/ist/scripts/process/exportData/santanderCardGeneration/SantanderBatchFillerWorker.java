@@ -16,16 +16,12 @@ import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
-import net.sourceforge.fenixedu.domain.cardGeneration.SantanderBatch;
-import net.sourceforge.fenixedu.domain.cardGeneration.SantanderEntry;
-import net.sourceforge.fenixedu.domain.cardGeneration.SantanderProblem;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -34,6 +30,10 @@ import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.idcards.domain.SantanderBatch;
+import org.fenixedu.idcards.domain.SantanderEntry;
+import org.fenixedu.idcards.domain.SantanderProblem;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 import org.slf4j.Logger;
@@ -43,9 +43,6 @@ import pt.ist.fenixframework.Atomic;
 public class SantanderBatchFillerWorker {
     private static String recordEnd = "*";
     private static String lineEnd = "\r\n";
-    private static String alamedaOid = "2465311230081";
-    private static String tagusparkOid = "2465311230082";
-    private static String itnOid = "2465311261622";
     private static String alamedaAddr = "Avenida Rovisco Pais, 1";
     private static String alamedaZip = "1049-001";
     private static String alamedaTown = "Lisboa";
@@ -98,7 +95,7 @@ public class SantanderBatchFillerWorker {
          * 1. Teacher
          * 2. Researcher
          * 3. Employee
-         * 4. GrantOwner
+         * 4. GrantOwner 
          * 5. Student
          */
         String line = null;
@@ -286,6 +283,9 @@ public class SantanderBatchFillerWorker {
             if (!registration.isActive()) {
                 continue;
             }
+            if (registration.getDegree().isEmpty()) {
+                continue;
+            }
             final RegistrationAgreement registrationAgreement = registration.getRegistrationAgreement();
             if (!registrationAgreement.allowsIDCard()) {
                 continue;
@@ -345,7 +345,7 @@ public class SantanderBatchFillerWorker {
     }
 
     private CampusAddress getCampusAddress(Person person, RoleType role) {
-        Campus campus = null;
+        Space campus = null;
         Map<String, CampusAddress> campi = getCampi();
         switch (role) {
         case STUDENT:
@@ -392,15 +392,24 @@ public class SantanderBatchFillerWorker {
         default:
             break;
         }
-        if (campus != null && campus.getExternalId().equals(alamedaOid)) {
-            return campi.get("alameda");
-        } else if (campus != null && campus.getExternalId().equals(tagusparkOid)) {
-            return campi.get("tagus");
-        } else if (campus != null && campus.getExternalId().equals(itnOid)) {
-            return campi.get("itn");
-        } else {
+        if (campus == null) {
             return null;
         }
+
+        if (campus.getName().equals("Alameda")) {
+            return campi.get("alameda");
+        }
+
+        if (campus.getName().equals("Taguspark")) {
+            return campi.get("tagus");
+        }
+
+        if (campus.getName().equals("Tecnológico e Nuclear")) {
+            return campi.get("itn");
+        }
+
+        return null;
+
     }
 
     private String createLine(SantanderBatch batch, Person person, RoleType role) {

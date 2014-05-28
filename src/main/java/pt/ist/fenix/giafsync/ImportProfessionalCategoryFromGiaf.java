@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportGia
 import org.slf4j.Logger;
 
 import pt.ist.fenix.giafsync.GiafSync.MetadataProcessor;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 class ImportProfessionalCategoryFromGiaf implements MetadataProcessor {
@@ -40,7 +39,7 @@ class ImportProfessionalCategoryFromGiaf implements MetadataProcessor {
         while (result.next()) {
             String giafId = result.getString("emp_cat_func");
             String descriptionString = result.getString("cat_func_dsc");
-            MultiLanguageString description = new MultiLanguageString(Language.pt, descriptionString);
+            MultiLanguageString description = new MultiLanguageString(MultiLanguageString.pt, descriptionString);
             CategoryType categoryType = null;
             String agrupamento = (result.getString("agrupamento"));
             if (agrupamento != null) {

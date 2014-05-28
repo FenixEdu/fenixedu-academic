@@ -14,8 +14,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
-import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch;
-import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -30,6 +28,8 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.scheduler.CronTask;
 import org.fenixedu.bennu.scheduler.annotation.Task;
+import org.fenixedu.idcards.domain.CardGenerationBatch;
+import org.fenixedu.idcards.domain.CardGenerationEntry;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -151,7 +151,7 @@ public class CreateCardGenerationEntries extends CronTask {
 
     private Collection<Recipient> getRecipients() {
         return Collections.singleton(new Recipient(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
-                "label.card.generation.manager.group"), new RoleGroup(RoleType.IDENTIFICATION_CARD_MANAGER)));
+                "label.card.generation.manager.group"), RoleGroup.get(RoleType.IDENTIFICATION_CARD_MANAGER)));
     }
 
     private PhdIndividualProgramProcess find(final Collection<PhdIndividualProgramProcess> phdIndividualProgramProcesses) {

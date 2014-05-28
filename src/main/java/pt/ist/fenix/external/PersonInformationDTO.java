@@ -18,17 +18,17 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTyp
 import net.sourceforge.fenixedu.domain.organizationalStructure.Invitation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.spaces.domain.Space;
 import org.joda.time.YearMonthDay;
 
 import com.google.common.io.BaseEncoding;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
- *
+ * 
  */
 public class PersonInformationDTO {
 
@@ -163,7 +163,7 @@ public class PersonInformationDTO {
                 }
             }
 
-            Campus currentCampus = person.getEmployee().getCurrentCampus();
+            Space currentCampus = person.getEmployee().getCurrentCampus();
             if (currentCampus != null) {
                 setCampus(currentCampus.getName());
             }

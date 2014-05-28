@@ -11,7 +11,6 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 
 import pt.ist.fenix.giafsync.GiafSync.MetadataProcessor;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 class ImportProfessionalRelationsFromGiaf implements MetadataProcessor {
@@ -39,7 +38,7 @@ class ImportProfessionalRelationsFromGiaf implements MetadataProcessor {
             Boolean fullTimeEquivalent = getBoolean(result.getString("eti"));
 
             ProfessionalRelation professionalRelation = metadata.relation(giafId);
-            MultiLanguageString name = new MultiLanguageString(Language.pt, nameString);
+            MultiLanguageString name = new MultiLanguageString(MultiLanguageString.pt, nameString);
             if (professionalRelation != null) {
                 if (!professionalRelation.getName().equalInAnyLanguage(name)) {
                     professionalRelation.edit(name, fullTimeEquivalent);

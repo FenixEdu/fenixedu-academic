@@ -127,8 +127,8 @@ class ImportEmployeeUnitsFromGiaf extends ImportProcessor {
                         } else {
                             if (unit != null && endDate == null) {
                                 // contrato novo
-                                createEmployeeContract(employee, new YearMonthDay(beginDate), null, unit, accountabilityTypeEnum,
-                                        null, isTeacher, logger);
+                                modifications.add(createEmployeeContract(employee, new YearMonthDay(beginDate), null, unit, accountabilityTypeEnum,
+                                        null, isTeacher, logger));
 
                             } else {
                                 // já tinha terminado o contrato e já

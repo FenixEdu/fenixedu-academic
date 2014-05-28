@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
@@ -24,6 +23,7 @@ import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 
 import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.groups.UserGroup;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -174,7 +174,7 @@ public class UpdateAbandonStateBean implements Serializable {
 
         SystemSender systemSender = Bennu.getInstance().getSystemSender();
         List<Recipient> recipientList = new ArrayList<Recipient>();
-        recipientList.add(new Recipient(new PersonGroup(person)));
+        recipientList.add(new Recipient(UserGroup.of(person.getUser())));
 
         String body = buildMessage(registration);
         String subject =
