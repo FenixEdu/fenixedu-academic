@@ -109,7 +109,7 @@
 					</td>
                		<td class="listClasses">               			
             	   		<logic:notEmpty name="lesson" property="roomOccupation">
-							<bean:write name="lesson" property="roomOccupation.room.nome"/>
+							<bean:write name="lesson" property="roomOccupation.room.name"/>
 						</logic:notEmpty>	
 			 		</td>
 				</logic:iterate>
@@ -144,7 +144,7 @@
 					</td>
                		<td class="listClasses">
             	   		<logic:notEmpty name="lesson" property="roomOccupation">
-							<bean:write name="lesson" property="roomOccupation.room.nome"/>
+							<bean:write name="lesson" property="roomOccupation.room.name"/>
 						</logic:notEmpty>	
 			 		</td>
 				</tr>

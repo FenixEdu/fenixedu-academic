@@ -27,7 +27,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<bean:define id="language" name="<%= org.apache.struts.Globals.LOCALE_KEY %>" property="language"/>
+<bean:define id="language" value="<%= I18N.getLocale().getLanguage() %>"/>
 
 <%
 	UnitSite site = (UnitSite) net.sourceforge.fenixedu.domain.cms.OldCmsSemanticURLHandler.getSite(request);

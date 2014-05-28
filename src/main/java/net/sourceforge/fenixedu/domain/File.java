@@ -97,7 +97,7 @@ public abstract class File extends File_Base {
 
     @Deprecated
     public boolean isPersonAllowedToAccess(Person person) {
-        return isAccessible(person.getUser());
+        return isAccessible(person != null ? person.getUser() : null);
     }
 
     @Deprecated

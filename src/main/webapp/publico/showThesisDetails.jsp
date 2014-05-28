@@ -18,14 +18,12 @@
     along with FenixEdu Core.  If not, see <http://www.gnu.org/licenses/>.
 
 --%>
-<%@page import="net.sourceforge.fenixedu.domain.thesis.ThesisVisibilityType"%>
+<%@page import="org.fenixedu.bennu.core.security.Authenticate"%>
 <%@ page language="java" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %><%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr" %>
 
-
-<%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%><html:xhtml/>
 
 <bean:define id="listThesesActionPath" name="listThesesActionPath"/>
 <bean:define id="listThesesContext" name="listThesesContext"/>
@@ -81,7 +79,7 @@
 	<bean:define id="thesis" name="thesis" type="net.sourceforge.fenixedu.domain.thesis.Thesis"/>
 	<p>
 	<%
-		if (thesis.getDissertation().isPersonAllowedToAccess(AccessControl.getPerson())) {
+		if (thesis.getDissertation().isAccessible(Authenticate.getUser())) {
 	%>
 		(<bean:define id="extAbstractDownloadUrl" name="thesis" property="extendedAbstract.downloadUrl" type="java.lang.String"/>
 		<html:link href="<%= extAbstractDownloadUrl %>">

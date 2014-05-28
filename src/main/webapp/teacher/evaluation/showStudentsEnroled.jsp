@@ -116,7 +116,7 @@
 							<h:outputText value="#{writtenEvaluationEnrolment.student.person.name}" />
 						<h:outputText value="</td>" escape="false" />
 						<h:outputText value="<td>" escape="false" />
-							<h:outputText value="#{(!empty writtenEvaluationEnrolment.room) ? writtenEvaluationEnrolment.room.nome : \" \"}" />
+							<h:outputText value="#{(!empty writtenEvaluationEnrolment.room) ? writtenEvaluationEnrolment.room.name : \" \"}" />
 						<h:outputText value="</td>" escape="false" />
 						<h:outputText value="<td>" escape="false" />
 							<h:outputText value="#{writtenEvaluationEnrolment.student.degree.name}" />

@@ -59,7 +59,7 @@
 				</h:column>
 				<h:column>
 					<h:outputText value="#{bundle['label.lesson.room']} " />
-					<h:outputText value="#{room.nome} " />
+					<h:outputText value="#{room.name} " />
 					<h:outputText value="(#{room.capacidadeExame} " />
 					<h:outputText value="#{bundle['label.distribute.places']})" />
 				</h:column>
