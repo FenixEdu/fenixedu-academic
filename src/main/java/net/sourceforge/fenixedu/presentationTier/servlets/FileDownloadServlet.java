@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.servlets.startup.FenixInitializer.FenixCustomExceptionHandler;
 import net.sourceforge.fenixedu.util.FenixConfigurationManager;
 
 import org.fenixedu.bennu.core.filters.CasAuthenticationFilter;
@@ -30,17 +29,6 @@ public class FileDownloadServlet extends HttpServlet {
     private static final long serialVersionUID = 6954413451468325605L;
 
     static final String SERVLET_PATH = "/downloadFile/";
-
-    private final FenixCustomExceptionHandler exceptionHandler = new FenixCustomExceptionHandler();
-
-    @Override
-    protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            super.service(request, response);
-        } catch (Throwable t) {
-            exceptionHandler.handle(request, response, t);
-        }
-    }
 
     @Override
     public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException {
