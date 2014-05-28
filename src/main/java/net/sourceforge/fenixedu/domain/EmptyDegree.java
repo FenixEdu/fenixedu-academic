@@ -212,6 +212,11 @@ public class EmptyDegree extends EmptyDegree_Base {
     }
 
     @Override
+    public String getNameEn() {
+        return getPresentationName();
+    }
+
+    @Override
     final public String getPresentationName(ExecutionYear executionYear) {
         return getNameFor((ExecutionYear) null).getContent(MultiLanguageString.pt);
     }
