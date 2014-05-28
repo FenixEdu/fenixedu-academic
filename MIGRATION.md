@@ -137,8 +137,11 @@ Before migrating to version 3.0, you must first ensure that:
         }
 
     }
-
     ```
+
+6. Run export tasks for fenixedu-spaces
+
+Please run `[SpaceMigrationTask.java](https://raw.githubusercontent.com/sergiofbsilva/fenixedu-spaces-export/master/src/main/java/org/fenixedu/spaces/migration/SpaceMigrationTask.java) and save the generated json files`
 
 ### Migration
 
@@ -318,6 +321,34 @@ Before migrating to version 3.0, you must first ensure that:
 
     ALTER TABLE OCCUPATION CHANGE OID_ROOT_DOMAIN_OBJECT OID_BENNU bigint unsigned;
     UPDATE FILE_STORAGE_CONFIGURATION SET FILE_TYPE = 'org.fenixedu.spaces.domain.BlueprintFile' where FILE_TYPE = 'net.sourceforge.fenixedu.domain.space.BlueprintFile';
+
+    -- occupation requests
+    -- update class names
+    UPDATE FF$DOMAIN_CLASS_INFO SET DOMAIN_CLASS_NAME = 'org.fenixedu.spaces.domain.occupation.requests.OccupationRequest' WHERE DOMAIN_CLASS_NAME = 'net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest';
+    UPDATE FF$DOMAIN_CLASS_INFO SET DOMAIN_CLASS_NAME = 'org.fenixedu.spaces.domain.occupation.requests.OccupationStateInstant' WHERE DOMAIN_CLASS_NAME = 'net.sourceforge.fenixedu.domain.PunctualRoomsOccupationStateInstant';
+    UPDATE FF$DOMAIN_CLASS_INFO SET DOMAIN_CLASS_NAME = 'org.fenixedu.spaces.domain.occupation.requests.OccupationComment' WHERE DOMAIN_CLASS_NAME = 'net.sourceforge.fenixedu.domain.PunctualRoomsOccupationComment';
+
+    -- rename tables
+    RENAME TABLE `PUNCTUAL_ROOMS_OCCUPATION_COMMENT` TO `OCCUPATION_COMMENT`;
+    RENAME TABLE `PUNCTUAL_ROOMS_OCCUPATION_REQUEST` TO `OCCUPATION_REQUEST`;
+    RENAME TABLE `PUNCTUAL_ROOMS_OCCUPATION_STATE_INSTANT` TO `OCCUPATION_STATE_INSTANT`;
+
+    -- update schema so if update is made, instant will not be changed
+    ALTER TABLE OCCUPATION_COMMENT CHANGE INSTANT INSTANT TIMESTAMP NULL DEFAULT NULL;
+    ALTER TABLE OCCUPATION_REQUEST CHANGE INSTANT INSTANT TIMESTAMP NULL DEFAULT NULL;
+
+    -- update owner and requestor from person to user
+    UPDATE OCCUPATION_COMMENT OC SET OID_OWNER = (SELECT OID FROM USER U WHERE U.OID_PERSON = OC.OID_OWNER) WHERE OID_OWNER IS NOT NULL;
+    UPDATE OCCUPATION_REQUEST OC SET OID_OWNER = (SELECT OID FROM USER U WHERE U.OID_PERSON = OC.OID_OWNER) WHERE OID_OWNER IS NOT NULL;
+    UPDATE OCCUPATION_REQUEST OC SET OID_REQUESTOR = (SELECT OID FROM USER U WHERE U.OID_PERSON = OC.OID_REQUESTOR) WHERE OID_REQUESTOR IS NOT NULL;
+
+    -- update campus oid to the new space oid
+    set @spaceId = (SELECT DOMAIN_CLASS_ID FROM FF$DOMAIN_CLASS_INFO WHERE DOMAIN_CLASS_NAME = 'org.fenixedu.spaces.domain.Space');
+    UPDATE OCCUPATION_REQUEST SET OID_CAMPUS = ((SELECT @spaceId << 32) + (OID_CAMPUS & 0x0000FFFF)) WHERE OID_CAMPUS IS NOT NULL;
+
+    -- convert MLS to normal string
+    UPDATE OCCUPATION_COMMENT SET DESCRIPTION = SUBSTR(DESCRIPTION, LOCATE(':', DESCRIPTION) + 1);
+    UPDATE OCCUPATION_COMMENT SET SUBJECT = SUBSTR(SUBJECT, LOCATE(':', SUBJECT) + 1);
     ```
 
 4. Support for ID Cards and Parking has been removed from the core of FenixEdu. If you wish to install the new modules, you will need to run the following SQL:
@@ -344,6 +375,7 @@ Before migrating to version 3.0, you must first ensure that:
 6. You now need to configure the revamped CMS. You need to instantiate SiteTemplates for every different site you want to support, as well as connecting them to Portal Functionalities. An example script can be found at https://gist.github.com/jcarvalho/0c16a878255a7afe6971. It contains paths and names that are specific to IST's installation, but you can use it as the starting point to configure your own sites.
 
 7. After the sites have been created, run the following task to import the previously existing FunctionalityCalls. Replace the /path/to/json with a server accessible location of the calls.json file exported previously and /path/to/transformations/json to a server accessible location of a translations file with all the transformations you need to do. An example of this last file can be found here https://gist.github.com/pedrosan7os/0bc8d3e7368c5a88acbc.
+8. To import the spaces information, please copy the following custom task [ImportSpacesTask.java](https://raw.githubusercontent.com/sergiofbsilva/fenixedu-spaces-import/master/src/main/java/org/fenixedu/spaces/migration/ImportSpacesTask.java), update the `IMPORT_URL` path and run it.
 
     ```java
     package pt.ist.fenix;
