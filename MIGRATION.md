@@ -141,7 +141,7 @@ Before migrating to version 3.0, you must first ensure that:
 
 6. Run export tasks for fenixedu-spaces
 
-Please run `[SpaceMigrationTask.java](https://raw.githubusercontent.com/sergiofbsilva/fenixedu-spaces-export/master/src/main/java/org/fenixedu/spaces/migration/SpaceMigrationTask.java) and save the generated json files`
+Please run [SpaceMigrationTask.java](https://raw.githubusercontent.com/sergiofbsilva/fenixedu-spaces-export/master/src/main/java/org/fenixedu/spaces/migration/SpaceMigrationTask.java) and save the generated json files.
 
 ### Migration
 
