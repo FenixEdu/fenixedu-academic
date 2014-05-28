@@ -128,8 +128,9 @@ public class SantanderBatchFillerWorker {
     }
 
     private boolean treatAsResearcher(Person person) {
-        return (person.hasRole(RoleType.RESEARCHER) && person.hasRole(RoleType.EMPLOYEE) && person.getEmployee() != null && person
-                .getEmployee().getCurrentWorkingPlace() != null);
+        return (person.hasRole(RoleType.RESEARCHER) && person.hasRole(RoleType.EMPLOYEE) && person.getEmployee() != null
+                && person.getPersonProfessionalData() != null && person.getPersonProfessionalData()
+                .getGiafProfessionalDataByCategoryType(CategoryType.RESEARCHER) != null);
     }
 
     private boolean treatAsEmployee(Person person) {
