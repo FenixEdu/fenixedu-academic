@@ -257,7 +257,7 @@ import pt.ist.fenixframework.FenixFramework;
 public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
 
     @StrutsFunctionality(app = StudentSeniorsApp.class, path = "dissertations", titleKey = "link.student.finalWorkTitle")
-    @Mapping(path = "/finalDegreeWorkDisserations", module = "student")
+    @Mapping(path = "/finalDegreeWorkDisserations", module = "student", formBean = "finalDegreeWorkCandidacyForm")
     public static class FinalDegreeWorkDisserations extends FinalDegreeWorkCandidacyDA {
         @Override
         @EntryPoint

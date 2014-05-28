@@ -76,9 +76,7 @@
                 </tr>
                 <tr>
                     <td><strong>
-                    	<html:link action="/findSpaces.do?method=viewSpace&" paramId="spaceID" paramName="infoRoom" paramProperty="externalId">
-                    		<bean:write name="infoRoom" property="nome" />
-                    	</html:link>
+                    		<bean:write name="infoRoom" property="name" />
                     </strong></td>
                     <td><bean:write name="infoRoom" property="tipo" /></td>
                     <td><bean:write name="infoRoom" property="edificio" /></td>

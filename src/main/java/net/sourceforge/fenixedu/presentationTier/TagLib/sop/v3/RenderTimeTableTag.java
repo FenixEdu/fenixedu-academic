@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
+import net.sourceforge.fenixedu.dataTransferObject.InfoOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.colorPickers.ClassTimeTableColorPicker;
@@ -178,9 +179,9 @@ public final class RenderTimeTableTag extends TagSupport {
 
     /**
      * Method generateTimeTable.
-     * 
+     *
      * @param startTimeTableHour
-     * 
+     *
      * @param listaAulas
      * @return TimeTable
      */
@@ -200,7 +201,9 @@ public final class RenderTimeTableTag extends TagSupport {
 
         while (lessonIterator.hasNext()) {
             InfoShowOccupation infoShowOccupation = (InfoShowOccupation) lessonIterator.next();
-            timeTable.addLesson(infoShowOccupation);
+            if (!(infoShowOccupation instanceof InfoOccupation)) {
+                timeTable.addLesson(infoShowOccupation);
+            }
         }
         return timeTable;
     }
@@ -297,7 +300,7 @@ public final class RenderTimeTableTag extends TagSupport {
 
     /**
      * Returns the type.
-     * 
+     *
      * @return int
      */
     public int getType() {
@@ -306,7 +309,7 @@ public final class RenderTimeTableTag extends TagSupport {
 
     /**
      * Sets the type.
-     * 
+     *
      * @param type
      *            The type to set
      */

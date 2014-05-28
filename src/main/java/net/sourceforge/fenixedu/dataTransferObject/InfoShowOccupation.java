@@ -20,15 +20,15 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Calendar;
 
-import org.fenixedu.spaces.domain.Space;
-
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
+import org.fenixedu.spaces.domain.Space;
+
 /**
  * @author Ana e Ricardo
- * 
+ *
  *         19/7/2004
  */
 

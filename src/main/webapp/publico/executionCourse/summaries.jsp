@@ -63,7 +63,7 @@
 								(<%= lesson.getBeginHourMinuteSecond().toString("HH:mm") %>
 								-<%= lesson.getEndHourMinuteSecond().toString("HH:mm") %>)
 								<logic:notEmpty name="lesson" property="roomOccupation">
-									<bean:write name="lesson" property="roomOccupation.room.nome"/>
+									<bean:write name="lesson" property="roomOccupation.room.name"/>
 								</logic:notEmpty>
 							</logic:iterate>
 							<logic:iterate id="lesson" type="net.sourceforge.fenixedu.domain.Lesson" name="shift" property="lessonsOrderedByWeekDayAndStartTime" offset="1">
@@ -71,7 +71,7 @@
 								(<%= lesson.getBeginHourMinuteSecond().toString("HH:mm") %>
 								-<%= lesson.getEndHourMinuteSecond().toString("HH:mm") %>)
 								<logic:notEmpty name="lesson" property="roomOccupation">
-									<bean:write name="lesson" property="roomOccupation.room.nome"/>
+									<bean:write name="lesson" property="roomOccupation.room.name"/>
 								</logic:notEmpty>
 							</logic:iterate>
 						</html:option>
@@ -131,7 +131,7 @@
 				   	
 					<logic:present name="summary" property="room">
 						<logic:notEmpty name="summary" property="room">
-							(<bean:message key="label.room" /> <bean:write name="summary" property="room.nome" />)
+							(<bean:message key="label.room" /> <bean:write name="summary" property="room.name" />)
 			       		</logic:notEmpty>
 			       	</logic:present>
 

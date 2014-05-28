@@ -71,20 +71,21 @@ public class SopClassTimeTableLessonContentRenderer extends LessonSlotContentRen
             strBuffer.append("&nbsp;(");
             strBuffer.append("<a href='");
             strBuffer.append(context).append("/resourceAllocationManager/")
-                    .append("manageShift.do?method=prepareEditShift&amp;page=0").append("&amp;shift_oid=")
-                    .append(infoShift.getExternalId()).append("&amp;execution_course_oid=")
-                    .append(infoExecutionCourse.getExternalId()).append("&amp;" + PresentationConstants.ACADEMIC_INTERVAL + "=")
-                    .append(infoExecutionCourse.getAcademicInterval().getResumedRepresentationInStringFormat())
-                    .append("&amp;curricular_year_oid=").append(infoCurricularYear.getExternalId())
-                    .append("&amp;execution_degree_oid=").append(infoExecutionDegree.getExternalId()).append("'>")
-                    .append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append("</a>").append(")&nbsp;");
+            .append("manageShift.do?method=prepareEditShift&amp;page=0").append("&amp;shift_oid=")
+            .append(infoShift.getExternalId()).append("&amp;execution_course_oid=")
+            .append(infoExecutionCourse.getExternalId()).append("&amp;" + PresentationConstants.ACADEMIC_INTERVAL + "=")
+            .append(infoExecutionCourse.getAcademicInterval().getResumedRepresentationInStringFormat())
+            .append("&amp;curricular_year_oid=").append(infoCurricularYear.getExternalId())
+            .append("&amp;execution_degree_oid=").append(infoExecutionDegree.getExternalId()).append("'>")
+            .append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append("</a>").append(")&nbsp;");
 
             final Space allocatableSpace = lesson.getAllocatableSpace();
             if (allocatableSpace != null) {
-                strBuffer.append(" <a href='");
+                /*strBuffer.append(" <a href='");
                 strBuffer.append(context).append("/resourceAllocationManager/");
                 strBuffer.append("pesquisarSala.do?name=").append(allocatableSpace.getName()).append("'>")
-                        .append(allocatableSpace.getName()).append("</a>");
+                        .append(allocatableSpace.getName()).append("</a>");*/
+                strBuffer.append(allocatableSpace.getName());
             }
 
             if (lesson.getFrequency().equals(FrequencyType.BIWEEKLY)) {
@@ -103,19 +104,20 @@ public class SopClassTimeTableLessonContentRenderer extends LessonSlotContentRen
             strBuffer.append("&nbsp;(");
             strBuffer.append("<a href='");
             strBuffer.append(context).append("/resourceAllocationManager/")
-                    .append("manageShift.do?method=prepareEditShift&amp;page=0").append("&amp;shift_oid=")
-                    .append(infoShift.getExternalId()).append("&amp;execution_course_oid=")
-                    .append(infoExecutionCourse.getExternalId()).append("&amp;" + PresentationConstants.ACADEMIC_INTERVAL + "=")
-                    .append(infoExecutionCourse.getAcademicInterval().getResumedRepresentationInStringFormat())
-                    .append("&amp;curricular_year_oid=").append(infoCurricularYear.getExternalId())
-                    .append("&amp;execution_degree_oid=").append(infoExecutionDegree.getExternalId()).append("'>")
-                    .append(lesson.getShiftTypeCodesPrettyPrint()).append("</a>").append(")&nbsp;");
+            .append("manageShift.do?method=prepareEditShift&amp;page=0").append("&amp;shift_oid=")
+            .append(infoShift.getExternalId()).append("&amp;execution_course_oid=")
+            .append(infoExecutionCourse.getExternalId()).append("&amp;" + PresentationConstants.ACADEMIC_INTERVAL + "=")
+            .append(infoExecutionCourse.getAcademicInterval().getResumedRepresentationInStringFormat())
+            .append("&amp;curricular_year_oid=").append(infoCurricularYear.getExternalId())
+            .append("&amp;execution_degree_oid=").append(infoExecutionDegree.getExternalId()).append("'>")
+            .append(lesson.getShiftTypeCodesPrettyPrint()).append("</a>").append(")&nbsp;");
 
             if (lesson.getInfoRoomOccupation() != null) {
-                strBuffer.append(" <a href='");
+                /*strBuffer.append(" <a href='");
                 strBuffer.append(context).append("/resourceAllocationManager/");
                 strBuffer.append("pesquisarSala.do?name=").append(lesson.getInfoRoomOccupation().getInfoRoom().getNome())
-                        .append("'>").append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("</a>");
+                .append("'>").append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("</a>");*/
+                strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());
             }
 
         } else if (showOccupation instanceof InfoLessonInstanceAggregation) {
@@ -128,20 +130,21 @@ public class SopClassTimeTableLessonContentRenderer extends LessonSlotContentRen
             strBuffer.append("&nbsp;(");
             strBuffer.append("<a href='");
             strBuffer.append(context).append("/resourceAllocationManager/")
-                    .append("manageShift.do?method=prepareEditShift&amp;page=0").append("&amp;shift_oid=")
-                    .append(shift.getExternalId()).append("&amp;execution_course_oid=").append(executionCourse.getExternalId())
-                    .append("&amp;" + PresentationConstants.ACADEMIC_INTERVAL + "=")
-                    .append(executionCourse.getAcademicInterval().getResumedRepresentationInStringFormat())
-                    .append("&amp;curricular_year_oid=").append(infoCurricularYear.getExternalId())
-                    .append("&amp;execution_degree_oid=").append(infoExecutionDegree.getExternalId()).append("'>")
-                    .append(shift.getShiftTypesCodePrettyPrint()).append("</a>").append(")&nbsp;");
+            .append("manageShift.do?method=prepareEditShift&amp;page=0").append("&amp;shift_oid=")
+            .append(shift.getExternalId()).append("&amp;execution_course_oid=").append(executionCourse.getExternalId())
+            .append("&amp;" + PresentationConstants.ACADEMIC_INTERVAL + "=")
+            .append(executionCourse.getAcademicInterval().getResumedRepresentationInStringFormat())
+            .append("&amp;curricular_year_oid=").append(infoCurricularYear.getExternalId())
+            .append("&amp;execution_degree_oid=").append(infoExecutionDegree.getExternalId()).append("'>")
+            .append(shift.getShiftTypesCodePrettyPrint()).append("</a>").append(")&nbsp;");
 
             final Space allocatableSpace = aggregation.getAllocatableSpace();
             if (allocatableSpace != null) {
-                strBuffer.append(" <a href='");
-                strBuffer.append(context).append("/resourceAllocationManager/");
-                strBuffer.append("pesquisarSala.do?name=").append(allocatableSpace.getName()).append("'>")
-                        .append(allocatableSpace.getName()).append("</a>");
+//                strBuffer.append(" <a href='");
+//                strBuffer.append(context).append("/resourceAllocationManager/");
+//                strBuffer.append("pesquisarSala.do?name=").append(allocatableSpace.getName()).append("'>")
+//                .append(allocatableSpace.getName()).append("</a>");
+                strBuffer.append(allocatableSpace.getName());
             }
 
         } else if (showOccupation instanceof InfoExam) {

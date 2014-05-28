@@ -139,4 +139,9 @@ public class InfoOccupation extends InfoShowOccupation implements GanttDiagramEv
     public String getDescription() {
         return occupation.getDescription();
     }
+
+    @Override
+    public String getExternalId() {
+        return occupation.getExternalId();
+    }
 }
