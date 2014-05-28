@@ -91,7 +91,7 @@
 								</td>
 								<td>
 									<logic:iterate id="roomOccupation" name="evaluation" property="writtenEvaluationSpaceOccupations">
-										<bean:write name="roomOccupation" property="room.nome"/>; 
+										<bean:write name="roomOccupation" property="room.name"/>; 
 									</logic:iterate>
 								</td>
 							</tr>
@@ -121,7 +121,7 @@
 								</td>
 								<td>
 									<logic:iterate id="roomOccupation" name="evaluation" property="writtenEvaluationSpaceOccupations">
-										<bean:write name="roomOccupation" property="room.nome"/>; 
+										<bean:write name="roomOccupation" property="room.name"/>; 
 									</logic:iterate>
 								</td>
 							</tr>
