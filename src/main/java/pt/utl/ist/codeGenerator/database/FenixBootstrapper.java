@@ -178,7 +178,7 @@ public class FenixBootstrapper {
                     new Country(countryName,
                             new MultiLanguageString(MultiLanguageString.pt, nationalityPT).append(new MultiLanguageString(
                                     MultiLanguageString.en, nationalityEN)), code, threeLetterCode);
-            if (StringUtils.equals(threeLetterCode, schoolSection.getCountryCode())) {
+            if (StringUtils.equals(threeLetterCode, schoolSection.getCountryCode().toUpperCase())) {
                 defaultCountry = country;
             }
         }
@@ -203,6 +203,8 @@ public class FenixBootstrapper {
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE));
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.SPACE_MANAGER));
         person.addPersonRoles(Role.getRoleByRoleType(RoleType.SPACE_MANAGER_SUPER_USER));
+        person.addPersonRoles(Role.getRoleByRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE));
+        person.addPersonRoles(Role.getRoleByRoleType(RoleType.BOLONHA_MANAGER));
         person.setRootDomainObject(bennu);
         person.setCountry(Country.readDefault());
         person.setCountryOfBirth(Country.readDefault());
@@ -214,10 +216,10 @@ public class FenixBootstrapper {
             partyContact.getPartyContactValidation().setState(PartyContactValidationState.VALID);
         }
         Authenticate.mock(adminUser);
-        PersistentAcademicAuthorizationGroup group =
-                new PersistentAcademicAuthorizationGroup(AcademicOperationType.MANAGE_AUTHORIZATIONS,
-                        new HashSet<AcademicProgram>(), new HashSet<AdministrativeOffice>());
-        group.addMember(person);
+        new PersistentAcademicAuthorizationGroup(AcademicOperationType.MANAGE_AUTHORIZATIONS, new HashSet<AcademicProgram>(),
+                new HashSet<AdministrativeOffice>()).addMember(person);
+        new PersistentAcademicAuthorizationGroup(AcademicOperationType.MANAGE_ACADEMIC_CALENDARS, new HashSet<AcademicProgram>(),
+                new HashSet<AdministrativeOffice>()).addMember(person);
     }
 
     private static void createPartyTypeEnums() {

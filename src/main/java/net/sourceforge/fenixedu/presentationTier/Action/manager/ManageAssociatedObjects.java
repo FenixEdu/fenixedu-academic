@@ -12,12 +12,14 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.EmptyDegree;
 import net.sourceforge.fenixedu.domain.EmptyDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.ManagerApplications.ManagerSystemManagementApp;
 
@@ -203,6 +205,7 @@ public class ManageAssociatedObjects extends FenixDispatchAction {
     @Atomic
     private void createDepartment(AssociatedObjectsBean bean) {
         Department department = new Department();
+        department.setCompetenceCourseMembersGroup(RoleGroup.get(RoleType.MANAGER));
         department.setActive(bean.isActive());
         department.setCode(bean.getCode());
         department.setName(bean.getName());
