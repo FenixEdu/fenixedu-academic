@@ -1,0 +1,10 @@
+{
+  "resources": {
+    "bundles": [
+      "ParkingResources"
+    ]
+  },
+  "modules": [
+    { "name": "parkingManager", "configFile": "struts-parking.xml" }
+  ]
+}

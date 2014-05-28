@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright © 2014 Instituto Superior Técnico
+
+    This file is part of Fenix Parking.
+
+    Fenix Parking is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Fenix Parking is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with Fenix Parking.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<!DOCTYPE struts-config PUBLIC
+      "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+      "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+      <!-- ========== Data Source Configuration =============================== -->
+      <!-- ========== Form Bean Definitions ================================== -->
+      <form-beans type="org.apache.struts.action.ActionFormBean">
+      		<form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="personParkingForm">
+                  <form-property type="java.lang.String" name="driverLicense"></form-property>
+                  <form-property type="java.lang.String" name="registry1"></form-property>
+                  <form-property type="java.lang.String" name="insurance1"></form-property>
+                  <form-property type="java.lang.String" name="Id1"></form-property>
+                  <form-property type="java.lang.String" name="declaration1"></form-property>
+                  <form-property type="java.lang.String" name="registry2"></form-property>
+                  <form-property type="java.lang.String" name="insurance2"></form-property>
+                  <form-property type="java.lang.String" name="Id2"></form-property>
+                  <form-property type="java.lang.String" name="declaration2"></form-property>
+                  <form-property type="java.lang.Boolean" name="ownVehicle1"></form-property>
+                  <form-property type="java.lang.Boolean" name="ownVehicle2"></form-property>
+                  <form-property type="java.lang.Boolean" name="vehicle2"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="parkingForm">
+                  <form-property type="java.lang.String" name="parkingRequestState"></form-property>
+                  <form-property type="java.lang.String" name="partyClassification"></form-property>
+                  <form-property type="java.lang.String" name="parkingPartyID"></form-property>
+                  <form-property type="java.lang.String" name="personName"></form-property>
+                  <form-property type="java.lang.String" name="groupID"></form-property>
+                  <form-property type="java.lang.Integer" name="code"></form-property>
+                  <form-property type="java.lang.Long" name="cardNumber"></form-property>
+                  <form-property type="java.lang.String" name="note"></form-property>
+                  <form-property type="java.lang.String" name="method"></form-property>
+                  <form-property type="java.lang.Integer" name="page"></form-property>
+                  <form-property type="java.lang.String" name="accepted"></form-property>
+                  <form-property type="java.lang.String" name="cardAlwaysValid"></form-property>
+                  <form-property type="java.lang.String" name="addVehicle"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="parkingRenewalForm">
+                  <form-property type="java.lang.String[]" name="selectedParkingCards"></form-property>
+                  <form-property type="java.lang.String[]" name="parkingCardsToRemove"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="exportFile">
+                  <form-property type="java.lang.String" name="method"></form-property>
+            </form-bean>
+      </form-beans>
+      <!-- ========== Controller Configuration ================================ -->
+      <controller processorClass="pt.ist.fenixWebFramework.renderers.plugin.SimpleRenderersRequestProcessor"></controller>
+      <!-- ========== Message Resources Definitions ============================ -->
+      <message-resources null="false" parameter="resources.ParkingResources"></message-resources>
+      <message-resources null="false" key="PARKING_RESOURCES" parameter="resources.ParkingResources"></message-resources>
+      <message-resources null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
+      <message-resources null="false" key="ENUMERATION_RESOURCES" parameter="resources.EnumerationResources"></message-resources>
+      <message-resources null="false" key="MANAGER_RESOURCES" parameter="resources.ManagerResources"></message-resources>
+      <!-- ========== Plug Ins Configuration ================================= -->
+      <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+            <set-property value="/WEB-INF/validator-rules.xml" property="pathnames"></set-property>
+      </plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
+</struts-config>
