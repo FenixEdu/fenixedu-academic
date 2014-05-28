@@ -312,7 +312,7 @@ public class LibraryAttendance implements Serializable {
     }
 
     public boolean isFull() {
-        return SpaceUtils.currentAttendaceCount(getLibrary()) < getLibrary().getAllocatableCapacity();
+        return SpaceUtils.currentAttendaceCount(getLibrary()) >= getLibrary().getAllocatableCapacity();
     }
 
     public void search() {

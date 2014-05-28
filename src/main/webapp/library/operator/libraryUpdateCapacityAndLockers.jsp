@@ -1,4 +1,3 @@
-<%@ page isELIgnored="true"%>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
@@ -14,7 +13,7 @@
 		<fr:schema bundle="LIBRARY_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryInformation">
 			<fr:slot name="library" key="label.library" layout="menu-select-postback" required="true">
 				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.library.LibraryProvider" />
-				<fr:property name="format" value="Biblioteca ${spaceBuilding.nameWithCampus}" />
+				<fr:property name="format" value="Biblioteca \${parent.parent.presentationName}" />
 				<fr:property name="destination" value="postback" />
 			</fr:slot>
 		</fr:schema>
