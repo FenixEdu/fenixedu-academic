@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DefineExamComment;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.CreateWrittenEvaluation;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.EditWrittenEvaluation;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadAvailableRoomsForExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
@@ -46,6 +45,7 @@ import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context.DegreeModuleScopeContext;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -62,7 +62,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts.util.MessageResources;
 import org.fenixedu.commons.i18n.I18N;
 import org.fenixedu.spaces.domain.Space;
-import org.fenixedu.spaces.domain.UnavailableException;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
@@ -879,11 +878,8 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
             int totalCapacity = 0;
             final StringBuilder buffer = new StringBuilder(20);
             for (final Space room : writtenTest.getAssociatedRooms()) {
-                try {
-                    buffer.append(room.getName()).append("; ");
-                    totalCapacity += (Integer) room.getMetadata("examCapacity");
-                } catch (UnavailableException e) {
-                }
+                buffer.append(room.getName()).append("; ");
+                totalCapacity += room.<Integer> getMetadata("examCapacity").orElse(0);
             }
             if (buffer.length() > 0) {
                 buffer.delete(buffer.length() - 2, buffer.length() - 1);
@@ -994,13 +990,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
             List<String> associatedRooms = new ArrayList<String>();
 
             for (Space room : ((WrittenEvaluation) this.getEvaluation()).getAssociatedRooms()) {
-                Integer examCapacity;
-                try {
-                    examCapacity = room.getMetadata("examCapacity");
-                } catch (UnavailableException e) {
-                    examCapacity = 0;
-                }
-                associatedRooms.add(room.getExternalId() + "-" + examCapacity);
+                associatedRooms.add(room.getExternalId() + "-" + room.<Integer> getMetadata("examCapacity").orElse(0));
             }
 
             String[] selectedRooms = {};
@@ -1038,9 +1028,9 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         examEndTime.set(Calendar.MILLISECOND, 0);
 
         List<InfoRoom> availableInfoRoom =
-                ReadAvailableRoomsForExam.run(YearMonthDay.fromCalendarFields(examDate),
-                        YearMonthDay.fromCalendarFields(examDate), HourMinuteSecond.fromCalendarFields(examStartTime),
-                        HourMinuteSecond.fromCalendarFields(examEndTime), dayOfWeek, null, null, Boolean.FALSE);
+                SpaceUtils.allocatableSpace(YearMonthDay.fromCalendarFields(examDate), YearMonthDay.fromCalendarFields(examDate),
+                        HourMinuteSecond.fromCalendarFields(examStartTime), HourMinuteSecond.fromCalendarFields(examEndTime),
+                        dayOfWeek, null, null, false);
 
         if (this.getEvaluationID() != null) {
             for (Space room : ((WrittenEvaluation) this.getEvaluation()).getAssociatedRooms()) {
@@ -1102,13 +1092,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     }
 
     private String getRoomWithExamCapacityString(Space room) {
-        Integer examCapacity;
-        try {
-            examCapacity = room.getMetadata("examCapacity");
-        } catch (UnavailableException e) {
-            examCapacity = 0;
-        }
-        return room.getExternalId() + "-" + examCapacity;
+        return room.getExternalId() + "-" + room.<Integer> getMetadata("examCapacity").orElse(0);
     }
 
     public String getAssociatedRooms() throws FenixServiceException {

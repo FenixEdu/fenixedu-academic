@@ -1,6 +1,6 @@
 /*
  * InfoRoom.java
- * 
+ *
  * Created on 31 de Outubro de 2002, 12:19
  */
 
@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.space.SpaceUtils;
 
 import org.fenixedu.spaces.domain.Space;
 import org.fenixedu.spaces.domain.SpaceClassification;
-import org.fenixedu.spaces.domain.UnavailableException;
 
 /**
  * @author tfc130
@@ -28,45 +27,35 @@ public class InfoRoom extends InfoObject implements Comparable {
         return getRoom().getName();
     }
 
+    public Space getSpaceBuilding() {
+        Space building = SpaceUtils.getSpaceBuilding(getRoom());
+        return building != null ? building : null;
+    }
+
     public String getEdificio() {
-        Space building;
-        try {
-            building = SpaceUtils.getSpaceBuilding(getRoom());
-            return building != null ? building.getName() : "";
-        } catch (UnavailableException e1) {
-            return "";
-        }
+        Space building = getSpaceBuilding();
+        return building != null ? building.getName() : "";
     }
 
     public Integer getPiso() {
-        try {
-            return getRoom().getMetadata("level");
-        } catch (UnavailableException e) {
-            return null;
-        }
+        Space spaceFloor = SpaceUtils.getSpaceFloor(getRoom());
+        return spaceFloor != null ? spaceFloor.<Integer> getMetadata("level").orElse(null) : null;
     }
 
     public String getTipo() {
-        SpaceClassification roomClassification;
-        try {
-            roomClassification = getRoom().getClassification();
-            return roomClassification != null ? roomClassification.getName().getContent() : "";
-        } catch (UnavailableException e) {
-            return "";
-        }
+        return getRoom().getClassification().getName().getContent();
+    }
+
+    public SpaceClassification getClassification() {
+        return getRoom().getClassification();
     }
 
     public Integer getCapacidadeNormal() {
-        return getRoom().getAllocatableCapacity() == null ? Integer.valueOf(0) : getRoom().getAllocatableCapacity();
+        return getRoom().getAllocatableCapacity();
     }
 
     public Integer getCapacidadeExame() {
-        try {
-            return (Integer) (getRoom().getMetadata("examCapacity") == null ? Integer.valueOf(0) : getRoom().getMetadata(
-                    "examCapacity"));
-        } catch (UnavailableException e) {
-            return null;
-        }
+        return getRoom().<Integer> getMetadata("examCapacity").orElse(0);
     }
 
     @Override
@@ -100,6 +89,10 @@ public class InfoRoom extends InfoObject implements Comparable {
 
     public Space getRoom() {
         return room;
+    }
+
+    public String getName() {
+        return getNome();
     }
 
 }

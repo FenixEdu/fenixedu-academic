@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.util.Season;
 
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.spaces.domain.Space;
-import org.fenixedu.spaces.domain.UnavailableException;
 
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
@@ -179,12 +178,8 @@ public class Exam extends Exam_Base {
 
     @Override
     public boolean canBeAssociatedToRoom(Space room) {
-        try {
-            return SpaceUtils.isFree(room, getBeginningDateTime().toYearMonthDay(), getEndDateTime().toYearMonthDay(),
-                    getBeginningDateHourMinuteSecond(), getEndDateHourMinuteSecond(), getDayOfWeek(), null, null, null);
-        } catch (UnavailableException e) {
-            return false;
-        }
+        return SpaceUtils.isFree(room, getBeginningDateTime().toYearMonthDay(), getEndDateTime().toYearMonthDay(),
+                getBeginningDateHourMinuteSecond(), getEndDateHourMinuteSecond(), getDayOfWeek(), null, null, null);
     }
 
     @Override

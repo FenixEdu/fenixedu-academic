@@ -22,12 +22,9 @@ public class LibraryInformation implements Serializable {
         public Object provide(Object source, Object currentValue) {
             LibraryInformation attendance = (LibraryInformation) source;
             Set<Space> availableSpaces = new HashSet<Space>();
-            for (org.fenixedu.spaces.domain.Space space : attendance.getLibrary().getValidChildrenSet()) {
-                Space newSpace = (Space) space;
-                Integer allocatableCapacity;
-                allocatableCapacity = newSpace.getAllocatableCapacity();
-                if (SpaceUtils.currentAttendaceCount(newSpace) < allocatableCapacity) {
-                    availableSpaces.add((Space) space);
+            for (Space space : attendance.getLibrary().getChildren()) {
+                if (SpaceUtils.currentAttendaceCount(space) < space.getAllocatableCapacity()) {
+                    availableSpaces.add(space);
                 }
             }
             return availableSpaces;

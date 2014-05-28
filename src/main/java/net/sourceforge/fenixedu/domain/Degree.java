@@ -729,8 +729,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         final StringBuilder res = new StringBuilder(getNameFor(executionYear).getContent(locale));
 
         for (final Space campus : Space.getAllCampus()) {
-            String toRemove;
-            toRemove = " - " + campus.getName();
+            String toRemove = " - " + campus.getName();
             if (res.toString().contains(toRemove)) {
                 res.replace(res.indexOf(toRemove), res.indexOf(toRemove) + toRemove.length(), StringUtils.EMPTY);
             }
@@ -1160,7 +1159,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     /**
      * Verifies if the given person was a coordinator for this degree regardless
      * of the execution year.
-     * 
+     *
      * @param person
      *            the person to check
      * @return <code>true</code> if the person was a coordinator for a certain
@@ -1399,7 +1398,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
         if (!elections.isEmpty()) {
             lastYearDelegateElection =
                     Collections
-                            .max(elections, DelegateElection.ELECTION_COMPARATOR_BY_VOTING_START_DATE_AND_CANDIDACY_START_DATE);
+                    .max(elections, DelegateElection.ELECTION_COMPARATOR_BY_VOTING_START_DATE_AND_CANDIDACY_START_DATE);
         }
         return lastYearDelegateElection;
     }

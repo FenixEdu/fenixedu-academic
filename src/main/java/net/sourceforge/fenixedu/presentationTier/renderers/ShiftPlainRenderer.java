@@ -36,7 +36,7 @@ public class ShiftPlainRenderer extends OutputRenderer {
                     lessonsLabel.append(DateFormatUtil.format("HH:mm", lesson.getInicio().getTime())).append("-");
                     lessonsLabel.append(DateFormatUtil.format("HH:mm", lesson.getFim().getTime())).append(") ");
                     if (lesson.hasSala()) {
-                        lessonsLabel.append(lesson.getSala().getName().toString());
+                        lessonsLabel.append(lesson.getSala().getName());
                     }
                     if (index < shift.getAssociatedLessonsSet().size()) {
                         lessonsLabel.append(" ; ");

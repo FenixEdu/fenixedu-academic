@@ -44,6 +44,7 @@ import org.apache.struts.util.LabelValueBean;
 import org.fenixedu.bennu.portal.EntryPoint;
 import org.fenixedu.bennu.portal.StrutsFunctionality;
 import org.fenixedu.commons.i18n.I18N;
+import org.fenixedu.spaces.domain.Space;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -176,7 +177,7 @@ public class ExecutionDegreesManagementDispatchAction extends FenixDispatchActio
 
             request.setAttribute("executionDegree", executionDegree);
             request.setAttribute("executionYears", ExecutionYear.readNotClosedExecutionYears());
-            request.setAttribute("campus", SpaceUtils.getAllActiveCampus());
+            request.setAttribute("campus", Space.getAllCampus());
 
             form.set("executionYearID", executionDegree.getExecutionYear().getExternalId());
             form.set("campusID", executionDegree.getCampus().getExternalId());

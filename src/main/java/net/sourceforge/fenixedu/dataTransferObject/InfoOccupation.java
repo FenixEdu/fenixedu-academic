@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.util.DayType;
@@ -9,16 +10,10 @@ import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.renderer.GanttDiagramEvent;
 
 import org.fenixedu.commons.i18n.I18N;
-import org.fenixedu.spaces.domain.Space;
 import org.fenixedu.spaces.domain.occupation.Occupation;
 import org.joda.time.Interval;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
-
-import com.google.common.base.Function;
-import com.google.common.base.Joiner;
-import com.google.common.base.Predicate;
-import com.google.common.collect.FluentIterable;
 
 public class InfoOccupation extends InfoShowOccupation implements GanttDiagramEvent {
 
@@ -82,19 +77,7 @@ public class InfoOccupation extends InfoShowOccupation implements GanttDiagramEv
 
     @Override
     public String getGanttDiagramEventObservations() {
-        return Joiner.on(" ").join(FluentIterable.from(occupation.getSpaceSet()).filter(new Predicate<Space>() {
-
-            @Override
-            public boolean apply(Space input) {
-                return input.isActive();
-            }
-        }).transform(new Function<Space, String>() {
-            @Override
-            public String apply(Space input) {
-                return input.getName();
-            }
-
-        }).toSet());
+        return occupation.getSpaces().stream().map(space -> space.getName()).collect(Collectors.joining(" "));
     }
 
     @Override

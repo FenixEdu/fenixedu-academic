@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManage
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteLessonInstance;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.DeleteLessons;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.EditLesson;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadAvailableRoomsForExam;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
@@ -60,24 +59,24 @@ import pt.ist.fenixframework.FenixFramework;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
- * 
+ *
  */
 
 @Mapping(path = "/manageLesson", module = "resourceAllocationManager", input = "/manageLesson.do?method=findInput&page=0",
-        formBean = "manageLessonForm", functionality = ExecutionPeriodDA.class)
+formBean = "manageLessonForm", functionality = ExecutionPeriodDA.class)
 @Forwards({ @Forward(name = "ShowLessonForm", path = "/resourceAllocationManager/manageLesson_bd.jsp"),
-        @Forward(name = "ShowChooseRoomForm", path = "/resourceAllocationManager/chooseRoomForLesson_bd.jsp"),
-        @Forward(name = "EditShift", path = "/resourceAllocationManager/manageShift.do?method=prepareEditShift&page=0"),
-        @Forward(name = "LessonDeleted", path = "/resourceAllocationManager/manageShift.do?method=prepareEditShift&page=0"),
-        @Forward(name = "ViewAllLessonDates", path = "/resourceAllocationManager/showAllLessonDates.jsp"),
-        @Forward(name = "ChangeRoom", path = "/resourceAllocationManager/changeRoom_bd.jsp") })
+    @Forward(name = "ShowChooseRoomForm", path = "/resourceAllocationManager/chooseRoomForLesson_bd.jsp"),
+    @Forward(name = "EditShift", path = "/resourceAllocationManager/manageShift.do?method=prepareEditShift&page=0"),
+    @Forward(name = "LessonDeleted", path = "/resourceAllocationManager/manageShift.do?method=prepareEditShift&page=0"),
+    @Forward(name = "ViewAllLessonDates", path = "/resourceAllocationManager/showAllLessonDates.jsp"),
+    @Forward(name = "ChangeRoom", path = "/resourceAllocationManager/changeRoom_bd.jsp") })
 @Exceptions({
-        @ExceptionHandling(key = "resources.Action.exceptions.ExistingActionException",
-                handler = FenixErrorExceptionHandler.class, type = ExistingActionException.class),
-        @ExceptionHandling(key = "resources.Action.exceptions.InterceptingActionException",
-                handler = FenixErrorExceptionHandler.class, type = InterceptingActionException.class),
-        @ExceptionHandling(key = "resources.Action.exceptions.InvalidTimeIntervalActionException",
-                handler = FenixErrorExceptionHandler.class, type = InvalidTimeIntervalActionException.class) })
+    @ExceptionHandling(key = "resources.Action.exceptions.ExistingActionException",
+            handler = FenixErrorExceptionHandler.class, type = ExistingActionException.class),
+            @ExceptionHandling(key = "resources.Action.exceptions.InterceptingActionException",
+            handler = FenixErrorExceptionHandler.class, type = InterceptingActionException.class),
+            @ExceptionHandling(key = "resources.Action.exceptions.InvalidTimeIntervalActionException",
+            handler = FenixErrorExceptionHandler.class, type = InvalidTimeIntervalActionException.class) })
 public class ManageLessonDA extends FenixShiftAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
 
     @Override
@@ -268,7 +267,7 @@ public class ManageLessonDA extends FenixShiftAndExecutionCourseAndExecutionDegr
 
         final InfoLesson infoLesson = (InfoLesson) request.getAttribute(PresentationConstants.LESSON);
         final Interval[] intervals = infoLesson.getLesson().getAllLessonIntervals().toArray(new Interval[0]);
-        final List<Space> emptySpaces = ReadAvailableRoomsForExam.findAllocatableSpace(null, Boolean.TRUE, intervals);
+        final List<Space> emptySpaces = SpaceUtils.allocatableSpace(null, true, intervals);
         Collections.sort(emptySpaces, SpaceUtils.COMPARATOR_BY_PRESENTATION_NAME);
         request.setAttribute("emptySpaces", emptySpaces);
 
@@ -365,9 +364,9 @@ public class ManageLessonDA extends FenixShiftAndExecutionCourseAndExecutionDegr
                 }
 
                 emptyRoomsList =
-                        ReadAvailableRoomsForExam.run(lessonNewBeginDate, lessonEndDate,
+                        SpaceUtils.allocatableSpace(lessonNewBeginDate, lessonEndDate,
                                 HourMinuteSecond.fromCalendarFields(inicio), HourMinuteSecond.fromCalendarFields(fim), weekDay,
-                                null, frequency, Boolean.TRUE);
+                                null, frequency, true);
 
             } else if (action != null && action.equals("edit")) {
                 actionErrors.add("error.Lesson.already.finished", new ActionError("error.Lesson.already.finished"));

@@ -46,7 +46,7 @@ public class ExportExistingStudentsFromImportationProcess extends ExportExisting
 
         final Spreadsheet spreadsheet = new Spreadsheet("Shifts");
         spreadsheet
-                .setHeaders(new String[] { "Número de Aluno", "Nome", "BI", "Curso", "Ano", "Campus", "Ficheiro de importacao" });
+        .setHeaders(new String[] { "Número de Aluno", "Nome", "BI", "Curso", "Ano", "Campus", "Ficheiro de importacao" });
 
         for (DgesStudentImportationProcess importationProcess : DgesStudentImportationProcess.readDoneJobs(getExecutionYear())) {
             if (!importationProcess.getEntryPhase().equals(getEntryPhase())) {
@@ -78,7 +78,7 @@ public class ExportExistingStudentsFromImportationProcess extends ExportExisting
                     addRow(spreadsheet, person.getStudent().getNumber().toString(), person.getName(),
                             person.getDocumentIdNumber(), dto.getExecutionDegree(getExecutionYear(),
                                     importationProcess.getDgesStudentImportationForCampus()), getExecutionYear(),
-                            importationProcess.getDgesStudentImportationForCampus(), importationProcess
+                                    importationProcess.getDgesStudentImportationForCampus(), importationProcess
                                     .getDgesStudentImportationFile().getFilename());
 
                     personSet.add(person);
@@ -100,9 +100,7 @@ public class ExportExistingStudentsFromImportationProcess extends ExportExisting
         row.setCell(2, documentIdNumber);
         row.setCell(3, executionDegree.getDegreeCurricularPlan().getName());
         row.setCell(4, executionYear.getYear());
-        String name;
-        name = campus.getName();
-        row.setCell(5, name);
+        row.setCell(5, campus.getName());
         row.setCell(6, importationFilename);
     }
 

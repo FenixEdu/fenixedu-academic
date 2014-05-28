@@ -491,18 +491,9 @@ public class Shift extends Shift_Base {
     }
 
     public int getCapacityBasedOnSmallestRoom() {
-        int capacity = 0;
-
-        for (final Lesson lesson : getAssociatedLessonsSet()) {
-            if (lesson.hasSala()) {
-                if (capacity == 0) {
-                    capacity = (lesson.getSala()).getAllocatableCapacity();
-                } else {
-                    capacity = Math.min(capacity, (lesson.getSala()).getAllocatableCapacity());
-                }
-            }
-        }
-
+        int capacity =
+                getAssociatedLessonsSet().stream().filter(Lesson::hasSala)
+                        .mapToInt(lesson -> lesson.getSala().getAllocatableCapacity()).min().orElse(0);
         return capacity + (capacity / 10);
     }
 

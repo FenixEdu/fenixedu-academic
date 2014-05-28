@@ -45,10 +45,9 @@ public class LibraryAttendance implements Serializable {
         public Object provide(Object source, Object currentValue) {
             LibraryAttendance attendance = (LibraryAttendance) source;
             Set<Space> availableSpaces = new HashSet<Space>();
-            for (org.fenixedu.spaces.domain.Space space : attendance.getLibrary().getValidChildrenSet()) {
-                Space newSpace = (Space) space;
-                if (SpaceUtils.currentAttendaceCount(newSpace) < newSpace.getAllocatableCapacity()) {
-                    availableSpaces.add(newSpace);
+            for (Space space : attendance.getLibrary().getChildren()) {
+                if (SpaceUtils.currentAttendaceCount(space) < space.getAllocatableCapacity()) {
+                    availableSpaces.add(space);
                 }
             }
             return availableSpaces;
@@ -185,8 +184,8 @@ public class LibraryAttendance implements Serializable {
         if (person != null) {
             Set<Space> spaces = new HashSet<Space>();
             spaces.add(library);
-            for (org.fenixedu.spaces.domain.Space newSpace : library.getChildrenSet()) {
-                spaces.add((Space) newSpace);
+            for (Space newSpace : library.getChildren()) {
+                spaces.add(newSpace);
             }
             for (Space space : spaces) {
                 for (SpaceAttendances attendance : space.getCurrentAttendanceSet()) {
@@ -305,19 +304,15 @@ public class LibraryAttendance implements Serializable {
     public Set<SpaceAttendances> getLibraryAttendances() {
         Set<SpaceAttendances> attendances = new HashSet<SpaceAttendances>();
         attendances.addAll(library.getCurrentAttendanceSet());
-        for (org.fenixedu.spaces.domain.Space space : library.getValidChildrenSet()) {
-            Space newSpace = (Space) space;
+        for (org.fenixedu.spaces.domain.Space space : library.getChildren()) {
+            Space newSpace = space;
             attendances.addAll(newSpace.getCurrentAttendanceSet());
         }
         return attendances;
     }
 
     public boolean isFull() {
-        Space r = getLibrary();
-        Integer allocatableCapacity;
-        allocatableCapacity = r.getAllocatableCapacity();
-
-        return SpaceUtils.currentAttendaceCount(r) < allocatableCapacity;
+        return SpaceUtils.currentAttendaceCount(getLibrary()) >= getLibrary().getAllocatableCapacity();
     }
 
     public void search() {
@@ -369,9 +364,7 @@ public class LibraryAttendance implements Serializable {
         if (person == null) {
             return null;
         }
-        Integer allocatableCapacity;
-        allocatableCapacity = space.getAllocatableCapacity();
-        if (!(SpaceUtils.currentAttendaceCount(space) < allocatableCapacity)) {
+        if (!(SpaceUtils.currentAttendaceCount(space) < space.getAllocatableCapacity())) {
             throw new DomainException("error.space.maximumAttendanceExceeded");
         }
         SpaceAttendances attendance = new SpaceAttendances(person.getIstUsername(), responsibleUsername, new DateTime());
